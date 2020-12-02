@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Laravel Email Verification</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Laravel Email Verification">
+ </head> 
+ <body> 
+  <article> 
+   <p>Hiện nay nhiều web app yêu cầu người dùng xác thực email trước khi sử dụng ứng dụng. Thay vì bạn phải tự xây dựng chức năng này thì từ version 5.7 trở đi, Laravel đã thêm vào một tính năng mới là Email Verification. Như tên gọi khi sử dụng nó website của bạn sẽ buộc người dùng phải verify email mới có thể truy cập vào nội dung trang web. Cùng tìm hiểu xem cách sử dụng và cách Email Verification hoạt động như thế nào nhé.</p> 
+   <p>Tạo project mới:</p> 
+   <pre>composer create-project --prefer-dist laravel/laravel verification</pre> 
+   <p>Start project:</p> 
+   <img alt="" src="images/new%20project.png"> 
+   <p>Hiện vẫn chưa có đăng nhập, đăng ký.</p> 
+   <h3>Migrate database</h3> 
+   <p>Thực hiện chạy composer để cài đặt Laravel mới nhất ở thời điểm hiện tại version 5.7.</p> 
+   <p>Chỉnh lại cấu hình DB ở file <code>.env</code>.</p> 
+   <p>Sau đó vào folder <code>migration</code> mở file <code>create_users_table.php</code>, chúng ta sẽ thấy tại function <code>up()</code> có thêm 1 trường <code>email_verified_at</code>. Đây là trường sẽ xác định người dùng đã verify email hay chưa bằng việc cập nhật timestamp sau này.</p> 
+   <pre><code>Schema::create('users', function(Blueprint $table) {
+    $table-&gt;increments('id');
+    $table-&gt;string('name');
+    $table-&gt;string('email')-&gt;unique();
+    $table-&gt;timestamp('email_verified_at')-&gt;nullable();
+    $table-&gt;string('password');
+    $table-&gt;rememberToken();
+    $table-&gt;timestamps();
+});
+</code></pre> 
+   <p>Thực thi migrate với php artisan:</p> 
+   <pre><code>php artisan migrate
+</code></pre> 
+   <h3>Model setup</h3> 
+   <p>Vào model User, ta sẽ thấy model này sử dụng thêm 1 lớp mới: <code>MustVerifyEmail</code>, nó là một contract. Và để sử dụng được Email Verification, model User sẽ phải implements contract này.</p> 
+   <pre><code>class User extends Authenticatable implements MustVerifyEmail
+</code></pre> 
+   <h3>Routing</h3> 
+   <p>Tạo Auth bằng câu lệnh:</p> 
+   <pre><code>php artisan make:auth
+</code></pre> 
+   <p>Từ version 5.7, tại Controller ta sẽ thấy thêm <code>Auth\VerificationController</code>, đây là controller sẽ xử lý việc verify email người dùng gồm việc gửi link xác minh, xác thực việc người dùng đã xác minh email hay chưa và gửi lại email theo yêu cầu. Để sử dụng controller này, tại file <code>web.php</code> ta sẽ thêm option <code>verify</code> vào <code>Auth::routes()</code>:</p> 
+   <pre><code>Auth::routes(['verify' =&gt; true]);
+</code></pre> 
+   <p>Tiếp theo, bạn nhớ config <code>.env</code> email nhé.</p> 
+   <p>Giao diện giờ đã thêm nút đăng nhập và đăng ký:</p> 
+   <img alt="" src="images/add%20authentication.png"> 
+   <p>Ok, phần setup đã xong. Giờ mình thử register một user.</p> 
+   <p><img src="https://images.viblo.asia/d1602fd8-1b1b-498d-8d10-53f6fa5725a2.png" alt=""></p> 
+   <p>Sau khi đăng kí xong, một email với link verify sẽ được gửi đến email của bạn. Mình cut ra cho nó ngắn gọn như sau:</p> 
+   <img alt="" src="images/verification%20email.png"> 
+   <p>Việc còn lại là user sẽ truy cập vào link đấy, và việc verify email sẽ thành công. Tuy nhiên, nếu user chưa verify ta sẽ thông báo user phải verify trước khi truy cập vào các nội dung khác của web, bằng việc sử dụng middleware <code>verified</code> mà Laravel đã cung cấp tại các route mà bạn muốn. Ví dụ:</p> 
+   <pre><code>Route::get('/', function () {
+    return view('welcome');
+})-&gt;middleware('verified');
+</code></pre> 
+   <p>Khi user truy cập vào route này, sẽ hiện thông báo:</p> 
+   <p><img src="https://images.viblo.asia/54a4e410-de8e-434b-b936-15c19c9f8dc4.png" alt=""></p> 
+   <p>Còn khi user đã verify email, thì việc truy cập sẽ hoàn toàn bình thường và tại field <code>email_verified_at</code> trong bảng <code>users</code> sẽ hiện thị thời gian user verify email.</p> 
+   <p><img src="https://images.viblo.asia/7887a5d2-8c1a-4915-90c8-d7d4fbbfd2c9.png" alt=""></p> 
+   <h3>Cách hoạt động</h3> 
+   <p>Việc sử dụng Email Verification rất đơn giản gồm việc cấu hình model User và route như đã hướng dẫn ở trên. Tuy nhiên, mình sẽ nói thêm cách nó hoạt động như thế nào.</p> 
+   <p>Đầu tiên, ta implements MustVerifyEmail, nó là một contract (hiểu đơn giản contract là interface, contract là thuật ngữ mà ông Taylor ông gọi mà thôi :)). Contract này khai báo 3 method cho việc verify email.</p> 
+   <pre><code>    /**
+     * Determine if the user has verified their email address.
+     * Xác định xem người dùng đã xác minh địa chỉ email của họ chưa
+     * @return bool
+     */
+    public function hasVerifiedEmail();
+
+    /**
+     * Mark the given user's email as verified.
+     * Đánh dấu email của người dùng đã được xác minh (đánh dấu bằng field email_verified_at)
+     * @return bool
+     */
+    public function markEmailAsVerified();
+
+    /**
+     * Send the email verification notification.
+     * Gửi thông báo xác minh email.
+     * @return void
+     */
+    public function sendEmailVerificationNotification();
+</code></pre> 
+   <p>Ý nghĩa các method mình đã comment rõ ràng ở trên. Nó là interface nên chỉ khai báo các phương thức chứ không định nghĩa thực hiện chúng. Việc thực hiện các method trên sẽ do trait <code>MustVerifyEmail</code> thực hiện (chi tiết mình sẽ nói ở phía dưới).</p> 
+   <p>Tiếp tục vào EventServiceProvider, bạn sẽ thấy khai báo 1 event <code>Registered</code> và 1 listener <code>SendEmailVerificationNotification</code> lắng nghe event này. Event <code>Registered</code> được fire khi một user thực hiện việc đăng ký.</p> 
+   <pre><code>protected $listen = [
+    Registered::class =&gt; [
+        SendEmailVerificationNotification::class,
+    ],
+];
+</code></pre> 
+   <p>Tiếp tục vào listener <code>SendEmailVerificationNotification</code>, tại method <code>handle()</code>:</p> 
+   <pre><code>public function handle(Registered $event) {
+    if ($event-&gt;user instanceof MustVerifyEmail &amp;&amp; ! $event-&gt;user-&gt;hasVerifiedEmail()) {
+        $event-&gt;user-&gt;sendEmailVerificationNotification();
+    }
+}
+</code></pre> 
+   <p>Method này sẽ kiểm tra xem user lúc register có phải là một instance của contract MustVerifyEmail (hiểu đơn giản là model User có implements MustVerifyEmail) hay không và user đã verify email hay chưa? Nếu là instance và chưa verify email thì thực hiện method <code>sendEmailVerificationNotification</code>.</p> 
+   <p>Note: Dù model User không implements MustVerifyEmail thì khi một user register event <code>Registered</code> vẫn được fire, nhưng khi vào method handle của listener <code>SendEmailVerificationNotification</code> do ở đây đã check xem <code>instanceof MustVerifyEmail</code>, vì không implements MustVerifyEmail nên sẽ không thực hiện các logic phía dưới.</p> 
+   <p>Hai method <code>hasVerifiedEmail</code> và <code>sendEmailVerificationNotification</code>, bạn thấy ở trên sẽ do trait <code>MustVerifyEmail</code> định nghĩa thực hiện chúng.</p> 
+   <pre><code>&lt;?php
+namespace Illuminate\Auth;
+
+trait MustVerifyEmail
+{
+    /**
+     * Determine if the user has verified their email address.
+     * 
+     * Xác định xem người dùng đã xác minh địa chỉ email của họ chưa
+     * bằng việc kiểm tra trường email_verified_at có null hay không
+     * 
+     * @return bool
+     */
+    public function hasVerifiedEmail()
+    {
+        return ! is_null($this-&gt;email_verified_at);
+    }
+
+    /**
+     * Mark the given user's email as verified.
+     *
+     * Đánh dấu email của người dùng đã được xác minh
+     * bằng việc cập nhật timestamp ở trường email_verified_at
+     * 
+     * @return bool
+     */
+    public function markEmailAsVerified()
+    {
+        return $this-&gt;forceFill([
+            'email_verified_at' =&gt; $this-&gt;freshTimestamp(),
+        ])-&gt;save();
+    }
+
+    /**
+     * Send the email verification notification.
+     *
+     * Gửi thông báo xác minh email
+     * bằng việc sử dụng Notifications
+     * 
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this-&gt;notify(new Notifications\VerifyEmail);
+    }
+}
+</code></pre> 
+   <p>Ở listener SendEmailVerificationNotification gọi hàm sendEmailVerificationNotification(), trong trait đã định nghĩa hàm này new một VerifyEmail notification, notification sẽ gửi nội dung verify đến email người dùng, cụ thể logic của VerifyEmail notification này bạn xem tại <a href="https://github.com/laravel/framework/blob/5.7/src/Illuminate/Auth/Notifications/VerifyEmail.php" target="_blank">Illuminate/Auth/Notifications/VerifyEmail.php</a>.</p> 
+   <p>Views</p> 
+   <p>Laravel will generate all of the necessary email verification views when the make:auth command is executed. This view is placed in resources/views/auth/verify.blade.php. You are free to customize this view as needed for your application.</p> 
+   <p>After Verifying Emails</p> 
+   <p>After an email address is verified, the user will automatically be redirected to /home. You can customize the post verification redirect location by defining a redirectTo method or property on the VerificationController:</p> 
+   <pre>protected $redirectTo = '/dashboard';</pre> 
+   <p>Events</p> 
+   <p>Laravel dispatches events during the email verification process. You may attach listeners to these events in your EventServiceProvider:</p> 
+   <pre>/**
+ * The event listener mappings for the application.
+ *
+ * @var array
+ */
+protected $listen = [
+    'Illuminate\Auth\Events\Verified' =&gt; [
+        'App\Listeners\LogVerifiedUser',
+    ],
+];</pre> 
+   <p>TODO:</p> 
+   <p>Cấu hình lại việc đa ngôn ngữ ở <code>config/app.php</code> (2 key là <code>locale</code> và <code>fallback_locale</code>). Thường chỉ sửa <code>locale</code> về thành <code>vi</code> (tiếng Việt).</p> 
+   <p><br> </p> 
+   <p>Sửa nội dung email (<code>Illuminate/Auth/Notifications/VerifyEmail.php</code>), tạo file <code>resources/lang/vi.json</code> với nội dung sau:</p> 
+   <pre>{
+    "Reset Password Notification": "Thông báo thiết lập lại mật khẩu",
+    "You are receiving this email because we received a password reset request for your account.": "Bạn nhận được email này bởi vì chúng tôi nhận được một yêu cầu thiết lập lại mật khẩu cho tài khoản của bạn.",
+    "Reset Password": "Thiết lập lại mật khẩu",
+    "If you did not request a password reset, no further action is required.": "Nếu bạn không yêu cầu thiết lập lại mật khẩu thì không cần làm gì thêm.",
+
+    "If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\ninto your web browser: [:actionURL](:actionURL)": "Nếu bạn có khó khăn với việc click nút \":actionText\", copy và paste URL sau vào trình duyệt của bạn: [:actionURL](:actionURL)",
+    "Hello!": "Xin chào!",
+    "Regards": "Trân trọng",
+
+    "Verify Email Address": "Xác nhận địa chỉ email",
+    "Please click the button below to verify your email address.": "Vui lòng nhấn vào nút sau để xác nhận địa chỉ email của bạn.",
+    "If you did not create an account, no further action is required.": "Nếu bạn không tạo tài khoản thì không cần làm gì thêm.",
+
+    "Verify Your Email Address": "Xác nhận địa chỉ email của bạn",
+    "A fresh verification link has been sent to your email address.": "Một đường dẫn xác nhận mới đã được gửi tới địa chỉ email của bạn.",
+    "Before proceeding, please check your email for a verification link.": "Trước khi tiếp tục, vui lòng kiểm tra đường dẫn xác nhận ở email của bạn",
+    "If you did not receive the email": "Nếu bạn không nhận được email",
+    "click here to request another": "Nhấn vào đây để yêu cầu một cái khác"
+}</pre> 
+   <p>thông báo cần verify, thông báo verify lại thành công (<code>resources/views/auth/verify.blade.php</code>).</p> 
+   <h3>Lời kết</h3> 
+   <p>Trong bài viết này, mình đã hướng dẫn bạn sử dụng Email Verification, một tính năng mới được Laravel thêm vào từ version 5.7 và nêu cách nó hoạt động trong Laravel như thế nào. Nếu có thắc mắc và góp ý bạn comment phía dưới nhé. Cảm ơn bạn.</p> 
+   <p>Tham khảo: <a href="https://laravel.com/docs/5.7/verification" target="_blank">https://laravel.com/docs/5.7/verification</a></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

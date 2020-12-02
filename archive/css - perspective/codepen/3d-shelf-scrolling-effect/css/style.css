@@ -1,0 +1,218 @@
+body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #e6e6e6;
+	font-family: sans-serif;
+	color: #fff;
+}
+
+#tridiv {
+	overflow: auto;
+	height: 800px;
+	-webkit-perspective: 800px;
+	perspective: 800px;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	font-size: 100%;
+	z-index: 999;
+}
+
+.scene,.shape,.shape-2,.face,.face-wrapper,.cr {
+	position: absolute;
+
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	-ms-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+}
+
+.scene {
+	width: 100%;
+	height: 100em;
+}
+
+.shape {
+	top: 10%;
+	left: 50%;
+	width: 0;
+	height: 0;
+
+	-webkit-transform-origin: 50%;
+	-moz-transform-origin: 50%;
+	-o-transform-origin: 50%;
+	-ms-transform-origin: 50%;
+	transform-origin: 50%;
+}
+
+.shape-2 {
+	top: 35%;
+	left: 50%;
+	width: 0;
+	height: 0;
+
+	-webkit-transform-origin: 50%;
+	-moz-transform-origin: 50%;
+	-o-transform-origin: 50%;
+	-ms-transform-origin: 50%;
+	transform-origin: 50%;
+}
+
+.shape-3 {
+	top: 50%;
+	left: 50%;
+	width: 0;
+	height: 0;
+
+	-webkit-transform-origin: 50%;
+	-moz-transform-origin: 50%;
+	-o-transform-origin: 50%;
+	-ms-transform-origin: 50%;
+	transform-origin: 50%;
+}
+
+.face,.face-wrapper {
+	overflow: hidden;
+
+	-webkit-transform-origin: 0 0;
+	-moz-transform-origin: 0 0;
+	-o-transform-origin: 0 0;
+	-ms-transform-origin: 0 0;
+	transform-origin: 0 0;
+	backface-visibility: hidden; /* hidden by default, prevent blinking and other weird rendering glitchs */
+}
+
+.face {
+	-webkit-background-size: 100% 100% !important;
+	-moz-background-size: 100% 100% !important;
+	background-size: 100% 100% !important;
+	background-position: center;
+}
+
+.face-wrapper .face {
+	left: 100%;
+	width: 100%;
+	height: 100%;
+}
+
+.photon-shader {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+[class*="cuboid"] .ft,[class*="cuboid"] .bk {
+	width: 100%;
+	height: 100%;
+}
+
+[class*="cuboid"] .bk {
+	left: 100%;
+}
+
+[class*="cuboid"] .rt {
+	-webkit-transform: rotateY(-90deg) translateX(-50%);
+	-moz-transform: rotateY(-90deg) translateX(-50%);
+	-o-transform: rotateY(-90deg) translateX(-50%);
+	-ms-transform: rotateY(-90deg) translateX(-50%);
+	transform: rotateY(-90deg) translateX(-50%);
+}
+
+[class*="cuboid"] .lt {
+	-webkit-transform: rotateY(90deg) translateX(-50%);
+	-moz-transform: rotateY(90deg) translateX(-50%);
+	-o-transform: rotateY(90deg) translateX(-50%);
+	-ms-transform: rotateY(90deg) translateX(-50%);
+	transform: rotateY(90deg) translateX(-50%);
+}
+
+[class*="cuboid"] .tp {
+	-webkit-transform: rotateX(90deg) translateY(-50%);
+	-moz-transform: rotateX(90deg) translateY(-50%);
+	-o-transform: rotateX(90deg) translateY(-50%);
+	-ms-transform: rotateX(90deg) translateY(-50%);
+	transform: rotateX(90deg) translateY(-50%);
+}
+
+[class*="cuboid"] .bm {
+	-webkit-transform: rotateX(-90deg) translateY(-50%);
+	-moz-transform: rotateX(-90deg) translateY(-50%);
+	-o-transform: rotateX(-90deg) translateY(-50%);
+	-ms-transform: rotateX(-90deg) translateY(-50%);
+	transform: rotateX(-90deg) translateY(-50%);
+}
+
+[class*="cuboid"] .lt {
+	left: 100%;
+}
+
+[class*="cuboid"] .bm {
+	top: 100%;
+}
+
+/* .shelf styles */
+.shelf {
+	-webkit-transform: translate3D(0em, -0.5em, 2.5em) rotateX(0deg) rotateY(90deg) rotateZ(0deg);
+	-moz-transform: translate3D(0em, -0.5em, 2.5em) rotateX(0deg) rotateY(90deg) rotateZ(0deg);
+	-o-transform: translate3D(0em, -0.5em, 2.5em) rotateX(0deg) rotateY(90deg) rotateZ(0deg);
+	-ms-transform: translate3D(0em, -0.5em, 2.5em) rotateX(0deg) rotateY(90deg) rotateZ(0deg);
+	transform: translate3D(0em, -0.5em, 2.5em) rotateX(0deg) rotateY(90deg) rotateZ(0deg);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	filter: alpha(opacity=100);
+	opacity: 1;
+	width: 3.5em;
+	height: 1em;
+}
+
+.shelf .ft {
+	-webkit-transform: translateZ(1.5em);
+	-moz-transform: translateZ(1.5em);
+	-o-transform: translateZ(1.5em);
+	-ms-transform: translateZ(1.5em);
+	transform: translateZ(1.5em);
+}
+
+.shelf .bk {
+	-webkit-transform: translateZ(-1.5em) rotateY(180deg);
+	-moz-transform: translateZ(-1.5em) rotateY(180deg);
+	-o-transform: translateZ(-1.5em) rotateY(180deg);
+	-ms-transform: translateZ(-1.5em) rotateY(180deg);
+	transform: translateZ(-1.5em) rotateY(180deg);
+}
+
+.shelf .rt,.shelf .lt {
+	width: 33em;
+	height: 1em;
+}
+
+.shelf .tp,.shelf .bm {
+	width: 3.5em;
+	height: 33em;
+}
+
+.shelf .face {
+	background-color: #bfc9c5;
+}
+
+
+/* MvanEijgen styling */
+
+.face { background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/16437/wood.jpg); }
+
+.face.lt {
+	-webkit-box-shadow: -1px 11px 6px -2px rgba(0,0,0,0.2);
+	box-shadow: -1px 11px 6px -2px rgba(0,0,0,0.2);
+}
+
+
+.shape {
+	position: relative;
+	margin-top: 200px;
+}
+.shape:first-child { margin-top: 0; } 
+
+
+

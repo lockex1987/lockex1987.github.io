@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html class=" -moz-">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico">
+  <link rel="mask-icon" type="" href="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111">
+  <title>CodePen - how `-webkit-box-reflect` works</title>
+  
+  
+  
+  
+      
+
+  
+
+  
+
+  
+  
+
+
+<link media="all" href="index_16.css" type="text/css" rel="stylesheet">
+</head>
+<body translate="no">
+
+  
+<pre><code><span class="token--prp">-webkit-box-reflect</span>: <i class="br"></i><span class="token--kwd trigger" id="dir"><span class="curr"><span class="val">below</span></span><span class="popup hidden">
+        <input name="o" id="o#{i}" checked="checked" type="radio">
+        <label for="o#{i}">below</label>
+        <input name="o" id="o#{i}" type="radio">
+        <label for="o#{i}">above</label>
+        <input name="o" id="o#{i}" type="radio">
+        <label for="o#{i}">right</label>
+        <input name="o" id="o#{i}" type="radio">
+        <label for="o#{i}">left</label></span></span> <span class="token--len trigger" id="off"><span class="curr"><span class="val">0</span>px</span><span class="popup hidden">
+        <input id="off" value="0" type="range">
+        <label for="off">offset</label></span></span> <i class="br"></i><span class="token--fnc">linear-gradient</span>(<span class="token--ang trigger" id="ang"><span class="curr"><span class="val">180</span>deg</span><span class="popup hidden">
+        <input id="ang" max="360" type="range">
+        <label for="ang">direction</label></span></span>, <i class="br"></i><span class="token--fnc">rgba</span>(<span class="token--hex">#fff</span>, <span class="token--num trigger" id="alpha#{i}"><span class="curr"><span class="val">0</span></span><span class="popup hidden">
+        <input id="alpha#{i}" value="#{i*100}" type="range">
+        <label for="alpha#{i}">stop alpha</label></span></span>) <span class="token--prc trigger" id="pos#{i}"><span class="curr"><span class="val">0</span>%</span><span class="popup hidden">
+        <input id="pos#{i}" value="#{i*100}" type="range">
+        <label for="pos#{i}">stop position</label></span></span>, <i class="br"></i><span class="token--fnc">rgba</span>(<span class="token--hex">#fff</span>, <span class="token--num trigger" id="alpha#{i}"><span class="curr"><span class="val">1</span></span><span class="popup hidden">
+        <input id="alpha#{i}" value="#{i*100}" type="range">
+        <label for="alpha#{i}">stop alpha</label></span></span>) <span class="token--prc trigger" id="pos#{i}"><span class="curr"><span class="val">100</span>%</span><span class="popup hidden">
+        <input id="pos#{i}" value="#{i*100}" type="range">
+        <label for="pos#{i}">stop position</label></span></span>);</code></pre>
+<svg viewBox="-306 -168 612 336">
+  <linearGradient id="lg" x1="50%" y1="100%" x2="50%" y2="0%" gradientTransform="rotate(180 .5 .5)">
+    <stop offset="0%" stop-color="#fff" stop-opacity="0"></stop>
+    <stop offset="100%" stop-color="#fff" stop-opacity="1"></stop>
+  </linearGradient>
+  <mask id="m" maskContentUnits="objectBoundingBox">
+    <rect width="1" height="1" fill="url(#lg)"></rect>
+  </mask>
+  <image id="img" x="-20%" y="-40%" width="40%" height="40%" preserveAspectRatio="xMidYMid slice" xlink:href="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Siberian_tiger_cub_Amneville_Zoo.jpg/320px-Siberian_tiger_cub_Amneville_Zoo.jpg"></image>
+  <use xlink:href="#img" y="0" transform="scale(1 -1)" mask="url(#m)"></use>
+</svg>
+    
+
+  
+
+    
+
+  
+  
+
+
+
+ </body>
+</html>

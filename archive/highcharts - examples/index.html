@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="demo"/>
+    
+    <title>Các ví dụ Highcharts</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body>
+    <article class="mw-none">
+        <div class="container">
+            <h2>Các ví dụ Highcharts</h2>
+            <p>Tham khảo: <a href="https://www.highcharts.com/demo" target="_blank">Highcharts demo</a></p>
+            <div id="app">
+                <div class="mb-3">
+                    <input type="text"
+                            class="form-control"
+                            placeholder="Lọc theo tên..."
+                            v-model.trim="searchText"/>
+                </div>
+
+                <div v-show="filteredDemos.length == 0"
+                        class="text-danger">
+                    Không tìm thấy bản ghi
+                </div>
+
+                <div class="row">
+                    <div v-for="demo in filteredDemos"
+                            class="col-md-4 col-sm-6 mb-3">
+                        <div class="border shadow-sm">
+                            <a :href="demo.url">
+                                <div style="height: 250px;" class="d-flex justify-content-center align-items-center">
+                                    <img :src="demo.image" class="mh-100"/>
+                                </div>
+                                <div class="p-2 border-top">
+                                    {{demo.title}}
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="../../js/docs.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

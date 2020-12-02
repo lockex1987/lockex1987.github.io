@@ -1,0 +1,91 @@
+html{
+	height: 100%;
+}
+body{
+	background-color: #484848;
+	height: 100%;
+	margin: 0px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-family: Arial;
+}
+
+h1{
+	color: white
+}
+
+#spinner{
+	width: 400px;
+	height: 400px;
+	min-width: 400px;
+	min-height: 400px;
+	align-items: center;
+	position: relative;
+	overflow: hidden;
+}
+
+#clicker{
+	position: absolute;
+	top: 0px;
+	left: calc(50% - 10px);
+	width: 15px;
+	height: 60px;
+	z-index: 2;
+	transform-origin: 50% 20px;
+	pointer-events: none;
+}
+
+#wheel{
+	position: absolute;
+	top: 30px;
+	left: 30px;
+	width: calc(100% - 60px);
+	height: calc(100% - 60px);
+	box-sizing: border-box;
+	border-radius: 100%;
+	cursor: pointer;
+	border: solid white 10px;
+	will-change: transform;
+	z-index: 1;
+}
+
+#shaddow{
+	position: absolute;
+	top: 30px;
+	left: 30px;
+	right: 30px;
+	bottom: 30px;
+	border-radius: 100%;
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+#splineMask > path{
+	fill: black;
+}
+
+#wheel > #middle{
+	fill: white;
+}
+
+#wheel > #knob{
+	fill: #ddd;
+}
+
+#wheel > text{
+	fill: white;
+	font-weight: bold;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+@media screen and ( max-height: 500px ) {
+	h1{
+		display: none;
+	}
+}

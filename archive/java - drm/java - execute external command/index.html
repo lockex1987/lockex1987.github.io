@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Execute external command">
+    <title>Execute external command</title>
+    
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Execute external command</h2>
+      <p>Runtime.exec is old, ProcessBuilder is new.</p>
+      <p>By executing external command, you can interoperate between services
+        which are written in different languages.</p>
+      <h3>Runtime.excec</h3>
+      <pre>StringBuilder sb = new StringBuilder();
+Process process = Runtime.getRuntime().exec(new String[]{
+    "python",
+    PYTHON_SCRIPT,
+    inputFile,
+    outputFile,
+    PID
+});
+process.waitFor();
+BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+String line;
+while ((line = reader.readLine()) != null) {
+    sb.append(line).append("\n");
+}
+return sb.toString();</pre>
+      <h3>ProcessBuilder</h3>
+      <pre>String[] args = new String[] {
+    FFMPEG_PATH,
+    "-loglevel", "error",
+    "-ss", String.valueOf(duration),
+    "-i", videoPath,
+    "-vframes", "1",
+    "-f", "image2",
+    "-s", size,
+    imagePath
+};
+Process process = new ProcessBuilder(args).start();
+BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+String line;
+while ((line = br.readLine()) != null) {
+    System.out.println(line);
+}</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

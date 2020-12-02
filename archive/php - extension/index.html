@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="phpize">
+    <title>PHP extension</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>PHP extension</h2>
+      <h3>Danh sách extension</h3>
+      <p>Để liệt kê các extension đã cài đặt, dùng lệnh sau:</p>
+      <pre>php -m</pre>
+      <p>Các extension khác của PHP là:</p>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th style="min-width: 150px">Extension</th>
+              <th>Mô tả</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>bcmath</td>
+              <td>Thao tác với giá trị float (Binary Calculator)</td>
+            </tr>
+            <tr>
+              <td>ctype</td>
+              <td>The functions provided by this extension check whether a
+                character or string falls into a certain character class
+                according to the current locale</td>
+            </tr>
+            <tr>
+              <td>cgi</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>curl</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>enchant</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>gmp</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>intl</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>mbstring</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>opcache</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>pspell</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>snmp</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>sybase</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>xmlrpc</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>bcmath</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>cli</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>dba</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>fpm</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>imap</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>json</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>mysql</td>
+              <td>Kết nối MySQL<br>
+              </td>
+            </tr>
+            <tr>
+              <td>pgsql</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>readline</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>soap</td>
+              <td>Kết nối giao thức SOAP<br>
+              </td>
+            </tr>
+            <tr>
+              <td>tidy</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>xsl</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>bz2</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>common</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>dev</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>gd</td>
+              <td>Xử lý ảnh<br>
+              </td>
+            </tr>
+            <tr>
+              <td>interbase</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>ldap</td>
+              <td>Đăng nhập, thao tác LDAP<br>
+              </td>
+            </tr>
+            <tr>
+              <td>odbc</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>phpdbg</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>recode</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>sqlite3</td>
+              <td>Kết nối SQLite<br>
+              </td>
+            </tr>
+            <tr>
+              <td>xml</td>
+              <td>Xử lý văn bản XML<br>
+              </td>
+            </tr>
+            <tr>
+              <td>zip</td>
+              <td>Xử lý file zip<br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Cài đặt từ repo</h3>
+      <p>Dùng lệnh apt bình thường:</p>
+      <pre>sudo apt install php7.2-mysql</pre>
+      <h3>Cài đặt từ source</h3>
+      <p><code>phpize</code> là chương trình dùng để comile một module từ
+        source.</p>
+      <p>Cài đặt <code>phpize</code>:</p>
+      <pre>sudo apt install php7.2-dev</pre>
+      <p>Giả sử compile <code>rar</code> extension.</p>
+      <p>Download source từ địa chỉ: <a href="https://pecl.php.net/package/rar"
+          target="_blank">PECL :: Package :: rar</a>.</p>
+      <p>Sau đó thực hiện các câu lệnh sau:</p>
+      <pre>unzip php-rar-4.0.0.zip<br>cd php-rar-4.0.0<br>phpize<br>./configure<br>make<br>#make install</pre>
+      <p>Sau khi biên dịch và cài đặt thành công, một file có tên <code>rar.so</code>
+        sẽ được tạo ra và đặt vào thư mục dành cho các extension của phiên bản
+        PHP tương ứng.</p>
+      <p>Kiểm tra thư mục extension:</p>
+      <pre>php -i | grep extension_dir</pre>
+      <p>Copy file:</p>
+      <pre>sudo cp modules/rar.so /usr/lib/php/20170718/</pre>
+      <p>Kiểm tra vị trí file <code>php.ini</code>:</p>
+      <pre>php -i | grep 'Configuration File'</pre>
+      <p>Sau đó, bạn cấu hình file <code>php.ini</code> để load module này.</p>
+      <pre>echo "extension=redis.so" &gt;&gt; /etc/php/7.2/cli/php.ini</pre>
+      <h3>Tham khảo</h3>
+      <p><a href="https://ma.ttias.be/how-to-compile-and-install-php-extensions-from-source/"
+          target="_blank">How To Compile And Install PHP Extensions From Source</a>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Blade template">
+    <title>Blade template</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Blade template</h2>
+      <p>Blade là templating engine đơn giản nhưng rất tuyệt vời cung cấp bởi
+        Laravel. Không như những templating engine của PHP, Blade không cấm bạn
+        sử dụng code PHP thuần ở trong view. Thực tế, tất cả các Blade view được
+        compile từ code PHP và được cache cho đến khi chúng được chỉnh sửa,
+        nghĩa là Blade không làm tăng thêm chi phí cho ứng dụng của bạn. Tất cả
+        các Blade view sử dụng đuôi <code>.blade.php</code> và được lưu trong
+        thư mục <code>resources/views</code>.</p>
+      <h3>Template inheritance</h3>
+      <h4>Định nghĩa một layout</h4>
+      <p>Có 2 lợi ích của việc sử dụng Blade là <em>template inheritance</em>
+        và <em>section</em>. Để bắt đầu, chúng ta hãy xem ví dụ sau. Đầu tiên,
+        chúng ta cùng xem một trang layout "master". Vì hầu hết các ứng dụng web
+        đều có một mẫu layout chung giữa các trang với nhau, nó sẽ rất tiện nếu
+        tạo ra layout này thành một Blade view riêng:</p>
+      <pre>&lt;!-- Stored in resources/views/layouts/app.blade.php --&gt;
+
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;App name - @yield('title')&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        @section('sidebar')
+            This is the master sidebar.
+        @endsection
+
+        &lt;div class="container"&gt;
+            @yield('content')
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</pre>
+      <p>Như bạn có thể thấy, file này có chứa mã HTML. Tuy nhiên, chú ý ở <code>@section</code>
+        và <code>@yield</code> directive. The <code>@section</code> directive,
+        đúng như tên của nó, định nghĩa một nội dung, trong khi <code>@yield</code>
+        directive sử dụng để hiển thị dữ liệu ở một vị trí đặt trước.</p>
+      <p>Bây giờ chúng ta đã tạo xong một layout cho ứng dúng, hãy cùng tạo ra
+        các trang con kế thừa từ layout này.</p>
+      <h4>Kế thừa một layout</h4>
+      <p>Khi bạn tạo một trang con, sử dụng Blade <code>@extends</code>
+        directive để chỉ ra layout của trang con này "inherit" từ đâu. Views kế
+        thừa một Blade layout có thể inject nội dung vào trong section sử dụng <code>@section</code>
+        directive của layout. Nhớ rằng, như ví dụ trên, nội dung của những
+        section này được hiển thị khi sử dụng <code>@yield</code>:</p>
+      <pre>&lt;!-- Stored in resources/views/child.blade.php --&gt;
+
+@extends('layouts.app')
+
+@section('title', 'Page Title')
+
+@section('sidebar')
+    @parent
+
+    &lt;p&gt;This is appended to the master sidebar.&lt;/p&gt;
+@endsection
+
+@section('content')
+    &lt;p&gt;This is my body content.&lt;/p&gt;
+@endsection</pre>
+      <p>Trong ví dụ trên, phần <code>sidebar</code> để thực hiện <code>@parent</code>
+        directive thêm nội dung vài sidebar (thay vì ghi đè toàn bộ). <code>@parent</code>
+        directive sẽ được thay thế bởi nội dung của layout khi view được render.</p>
+      <p>Blade view có thể được trả về từ routes bằng cách sử dụng hàm global <code>view</code>:</p>
+      <pre>Route::get('blade', function () {
+    return view('child');
+});</pre>
+      <h3>Hiển thị dữ liệu</h3>
+      <p>Bạn có thể truyền dữ liệu vào Blade view bằng cách đặt giá trị trong mảng.
+        Ví dụ, với route dưới:</p>
+      <pre>Route::get('greeting', function () {
+    return view('welcome', ['name' =&gt; 'Samantha']);
+});</pre>
+      <p>Bạn có thể hiển thị nội dung của biến <code>$name</code> như sau:</p>
+      <pre>Hello, {{ $name }}.</pre>
+      <p>Tất nhiên, bạn không hề bị giới hạn trong việc hiển thị nội dung của
+        biến vào trong view. Bạn cũng có thể sử dụng hàm echo của PHP để hiển
+        thị biến. Thực tế, bạn có thể đặt code PHP bạn muốn vào Blade:</p>
+      <pre>The current UNIX timestamp is {{ time() }}.</pre>
+      <p>Cặp <code>{{ }}</code> của Blade được tự động gửi tới hàm <code>htmlentities</code>
+        của PHP để ngăn chặn các hành vi tấn công XSS.</p>
+      <p>Ví dụ đoạn code Blade sau:</p>
+      <pre>@php
+    $testInputValue = 'huy"\'ennv9';
+    $testTextareaValue = '&lt;b&gt;Tuan&lt;/b&gt;';
+@endphp<br>
+&lt;input id="testInput" value="{{ $testInputValue }}"/&gt;
+&lt;textarea id="testTextarea"&gt;{{ $testTextareaValue }}&lt;/textarea&gt;</pre><p>Code HTML được sinh ra là:</p><pre>&lt;input id="testInput" value="huy&amp;quot;&amp;#039;ennv9"/&gt;
+&lt;textarea id="testTextarea"&gt;&amp;lt;b&amp;gt;Tuan&amp;lt;/b&amp;gt;&lt;/textarea&gt;
+</pre>
+      
+      <h4>Hiển thị dữ liệu nếu tồn tại</h4>
+      <p>Thỉnh thoảng bạn muốn hiện giá trị một biến, nhưng bạn không chắc nếu
+        biết đó có giá trị. Chúng ta có thể thể hiện theo kiểu code PHP như sau:</p>
+      <pre>{{ isset($name) ? $name : 'Default' }}</pre>
+      <p>Tuy nhiên, thay vì viết kiểu ternary, Blade cung cấp cho bạn một cách
+        ngắn gọn hơn:</p>
+      <pre>{{ $name or 'Default' }}</pre>
+      <p>Trong ví dụ trên, nếu biến <code>$name</code> tồn tại, giá trị sẽ được
+        hiện thị. Tuy nhiên, nếu nó không tồn tại, từ <code>Default</code> sẽ
+        được hiển thị.</p>
+      <h4>Hiện dữ liệu chưa escape</h4>
+      <p>Mặc định, cặp <code>{{ }}</code> được tự động gửi qua hàm <code>htmlentities</code>
+        của PHP để ngăn chặn tấn công XSS. Nếu bạn không muốn dự liệu bị escape,
+        bạn có thể sử dụng cú pháp:</p>
+      <pre>Hello, {!! $name !!}.</pre>
+      
+      <p>Phải cẩn thận khi hiện nội dung được người dùng cung cấp. Luôn luôn sử
+        dụng cặp ngoặc nhọn để ngăn chặn tấn công XSS khi hiển thị dữ
+        liệu được cung cấp. Với dữ liệu bắt buộc phải hiển thị không escape thì cần sanitize các thẻ nguy hiểm.</p>
+      
+      <h4>Blade và các JavaScript framework</h4> 
+   <p>Vì nhiều JavaScript frameworks cũng sử dụng cặp "ngoặc nhọn" để 
+cho biết một biểu thức cần được hiển thị lên trình duyệt, bạn có thể sử 
+dụng biểu tượng <code>@</code> để nói cho Blade biết được biểu thức này cần được giữ lại. Ví dụ:</p> 
+   <pre>&lt;h1&gt;Laravel&lt;/h1&gt;
+
+Hello, @{{ name }}.</pre> 
+   <p>Trong ví dụ này, biểu tượng <code>@</code> sẽ bị xóa bởi Blade. Tuy nhiên, <code>{{ name }}</code> được giữ lại cho phép nó được render tiếp bởi JavaScript framework của bạn.</p> 
+   <h4>Directive <code>@verbatim</code> 
+   </h4><p>Nếu bạn muốn hiển thị biến JavaScript trong phần lớn template của bạn, bạn có thể bọc chúng trong <code></code> directive khi đó bạn sẽ không cần tiền tố <code>@</code> trước biểu thức điều kiện:</p> 
+   <pre>@verbatim
+    &lt;div class="container"&gt;
+        Hello, {{ name }}.
+    &lt;/div&gt;<br>@endverbatim</pre> 
+   <h3>Các cấu trúc điều khiển</h3> 
+   <p>Ngoài template inheritance và hiển thị dữ liệu, Blade còn cung cấp
+ một số cấu trúc điều khiển như biểu thức điều kiện và 
+vòng lặp.</p> 
+   <h4>Cấu trúc điều kiện</h4> 
+   <p>Bạn có xây dựng cấu trúc <code>if</code> bằng cách sử dụng <code>@if</code>, <code>@elseif</code>, <code>@else</code>, và <code>@endif</code> directive. Những directive tương ứng giống các từ khóa của PHP:</p> 
+   <pre>@if (count($records) === 1)
+    I have one record!
+@elseif (count($records) &gt; 1)
+    I have multiple records!
+@else
+    I don't have any records!
+@endif</pre> 
+   <p>Để cho tiện, Blade cũng cung cấp directive <code>@unless</code>:</p> 
+   <pre>@unless (Auth::check())
+    You are not signed in.
+@endunless</pre> 
+   <h4>Vòng lặp</h4> 
+   <p>Blade cũng cung cấp phương thức hỗ trợ cho việc xử lý vòng lặp. Một lần nữa, mỗi directive tương ứng giống các từ khóa PHP:</p> 
+   <pre>@for ($i = 0; $i &lt; 10; $i++)
+    The current value is {{ $i }}
+@endfor
+
+@foreach ($users as $user)
+    &lt;p&gt;This is user {{ $user-&gt;id }}&lt;/p&gt;
+@endforeach
+
+@forelse ($users as $user)
+    &lt;li&gt;{{ $user-&gt;name }}&lt;/li&gt;
+@empty
+    &lt;p&gt;No users&lt;/p&gt;
+@endforelse
+
+@while (true)
+    &lt;p&gt;I'm looping forever.&lt;/p&gt;
+@endwhile</pre> 
+    
+   <p>Trong vòng lặp, bạn có thể sử dụng để lấy được thông tin giá trị 
+của vòng lặp, chẳng hạn như bạn muốn lấy giá trị đầu tiên hoặc cuối cùng
+ của vòng lặp.</p> 
+    
+   <p>Khi sử dụng vòng lặp bạn cũng có thể kết thúc hoặc bỏ qua vòng lặp hiện tại:</p> 
+   <pre>@foreach ($users as $user)
+    @if ($user-&gt;type == 1)
+        @continue
+    @endif
+
+    &lt;li&gt;{{ $user-&gt;name }}&lt;/li&gt;
+
+    @if ($user-&gt;number == 5)
+        @break
+    @endif
+@endforeach</pre> 
+   <p>Bạn cũng có thể thêm điều kiện directive biểu diễn trong một dòng:</p> 
+   <pre>@foreach ($users as $user)
+    @continue($user-&gt;type == 1)
+
+    &lt;li&gt;{{ $user-&gt;name }}&lt;/li&gt;
+
+    @break($user-&gt;number == 5)
+@endforeach</pre> 
+   <h4>Biến vòng lặp</h4> 
+   <p>Trong vòng lặp, một biến <code>$loop</code> sẽ tồn tại bên trong 
+vòng lặp. Biến này cho phép ta truy cập một số thông tin hữu ích của 
+vòng lặp như index của vòng lặp hiện tại và vòng lặp đầu hoặc vòng lặp 
+cuối của nó:</p> 
+   <pre>@foreach ($users as $user)
+    @if ($loop-&gt;first)
+        This is the first iteration.
+    @endif
+
+    @if ($loop-&gt;last)
+        This is the last iteration.
+    @endif
+
+    &lt;p&gt;This is user {{ $user-&gt;id }}&lt;/p&gt;
+@endforeach</pre> 
+   <p>Nếu bạn có vòng lặp lồng nhau, bạn có thể truy cập biên <code>$loop</code> của vòng lặp tra qua thuộc tính <code>parent</code>:</p> 
+   <pre>@foreach ($users as $user)
+    @foreach ($user-&gt;posts as $post)
+        @if ($loop-&gt;parent-&gt;first)
+            This is first iteration of the parent loop.
+        @endif
+    @endforeach
+@endforeach</pre> 
+   <p>Biến <code>$loop</code> còn chứa một số thông tin hữu ích:</p> 
+   <table> 
+    <thead> 
+     <tr> 
+      <th>Thuộc tính</th> 
+      <th>Miêu tả</th> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td><code>$loop-&gt;index</code></td> 
+      <td>Chỉ số index hiện tại của vòng lặp (starts at 0).</td> 
+     </tr> 
+     <tr> 
+      <td><code>$loop-&gt;iteration</code></td> 
+      <td>Các vòng lặp hiện tại (starts at 1).</td> 
+     </tr> 
+     <tr> 
+      <td><code>$loop-&gt;remaining</code></td> 
+      <td>Số vòng lặp còn lại.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$loop-&gt;count</code></td> 
+      <td>Tổng số vòng lặp.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$loop-&gt;first</code></td> 
+      <td>Vòng lặp đầu tiên.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$loop-&gt;last</code></td> 
+      <td>Vòng lặp cuối cùng.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$loop-&gt;depth</code></td> 
+      <td>Độ sâu của vòng lặp hiện tại.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$loop-&gt;parent</code></td> 
+      <td>Biến parent loop của vòng lặp trong 1 vòng lặp lồng.</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <p><a></a></p> 
+   <h3>Comment</h3> 
+   <p>Blade còn cho phép bạn comment trong view. Tuy nhiên, không như 
+comment của HTML, comment của Blade không đi kèm nội dung HTML được trả 
+về:</p>    <pre>{{-- This comment will not be present in the rendered HTML --}}</pre>
+      <code> </code>
+      <p><a></a></p>
+      <h3>Including sub-view</h3>
+      <p>Blade <code>@include</code> directive cho phép bạn chèn một Blade view
+        từ một view khác. Tất cả các biến tồn tại trong view cha đều có thể sử
+        dụng ở view chèn thêm:</p>
+      <pre>&lt;div&gt;
+    @include('shared.errors')
+
+    &lt;form&gt;
+        &lt;!-- Form Contents --&gt;
+    &lt;/form&gt;
+&lt;/div&gt;</pre>
+      <p>Mặc dù các view được chèn thêm kế thừa tất cả dữ liệu từ view cha, bạn
+        cũng có thể truyền một mảng dữ liệu bổ sung:</p>
+      <pre>@include('view.name', ['some' =&gt; 'data'])</pre>
+      
+      <p>Bạn nên tránh sử dụng <code>__DIR__</code> và <code>__FILE__</code> ở
+        trong Blade views, vì chúng sẽ tham chiếu tới vị trí file bị cache.</p>
+      
+      <h3>Rendering view cho Collection</h3>
+      <p>Bạn có thể kết hợp vòng lặp và view chèn thêm trong một dòng với <code>@each</code>
+        directive:</p>
+      <pre>@each('view.name', $jobs, 'job')</pre>
+      <p>Tham số thứ nhất là tên của view partial để render các element trong
+        mảng hay collection. Tham số thứ hai là một mảng hoặc collection mà bạn
+        muốn lặp, tham số thứ ba là tên của biến được gán vào trong vòng lặp bên
+        view. Vì vậy, ví dụ, nếu bạn muốn lặp qua một mảng tên <code>jobs</code>,
+        bạn phải truy xuất vào mỗi biến <code>job</code> trong view partial.
+        Key của vòng lặp hiện tại sẽ tồn tại như là <code>key</code> bên trong
+        view partial.</p>
+      <p>Bạn cũng có thể truyền tham số thứ tư vào <code>@each</code>
+        directive. Tham số này sẽ chỉ định view sẽ được render nếu như mảng bị
+        rỗng.</p>
+      <pre>@each('view.name', $jobs, 'job', 'view.empty')</pre>
+      <h3>Stack</h3>
+      <p>Blade cho phép bạn đẩy tên stack để cho việc render ở một vị trí nào
+        trong view hoặc layout khác. Việc này rất hữu ích cho việc xác định thư
+        viện JavaScript cần cho view con:</p>
+      <pre>@push('scripts')
+    &lt;script src="/example.js"&gt;&lt;/script&gt;
+@endpush</pre>
+      <p>Bạn có thể đẩy một hoặc nhiều vào stack. Để render thành công một nội
+        dung stack, truyền vào tên của stack trong <code>@stack</code>
+        directive:</p>
+      <pre>&lt;head&gt;
+    &lt;!-- Head contents --&gt;
+
+    @stack('scripts')
+&lt;/head&gt;</pre>
+      <p><a></a></p>
+      <h3>Service injection</h3>
+      <p>Để <code>@inject</code> directive có thể được sử dụng để lấy lại một
+        service từ Laravel service container. Tham số thứ nhất <code>@inject</code>
+        là tên biến của service sẽ được đặt vào, tham số thứ hai là class hoặc
+        tên interface của service bạn muốn resolve:</p>
+      <pre>@inject('metrics', 'App\Services\MetricsService')
+
+&lt;div&gt;
+    Monthly Revenue: {{ $metrics-&gt;monthlyRevenue() }}.
+&lt;/div&gt;</pre>
+      <h3>Mở rộng Blade</h3> 
+   <p>Blade còn cho phép bạn tùy biến directive bằng phương thức <code>directive</code>. Khi trình viên dịch của Blade gặp directive, nó sẽ gọi tới callback được cung cấp với tham số tương ứng.</p> 
+   <p>Ví dụ dưới đây tạo một <code>@datetime($var)</code> directive để thực hiện format một biến <code>$var</code>, nó sẽ là một thể hiện của <code>DateTime</code>. Chúng ta khai báo ở phương thức <code>boot</code> ở class <code>AppServiceProvider</code>.</p> 
+   <pre>&lt;?php
+
+namespace App\Providers;
+
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Perform post-registration booting of services.
+     *
+     * @return  void
+     */
+    public function boot()
+    {
+        Blade::directive('datetime', function ($expression) {
+            return "&lt;?php echo $expression-&gt;format('m/d/Y H:i'); ?&gt;";
+        });
+    }
+
+    /**
+     * Register bindings in the container.
+     *
+     * @return  void
+     */
+    public function register()
+    {
+        //
+    }
+}</pre> 
+   <p>Như bạn thấy, chúng ta sẽ móc nối phương thức <code>format</code> trong bất cứ biểu thức nào được gửi qua directive. Vì vậy, trong ví dụ trên, mã PHP được tạo ra bởi directive sẽ là:</p> 
+   <pre>&lt;?php echo $var-&gt;format('m/d/Y H:i'); ?&gt;</pre> 
+    
+   <p>Sau khi cập nhật logic của một Blade directive, bạn cần xóa hết 
+tất cả các Blade view bị cache. Cache của Blade view có thể xóa bằng lệnh Artisan <code>view:clear</code>.</p> 
+   <pre>php artisan view:clear</pre> 
+   
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://laravel.com/docs/master/blade">https://laravel.com/docs/master/blade</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  
+
+</body></html>

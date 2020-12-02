@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Phân trang trong Bootstrap" />
+
+    <title>Phân trang trong Bootstrap</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+    <article>
+        <h2>Phân trang trong Bootstrap</h2>
+
+        <p>
+            Để tạo phân trang, thêm một phần tử <code>ul</code> với class <code>.pagination</code>.
+            Sau đó thêm class <code>.page-item</code> cho từng phần tử <code>li</code>
+            và class <code>.page-link</code> cho các link ở bên trong <code>li</code>.
+        </p>
+        <p>
+            Thêm class <code>.active</code> cho <code>.page-item</code> của trang hiện tại.
+        </p>
+        <p>
+            Thêm class <code>.disable</code> cho <code>.page-item</code> mà không thể click được.
+        </p>
+
+        <ul class="pagination">
+            <li class="page-item disabled">
+                <span class="page-link">&laquo;</span>
+            </li>
+            <li class="page-item active">
+                <span class="page-link" href="#">1</span>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">2</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">3</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#">&raquo;</a>
+            </li>
+        </ul>
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

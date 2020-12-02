@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Common Problems</title>
+  </head>
+  <body>
+    <h2>Common Problems</h2>
+    <p>Here’s a list of the common problems you might face, and the possible
+      solutions.</p>
+    <h3>I see a blank (white) page instead of the Laravel ‘Welcome’ page!</h3>
+    <p>Run the following command from the Laravel root directory:</p>
+    <pre><code>sudo chmod -R 777 storage bootstrap/cache
+</code></pre>
+    <h3>I see “Welcome to nginx” instead of the Laravel App!</h3>
+    <p>Use <code>http://127.0.0.1</code> instead of <code>http://localhost</code>
+      in your browser.</p>
+    <h3>I see an error message containing <code>address already in use</code>
+      or <code>port is already allocated</code></h3>
+    <p>Make sure the ports for the services that you are trying to run (22, 80,
+      443, 3306, etc.) are not being used already by other programs on the host,
+      such as a built in <code>apache</code>/<code>httpd</code> service or
+      other development tools you have installed.</p>
+    <h3>I get NGINX error 404 Not Found on Windows.</h3>
+    <ol>
+      <li>Go to docker Settings on your Windows machine.</li>
+      <li>Click on the <code>Shared Drives</code> tab and check the drive that
+        contains your project files.</li>
+      <li>Enter your windows username and password.</li>
+      <li>Go to the <code>reset</code> tab and click restart docker.</li>
+    </ol>
+    <h3>The time in my services does not match the current time</h3>
+    <ol>
+      <li>Make sure you’ve <a href="https://laradock.io/#Change-the-timezone">changed
+          the timezone</a>.</li>
+      <li>Stop and rebuild the containers (<code>docker-compose up -d
+          --build&lt;services&gt;</code>)</li>
+    </ol>
+    <h3>I get MySQL connection refused</h3>
+    <p>This error sometimes happens because your Laravel application isn’t
+      running on the container localhost IP (Which is 127.0.0.1). Steps to fix
+      it:</p>
+    <ul>
+      <li>Option A
+        <ol>
+          <li>Check your running Laravel application IP by dumping <code>Request::ip()</code>
+            variable using <code>dd(Request::ip())</code> anywhere on your
+            application. The result is the IP of your Laravel container.</li>
+          <li>Change the <code>DB_HOST</code> variable on env with the IP that
+            you received from previous step.</li>
+        </ol>
+      </li>
+      <li>Option B
+        <ol>
+          <li>Change the <code>DB_HOST</code> value to the same name as the
+            MySQL docker container. The Laradock docker-compose file currently
+            has this as <code>mysql</code></li>
+        </ol>
+      </li>
+    </ul>
+    <h3>I get stuck when building nginx on <code>fetch
+        http://mirrors.aliyun.com/alpine/v3.5/main/x86_64/APKINDEX.tar.gz</code></h3>
+    <p>As stated on <a href="https://github.com/laradock/laradock/issues/749#issuecomment-419652646">#749</a>,
+      Already fixed，just set <code>CHANGE_SOURCE</code> to false.</p>
+    <h3>Custom composer repo packagist url and npm registry url</h3>
+    <p>In China, the origin source of composer and npm is very slow. You can add
+      <code>WORKSPACE_NPM_REGISTRY</code> and <code>WORKSPACE_COMPOSER_REPO_PACKAGIST</code>
+      config in <code>.env</code> to use your custom source.</p>
+    <p>Example:</p>
+    <pre><code>WORKSPACE_NPM_REGISTRY=https://registry.npm.taobao.org
+WORKSPACE_COMPOSER_REPO_PACKAGIST=https://packagist.phpcomposer.com
+</code></pre>
+    <h3>I get <code>Module build failed: Error: write EPIPE</code> while
+      compiling react application</h3>
+    <p>When you run <code>npm build</code> or <code>yarn dev</code> building a
+      react application using webpack with elixir you may receive a <code>Error:
+        write EPIPE</code>while processing .jpg images.</p>
+    <p>This is caused of an outdated library for processing .jpg files in ubuntu
+      16.04.</p>
+    <p>To fix the problem you can follow those steps</p>
+    <p>1 - Open the <code>.env</code>.</p>
+    <p>2 - Search for <code>WORKSPACE_INSTALL_LIBPNG</code> or add the key if
+      missing.</p>
+    <p>3 - Set the value to true:</p>
+    <pre><code>WORKSPACE_INSTALL_LIBPNG=true
+</code></pre>
+    <p>4 - Finally rebuild the workspace image</p>
+    <pre><code>docker-compose build workspace</code></pre>
+    <p></p>
+  </body>
+</html>

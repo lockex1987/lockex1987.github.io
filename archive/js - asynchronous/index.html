@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="callback, promise, async, await">
+    <title>Thực hiện hàm không đồng bộ</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <article>
+        <h2>Thực hiện hàm không đồng bộ</h2>
+        <h3>Callback</h3>
+        <p>Với các đặc tả JS cũ, ta phải sử dụng các hàm callback để xử lý
+            các thao tác bất đồng bộ. Tuy nhiên việc này dẫn tới tình trạng callback
+            hell khi ta có nhiều thao tác bất đồng bộ phải chờ nhau thực hiện.
+            Callback hell làm cho mã nguồn của ta rất rối và khó bảo trì.</p>
+        <pre>function waitCallback(ms, cb) {
+    setTimeout(cb, ms);
+}
+
+function executeCallback() {
+    logResult('sắp rồi...');
+    waitCallback(2007, () =&gt; {
+        logResult('chờ tí...');
+        waitCallback(2012, () =&gt; {
+            logResult('thêm chút nữa thôi...');
+            waitCallback(2016, () =&gt; {
+                logResult('xong rồi đấy!');
+            });
+        });
+    });
+}</pre>
+<h3>Promise</h3>
+        <p>Với phiên bản ES6 (ES 2016), Promise đã được đưa vào mặc định
+            nhằm giải quyết tình trạng callback hell. Với Promise, mã nguồn của ta
+            sẽ trông gần giống với phong cách đồng bộ, kết quả là trông dễ theo dõi
+            và bảo trì hơn. Tuy nhiên sử dụng Promise lại làm phát sinh vấn đề "khá"
+            tương tự là Promise hell.</p>
+        <pre>function waitPromise(ms) {
+    return new Promise(r =&gt; setTimeout(r, ms));
+}
+
+function executePromise() {
+    logResult('sắp rồi...');
+    waitPromise(2007).then(() =&gt; {
+        logResult('chờ tí...');
+        return waitPromise(2007);
+    }).then(() =&gt; {
+        logResult('thêm chút nữa thôi...');
+        return waitPromise(2012);
+    }).then(() =&gt; {
+        logResult('thêm chút nữa thôi...');
+        return waitPromise(2016);
+    }).then(() =&gt; {
+        logResult('xong rồi đấy!');
+    });
+}</pre>
+        <h3>async await</h3>
+        <p>Để giải quyết vấn đề đó, ở phiên bản ES7 (ES 2017), một khái niệm với
+            hai từ khóa mới được đưa vào là hàm async (<code>async</code> / <code>await</code>).
+            Hàm async cho phép ta viết các thao tác bất đồng bộ với phong cách của
+            các mã đồng bộ. Bằng cách viết như vậy, mã nguồn của ta trông sẽ sáng
+            sủa, dễ đọc hơn và "dễ hiểu hơn".</p>
+        <pre>function waitAsync(ms) {
+    return new Promise(r =&gt; setTimeout(r, ms));
+}
+
+async function executeAsync() {
+    logResult('sắp rồi...');
+    await waitAsync(2007);
+    logResult('chờ tí...');
+    await waitAsync(2012);
+    logResult('thêm chút nữa thôi...');
+    await waitAsync(2016);
+    logResult('xong rồi đấy!');
+}</pre>
+        <h3>Demo</h3>
+        <div>
+            <label class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="callType" value="callback" checked="checked">
+                <span class="custom-control-label">Callback</span>
+            </label>
+            <label class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="callType" value="promise">
+                <span class="custom-control-label">Promise</span>
+            </label>
+            <label class="custom-control custom-radio">
+                <input type="radio" class="custom-control-input" name="callType" value="async">
+                <span class="custom-control-label">async</span>
+            </label>
+        </div>
+        <p>
+            <button onclick="executeFunction()" type="button" class="btn btn-primary">
+                Execute function
+            </button>
+        </p>
+        <p>Kết quả:</p>
+        <pre id="result"></pre>
+        <p>Nên sử dụng async.</p>
+    </article>
+
+    <script src="js/script.js"></script>
+    <script src="js/promise-chain.js"></script>
+    <script src="js/parallel-async.js"></script>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

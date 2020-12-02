@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        #div1 {
+            position: relative;
+            height: 300px;
+            width: 300px;
+
+            margin: 250px;
+            border: 1px solid black;
+
+            perspective: 150px;
+        }
+        
+        #div2 {
+            position: absolute;
+            /*border: 1px solid black;*/
+            top: 0;
+            left: 0;
+            height: 300px;
+            width: 300px;
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            padding-top: 120px;
+            background-color: red;
+
+            transform: rotateX(25deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div1">
+        <div id="div2">HELLO</div>
+    </div>
+</body>
+
+</html>

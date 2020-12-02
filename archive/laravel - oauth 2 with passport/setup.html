@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Cài đặt môi trường thực hành</title>
+  </head>
+  <body>
+    <h3>Cài đặt môi trường thực hành</h3>
+    <p>Tạm dừng lại lý thuyết, chúng ta sẽ cài đặt môi trường thực hành để thực
+      hành với các dạng ủy quyền trong phần kế tiếp. Mô hình môi trường thực
+      hành như sau:</p>
+    <p><img src="https://allaravel.com/wp-content/uploads/2017/05/mo-hinh-thuc-hanh-oauth-2-voi-laravel-passport.png"></p>
+    <p>Như trong mô <a href="https://allaravel.com/laravel-tutorials/gioi-thieu-oauth2/">hình
+        OAuth 2</a>, chúng ta thấy có 4 đối tượng, ở đây chúng ta sẽ xây dựng 2
+      hệ thống là <a target="_blank" href="http://consumer.dev/">consumer.dev</a>
+      chính là ứng dụng khách và <a target="_blank" href="http://passport.dev/">passport.dev</a>
+      là nơi cung cấp các dịch vụ API (bao gồm cả hai đối tượng: máy chủ ủy
+      quyền và máy chủ tài nguyên). Ok, chúng ta sẽ tạo ra hai project Laravel
+      có tên là consumer và passport, sau đó bạn có thể tạo các tên miền ảo cục
+      bộ cho hai project này (Xem <a href="https://allaravel.com/laravel-tutorials/cai-dat-laravel-nhanh-cho-he-dieu-hanh-windows/">hướng
+        dẫn tạo tên miền ảo cục bộ</a>).</p>
+    <h4>Tạo project passport.dev</h4>
+    <ol>
+      <li>Tạo project sử dụng Laravel, tham khảo <a href="https://allaravel.com/laravel-tutorials/cai-dat-laravel-nhanh-cho-he-dieu-hanh-windows/">Cài
+          đặt nhanh Laravel cho Windows</a> -&gt; <code>composer create-project
+          --prefer-dist laravel/laravel passport</code>.</li>
+      <li>Cài đặt gói laravel/passport -&gt; <code>composer require
+          laravel/passport</code>.</li>
+      <li>Đăng ký provider trong <code>config/app.php</code>.</li>
+      <li>Migrate tạo bảng trong CSDL -&gt; <code>php artisan migrate</code>,
+        trước đó nhớ cấu hình kết nối database.</li>
+      <li>Tạo client (client id và client secret) -&gt; <code>php artisan
+          passport:install</code>.</li>
+      <li>Thêm trait <code>Laravel\Passport\HasApiTokens</code> vào <code>app\User.php</code>.</li>
+      <li>Đăng ký route mặc định cho Laravel Passport trong <code>AuthServiceProvider.php</code>
+        -&gt; <code>Passport::routes()</code>.</li>
+      <li>Thiết lập driver cho api trong <code>config/auth.php</code>.</li>
+      <li>Publish Vue component xây dựng sẵn -&gt; <code>php artisan
+          vendor:publish –tag=passport-components</code>.</li>
+      <li>Khai báo các component vào <code>app.js</code>.</li>
+      <li>Biên dịch tài nguyên bằng Laravel Mix -&gt; <code>npm run dev</code>
+        (nếu tạo project mới chưa chạy <code>npm install</code> lần nào thì cần
+        chạy lệnh <code>npm install</code> trước).</li>
+      <li>Chạy Laravel Authentication -&gt; <code>php artisan make:auth</code>,
+        tạo user bằng Laravel Seeding -&gt; <code>php artisan make:seeder
+          UsersTableSeeder</code>, thêm code tạo user và chạy <code>php artisan
+          db:seed --class=UsersTableSeeder</code> để đưa dữ liệu vào.</li>
+      <li>Thêm các template vào view <code>resources/views/home.blade.php</code>
+        để khi đăng nhập thấy các giao diện được cài đặt sẵn trong Laravel.</li>
+    </ol>
+    <p>Nội dung file seeder:</p>
+    <pre>&lt;?php
+
+use Illuminate\Database\Seeder;
+use App\User as User;
+
+
+class UsersTableSeeder extends Seeder {
+
+    public function run() {
+        User::create([
+            'name' =&gt; 'lockex1987',
+            'email' =&gt; 'lockex1987@gmail.com',
+            'password' =&gt; Hash::make('123456')
+        ]);
+    }
+}</pre>
+    <ol>
+    </ol>
+    <h4>Tạo project consumer.dev</h4>
+    <p>Tạo một project Laravel bình thường và cài đặt gói Guzzle HTTP bằng câu
+      lệnh:</p>
+    <pre>$ composer create-project --prefer-dist laravel/laravel consumer
+$ cd consumer
+$ composer require guzzlehttp/guzzle</pre>
+    <p>Chú ý: Do quá trình tạo hai project này khá nhiều bước, bạn nào gặp vấn
+      đề hãy comment ở dưới mình sẽ trả lời ngay khi có thể. Trong thời gian
+      tới, mình sẽ quay lại màn hình phần này để upload lên Youtube giúp bạn
+      thực hiện trực quan hơn.</p>
+    <h4>Thêm 2 sub-domain</h4>
+    <p>Sửa file httpd-vhosts.conf của XAMP như sau:</p>
+    <pre>&lt;VirtualHost *:80&gt;
+	ServerAdmin huyennv9@cyberspace.vn
+	DocumentRoot "D:/xampp/htdocs/sso/passport/public"
+
+	&lt;Directory "D:/xampp/htdocs/sso/passport/public"&gt;
+		&lt;LimitExcept GET POST HEAD&gt;
+			Deny from all
+		&lt;/LimitExcept&gt;
+
+		Options -Indexes +FollowSymLinks -ExecCGI
+		AllowOverride All
+		Require all granted
+	&lt;/Directory&gt;
+	
+	ServerName  passport.dev
+	ErrorLog "logs/passport.error.log"
+	CustomLog "logs/passport.access.log" common
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:80&gt;
+	ServerAdmin huyennv9@cyberspace.vn
+	DocumentRoot "D:/xampp/htdocs/sso/consumer/public"
+
+	&lt;Directory "D:/xampp/htdocs/sso/consumer/public"&gt;
+		&lt;LimitExcept GET POST HEAD&gt;
+			Deny from all
+		&lt;/LimitExcept&gt;
+
+		Options -Indexes +FollowSymLinks -ExecCGI
+		AllowOverride All
+		Require all granted
+	&lt;/Directory&gt;
+	
+	ServerName  consumer.dev
+	ErrorLog "logs/consumer.error.log"
+	CustomLog "logs/consumer.access.log" common
+&lt;/VirtualHost&gt;</pre>
+    <p><br>
+    </p>
+    <p></p>
+    <p></p>
+  </body>
+</html>

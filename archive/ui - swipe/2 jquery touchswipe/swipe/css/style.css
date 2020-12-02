@@ -1,0 +1,218 @@
+@charset "utf-8";
+
+/*-------------------------------------------------------------------------------
+ RESET
+ -------------------------------------------------------------------------------*/
+/* margin padding reset */
+body, div, p,  ul, ol, li, dl, dt, dd, table, th ,td, img, figure,
+h1, h2, h3 ,h4 ,h5, h6, form, select {
+    margin: 0;
+    padding: 0;
+}
+
+/* remove list point mark */
+ul,
+ol		{ list-style: none; }
+
+/* remove border & off descender */
+img		{ border: 0; vertical-align: middle; }
+
+/* set collapse */
+table	{ border-collapse: collapse; }
+
+/* off bold */
+h1, h2, h3 ,h4 ,h5, h6, th, em, strong { font-weight: normal; }
+
+/* break word for all elements */
+*,
+*:before,
+*:after {
+    word-break: break-all;
+}
+/* border-box for all elements */
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+/* [IE8-] New Tag from HTML5 */
+main, article, aside, figcaption, figure,
+footer, header, nav, section, details, summary {
+    display: block;
+}
+
+/* for height 100% */
+html,
+body {
+    min-height: 100%;
+}
+
+/*-------------------------------------------------------------------------------
+ BASE STYLE
+ -------------------------------------------------------------------------------*/
+/* font-style */
+html {
+    font-size: 62.5%;
+    line-height: 1.7;
+    -webkit-text-size-adjust: 100%;
+}
+/* normalize size & weight */
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+/*-------------------------------------------------------------------------------
+ ANCHORS STYLE
+ -------------------------------------------------------------------------------*/
+a			{ transition: opacity 0.5s ease-out; }
+a:link		{ color: #00bec8; text-decoration: none; }
+a:visited	{ color: #00bec8; text-decoration: none; }
+a:hover		{ color: #00bec8; text-decoration: none; opacity: .7;}
+a:active	{ color: #00bec8; text-decoration: none; }
+
+
+/*-------------------------------------------------------------------------------
+ UTIL
+ -------------------------------------------------------------------------------*/
+.cf:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+/*-------------------------------------------------------------------------------
+ SWIPE CONTNETS
+ -------------------------------------------------------------------------------*/
+/* swipe-contents */
+.swipe-contents-wrapper {
+    width: 100%;
+}
+.swipe-contents-wrapper + .swipe-contents-wrapper {
+    margin-top: 40px;
+}
+.swipe-contents {
+    position: relative;
+    max-width: 980px;
+    width: 80%;
+    margin: 20px auto;
+}
+
+/* swipe-tab-list */
+.swipe-tab-list {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.swipe-tab-list li {
+    width: 25%;
+    height: 50px;
+    text-align: center;
+    background-color: azure;
+    box-sizing: border-box;
+}
+.swipe-tab-list li + li {
+    border-left: 1px solid #00bec8;
+}
+.swipe-tab-list a {
+    font-size: 1.3rem;
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+}
+.swipe-tab-list a.current {
+    background-color: lightskyblue;
+}
+
+/* swipe-contents-list */
+.swipe-contents-list-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+.swipe-contents-list {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    -webkit-flex-direction: row;
+    justify-content: flex-start;
+    -webkit-justify-content: flex-start;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.swipe-contents-list li {
+    height: 100%;
+    min-height: 300px;
+    margin: 0;
+    padding: 0;
+    font-size: 1.5rem;
+}
+.swipe-contents-list img {
+    width: 100%;
+    height: 100%;
+}
+.bg-pink { background-color: pink; }
+.bg-green { background-color: lightgreen; }
+.bg-purple { background-color: mediumpurple; }
+.bg-yello { background-color: coral; }
+
+/* trigger-container */
+.trigger-container li {
+    position: absolute;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    margin-top: 25px;
+    background-color: black;
+    transform: translateY(-50%);
+}
+.previous{
+    top: 50%;
+    left: 0;
+}
+.next{
+    top: 50%;
+    right: 0;
+}
+.trigger-container a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: azure;
+    font-size: 4rem;
+    line-height: 25px;
+}
+
+/* indicator-container */
+.indicator-container {
+    position: absolute;
+    text-align: center;
+    list-style: none;
+    width: 100%;
+    margin: 10px 0 0;
+    padding: 0;
+    top: 100%;
+}
+.indicator-container > li {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 0;
+}
+.indicator-container > li > a {
+    display: inline-block;
+    box-sizing: border-box;
+    text-decoration: none;
+    width: 20px;
+    height: 20px;
+    border: solid 1px #000000;
+    border-radius: 10px;
+}
+.indicator-container > li > a.current {
+    background-color: #000000;
+}

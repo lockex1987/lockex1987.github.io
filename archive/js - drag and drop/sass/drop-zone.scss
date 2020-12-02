@@ -1,0 +1,12 @@
+.drop-zone {
+    border: 2px solid rgba(0, 0, 0, 0.5);
+
+    &--highlighted {
+        border: 2px dashed #F00;
+
+        // Thêm cái này, nếu không khi hover vào phần tử con thì sẽ gọi sự kiện dragleave
+        & * {
+            pointer-events: none;
+        }
+    }
+}

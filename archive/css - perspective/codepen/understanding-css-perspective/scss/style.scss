@@ -1,0 +1,71 @@
+$color1: #e01258;
+$color2: #ec3211;
+
+$mq-mobile: 320px;
+$mq-desktop: 960px;
+
+@function strip-unit($value) {
+  @return $value / ($value * 0 + 1);
+}
+
+@mixin css-locks($properties, $min-vw, $max-vw, $min-value, $max-value) {
+  @each $property in $properties {
+    #{$property}: $min-value;
+  }
+
+  @media screen and (min-width: $min-vw) {
+    @each $property in $properties {
+      #{$property}: calc(#{$min-value} + #{strip-unit($max-value - $min-value)} * (100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)});
+    }
+  }
+
+  @media screen and (min-width: $max-vw) {
+    @each $property in $properties {
+      #{$property}: $max-value;
+    }
+  }
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: -apple-system, BlinkMacSystemFont,
+"Segoe UI", "Roboto", "Oxygen",
+"Ubuntu", "Cantarell", "Fira Sans",
+"Droid Sans", "Helvetica Neue", sans-serif;
+  @include css-locks(font-size, $mq-mobile, $mq-desktop, 15px, 20px);
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  perspective: 50px;
+  animation: fly 4s ease-in-out infinite alternate;
+}
+
+div {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10rem;
+  padding: 3rem;
+  text-align: center;
+  background-color: AliceBlue;
+  color: DodgerBlue;
+  box-shadow: 0 2px 2px -1px rgba(0,0,0,.5);
+  border-radius: .25rem;
+  transform: rotateX(30deg);
+}
+
+@keyframes fly {
+  100% {
+    perspective: 2000px;
+  }
+}

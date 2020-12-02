@@ -1,0 +1,60 @@
+{
+	"applications": {
+		"gecko": {
+			"strict_min_version": "50.0"
+		}
+	},
+	"manifest_version": 2,
+	"name": "web-cleaner",
+	"description": "Loai bo add-on, chinh lai giao dien trang web.",
+	"version": "0.1.0",
+	"homepage_url": "https://lockex1987.github.io",
+	"icons": {
+		"16": "images/16x16.png",
+		"48": "images/48x48.png",
+		"128": "images/128x128.png"
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"http://www.youtube.com/*",
+                "https://www.youtube.com/*"
+			],
+			"css": [
+				"css/youtube.css"
+			],
+			"run_at": "document_start"
+		},
+		{
+			"matches": [
+				"http://readcomiconline.to/*"
+			],
+			"css": [
+				"css/readcomiconline.css"
+			],
+			"run_at": "document_start"
+		},
+		{
+			"matches": [
+				"http://vnexpress.net/*"
+			],
+			"css": [
+				"css/vnexpress.css"
+			],
+			"run_at": "document_start"
+		},
+		{
+			"matches": [
+				"http://thethao247.vn/*"
+			],
+			"css": [
+				"css/thethao247.css"
+			],
+			"run_at": "document_start"
+		}
+	],
+	"web_accessible_resources": [
+		"images/*",
+		"css/*"
+	]
+}

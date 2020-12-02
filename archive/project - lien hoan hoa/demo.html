@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Liên hoàn họa</title>
+
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+  <div id="homeScreen">
+    <h1>Liên hoàn họa</h1>
+    <div class="version-list" id="versionList"></div>
+  </div>
+  <div id="versionScreen">
+    <h1 id="versionName" onclick="returnHomeScreen()" class="link"></h1>
+    <div class="chapter-list" id="chapterList"></div>
+  </div>
+  <div id="chapterScreen">
+    <h1 id="chapterName" onclick="returnVersionScreen()" class="link"></h1>
+    <div class="page-list" id="pageList"></div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

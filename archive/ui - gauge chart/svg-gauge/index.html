@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - SVG gauge</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="container A">
+  <svg class="typeRange" height="165" width="330" view-box="0 0 330 165">
+
+    <g class="scale" stroke="red"></g>
+
+    <path class="outline" d="" />
+    <path class="fill" d="" />
+    <polygon class="needle" points="220,10 300,210 220,250 140,210" />
+  </svg>
+  <div class="output">30</div>
+</div>
+
+<p>You may change the initial value by dragging over the gauge
+  <br>or by editing the input below:</p>
+<input type="text" class="initialValue" value="18" />
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>

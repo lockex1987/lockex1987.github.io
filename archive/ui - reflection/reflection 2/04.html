@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<title>Canvas Transformaties: vertikale spiegeling </title>
+<script>
+function reflection(){
+    var canvas = document.getElementById("transformations");
+    var context = canvas.getContext("2d");
+  
+    // Translate context to center of canvas
+    context.translate(canvas.width / 2, canvas.height / 2);
+  
+    // vertical reflection of context
+    //context.scale(1, -1);
+		// horizontal reflection of context
+    //context.scale(-1, 1);
+  
+    context.font = "40pt Verdana";
+    context.textAlign = "center";
+    context.fillStyle = "red";
+    context.fillText("Cao Thi Thuy Duong", 0, 0);
+};
+    window.addEventListener("load", reflection, true);
+</script>
+</head>
+<body>   
+    <canvas id="transformations" style="border: 1px solid;" width="400" height="210"></canvas>
+</body>
+</html>

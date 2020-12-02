@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Upload từ iPad sang máy tính, download từ máy tính sang iPad">
+
+    <title>Upload file</title>
+
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <article>
+        <h2>File manager</h2>
+
+        <div id="app"></div>
+
+        <div class="mt-5">
+            <!-- Vùng form upload -->
+            <section class="mt-5">
+                <button class="btn btn-primary" id="uploadButton"> Upload </button>
+                <input type="file" id="uploadFileInput" multiple class="d-none">
+            </section>
+
+            <!-- Vùng danh sách file ĐANG upload -->
+            <section class="mt-5" id="uploadingSection" style="display: none">
+                <h3>Uploading</h3>
+                <div id="uploadingList"></div>
+            </section>
+        </div>
+    </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="../../js/common.js"></script>
+    
+    <!--script src="lib/pubsub/pubsub.js"></script>
+    <script src="js/form-section.js"></script>
+    <script src="js/uploading-section.js"></script-->
+
+    <script type="module" src="js/script.js"></script>
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

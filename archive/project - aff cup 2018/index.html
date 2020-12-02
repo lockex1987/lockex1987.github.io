@@ -1,0 +1,333 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+  <title>AFF 2018 Thailand</title> 
+  <style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.d-none {
+    display: none;
+}
+
+body {
+    background-image: -webkit-radial-gradient(ellipse, #2a437c 0, #10203b 100%);
+    font-family: 'Open Sans', helvetica, arial, sans-serif;
+}
+
+.main {
+    max-width: 925px;
+    margin: 20px auto;
+}
+
+.ratio-wrapper { position: relative; height: 0; padding-top: 80%; }
+.ratio-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+
+
+
+
+.stage {
+  perspective-origin: 50% -200px;
+  perspective: 1100px; }
+
+.world {
+  position: absolute;
+  top: 130px;
+  left: 50%;
+  margin-left: -50%;
+  width: 100%;
+  height: 840px;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transform: translateZ(-200px); }
+
+.terrain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-style: inherit; }
+
+
+.field-x {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: green;
+  z-index: 2;
+  transform: rotateX(90deg) translateZ(0);
+  transform-origin: 50% 50%;
+  box-sizing: content-box;
+  backface-visibility: hidden; }
+
+
+
+
+
+.formation {
+    position: absolute;
+    top: 33%;
+    bottom: 0;
+    left: 10%;
+    right: 10%;
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex: 1;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.player {
+    margin: 5px;
+    width: 20%;
+    text-align: center;
+}
+.player .number { color: blue; }
+.player .name {
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #FFF;
+}
+.player .avatar img {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 50%; }
+
+.squad-table td { padding: 5px 10px; }
+.squad-table img { width: 140px; height: 180px; object-fit: cover; }
+
+
+/* Part 1: Outline */
+
+.football-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Part 2: Grass */
+ul.grass{
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+ul.grass li {
+  display: block;
+  width: 100%;
+  height: 10%;
+  background-color: #006e1e;
+}
+
+ul.grass li:nth-child(odd) {
+  background-color: #007a22;
+}
+
+/* Part 3: Field */
+.field {
+  display: block;
+  position: relative;
+  top: 4%;
+  left: 10%;
+  width: 80%;
+  height: 92%;  
+}
+
+.field .border {
+  display: block;
+  width: auto;
+  height: 100%;
+  border: 0.4vw solid #338b4b;
+}
+
+.field .separator {
+  display: block;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: 50%;
+  border-top: 0.4vw solid #338b4b;
+}
+
+.field .central-circle {
+  display: block;
+  position: absolute;
+  width: 30%;
+  height: 30%;
+  top: 35%;
+  left: 35%;
+  border: 0.4vw solid #338b4b;
+  border-radius: 50%;
+}
+
+.field .penalty {
+  display: block;
+  position: absolute;
+  width: 40%;
+  height: 12.5%;
+  left: 30%;
+  border: 0.4vw solid #338b4b;
+}
+
+.field .penalty.top {
+  top: 0;
+}
+
+.field .penalty.bottom {
+  bottom: 0;
+}
+
+
+</style> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="AFF 2018 Thailand">
+ </head> 
+ <body> 
+  <article> 
+   <div class="main"> 
+    <table> 
+     <thead> 
+      <tr> 
+       <th>Number</th> 
+       <th>Image</th> 
+       <th>Position</th> 
+       <th>Name</th> 
+       <th>Date of birth</th> 
+       <th>Age</th> 
+       <th>Club</th> 
+      </tr> 
+     </thead> 
+     <tbody id="tableBody"> 
+     </tbody> 
+    </table> 
+    <div class="ratio-wrapper"> 
+     <div class="ratio-content"> 
+      <div class="stage"> 
+       <div class="world"> 
+        <div class="terrain"> 
+         <div class="field-x"> 
+          <div class="football-container"> 
+           <ul class="grass"> 
+            <li></li> 
+            <li></li> 
+            <li></li> 
+            <li></li> 
+            <li></li> 
+            <li></li> 
+            <li></li> 
+            <li></li> 
+            <li></li> 
+            <li></li> 
+           </ul> 
+           <div class="field"> 
+            <div class="border"></div> 
+            <div class="separator"></div> 
+            <div class="central-circle"></div> 
+            <div class="penalty top"></div> 
+            <div class="penalty bottom"></div> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="formation"></div> 
+     </div> 
+    </div> 
+   </div> 
+   <script>
+/*
+https://codepen.io/paulnoble/pen/PwOxOY
+https://codepen.io/kaolay/pen/vydwjq
+https://codepen.io/kayhan/pen/YjqxMg
+https://codepen.io/bennettfeely/pen/jpMzWG
+
+https://dl1.cbsistatic.com/i/2017/11/09/6213095c-ebd2-4963-92d0-3948f6e0957b/b2d11078a27e01ef12cbe35f2088f430/imgingest-2148538120962822306.jpg
+*/
+var team = 'thailand';
+
+var players = [
+    {"number":"31","position":"GK","name":"Saranon Anuin","dob":"24 March 1994","club":"Chiangrai United","age":"24"},
+    {"number":"1","position":"GK","name":"Chatchai Budprom","dob":"4 February 1987","club":"Bangkok Glass","age":"31"},
+    {"number":"23","position":"GK","name":"Siwarak Tedsungnoen","dob":"20 April 1984","club":"Buriram United","age":"34"},
+    {"number":"19","position":"DF","name":"Kevin Deeromram","dob":"11 September 1997","club":"Port","age":"21"},
+    {"number":"15","position":"DF","name":"Suphan Thongsong","dob":"26 August 1994","club":"Suphanburi","age":"24"},
+    {"number":"13","position":"DF","name":"Philip Roller","dob":"10 June 1994","club":"Ratchaburi Mitr Phol","age":"24"},
+    {"number":"20","position":"DF","name":"Manuel Bihr","dob":"17 September 1993","club":"Bangkok United","age":"25"},
+    {"number":"6","position":"DF","name":"Pansa Hemviboon","dob":"8 July 1990","club":"Buriram United","age":"28"},
+    {"number":"5","position":"DF","name":"Mika Chunuonsee","dob":"26 March 1989","club":"Bangkok United","age":"29"},
+    {"number":"24","position":"DF","name":"Korrakot Wiriyaudomsiri","dob":"19 January 1988","club":"Buriram United","age":"30"},
+    {"number":"4","position":"DF","name":"Chalermpong Kerdkaew","dob":"7 November 1986","club":"Nakhon Ratchasima","age":"32"},
+    {"number":"16","position":"MF","name":"Sasalak Haiprakhon","dob":"8 January 1996","club":"Buriram United","age":"22"},
+    {"number":"17","position":"MF","name":"Tanaboon Kesarat","dob":"21 September 1993","club":"Bangkok Glass","age":"25"},
+    {"number":"8","position":"MF","name":"Thitipan Puangchan","dob":"1 September 1993","club":"Bangkok Glass","age":"25"},
+    {"number":"25","position":"MF","name":"Pakorn Prempak","dob":"2 February 1993","club":"Port","age":"25"},
+    {"number":"14","position":"MF","name":"Nurul Sriyankem","dob":"8 February 1992","club":"Port","age":"26"},
+    {"number":"21","position":"MF","name":"Pokklaw Anan","dob":"4 March 1991","club":"Bangkok United","age":"27"},
+    {"number":"29","position":"MF","name":"Sanrawat Dechmitr","dob":"3 August 1989","club":"Bangkok United","age":"29"},
+    {"number":"11","position":"MF","name":"Mongkol Tossakrai","dob":"5 September 1987","club":"Police Tero","age":"31"},
+    {"number":"7","position":"MF","name":"Sumanya Purisai","dob":"5 December 1986","club":"Bangkok United","age":"31"},
+    {"number":"22","position":"FW","name":"Supachai Jaided","dob":"1 December 1998","club":"Buriram United","age":"19"},
+    {"number":"2","position":"FW","name":"Chananan Pombuppha","dob":"17 March 1992","club":"Suphanburi","age":"26"},
+    {"number":"9","position":"FW","name":"Adisak Kraisorn","dob":"1 February 1991","club":"Muangthong United","age":"27"}
+];
+
+function bindFormation() {
+    var formation = [
+        [ 23 ],
+        [ 24, 20, 4, 13 ],
+        [ 17, 8 ],
+        [ 29, 11, 14 ],
+        [ 9 ]
+    ];
+
+    var html = '';
+    formation.forEach((row) => {
+        html += '<div class="row">';
+        row.forEach((p) => {
+            var temp = players.find(x => x.number == p);
+            html += `
+                <div class="player"">
+                    <div class="number d-none">${temp.number}</div>
+                    <div class="avatar">
+                        <img src="images/players/${team}/${temp.number}.jpg"/>
+                    </div>
+                    <div class="name">${temp.name.split(' ').pop()}</div>
+                    
+                </div>`;
+        });
+        html += '</div>';
+    });
+    document.querySelector('.formation').innerHTML = html;
+}
+
+var html = '';
+players.forEach(p => html += `<tr><td>${p.number}</td><td><img src="images/players/${team}/${p.number}.jpg"/></td><td>${p.position}</td><td>${p.name}</td><td>${p.dob}</td><td>${p.age}</td><td>${p.club}</td></tr>`);
+//document.querySelector('#tableBody').innerHTML = html;
+
+bindFormation();
+
+
+</script> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Đối tượng Editor</title>
+</head>
+
+<body>
+	<h3>Đối tượng Editor</h3>
+	<p>Có thuộc tính và method</p>
+	<p>https://docs.ckeditor.com/ckeditor4/docs/#!/api/CKEDITOR.editor</p>
+	
+	<textarea id="editor" name="editor" cols="80" rows="10">
+		<p>Tiếng Việt, Nguyễn Văn Huyên, Cao Thị Thùy Dương</p>
+	</textarea>
+	<p>
+		<button type="button" onclick="getDataTest()">
+			getData
+		</button>
+		<button type="button" onclick="insertElementTest()">
+			insertElement
+		</button>
+		<button type="button" onclick="insertHtmlTest()">
+			insertHtml
+		</button>
+		<button type="button" onclick="insertTextTest()">
+			insertText
+		</button>
+		<button type="button" onclick="getSelectedHtmlTest()">
+			getSelectedHtml
+		</button>
+	</p>
+	
+	<script src="../lib/ckeditor/ckeditor.js"></script>
+	<script>
+		var myEditor = CKEDITOR.replace('editor');
+
+		function getDataTest() {
+			alert(myEditor.getData());
+		}
+		
+		function insertElementTest() {
+			// Tham số không phải là DOM bình thường, mà là CKEDITOR.dom.element
+			var elem = CKEDITOR.dom.element.createFromHtml('<div>Hello World</div>');
+			myEditor.insertElement(elem);
+			
+			// Chạy lỗi vì là DOM bình thường
+			var p = document.createElement("p");
+			
+			p.textContent = 'This is a new paragraph.';
+			//myEditor.insertElement(p);
+			
+			/*
+			var span = myEditor.document.createElement("span");
+			span.textContent = "CTTD";
+			myEditor.insertElement(span);*/
+		}
+		
+		function insertHtmlTest() {
+			var now = new Date();
+			myEditor.insertHtml('The current date and time is: <em>' + now.toString() + '</em>');
+		}
+		
+		function insertTextTest() {
+			myEditor.insertText("@ckeditor");
+		}
+		
+		function getSelectedHtmlTest() {
+			alert(myEditor.getSelectedHtml().getHtml());
+		}
+	</script>
+</body>
+</html>
+

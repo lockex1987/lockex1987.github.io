@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mutable và immutable">
+    <title>Mutable và immutable</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2><strong>Mutable và immutable</strong></h2>
+      <p>Link gốc bài viết <a target="_blank" href="http://blog.daovanhung.com/post/ban-da-thuc-su-hieu-mutable-va-immutable">ở
+          đây</a>.</p>
+      <h3>Mở đầu</h3>
+      <p>Bạn đã từng đọc hay nghe đâu đó nói rằng: <strong>mutable</strong> là
+        giá trị có thể thay đổi được còn <strong>immutable</strong> là giá trị
+        không thể thay đổi được. Nhưng bạn đã thực sự hiểu đúng nó chưa?</p>
+      <pre>&gt;&gt; test = 3
+# =&gt; 3
+
+&gt;&gt; test
+# =&gt; 3
+
+&gt;&gt; test = 2 * test
+# =&gt; 6
+
+&gt;&gt; test
+# =&gt; 6
+</pre>
+      <p>Bạn nghĩ đoạn code trên (trong Ruby) chứng tỏ biến <strong>test</strong>
+        có phải là <strong>mutable</strong> không?</p>
+      <blockquote>
+        <p>Trong Ruby, kiểu number và boolean luôn là immutable.</p>
+      </blockquote>
+      <p>Rõ ràng trong Ruby, kiểu number luôn là <strong>immutable</strong>
+        nhưng ta vẫn thấy <strong>test</strong> ở ví dụ trên có thể thay đổi
+        được. Lý do là vì bạn đã hiểu sai từ <strong>giá trị</strong> trong
+        định nghĩa.</p>
+      <p>Để hiểu đúng bạn cần biết được cách bộ nhớ lưu trữ một biến như thế
+        nào.</p>
+      <h3>Cách bộ nhớ lưu trữ và sử dụng biến</h3>
+      <p>Nguyên lý 2 Von Neumann: Chương trình máy tính chỉ truy cập tới dữ liệu
+        thông qua địa chỉ.</p>
+      <p>Bộ nhớ chương trình gồm có 2 thành phần là <strong>địa chỉ bộ nhớ</strong>
+        và <strong>dữ liệu</strong> được lưu trữ trong bộ nhớ đó.</p>
+      <p>Khi có một phép toán như phép gán <code>test = 3</code>, rõ ràng bộ
+        nhớ cần lưu trữ chữ <code>test</code> và giá trị <code>3</code> của nó
+        vào bộ nhớ:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Địa chỉ bộ nhớ</th>
+            <th>Giá trị ô nhớ 1</th>
+            <th>Giá trị ô nhớ 2</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>xxx1</td>
+            <td>test</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>xxx2</td>
+            <td>3</td>
+            <td><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Cần lưu trữ một thứ gì đó trong bộ nhớ để gán <code>test = 3</code>,
+        giả sử ví dụ đơn giản bộ nhớ làm như sau để lưu trữ phép gán đó:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Địa chỉ bộ nhớ</th>
+            <th>Giá trị ô nhớ 1</th>
+            <th>Giá trị ô nhớ 2</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>xxx1</td>
+            <td>test</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>xxx2</td>
+            <td>3</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>xxx0</td>
+            <td>xxx1</td>
+            <td>xxx2</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Thế khi nào thì phép toán <code>test = test * 2</code> được xem là <strong>mutable</strong>,
+        khi nào thì được xem là <strong>immutable</strong>?</p>
+      <p>Phép toán trên được xem là <strong>mutable</strong> khi bộ nhớ thành
+        như sau:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Địa chỉ bộ nhớ</th>
+            <th>Giá trị ô nhớ 1</th>
+            <th>Giá trị ô nhớ 2</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>xxx1</td>
+            <td>test</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>xxx2</td>
+            <td>6</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>xxx0</td>
+            <td>xxx1</td>
+            <td>xxx2</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Phép toán trên được xem là <strong>immutable</strong> khi bộ nhớ thành
+        như sau:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Địa chỉ bộ nhớ</th>
+            <th>Giá trị ô nhớ 1</th>
+            <th>Giá trị ô nhớ 2</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>xxx1</td>
+            <td>test</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>xxx2</td>
+            <td>3</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>xxx3</td>
+            <td>6</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>xxx0</td>
+            <td>xxx1</td>
+            <td>xxx3</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Như bạn thấy, khi giá trị của biến không bị ghi đè mà được copy sang
+        một nơi khác thì đó mới là <strong>immutable</strong>, từ <strong>giá
+          trị</strong> ở định nghĩa này chính là giá trị đi với ô nhớ.</p>
+      <p>Vì sao phải copy sang một ô nhớ khác như thế? Nếu chỉ có một biến tham
+        chiếu tới một ô nhớ thì không có gì đáng nói nhưng khi bạn có nhiều biến
+        tham chiếu tới cùng một ô nhớ thì khi thay đổi giá trị của một biến thì
+        giá trị của các biến kia cũng đều thay đổi theo tương ứng.</p>
+      <p>Còn nếu <code>xxx2</code> không còn được dùng trong <strong>immutable</strong>
+        sẽ đi về đâu? Trong Ruby có chương trình dọn rác <strong>Garbage
+          Collection</strong> sẽ tự động xóa biến này đi khi nó đi thu dọn bộ
+        nhớ.</p>
+      <p>Giờ bạn có thể hiểu đoạn code Ruby ở phần mở đầu rồi. Nếu không tin bạn
+        có thể in ra object_id của nó để xác thực:</p>
+      <pre>&gt;&gt; test = 3
+# =&gt; 3
+
+&gt;&gt; test
+# =&gt; 3
+&gt;&gt; test.object_id
+# =&gt; 7
+
+&gt;&gt; test = 2 * test
+# =&gt; 6
+
+&gt;&gt; test
+# =&gt; 6
+&gt;&gt; test.object_id
+# =&gt; 13
+</pre>
+      <p>Thế vì sao lại phải cần tới <strong>immutable</strong> để làm gì khi
+        nó giảm công suất của bộ nhớ đi như thế?</p>
+      <h3>Khi nào nên dùng mutable</h3>
+      <blockquote>
+        <p>Khi cần thay đổi một biến trong vòng lặp thì bạn nên dùng mutable.</p>
+      </blockquote>
+      <p>Nếu lặp n phần tử mà ta dùng immutable như sau:</p>
+      <pre>String s = "";
+for (int i = 0; i &lt; n; ++i) {
+    s = s + n;
+}
+</pre>
+      <p>Trong Java, kiểu String là <strong>immutable</strong>. Đoạn code trên
+        cứ mỗi lần gán <code>s = s + n</code> là phải copy biến <code>s</code>
+        cũ thành object khác rồi mới gán vào <code>s</code> mới được. Cứ mỗi
+        lần copy s cũ là phải lặp số ký tự có trong <code>s cũ</code> để copy,
+        dẫn tới thời gian tính toán của thuật toán là O(n²).</p>
+      <p>Ta có thể cải thiện thuật toán trên bằng cách sử dụng mutable:</p>
+      <pre>StringBuilder sb = new StringBuilder();
+for (int i = 0; i &lt; n; ++i) {
+    sb.append(String.valueOf(n));
+}
+String s = sb.toString();
+</pre>
+      <h3>Khi nào nên dùng immutable</h3>
+      <p>Trong đa số các trường hợp, bạn nên dùng <strong>immutable</strong> vì
+        <strong>immutable</strong> dễ hiểu và không xảy ra bug liên quan tới <strong>reference</strong>
+        còn <strong>mutable</strong> khiến cho code không tuân theo luồng suy
+        nghĩ của lập trình viên, khó đọc, dễ gây bug khó chịu liên quan tới <strong>reference</strong>.</p>
+      <h4>Ví dụ 1 gây bug</h4>
+      <pre>/** @return the sum of the numbers in the list */
+public static int sum(List&lt;Integer&gt; list) {
+    int sum = 0;
+    for (int x : list)
+        sum += x;
+    return sum;
+}
+
+/** @return the sum of the absolute values of the numbers in the list */
+public static int sumAbsolute(List&lt;Integer&gt; list) {
+    // let's reuse sum(), because DRY, so first we take absolute values
+    for (int i = 0; i &lt; list.size(); ++i)
+        list.set(i, Math.abs(list.get(i)));
+    return sum(list);
+}
+
+
+// meanwhile, somewhere else in the code...
+public static void main(String[] args) {
+    // ...
+    List&lt;Integer&gt; myData = Arrays.asList(-5, -3, -2);
+    System.out.println(sumAbsolute(myData));
+    System.out.println(sum(myData));
+}
+</pre>
+      <p>Nhận xét:</p>
+      <ul>
+        <li>Hàm <code>sum</code> tính tổng các phần tử của list truyền vào</li>
+        <li>Hàm <code>sumAbsolute</code> tính tổng giá trị tuyệt đối của mỗi
+          phần tử của list truyền vào. Vì không muốn tạo một mảng tạm trong hàm
+          này nên lập trình viên đã dùng lại luôn list truyền vào để đỡ tốn bộ
+          nhớ và hiệu năng.</li>
+      </ul>
+      <p>Vấn để xảy ra khi ai đó gọi hàm <code>sumAbsolute(myData)</code> với
+        mảng bất kỳ <code>myData</code> rồi gọi tiếp <code>sum(myData)</code>.
+        Khi gọi <code>sumAbsolute(myData)</code> thì hàm này đã làm mảng <code>myData</code>
+        bị thay đổi nên hàm <code>sum(myData)</code> không còn gọi đúng với <code>myData</code>
+        ban đầu như dự kiến nữa.</p>
+      <h4>Ví dụ 2 gây bug</h4>
+      <pre>private static Date startSpringDate = null;
+
+/** @return the first day of spring this year */
+public static Date startOfSpring() {
+    if (startSpringDate == null) startSpringDate = getStartOfSpring();
+    return startSpringDate;
+}
+
+
+// somewhere else in the code...
+public static void partyPlanning() {
+    // let's have a party one month after spring starts!
+    Date partyDate = startOfSpring();
+    partyDate.setMonth(partyDate.getMonth() + 1);
+}
+</pre>
+      <p>Nhận xét:</p>
+      <ul>
+        <li>Kiểu <code>Date</code> trong Java là <strong>mutable</strong>.</li>
+        <li>Hàm <code>startOfSpring()</code> để lấy ngày đầu tiên của mùa xuân,
+          vì hàm <code>getStartOfSpring()</code> phía trong có xử lý rất phức
+          tạp và tốn thời gian nên lập trình viên đã gán một biến global <code>startSpringDate</code>
+          để lưu giá trị của <code>startOfSpring()</code> vào giúp khỏi phải
+          gọi lại khi cần thiết.</li>
+      </ul>
+      <p>Vấn đề xảy ra khi một lập trình viên nào đó muốn lấy ngày đầu tiên của
+        mùa xuân và cộng thêm 1 tháng nữa như đoạn code trên. Vì <code>startSpringDate</code>
+        và <code>partyDate</code> lúc này đang cùng trỏ đến một giá trị và kiểu
+        <code>Date</code> trong java là <strong>mutable</strong> nên khi gọi
+        hàm <code>partyDate.setMonth()</code> thì vô tình chung họ đã làm biến
+        <code>startSpringDate</code> bị thay đổi, thiết kế ban đầu nhằm mục đích
+        biến này không bị thay đổi nên nó gây ra bug.</p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

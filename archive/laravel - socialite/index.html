@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Laravel Socialite">
+    <meta name="keywords" content="laravel, socialite, facebook, google">
+    <meta name="author" content="lockex1987">
+    <title>Laravel Socialite</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Laravel Socialite</h2>
+      <p> Ngoài form login cài đặt xinh xinh đáng yêu quen thuộc ra thì Laravel
+        có 1 cách để xác thực người dùng khác là sử dụng xác thực người dùng của
+        các nhà cung cấp OAuth. Đó là Laravel Socialite. Thư viện đang hỗ trợ
+        cho xác thực người dùng thông qua Facebook, Twitter, LinkedIn, Google,
+        Bitbucket, GitHub và rất nhiều các nhà cung cấp khác.</p>
+      <p>Các bước thực hiện bao gồm: </p>
+      <ul>
+        <li>Mở chế độ Authentication trong Laravel</li>
+        <li>Cài Laravel Socialite vào dự án</li>
+        <li>Tạo facebook app &amp; lấy ID, Secret Key</li>
+        <li>Thêm nút tại file login.blade.php</li>
+        <li>Chèn Facebook ID, Secret Key vào dự án</li>
+        <li>Thêm route cho Facebook Auth</li>
+        <li>Sửa file config/app.php</li>
+        <li>Tạo controller/FacebookAuthController</li>
+        <li>Sửa database user</li>
+        <li>Vào lại facebook app, chỉnh redirect URIs</li>
+        <li>Chỉnh model user.php</li>
+      </ul>
+      <p>Okay chúng ta hãy bắt tay vào thực hiện chi tiết.</p>
+      <h3> Chuẩn bị</h3>
+      <p> Khởi tạo một project Laravel mới:</p>
+      <pre>$ composer create-project --prefer-dist laravel/laravel facebook-login<br>$ cd facebook-login</pre>
+      <p>Tạo database:</p>
+      <pre>echo "create database facebook_login;" | mysql -u root -p
+# type password</pre>
+      <p>Sửa lại cấu hình DB ở file <code>.env</code> theo đúng với môi trường
+        của bạn.</p>
+      <p>Chỉnh lại class <code>CreateUsersTable</code> ở thư mục <code>database/migrations</code>,
+        thêm các trường mới:</p>
+      <pre>$table-&gt;string('avatar');
+$table-&gt;string('provider_id');
+$table-&gt;string('provider');<br>$table-&gt;string('full_name');</pre>
+      <p>Ngoài ra, bây giờ trường password cũng không cần nữa, chúng ta sửa lại:</p>
+      <pre>$table-&gt;string('password')-&gt;nullable();</pre>
+      <p>Chỉnh model <code>User.php</code>, thêm các trường bạn mới tạo:</p>
+      <pre>protected $fillable = [ 'name', 'email', 'password', 'avatar', 'provider_id', 'provider', 'full_name' ];</pre>
+      <p> Mở chế độ Authentication trong Laravel, chỉ cần và chạy lệnh sau:</p>
+      <pre>$ php artisan make:auth<br>$ php artisan migrate</pre>
+      <p>Chạy thử project:</p>
+      <pre>$ php artisan serve</pre>
+      <p>Truy cập địa chỉ <a href="http://localhost:8000/" target="_blank">http://localhost:8000</a>
+        và kiểm tra.</p>
+      <p>Ngoài ra chúng ta phải tạo Facebook app và lấy ID, Secret Key. Xem
+        hướng dẫn <a href="../web%20-%20facebook%20app/index.html" target="_blank">ở
+          đây</a>.</p>
+      <h3> Cài đặt</h3>
+      <p> Chạy lệnh:</p>
+      <pre>$ composer require laravel/socialite
+</pre>
+      <p>Ở các phiên bản Laravel &lt; 5.5 thì chúng ta phải thêm vài cấu hình ở
+        phần <code>providers</code> và <code>aliases</code> ở <code>config\app.php</code>.
+        Nhưng từ Laravel 5.5 trở đi chúng ta không cần làm động tác này.</p>
+      <p>Với <code>providers</code>, bạn thêm:</p>
+      <pre>Laravel\Socialite\SocialiteServiceProvider::class,</pre>
+      <p>Với <code>aliases</code>, bạn thêm:</p>
+      <pre>'Socialite' =&gt; Laravel\Socialite\Facades\Socialite::class,</pre>
+      <h3> Tùy chỉnh</h3>
+      <p> Trước khi sử dụng Socialite, bạn cũng cần thêm thông tin đăng nhập cho
+        các dịch vụ OAuth mà ứng dụng của bạn sử dụng. Các thông tin này nên
+        được đặt trong tập tin cấu hình <code> config/services.php </code> của
+        bạn, và nên sử dụng key của Facebook, Twitter, Linkedin, Google, Github
+        hoặc Bitbucket, tùy thuộc vào nhà cung cấp mà ứng dụng của bạn yêu cầu.
+        Ví dụ:</p>
+      <pre>'github' =&gt; [
+    'client_id' =&gt; env('GITHUB_CLIENT_ID'),
+    'client_secret' =&gt; env('GITHUB_CLIENT_SECRET'),
+    'redirect' =&gt; 'http://your-callback-url'
+],<br><br>'facebook' =&gt; [ <br>&nbsp; &nbsp; 'client_id' =&gt; env('FACEBOOK_ID'),<br>&nbsp; &nbsp; 'client_secret' =&gt; env('FACEBOOK_SECRET'), <br>&nbsp; &nbsp; 'redirect' =&gt; env('FACEBOOK_URL')<br>],
+</pre>
+      <p>Hãy đặt các cấu hình thực sự<code> </code> trong file <code> .env</code>.</p>
+      <pre>GITHUB_CLIENT_ID=<br>GITHUB_CLIENT_SECRET=<br><br>FACEBOOK_ID=<br>FACEBOOK_SECRET=<br>FACEBOOK_URL=/auth/facebook/callback</pre>
+      <h3> Routing </h3>
+      <p> Tiếp theo, bạn đã sẵn sàng để xác thực người dùng! Bạn sẽ cần hai
+        route:</p>
+      <ul>
+        <li>một để chuyển hướng người dùng đến nhà cung cấp OAuth</li>
+        <li>một route khác để nhận callback từ nhà cung cấp sau khi xác thực</li>
+      </ul>
+      <p>Thêm route cho Facebook Login </p>
+      <p>Tất nhiên, bạn sẽ cần phải xác định các tuyến đường đến các phương pháp
+        điều khiển của bạn ở file <code>routes/web.php</code>:</p>
+      <pre>Route::get('login/github', 'Auth\LoginController@redirectToProvider');
+Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');<br><br>Route::get('auth/facebook', 'FacebookAuthController@redirectToProvider')-&gt;name('facebook.login') ;<br>Route::get('auth/facebook/callback', 'FacebookAuthController@handleProviderCallback');
+</pre>
+      <p>Thêm nút tại màn hình login</p>
+      <p>Bạn tìm đến file <code>login.blade.php</code> tại <code>resources/views/auth</code>.
+        Thêm nút Facebook Login như sau:</p>
+      <pre>&lt;a href="{{ route('facebook.login')}}" class="btn btn-primary"&gt;Facebook Login&lt;/a&gt;</pre>
+      <p>Tạo Controller xử lý</p>
+      <p>Bạn tạo với lệnh:</p>
+      <pre>php artisan make:controller FacebookAuthController</pre>
+      <p>Sau đó copy đoạn code này vào (chúng ta sẽ truy cập Socialite bằng cách
+        sử dụng facade <code> Socialite</code>):</p>
+      <pre>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Auth;
+use App\User;
+use Socialite;
+
+
+class FacebookAuthController extends Controller {
+
+    public function redirectToProvider() {
+        return Socialite::driver('facebook')-&gt;redirect();
+    }
+ 
+    public function handleProviderCallback() {
+        $facebookUser = Socialite::driver('facebook')-&gt;user();
+        //info(print_r($facebookUser, true));
+        $authUser = $this-&gt;findOrCreateUser($facebookUser);
+        Auth::login($authUser, true);
+        return redirect('/home');
+    }
+ 
+    private function findOrCreateUser($facebookUser) {
+        $authUser = User::where('provider_id', $facebookUser-&gt;id)-&gt;first();
+        if ($authUser) {
+            return $authUser;
+        }
+        return User::create([
+            'name' =&gt; $facebookUser-&gt;getName(), //$facebookUser-&gt;getNickname(),
+            'full_name' =&gt; $facebookUser-&gt;getName(),
+            //'password' =&gt; $facebookUser-&gt;token,
+            'email' =&gt; $facebookUser-&gt;getEmail(),
+            'avatar' =&gt; $facebookUser-&gt;getAvatar(),
+            'provider_id' =&gt; $facebookUser-&gt;getId(),
+            'provider' =&gt; 'facebook',
+        ]);
+    }
+}</pre>
+      <p> Phương thức <code> redirect </code> xử lý việc gửi người dùng đến
+        nhà cung cấp OAuth, trong khi phương thức <code> user </code> sẽ đọc
+        yêu cầu gửi đến và truy xuất thông tin của người dùng từ nhà cung cấp.</p>
+      <p>Đoạn code trong controller này có tác dụng: kiểm tra tài khoản facebook
+        đã đăng ký trong database chưa? Nếu chưa nó sẽ tạo một tài khoản đăng
+        nhập và lưu dữ liệu lại.</p>
+      <br>
+      <p>Khi user có fbid các bạn có thể sử dụng avatar từ facebook bằng đường
+        link: http://graph.facebook.com/[FBID]/picture hoặc
+        http://graph.facebook.com/[FBID]/picture?type=large cho kích thước lớn
+        hơn.</p>
+      <h3> Tham số tùy chọn</h3>
+      <p> Một số nhà cung cấp OAuth hỗ trợ các tham số tùy chọn trong yêu cầu
+        chuyển hướng. Để bao gồm bất kỳ tham số tùy chọn nào trong yêu cầu, hãy
+        gọi phương thức <code> with </code> với một mảng kết hợp:</p>
+      <pre>return Socialite::driver('google')
+    -&gt;with(['hd' =&gt; 'example.com'])
+    -&gt;redirect();
+</pre>
+      <p> !CHÚ Ý: khi dùng phương thức <code> with</code>, KHÔNG ĐƯỢC sử dụng
+        dụng các keyword như <code> state </code> hay <code> response_type</code>.</p>
+      <h3> Phạm vi truy cập </h3>
+      <p> Trước khi chuyển hướng người dùng, bạn cũng có thể thêm "các phạm vi"
+        bổ sung vào yêu cầu bằng phương thức <code> scopes </code> . Phương
+        pháp này sẽ hợp nhất tất cả phạm vi hiện có với phạm vi bạn cung cấp: </p>
+      <pre>return Socialite::driver('github')
+    -&gt;scopes(['read:user', 'public_repo'])
+    -&gt;redirect();
+</pre>
+      <p> Ta cũng có thể ghi đè toàn bộ các phạm vi với <code> setScopes </code>
+        : </p>
+      <pre>return Socialite::driver('github')
+    -&gt;setScopes(['read:user', 'public_repo'])
+    -&gt;redirect();
+</pre>
+      <h3> Xác thực stateless </h3>
+      <p> Phương thức <code> stateless </code> có thể được sử dụng để vô hiệu
+        hóa xác minh trạng thái phiên. Điều này hữu ích khi thêm xác thực mạng
+        xã hội vào API: </p>
+      <pre>return Socialite::driver('google')-&gt;stateless()-&gt;user();
+</pre>
+      <h3> Truy xuất thông tin người dùng </h3>
+      <p>Ví dụ thông tin do Facebook trả về:</p>
+      <pre>(
+    [token] =&gt; EAAM7E6zG09kBAAOesPypN0ZCtKhd8JoMlDz5ZBeJhtyVEAlZB9e6UM4IIohlQQmPfCQuGObPEDNSbsQRyzzrpXz8Pjt0uYQA4R6UqSPx3c0eZAhiE8MRPZAubwDruPHxV6MNud6JlBLQHRYfss8FuSv6QOS9RLli0Uav2Bg0KDwZDZD
+    [refreshToken] =&gt; 
+    [expiresIn] =&gt; 5183691
+    [id] =&gt; 2223278401219995
+    [nickname] =&gt; 
+    [name] =&gt; Văn Huyên Nguyễn
+    [email] =&gt; lockex1987@gmail.com
+    [avatar] =&gt; https://graph.facebook.com/v3.0/2223278401219995/picture?type=normal
+    [user] =&gt; Array
+        (
+            [name] =&gt; Văn Huyên Nguyễn
+            [email] =&gt; lockex1987@gmail.com
+            [id] =&gt; 2223278401219995
+        )
+
+    [avatar_original] =&gt; https://graph.facebook.com/v3.0/2223278401219995/picture?width=1920
+    [profileUrl] =&gt; 
+)</pre>
+      <p>Khi bạn có một instance người dùng, bạn có thể lấy thêm một vài chi
+        tiết về người dùng:</p>
+      <pre>$user = Socialite::driver('github')-&gt;user();
+
+// OAuth Two Providers
+$token = $user-&gt;token;
+$refreshToken = $user-&gt;refreshToken; // not always provided
+$expiresIn = $user-&gt;expiresIn;
+
+// OAuth One Providers
+$token = $user-&gt;token;
+$tokenSecret = $user-&gt;tokenSecret;
+
+// All Providers
+$user-&gt;getId();
+$user-&gt;getNickname();
+$user-&gt;getName();
+$user-&gt;getEmail();
+$user-&gt;getAvatar();
+</pre>
+      <h4> Truy xuất thông tin người dùng từ token (OAuth2)</h4>
+      <p> Nếu bạn đã có một token truy cập hợp lệ cho một người dùng, bạn có thể
+        lấy các thông tin của họ bằng cách sử dụng phương thức <code>
+          userFromToken</code>:</p>
+      <pre>$user = Socialite::driver('github')-&gt;userFromToken($token);
+</pre>
+      <h4> Truy xuất thông tin người dùng từ token và secret (OAuth1)</h4>
+      <p> Nếu bạn có cả cặp token/secret, sử dụng phương thức <code>
+          userFromTokenAndSecret</code>:</p>
+      <pre>$user = Socialite::driver('twitter')-&gt;userFromTokenAndSecret($token, $secret);</pre>
+      <h3> Tham khảo</h3>
+      <p><a href="facebook-login.zip">Code mẫu</a></p>
+      <p> <a href="https://laravel.com/docs/5.7/socialite" target="_blank">
+          https://laravel.com/docs/5.7/socialite </a> </p>
+      <p><a href="https://vinhweb.com/dang-nhap-laravel-bang-facebook-su-dung-laravel-socialite/"
+          target="_blank">
+          https://vinhweb.com/dang-nhap-laravel-bang-facebook-su-dung-laravel-socialite/</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Upload image preview">
+
+    <title>Preview file ảnh</title>
+
+    <link rel="icon" href="../../images/favicon.png">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/css/line-awesome.min.css"/>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <article>
+        <h2>Preview file ảnh</h2>
+
+		<label class="upload-file-preview position-relative mx-auto cursor-pointer d-block mb-0">
+			<img class="object-fit-cover w-100 h-100 rounded-circle" src="images/puppy-yawning.jpg">
+			
+			<input id="uploadFile" type="file" accept="image/*" class="d-none">
+
+			<i class="la la-camera upload-button position-absolute font-size-2"></i>
+		</label>
+    </article>
+
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

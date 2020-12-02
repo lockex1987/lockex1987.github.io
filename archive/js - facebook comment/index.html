@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Thêm Facebook comment vào trang">
+    <title>Thêm Facebook comment vào trang</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Thêm Facebook comment vào trang</h2>
+      <p>Thêm Facebook comment cho website.</p>
+      <h3>Danh sách link</h3>
+      <p>Danh sách app, tạo appk, publish app:</p>
+      <p><a target="_blank" href="https://developers.facebook.com/apps/">developers.facebook.com/apps</a></p>
+      <p>Tài liệu:</p>
+      <p><a target="_blank" href="https://developers.facebook.com/docs/plugins/comments">developers.facebook.com/docs/plugins/comments</a></p>
+      <p>Quản lý comment:</p>
+      <p><a target="_blank" href="https://developers.facebook.com/tools/comments">developers.facebook.com/tools/comments</a></p>
+      <p>Đăng nhập qua Facebook:</p>
+      <p><a target="_blank" href="https://developers.facebook.com/docs/facebook-login/web">developers.facebook.com/docs/facebook-login/web</a></p>
+      <p>Các câu hỏi thường gặp:</p>
+      <p><a target="_blank" href="https://developers.facebook.com/docs/plugins/faqs">developers.facebook.com/docs/plugins/faqs</a></p>
+      <h3>Các bước tích hợp</h3>
+      <p>Thêm thẻ <code>meta</code>:</p>
+      <pre class="out-of-box">&lt;meta property="fb:app_id" content="1762996047326114" /&gt;</pre>
+      <p>Thêm thẻ <code>div</code>:</p>
+      <pre>&lt;div id="fb-root"&gt;&lt;/div&gt;</pre>
+      <p>Thêm thẻ <code>script</code>:</p>
+      <pre class="out-of-box">&lt;script id="facebook-jssdk" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&amp;version=v2.10&amp;appId=1762996047326114"&gt;&lt;/script&gt;</pre>
+      <h3>Sửa lỗi responsive</h3>
+      <p>Thêm đoạn CSS sau:</p>
+      <pre>/* Facebook comment */<br>.fb_iframe_widget,
+.fb_iframe_widget span,
+.fb_iframe_widget iframe,
+.fb_iframe_widget_fluid_desktop,
+.fb_iframe_widget_fluid_desktop span,
+.fb_iframe_widget_fluid_desktop iframe {
+    max-width: 100% !important;
+    min-width: 100% !important;
+    width: 100% !important;
+}</pre>
+      
+      
+      
+      
+      
+    </article>
+    <script src="../../js/docs.js"></script>
+  
+
+</body></html>

@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Laravel mail">
+    <title>Gửi mail với Laravel</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Gửi mail với Laravel</h2>
+      <p>Laravel cung cấp API rất gọn và đơn giản thông qua thư viện <a href="http://swiftmailer.org/"
+          target="_blank">SwiftMailer</a>.</p>
+      <p>Không nên sử dụng hàm <code>mail</code> của PHP thuần. Nếu bạn sử
+        dụng, bạn sẽ phải cấu hình email, password, host, port ở file <code>php.ini</code>.
+        Hàm <code>mail</code> chỉ có tham số là người nhận, tiêu đề, nội dung.</p>
+      <h3>Cấu hình</h3>
+      <p>File cấu hình là <code>config/mail.php</code>.</p>
+      <p>Bạn phải thêm hai cấu hình <code>MAIL_FROM_ADDRESS</code> và <code>MAIL_FROM_NAME</code>
+        ở file <code>.env</code> để thiết lập địa chỉ và tên sẽ hiển thị ở
+        người gửi.</p>
+      <p>Khi nhận mail sẽ hiển thị ở mail như sau:</p>
+      <div class="out-of-box text-center"> <img alt="" src="images/alias.png">
+      </div>
+      <p>Ví dụ cấu hình:</p>
+      <pre>MAIL_DRIVER=smtp
+MAIL_USERNAME=huyennv9@cyberspace.vn
+MAIL_PASSWORD=secret
+
+MAIL_HOST=mail.cyberspace.vn
+MAIL_PORT=465
+MAIL_ENCRYPTION=ssl
+
+# MAIL_HOST=smtp.gmail.com
+# MAIL_ENCRYPTION=tls
+# MAIL_PORT=587
+
+MAIL_FROM_ADDRESS=huyennv9@cyberspace.vn
+MAIL_FROM_NAME="Nguyễn Văn Huyên"</pre>
+      <p>Chú ý: nếu bạn sử dụng Gmail có thể bạn phải enable 2-step
+        verification.</p>
+      <p>Bạn nên sử dụng mã hóa TLS với cổng 587, mới hơn so với mã hóa SSL với
+        cổng 465.</p>
+      <h3>Lỗi kết nối mail server</h3>
+      <p>Khi gửi mail, bạn có thể bị lỗi không kết nối được với mail server do
+        SSL.</p>
+      <p>Nếu bạn bị lỗi như trên, thì hãy thử thêm cấu hình <code>stream</code>
+        như sau vào file <code>config/mail.php</code>:</p>
+      <pre class="text-pre-wrap">'mailers' =&gt; [
+        'smtp' =&gt; [
+            'transport' =&gt; 'smtp',
+            'host' =&gt; env('MAIL_HOST', 'smtp.mailgun.org'),
+            'port' =&gt; env('MAIL_PORT', 587),
+            'encryption' =&gt; env('MAIL_ENCRYPTION', 'tls'),
+            'username' =&gt; env('MAIL_USERNAME'),
+            'password' =&gt; env('MAIL_PASSWORD'),
+
+            // Nếu có lỗi SSL (server tự ký)
+            // Tham khảo file vendor\swiftmailer\lib\classes\Swift\Transport\StreamBuffer.php
+            'stream' =&gt; [<br>                'ssl' =&gt; [<br>                    'allow_self_signed' =&gt; true,<br>                    'verify_peer' =&gt; false,<br>                    'verify_peer_name' =&gt; false<br>                ]<br>            ]<br>    ]<br>]</pre>
+      <p>Nguyên nhân là do mấy cái TLS, SSL.</p>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th>Protocol</th>
+            <th>Published</th>
+          </tr>
+          <tr>
+            <td>SSL 1.0</td>
+            <td>Unpublished</td>
+          </tr>
+          <tr>
+            <td>SSL 2.0</td>
+            <td>1995</td>
+          </tr>
+          <tr>
+            <td>SSL 3.0</td>
+            <td>1996</td>
+          </tr>
+          <tr>
+            <td>TLS 1.0</td>
+            <td>1999</td>
+          </tr>
+          <tr>
+            <td>TLS 1.1</td>
+            <td>2006</td>
+          </tr>
+          <tr>
+            <td>TLS 1.2</td>
+            <td>2008</td>
+          </tr>
+          <tr>
+            <td>TLS 1.3</td>
+            <td>2018</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Tạo Mailable</h3>
+      <p>Trong Laravel, mỗi khi email được gửi đi bởi ứng dụng được đại diện như
+        một class <code>Mailable</code>. Các class đó được lưu trong thư mục <code>app/Mail</code>.
+        Đừng lo lắng nếu bạn không nhìn thấy đường dẫn đó trong ứng dụng của
+        bạn, vì nó sẽ được tạo ra khi bạn tạo class <code>Mailable</code> lần
+        đầu tiên bằng cách dùng lệnh <code>make:mail</code>.</p>
+      <pre>php artisan make:mail OrderShipped</pre>
+      <p>Tất cả của một class <code>Mailable</code> đều được cấu hình trong
+        phương thức <code>build</code>. Bên trong hàm này, bạn có thể gọi nhiều
+        phương thức như <code>from</code>, <code>subject</code>, <code>view</code>,
+        và <code>attach</code> để cấu hình mail nhận.</p>
+      <h4>Cấu hình người gửi</h4>
+      <p>Sử dụng hàm <code>from</code>.</p>
+      <p>Đầu tiên, hãy tìm hiểu cấu hình email của người gửi. Hoặc, theo một
+        nghĩa khác, người gửi mail là "from". Có hai cách để cấu hình người gửi.
+        Đầu tiên, bạn có thể sử dụng hàm <code>from</code> trong hàm <code>build</code>
+        của class Mailable:</p>
+      <pre>/**
+ * Build the message.
+ *
+ * @return  $this
+ */
+public function build()
+{
+    return $this-&gt;from('example@example.com')
+        -&gt;view('emails.orders.shipped');
+}</pre>
+      <p>Sử dụng hàm toàn cục <code>from</code>.</p>
+      <p>Tuy nhiên, nếu ứng dụng của bạn sử dụng địa chỉ "from" cho tất cả các
+        mail, nó sẽ trở lên dài dòng để gọi hàm <code>from</code> trong mỗi
+        class Mailable bạn tạo ra. Thay vì, bạn có thể chỉ định địa chỉ "from"
+        trong file cấu hình <code>config/mail.php</code>. Địa chỉ này sẽ được
+        sử dụng nếu không có địa chỉ "from" được chỉ định của class Mailable:</p>
+      <pre>'from' =&gt; [<br>    'address' =&gt; 'example@example.com',<br>    'name' =&gt; 'App Name'<br>],</pre>
+      <h4>Cấu hình view</h4>
+      <p>Bên trong hàm <code>build</code> mailable, bạn có thể sử dụng hàm <code>view</code>
+        để chỉ định template được sử dụng khi render nội dung email. Vì mỗi
+        email sử dụng Blade template để render nội dung, bạn có thể có toàn
+        quyền và thoải mái xây dựng Blade templating HTML:</p>
+      <pre>/**
+ * Build the message.
+ *
+ * @return  $this
+ */
+public function build()
+{
+    return $this-&gt;view('emails.orders.shipped');
+}</pre>
+      <p> Bạn nên tạo thư mục <code>resources/views/emails</code> để lưu tất cả
+        các email templates; tuy nhiên, bạn hoàn toàn có thể thay đổi vị trí
+        theo ý bạn bên trong thư mục <code>resources/views</code>.</p>
+      <h4>Plain text email</h4>
+      <p>Nếu bạn muốn định nghĩa một phiên bản plain-text cho email, bạn có thể
+        sử dụng hàm <code>text</code>. Giống như hàm <code>view</code>, hàm <code>text</code>
+        nhận một tên template sẽ được sử dụng để render nội dung của email. Nếu
+        bạn định thoải mái nghĩa một HTML và một phiên bản plain-text cho tin
+        nhắn của bạn:</p>
+      <pre>/**
+ * Build the message.
+ *
+ * @return  $this
+ */
+public function build()
+{
+    return $this-&gt;view('emails.orders.shipped')
+        -&gt;text('emails.orders.shipped_plain');
+}</pre>
+      <h3>Truyền dữ liệu cho view</h3>
+      <h4>Qua thuộc tính public</h4>
+      <p>Thông thường, bạn sẽ cần truyền một số dữ liệu vào trong view khi
+        rendering ra HTML. Có hai cách bạn có thể hiển thị dữ liệu trong view.
+        Thứ nhất, bất cứ thuộc tính public được định nghĩa trong class mailable
+        sẽ được tự động tồn tại trong view. Vì vậy, ví dụ, bạn có thể truyền dữ
+        liệu có thuộc tính public vào trong hàm khởi tạo của class Mailable và
+        đặt dữ liệu bạn muốn truyền vào trong đó:</p>
+      <pre>&lt;?php
+
+namespace App\Mail;
+
+use App\Order;
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+class OrderShipped extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    /**
+     * The order instance.
+     *
+     * @var  Order
+     */
+    public $order;
+
+    /**
+     * Create a new message instance.
+     *
+     * @return  void
+     */
+    public function __construct(Order $order)
+    {
+        $this-&gt;order = $order;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return  $this
+     */
+    public function build()
+    {
+        return $this-&gt;view('emails.orders.shipped');
+    }
+}</pre>
+      <p>Khi dữ liệu đã được đặt vào một thuộc tính public public, nó sẽ tự động
+        tồn tại trong view, bạn có thể truy cập nó giống như bạn truy cập bất cứ
+        dữ liệu khác trong Blade template:</p>
+      <pre>&lt;div&gt;
+    Price: {{ $order-&gt;price }}
+&lt;/div&gt;</pre>
+      <h4>Qua phương thức <code>with</code></h4>
+      <p>Nếu bạn muốn tùy biến định dạng dữ liệu trước khi gửi nó vào template,
+        bạn có thể tùy biến dữ liệu của bạn vào view qua hàm <code>with</code>.
+        Thông thường, bạn vẫn truyền dữ liệu qua hàm khởi tạo của class
+        Mailable; tuy nhiên, bạn nên đặt dữ liệu thành <code>protected</code>
+        hoặc <code>private</code> nó sẽ không có ở trong view template. Sau đó,
+        khi gọi hàm <code>with</code>, truyền một mảng dữ liệu bạn muốn vào
+        trong template:</p>
+      <pre>&lt;?php
+
+namespace App\Mail;
+
+use App\Order;
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+class OrderShipped extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    /**
+     * The order instance.
+     *
+     * @var  Order
+     */
+    protected $order;
+
+    /**
+     * Create a new message instance.
+     *
+     * @return  void
+     */
+    public function __construct(Order $order)
+    {
+        $this-&gt;order = $order;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return  $this
+     */
+    public function build()
+    {
+        return $this-&gt;view('emails.orders.shipped')
+            -&gt;with([
+                'orderName' =&gt; $this-&gt;order-&gt;name,
+                'orderPrice' =&gt; $this-&gt;order-&gt;price,
+            ]);
+    }
+}</pre>
+      <p>Khi dữ liệu đã được truyền vào hàm <code>with</code>, nó sẽ tự động
+        tồn tại ở trong view, bạn có thể truy cập bình thường như khi sử dụng dữ
+        liệu với Blade template:</p>
+      <pre>&lt;div&gt;
+    Price: {{ $orderPrice }}
+&lt;/div&gt;</pre>
+      <h3>Đính kèm</h3>
+      <p>Để đính kèm vào email, sử dụng hàm <code>attach</code> bên trong hàm <code>build</code>
+        của class mailable. Hàm <code>attach</code> chấp nhận đường dẫn đầy đủ
+        của file là tham số thứ nhất:</p>
+      <pre>/**
+ * Build the message.
+ *
+ * @return  $this
+ */
+public function build()
+{
+    return $this-&gt;view('emails.orders.shipped')
+        -&gt;attach('/path/to/file');
+}</pre>
+      <p>Khi đính kèm các file vào một message, bạn có thể chỉ định tên hiển thị
+        và / hoặc MIME type bằng cách truyền vào <code>array</code> như là tham
+        số thứ hai của phương thức <code>attach</code>:</p>
+      <pre>/**
+ * Build the message.
+ *
+ * @return  $this
+ */
+public function build()
+{
+    return $this-&gt;view('emails.orders.shipped')
+        -&gt;attach('/path/to/file', [
+            'as' =&gt; 'name.pdf',
+            'mime' =&gt; 'application/pdf',
+        ]);
+}</pre>
+      <h4>Raw data attachment</h4>
+      <p>Hàm <code>attachData</code> bạn có thể sử dụng để đính kèm một raw
+        string của bytes như một đính kèm. Ví dụ, bạn có thể sử dụng phương thức
+        này nếu bạn muốn sinh một PDF trong memory và muốn đính kèm nó vào email
+        mà không cần viết nó vào ổ cứng. Hàm <code>attachData</code> chấp nhận
+        dữ liệu dạng raw data byte là tham số thứ nhất, tên của file là tham số
+        thứ hai, và một mảng tùy biến là tham số thứ ba:</p>
+      <pre>/**
+ * Build the message.
+ *
+ * @return  $this
+ */
+public function build()
+{
+    return $this-&gt;view('emails.orders.shipped')
+        -&gt;attachData($this-&gt;pdf, 'name.pdf', [
+            'mime' =&gt; 'application/pdf',
+        ]);
+}</pre>
+      <h4>Inline attachment</h4>
+      <p>Nhúng ảnh inline vào emails thông thường là không đơn giản; tuy nhiên,
+        Laravel cung cấp khá thuận tiện để bạn đính kèm ảnh vào email và nhận
+        CID thích hợp. Để nhúng một ảnh inline, sử dụng hàm <code>embed</code>
+        trong biến <code>$message</code> trong email template. Laravel tự động
+        tạo biến <code>$message</code> tồn tại cho tất cả email template, vì
+        vậy bạn không cần phải truyền nó một cách thủ công:</p>
+      <pre>&lt;body&gt;
+    Here is an image:
+
+    &lt;img src="{{ $message-&gt;embed($pathToFile) }}"&gt;
+&lt;/body&gt;</pre>
+      <h4>Nhúng raw data attachment</h4>
+      <p>Nếu bạn có một raw data string bạn muốn nhúng vào email template, bạn
+        có thể sử dụng hàm <code>embedData</code> trong biến <code>$message</code>:</p>
+      <pre>&lt;body&gt;
+    Here is an image from raw data:
+
+    &lt;img src="{{ $message-&gt;embedData($data, $name) }}"&gt;
+&lt;/body&gt;</pre>
+      <h3>Gửi mail</h3>
+      <p>Để gửi một tin nhắn, sử dụng hàm <code>to</code> trong <code>Mail</code>
+        facade. Hàm <code>to</code> chấp nhận một địa chỉ email, một user
+        instance, hoặc một collection của user. Nếu bạn muốn truyền một object
+        hoặc một collection của object, mailer sẽ tự động sử dụng thuộc tính <code>email</code>
+        và <code>name</code> khi thiết lập email nhận, và đảm bảo rằng thuộc
+        tính tồn tại trong objects. Khi bạn đã chỉ định mail nhận, bạn có thể
+        truyền một instance vào hàm <code>send</code> class Mailable:</p>
+      <pre>&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Order;
+use App\Mail\OrderShipped;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Controller;
+
+class OrderController extends Controller
+{
+    /**
+     * Ship the given order.
+     *
+     * @param    Request  $request
+     * @param    int  $orderId
+     * @return  Response
+     */
+    public function ship(Request $request, $orderId)
+    {
+        $order = Order::findOrFail($orderId);
+
+        // Ship order...
+
+        Mail::to($request-&gt;user())<br>            -&gt;send(new OrderShipped($order));
+    }
+}</pre>
+      <p>Tất nhiên, bạn có thể không giới hạn gửi mail cho người nhận khi gửi
+        một tin nhắn. Bạn có thể tự do thiết lập "to", "cc", và "bcc" người nhận
+        bên trong, gắn vào phương thức gọi:</p>
+      <pre>Mail::to($request-&gt;user())
+    -&gt;cc($moreUsers)
+    -&gt;bcc($evenMoreUsers)
+    -&gt;send(new OrderShipped($order));</pre>
+      <p>Cú pháp của hàm send như sau:</p>
+      <pre>void send(Mailable|string|array $view,<br>        array $data = [],<br>        Closure|string|null $callback = null)</pre>
+      <p>Các tham số là:</p>
+      <ul>
+        <li><code> $view</code>: Tên của view chứa nội dung email, hoặc class <code>Mailable</code></li>
+        <li><code> $data</code>: Mảng dữ liệu để truyền cho view </li>
+        <li><code> $callback</code>: Một hàm nhận một instance $message và với
+          instance đó chúng ta có thể gọi các hàm sau để tùy chỉnh: <code>to</code>,
+          <code>subject</code>, <code>setBody</code>, <code>attach</code>, <code>embed</code>,
+          <code>cc</code>, <code>bcc</code>,...</li>
+      </ul>
+      <h3>Queue mail</h3>
+      <h4>Queue một mail thông điệp</h4>
+      <p>Khi gửi một tin nhắn bằng email có thể kéo dài thời gian trả về
+        response của ứng dụng, nhiều lập trình viên chọn queue email để làm việc
+        đó. Laravel tạo nó rất đơn giản để built-in unified queue API. Để queue
+        một mail tin nhắn, sử dụng hàm <code>queue</code> trong <code>Mail</code>
+        facade sau khi chỉ định mail người nhận:</p>
+      <pre>Mail::to($request-&gt;user())
+    -&gt;cc($moreUsers)
+    -&gt;bcc($evenMoreUsers)
+    -&gt;queue(new OrderShipped($order));</pre>
+      <p>Hàm này sẽ tự động pushing một job vào trong queue để gửi thông điệp.
+        Tất nhiên, bạn sẽ cần phải cấu hình cấu hình queue trước khi sử dụng
+        tính năng này.</p>
+      <h4>Hoãn thông điệp queue</h4>
+      <p>Nếu bạn muốn hoãn phục vụ một queued email, bạn có thể dùng hàm <code>later</code>.
+        Như đối số đầu tiên, hàm <code>later</code> nhận một thể hiện <code>DateTime</code>
+        khi thông điệp được gửi:</p>
+      <pre>$when = Carbon\Carbon::now()-&gt;addMinutes(10);
+
+Mail::to($request-&gt;user())
+    -&gt;cc($moreUsers)
+    -&gt;bcc($evenMoreUsers)
+    -&gt;later($when, new OrderShipped($order));</pre>
+      <h4>Push vào queue chỉ định</h4>
+      <p>Vì tất cả các class Mailable được tạo ra sử dụng lệnh <code>make:mail</code>
+        sử dụng <code>Illuminate\Bus\Queueable</code> trait, bạn có thể gọi hàm
+        <code>onQueue</code> và <code>onConnection</code> trong bất kỳ class
+        Mailable, cho phép bạn chỉ định kết nối và tên queue cho thông điệp:</p>
+      <pre>$message = (new OrderShipped($order))
+    -&gt;onConnection('sqs')
+    -&gt;onQueue('emails');
+
+Mail::to($request-&gt;user())
+    -&gt;cc($moreUsers)
+    -&gt;bcc($evenMoreUsers)
+    -&gt;queue($message);</pre>
+      <h4>Queue mặc định</h4>
+      <p>Nếu bạn có class Mailable mà bạn muốn cho vào queue, bạn có thể làm <code>ShouldQueue</code>
+        contract trong class. Bây giờ, nếu bạn gọi hàm <code>send</code> khi
+        đang gửi mail, Mailable sẽ vẫn được cho vào queue vì nó implements
+        contract:</p>
+      <pre>use Illuminate\Contracts\Queue\ShouldQueue;
+
+class OrderShipped extends Mailable implements ShouldQueue
+{
+    //
+}</pre>
+      <h3>Local development</h3>
+      <p>Khi phát triển một ứng dụng có gửi email, có thể bạn không cần phải gửi
+        mail trực tiếp. Laravel cung cấp một vài cách để "disable" gửi mail
+        trong môi trường phát triển.</p>
+      <h4>Log driver</h4>
+      <p>Thay vì gửi mail của bạn, hàm <code>log</code> mail driver sẽ viết tất
+        cả các thông điệp mail vào file log để kiểm tra. Tìm hiểu thêm thông tin
+        cấu hình ứng dụng trên từng môi trường xem tại configuration
+        documentation.</p>
+      <h4>Universal to</h4>
+      <p>Một cách khác mà Laravel cung cấp là đặt một đặt một mail để gửi cho
+        tất cả framework. Cách này, tất cả các mail được tạo ra bởi ứng dụng sẽ
+        được gửi đến mail một chỉ định, thay vì chỉ định mail khi gửi mail. Để
+        thực hiện cần phải cấu hình trong <code>to</code> option in your <code>config/mail.php</code>.</p>
+      <pre><code>'to' =&gt; [
+    'address' =&gt; 'example@example.com',
+    'name' =&gt; 'Example'
+],</code></pre>
+      <h4>Mailtrap</h4>
+      <p>Cuối cùng, bạn có thể sử dụng dịch vụ mail như <a href="https://mailtrap.io/"
+          target="_blank">Mailtrap</a> và <code>smtp</code> driver để gửi thông
+        điệp mail của bạn đến một "dummy" mailbox nơi mà bạn có thể xem chúng
+        như người nhận. Cách tiếp cận này khá hữu ích cho bạn kiểm tra mail.</p>
+      <h3>Event</h3>
+      <p>Laravel bắn ra một event trước khi gửi mail. Nhớ rằng, event này được
+        bắn khi mail <em>đã gửi</em>, nó không như queue. Bạn có thể đăng ký
+        một event listener cho event này trong <code>EventServiceProvider</code>:</p>
+      <pre>/**
+ * The event listener mappings for the application.
+ *
+ * @var  array
+ */
+protected $listen = [
+    'Illuminate\Mail\Events\MessageSending' =&gt; [
+        'App\Listeners\LogSentMessage',
+    ],
+];</pre>
+      <h3>Demo</h3>
+      <h4> Tạo route</h4>
+      <p><code>routes/api.php</code></p>
+      <pre>require __DIR__ . '/Api/MailDemo.php';</pre>
+      <p><code>routes/Api/MailDemo.php</code></p>
+      <pre>&lt;?php
+
+use Illuminate\Support\Facades\Route;
+
+
+Route::group(['prefix' =&gt; '/mail-demo'], function () {
+    Route::get('/view', 'MailDemoController@sendUsingView');
+    Route::get('/no-view', 'MailDemoController@sendUsingStringTemplate');
+    Route::get('/view-without-mailable', 'MailDemoController@sendWithoutMailable');
+});
+</pre>
+      <h4>Tạo Mailable</h4>
+      <pre>php artisan make:mail ChangePassword</pre>
+      <p><code>app/Mail/ChangePassword.php</code></p>
+      <pre class="text-pre-wrap">&lt;?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+class ChangePassword extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public $subject;
+    public $user;
+    public $pathToImage;
+    public $pathToAttach;
+
+    public function __construct($subject, $user, $pathToImage, $pathToAttach)
+    {
+        $this-&gt;subject = $subject;
+        $this-&gt;user = $user;
+        $this-&gt;pathToImage = $pathToImage;
+        $this-&gt;pathToAttach = $pathToAttach;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this-&gt;subject($this-&gt;subject)
+            -&gt;view('emails.changePassword')
+            -&gt;attach($this-&gt;pathToAttach);
+    }
+}</pre>
+      <h4>Tạo view</h4>
+      <p><code>resources/views/emails/changePassword.blade.php</code></p>
+      <pre>&lt;html&gt;
+&lt;head&gt;
+    &lt;style&gt;
+        .text-success {
+            color: green;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;p&gt;
+        Kính gửi đ/c: &lt;span class="text-success"&gt;{{ $user-&gt;full_name }}&lt;/span&gt;,
+    &lt;/p&gt;
+    &lt;p&gt;
+        Đồng chí vừa thực hiện thay đổi mật khẩu thành công trên hệ thống xác thực Tập trung SSO.
+    &lt;/p&gt;
+    &lt;p&gt;
+        Nếu cần hỗ trợ, vui lòng liên hệ &lt;a href="mailto:hotro_cntt@viettel.com.vn"&gt;hotro_cntt@viettel.com.vn&lt;/a&gt;, SĐT: 1789 nhánh 2.
+    &lt;/p&gt;
+    &lt;p&gt;
+        &lt;img src="{{ $message-&gt;embed($pathToImage) }}"&gt;
+    &lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+      <h4>Tạo Controller</h4>
+      <p><code>app/Http/Controllers/MailDemoController.php</code></p>
+      <pre>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Mail\ChangePassword;
+use Illuminate\Support\Facades\Mail;
+
+
+class MailDemoController extends Controller
+{
+    private $user;
+    private $recipient;
+    private $pathToImage;
+    private $pathToAttach;
+    private $subject;
+    private $mailBodyFromDb;
+
+    public function __construct()
+    {
+        $this-&gt;user = (object) [
+            'full_name' =&gt; 'Nguyễn Văn Huyên'
+        ];
+        $this-&gt;recipient = 'huyennv9@cyberspace.vn';
+        $this-&gt;pathToImage = 'D:/lockex1987.github.io/images/nvh/nvh3.jpg';
+        $this-&gt;pathToAttach = 'D:/home/Platform_20200413.pdf';
+        $this-&gt;subject = '[VIETTEL SSO] Hệ thống Xác thực tập trung Viettel SSO';
+        // Có thể lấy từ DB
+        $this-&gt;mailBodyFromDb = file_get_contents(resource_path('views/emails/changePassword.blade.php'));
+    }
+
+    /**
+     * Gửi mail sử dụng view, sử dụng class Mailable.
+     */
+    public function sendUsingView(Request $request)
+    {
+        $changePasswordEmail = new ChangePassword($this-&gt;subject, $this-&gt;user, $this-&gt;pathToImage, $this-&gt;pathToAttach);
+        // $html = $changePasswordEmail-&gt;render();
+        // dd($html);
+
+        Mail::to($this-&gt;recipient)-&gt;send($changePasswordEmail);
+
+        return [
+            'code' =&gt; 0
+        ];
+    }
+
+    /**
+     * Gửi mail không sử dụng view, không sử dụng class Mailable.
+     * Nội dung template là xâu, có thể lấy từ DB.
+     */
+    public function sendUsingStringTemplate(Request $request)
+    {
+        // Không cần dùng use ($mailBodyFromDb, $user)
+        Mail::send([], [], function ($message)  {
+            $message-&gt;to($this-&gt;recipient);
+            $message-&gt;subject($this-&gt;subject);
+
+            /*
+            $cid = $message-&gt;embed($this-&gt;pathToImage);
+            $mailBodyFromDb = $this-&gt;mailBodyFromDb;
+            $mailBodyFromDb = str_replace('{{ $message-&gt;embed($pathToImage) }}', $cid, $mailBodyFromDb);
+            $mailBodyFromDb = str_replace('{{ $user-&gt;full_name }}', $this-&gt;user-&gt;full_name, $mailBodyFromDb);
+            */
+
+            $mailBodyFromDb = $this-&gt;bladeCompile($this-&gt;mailBodyFromDb, [
+                'user' =&gt; $this-&gt;user,
+                'pathToImage' =&gt; $this-&gt;pathToImage,
+                'message' =&gt; $message
+            ]);
+
+            $message-&gt;setBody($mailBodyFromDb, 'text/html');
+            $message-&gt;attach($this-&gt;pathToAttach);
+        });
+
+        return [
+            'code' =&gt; 0
+        ];
+    }
+
+    /**
+     * Gửi mail sử dụng view, không sử dụng class Mailable.
+     */
+    public function sendWithoutMailable(Request $request)
+    {
+        // Có thể lấy attach từ file upload
+        // $attach = $request-&gt;file('file');
+
+        $data = [
+            'user' =&gt; $this-&gt;user,
+            'pathToImage' =&gt; $this-&gt;pathToImage
+        ];
+
+        // Có thể dùng Mail::queue() thay cho Mail::send()
+        Mail::send('emails.changePassword', $data, function ($message) {
+            $message-&gt;to($this-&gt;recipient);
+            $message-&gt;subject($this-&gt;subject);
+            $message-&gt;attach($this-&gt;pathToAttach);
+        });
+
+        return [
+            'code' =&gt; 0
+        ];
+    }
+
+    /**
+     * https://gist.github.com/AlexR1712/83e502e25300fcfeb4199b88f3bdce49
+     */
+    public function bladeCompile($value, array $args = array())
+    {
+        $generated = \Blade::compileString($value);
+        ob_start() &amp;&amp; extract($args, EXTR_SKIP);
+        try {
+            eval('?&gt;'.$generated);
+        } catch (\Exception $e) {
+            ob_get_clean();
+            throw $e;
+        }
+        $content = ob_get_clean();
+        return $content;
+    }
+}
+</pre>
+      <h4>Kiểm tra</h4>
+      <p>Test bằng cách truy cập các địa chỉ và kiểm tra hộp thư. </p>
+      <p><a href="http://sso-admin.cttd.tk/mail-demo/view" target="_blank">http://sso-admin.cttd.tk/mail-demo/view</a></p>
+      <p><a href="http://sso-admin.cttd.tk/mail-demo/no-view" target="_blank">http://sso-admin.cttd.tk/mail-demo/no-view</a></p>
+      <p> <a href="http://sso-admin.cttd.tk/mail-demo/view-without-mailable" target="_blank">http://sso-admin.cttd.tk/mail-demo/view-without-mailable</a>
+      </p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://laravel.com/docs/master/mail" target="_blank">Mail -
+          Laravel</a></p>
+      <p><a href="https://laravel.com/api/master/Illuminate/Contracts/Mail/Mailer.html"
+          target="_blank">Illuminate\Contracts\Mail\Mailer | Laravel API</a></p>
+      <p><a href="https://lockex1987.github.io/archive/php%20-%20swiftmailer/" target="_blank">https://lockex1987.github.io/archive/php
+          - swiftmailer/</a></p>
+      <p><a href="https://lockex1987.github.io/archive/php%20-%20phpmailer/" target="_blank">https://lockex1987.github.io/archive/php
+          - phpmailer/</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

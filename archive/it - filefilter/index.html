@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="upcode, deploy">
+    <title>File filter</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>File filter</h2>
+      <p>Nhớ ngày xưa, Viettel không cho phép deploy cả file war của ứng dụng
+        Java web, phải update từng file thay đổi. Mình phải thủ công liệt kê các
+        file thay đổi mỗi lần commit lên SVN vào một file text. Sau đó, viết một
+        chương trình để lọc ra các file thay đổi. </p>
+      <p>Từ lúc đó đến bây giờ cũng nhiều thay đổi:</p>
+      <ul>
+        <li>Sử dụng git thay cho SVN</li>
+        <li>Code PHP Laravel thay cho Java Struts</li>
+        <li>Sử dụng nginx thay cho Tomcat</li>
+        <li>Áp dụng CI/CD</li>
+      </ul>
+      <p>Tuy nhiên, nhiều khi cũng nên sử dụng cách upcode thủ công từng file:
+        bạn chỉ muốn upload một vài file, sợ upload nhiều sẽ bị lỗi ở đâu đó.</p>
+      <p>Dùng lệnh sau lấy ra danh sách file thay đổi từ 5 lần commit gần nhất:</p>
+      <pre>git diff --name-status HEAD HEAD~5 &gt; changes.txt</pre>
+      <p>Bạn cũng có thể sử dụng lệnh sau để lấy ra danh sách các file thay đổi
+        trong lần commit này thôi:</p>
+      <pre>git status &gt; changes.txt</pre>
+      <p>Thực hiện lệnh sau để lọc file: </p>
+      <pre>java -jar fileFilter.jar &lt;path to source folder&gt;<br>java -jar fileFilter.jar .</pre>
+      <p> Các file thay đổi sẽ được lọc và copy vào thư mục <code>filtered</code>.
+        Cấu trúc thư mục được giữ nguyên nên khi upcode chúng ta chỉ việc copy
+        nguyên cả thư mục. Giờ chúng ta chỉ việc nén thư mục, chuyển file lên
+        server, rồi giải nén.</p>
+      <p>Sửa file <code>.gitignore</code> để bỏ qua các file và thư mục phục vụ
+        script:</p>
+      <pre>/filtered
+/filtered.tar
+/fileFilter.jar
+/changes.txt</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

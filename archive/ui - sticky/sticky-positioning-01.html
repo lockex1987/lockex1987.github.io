@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Sticky Positioning 01</title>
+	<style>
+		body {
+			height: 5000px;
+		}
+		#toolbar {
+			position: absolute;
+			top: 100px;
+			width: 100px;
+			height: 20px;
+			background-color: green;
+		}
+	</style>
+</head>
+
+<body onscroll="setStickyToolbarWhenScroll()">
+	<div id="toolbar"></div>
+
+	<script>
+		var toolbar = document.getElementById('toolbar');
+
+		function setStickyToolbarWhenScroll() {
+			toolbar.style.top = Math.max(100, window.scrollY) + 'px';
+		}
+	</script>
+</body>
+
+</html>

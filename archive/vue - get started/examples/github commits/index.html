@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Commits</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <h2>GitHub Commits</h2>
+    <p>This example fetches latest Vue.js commits data from GitHub’s API and displays them as a list.</p>
+    <p>You can switch between the master and dev branches.</p>
+
+    <div id="demo">
+        <h1>Latest Vue.js Commits</h1>
+
+        <template v-for="branch in branches">
+            <input type="radio" :id="branch" :value="branch" name="branch" v-model="currentBranch">
+
+            <label :for="branch">{{ branch }}</label>
+        </template>
+
+        <p>vuejs/vue@{{ currentBranch }}</p>
+
+        <ul>
+            <li v-for="record in commits">
+                <a :href="record.html_url" target="_blank" class="commit">
+                    {{ record.sha.slice(0, 7) }}
+                </a>
+                - <span class="message">{{ record.commit.message | truncate }}</span>
+                <br>
+                by
+                <span class="author">
+                    <a :href="record.author.html_url" target="_blank">
+                        {{ record.commit.author.name }}
+                    </a>
+                </span>
+                at
+                <span class="date">
+                    {{ record.commit.author.date | formatDate }}
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

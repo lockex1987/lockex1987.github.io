@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Flying Saucer</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Flying Saucer">
+ </head> 
+ <body> 
+  <article> 
+   <h2>Convert HTML sang PDF sử dụng Flying Saucer</h2> 
+   <p>Chỉ Prince và Flying Saucer hỗ trợ CSS Paged Media.</p> 
+   <p>Prince thì mất phí, còn Flying Saucer thì open source.</p> 
+   <p>Prince có wrapper Java. prince.jar chỉ là code Java gọi process prince đã cài ở máy thôi. Không thể hack file class không in logo mark. In thừa ra trang đầu tiên, sau đó dùng iText xóa đi.</p> 
+   <p>Calibre không sử dụng chuẩn CSS Paged Media.</p> 
+   <p><strong>Tập trung vào Flying Saucer.</strong></p> 
+   <p>Không convert sang DOCX nhỉ. Chỉ có JOD Converter, nhưng sẽ không có TOC, header, footer. Thư viện chuyên dụng docx4j thì phải code khác, không dùng lại được code.</p> 
+   <h3>Cài đặt và sử dụng</h3> 
+   <p>Thêm Maven dependency</p> 
+   <pre><code class="xml">&lt;dependency&gt;
+&nbsp; &nbsp; &lt;groupId&gt;org.xhtmlrenderer&lt;/groupId&gt;
+&nbsp; &nbsp; &lt;artifactId&gt;flying-saucer-pdf-itext5&lt;/artifactId&gt;
+&nbsp; &nbsp; &lt;version&gt;9.1.7&lt;/version&gt;
+&lt;/dependency&gt;</code></pre> 
+   <p>Khung code:</p> 
+   <pre><code class="java">OutputStream os = ... // file, ByteOutputStream, hoặc là HttpResponse<br>ITextRenderer renderer = new ITextRenderer();<br>renderer.setDocument ...<br>renderer.layout();
+renderer.createPDF(os);
+renderer.finishPDF();<br>os.close();<br></code></pre> 
+   <h3>CSS Paged Media</h3> 
+   <p>CSS Paged Media là một module của CSS 3 định nghĩa xem trang web sẽ được hiển thị như thế nào khi in.</p> 
+   <p>Hiện tại vẫn là Working Draft, chỉ có PrinceXML và Flying Saucer hỗ trợ.</p> 
+   <p>Thuộc tính:</p> 
+   <p>page-break-after</p> 
+   <p>page-break-before</p> 
+   <p>page-break-inside</p> 
+   <p>Rule:</p> 
+   <p>@page</p> 
+   <p>Pseudo-class</p> 
+   <p>:first</p> 
+   <p>:left</p> 
+   <p>:right</p> 
+   <p>Header và Footer</p> 
+   <p><br></p> 
+   <p>Mục lục</p> 
+   <p><br></p> 
+   <p>Trang bìa</p> 
+   <p><br></p> 
+   <h3>Tạo tài liệu ebook</h3> 
+   <p>Cũng có thể áp dụng vào chức năng: export ra file PDF, export ra file DOC, DOCX.</p> 
+   <p>Nguồn sẽ là HTML, CSS. Đây là 2 công nghệ để xây dựng GIAO DIỆN thật đơn giản và mạnh mẽ.</p> 
+   <p>Để test, chúng ta có thể mở file HTML bằng LibreOffice Writer, MS Word, hoặc vào menu File/ Print Preview của trình duyệt.</p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p>Tham khảo</p> 
+   <p>https://en.wikipedia.org/wiki/Comparison_of_layout_engines_(Cascading_Style_Sheets)</p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

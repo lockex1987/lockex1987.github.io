@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Spread Operator</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Spread Operator">
+ </head> 
+ <body> 
+  <article> 
+   <h2>ES6 Spread Operator</h2> 
+   <p>Spread operator có cú pháp giống với rest paraterter tuy nhiên cả hai có ý nghĩa khác nhau. Rest paramter được sử dụng khi khai báo hàm, ngược lại spread operator được sử dụng trong các câu lệnh, biểu thức hoặc khi gọi hàm.</p> 
+   <p>Để hiểu về spread operator chúng ta sẽ cùng tham khảo một số ví dụ tiếp sau đây.</p> 
+   <h3>Sử Dụng Spread Operator Với Mảng</h3> 
+   <h4>Nối Mảng (Concatenate Array)</h4> 
+   <p>Trước khi ES6 được ra đời thì cách phổ biến để nối mảng là sử dụng phương thức <code>concat()</code> của một mảng với đối số truyền vào là những mảng khác sẽ được nối với mảng này:</p> 
+   <pre><code>var arr_1 = [1, 2, 3];
+var arr_2 = [4, 5, 6];
+
+arr_3 = arr_1.concat(arr_2);
+console.log(arr_3); //  [1, 2, 3, 4, 5, 6]</code></pre> 
+   <p>Sử dụng spread operator trong ES6 đoạn code trên có thể được viết lại như sau:</p> 
+   <pre><code>arr_3 = [...arr_1, ...arr_2];</code></pre> 
+   <h4>Gộp Với Giá Trị Khác</h4> 
+   <p>Với spread operator chúng ta còn có thể kết hợp một mảng với giá trị khác:</p> 
+   <pre><code>var numbers = [1, 2, 3]; 
+result = ["Car", numbers, "Motobike"];</code></pre> 
+   <p>Với phiên bản trước của ECMAScript để thực hiện việc gộp mảng với các giá trị tuỳ ý khác như trên sẽ cần sử dụng tới rất nhiều các phương thức khác nhau như <code>concat()</code>, <code>push()</code>, <code>slide()</code>.</p> 
+   <h3>Sử Dụng Spread Operator Với Object</h3> 
+   <h4>Copy Object</h4> 
+   <p>Sử dụng spread operator chúng ta có thể dễ dàng copy object như sau:</p> 
+   <pre><code>var obj_1 = { name: 'ECMAScript' };
+
+var cloned_obj = { ...obj_1 };
+console.log(cloned_obj);
+// { name: 'ECMAScript' }</code></pre> 
+   <h4>Gộp Object</h4> 
+   <p>Chúng ta cũng có thể sử dụng spread operator để gộp các object với nhau:</p> 
+   <pre><code>var obj_1 = { name: 'ECMAScript' };
+var obj_2 = { year: 2015 };
+
+var cloned_obj = { ...obj_1, ...obj_2 };
+console.log(cloned_obj); // { name: 'ECMAScript' }
+// {name: "ECMAScript", year: 2015}</code></pre> 
+   <h3>Sử Dụng Spread Operator Với Hàm</h3> 
+   <p>Với các hàm được khai báo với nhiều tham số khác nhau thì sử dụng spread operator cho phép chúng ta truyền vào một giá trị duy nhất là một mảng:</p> 
+   <pre><code>function myFn (param_1, param_2, param_3) {
+}
+var args = [1, 2, 3];
+myFn(...args);</code></pre> 
+   <p>Chúng ta cũng có thể sử dụng spread operator kết hợp với đối số thông thường:</p> 
+   <pre><code>function myFn (param_1, param_2, param_3, param_4, param_5) {
+}
+var args = [2, 3, 4];
+myFn(1, ...args, 5);</code></pre> 
+   <p>------------------------------</p> 
+   <p></p> 
+   <p><br> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

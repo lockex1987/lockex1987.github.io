@@ -1,0 +1,378 @@
+// Cửa vào phòng
+.door {
+    position: absolute;
+    background: #fff;
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    z-index: 10;
+
+    &:before {
+        content: "";
+        position: absolute;
+        background: #fff;
+        width: 80px;
+        height: 4px;
+        bottom: 0;
+        border: 1px solid #096b72;
+    }
+}
+
+// Cửa chính
+.main-door {
+    width: 25px;
+    height: 200px;
+}
+
+// Cửa phụ
+.sub-door {
+    width: 90px;
+    height: 25px;
+}
+
+// Tường
+.wall {
+    position: absolute;
+    background-color: #096b72;
+}
+
+// Tường ngang
+.wall-hor {
+    @extend .wall;
+    height: 25px;
+}
+
+// Tường dọc
+.wall-ver {
+    @extend .wall;
+    width: 25px;
+}
+
+// Cửa sổ
+.window {
+    position: absolute;
+    border: 2px solid #096b72;
+    background-color: #e2f0f1;
+    z-index: 10;
+}
+
+// Cửa sổ ngang
+.window-hor {
+    @extend .window;
+    height: 25px;
+}
+
+// Cửa sổ dọc
+.window-ver {
+    @extend .window;
+    width: 25px;
+}
+
+// Giường
+.bed {
+    position: absolute;
+    border: 2px solid #096b72;
+    width: 210px;
+    height: 170px;
+}
+
+// Tủ lạnh
+.refrigerator {
+    position: absolute;
+    border: 2px solid #096b72;
+    width: 50px;
+    height: 50px;
+    background: #ffc107;
+}
+
+// Máy rửa bát
+.dish-washer {
+    position: absolute;
+    border: 2px solid #096b72;
+    width: 45px;
+    height: 40px;
+    background: #ffc107;
+}
+
+// Máy lọc nước
+.water-purifier {
+    position: absolute;
+    border: 2px solid #096b72;
+    width: 30px;
+    height: 40px;
+    background: #ffc107;
+}
+
+// Bàn máy tính
+.computer-table {
+    position: absolute;
+    border: 2px solid #096b72;
+    width: 98px;
+    height: 45px;
+}
+
+// Bồn rửa bát
+.sink {
+    position: absolute;
+    border: 2px solid #096b72;
+    width: 45px;
+    height: 98px;
+
+    // Bồn rửa
+    .sink-tap-1,
+    .sink-tap-2 {
+        position: absolute;
+        width: 19px;
+        border: 2px solid #096b72;
+        right: 8px;
+        border-radius: 4px;
+    }
+
+    .sink-tap-1 {
+        top: 40px;
+        height: 15px;
+    }
+
+    .sink-tap-2 {
+        top: 57px;
+        height: 10px;
+
+        &:before {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            width: 4px;
+            height: 4px;
+            border: 1px solid #096b72;
+            right: -8px;
+            top: -6px;
+        }
+    }
+}
+
+// Bếp
+.cabinets {
+    position: absolute;
+    border: 2px solid #096b72;
+    width: 120px;
+    height: 40px;
+
+    .stove {
+        position: absolute;
+        width: 54px;
+        height: 32px;
+        border: 2px solid #096b72;
+        right: 40px;
+        top: 2px;
+    
+        &:before,
+        &:after {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 5px;
+            border-radius: 50%;
+            border: 2px solid #096b72;
+        }
+    
+        &:before {
+            left: 5px;
+        }
+    
+        &:after {
+            right: 5px;
+        }
+    }
+}
+
+// Bệ xí
+.toilet {
+    width: 8px;
+    height: 30px;
+    position: absolute;
+    border: 2px solid #096b72;
+    
+
+    &:after {
+        content: "";
+        position: absolute;
+        border: 2px solid #096b72;
+        height: 20px;
+        width: 22px;
+        border-radius: 0 20px 20px 0;
+        top: 2px;
+        left: 4px;
+    }
+}
+
+// Rửa mặt
+.vanity {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    border: 2px solid #096b72;
+
+    &:before {
+        content: "";
+        position: absolute;
+        border: 1px solid #096b72;
+        box-shadow: 0 0 0 2px #fff, 0 0 0 3px #096b72;
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+        top: 5px;
+        left: 50%;
+        margin-left: -7.5px;
+    }
+}
+
+// Bàn uống nước
+.living-table {
+    position: absolute;
+    border: 2px solid #096b72;
+    width: 100px;
+    height: 50px;
+}
+
+// Ghế sofa
+.sofa {
+    position: absolute;
+    border: 2px solid #096b72;
+    width: 160px;
+    height: 50px;
+    // border-radius: 8px 0 0 8px;
+    background: #ffc107;
+
+    /*
+    &:before {
+        content: "";
+        position: absolute;
+        border: 2px solid #096b72;
+        border-width: 2px 2px 2px 0;
+        width: 80%;
+        height: 70%;
+        top: 15%;
+        border-radius: 0 4px 4px 0;
+        background: #fff;
+    }
+    */
+}
+
+// Ghế
+.chair {
+    position: absolute;
+    border: 2px solid #096b72;
+    width: 50px;
+    height: 50px;
+    border-radius: 6px;
+    background: #ffc107;
+}
+
+// Máy giặt
+.washing-machine {
+    position: absolute;
+    border: 2px solid #096b72;
+    width: 70px;
+    height: 70px;
+    border-radius: 6px;
+    background: #ffc107;
+}
+
+// Két sắt
+.safe {
+    position: absolute;
+    border: 2px solid #096b72;
+    width: 45px;
+    height: 45px;
+    border-radius: 6px;
+    background: #ffc107;
+}
+
+// Ban thờ
+.altar {
+    position: absolute;
+    border: 2px solid #096b72;
+    height: 236px;
+    width: 40px;
+    border-radius: 6px;
+    background: rgba(255, 193, 7, 0.25);;
+}
+
+// Tủ đứng 1 (ở gian buồng trong)
+.closet-1 {
+    position: absolute;
+    border: 2px solid #096b72;
+    height: 40px;
+    width: 187px;
+}
+
+// Tủ đứng 2 (ở gian vợ chồng)
+.closet-2 {
+    position: absolute;
+    border: 2px solid #096b72;
+    height: 200px;
+    width: 40px;
+}
+
+// Tủ bích phê (ở gian giữa)
+.closet-3 {
+    position: absolute;
+    border: 2px solid #096b72;
+    height: 200px;
+    width: 40px;
+}
+
+// Tủ quần áo gỗ (ở gian giữa)
+.wardrobe-1 {
+    position: absolute;
+    border: 2px solid #096b72;
+    height: 40px;
+    width: 140px;
+}
+
+// Tủ quần áo nhựa (ở trong buồng)
+.wardrobe-2 {
+    position: absolute;
+    border: 2px solid #096b72;
+    height: 150px;
+    width: 40px;
+}
+
+// TV
+.tv {
+    position: absolute;
+    border: 2px solid #096b72;
+    width: 140px;
+    height: 15px;
+    background: #ffc107;
+}
+
+// Gối
+.pillow {
+    position: absolute;
+    border: 2px solid #096b72;
+    width: 25px;
+    height: 40px;
+    border-radius: 6px;
+    background: #ffc107;
+}
+
+// Nhãn không gian phòng
+.label {
+    font: 600 14px/1 "Poppins", sans-serif;
+    text-transform: uppercase;
+    color: #096b72;
+    position: absolute;
+    text-align: center;
+    z-index: 30;
+}
+
+// Ổ cắm điện
+.outlet {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: #ff7979;
+    z-index: 20;
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>This example uses the addEventListener() method to attach a "paste" event to an input element.</p>
+
+<input type="text" id="myInput" value="Try to paste something in here" size="40">
+
+<script>
+document.getElementById("myInput").addEventListener("paste", myFunction);
+
+function myFunction(evt) {
+  console.log("You pasted text!");
+  console.log(evt.clipboardData);
+  console.log(evt.clipboardData.getData('text/plain'));
+}
+
+/*
+// Strip tags on pasting into a contenteditable DOM element
+editText.addEventListener('paste', function(evt) {
+    // Không thực hiện mặc định
+                evt.preventDefault();
+                var clipboard = evt.clipboardData;
+                var plainText = clipboard.getData('text/plain');
+                //var htmlCode = clipboard.getData('text/html');
+                //console.log(plainText);
+                //console.log(htmlCode);
+
+                // Loại bỏ các tag (nội dung là tag)
+                //plainText = plainText.replace(/(<([^>]+)>)/ig,'');
+
+                // Thêm text
+                document.execCommand('insertText', false, plainText);
+            });
+*/
+</script>
+
+</body>
+</html>

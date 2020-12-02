@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Key event"/>
+    
+    <title>Bắt sự kiện nhập từ bàn phím</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body>
+    <article>
+        <h2>Bắt sự kiện nhập từ bàn phím</h2>
+        <div id="app">
+            <div>
+                <audio src="https://dl.dropboxusercontent.com/s/vboepo1elrfaa6p/Ngam-Hoa-Le-Roi-Chau.Khai.Phong.mp3"
+                        ref="theAudio"
+                        controls
+                        preload="auto"></audio>
+            </div>
+
+            <div class="mb-2"
+                    v-for="(line, idx) in lines"
+                    :class="[idx == currentIndex ? 'text-success' : 'text-muted']">
+                <span v-if="line.text">
+                    {{line.text}}
+                </span>
+                <span v-else class="text-warning">
+                    ---
+                </span>
+                
+                <span class="font-size-0.75 text-danger">({{line.time}})</span>
+            </div>
+        </div>
+    </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script type="module" src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

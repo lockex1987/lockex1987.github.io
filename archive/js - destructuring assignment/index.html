@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Destructuring Assignment</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Destructuring Assignment">
+ </head> 
+ <body> 
+  <article> 
+   <h1>ES6 Destructuring Assignment</h1> 
+   <p>Destructuring assignment là một biểu thức JavaScript dùng để lấy ra (destructure) giá trị của một hay nhiều phần tử rong mảng hoặc đối tượng đồng thời gán các giá trị này cho các biến cho trước.</p> 
+   <p>Chúng ta cùng tham khảo một đoạn code ví dụ khá cơ bản dùng để destructure các thuộc tính trong đối tượng như sau:</p> 
+   <pre>var iPhone = {  
+    model: "iPhone X",
+    price: "$1500 USD",
+    year: 2017
+};
+
+var model = iPhone.model;
+var price = iPhone.price;
+var year = iPhone.year;</pre> 
+   <p>Bạn có thể thấy sử dụng cú pháp như trên để destructure các thuộc tính trong đối tượng trôgn khá rườm rà. Câu hỏi đặt ra ở đây là có cách nào để nhanh tróng lấy ra các giá trị của đối tượng <code>iPhone</code>và gán cho các biến với tên cho trước hay không? Câu trả lời ở đây là có, thông qua sử dụng cú pháp destructuring assignment trong ES6:</p> 
+   <pre>let iPhone = {  
+    model: "iPhone X",
+    price: "$1500 USD",
+    year: 2017
+};
+
+let { model, price, year } = iPhone;
+
+console.log(model); // iPhone
+console.log(price); // $1500 USD
+console.log(year); // 2017</pre> 
+   <p>Cú pháp như trên trông gọn gàng hơn rất nhiều so với lúc trước!</p> 
+   <p>Destructuring assignment được sử dụng với kiểu dữ liệu đối tượng và mảng. Ở phần dưới đây chúng ta hãy cùng nhau đi sâu hơn vào chi tiết cách sử dụng của destructuring assignment trong ES6.</p> 
+   <h2>Destructuring Object</h2> 
+   <p>Destructuring object dùng để lấy ra các thuộc tính của object và gán giá trị của từng thuộc tính cho các biến với tên cho trước.</p> 
+   <p>Trường gán lấy ra giá trị của thộc tính object và gán cho biến với tên biến trùng tên với thuộc tính:</p> 
+   <pre><code>let iPhone = {  
+    model: "iPhone X",
+    price: "$1500 USD",
+    year: 2017
+};
+
+let { model, price, year } = iPhone;</code></pre> 
+   <p>Trường hợp muốn sử dụng tên biến khác với tên thuộc tính của object:</p> 
+   <pre>let iPhone = {  
+    model: "iPhone X",
+    price: "$1500 USD",
+    year: 2017
+};
+
+let { model: iPhoneModel, price: iPhonePrice, year: iPhoneYear } = iPhone;
+
+console.log(iPhoneModel); // iPhone X
+console.log(iPhonePrice); // $1500 USD
+console.log(iPhoneYear); // 2017</pre> 
+   <p>Ngoài ra, chúng ta hoàn toàn có thể sử dụng destructuring assignment để lấy ra giá trị của một vài thuộc tính (chứ không nhất thiết lúc nào cũng cần lấy ra tất cả giá trị của tất cả thuộc tính):</p> 
+   <pre><code>let iPhone = {  
+    model: "iPhone X",
+    price: "$1500 USD",
+    year: 2017
+};
+
+let { model } = iPhone;
+
+console.log(model); // iPhone</code></pre> 
+   <h2>Destructuring Array</h2> 
+   <p>Cú pháp destructuring assignment sử dụng cho array có thay đổi chút ít so với object. Thay vì sử dung <code>{}</code> thì chúng ta sẽ sử dụng <code>[]</code>:</p> 
+   <pre><code>let topSmartPhones2017 = [
+    "Samsung Galaxy S8",
+    "Samsung Galaxy S8 Plus",
+    "iPhone 7 Plus",
+    "Samsung Galaxy Note 8",
+    "OnePlus 5"
+];
+
+let [first, second, third, forth, fifth ] = topSmartPhones2017;
+
+console.log(first); // Samsung Galaxy S8
+console.log(second); // Samsung Galaxy S8 Plus
+console.log(third); // iPhone 7 Plus
+console.log(forth); // Samsung Galaxy Note 8
+console.log(fifth); // OnePlus 5</code></pre> 
+   <p>Giống như destructuring object thì đối với array bạn cũng có thể lấy ra giá trị của một vài phần tử thay vì tất cả phần tử:</p> 
+   <pre><code>let [first, second] = topSmartPhones2017;
+
+console.log(first); // Samsung Galaxy S8
+console.log(second); // Samsung Galaxy S8 Plus</code></pre> 
+   <p>---------------------</p> 
+   <p><a href="destructuring-assignment.js">destructuring-assignment.js</a></p> 
+   <p></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

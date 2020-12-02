@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Git">
+    <title>Tìm hiểu về Commit và Staging Area trong Git</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <p>Trong bài tạo repository cho Git mình có nhắc qua về cụm từ <strong>Staging
+          Area</strong> và một tính năng là <strong>commit</strong> (ủy thác),
+        vậy hai cái này là gì thì mình sẽ giải thích kỹ hơn trong bài này để bạn
+        biết cách sử dụng cho đúng.</p>
+      <h3 id="Staging_Area_là_gì?">Staging Area là gì?</h3>
+      <p><em>Staging Area</em> nghĩa là một khu vực mà nó sẽ được chuẩn bị cho
+        quá trình commit.&nbsp;Trước hết, bạn cần phải hiểu rằng trong các hệ
+        thống quản lý phiên bản (Version Control System)&nbsp;thì các dữ liệu sẽ
+        được lưu trữ ở hai nơi, một là thư mục bạn đang làm việc trên máy tính
+        (working tree) và một là kho chứa mã nguồn (repository) sau khi bạn đã
+        thực hiện thay đổi (ví dụ như kho chứa trên <a href="https://github.com" target="_blank">Github</a>).</p>
+      <p>Nhưng với Git thì nó có thêm một lựa chọn nữa đó là có thêm một khu vực
+        trung gian gọi là <strong>Staging Area</strong> và đây chính là một lợi
+        thế lớn của Git. Staging Area nghĩa là khu vực sẽ lưu trữ những thay đổi
+        của bạn trên tập tin để nó có thể được commit, vì muốn commit tập tin
+        nào thì tập tin đó phải nằm trong Staging Area. Một tập tin khi nằm
+        trong Staging Area sẽ có trạng thái là Staged (xem thêm ở dưới).</p>
+      <figure> <img src="images/5-git-staging-area.png" alt="Mô hình giải thích cách hoạt động của Staging Area.">
+        <figcaption> Mô hình giải thích cách hoạt động của Staging Area. </figcaption>
+      </figure>
+      <p>Và để đưa một tập tin vào Staging Area thì bạn sẽ cần phải sử dụng lệnh
+        <code>git add tên_file</code>&nbsp;mà mình đã có ví dụ ở phần trước.</p>
+      <h3 id="Commit_là_gì_và_nó_hoạt_động_ra_sao?">Commit là gì và nó hoạt động
+        ra sao?</h3>
+      <p>Hiểu đơn giản hơn, commit nghĩa là một hành động để Git lưu lại một bản
+        chụp (snapshot) của các sự thay đổi trong thư mục làm việc, và các tập
+        tin và thư mục được thay đổi đã phải&nbsp;nằm trong Staging Area. Mỗi
+        lần commit nó sẽ được lưu lại lịch sử chỉnh sửa của mã nguồn kèm theo
+        tên và địa chỉ email của người commit.&nbsp;Ngoài ra trong Git bạn cũng
+        có thể khôi phục lại tập tin trong lịch sử commit của nó để chia cho một
+        phân nhánh (branch) khác, đây là mấu chốt của việc bạn sẽ dễ dàng khôi
+        phục lại các thay đổi trước đó mà mình có giới thiệu qua ở phần giới
+        thiệu serie này.</p>
+      <p>Và tất nhiên, lệnh commit trong Git sẽ là <code>git commit -m "Lời
+          nhắn"</code>.</p>
+      <p>Và nếu bạn <strong>muốn đưa tập tin lên repository thì bạn phải commit
+          nó trước</strong> rồi sau đó lệnh <code>git push origin master</code>&nbsp;sẽ
+        có nhiệm vụ đưa toàn bộ các tập tin đã được commit lên repository.</p>
+      <h4 id="Điều_kiện_gì_để_commit_một_tập_tin?">Điều kiện gì để commit một
+        tập tin?</h4>
+      <p>Nếu bạn muốn commit một tập tin đó, bạn sẽ cần phải đưa tập tin đó vào
+        trạng thái tracked bằng lệnh <code>git add tên_file</code>. Trong git
+        có hai loại trạng thái chính đó là Tracked và Untracked, cụ thể:</p>
+      <ul>
+        <li><strong>Tracked</strong> – Là tập tin đã được đánh dấu theo dõi
+          trong Git để bạn làm việc với nó. Và trạng thái Tracked nó sẽ có thêm
+          các trạng thái phụ khác là Unmodified (chưa chỉnh sửa gì), Modified
+          (đã chỉnh sửa) và Staged (đã sẵn sàng để commit).</li>
+        <li><strong>Untracked</strong> – Là tập tin còn lại mà bạn sẽ không muốn
+          làm việc với nó trong Git.</li>
+      </ul>
+      <p>Nhưng bạn phải&nbsp;nên biết rằng nếu tập tin đó đã được Tracked nhưng
+        đang rơi vào trạng thái (Modified) thì nó vẫn sẽ không thể commit được
+        mà bạn phải đưa nó về Staged cũng bằng lệnh <code>git add</code>.</p>
+      <h4 id="Bỏ_qua_Staging_Are_để_commit">Bỏ qua Staging Are để commit</h4>
+      <p>Như mình có nói ở trên là một tập tin sau khi được thay đổi hay tạo mới
+        thì nó phải được thêm vào Staging Area với lệnh git add. Tuy nhiên, bạn
+        có thể đưa một tập tin đã được Tracked để commit mà không cần đưa nó vào
+        Staging Area với tham số <code>-a</code>&nbsp;trong lệnh <code>git
+          commit</code>. Ví dụ: <code>git commit -a -m "Skipped Staging Are to
+          commit"</code>.</p>
+      <h3 id="Tìm_hiểu_thêm_về_trạng_thái">Tìm hiểu thêm về trạng thái</h3>
+      <figure> <img src="images/5-git-lifecycle.png" alt="Vòng đợi trạng thái của các tập tin">
+        <figcaption> Vòng đợi trạng thái của các tập tin </figcaption> </figure>
+      <h4 id="Untracked">Untracked</h4>
+      <p>Nếu bạn tạo ra hoặc thêm vào một tập tin mới vào trong thư mục làm việc
+        của bạn thì nó sẽ ở trạng thái Untracked. Bây giờ mình thử tạo ra một
+        tập tin mới tên là <em>faq.html</em>, sau đó dùng lệnh <code>git
+          status</code>&nbsp;để xem trạng thái của Git trong thư mục làm việc.</p>
+      <pre>$ touch faq.html
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Untracked files:
+ (use "git add &lt;file&gt;..." to include in what will be committed)
+
+ faq.html
+
+nothing added to commit but untracked files present (use "git add" to track)</pre>
+      <p><strong><em>Note</em></strong>: Lệnh <code>touch</code>&nbsp;là tạo ra
+        một tập tin rỗng.</p>
+      <p>Bây giờ bạn sẽ thấy nó đã liệt kê ra tên tập tin đang ở trạng thái
+        Untracked. Để đưa nó về Tracked bạn sẽ sử dụng lệnh <code>git add</code>&nbsp;và
+        xem lại trạng thái của nó.</p>
+      <pre>$ git add faq.html
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+ (use "git reset HEAD &lt;file&gt;..." to unstage)
+
+ new file: faq.html</pre>
+      <p>Bây giờ bạn thấy, tập tin faq.html của mình đã được đưa về trạng thái
+        Staged và nó có thể được commit. Tại sao? Vì bạn phải biết rằng nếu một
+        tập tin ở trạng thái Untracked mà được đưa về Tracked thì nó sẽ nằm ở
+        trạng thái Staged luôn, trừ khi bạn thay đổi nội dung tập tin này thì nó
+        sẽ đưa về trạng thái Modified và nó không thể commit trừ khi bạn gõ lệnh
+        <code>git add</code>&nbsp;cho nó.</p>
+      <h4 id="Tracked">Tracked</h4>
+      <p>Một khi một tập tin đã được đưa về Tracked thì nó sẽ có thể thay đổi
+        giữa 3 trạng thái khác nhau là <strong>Modified</strong>, <strong>Unmodified</strong>
+        và <strong>Staged</strong>.</p>
+      <p>Trước hết bây giờ mình đã có một tập tin mới đã được đưa về Staged với
+        lệnh <code>git add</code>&nbsp;như ví dụ trên. Bây giờ mình tiến hành
+        thay đổi nội dung của tập tin faq.html này và xem kết quả của lệnh <code>git
+          status</code>.</p>
+      <pre>$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+ (use "git reset HEAD &lt;file&gt;..." to unstage)
+
+ new file: faq.html
+
+Changes not staged for commit:
+ (use "git add &lt;file&gt;..." to update what will be committed)
+ (use "git checkout -- &lt;file&gt;..." to discard changes in working directory)
+
+ modified: faq.html</pre>
+      <p>Bạn có thấy sự kỳ lạ ở tập tin <em>faq.html</em> không? Đó là nó được
+        hiển thị ở hai trạng thái Staged (có thể commit) và Modified (không thể
+        commit) hay còn gọi là Unstaged. Sở dĩ có sự kỳ lạ đó ở đây là bởi vì
+        trước đó bạn đã tạo ra tập tin <em>faq.html</em> và đưa về Tracked thì
+        nó cũng đã được đưa về Staged để có thể commit. Tuy nhiên sau đó bạn lại
+        chỉnh sửa nội dung của nó nên nó đã có một phiên bản khác nằm ở trạng
+        thái Modified (không thể commit). Nếu bây giờ bạn gõ lệnh git commit để
+        ủy thác nó thì bản chụp của tập tin faq.html ở lần cuối cùng bạn gõ lệnh
+        git add sẽ được commit lên chứ nó không chứa các nội dung mà bạn vừa
+        thêm vào. Và để nó có thể commit tập tin faq.html đã được chỉnh sửa thì
+        bạn phải gõ lại lệnh <code>git add faq.html</code>&nbsp;lần nữa.</p>
+      <h4 id="Chuyển_tập_tin_từ_Untracked_về_Tracked">Chuyển tập tin từ
+        Untracked về Tracked</h4>
+      <p>Trong Git, bạn có thể đưa một tập tin từ Tracked về Untracked với lệnh
+        rm tên_file. Lệnh rm sẽ giúp bạn đưa tập tin về trạng thái Untracked
+        nhưng không xóa hẳn trong ổ cứng.</p>
+      <pre>$ rm faq.html
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.</pre>
+      <pre>Changes not staged for commit:
+ (use "git add/rm &lt;file&gt;..." to update what will be committed)
+ (use "git checkout -- &lt;file&gt;..." to discard changes in working directory)</pre>
+      <pre>deleted: faq.html</pre>
+      <p>Còn nếu bạn muốn xóa nó luôn thì dùng lệnh <code>git rm -f tên_file</code>&nbsp;và<strong><em>
+            nhớ cẩn thận</em></strong> khi dùng lệnh này.</p>
+      <h3>7 quy tắc viết commit</h3>
+      <ul>
+        <li>Sử dụng dòng trắng để phân tách phần tiêu đề và nội dung commit</li>
+        <li>Giới hạn tiêu đề commit không quá 50 ký tự</li>
+        <li>Viết hoa dòng tiêu đề</li>
+        <li>Không dùng dấu câu để kết thúc dòng tiêu đề</li>
+        <li>Viết tiêu đề có dạng câu mệnh lệnh</li>
+        <li>Trình bày phần mô tả của commit bằng những dòng không quá 72 ký tự</li>
+        <li>Sử dụng phần mô tả của commit để trả lời cho nhưng câu hỏi cái gì,
+          như thế nào, tại sao</li>
+      </ul>
+      <p>Ví dụ viết commit có tiêu đề và mô tả:</p>
+      <pre>$ git commit -m "Logout tu dong khi token API het han" -m "Su dung interceptors cua axios
+&gt; Chu y API login cung tra ve ma 401"<br>
+[fix-bugs-huyennv9 896b8ff] Logout tu dong khi token API het han
+4 files changed, 85 insertions(+), 27 deletions(-)
+</pre><p>Xem lại lịch sử:</p><pre>$ git log
+commit 896b8ff5fc084273858906fddd9cfadd4eb0158d
+Author: Nguyen Van Huyen &lt;huyennv9@cyberspace.vn&gt;
+Date:   Tue Dec 17 11:35:53 2019 +0700
+
+    Logout tu dong khi token API het han
+
+    Su dung interceptors cua axios
+    Chu y API login cung tra ve ma 401
+
+commit 8324fa513615e708a157e545df1cc7f6f2ed4427
+Merge: fe88d44 a9f0e28
+Author: Nguyen Van Huyen &lt;huyennv9@cyberspace.vn&gt;
+Date:   Thu Dec 12 19:21:24 2019 +0700
+
+    Merge branch 'fix-bugs-huyennv9' into develop
+
+commit a9f0e282373fbf9f794a5167e77782d1be61688a
+Author: Nguyen Van Huyen &lt;huyennv9@cyberspace.vn&gt;
+Date:   Thu Dec 12 19:20:52 2019 +0700
+
+    Fix bug luat cua du an
+</pre>
+      <h3 id="Lời_kết">Lời kết</h3>
+      <p>Có thể bạn sẽ thấy những gì mình nói trong bài này hơi dài nhưng đó là
+        những kiến thức rất cơ bản về Git mà bạn cần nắm chắc vì nếu bạn không
+        hiểu vòng đời các trang thái của một tập tin trong Git thì chắc chắn sau
+        này khi làm việc bạn sẽ bối rối khi gõ lệnh git commit và cứ hỏi tại sao
+        lại không commit được vì muốn commit được bạn sẽ phải đưa nó về trạng
+        thái thích hợp, tức là trạng thái Staged.</p>
+    </article>
+  
+    
+</body></html>

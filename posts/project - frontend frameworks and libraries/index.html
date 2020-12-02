@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="cdn, zip" />
+    <meta name="date" content="2020-02-24 18:28:00" />
+
+    <title>Các framework và thư viện frontend hay dùng</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+    <article>
+        <h2>Các framework và thư viện frontend hay dùng</h2>
+
+        <!--
+        <p>Nếu đóng gói vào từng file riêng (<code>libs.#hash.js</code>, <code>libs.#hash.css</code>) thì có ưu điểm là load nhanh, nhưng rất khó nâng cấp từng thành phần.</p>
+        <p>Ngoài ra, một số file CSS nên để ở phần <code>head</code>, còn một số cái (cả CSS, JS) thì nên để ở cuối <code>body</code>.</p>
+		<p>Thứ tự khai báo các file JS cũng quan trọng, nếu không có thể gây lỗi.</p>
+		<p>Có nên download cả file <code>.map</code>?</p>
+        -->
+
+        <div id="app">
+            <div class="mb-3">
+                <div v-for="e in libraries">
+                    <option-item :e="e"/>
+                </div>
+            </div>
+
+            <div class="mb-3 d-flex">
+                <button class="btn btn-primary"
+                        @click="downloadFiles()">
+                    Download file
+                </button>
+
+                <button class="btn btn-secondary ml-auto"
+                        @click="saveDeclaration()">
+                    Download khai báo
+                </button>
+            </div>
+        </div>
+    </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="https://cdn.rawgit.com/Stuk/jszip/v3.0.0/dist/jszip.min.js"></script>
+
+    <script src="../../js/common.js"></script>
+
+    <script src="js/data.js"></script>
+    <script src="js/option-item.js"></script>
+    <script src="js/script.js"></script>
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Riot Router Example: Mixins</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+
+<body>
+  <my-tag></my-tag>
+  <my-second-tag></my-second-tag>
+
+  <!-- riot tags -->
+  <script type="riot/tag" src="my-tag.tag"></script>
+  <script type="riot/tag" src="my-second-tag.tag"></script>
+
+  <!-- scripts we need -->
+  <script src="https://cdn.jsdelivr.net/gh/riot/riot/riot%2Bcompiler.min.js"></script>
+
+  <!-- mount this app -->
+  <script>
+    riot.mixin('MessageMixin', {
+      init: function() {
+        console.log('Mixin!')
+      },
+
+      getMessage: function() {
+        return 'Hello world'
+      }
+    })
+
+    riot.mount('*')
+  </script>
+</body>
+</html>

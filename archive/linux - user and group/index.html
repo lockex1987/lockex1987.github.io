@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="permission"/>
+    
+	<title>User và group trong Linux</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+
+</head>
+<body>
+    <article>
+        <h2>User và group trong Linux</h2>
+        
+
+<p>Lấy user hiện tại:</p>
+<pre>whoami</pre>
+
+
+<p>User hiện tại thuộc vào nhóm nào:</p>
+<pre>groups</pre>
+
+
+<p>Xem một user nào đó thuộc vào nhóm nào (thực hiện khi đang là root):</p>
+<pre>groups &lt;username&gt;</pre>
+
+
+<p>Gán user cho group:</p>
+<pre>usermod -g &lt;groupname&gt; &lt;username&gt;</pre>
+
+
+<p>Xóa user khỏi group:</p>
+<pre>gpasswd -d user group<br/>deluser &lt;username&gt; &lt;groupname&gt;</pre>
+
+
+<p>Liệt kê tất cả user:</p>
+<pre>cut -d: -f1 /etc/passwd | sort</pre>
+
+<p>Liệt kê tất cả group:</p>
+<pre>cut -d: -f1 /etc/group | sort</pre>
+
+<p>Tạo user:</p>
+<pre>useradd -c "Tran Huy Hoang - admin2" tranhoang</pre>
+
+<p>Xóa người dùng:</p>
+<pre>userdel -r &lt;username&gt;</pre>
+
+<p>Tạo nhóm:</p>
+<pre>groupadd &lt;groupname&gt;</pre>
+
+<p>Xóa nhóm:</p>
+<pre>groupdel &lt;groupname&gt;</pre>
+
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

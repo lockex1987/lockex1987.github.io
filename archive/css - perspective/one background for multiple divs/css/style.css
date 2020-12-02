@@ -1,0 +1,18 @@
+html, body { min-height: 100%; }
+
+body { background: linear-gradient(125deg, #302015 0%, #1C1008 100%); }
+
+.example { position: relative; width: 80%; padding-top: 50%; margin: 2rem auto; }
+.example > .block { position: absolute; height: 100%; width: 30%; perspective: 1000px; }
+.example > .block:nth-of-type(1) { height: 80%; top: 10%; left: 17%; width: 15%; }
+.example > .block:nth-of-type(2) { top: 0; left: 35%; }
+.example > .block:nth-of-type(3) { height: 80%; top: 10%; left: 64%; width: 15%; }
+.example > .block > .side { position: absolute; top: 0; left: 0; background-image: url("https://picsum.photos/id/1025/1024/768"); background-size: auto 100%; box-shadow: -1vw 0.5vw 1vw rgba(0, 0, 0, 0.3); }
+.example > .block > .side.-main { height: 100%; width: 100%; transform: rotateY(30deg); transform-origin: 0 50%; }
+.example > .block > .side.-left { height: 100%; width: 20%; transform-origin: 0 50%; transform: rotateY(-60deg) translateX(-100%); filter: brightness(40%); }
+.example > .block:nth-of-type(1) > .side.-main { background-position: 4% 50%; background-size: auto 130%; }
+.example > .block:nth-of-type(1) > .side.-left { background-position: 0 50%; background-size: auto 130%; }
+.example > .block:nth-of-type(2) > .side.-main { background-position: 50% 0; }
+.example > .block:nth-of-type(2) > .side.-left { background-position: 28.5% 0; }
+.example > .block:nth-of-type(3) > .side.-main { background-position: 96% 50%; background-size: auto 130%; }
+.example > .block:nth-of-type(3) > .side.-left { background-position: 78% 50%; background-size: auto 130%; }

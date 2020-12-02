@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Gulp - Minify JS, CSS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta name="description" content="Gulp - Minify JS, CSS">
+  </head>
+  <body>
+    <article>
+      <h2>Minify file JS, CSS</h2>
+      <p>Cài đặt:</p>
+      <pre>npm install --save-dev gulp-uglify</pre>
+      <p>Code:</p>
+      <pre>var uglify = require('gulp-uglify');<br><br>gulp.task('uglify', function () {<br>    gulp.src('js/*.js')<br>        .pipe(uglify())<br>        .pipe(gulp.dest('minjs'));<br>});<br><br>var cssnano = require('gulp-cssnano');<br><br>gulp.task('useref', function () {<br>    return gulp.src('app/*.html')<br>        .pipe(useref())<br>        .pipe(gulpIf('*.js', uglify()))<br>        // Minifies only if it's a CSS file<br>        .pipe(gulpIf('*.css', cssnano()))<br>        .pipe(gulp.dest('dist'))<br>});</pre> 
+   <p>Chúng ta cần hai plugin mới. Để thêm hai plugin này, ta sẽ phải chạy lệnh sau:</p> 
+   <pre>npm install --save-dev gulp-clean-css gulp-minify</pre> 
+   <p>Plugin đầu tiên sử dụng clean-css package để giảm nhẹ CSS, và cái thứ hai dùng UglifyJS2 để giảm nhẹ JavaScript. Chúng ta sẽ load hai package này trong gulpfile.js trước:</p> 
+   <pre>const minify = require('gulp-minify');
+const cleanCss = require('gulp-clean-css');</pre> 
+   <p>Kế tiếp ta sẽ cần phần dùng hai plugin này trong tasks của ta trước khi viết output lên disk:</p> 
+   <pre>.pipe(minify())
+.pipe(cleanCss())</pre> 
+   <p><code>gulpfile.js</code> giờ đây sẽ trông thế này:</p> 
+   <pre>const gulp = require('gulp');
+const concat = require('gulp-concat');
+const minify = require('gulp-minify');
+const cleanCss = require('gulp-clean-css');
+
+gulp.task('pack-js', function () {
+    gulp.src(['assets/js/vendor/*.js', 'assets/js/main.js', 'assets/js/module*.js'])
+            .pipe(concat('bundle.js'))
+            .pipe(minify())
+            .pipe(gulp.dest('public/build/js'));
+});
+
+gulp.task('pack-css', function () {
+    gulp.src(['assets/css/main.css', 'assets/css/custom.css'])
+            .pipe(concat('stylesheet.css'))
+            .pipe(cleanCss())
+            .pipe(gulp.dest('public/build/css'));
+});
+
+gulp.task('default', ['pack-js', 'pack-css']);</pre> 
+   <p>Hãy chạy gulp lần nữa. Ta sẽ thấy rằng file <code>stylesheet.css</code> được lưu trữ dưới format đã giảm nhẹ, và file <code>bundle.js</code> sẽ vẫn được lưu trữ y nguyên. Hãy để ý, giờ đây ta còn có <code>bundle-min.js</code> đã được giảm nhẹ. Chúng ta chỉ muốn file đã giảm nhẹ, và file này được lưu thành <code>bundle.js</code>, vậy nên ta sẽ điều chỉnh code với thông số bổ sung:</p> 
+   <pre>.pipe(minify({
+    ext: {
+        min:'.js'
+    },
+    noSource: true
+}))</pre> 
+   <p>Giống trong gulp-minify plugin documentation (<a href="https://www.npmjs.com/package/gulp-minify"
+data-wpel-link="external" target="_new" rel="nofollow">https://www.npmjs.com/package/gulp-minify</a>), điều chỉnh trên sẽ đặt tên như mong muốn cho phiên bản giảm nhẹ, và lệnh cho plugin không tạo phiên bản chứa original source. Nếu chúng ta xóa content của build directory và lại chạy gulp từ command line, cuối cùng ta sẽ chỉ có hai files giảm nhẹ.</p> 
+   <p>Ngoài ra chúng ta có thể dùng gulp-rename.</p> 
+   <pre>var gulp = require('gulp');
+var sass = require('gulp-sass');
+var rename = require('gulp-rename');
+var livereload = require('gulp-livereload');
+var minifyCss = require('gulp-cssnano');
+
+
+gulp.task('sass', function () {
+    return gulp.src('assets/sass/style.scss')
+&nbsp; &nbsp;&nbsp;        .pipe(sass())
+        &nbsp; &nbsp; .pipe(minifyCss())
+&nbsp; &nbsp;&nbsp;        .pipe(rename('style.min.css'))
+    &nbsp; &nbsp;&nbsp;    .pipe(gulp.dest('assets/css'))
+        &nbsp; &nbsp; .pipe(livereload());
+});</pre> 
+    
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ 
+</body></html>

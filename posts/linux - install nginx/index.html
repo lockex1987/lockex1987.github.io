@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="date" content="2020-02-20 21:53:00">
+    <meta name="description" content="linux, nginx, ubuntu">
+    <title>Cài đặt nginx trên Ubuntu</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Cài đặt nginx trên Ubuntu</h2>
+      <p> Nginx là một web server nguồn mở hoạt động nhanh và sử dụng ít tài
+        nguyên hệ thống hơn Apache. Khi ở trạng thái tải nhẹ thì sự khác nhau
+        giữa Apache và nginx là không đáng kể. Tuy vậy, ở trạng thái tải nặng,
+        nginx có thể mở rộng sao cho phù hợp và hoạt động nhanh mà không cần
+        chiếm quá nhiều tài nguyên bộ nhớ như Apache.</p>
+      <h3>Cài đặt</h3>
+      <p> Cài đặt:</p>
+      <pre>sudo apt-get install nginx</pre>
+      <p>Sử dụng:</p>
+      <pre>sudo systemctl status nginx<br>sudo systemctl start nginx<br>sudo systemctl stop nginx<br>sudo systemctl restart nginx<br>sudo systemctl reload nginx<br>sudo systemctl enable nginx</pre>
+      <p>Truy cập để <a href="http://localhost/" target="_blank">localhost </a>
+        kiểm tra.</p>
+      <h3>Cấu hình mẫu</h3>
+      <p> Cấu hình file <code> /etc/nginx/sites-available/default</code>:</p>
+      <pre>server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /home/lockex1987/lockex1987.github.io;
+    index index.html index.htm index.php;
+    server_name _;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}</pre>
+      <h3>Fix lỗi open nginx.conf (Permission denied)</h3>
+      <p>Đọc file log xem lỗi là gì:</p>
+      <pre>cat /var/log/nginx/error.log</pre>
+      <p>Giả sử lỗi như sau:</p>
+      <pre>open() "/etc/nginx/nginx.conf" failed (13: Permission denied)</pre>
+      <p>Khi đó, hãy sửa file <code>/etc/selinux/config</code>, chỉnh:</p>
+      <pre>SELINUX=disabled</pre>
+      <p><strong>SELinux</strong> nghĩa là <strong>S</strong>ecurity-<strong>E</strong>nhanced
+        <strong>Linux</strong>. Nó là một cách để tăng security của server.</p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

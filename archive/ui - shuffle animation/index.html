@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Shuffle Animation"/>
+    <meta name="keywords" content="shuffle, animation"/>
+    <meta name="author" content="lockex1987"/>
+    
+    <title>Shuffle Animation</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body>
+    <article>
+        <h2>Shuffle Animation</h2>
+        
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Orbitron');
+    html, body { background-color: #222222; color: #eee; }
+    .content { text-align: center; top: 50%; position: relative; transform: translateX(-50%), translateY(-50%);
+        font-family: 'Orbitron'; font-size: 24px; text-transform: uppercase; font-weight: 100; }
+    .random span { width: 30px; display: inline-block; }
+  </style>
+<div class="content">
+<div class="random">
+</div>
+</div>
+<script>
+    function shuffleText(text) {
+
+      var randomNumber = [];
+      var data = 0;
+      var letters = text.split("");
+
+      for (var i = 0; i < letters.length; i++) {
+        var span = document.createElement("span");
+        span.className = "span nbr ltr";
+        span.textContent = "0";
+        span.dataset.change = Math.round(Math.random() * 100);
+        document.querySelector(".random").appendChild(span);
+
+        randomNumber.push(span);
+      }
+
+      function shuffle() {
+        var temp = document.querySelectorAll('.nbr');
+        if (temp.length === 0) {
+          return;
+        }
+
+        var i1 = Math.round(Math.random() * temp.length);
+
+        if (i1 < temp.length) {
+          temp[i1].textContent = Math.round(Math.random() * 9);
+        }
+
+        var i2 = Math.round(Math.random() * temp.length);
+        if (i2 < temp.length) {
+          temp[i2].dataset.number = data;
+        }
+        data++;
+
+        randomNumber.forEach(function(e, index) {
+          if (parseInt(e.dataset.number) > parseInt(e.dataset.change)) {
+            e.textContent = letters[index];
+            e.classList.remove('nbr');
+          }
+        });
+
+        setTimeout(shuffle, 30);
+      }
+
+      shuffle();
+    }
+
+    shuffleText("NGUYEN_VAN_HUYEN");
+  </script>
+
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Get computed CSS">
+    <title>Get Computed CSS</title>
+
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+
+  </head>
+  <body>
+    <article>
+      <h1>Get Computed CSS</h1>
+      <p>The getComputedStyle() method gets all the computed (actual) CSS
+        property and values of the specified element.</p>
+      <p>The computed style is the style actually used in displaying the
+        element, after "stylings" from multiple sources have been applied.</p>
+      <p>Style sources can include: internal style sheets, external style
+        sheets, inherited styles and browser default styles.</p>
+      <p>The getComputedStyle() method returns a CSSStyleDeclaration object.<strong><br>
+        </strong></p>
+      <p><strong>Syntax</strong></p>
+      <p><code>window.getComputedStyle(element, pseudoElement)</code><strong><br>
+        </strong></p>
+      <p><strong>Parameters</strong></p>
+      <p><strong></strong></p>
+      <table style="width: 100%" border="1">
+        <tbody>
+          <tr>
+            <td>element</td>
+            <td>Required. The element to get the computed style for.</td>
+          </tr>
+          <tr>
+            <td>pseudoElement</td>
+            <td>Optional. A pseudo-element to get. Must be omitted (or null) for
+              regular elements.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p></p>
+      <h2>CSSStyleDeclaration Object</h2>
+      <p>The CSSStyleDeclaration object is of the same type that the object
+        returned from the element's style property. However, the two objects
+        have different purposes. The object return from getComputedStyle is
+        read-only and can be used to inspect the element's style. The elt.style
+        object should be used to set styles on a specific element.</p>
+      <p>The HTMLElement.style property returns only inline style attributes.</p>
+      <p>The first argument must be an Element. Parsing a non-Element Node, like
+        a #text Node, will throw an error.</p>
+      <p>The CSSStyleDeclaration object represents a collection of CSS
+        property-value pairs.</p>
+      <p><strong>Properties</strong></p>
+      <table style="width: 100%" border="1">
+        <tbody>
+          <tr>
+            <td>cssText</td>
+            <td>Returns a text representation of the declaration block</td>
+          </tr>
+          <tr>
+            <td>length</td>
+            <td>Returns a number of properties</td>
+          </tr>
+          <tr>
+            <td>parentRule</td>
+            <td>Returns the containing CssRule</td>
+          </tr>
+        </tbody>
+      </table>
+      <p></p>
+      <p><strong>Methods</strong></p>
+      <table style="width: 100%" border="1">
+        <tbody>
+          <tr>
+            <td>getPropertyPriority(property)</td>
+            <td>Gets whether or not the property has the "important" priority</td>
+          </tr>
+          <tr>
+            <td>getPropertyValue(property)</td>
+            <td>Gets the property value</td>
+          </tr>
+          <tr>
+            <td>index(index)</td>
+            <td>Gets the property name</td>
+          </tr>
+          <tr>
+            <td>removeProperty(property)</td>
+            <td>Gets the removed property value</td>
+          </tr>
+          <tr>
+            <td>setProperty(property, value, priority)</td>
+            <td>Set a CSS property for an element</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><a href="demo.html">Demo</a></p>
+      <script src="../../js/docs.js"></script></article>
+  </body>
+</html>

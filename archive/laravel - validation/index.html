@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Laravel validation">
+    <title>Validation trong Laravel</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Validation trong Laravel</h2>
+      <p>Laravel cung cấp một vài cách tiếp cận để validate dữ liệu đến ứng dụng
+        của bạn. Mặc định, class base controller của Laravel sử dụng <code>ValidatesRequests</code>
+        trait cung cấp phương thức khá thuận tiện cho việc validate HTTP request
+        đến với đa dạng quy định validation.</p>
+      <h3>Bắt đầu nhanh validation trong Laravel</h3>
+      <p>Để học tính năng validation của Laravel, hãy xem một ví dụ hoàn chỉnh
+        validate một form và hiển thị nội dung lỗi trả về cho người dùng.</p>
+      <h4>Xác định route</h4>
+      <p>Đầu tiên, giả sử chúng ta có route được định nghĩa trong <code>routes/web.php</code>:</p>
+      <pre>Route::get('post/create', 'PostController@create');
+
+Route::post('post', 'PostController@store');</pre>
+      <p>Tất nhiên, phương thức <code>GET</code> route sẽ hiển thị một form cho
+        người dùng tạo mới một bài viết, trong khi phương thức <code>POST</code>
+        route sẽ lưu bài viết đấy vào cơ sở dữ liệu.</p>
+      <h4>Tạo Controller</h4>
+      <p>Tiếp theo, tạo một controller đơn giản xử lý các routes. Bây giờ, chúng
+        ta sẽ để phương thức đấy <code>store</code> rỗng:</p>
+      <pre>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+class PostController extends Controller
+{
+    /**
+     * Show the form to create a new blog post.
+     *
+     * @return  Response
+     */
+    public function create()
+    {
+        return view('post.create');
+    }
+
+    /**
+     * Store a new blog post.
+     *
+     * @param    Request  $request
+     * @return  Response
+     */
+    public function store(Request $request)
+    {
+        // Validate and store the blog post...
+    }
+}</pre>
+      <h4>Viết logic validation</h4>
+      <p>Bây giờ chúng ta đã sẵn sàng viết logic vào phương thức <code>store</code>
+        để validate tạo mới bài viết. Nếu bạn kiểm tra class base controller (<code>App\Http\Controllers\Controller</code>)
+        của Laravel, bạn sẽ thấy class sử dụng một <code>ValidatesRequests</code>
+        trait. Nó cung cấp một phương thức <code>validate</code> cho tất cả
+        controllers.</p>
+      <p>Phương thức <code>validate</code> chấp nhận một HTTP request đến và
+        đặt quy định validation. Nếu quy định validationthành công, code của bạn
+        sẽ thực thi bình thường. Tuy nhiên, nếu validation thất bại, mội
+        exception sẽ được ném và tích hợp lỗi response sẽ được tự động gửi cho
+        người dùng. Trong trường hợp là HTTP request, một response chuyển trang
+        sẽ được tạo ra, trong khi một JSON response sẽ được gửi cho AJAX
+        request.</p>
+      <p>Để có thể hiểu rõ hơn về phương thức <code>validate</code>, hãy quay
+        lại phương thức <code>store</code>:</p>
+      <pre>/**
+ * Store a new blog post.
+ *
+ * @param    Request  $request
+ * @return  Response
+ */
+public function store(Request $request)
+{
+    $this-&gt;validate($request, [
+        'title' =&gt; 'required | unique:posts | max:255',
+        'body' =&gt; 'required',
+    ]);
+
+    // The blog post is valid, store in database...
+}</pre>
+      <p>Như bạn có thể thấy, chúng ta có thể truyền qua HTTP request đến và yêu
+        cầu quy định validation vào phương thức <code>validate</code>. Một lần
+        nữa, nếu validation thất bại, một response tương ứng sẽ tự động được tạo
+        ra. Nếu validation thành công, controller sẽ được thực thi bình thường.</p>
+      <h4>Dừng khi validation thất bại</h4>
+      <p>Thỉnh thoảng bạn muốn dừng quy định validation trong một thuộc tính sau
+        khi validation đầu tiên thất bại. Để làm việc đó, gán quy định <code>bail</code>
+        cho thuộc tính:</p>
+      <pre>$this-&gt;validate($request, [
+    'title' =&gt; 'bail | required | unique:posts | max:255',
+    'body' =&gt; 'required',
+]);</pre>
+      <p>Trong ví dụ này, nếu quy định <code>required</code> trên thuộc tính <code>title</code>
+        thất bại, quy định <code>unique</code> sẽ không cần kiểm tra. Quy định
+        sẽ validate trong thứ tự mà nó được gán.</p>
+      <h4>Chú ý thuộc tính lồng nhau</h4>
+      <p>Nếu HTTP request chứa tham số "lồng nhau", bạn có thể chỉ định chúng
+        trong quy định validate bằng cách sử dụng cú pháp "dấu chấm":</p>
+      <pre>$this-&gt;validate($request, [
+    'title' =&gt; 'required | unique:posts | max:255',
+    'author.name' =&gt; 'required',
+    'author.description' =&gt; 'required',
+]);</pre>
+      <h4>Hiển thị validation lỗi</h4>
+      <p>Cái gì sẽ xảy ra khi có một tham số request gửi đến không thành không
+        với quy định validation? Như đã đề cập ở trước, Laravel sẽ tự động
+        chuyển trang lại cho người dùng về trang trước đó. Ngoài ra, tất cả các
+        lỗi validation sẽ tự động <a href="https://giaphiep.com/docs/5.3/session#flash-data">flashed
+          vào session</a>.</p>
+      <p>Một lần nữa, chú ý rằng chúng ta sẽ không có một cách rõ ràng bind nội
+        dung lỗi vào view của <code>GET</code> route. Bởi vì Laravel sẽ tự động
+        kiểm tra lỗi trong dữ liệu session, và tự động bind chúng vào view nếu
+        chúng tồn tại. Biến <code>$errors</code> sẽ là một thể hiện của <code>Illuminate\Support\MessageBag</code>.
+        Để biết thêm chi tiết về nó, <a href="https://giaphiep.com/docs/5.3/validation#working-with-error-messages">có
+          thể xem tại đây</a>.</p>
+      <p> Biến <code>$errors</code> là bound vào view bởi middleware <code>Illuminate\View\Middleware\ShareErrorsFromSession</code>,
+        nó được cung cấp bởi nhóm middleware <code>web</code> middleware. <strong>Khi
+          middleware này được áp dụng, một biến <code>$errors</code> sẽ luôn
+          luôn tồn tại trong view của bạn</strong>, cho phép bạn thuận tiện để
+        giả định biến <code>$errors</code> luôn luôn được định nghĩa và có thể
+        sử dụng.</p>
+      <p>Vì vậy, trong ví dụ trên, người dùng sẽ chuyển trang đến phương thức <code>create</code>
+        của controller khi validation thất bại, cho phép chúng ta hiển thị nội
+        dung lỗi trên view:</p>
+      <pre>&lt;!-- /resources/views/post/create.blade.php --&gt;
+
+&lt;h1&gt;Create Post&lt;/h1&gt;
+
+@if (count($errors) &gt; 0)
+    &lt;div class="alert alert-danger"&gt;
+        &lt;ul&gt;
+            @foreach ($errors-&gt;all() as $error)
+                &lt;li&gt;{{ $error }}&lt;/li&gt;
+            @endforeach
+        &lt;/ul&gt;
+    &lt;/div&gt;
+@endif
+
+&lt;!-- Create Post Form --&gt;</pre>
+      <h4>Tùy biến định dạng lỗi flashed</h4>
+      <p>Giả sử bạn muốn tùy chỉnh nội dung lỗi của validation được flashed vào
+        session khi validation thất bại, ghi đè phương thức <code>formatValidationErrors</code>
+        trong base controller. Đừng quên import class <code>Illuminate\Contracts\Validation\Validator</code>
+        ở trên đầu file file:</p>
+      <pre>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+
+abstract class Controller extends BaseController
+{
+    use DispatchesJobs, ValidatesRequests;
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function formatValidationErrors(Validator $validator)
+    {
+        return $validator-&gt;errors()-&gt;all();
+    }
+}</pre>
+      <h4>AJAX Requests &amp; Validation</h4>
+      <p>Trong ví dụ này, chúng ta sử dụng form để gửi dữ liệu vào ứng dụng. Tuy
+        nhiên, nhiều ứng dụng sử dụng AJAX requests. Khi sử dụng phương thức <code>validate</code>
+        trong AJAX request, Laravel sẽ không tạo ra redirect response. Thay vì,
+        Laravel tạo một JSON response chứa tất cả lỗi validation. JSON response
+        này sẽ được gửi với mã 422 HTTP status.</p>
+      <h3>Form Request Validation</h3>
+      <h4>Tạo form request</h4>
+      <p>Với những trường hợp validation phức tạp, bạn có thể tạo một "form
+        request". Form requests là tùy chỉnh class request chứa logic
+        validation. Để tạo class form request, sử dụng lệnh <code>make:request</code>
+        Artisan CLI:</p>
+      <pre>php artisan make:request StoreBlogPost</pre>
+      <p>Class được tạo sẽ nằm ở thư mục <code>app/Http/Requests</code>
+        directory. Nếu thư mục đó không tồn tại, nó sẽ được tạo khi bạn chạy
+        lệnh <code>make:request</code>. Chúng ta sẽ thêm một vài quy định
+        validation vào trong phương thưc <code>rules</code>:</p>
+      <pre>/**
+ * Get the validation rules that apply to the request.
+ *
+ * @return  array
+ */
+public function rules()
+{
+    return [
+        'title' =&gt; 'required|unique:posts|max:255',
+        'body' =&gt; 'required',
+    ];
+}</pre>
+      <p>Bạn đánh giá thế nào về quy định validation? Tất cả bạn cần làm là
+        type-hint request vào trong phương thức controller. Form request được
+        validated trước khi phương thức controller được gọi, nghĩa là bạn không
+        cần viết một mớ hỗn độn logic trong controller:</p>
+      <pre>/**
+ * Store the incoming blog post.
+ *
+ * @param    StoreBlogPost  $request
+ * @return  Response
+ */
+public function store(StoreBlogPost $request)
+{
+    // The incoming request is valid...
+}</pre>
+      <p>Nếu validation thất bại, một chuyển trang response sẽ được tạo ra để
+        gửi cho lại người dùng đến trang trước. Ngoài ra lỗi sẽ được flashed vào
+        session, vì vậy chúng ta có thể hiển thị nó. Nếu request là AJAX
+        request, một HTTP response với mã 422 status sẽ được trả về cho người
+        dùng gồm JSON representation chứa lỗi validation.</p>
+      <h4>Authorizing Form Request</h4>
+      <p>Class form request ngoài ra còn chứa một phương thức <code>authorize</code>.
+        Bên trong phương thức, bạn có thể xác thực người dùng thực sự đã có
+        quyền cập nhật dữ liệu. Ví dụ, nếu một người dùng cố gắng cập nhật
+        comment của một một bài viết, họ thật sự sở hữa comment đấy? Ví dụ:</p>
+      <pre>/**
+ * Determine if the user is authorized to make this request.
+ *
+ * @return  bool
+ */
+public function authorize()
+{
+    $comment = Comment::find($this-&gt;route('comment'));
+
+    return $comment &amp;&amp; $this-&gt;user()-&gt;can('update', $comment);
+}</pre>
+      <p>Khi tất cả các form requests kế thừa từ class base Laravel request,
+        chúng ta có thể sử dụng phương thức <code>user</code> để truy cập xác
+        thức người dùng. Ngoài ra cũng cần gọi phương thức <code>route</code>
+        trong ví dụ trên. Phương thức này cho phép bạn truy cập đến tham số của
+        URI được định nghĩa trong route được gọi, như tham số <code>{comment}</code>
+        trong ví dụ trên:</p>
+      <pre>Route::post('comment/{comment}');</pre>
+      <p>Nếu phương thức <code>authorize</code> trả về <code>false</code>, một
+        HTTP response với mã 403 status sẽ được tự động trả về và phương thức
+        controller sẽ không được thực hiện.</p>
+      <p>Nếu bạn có kế hoạch cho phép logic trong một phần khác ứng dung của
+        bạn, đơn giản trả về <code>true</code> từ phương thức <code>authorize</code>:</p>
+      <pre>/**
+ * Determine if the user is authorized to make this request.
+ *
+ * @return  bool
+ */
+public function authorize()
+{
+    return true;
+}</pre>
+      <h4>Tùy biến định dạng lỗi</h4>
+      <p>Nếu bạn muốn tùy biến định dạng lỗi validation được flashed vào session
+        khi validation thất bại, ghi đè phương thức <code>formatErrors</code>
+        trong base request (<code>App\Http\Requests\Request</code>). Đừng quên
+        import class <code>Illuminate\Contracts\Validation\Validator</code>
+        class ở trên đầu file:</p>
+      <pre>/**
+ * {@inheritdoc}
+ */
+protected function formatErrors(Validator $validator)
+{
+    return $validator-&gt;errors()-&gt;all();
+}</pre>
+      <h4>Tùy biến nội dung lỗi</h4>
+      <p>Bạn có thể muốn tùy biến lỗi dung lỗi bằng cách sử dụng bởi form
+        request bằng cách ghi đè phương thức <code>messages</code>. Phương thức
+        này trả về một mảng các cặp thuộc tính / quy định tương ứng với nội dung
+        lỗi:</p>
+      <pre>/**
+ * Get the error messages for the defined validation rules.
+ *
+ * @return  array
+ */
+public function messages()
+{
+    return [
+        'title.required' =&gt; 'A title is required',
+        'body.required'  =&gt; 'A message is required',
+    ];
+}</pre>
+      <h3>Tự tạo validator</h3>
+      <p>Nếu bạn không muốn sử dụng phương thức <code>validate</code> của trait
+        <code>ValidatesRequests</code>, bạn có thể tự tạo một thể hiện validator
+        instance bằng <code>Validator</code> <a href="https://giaphiep.com/docs/5.3/facades">facade</a>.
+        Phương thức <code>make</code> trong facade sinh ra một thể hiện mới
+        validator:</p>
+      <pre>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Validator;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+class PostController extends Controller
+{
+    /**
+     * Store a new blog post.
+     *
+     * @param    Request  $request
+     * @return  Response
+     */
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request-&gt;all(), [
+            'title' =&gt; 'required|unique:posts|max:255',
+            'body' =&gt; 'required',
+        ]);
+
+        if ($validator-&gt;fails()) {
+            return redirect('post/create')
+                        -&gt;withErrors($validator)
+                        -&gt;withInput();
+        }
+
+        // Store the blog post...
+    }
+}</pre>
+      <p>Đối số đầu tiên truyền vào phương thức <code>make</code> là dữ liệu
+        cần validation. Đối số thứ hai là mảng quy định validation được áp dụng
+        vào dữ liệu.</p>
+      <p>Sau khi kiểm tra request validation không thành công, bạn có thể dùng
+        phương thức <code>withErrors</code> để flash nội dung lỗi vào session.
+        Khi sử dụng phương thức này, biến <code>$errors</code> sẽ tự động được
+        gửi đến views sau khi chuyển trang, cho phép bạn dễ dàng hiển thị chúng
+        cho người dùng. Phương thức <code>withErrors</code> chấp nhận một
+        validator, <code>MessageBag</code>, hoặc một <code>array</code> PHP.</p>
+      <h4>Redirection tự động</h4>
+      <p>Nếu bạn muốn tạo mới một thể hiện validator những vẫn tự động chuyển
+        trang bởi <code>ValidatesRequest</code> trait, bạn có thể gọi phương
+        thức <code>validate</code> trong một thể hiện hiện tại validator. Nếu
+        validation thất bạn, người dùng sẽ tự động được chuyển trang hoặc trong
+        trường hợp là một AJAX request, một JSON response sẽ được trả về:</p>
+      <pre>Validator::make($request-&gt;all(), [
+    'title' =&gt; 'required|unique:posts|max:255',
+    'body' =&gt; 'required',
+])-&gt;validate();</pre>
+      <h4>Named Error Bag</h4>
+      <p>Nếu bạn có nhiều form trên một trang, bạn có thể sử dụng phương thức <code>MessageBag</code>,
+        cho phép bạn nhận nội dung lỗi từ form cụ thể. Đơn giản chỉ là truyền
+        thêm một tham số thứ hai của phương thức <code>withErrors</code>:</p>
+      <pre>return redirect('register')
+            -&gt;withErrors($validator, 'login');</pre>
+      <p>Bạn cũng có thể lấy một thể hiện <code>MessageBag</code> từ biến <code>$errors</code>:</p>
+      <pre>{{ $errors-&gt;login-&gt;first('email') }}</pre>
+      <h4>After Validation Hook</h4>
+      <p>Ngoài ra validator còn cho phép bạn thêm callbacks để chạy sau khi
+        validation thành công. Điều này cho phép bạn dễ dàng thực hiện các
+        validation và thêm nội dung lỗi cho message collection. Để bắt đầu, sử
+        dụng phương thức <code>after</code> trong một thể hiện validator:</p>
+      <pre>$validator = Validator::make(...);
+
+$validator-&gt;after(function ($validator) {
+    if ($this-&gt;somethingElseIsInvalid()) {
+        $validator-&gt;errors()-&gt;add('field', 'Something is wrong with this field!');
+    }
+});
+
+if ($validator-&gt;fails()) {
+    //
+}</pre>
+      <h3>Làm việc với message lỗi</h3>
+      <p>Sau khi gọi phương thức <code>errors</code> trong một thể hiện <code>Validator</code>,
+        bạn sẽ nhận được một thể hiện <code>Illuminate\Support\MessageBag</code>,
+        sẽ có một số phương thức làm việc với nội dung lỗi. Biến <code>$errors</code>
+        sẽ tự động được tạo cho tất cả các view, ngoài ra nó cũng là một thể
+        hiện của class <code>MessageBag</code>.</p>
+      <h4>Nhận về nội dung lỗi đầu tiên của một trường</h4>
+      <p>Để nhận về lỗi đầu tiên của một trường, sử dụng phương thức <code>first</code>:</p>
+      <pre>$errors = $validator-&gt;errors();
+
+echo $errors-&gt;first('email');</pre>
+      <h4>Nhận về tất cả nội dung lỗi của một trường</h4>
+      <p>Nếu bạn cần nhận một mảng nội dung của tất cả lỗi của một trường, sử
+        dụng phương thức <code>get</code>:</p>
+      <pre>foreach ($errors-&gt;get('email') as $message) {
+    //
+}</pre>
+      <p>Nếu bạn validating một mảng các trường của form, bạn có thể nhận về tất
+        cả nội dung cho mỗi phần tử của mảng bằng cách sử dụng ký tự <code>*</code>:</p>
+      <pre>foreach ($errors-&gt;get('attachments.*') as $message) {
+    //
+}</pre>
+      <h4>Nhận về tất cả các lỗi của tất cả các trường</h4>
+      <p>Để nhận một mảng tất cả các nội dung của tất cả các trường, sử dụng
+        phương thức <code>all</code>:</p>
+      <pre>foreach ($errors-&gt;all() as $message) {
+    //
+}</pre>
+      <h4>Xác định nội dung của một trường có tồn tại</h4>
+      <p>Phương thức <code>has</code> có thể sử dụng để xác định bất kỳ nội
+        dung lỗi tồn tại của một trường:</p>
+      <pre>if ($errors-&gt;has('email')) {
+    //
+}</pre>
+      <h4>Tùy biến nội dung</h4>
+      <p>Nếu bạn cần, bạn có thể tùy biến nội dung lỗi cho thể hiện validation
+        mặc định. Có một vài cách để làm việc này. Đầu tiên, bạn có thể truyền
+        tùy biến nội dung như là tham số thứ ba của hàm <code>Validator::make</code>:</p>
+      <pre>$messages = [
+    'required' =&gt; 'The :attribute field is required.',
+];
+
+$validator = Validator::make($input, $rules, $messages);</pre>
+      <p>Trong ví dụ trên, thuộc tính <code>:attribute</code> place-holdersẽ
+        thay thế bởi tên thực tế của trường validation. Ngoài ra bạn có thể sử
+        dụng place-holders trong nội dung validation. Ví dụ:</p>
+      <pre>$messages = [
+    'same'    =&gt; 'The :attribute and :other must match.',
+    'size'    =&gt; 'The :attribute must be exactly :size.',
+    'between' =&gt; 'The :attribute must be between :min - :max.',
+    'in'      =&gt; 'The :attribute must be one of the following types: :values',
+];</pre>
+      <h4>Tùy biến nội dung của thuộc tính cụ thể</h4>
+      <p>Thỉnh thoảng bạn có thể tùy biến nội dung lỗi chỉ duy nhất một trường.
+        Bạn có thể sử dụng "dấu chấm". Chỉ định tên của thuộc tính đầu tiên,
+        theo bởi quy định:</p>
+      <pre>$messages = [
+    'email.required' =&gt; 'We need to know your e-mail address!',
+];</pre>
+      <h4>Tùy biến nội dung trong file ngôn ngữ</h4>
+      <p>Trong hầu hết các trương hợp, bạn có thể tùy biến nội dung trong một
+        file ngôn ngữ thay vì truyền chúng trực tiếp vào phương thức <code>Validator</code>.
+        Đề làm điều này, bạn thêm nội dung vào mảng <code>custom</code>trong
+        file ngôn ngữ <code>resources/lang/xx/validation.php</code>.</p>
+      <pre>'custom' =&gt; [
+    'email' =&gt; [
+        'required' =&gt; 'We need to know your e-mail address!',
+    ],
+],</pre>
+      <h4>Tùy biến thuộc tính trong file ngôn ngữ</h4>
+      <p>Nếu bạn muốn thuộc tính <code>:attribute</code> phần nội dung
+        validation sẽ được thay đổi bởi tên thuộc tính tùy chỉnh, bạn có thể tùy
+        biến trong mảng <code>attributes</code> của file ngôn ngữ <code>resources/lang/xx/validation.php</code>:</p>
+      <pre>'attributes' =&gt; [
+    'email' =&gt; 'email address',
+],</pre>
+      <h3>Những quy định validation có sẵn</h3>
+      <h4>accepted</h4>
+      <p>Giá trị phải là <em>yes</em>, <em>on</em>, <em>1</em>, or <em>true</em>.
+        Rất hữu dụng cho việc chấp nhận "Terms of Service".</p>
+      <h4>active_url</h4>
+      <p>Giá trị phải là URL theo hàm <code>checkdnsrr</code> của PHP.</p>
+      <h4>after:<em>date</em></h4>
+      <p>Giá trị phải là một ngày sau ngày đã cho. Giá trị ngày phải hợp lệ theo
+        hàm <code>strtotime</code> của PHP:</p>
+      <pre>'start_date' =&gt; 'required|date|after:tomorrow'</pre>
+      <p>Thay vì truyền giá trị ngày vào một chuỗi vào hàm <code>strtotime</code>,
+        bạn có thể chỉ định một trường khác để so sánh ngày:</p>
+      <pre>'finish_date' =&gt; 'required|date|after:start_date'</pre>
+      <h4>alpha</h4>
+      <p>Giá trị phải là chữ cái.</p>
+      <h4>alpha_dash</h4>
+      <p>Giá trị phải là chữ cái hoặc chữ số, gồm cả dấu gạch ngang và dấu gạch
+        dưới.</p>
+      <h4>alpha_num</h4>
+      <p>Giá trị phải là chữ số.</p>
+      <h4>array</h4>
+      <p>Giá trị phải là một <code>array</code> PHP.</p>
+      <h4>before:<em>date</em></h4>
+      <p>Giá trị phải là ngày trước ngày đã cho. Giá trị ngày sẽ được truyền vào
+        hàm <code>strtotime</code> của PHP.</p>
+      <h4>between:<em>min</em>,<em>max</em></h4>
+      <p>Giá trị phải nằm trong khoảng <em>min</em> and <em>max</em>. Chuỗi,
+        số, và file là giống kiểu <a href="https://giaphiep.com/docs/5.3/validation#rule-size"><code>size</code></a>
+        với nhau.</p>
+      <h4>boolean</h4>
+      <p>Giá trị phải là kiểu boolean có thể là <code>true</code>, <code>false</code>,
+        <code>1</code>, <code>0</code>, <code>"1"</code>, và <code>"0"</code>.</p>
+      <h4>confirmed</h4>
+      <p>Giá trị phải khớp với trường <code>foo_confirmation</code>. Ví dụ, nếu
+        trường là <code>password</code>, thì giá trị <code>password_confirmation</code>
+        phải khớp với trương mật khẩu.</p>
+      <h4>date</h4>
+      <p>Giá trị phải là ngày hợp lệ theo hàm <code>strtotime</code> của PHP.</p>
+      <h4>date_format:<em>format</em></h4>
+      <p>Giá trị phải giống <em>format</em> truyền vào. Định dạng phải hợp lệ
+        với hàm <code>date_parse_from_format</code> của PHP. Bạn nên sử dụng <code>date</code>
+        hoặc <code>date_format</code> khi validate một trường.</p>
+      <h4>different:<em>field</em></h4>
+      <p>Giá trị phải khác giá trị của <em>field</em>.</p>
+      <h4>digits:<em>value</em></h4>
+      <p>Giá trị phải là <em>numeric</em> và phải chính xác độ dài là <em>value</em>.</p>
+      <h4>digits_between:<em>min</em>,<em>max</em></h4>
+      <p>Giá trị phải có độ dài nằm trong khoảng <em>min</em> and <em>max</em>.</p>
+      <h4>dimensions</h4>
+      <p>Giá trị phải là một ảnh có kích thước giống rule's parameters:</p>
+      <pre>'avatar' =&gt; 'dimensions:min_width=100,min_height=200'</pre>
+      <p>Tồn tại một số thuộc tính: <em>min_width</em>, <em>max_width</em>, <em>min_height</em>,
+        <em>max_height</em>, <em>width</em>, <em>height</em>, <em>ratio</em>.</p>
+      <p>A <em>ratio</em> biểu diễn tỷ lệ chiều rộng chia chiều cao. Có thể
+        được xác định như <code>3/2</code> hoặc <code>1.5</code>:</p>
+      <pre>'avatar' =&gt; 'dimensions:ratio=3/2'</pre>
+      <h4>distinct</h4>
+      <p>Khi làm việc với mảng, Mảng phải không có giá trị lặp lại.</p>
+      <pre>'foo.*.id' =&gt; 'distinct'</pre>
+      <h4>email</h4>
+      <p>Giá trị phải là một địa chỉ email.</p>
+      <h4>exists:<em>table</em>,<em>column</em></h4>
+      <p>Giá trị phải có trong bảng cơ sở dữ liệu.</p>
+      <p>Basic Usage Of Exists Rule</p>
+      <pre>'state' =&gt; 'exists:states'</pre>
+      <p>Specifying A Custom Column Name</p>
+      <pre>'state' =&gt; 'exists:states,abbreviation'</pre>
+      <p>Thỉnh thoảng, bạn cần kiểm tra kết nối database sử dụng cho <code>exists</code>
+        query. Bạn có thể làm điều này bằng cách thêm "dấu chấm" vào trước tên
+        kết nối:</p>
+      <pre>'email' =&gt; 'exists:connection.staff,email'</pre>
+      <p>Nếu bạn muốn tùy biến thực thi query , bạn có thể sử dụng class <code>Rule</code>
+        để định nghĩa quy định. Trong ví dụ này, chúng ta chỉ định quy tắc
+        validation như là một mảng thay vì sử dụng ký tự <code>|</code>:</p>
+      <pre>use Illuminate\Validation\Rule;
+
+Validator::make($data, [
+    'email' =&gt; [
+        'required',
+        Rule::exists('staff')-&gt;where(function ($query) {
+            $query-&gt;where('account_id', 1);
+        }),
+    ],
+]);</pre>
+      <h4>file</h4>
+      <p>Giá trị phải là một file tải lên thành công.</p>
+      <h4>filled</h4>
+      <p>Giá trị không được phép trống.</p>
+      <h4>image</h4>
+      <p>Giá trị phải là ảnh có định dạng (jpeg, png, bmp, gif, or svg).</p>
+      <h4>in:<em>foo</em>,<em>bar</em>,...</h4>
+      <p>Giá trị phải thuộc danh sách các giá trị.</p>
+      <h4>in_array:<em>anotherfield</em></h4>
+      <p>Giá trị phải tồn tại trong giá trị của <em>anotherfield</em>'s.</p>
+      <h4>integer</h4>
+      <p>Giá trị phải là kiểu integer.</p>
+      <h4>ip</h4>
+      <p>Giá trị phải là địa chỉ IP.</p>
+      <h4>json</h4>
+      <p>Giá trị phải là một string JSON.</p>
+      <h4>max:<em>value</em></h4>
+      <p>Giá trị phải nhỏ hơn hoặc bằng <em>value</em>. Chuỗi, số, và file là
+        kiểu giống <a href="https://giaphiep.com/docs/5.3/validation#rule-size"><code>size</code></a>
+        với nhau.</p>
+      <h4>mimetypes:<em>text/plain</em>,...</h4>
+      <p>Giá trị phải khớp với MIME types:</p>
+      <pre>'video' =&gt; 'mimetypes:video/avi,video/mpeg,video/quicktime'</pre>
+      <p>Xác định MIME type của file upload, nội dung file sẽ được đọc framework
+        sẽ đoán MIME type, có thể sẽ khác MIME type của người dùng.</p>
+      <h4>mimes:<em>foo</em>,<em>bar</em>,...</h4>
+      <p>Giá trị phải khơp với MIME type ứng với một danh sách extensions.</p>
+      <p>Basic Usage Of MIME Rule</p>
+      <pre>'photo' =&gt; 'mimes:jpeg,bmp,png'</pre>
+      <p>Mặc dù bạn chỉ cần xác định extensions, thực ra quy định validates này
+        lại là validate MIME type file bằng các đọc nội dung và đoán MIME type.</p>
+      <p>Tất cả danh sách MIME types và extensions có thể tìm thấy ở:</p>
+      <p><a href="http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types">http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types</a></p>
+      <h4>min:<em>value</em></h4>
+      <p>Giá trị phải nhỏ hơn <em>value</em>. Chuỗi, số, và file là giống <a href="https://giaphiep.com/docs/5.3/validation#rule-size"><code>size</code></a>
+        với nhau.</p>
+      <h4>nullable</h4>
+      <p>Giá trị có thể <code>null</code>. Nó rất hữu dụng khi validate string
+        hoặc integer chứa giá trị <code>null</code>.</p>
+      <h4>not_in:<em>foo</em>,<em>bar</em>,...</h4>
+      <p>Giá trị phải không thuộc danh sách giá trị.</p>
+      <h4>numeric</h4>
+      <p>Giá trị phải là số.</p>
+      <h4>present</h4>
+      <p>Giá trị hiện tại phải xuất hiện trong input nhưng thể được trống.</p>
+      <h4>regex:<em>pattern</em></h4>
+      <p>Giá trị phải khớp với regular expression.</p>
+      <p><strong>Chú ý:</strong> Khi sử dụng <code>regex</code> pattern, nó cần
+        được xác định quy định trong mảng thay vì sử dụng pipe delimiter, đặc
+        biệt nếu regular expression chứa pipe ký tự.</p>
+      <h4>required</h4>
+      <p>Giá trị phải xuất hiện trong input và không được phép trống. Một trường
+        được coi là "empty" nếu một trong số điều kiện dưới đây đúng:</p>
+      <div>
+        <ul>
+          <li>Giá trị là <code>null</code>.</li>
+          <li>Giá trị là một chuỗi rỗng.</li>
+          <li>Giá trị là mảng rỗng hoặc object <code>Countable</code> rỗng.</li>
+          <li>Giá trị là file upload không có đường dẫn.</li>
+        </ul>
+      </div>
+      <h4>required_if:<em>anotherfield</em>,<em>value</em>,...</h4>
+      <p>Giá trị phải xuất hiện và không được trống nếu trường <em>anotherfield</em>
+        bằng bất kỳ <em>value</em>.</p>
+      <h4>required_unless:<em>anotherfield</em>,<em>value</em>,...</h4>
+      <p>Giá trị phải xuất hiện và không được phép trống trừ khi trường <em>anotherfield</em>
+        bằng bất kỳ <em>value</em>.</p>
+      <h4>required_with:<em>foo</em>,<em>bar</em>,...</h4>
+      <p>Giá trị phải xuất hiện và không được trống <em>only if</em> bất kỳ một
+        trường khác xác định xuất hiện.</p>
+      <h4>required_with_all:<em>foo</em>,<em>bar</em>,...</h4>
+      <p>Giá trị phải xuất hiện và không được trống <em>only if</em> tất cả các
+        trường khác xác định xuất hiện.</p>
+      <h4>required_without:<em>foo</em>,<em>bar</em>,...</h4>
+      <p>Giá trị phải xuất hiện và không được trống <em>only when</em> bất cứ
+        trường xác định không xuất hiện.</p>
+      <h4>required_without_all:<em>foo</em>,<em>bar</em>,...</h4>
+      <p>The field under validation must be present and not empty <em>only when</em>
+        all of the other specified fields are not present.</p>
+      <h4>same:<em>field</em></h4>
+      <p>Giá trị <em>field</em> phải khớp với trường này.</p>
+      <h4>size:<em>value</em></h4>
+      <p>Giá trị phải có kích thước khớp với <em>value</em>. Đối với chuỗi, <em>value</em>
+        tương ứng là số ký tự. Đối với số, <em>value</em> tương ứng là giá trị
+        integer. Đối với mảng, <em>size</em> tương ứng là <code>count</code>
+        phần tử của mảng. Đối với file, <em>size</em> tương ứng là kích thước
+        file kiểu kilobytes.</p>
+      <h4>string</h4>
+      <p>Giá trị phải là chuỗi. Nếu bạn muốn cho phép trường đó <code>null</code>,
+        bạn có thể gán <code>nullable</code> vào trường đó.</p>
+      <h4>timezone</h4>
+      <p>Giá trị phải là timezone identifier hợp lệ với hàm <code>timezone_identifiers_list</code>
+        của PHP.</p>
+      <h4>unique:<em>table</em>,<em>column</em>,<em>except</em>,<em>idColumn</em></h4>
+      <p>Giá trị phải là unique trong bảng cơ sở dữ liệu. Nếu tên <code>column</code>
+        không được chỉ định, trường name sẽ được sử dụng.</p>
+      <p>Bạn có thể chỉ định tên cột (email_address) như sau:</p>
+      <pre>'email' =&gt; 'unique:users,email_address'</pre>
+      <h5>Tùy biến kết nối cơ sở dữ liệu</h5>
+      <p>Thỉnh thoảng, có thể bạn muốn tùy chỉnh kết nối query cơ sở dữ liệu bởi
+        Validator. Như ở trên, cài đặt <code>unique:users</code> như một quy
+        định validation sẽ sử dụng kết nối mặc định database để query đến cơ sở
+        dữ liệu. Để ghi đè nó, xác định kết nối và tên bảng sử dụng "dấu chấm":</p>
+      <pre>'email' =&gt; 'unique:connection.users,email_address'</pre>
+      <h5>Validate unique bỏ qua ID</h5>
+      <p>Thỉnh thoảng, bạn có thể muốn bỏ qua id trong khi kiểm tra unique. Ví
+        dụ, cân nhắc "cập nhận hồ sơ" sẽ bao gồm name, địa chỉ e-mail, và địa
+        điểm của người dùng. Tất nhiên, bạn sẽ muốn xác định email là unique.
+        Tuy nhiên, nếu người dùng chỉ thay đổi tên và không thay đổi email, bạn
+        không muốn validation lỗi được ném ra bởi vì người dùng đó đã sử dụng
+        cái email đấy rồi.</p>
+      <p>Chỉ dẫn validator bỏ qua ID của người dùng, chúng ta sử dụng class <code>Rule</code>
+        định nghĩa quy tắc. Trong ví dụ này, chúng ta sẽ chỉ định quy tắc
+        validation như một mảng thay thế sử dụng ký tự để phân cách <code>|</code>
+        quy định:</p>
+      <pre>use Illuminate\Validation\Rule;
+
+Validator::make($data, [
+    'email' =&gt; [
+        'required',
+        Rule::unique('users')-&gt;ignore($user-&gt;id),
+    ],
+]);</pre>
+      <p>Nếu bảng user của bạn có a primary key không phải là <code>id</code>,
+        bạn có thể chỉ định name của cột khi gọi phương thức <code>ignore</code>:</p>
+      <pre>'email' =&gt; Rule::unique('users')-&gt;ignore($user-&gt;id, 'user_id')</pre>
+      <h5>Thêm điều kiện bổ sung</h5>
+      <p>Bạn cũng có thể thêm query chứa tùy chỉnh query bằng cách sử dụng
+        phương thức <code>where</code>. Ví dụ, chúng ta thêm một hạn chế để
+        kiểm tra <code>account_id</code> là <code>1</code>:</p>
+      <pre>'email' =&gt; Rule::unique('users')-&gt;where(function ($query) {
+    $query-&gt;where('account_id', 1);
+})</pre>
+      <h4>url</h4>
+      <p>Giá trị phải là đúng định dạng URL.</p>
+      <h3>Thêm quy định có điều kiện</h3>
+      <h4>Validating khi xuất hiện</h4>
+      <p>Trong một số trường hợp, bạn có thể muốn chạy validation kiểm tra lại
+        trường <strong>only</strong> nếu trường đó xuất hiện trong mảng input.
+        Để nhanh chóng làm điều này, thêm <code>sometimes</code> vào trong danh
+        sách quy tắc rule:</p>
+      <pre>$v = Validator::make($data, [
+    'email' =&gt; 'sometimes|required|email',
+]);</pre>
+      <p>Trong ví dụ trên, trường <code>email</code> sẽ chỉ được validated nếu
+        nó xuất hiện trong mảng <code>$data</code>.</p>
+      <h4>Thêm quy định có điều kiện</h4>
+      <p>Thỉnh thoảng bạn muốn thêm quy định trong logic. Ví dụ, bạn có thể muốn
+        yêu cầu một trường chỉ nếu trường khác có giá trị lớn hơn 100. Hoặc bạn
+        muốn 2 trường có giá trị chỉ khi trường khác xuất hiện. Để làm việc đó
+        không có gì khó khăn cả. Đầu tiên, tạo một thể hiện <code>Validator</code>
+        với <em>static rules</em> sẽ không bao giờ thay đổi:</p>
+      <pre>$v = Validator::make($data, [
+    'email' =&gt; 'required|email',
+    'games' =&gt; 'required|numeric',
+]);</pre>
+      <p>Giả sử bây giờ ứng dụng web của bạn là sưu tầm game. Nếu một người sưu
+        tầm game đăng ký ứng dụng của bạn và họ có nhỏ hơn 100 game, chúng ta
+        muốn họ giải thích tại sao chọ có quá nhiều game. Ví dụ, có thể họ chạy
+        một shop bán game, hoặc có thể họ thích sưu tầm. Để có thể yêu cầu này,
+        chúng ta có thể sử dụng phương thức <code>sometimes</code> trong thể
+        hiện <code>Validator</code>.</p>
+      <pre>$v-&gt;sometimes('reason', 'required|max:500', function ($input) {
+    return $input-&gt;games &gt;= 100;
+});</pre>
+      <p>Tham số thứ nhất truyền vào phương thức <code>sometimes</code> là tên
+        của trường chúng ta muốn validate. Tham số thứ hai là quy định chúng ta
+        muốn thêm. Nếu truyền <code>Closure</code> như là tham số thứ ba trả về
+        <code>true</code>, quy định sẽ được thêm. Phương thức này làm cho việc
+        thêm quy định validate phức tạp trở lên dễ dàng hơn, ngay cả khi bạn
+        muốn thêm nhiều validate cho nhiều trường:</p>
+      <pre>$v-&gt;sometimes(['reason', 'cost'], 'required', function ($input) {
+    return $input-&gt;games &gt;= 100;
+});</pre>
+      <p> Tham số <code>$input</code> truyền vào trong <code>Closure</code> là
+        một thể hiện của <code>Illuminate\Support\Fluent</code>và bạn có thể
+        truy cập input và file.</p>
+      <h3>Validate mảng</h3>
+      <p>Validating mảng các trường của form không có gì khó khăn. Ví dụ, để
+        validate mỗi email trong mảng trường input là unique, bạn có thể làm như
+        sau:</p>
+      <pre>$validator = Validator::make($request-&gt;all(), [
+    'person.*.email' =&gt; 'email|unique:users',
+    'person.*.first_name' =&gt; 'required_with:person.*.last_name',
+]);</pre>
+      <p>Tương tự như vậy, bạn có thể sử dụng ký tự <code>*</code> khi muốn chỉ
+        định nội dung validation trong file ngôn ngữ, làm cho việc dễ dàng sử
+        dụng một file nội dung validate cho mảng:</p>
+      <pre>'custom' =&gt; [
+    'person.*.email' =&gt; [
+        'unique' =&gt; 'Each person must have a unique e-mail address',
+    ]
+],</pre>
+      <h3>Tự tạo luật validate riêng</h3>
+      <p>Chúng ta có thể sử dụng ba cách:</p>
+      <ul>
+        <li>Đối tượng Rule</li>
+        <li>Dùng Closure</li>
+        <li>Dùng extension</li>
+      </ul>
+      <p>Validate số điện thoại.</p>
+      <p>Laravel cung cấp một số quy định validation rất hữu ích; tuy nhiên, có
+        thể bạn muốn tạo validate bởi chính bạn. Một phương thức đăng ký tùy
+        biến quy tắc validation là sử dụng phương thức <code>extend</code>
+        trong <code>Validator</code> <a href="https://giaphiep.com/docs/5.3/facades">facade</a>.
+        Chúng ta sẽ sử dụng nó trong một <a href="https://giaphiep.com/docs/5.3/providers">service
+          provider</a> để đăng ký tùy biến quy tắc validation:</p>
+      <pre>&lt;?php
+
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Validator;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return  void
+     */
+    public function boot()
+    {
+        Validator::extend('foo', function ($attribute, $value, $parameters, $validator) {
+            return $value == 'foo';
+        });
+    }
+
+    /**
+     * Register the service provider.
+     *
+     * @return  void
+     */
+    public function register()
+    {
+        //
+    }
+}</pre>
+      <p>Tùy biến validator Closure nhận bốn đối số:</p>
+      <ul>
+        <li>tên của <code>$attribute</code> được validate</li>
+        <li>giá trị <code>$value</code> của thuộc tính</li>
+        <li>một mảng quy định <code>$parameters</code></li>
+        <li>một thể hiện <code>Validator</code></li>
+      </ul>
+      <p>Bạn cũng có thể truyền một class và method vào phương thức <code>extend</code>
+        thay vì một Closure:</p>
+      <pre>Validator::extend('foo', 'FooValidator@validate');</pre>
+      <h4>Định nghĩa nội dung lỗi</h4>
+      <p>Bạn có thể định nghĩa một nội dung lỗi cho quy định tùy biến của bạn.
+        Bạn có thể làm như vậy hoặc một mảng nội dung tùy biến nội dung inline
+        hoặc thêm vào validation file ngôn ngữ. Nội dung này sẽ được đặt ở trên
+        đầu của mảng, không ở bên trong mảng <code>custom</code>, nó chỉ dành
+        cho những nội dung lỗi attribute-specific:</p>
+      <pre>"foo" =&gt; "Your input was invalid!",
+
+"accepted" =&gt; "The :attribute must be accepted.",
+
+// The rest of the validation error messages...</pre>
+      <p>Khi bạn tùy biến quy định validation, thỉnh thoảng bạn cần định nghĩa
+        tùy chỉnh placeholder thay thế nội dung lỗi. Bạn cũng có thể tạo một
+        Validator như miêu tả ở trên sau đó gọi phương thức <code>replacer</code>
+        trong <code>Validator</code> facade. Bạn có thể sử dụng trong phương
+        thức <code>boot</code> của <a href="https://giaphiep.com/docs/5.3/providers">service
+          provider</a>:</p>
+      <pre>/**
+ * Bootstrap any application services.
+ *
+ * @return  void
+ */
+public function boot()
+{
+    Validator::extend(...);
+
+    Validator::replacer('foo', function ($message, $attribute, $rule, $parameters) {
+        return str_replace(...);
+    });
+}</pre>
+      <h4>Implicit extension</h4>
+      <p>Mặc định, khi một thuộc tính đã được validate là không xuất hiện hoặc
+        chứa một giá trị rỗng như định nghĩa bởi quy tắc <a href="https://giaphiep.com/docs/5.3/validation#rule-required"><code>required</code></a>,
+        thì các quy tắc validate thường, bao gồm cả phần extension, là không
+        hoạt động. Ví dụ, quy định <a href="https://giaphiep.com/docs/5.3/validation#rule-unique"><code>unique</code></a>
+        sẽ không hoạt động lần nữa nếu giá trị <code>null</code>:</p>
+      <pre>$rules = ['name' =&gt; 'unique'];
+$input = ['name' =&gt; null];
+Validator::make($input, $rules)-&gt;passes(); // true</pre>
+      <p>Đối với quy tắc validate hoạt động ngay cả khi thuộc tính là rỗng, quy
+        định phải ngụ ý rằng các thuộc tính là bắt buộc. Như tạo một "implicit"
+        extension, sử dụng phương thức <code>Validator::extendImplicit()</code>:</p>
+      <pre>Validator::extendImplicit('foo', function ($attribute, $value, $parameters, $validator) {
+    return $value == 'foo';
+});</pre>
+      <p> Một "implicit" extension<em></em> ngụ ý là các thuộc tính là bắt buộc.
+        Cho dù nó thực sự invalidate thuộc tính là lỗi hoặc rộng là phụ thuộc
+        vào bạn.</p>
+      <h4>Thêm validation - validate mật khẩu mạnh</h4>
+      <p>Thực ra tôi chỉ muốn validate mật khẩu dài thôi. Độ phức tạp của mật
+        khẩu không quan trọng bằng độ dài của nó. Nhưng quy định ATTT của
+        Viettel là như vậy.</p>
+      <p>Các chức năng liên quan mà cần validate mật khẩu mạnh:</p>
+      <ul>
+        <li>Đăng ký (chức năng của Laravel)</li>
+        <li>Reset mật khẩu (chức năng của Laravel)</li>
+        <li>Người dùng đổi mật khẩu</li>
+      </ul>
+      <p>Vì có nhiều chỗ thế này nên chúng ta nên viết một rule riêng.</p>
+      <p>Mật khẩu mạnh là:</p>
+      <ul>
+        <li>Ít nhất 8 ký tự</li>
+        <li>Chứa chữ hoa</li>
+        <li>Chứa chữ thường</li>
+        <li>Chứa số</li>
+        <li>Chứa ký tự đặc biệt (!@#$&amp;*)</li>
+        <li>Không được trong 1 số mật khẩu yếu thông dụng (ví dụ 123456a@).</li>
+      </ul>
+      <p>Biểu thức chính quy là:</p>
+      <pre>^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$&amp;*]).{8,}$</pre>
+      <p><a href="">Rubular link</a></p>
+      <p>Giải thích:</p>
+      <pre>^                  Start anchor
+(?=.*[A-Z])        Ensure string has uppercase letters
+(?=.*[!@#$&amp;*])     Ensure string has one special case letter
+(?=.*[0-9])        Ensure string has digits
+(?=.*[a-z])        Ensure string has lowercase letters
+.{8,}              Độ dài ít nhất 8 ký tự
+$                  End anchor</pre>
+      <p>Thêm validation rule kiểu extension.</p>
+      <pre>&lt;?php
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Validator;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        // Register custom validators
+        Validator::extend('current_password', function ($attribute, $value, $parameters, $validator) {
+            return \Illuminate\Support\Facades\Hash::check($value, auth()-&gt;user()-&gt;password);
+        }, 'The :attribute field does not match with your current password.');
+
+        Validator::extend('strong_password', function ($attribute, $value, $parameters, $validator) {
+            return preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$&amp;*]).{8,}$/', $value);
+        }, 'Mật khẩu phải dài ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số, ký tự đặc biệt');
+    }
+}</pre>
+      <p>Nếu làm theo cách thông thường, dùng luật regex, ta nên làm như sau
+        (chú ý nên định nghĩa kiểu mảng, vì trong regex có thể chứa ký tự pipe
+        |).</p>
+      <pre>'password' =&gt; [
+    'required',
+    'min:8',
+    'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$&amp;*]).{8,}$/', 
+    'confirmed'<br>]</pre>
+      <p>Mở file&nbsp;<code>RegisterController.php</code> ở thư mục <code>app/Http/Controllers/Auth</code>.
+        Trong phương thức <code>validator()</code>, sửa luật validation của
+        password.</p>
+      <pre>protected function validator(array $data) {
+    return Validator::make($data, [
+        'name' =&gt; 'required | string | max:255',
+        'email' =&gt; 'required | string | email | max:255 | unique:users',
+        'password' =&gt; 'required | string | min:8 | confirmed | strong_password'
+    ]);
+}</pre>
+      <p>Mở file <code>ResetPasswordController.php</code> ở thư mục <code>app/Http/Controllers/Auth</code>.
+        Thêm phương thức <code>rules()</code> với các luật sau:</p>
+      <div> <ins data-ad-client="ca-pub-8077071189647178" data-ad-slot="1403147647"
+          data-ad-format="auto"></ins> </div>
+      <pre>protected function rules() {
+    return [
+        'token' =&gt; 'required',
+        'email' =&gt; 'required | string | email',
+        'password' =&gt; 'required | string | min:8 | confirmed | strong_password',
+    ];
+}</pre>
+      <p>The <code>rules()</code> method is available in <code>ResetPasswords</code>
+        trait. When we put in this controller, it overrides the default
+        validation rules of <code>ResetPasswords</code>.</p>
+      <p>That’ it ! You now have a stronger password validation on top of
+        Laravel Authentication.</p>
+      <h3>Đối tượng Rule</h3>
+      <p>Đối tượng Rule là một class mà trong đó bạn có thể định nghĩa các
+        custom rule của bạn tương tự như Closure và có thể gọi đến instance của
+        class rule đó ở bất cứ đâu bạn cần. Nếu có thay đổi, bạn chỉ cần mở lại
+        class đó lên và chỉnh sửa thì tất cả các vị trí sử dụng instance của
+        class sẽ được cập nhật theo. Để tạo một đối tượng Rule, ta sử dụng cú
+        pháp sau:</p>
+      <pre>php artisan make:rule [class_name]
+</pre>
+      <p>Ở đây mình sẽ làm ví dụ về cách tạo đối tượng Rule cho rule của field <code>number</code>.
+        Còn lại field <code>name</code> bạn hãy dựa vào ví dụ của mình và tự
+        làm theo để nắm rõ hơn cách sử dụng. Ta tiến hành tạo đối tượng Rule<code></code>
+        với cú pháp nói trên:</p>
+      <pre>$ php artisan make:rule CustomEvenNumber
+</pre>
+      <p>Xong khi gõ lệnh trên, trong folder app của bạn sẽ xuất hiện một thư
+        mục mới là <code>Rules</code>, bên trong đó sẽ chứa các class mà bạn
+        dùng để định nghĩa các rule.</p>
+      <p>Đây là nội dung bên trong của class <code>CustomEvenNumber</code>:</p>
+      <pre>&lt;?php
+
+namespace App\Rules;
+
+use Illuminate\Contracts\Validation\Rule;
+
+class CustomEvenNumber implements Rule
+{
+    public function __construct()
+    {
+        //
+    }
+
+    public function passes($attribute, $value)
+    {
+        //
+    }
+
+    public function message()
+    {
+        return 'The validation error message.';
+    }
+}
+
+</pre>
+      <p>Class này gồm có 3 hàm hình:</p>
+      <ul>
+        <li><code>__construct()</code>: hàm khởi tạo của rule, nơi ta có thể
+          truyền thêm các biến khác vào</li>
+        <li><code>passes()</code>: hàm để định nghĩa giá trị của filed cần
+          validate có thỏa mãn hay không (2 biến <code>$attribute</code> và <code>$value</code>
+          có giá trị tương tự như sử dụng <code>Closure</code>)</li>
+        <li><code>mesage()</code>: thông báo trả về nếu điều kiện không thỏa mãn</li>
+      </ul>
+      <p>Vì điều kiện ta cần tạo yêu cầu giá trị của field <code>name</code>,
+        nên ta sẽ tiến hành truyền giá trị đó vào thông qua hàm <code>__construct()</code>
+        như sau:</p>
+      <pre>protected $name;
+
+public function __construct($name)
+{
+    $this-&gt;name = $name;
+}
+</pre>
+      <p>Tiếp đó trong hàm <code>passes()</code> ta sẽ định nghĩa nội dung
+        tương tự với cách làm Closure nói trên. Tuy nhiên bạn nên chú ý rằng với
+        cách sử dụng Closure ta sẽ định nghĩa điều kiện dẫn đến việc validate
+        thất bại còn trong hàm <code>passes()</code> ta định nghĩa điều kiện
+        validate thành công. Tức là giá trị trả về của Closure và đối tượng Rule<code></code>
+        là ngược nhau. Vì thế nội dung hàm <code>passes()</code> như sau:</p>
+      <pre>public function passes($attribute, $value)
+{
+    return (strlen($this-&gt;name) + $value) % 2 == 0;
+}
+</pre>
+      <p>Còn nội dung của Closure:</p>
+      <pre>function ($attribute, $value, $fail) {
+    if ((strlen($this-&gt;name) + $value) % 2 != 0) {
+        return $fail("Sum of $attribute and name's total chars must be an even number");
+    }
+}
+</pre>
+      <p>Bạn có thể thấy hai điều kiện khác nhau, một là khác 0 còn một là bằng
+        0. Cuối cùng, trong hàm <code>message()</code> ta copy lại nội dung từ
+        bên Closure và sửa lại một chút như sau:</p>
+      <pre>public function message()
+{
+    return "Sum of :attribute and name's total chars must be an even number";
+}
+</pre>
+      <p>Đây là nội dung hoàn chỉnh của class <code>CustomEventNumber</code>:</p>
+      <pre>&lt;?php
+
+namespace App\Rules;
+
+use Illuminate\Contracts\Validation\Rule;
+
+class CustomEvenNumber implements Rule
+{
+
+    protected $name;
+
+    public function __construct($name)
+    {
+        $this-&gt;name = $name;
+    }
+
+    public function passes($attribute, $value)
+    {
+        return (strlen($this-&gt;name) + $value) % 2 == 0;
+    }
+
+    public function message()
+    {
+        return "Sum of :attribute and name's total chars must be an even number";
+    }
+}
+</pre>
+      <p>Quay lại bên FormRequest ta sẽ xóa phần Closure của trường <code>number</code>
+        và thay class <code>CustomEvenNumber</code> như sau:</p>
+      <pre>'number' =&gt; [
+    'required',
+    'numeric',
+    new CustomEvenNumber($this-&gt;name),
+]
+</pre>
+      <p>Tương tự như trong Closure ta cũng phải truyền vào <code>$this-&gt;name</code>
+        là giá trị của field <code>name</code>. Bạn nhớ <code>use</code> class
+        vừa tạo ở đầu class FormRequest:</p>
+      <pre>use App\Rules\CustomEvenNumber;
+</pre>
+      <p>Cuối cùng, đây là nội dung hoàn chỉnh của FormRequest:</p>
+      <pre>&lt;?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\CustomEvenNumber;
+
+class CustomRequest extends FormRequest
+{
+    public function authorize()
+    {
+        return true;
+    }
+
+    public function rules()
+    {
+        return [
+            'name' =&gt; [
+                'required',
+                'min:6',
+                function ($attribute, $value, $fail) {
+                    if (strtoupper($value) !== $value) {
+                        return $fail("The $attribute must be upper case");
+                    }
+                },
+            ],
+
+            'number' =&gt; [
+                'required',
+                'numeric',
+                new CustomEvenNumber($this-&gt;name),
+            ]
+        ];
+    }
+}
+</pre>
+      <p>Lưu ý: Khi dùng đối tượng Rule hay Closure bạn đều có thể sử dụng
+        Eloquent để truy cập tới CSDL.</p>
+      <p>Validate đuôi mở rộng. Rule <code>mimetypes</code> và <code>mimes</code>
+        Laravel chỉ validate dựa vào mime nên có thể bị bypass (hacker thay đổi
+        mime ở Content-Type, nhưng không thay đổi đuôi mở rộng của file).</p>
+      <pre>&lt;?php
+
+namespace App\Rules;
+
+use Illuminate\Contracts\Validation\Rule;
+
+class FileExtension implements Rule
+{
+    private $allowExtensions;
+
+    public function __construct($allowExtensions)
+    {
+        $this-&gt;allowExtensions = array_map('trim', explode(',', strtolower($allowExtensions)));
+    }
+
+    /**
+     * Determine if the validation rule passes.
+     *
+     * @param  string  $attribute
+     * @param  mixed  $value
+     * @return bool
+     */
+    public function passes($attribute, $value)
+    {
+        $extension = $value-&gt;getClientOriginalExtension();
+        return in_array($extension, $this-&gt;allowExtensions);
+    }
+
+    /**
+     * Get the validation error message.
+     *
+     * @return string
+     */
+    public function message()
+    {
+        return 'Bạn phải nhập file định dạng ' . implode(', ', $this-&gt;allowExtensions) . '.';
+    }
+}
+</pre>
+      <h3>Tham khảo</h3>
+      <p><a href="https://laravel.com/docs/master/validation" target="_blank">https://laravel.com/docs/master/validation</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

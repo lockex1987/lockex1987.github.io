@@ -1,0 +1,282 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>CKEditor</title> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"> 
+  <style>
+	.hljs-string {
+		color: #FFF;
+	}
+	</style> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> 
+  <script>hljs.initHighlightingOnLoad();</script> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="CKEditor">
+ </head> 
+ <body> 
+  <article> 
+   <h1>CKEditor</h1> 
+   <h2>Bắt đầu với CKEditor</h2> 
+   <p>CKEditor là một trình soạn thảo WYSIWYG nền web. Nó thường có ở các nghiệp vụ như:</p> 
+   <ul> 
+    <li>Soạn thảo tin tức</li> 
+    <li>Soạn thảo nội dung email</li> 
+    <li>Soạn thảo tài liệu</li> 
+   </ul> 
+   <p>CKEditor là một trong những thư viện nổi tiếng nhất.</p> 
+   <p>Hiện tại phiên bản 5 vẫn đang ở trạng thái alpha. Chúng ta hãy sử dụng bản 4. Bản 4 này đã đáp ứng khá là đầy đủ tính năng.</p> 
+   <p>Download ở địa chỉ sau.</p> 
+   <p><a href="https://ckeditor.com/ckeditor-4/download/">https://ckeditor.com/ckeditor-4/download/</a></p> 
+   <p>Có các gói khác nhau. Nên sử dụng gói standard.</p> 
+   <p>Ví dụ:</p> 
+   <ul> 
+    <li>demo_01_get_started.html: Thay thế các phần tử textarea</li> 
+    <li>demo_02_replace_by_class.html</li> 
+    <li>...</li> 
+   </ul> 
+   <p><a href="https://docs.ckeditor.com/ckeditor4/docs/#%21/guide">https://docs.ckeditor.com/ckeditor4/docs/#!/guide</a></p> 
+   <p>Download file, tạo một tài liệu PDF từ địa chỉ trên.</p> 
+   <ul> 
+   </ul> 
+   <h2>Get set nội dung</h2> 
+   <p>CKEditor helps you create content but it is the role of your website or application to deal with the data created in this way. Saving data is a server-side operation and you are free to implement the save functionality on your own, in any way you like. CKEditor is a pure JavaScript component and it does not offer anything more than JavaScript methods and events to access the data so that you could save it on the server.</p> 
+   <p>The CKEditor JavaScript API makes it easy to retrieve and control the data. Depending on your usage scenario, the data can either be submitted to your server along with the parent &lt;form&gt; element or be used in Ajax applications where editor instances are created and destroyed dynamically.</p> 
+   <h3>Retrieving Data from CKEditor</h3> 
+   <p>Some applications need to handle all data on the client side, sending it to the server using their specific methods. This is what usually happens in inline editing — with the possibility to create and destroy CKEditor instances dynamically, CKEditor is a perfect match for Ajax applications. If this is the case, it is enough to use the JavaScript API methods to easily retrieve the editor instance data.</p> 
+   <p>To retrieve the editor data, call the CKEDITOR.editor.getData method of the editor instance. For an editor instance with an ID of editor1, this would look like the following:</p> 
+   <p>var data = CKEDITOR.instances.editor1.getData();</p> 
+   <p>Note that the ID of the original element that is replaced with CKEditor was passed to the CKEDITOR.instances object to make it possible to retrieve the editor instance.</p> 
+   <h3>Saving Data in CKEditor Replacing a Textarea</h3> 
+   <p>When CKEditor functions as a replacement for a &lt;textarea&gt; element, the integration with the parent &lt;form&gt; element is automatic. CKEditor automatically updates the replaced &lt;textarea&gt; when the form is submitted, so there is no need to change any server-side code handling form submission after enabling CKEditor on an exisiting form element.</p> 
+   <p>This means that when submitting a form containing an editor instance, its data will simply be posted to the server, using the &lt;textarea&gt; element name as the key to retrieve it.</p> 
+   <p>Please note that the replaced &lt;textarea&gt; element is updated automatically by CKEditor straight before submission. If you need to access the &lt;textarea&gt; value programatically with JavaScript (e.g. in the onsubmit handler to validate the entered data), there is a chance that the &lt;textarea&gt; element would still store the original data. In order to update the value of replaced &lt;textarea&gt; use the editor.updateElement() method.</p> 
+   <p>Code mẫu:</p> 
+   <pre><code class="javascript">var editorOptions = {
+    language: 'vi',
+    //extraPlugins: "imagebrowser,mediaembed",
+    filebrowserImageUploadUrl: "${contextPath}/admin/upload-content-image",
+    entities: false
+};
+
+CKEDITOR.replace('content', editorOptions);
+
+// Gán giá trị của edtior cho textarea
+$("#content").val(CKEDITOR.instances.content.getData());</code></pre> 
+   <p>Done</p> 
+   <ul> 
+   </ul> 
+   <h2>Danh sách các icon</h2> 
+   <p>Ít icon hơn như bản 5</p> 
+   <table> 
+    <tbody> 
+     <tr> 
+      <td>Group</td> 
+      <td>Item</td> 
+     </tr> 
+     <tr> 
+      <td>document</td> 
+      <td>Source, -, Save, NewPage, DocProps, Preview, Print, -, Templates</td> 
+     </tr> 
+     <tr> 
+      <td>clipboard</td> 
+      <td>Cut, Copy, Paste, PasteText, PasteFromWord, -, Undo, Redo</td> 
+     </tr> 
+     <tr> 
+      <td>editing</td> 
+      <td>Find, Replace, -, SelectAll, -, SpellChecker, Scayt</td> 
+     </tr> 
+     <tr> 
+      <td>forms</td> 
+      <td>Form, Checkbox, Radio, TextField, Textarea, Select, Button, ImageButton, HiddenField</td> 
+     </tr> 
+     <tr> 
+      <td>basicstyles</td> 
+      <td>Bold, Italic, Underline, Strike, Subscript, Superscript, -, RemoveFormat</td> 
+     </tr> 
+     <tr> 
+      <td>paragraph</td> 
+      <td>NumberedList, BulletedList, -, Outdent, Indent, -, Blockquote, CreateDiv, -, JustifyLeft, JustifyCenter, JustifyRight, JustifyBlock, -, BidiLtr, BidiRtl</td> 
+     </tr> 
+     <tr> 
+      <td>links</td> 
+      <td>Link, Unlink, Anchor</td> 
+     </tr> 
+     <tr> 
+      <td>insert</td> 
+      <td>Image, Flash, Table, HorizontalRule, Smiley, SpecialChar, PageBreak, Iframe</td> 
+     </tr> 
+     <tr> 
+      <td>styles</td> 
+      <td>Styles, Format, Font, FontSize</td> 
+     </tr> 
+     <tr> 
+      <td>colors</td> 
+      <td>TextColor, BGColor</td> 
+     </tr> 
+     <tr> 
+      <td>tools</td> 
+      <td>Maximize, ShowBlocks, -, About</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <br> 
+   <h2>Thêm plugin</h2> 
+   <p><a href="https://docs.ckeditor.com/ckeditor4/docs/#%21/guide/plugin_sdk_intro">https://docs.ckeditor.com/ckeditor4/docs/#!/guide/plugin_sdk_intro</a></p> 
+   <p>Thêm plugin timestamp chèn thời điểm hiện tại vào vị trí con trỏ.</p> 
+   <p>Thêm thư mục timestamp vào thư mục plugins. Trong đó có các file như sau:</p> 
+   <ul> 
+    <li>ckeditor_lib/</li> 
+    <ul> 
+     <li>plugins</li> 
+     <ul> 
+      <li>timestamp</li> 
+      <ul> 
+       <li>plugin.js</li> 
+       <li>icons</li> 
+       <ul> 
+        <li>timestamp.png</li> 
+       </ul> 
+      </ul> 
+     </ul> 
+    </ul> 
+   </ul> 
+   <p>plugin.js</p> 
+   <pre><code class="javascript">CKEditor.plugins.add('timestamp', {<br>    icons: 'timestamp',<br>    init: function(editor) {<br>        // Nghiệp vụ của plugin<br>    }<br>});</code></pre> 
+   <p>Trong hàm init, chúng ta sẽ có 2 nghiệp vụ:</p> 
+   <ul> 
+    <li>Thêm lệnh cho editor</li> 
+    <li>Thêm giao diện (icon của plugin) cho editor</li> 
+   </ul> 
+   <p>Khi khởi tạo editor, đăng ký plugin</p> 
+   <pre><code class="javascript">CKEDITOR.replace('editor1', {
+    extraPlugins: 'timestamp'
+});</code></pre> 
+   <p>Thêm plugin có sẵn ở <a href="https://ckeditor.com/cke4/addons/plugins/all">https://ckeditor.com/cke4/addons/plugins/all</a></p> 
+   <h2>Tích hợp với AngularJS</h2> 
+   <p>Có thư viện trên mạng rồi. Đã áp dụng ở hệ thống SafeNet.</p> 
+   <p><br></p> 
+   <h2>Auto Grow</h2> 
+   <p>Autogrow plugin</p> 
+   <p>https://ckeditor.com/cke4/addon/autogrow</p> 
+   <p>Plugin này không có trong gói Standard.</p> 
+   <p><br> </p> 
+   <h2>Upload ảnh</h2> 
+   <p>Để sử dụng được chức năng upload image trong CKEditor thì ta cần thêm tùy chọn <strong>filebrowserImageUploadUrl</strong>.</p> 
+   <p>Dialog chèn ảnh bây giờ sẽ thêm tab <strong>Upload</strong>.</p> 
+   <p>Xử lý ở server.</p> 
+   <p>Trước hết mình phải biết CKEditor sẽ gửi request gì thì mới có thể xử lý được.</p> 
+   <p>Sau khi bấm nút submit CKEditor sẽ gửi 1 request với phương thức POST (tất nhiên rồi) với khá nhiều biến.</p> 
+   <p>Mình chỉ cần quan tâm đến 2 biến chính này thôi:</p> 
+   <ul> 
+    <li>upload: đây chính là file mình upload lên</li> 
+    <li>CKEditorFuncNum: Đây là mã hàm sẽ chạy khi nhận được kết quả trả về</li> 
+   </ul> 
+   <p>Mình sẽ sử dụng biến upload để lưu ảnh trên server.</p> 
+   <p>Sau khi lưu ảnh xong mình sẽ return 1 view HTML.</p> 
+   <p>Trong view này mình sẽ chạy một hàm của CKEditor <strong>window.parent.CKEDITOR.tools.callFunction(funcNum, fileUrl [, data])</strong>;</p> 
+   <p>Các tham số cần truyền vào:</p> 
+   <ul> 
+    <li>mã hàm là $CKEditorFuncNum đã truyền vào từ request.</li> 
+    <li>fileUrl là url trả về.</li> 
+    <li>data có thể có hoặc không. Nó có thể là hàm hoặc chuỗi. Nếu nó là chuỗi kí tự thì nó sẽ hiện lên màn hình giống như ta gọi hàm alert() của JavaScript.</li> 
+   </ul> 
+   <h2>Image2</h2> 
+   <p>Sử dụng image2 để có captioned image.</p> 
+   <p>https://sdk.ckeditor.com/samples/captionedimage.html</p> 
+   <p>Bình thường sẽ chỉ sinh thẻ IMG. Sử dụng image2 sẽ sinh thẻ FIGURE, trong đó có thẻ IMG và FIGURECAPTION.</p> 
+   <p>Chúng ta có thể chỉnh sửa caption, có thể resize, kéo để thay đổi vị trí.</p> 
+   <p>Trong gói standard không có (cả bản full cũng k có), chúng ta phải thêm như sau:</p> 
+   <p>https://ckeditor.com/cke4/addon/image2</p> 
+   <ul> 
+    <li>Enhanced Image</li> 
+    <ul> 
+     <li>Dialog</li> 
+     <ul> 
+      <li>Dialog User Interface</li> 
+     </ul> 
+     <li>Widget</li> 
+     <ul> 
+      <li>Line Utilities</li> 
+      <li>Clipboard</li> 
+      <ul> 
+       <li>Notification</li> 
+      </ul> 
+      <li>Widget Selection</li> 
+     </ul> 
+    </ul> 
+   </ul> 
+   <h2>Image drag and drop</h2> 
+   <p>Sử dụng plugin uploadimage.</p> 
+   <ul> 
+    <li>Upload Image</li> 
+    <ul> 
+     <li>Upload Widget</li> 
+     <ul> 
+      <li>Widget</li> 
+      <ul> 
+       <li>...</li> 
+      </ul> 
+      <li>Clipboard</li> 
+      <ul> 
+       <li>..</li> 
+      </ul> 
+      <li>File Tools</li> 
+      <li>Notification Aggregator</li> 
+      <ul> 
+       <li>Notification</li> 
+      </ul> 
+     </ul> 
+    </ul> 
+   </ul> 
+   <p>Bạn có thể thêm ảnh bằng cách kéo thả vào vùng soạn thảo.</p> 
+   <p>Khi đã sử dụng kiểu này thì bỏ kiểu upload image bình thường đi (không cấu hình browserImageUploadUrl nữa).</p> 
+   <p> </p> 
+   <p>https://ckeditor.com/cke4/addon/uploadimage</p> 
+   <p>Drag và drop các file khác</p> 
+   <p>https://sdk.ckeditor.com/samples/fileupload.html </p> 
+   <p>https://docs.ckeditor.com/ckeditor4/docs/#!/guide/dev_file_upload</p> 
+   <p>Nếu file không phải là ảnh (ví dụ file DOC, PDF) thì sẽ tự tạo link để download.</p> 
+   <p>Thêm addon Upload File</p> 
+   <p>https://ckeditor.com/cke4/addon/uploadfile</p> 
+   <ul> 
+    <li>Upload File</li> 
+    <ul> 
+     <li>Upload Widget</li> 
+     <ul> 
+      <li>...</li> 
+     </ul> 
+     <li>Link (đã có sẵn rồi)</li> 
+    </ul> 
+   </ul> 
+   <h2>HTML5 Video (Audio)</h2> 
+   <p><a href="https://ckeditor.com/cke4/addon/html5video">https://ckeditor.com/cke4/addon/html5video</a></p> 
+   <p><a href="https://ckeditor.com/cke4/addon/html5audio">https://ckeditor.com/cke4/addon/html5audio<br></a></p> 
+   <p>Sử dụng addon này để có thể có các chỉnh sửa như vị trí, kích thước, auto play.</p> 
+   <p>Sinh ra thẻ kiểu</p> 
+   <p>Video</p> 
+   <pre><code class="html">&lt;div class="ckeditor-html5-video"<br>        data-responsive="true"<br>        style="text-align: left; float: left; margin-right: 10px;"&gt;
+    &lt;video controls="controls"<br>            width="500px"<br>            height="200px"<br>            src="http://localhost:8080/spring-mvc-ckeditor/static/20171103 102906 Earth_Zoom_In.mov"<br>            style="max-width: 100%; height: auto;"&gt;<br>        &amp;nbsp;<br>    &lt;/video&gt;
+&lt;/div&gt;</code></pre> 
+   <p>Audio</p> 
+   <pre><code class="html">&lt;div class="ckeditor-html5-audio"<br>        style="text-align: center;"&gt;<br>    &lt;audio controls="controls"<br>            controlslist="nodownload"<br>            src="http://localhost:8080/spring-mvc-ckeditor/static/20171103 103623 v2_3010_22h30_doc_truyen_dem_khuya_3110201711.mp3"&gt;<br>        &amp;nbsp;<br>    &lt;/audio&gt;<br>&lt;/div&gt;</code></pre> 
+   <p><br></p> 
+   <h2>Loại bỏ HTML entity</h2> 
+   <p>Loại bỏ các HTML entity, thay bằng ký tự Unicode bình thường.</p> 
+   <p>Thêm tùy chọn entities: false khi khởi tạo.</p> 
+   <pre><code class="javascript">var myEditor2 = CKEDITOR.replace('editor2', { entities: false });</code></pre> 
+   <p>Chú ý ký tự <code>&amp;nbsp;</code> (dấu trắng). Nếu bị lỗi rồi thì cần xóa <code>&amp;nbsp;</code> đi và tạo lại, hoặc cập nhật DB.</p> 
+   <h2>CKEditor 5 </h2> 
+   <p>Hiện vẫn chỉ là bản alpha.</p> 
+   <p>https://ckeditor5.github.io/ </p> 
+   <p>https://docs.ckeditor.com/ckeditor5/latest/builds/guides/overview.html </p> 
+   <p>https://docs.ckeditor.com/ckeditor5/latest/framework/guides/overview.html </p> 
+   <p>https://docs.ckeditor.com/ckeditor5/latest/features/index.html</p> 
+   <p>https://www.youtube.com/watch?v=MRnYtmPAJ30</p> 
+   <p>https://www.youtube.com/watch?v=SJVbAxvLJJY</p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

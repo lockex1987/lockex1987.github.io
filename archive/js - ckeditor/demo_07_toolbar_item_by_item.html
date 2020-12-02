@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>CKEditor Toolbar Configuration - Item by Item</title>
+    <script src="../lib/ckeditor/ckeditor.js"></script>
+    <script>
+    /*
+    CKEDITOR.config.toolbar = [    
+        { name: 'my_document', items: [ 'Source', '-', 'NewPage', 'Preview', '-', 'Templates' ] },
+        { name: 'my_clipboard', items: [ 'Cut', 'Copy', 'Paste' ] },
+        '/',
+        { name: 'my_styles', items: [ 'Bold', 'Italic', 'Format' ] }
+    ];
+    */
+
+    // Bạn cũng có thể không cần thiết phải khai báo tên nhóm.
+    CKEDITOR.config.toolbar = [
+        [ 'Bold', 'Italic', 'Format', '-', 'Source' ]  
+    ];
+         
+    CKEDITOR.config.height = '300px';     
+    </script>
+</head>
+
+<body>
+    <h3>CKEditor Toolbar Configuration - Item by Item</h3>
+    <textarea class="ckeditor" name="editor1">
+        <p>Chỉnh toolbar gọn như phiên bản 5</p>
+    </textarea>
+</body>
+</html>

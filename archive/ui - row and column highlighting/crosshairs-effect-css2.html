@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="de">
+<head>
+<title>CSS2 Crosshairs Effect - Table Column and Row Hover for CSS2 Browsers</title>
+<style type="text/css">
+
+body{
+	font-family:Georgia;
+}
+h1{
+	margin-top:0;
+}
+address{
+	font-style:normal;
+	text-align:right;
+}
+
+td:hover{
+	background:#F0F;
+}
+tr:hover{
+	background:#F00;
+}
+col:hover{
+	background:#00F;
+}
+.col2{
+	background:#FF0;
+}
+
+</style>
+</head>
+<body>
+
+        <h1>CSS&thinsp;2 Crosshairs Effect</h1>
+
+        <p>Table Column and Row Hover for CSS2 Browsers</p>
+
+        <p>Uses <code>&lt;col&gt;</code> and <code>col:hover</code> to hover
+            the columns. Although this is CSS2, it does not work with actual
+            browsers (but will in the future).</p>
+
+        <table border="1" cellspacing="0" width="100%">
+            <colgroup>
+                <col class="col1" />
+                <col class="col2" />
+                <col class="col3" />
+                <col class="col4" />
+                <col class="col5" />
+            </colgroup>
+            <tr>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+            </tr>
+            <tr>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+            </tr>
+            <tr>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+            </tr>
+            <tr>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+            </tr>
+            <tr>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+                <td>Some Table Data</td>
+            </tr>
+        </table>
+
+        <p>Tested with:</p>
+        <ul>
+            <li>Mozilla 1.6, Firefox 0.8 (but does not hover the column)</li>
+            <li>Opera 7.5 (but does not hover the column)</li>
+            <li>Does <em>not</em> work with Internet Explorer 5.0, 6.0</li>
+        </ul>
+
+<address>&copy; <a href="http://maettig.com/">Thiemo Mättig</a>,
+created in <a href="http://maettig.com/1079344740">June 2004</a><br>
+<a href="./">More JavaScript experiments »</a></address>
+
+</body>
+</html>

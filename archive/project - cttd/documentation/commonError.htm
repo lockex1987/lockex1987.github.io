@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <title>Common Error</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <link href="theme.css" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+        <div id="main">
+            <h2 id="div6">6. Các lỗi thường gặp</h2>
+            <div>
+                <ul>
+                    <li>Liệt kê một số lỗi hay dùng.</li>
+                    <li>Không lưu trường số ở Form Java là Long hoặc Double mà phải là String để k bị lỗi format.</li>
+                    <li>Validate khi tìm kiếm (trường ngày).</li>
+                    <li>Tất cả các hàm Javascript mà có tham số là String từ CSDL cần chú ý escape các ký tự đặc biệt (treeChooserList), dùng hàm escapeHtml như VHR?</li>
+                </ul>
+
+                <h3>Tiles-defs trùng trang trả về</h3>
+                <div>Tiles-defs không phân thành các phần, là một danh sách rất dài, do đó khó quản lý, dễ bị trùng tên.
+                    Đầu tiên nên gom các trang JSP thành các folder. Cách gom folder tương tự như cách gom menu.
+                    Nên đặt tên các trang có prefix là folder. VD thư mục là carBrand thì các trang JSP trong đó sẽ có prefix là cbd.</div>
+
+                <h3>Trùng tên hàm Javascript</h3>
+                <div>Khi định nghĩa hai hàm Javascript trùng tên nhau, chúng ta không biết trình duyệt sẽ gọi hàm nào, dẫn đến kết quả không mong muốn.
+                    Mà lỗi này nó chỉ có biểu hiện là "kết quả không mong muốn thôi", không ra trang lỗi hay cảnh báo gì.</div>
+
+                <h3>Thêm quá nhiều trường vào BO</h3>
+                <div>Mọi người đang có thói quen muốn hiển thị trường gì mà chưa có trong BO sẵn thì thêm vào, làm cho số trường trong BO ngày càng dài, về sau không biết phải bỏ trường nào đi cho đỡ rối.
+                    Hãy sử dụng bean thay thế.</div>
+
+                <h3>Search tiếng Việt ra lỗi</h3>
+                <div>
+                    Giả sử chúng ta sử dụng câu lệnh HQL có như sau:<br/>
+                    String name = "điều kiện tìm kiếm người dùng nhập vào";<br/>
+                    String hql = " FROM CustomerBO c WHERE UPPER(c.name) LIKE ? ";<br/>
+                    Query query = getSession().createQuery(hql);<br/>
+                    query.setParameter(0, "%" + name.trim().toUpperCase() + "%");<br/>
+                    List&lt;CustomerBO&gt; list = query.list();<br/>
+                    Đoạn code trên sẽ gặp lỗi tiếng Việt. Đó là do cách upper case của Oracle và Java khác nhau.<br/>
+                    Cách giải quyết là sử dụng lower case.</div>
+
+                <h3>Lỗi ký tự tiếng Việt hoa</h3>
+                <div>Khi nhập vào ký tự tiếng Việt hoa (VD: Á, Ố, Ê,...) thì lưa vào CSDL bị lỗi.
+                    Cách giải quyết là chuyển kiểu dữ liệu thành NVARCHAR2 và trong hibernate.cfg.xml thêm cấu hình như sau:<br/>
+                    &lt;property name="hibernate.connection.defaultNChar"&gt;true&lt;/property&gt;</div>
+
+                <h3>Bật được popup nhiều lần</h3>
+                <div>Nhiều dự án bật được popup nhiều lần. Làm như thế sẽ làm rối chương trình, mà có khi còn có thể gây ra lỗi nếu ta không thực hiện đúng thứ tự các popup.
+                    Hãy sử dụng modalPopup, hoặc khi bật popup thì disable trang dưới.</div>
+
+                <h3>Submit nhiều bản ghi</h3>
+                <div>Chưa có cách giải quyết.
+                    Struts có cơ chế tránh double submit (saveToken, resetToken, and isTokenValid), không biết có thể áp dụng được không.</div>
+            </div>
+        </div>
+    </body>
+</html>
+

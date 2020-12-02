@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>API node trong Elasticsearch</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="API node trong Elasticsearch">
+ </head> 
+ <body> 
+  <article> 
+   <p><br> API Hiển thị thông tin node, cluster, version trong Elasticsearch </p> 
+   <p>Trong các ví dụ API Elasticsearch, mình sẽ dùng <a href="https://stackjava.com/install/postman-la-gi-cai-dat-gui-request-api-voi-postman.html">postman</a> để gửi request, các bạn có thể dùng các phần mềm rest client khác để gửi, còn nếu gửi bằng trình duyệt thì chỉ có thể áp dụng được api với method GET/POST.</p> 
+   <h2>API Hiển thị thông tin node, cluster, version</h2> 
+   <p>Tất cả các request tới api đều gửi tới tới địa chỉ là <code>host:port</code> (Ví dụ: <code>localhost:9200</code>) với url và HTTP Method riêng cho từng loại api.</p> 
+   <p>API Hiển thị thông tin version, cluster </p> 
+   <ul> 
+    <li>GET /</li> 
+   </ul> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-api-info-1.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-api-info-1.png"></a></p> 
+   <p>API Hiển thị chi tiết thông tin node:</p> 
+   <ul> 
+    <li>GET /_cat/nodes</li> 
+   </ul> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-api-info-3.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-api-info-3.png"></a></p> 
+   <p>Hoặc:</p> 
+   <ul> 
+    <li>GET /_cat/master</li> 
+   </ul> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-api-info-2.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-api-info-2.png"></a></p> 
+   <p> </p> 
+   <p>Okay, Done!</p> 
+   <p>References:</p> 
+   <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cat.html" target="_blank">https://www.elastic.co/guide/…/cat.html</a> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

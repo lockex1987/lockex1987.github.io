@@ -1,0 +1,292 @@
+/* @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300); */
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900');
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+ }
+  
+body {
+  /* font-family: 'Source Sans Pro', sans-serif; */
+  font-family: 'Raleway', sans-serif;
+  color: white;
+  padding: 0px;
+  margin: 0px;
+}
+
+/* link color */
+a:link{text-decoration:none;color:rgba(255,255,255,0.7);}
+a:visited{text-decoration:none;color:#fff;}
+a:hover{text-decoration:none;color:rgba(255,255,255);}
+
+/* text style corrections start */
+  div#login.container-login{margin-top:30px;}
+  div.separator{font-size:15px;}
+  p#below-login{color:rgba(255,255,255,0.6);font-size:14px;font-weight:300;}
+  div.privacy{color:rgba(255,255,255,0.7); line-height:15px;font-size:13px;font-weight:300;}
+  p#efgh{color:rgba(255,255,255,0.9); font-size:16px; font-weight:700; cursor:pointer;}
+  div.small-text {color:rgba(255,255,255,0.8); font-size:14px;}
+  div.small-text2 {color:rgba(255,255,255,0.9);font-size:13px; line-height:14px; font-weight:300; margin-bottom:13%;}
+  form input{margin-left:0px;margin-right:0px;}
+  p#abcd{margin-bottom:0px;font-size:14px;color:rgba(255,255,255,0.6);}
+  .logo{margin-bottom:14px;}
+  .form-correction{width:90%;}
+  .form-sms{height:42px;}
+  .sms{padding:0px 10px 10px 10px;}
+/* text style corrections end */
+  
+  /* modal settings start  */
+  .modal{
+	  margin:20px 23px;
+	  }
+div.modal-header{
+	padding:8px 10px;
+	color:#000;
+	font-weight:800;
+}
+div.modal-footer{
+	padding:8px 17px;
+}
+button#modal-close{
+	color:green;
+	background:transparent;
+	border:none;
+	font-size:15px;
+	cursor:pointer;
+	font-weight:700;
+}
+  div.modal-body{
+	  overflow:auto; 
+	  height:350px;
+	  }
+div.modal-search{
+	float:left;
+}
+input.modal-input{
+	border:none;
+	font-size:12px;
+	color:#000;
+	outline:0;
+}
+   /* modal settings end */
+
+/*placeholder styles start*/
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:   #dbdbdb;font-size: 12px;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #dbdbdb;font-size: 12px;
+  
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #dbdbdb;font-size: 12px;
+  
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #dbdbdb;font-size: 12px;
+
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color:    #dbdbdb;font-size: 12px;
+}
+
+::placeholder { /* Most modern browsers support this now. */
+   color:    #dbdbdb;font-size: 12px;
+} */
+/*placeholder styles end*/
+
+/*form container start*/
+.container-login {
+  max-width: 350px;
+  display:block;
+  vertical-align:middle;
+}
+.container-signup {
+  max-width: 350px;
+  margin-top:10px;
+  display:none;
+}
+
+.container-signup-main {
+	 max-width: 350px;
+     display:block;
+}
+
+.container-sinup-inward {
+  max-width: 350px;
+  display:none;
+}
+
+.button-white{
+  outline: 0;
+  background:#fff;
+  border: 3px;
+  border:none;
+  border-radius: 3px;
+  max-width:255px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight:700;
+  color:#008fdd;
+  max-width:310px;
+}
+
+form {
+  position: relative;
+  z-index: 2;
+  height:170px;
+  padding:0px 0px;
+}
+form input {
+  display: block;
+  outline: 0;
+  border: 0px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, .2);
+  max-width:310px;
+  width:100%;
+  height:49px;
+  border-radius: 2px;
+  padding: 10px 18px;
+  margin: 0px 0px 10px 0px;
+  display: block;
+  text-align: left;
+  font-size: 15px;
+  font-weight:600;
+  color: #ffff; 
+}
+form input:hover {
+  /* background-color: rgba(255, 255, 255, 0.4); */
+}
+form input:focus {
+	/* border: 1px solid rgba(255, 255, 255, 0.35);
+	background:transparent; */
+}
+form button {
+  outline: 0;
+  background:transparent;
+  border: 3px;
+  padding: 10px 16px;
+ color:#d6d6d6;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  max-width:310px;
+  width:100%;
+  height:49px;
+  cursor: pointer;
+  font-size: 12px;
+}
+form button:hover { 
+   border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+#gradient {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: #836997;
+}
+
+/* Footer START */
+#bottom{
+    display:block;
+    position: fixed; 
+    background:rgba(255,255,255,0.08);
+    width:100%;
+    bottom:0;
+	left: 0;
+	right:0;
+    padding:13px 13px;
+    border-top:   1.5px;
+    border-left:  0px;
+    border-right: 0px;
+    border-bottom: 0px;
+    border-style:solid;
+    border-color:rgba(255,255,255,0.2);
+    cursor:pointer;
+    text-align: center;
+	color:#dfdfe1;
+	font-size:14px; 
+	font-weight:500;    
+}
+/* Footer END */
+
+/* ----------or---------- Start*/
+.separator {
+    max-width:300px;	
+    font-size:15px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding:18px;
+	color:#fff;
+}
+.separator::before, .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    margin: 0px 40px;  
+}
+.separator::before {
+    margin-right: .55em; 
+}
+.separator::after {
+    margin-left: .55em;
+}
+/* ----------or---------- end*/
+
+.ag{
+  padding:0px 0px;
+}
+
+.lang{
+  font-size:14px;
+  text-align:center;
+  padding:15px 0px;  
+}
+
+/* signup tabs start */
+#tabs{
+	width:78%;
+}
+/* Style the tab */
+div.tab {
+	
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255,255,255,0.8);
+    background: transparent;	
+}
+/* Style the buttons inside the tab */
+div.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 15px 5px;
+    transition: 0.08s;
+   /*  font-size: 17px; */
+    width:50%;
+}
+button#defaultOpen.tablinks.active{color:#fff;}
+button.tablinks{color:rgba(255,255,255,0.6);}
+/* Change background color of buttons on hover */
+div.tab button:hover {
+	
+}
+/* Create an active/current tablink class */
+div.tab button.active {
+	color:#fff;
+    border-bottom:3px solid rgba(255,255,255,0.8);
+}
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 22px 0px;
+   border-top: none;
+}
+/* signup tabs end */

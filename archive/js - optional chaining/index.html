@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Optional chaining">
+    <title>Optional chaining</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Optional chaining</h2>
+      <p>Giả sử chúng ta nhận được một đối tượng có nhiều cấp như sau:</p>
+      <pre>const player = {
+    details: {
+        name: {
+            firstName: 'Huyen',
+            lastName: 'Nguyen'
+        },
+        age: 20
+    },
+    jobs: [
+        'Dev JS',
+        'Dev PHP'
+    ]
+};</pre>
+      <p>Chúng ta hay phải check một thuộc tính của một đối tượng có tồn tại hay
+        không trước khi truy cập đến nó, nếu không thường bị lỗi <code>Cannot
+          read property 'name' of undefined</code>.</p>
+      <p>Hãy sử dụng optional chaining. Nếu trong quá trình truy cập có thuộc
+        tính nào đó là <code>undefined</code> thì giá trị trả về là <code>undefined</code>.</p>
+    </article>
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

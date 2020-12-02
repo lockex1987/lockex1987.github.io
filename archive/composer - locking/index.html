@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="lock">
+    <title>Locking trong Composer</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Locking trong Composer</h2>
+      <p>Locking là một trong những tính năng hữu ích nhất của Composer. Trước
+        tiên ta sẽ nói đến <code>composer.lock</code>. Công việc của nó là khóa
+        lại các version của các component đã sử dụng. Lock file có thể chắc chắn
+        rằng mọi người làm việc với các version giống nhau của các file.</p>
+      <p>Khi lần đầu tiên sử dụng Composer để lấy một dependency nó sẽ ghi chính
+        xác version vào file <code>composer.lock</code>. Ví dụ như nếu bạn chỉ
+        rõ <code>2.3.*</code> và <code>2.3.5</code> là version mới nhất thì
+        version được cài đặt sẽ là <code>2.3.5</code> và nó sẽ được đưa vào
+        trong lock file.</p>
+      <p>Giả sử sau 1 tuần có một developer gia nhập team của bạn. Trong thời
+        gian này dependency đã được update lên <code>2.3.6</code>. Nếu anh ta
+        sử dụng câu lệnh (<code>composer install</code>) thì sẽ nhận được <code>2.3.5</code>
+        vì nó đã được ghi trong file lock.</p>
+      <p>Tất nhiên bạn có thể quyết định việc update các dependency của mình.
+        Trong trường hợp đó, bạn sẽ thực hiện lệnh:</p>
+      <pre>composer update</pre>
+      <p>Nó sẽ lấy các version mới nhất và ghi chúng vào file lock.</p>
+        <p><strong>Chú ý</strong>: Không bao giờ chạy lệnh <code>composer
+            update</code> trong môi trường thực tế (production) mà hãy kiểm tra
+          trên máy để tránh tình trạng không tương thích.</p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

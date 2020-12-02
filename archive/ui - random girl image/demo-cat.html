@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="description" content="Ảnh mèo ngẫu nhiên">
+    <meta name="keywords" content="random, cat, image">
+    <meta name="author" content="lockex1987">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+.the-cat { margin-top: 30px; width: 240px; box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.6); display: block; }
+    </style>
+
+    <title>Ảnh mèo ngẫu nhiên</title>
+</head>
+
+<body>
+    <article>
+        <div>
+            
+                <!-- Random ảnh mèo -->
+                <!-- Xem thêm ở https://thecatapi.com/docs.html -->
+                <!-- https://thecatapi.com/api/images/get?size=small -->
+                <!-- Ảnh load hơi lâu do đó cho vào sự kiện window load -->
+                <img src="data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=" class="the-cat" id="catImg" alt="Random cat image">
+        </div>
+
+        
+    </article>
+
+    <script src="../../js/docs.js"></script>
+    <script>
+window.addEventListener("load", function() {
+    // Vì chỗ load ảnh này chậm nên trình duyệt sẽ hiển thị loading lâu
+    // Thêm vào sự kiện "load" để chờ khi trình duyệt không hiển thị loading nữa
+    // Ngoài ra chỉ khi kích thước trình duyệt lớn thì mới hiển thị
+    document.querySelector("#catImg").src = "https://thecatapi.com/api/images/get?size=small";
+});
+
+    </script>
+  </body>
+</html>

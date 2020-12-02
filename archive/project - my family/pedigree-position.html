@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Pedigree Position</title>
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+	<link rel="stylesheet" href="css/pedigree-position.css" />
+</head>
+
+<body>
+    <article>
+        <p>Vẽ phả hệ bằng cách thiết lập absolute postion của từng node.</p>
+
+        <div class="pedigreePosition" id="pedigreeChart1"></div>
+    </article>
+
+    <script src="../../js/docs.js"></script>
+
+	<!-- Dữ liệu thô -->
+	<!--script src="js/raw-data.js"></script>
+    <script src="js/data-service.js"></script>-->
+    
+    <script src="js/people.js"></script>
+    <script src="js/marriages.js"></script>
+
+    <script src="js/personMap.js"></script>
+
+    <script src="js/raw-data-processing.js"></script>
+    
+    <script src="js/pedigree-position.js"></script>
+
+    <script>
+        PedigreePosition.buildPedigreeChart(document.querySelector("#pedigreeChart1"));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+// Hiệu ứng click ở button
+.btn-ripple {
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        border-radius: 50%;
+        padding: 60%;
+        background-color: currentColor;
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1) ;
+        transition: opacity 1s, transform 0.5s;
+    }
+
+    &:active {
+        &::after {
+            opacity: 0.4;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0s;
+        }
+    }
+}

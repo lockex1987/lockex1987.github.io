@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Git">
+    <title>Cách tự tạo Repository cho Git trên Server riêng</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <p>Trong một vài trường hợp cá biệt, có thể bạn sẽ không muốn nâng cấp tài
+        khoản của bạn tại các dịch vụ Repository Hosting từ miễn phí lên trả phí
+        để có thể tạo ra không giới hạn các kho chứa mã nguồn, mà bạn muốn tự
+        tạo cho mình một Repository Server để thoải mái tạo ra bao nhiêu kho
+        chứa cũng được. Thật vậy, chỉ với $5/tháng để thuê&nbsp;một VPS Linux
+        tại <a href="http://thachpham.com/nen-dung/digitalocean">DigitalOcean</a>
+        thì bạn đã có thể tạo ra một Repository Server thật tốt và đủ để sử dụng
+        cho team của bạn từ nhỏ tới trung bình.</p>
+      <h3>Chuẩn bị</h3>
+      <p>Một Linux Server, có thể là hệ điều hành nào cũng được nhưng nên sử
+        dụng các hệ điều hành phổ biến và bạn dễ thao tác là được, ví dụ như
+        Ubuntu, CentOS, Debian, Fedora,… Và bạn phải sử dụng user root.</p>
+      <p>Trong bài này thì mình sẽ sử dụng hệ điều hành Ubuntu 14.04 32-bits tại
+        DigitalOcean.</p>
+      <p>Nếu bạn tự cài đặt server thì hãy chắc chắn rằng đã cài đặt SSH và mở
+        cổng SSH (mặc định là 22).</p>
+      <h3>Cài đặt Git</h3>
+      <p>Trước tiên, bạn hãy cài đặt Git vào server với lệnh:</p>
+      <p><strong>CentOS/RHEL/Fedora</strong></p>
+      <pre>$ yum install git</pre>
+      <p><strong>Ubuntu/Debian</strong></p>
+      <pre>$ apt-get install git</pre>
+      <p>Sau đó gõ git để kiểm tra xem có hiện nội dung hướng dẫn không, nếu có
+        thi thành công.</p>
+      <h3>Tạo Repository</h3>
+      <p>Quy trình tạo Repository trên Server cũng giống như bài tạo repository
+        mình đã viết trước đó. Nhưng để an toàn hơn, mình khuyến khích bạn làm
+        theo từng bước của mình.</p>
+      <h4>Bước 1. Tạo user truy cập vào repository</h4>
+      <p>Bước này chúng ta sẽ tạo ra một user để khi kết nối từ máy tính cá nhân
+        sẽ dùng nó chứ không nên kết nối thẳng vào user root nhé.</p>
+      <p>Ví dụ mình tạo ra một user tên là <code>git_user</code> và.</p>
+      <pre>$ useradd git_user</pre>
+      <blockquote>
+        <p><em><strong>Hiếm gặp</strong></em>: Trường hợp khi tạo user nó không
+          tự tạo ra thư mục riêng cho user này tại <em>/home/git_user</em> thì
+          bạn có thể tạo thủ công bằng tài khoản root với lệnh <code>mkdir
+            /home/git_user</code> và dùng lệnh <code>chown -R git_user:git_user
+            /home/git_user</code> để cấp quyền thư mục này cho user <em>git_user</em>.</p>
+      </blockquote>
+      <p>Và thiết lập mật khẩu cho <em>git_user</em> với lệnh <code>passwd
+          git_user</code>, lưu ý là mật khẩu này bạn chỉ nên sử dụng cho riêng
+        bạn để truy cập vào user <em>git_user</em> nhanh chứ khi remote
+        repository ở máy tính cá nhân thì sẽ dùng SSH cho bảo mật mà không cần
+        gõ lại user/pass khi push.</p>
+      <p><strong>Tham khảo</strong>: <a href="http://thachpham.com/hosting-domain/vps-basic-quan-ly-user-va-sudo.html">Quản
+          trị &amp; Tạo user trên Linux</a></p>
+      <p>Thiết lập mật khẩu xong, hãy gõ lệnh su – git_user để chuyển qua user
+        git_user&nbsp;và gõ cd ~ để quay về thư mục gốc của nó để làm việc (các
+        thao tác ở dưới đều làm trên user git_user này).</p>
+      <h4>Bước 2. Thiết lập SSH cho git_user</h4>
+      <p>Bước này chúng ta sẽ thiết lập cho phép người dùng bên ngoài kết nối
+        vào thư mục <em>/home/git_user</em> bằng giao thức SSH cho bảo mật và
+        thuận tiện.</p>
+      <p><strong>Tham khảo</strong>: <a href="http://thachpham.com/hosting-domain/huong-dan-ssh-key.html">Bảo
+          mật máy chủ&nbsp;với SSH Key</a></p>
+      <p>Tạo thư mục <em>.ssh</em> cho user này.</p>
+      <pre>$ mkdir ~/.ssh/</pre>
+      <p>Kế tiếp là tạo thêm tập tin <em>authorized_keys</em> trong thư mục <em>.ssh/</em>
+        của nó.</p>
+      <pre>$ touch ~/.ssh/authorized_keys</pre>
+      <p>Bây giờ hãy CHMOD thư mục<em> ~/.ssh/</em> thành <em>700</em>.</p>
+      <pre>$ chmod 700 ~/.ssh/</pre>
+      <p>Sau đó CHMOD file <em>authorized_keys</em> thành <em>600</em>.</p>
+      <pre>$&nbsp;chmod 600&nbsp;~/.ssh/authorized_keys</pre>
+      <h4>Bước 2. Tạo repository trên server</h4>
+      <p>Hãy chắc chắn là bạn đang truy cập vào user <em>git_user</em> và đang
+        ở thư mục gốc của user này.</p>
+      <p>Bây giờ sẽ tạo một tập tin .git cho repository bằng lệnh sau:</p>
+      <pre>$ git init --bare thachpham.git
+Initialized empty Git repository in /home/git_user/thachpham.git/</pre>
+      <p>Xong roài đó.</p>
+      <h3>Kết nối với repository từ máy tính</h3>
+      <p>Để kết nối vào repository <em>thachpham.git</em> mà chúng ta vừa tạo,
+        bạn phải tạo ra một SSH Key riêng và thêm nó vào tập tin <em>authorized_keys</em>
+        trong thư mục <em>.ssh</em> của <em>git_user</em>.</p>
+      <p>Để tạo SSH Key, bạn mở Terminal (hoặc Git Bash ở Windows) lên và gõ
+        lệnh sau:</p>
+      <pre>$ ssh-keygen -t rsa -C "Key cua Thach"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/thachpham/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/thachpham/.ssh/id_rsa.
+Your public key has been saved in /home/thachpham/.ssh/id_rsa.pub.
+The key fingerprint is:
+ce:50:14:df:7b:5e:a5:e2:1f:1e:af:66:79:56:57:87 Key cua Thach
+The key's randomart image is:
++--[ RSA 2048]----+
+| o. |
+| . . . |
+| . . . ..|
+| . .E.+|
+| . S o o +|
+| + . + .o|
+| o . +.o|
+| o++o|
+| o++.|
++-----------------+</pre>
+      <p>Sau đó ở máy tính, bạn gõ lệnh <code>cat ~/.ssh/id_rsa.pub</code> để
+        xem public key và copy nó, sau đó dán vào file <em>authorized_keys</em>
+        trong thư mục <em>/home/git_user/.ssh/</em> trên server. Lưu ý là mỗi
+        key sẽ là một dòng nếu sau này bạn thêm nhiều key vào.</p>
+      <p>Sau đó, bạn có thể clone repository trên server với lệnh sau.</p>
+      <pre>$ git init &amp;&amp; git remote add origin git_user@123.456.78.9:thachpham.git
+Initialized empty Git repository in /home/thachpham/thachpham_git/.git/</pre>
+      <p>Trong đó,</p>
+      <ul>
+        <li><code>git_user</code>: Tên user sở hữu thư mục git trên server bạn
+          đã tạo</li>
+        <li><code>123.456.78.9</code>: là IP của server</li>
+        <li><code>thachpham.git</code>: Tên repository đã tạo trên server.</li>
+      </ul>
+      <p>Và bây giờ bạn có thể thử commit và push một tập tin lên server.</p>
+      <pre>$ touch README.md
+$ git add .
+$ git commit -m "Initial commit"
+[master (root-commit) 104f7b7] Initial commit
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 README.md
+thachpham@ubuntu:~/thachpham_git$ git push origin master
+Counting objects: 3, done.
+Writing objects: 100% (3/3), 215 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To git_user@46.101.154.122:thachpham.git
+ * [new branch] master -&gt; master</pre>
+      <p>Nếu bạn lên server kiểm tra thì trong thư mục repository sẽ không thấy
+        tập tin của bạn vừa push lên. Bạn có thể test thử bằng cách tạo một thư
+        mục khác, sau đó clone lại repository này trên server sẽ thấy tập tin
+        được kéo về.</p>
+      <h3>Lời kết</h3>
+      <p>Tới đây thì bạn cũng đã nắm khá rõ về cách hoạt động của Git, cũng như
+        là biết cách tự tạo một repository server dành cho Git rồi nhỉ? Và đây
+        cũng là bài cuối cùng trong serie Git cơ bản này và mình hy vọng là nó
+        có thể giúp ích cho bạn nhiều trong việc sử dụng Git. Về video thì mình
+        sẽ làm sau nhé.</p>
+    </article>
+
+    
+  </body>
+</html>

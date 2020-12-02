@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Xử lý Exception trong PHP">
+    <title>Xử lý Exception trong PHP</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Xử lý Exception trong PHP</h2>
+      <p>Lỗi là một phần không thể thể thiếu trong cuộc sống, vấn đề là làm thế
+        nào để nhận biết và tìm cách khắc phục lỗi? Trong lập trình ứng dụng
+        cũng vậy, sẽ không thể tránh được lỗi, ngôn ngữ PHP cho phép các lỗi xảy
+        ra, quản lý và khắc phục. Lập trình nói chung có hai dạng lỗi chính:</p>
+      <ul>
+        <li>
+          <p>Các lỗi tác động từ bên ngoài: Lỗi này xảy ra khi các đoạn mã không
+            lường trước được một nhánh trong lập trình hoặc một phần của chương
+            trình hoạt động không như dự kiến. Ví dụ: một đoạn mã thực hiện ghi
+            một bản ghi vào database, nó cần kết nối đến database thành công
+            trong khi việc kết nối thực tế bị lỗi, đây là một lỗi bên ngoài.</p>
+        </li>
+        <li>
+          <p>Lỗi logic trong mã nguồn: Các lỗi này thông thường được gọi là bug,
+            nó là các lỗi trong thiết kế logic hoặc đôi khi đơn giản chỉ là lỗi
+            do đánh sai các từ khóa.</p>
+        </li>
+      </ul>
+      <h3>Xử lý lỗi kiểu thủ tục</h3>
+      <p>Ngôn ngữ PHP đã xây dựng sẵn những tính năng quản lý lỗi với 3 cấp độ:</p>
+      <ul>
+        <li>E_NOTICE</li>
+        <li>E_WARNING</li>
+        <li>E_ERROR</li>
+      </ul>
+      <h4>E_NOTICE</h4>
+      <ul>
+      </ul>
+      <p>E_NOTICE là một lỗi thứ yếu, không phải lỗi nghiêm trọng, nó giúp bạn
+        nhận biết khả năng có các bug trong các đoạn mã. Về cơ bản, khi gặp lỗi
+        E_NOTICE, đoạn mã có thể chạy nhưng cũng có thể không. Chúng ta cùng xem
+        ví dụ về việc sử dụng một biến mà chưa được gán giá trị.</p>
+      <pre>$variable++;
+</pre>
+      <p>Ví dụ này sẽ tăng biến $variable thêm 1 và nó phát sinh lỗi E_NOTICE do
+        biến này không được khởi tạo nên nó sẽ có giá trị mặc định là 0 hoặc
+        false hoặc chuỗi rỗng. Để tránh lỗi này, chúng ta cần khởi tạo biến
+        trước khi sử dụng.</p>
+      <pre>$variable = 0;
+$variable++;</pre>
+      <p>Mặc định, lỗi E_NOTICE được tắt do đó nếu chúng ta có thực hiện đoạn mã
+        không gán giá trị thì cũng không có lỗi gì xảy ra.</p>
+      <h4>E_WARNING</h4>
+      <p>E_WARNING là các lỗi không nghiêm trọng xảy ra trong quá trình ứng dụng
+        chạy, chúng không làm dừng chương trình hoặc thay đổi luồng điều khiển
+        nhưng chúng cảnh báo một vấn đề xấu đang xảy ra. Có rất nhiều các lỗi
+        bên ngoài làm phát sinh E_WARNING, ví dụ như một lời gọi đến <code>fopen()</code>.</p>
+      <h4>E_ERROR</h4>
+      <p>E_ERROR là các lỗi không thể cứu chữa, nó làm ứng dụng dừng lại. Ví dụ
+        chúng ta tạo một đối tượng từ một class không tồn tại, có thể do lỗi khi
+        đánh sai tên class. PHP có hàm <code>trigger_error()</code> được sử
+        dụng để cho phép người dùng sinh ra một lỗi trong đoạn mã, có 3 dạng lỗi
+        có thể bung ra bởi người dùng với ý nghĩa giống như 3 cấp độ lỗi ở trên.</p>
+      <ul>
+        <li>E_USER_NOTICE</li>
+        <li>E_USER_WARNING</li>
+        <li>E_USER_ERROR</li>
+      </ul>
+      <pre>while(!feof($fp)) {
+    $line = fgets($fp);
+    if (!parse_line($line)) {
+        trigger_error('Incomprehensible data encountered', E_USER_NOTICE);
+    }
+}</pre>
+      <p>Nếu không xác định mức độ lỗi thì E_USER_NOTICE được sử dụng. Trong
+        phần tiếp theo chúng ta sẽ sử dụng các kỹ thuật để thay đổi luồng điều
+        khiển trong mã nguồn, với các lỗi khác nhau chúng ta có các mã lỗi giúp
+        biết được chính xác nơi phát sinh lỗi. Chúng ta xem xét một ví dụ sau:</p>
+      <pre>function get_passwd_info($user)
+{
+    $fp = fopen("/etc/passwd", "r");
+    while (!feof($fp)) {
+        $line = fgets($fp);
+        $fields = explode(";", $line);
+        if ($user == $fields[0]) {
+            return $fields;
+        }
+    }
+    return false;
+}
+</pre>
+      <p>Hàm này được thiết kế để trả về chi tiết file passwd tương ứng với một
+        người dùng. Đoạn code trên có hai bug, thứ nhất là một bug về logic
+        trong mã nguồn và một lỗi về tài khoản có thể xảy ra. Khi chúng ta thực
+        hiện ví dụ này, một mảng như sau được trả về:</p>
+      <pre>print_r(get_passwd_info('www'));
+// Array
+// (
+//     [0] =&gt; www:*:70:70:World Wide Web Server:/Library/WebServer:/noshell
+// )
+</pre>
+      <p>Bug đầu tiên là các trường trong file passwd được phân cách nhau bởi
+        dấu : chứ không phải ; do đó đoạn code</p>
+      <pre>$fields = explode(";", $line);</pre>
+      <p>cần được thay thế bởi</p>
+      <pre>$fields = explode(":", $line);</pre>
+      <p>Lỗi thứ hai khó phát hiện hơn, khi bạn mở file passwd, sẽ có một lỗi
+        E_WARNING nhưng luồng ứng dụng vẫn xử lý. Nếu một người dùng không có
+        file passwd thì hàm sẽ trả về giá trị false. Tuy nhiên, nếu fopen lỗi,
+        hàm cũng dừng và trả về giá trị false, điều này gây nên sự nhầm lẫn. Ví
+        dụ đơn giản này cho thấy sự phức tạp trong việc quản lý lỗi với các ngôn
+        ngữ thủ tục do không sử dụng Exception sẽ được giới thiệu trong phần
+        tiếp theo. Tiếp tục với ví dụ này, chúng ta có thể thay đổi đoạn mã để
+        định dạng lỗi trả về:</p>
+      <pre>function get_passwd_info($user)
+{
+    $fp = fopen("/etc/passwd", "r");
+    if (!is_resource($fp)) {
+        return "Error opening file";
+    }
+    while (!feof($fp)) {
+        $line = fgets($fp);
+        $fields = explode(":", $line);
+        if ($user == $fields[0]) {
+            return $fields;
+        }
+    }
+    return false;
+}</pre>
+      <p>Với cách định dạng lỗi này, chúng ta khó để phân chia các lỗi xảy ra,
+        do đó thay vì trả về một message lỗi chúng ta trả về các giá trị đặc
+        biệt là các mã lỗi:</p>
+      <pre>function get_passwd_info($user)
+{
+    $fp = fopen("/etc/passwd", "r");
+    if (!is_resource($fp)) {
+        return -1;
+    }
+    while (!feof($fp)) {
+        $line = fgets($fp);
+        $fields = explode(":", $line);
+        if ($user == $fields[0]) {
+            return $fields;
+        }
+    }
+    return false;
+}
+</pre>
+      <p>Như vậy, các lỗi xảy ra có thể được phân loại trong function gọi
+        get_passwd_info():</p>
+      <pre>function is_shelled_user($user)
+{
+    $passwd_info = get_passwd_info($user);
+    if (is_array($passwd_info) &amp;&amp; $passwd_info[7] != '/bin/false') {
+        return 1;
+    } else if($passwd_info === -1) {
+        return -1;
+    } else {
+        return 0;
+    }
+}</pre>
+      <p>Như vậy chúng ta hoàn toàn kiểm soát được toàn bộ lỗi có thể xảy ra khi
+        thực hiện đoạn code:</p>
+      <pre>    $v = is_shelled_user('www');
+    if ($v === 1) {
+        echo "Your Web server user probably shouldn ’ t be shelled.\n";
+    } else if($v === 0) {
+        echo "Great!\n" ;
+    } else {
+        echo "An error occurred checking the user\n";
+    }</pre>
+      <h3>Exception</h3>
+      <p>Exception là một giải pháp quản lý lỗi kiểu hướng đối tượng, nó là một
+        class được xây dựng sẵn trong ngôn ngữ PHP. Một đối tượng Exception sẽ
+        chứa các thông tin về nơi xảy ra lỗi (tên file, số dòng), message lỗi và
+        một mã lỗi (tùy chọn). Sự khác biệt giữa các lỗi và Exception là ở cấu
+        trúc, cả hai đều là biểu hiện của những vấn đề trong code. Thay vì sử
+        dụng các lệnh điều kiện trong ngôn ngữ thủ tục để kiểm tra lỗi, lập
+        trình hướng đối tượng sử dụng các cấu trúc try catch để quản lý các
+        exception. Nếu một lỗi xảy ra, một exception sẽ được bung ra và code của
+        chúng ta sẽ bắt lấy và thực hiện các công việc phù hợp với ngữ cảnh.</p>
+      <pre>try {
+    // Do something
+    // An exception is thrown on error
+} catch (exception) {
+    // Do whatever now
+}</pre>
+      <p>Một trong những lợi ích của quản lý exception là nó tách biệt chức năng
+        và logic so với quản lý lỗi như trong phần 1, nhiều lỗi có thể được quản
+        lý mà không cần các câu lệnh điều kiện lồng nhau. Để bắn ra một
+        exception chúng ta có thể sử dụng cú pháp như sau:</p>
+      <pre>throw new Exception('error message');</pre>
+      <p>Cú pháp này sẽ bắn ra một đối tượng dạng Exception là một class được
+        xây dựng sẵn trong PHP, để bắt được ngoại lệ này chúng ta sử dụng:</p>
+      <pre>catch (Exception $e)</pre>
+      <p>Lớp Exception có rất nhiều các phương thức chứa các thông tin về lỗi
+        xảy ra, ví dụ dưới đây chúng ta bắt ngoại lệ và in ra message lỗi:</p>
+      <pre>try {
+    // Do something
+} catch (Exception $e) {
+    echo $e-&gt;getMessage();
+}</pre>
+      <p>Các phương thức khác của Exception:</p>
+      <ul>
+        <li><code>getCode()</code>: trả về mã lỗi</li>
+        <li><code>getMessage()</code>: trả về message lỗi.</li>
+        <li><code>getFile()</code>: trả về tên file bị lỗi.</li>
+        <li><code>getLine()</code>: trả về số dòng nơi xảy ra lỗi.</li>
+        <li><code>getTrace()</code>: trả về thông tin truy vết lỗi là một mảng
+          các tên file và số dòng.</li>
+      </ul>
+      <p>Phần tiếp theo này, chúng ta cùng thực hành một ví dụ để hiểu cách sử
+        dụng Exception.</p>
+      <p><a target="_blank" href="WriteToFile.php">WriteToFile.php</a></p>
+      <pre>&lt;?php
+class WriteToFile
+{
+    private $_fp = NULL;
+
+    function __construct($file) {
+        // Kiểm tra xem file có tồn tại và có phải là file không?
+        if (!file_exists($file) || !is_file($file)) {
+            throw new Exception('The file does not exist.');
+        }
+
+        // Mở file
+        if (!$this-&gt;_fp = @fopen($file, 'w')) {
+            throw new Exception('Could not open the file.');
+        }
+    }
+
+    function write($data)
+    {
+        if (@!fwrite($this-&gt;_fp, $data . "\n")) {
+            throw new Exception('Could not write to the file.');
+        }
+    }
+
+    function close()
+    {
+        if ($this-&gt;_fp) {
+            fclose($this-&gt;_fp);
+            $this-&gt;_fp = NULL;
+        }
+    }
+
+    function __destruct()
+    {
+        $this-&gt;close();
+    }
+}</pre>
+      <p>Để sử dụng class này chúng ta tạo ra một page <a target="_blank" href="WriteToFileTest.php">WriteToFileTest.php</a>
+        như sau:</p>
+      <pre>&lt;?php
+require('WriteToFile.php');
+
+try {
+	// Tạo một đối tượng file để lưu dữ liệu
+	$fp = new WriteToFile('data.txt');
+
+	// Ghi vào file dữ liệu
+	$fp-&gt;write('This is a line of data.');
+
+	// Đóng file
+	$fp-&gt;close();
+
+	// Xóa đối tượng
+	unset($fp);
+
+	// Mọi việc hoàn thành, in ra một message
+	echo 'Ghi dữ liệu vào file thành công.\n';
+} catch (Exception $e) {
+	// Nếu lỗi xảy ra, in ra màn hình message
+	echo 'Quá trình xử lý file lỗi: ' . $e-&gt;getMessage() . "\n";
+}
+</pre>
+      <p>Thực thi file PHP:</p>
+      <pre>php WriteToFileTest.php</pre>
+      <p>Chúng ta sẽ có thông báo lỗi.</p>
+      <p>Lỗi này là do file <code>data.txt</code> chưa tồn tại. Bạn tạo ra một
+        file <code>data.txt</code> trong cùng thư mục chứa file <code>WriteToFileTest.php</code>.
+        Khi đó thực hiện lại đường dẫn trên sẽ có kết quả là "<em>Ghi dữ liệu
+          vào file thành công</em>".</p>
+      <p>Ví dụ trên chúng ta đã biết cách sử dụng Exception, tuy nhiên các
+        message lỗi chúng ta hoàn toàn sử dụng của Exception được xây dựng sẵn
+        trong PHP. Trong thực tế, các lỗi sẽ rất phức tạp và có những trường hợp
+        Exception chưa quản lý được hết, vậy chúng ta cần có những class
+        Exception riêng để xử lý. Chúng ta hoàn toàn có thể tạo ra các lớp
+        exception riêng được kế thừa từ lớp Exception.</p>
+      <pre>class MyException extends Exception
+{
+
+}</pre>
+      <p>Chú ý, chỉ có phương thức khởi tạo <code>__contruct()</code> và <code>__toString</code>
+        của Exception có thể ghi đè trong lớp kế thừa, còn lại các phương thức
+        khác không thể ghi đè vì nó được định nghĩa là final.</p>
+      <p>Trong code, chúng ta có thể bắn ra các exception mới tạo:</p>
+      <pre>throw new MyException('error message');</pre>
+      <p>Khi bắt các ngoại lệ, có thể sử dụng nhiều câu lệnh catch để bắt các
+        Exception khác nhau:</p>
+      <pre>try {
+    // Some code
+    throw new MyException1('error message');
+    // Some more code
+    throw new MyException2('error message');
+} catch (MyException1 $e) {
+    // ...
+} catch (MyException2 $e) {
+    // ...
+}</pre>
+      <p>Quay trở lại với ví dụ sử dụng Exception ở trên, chúng ta tạo ra một
+        class <code>FileException</code> mở rộng từ Exception và định nghĩa các
+        message lỗi theo cách riêng vào trong file <code>WriteToFileNew.php</code>.</p>
+      <p><a target="_blank" href="FileException.php">FileException.php</a></p>
+      <pre>&lt;?php
+class FileException extends Exception
+{
+    function getDetails() {
+        // Trả về các message khác nhau dựa trên mã lỗi
+        switch ($this-&gt;code) {
+            case 0:
+                return 'Tên file không được rỗng.';
+                break;
+            case 1:
+                return 'File không tồn tại.';
+                break;
+            case 2:
+                return 'Không phải dạng file.';
+                break;
+            case 3:
+                return 'File không thể ghi dữ liệu.';
+                break;
+            case 4:
+                return 'Mode ghi file không đúng.';
+                break;
+            case 5:
+                return 'Dữ liệu không thể ghi vào file.';
+                break;
+            case 6:
+                return 'File không thể đóng.';
+                break;
+            default:
+                return 'Lỗi không xác định.';
+                break;
+        }
+    }
+}</pre>
+      <p><a target="_blank" href="WriteToFileNew.php">WriteToFileNew.php</a></p>
+      <pre>&lt;?php
+class WriteToFileNew
+{
+    private $_fp = NULL;
+
+    private $_message = '';
+
+    function __construct($file = null, $mode = 'w')
+    {
+        // Gán tên file và mode vào thuộc tính message
+        $this-&gt;_message = "File: $file Mode: $mode";
+
+        // Kiểm tra tên file có rỗng không
+        if (empty($file))
+            throw new FileException($this-&gt;_message, 0);
+
+        // Kiểm tra xem file có tồn tại hay không
+        if (!file_exists($file))
+            throw new FileException($this-&gt;_message, 1);
+
+        // Kiểm tra xem có phải là một file hay không
+        if (!is_file($file))
+            throw new FileException($this-&gt;_message, 2);
+
+        // Kiểm tra xem file có ghi dữ liệu vào được không         
+        if (!is_writable($file))
+            throw new FileException($this-&gt;_message, 3);
+
+        // Kiểm tra các mode mở file
+        if (!in_array($mode, array('a', 'a+', 'w', 'w+')))
+            throw new FileException($this-&gt;_message, 4);
+
+        // Mở file
+        $this-&gt;_fp = fopen($file, $mode);
+    }
+
+    function write($data)
+    {
+        if (@!fwrite($this-&gt;_fp, $data . "\n"))
+            throw new FileException($this-&gt;_message . " Data: $data", 5);
+    } 
+
+    function close()
+    {
+        if ($this-&gt;_fp) {
+            if (@!fclose($this-&gt;_fp))
+                throw new FileException($this-&gt;_message, 6);
+            $this-&gt;_fp = NULL;
+        }
+    }
+
+    function __destruct()
+    {
+        $this-&gt;close();
+    }
+}</pre>
+      <p>Điều chỉnh lại file <a target="_blank" href="WriteToFileNewTest.php">WriteToFileNewTest.php</a>
+        để sử dụng class <code>FileException</code> mới tạo ra và phương thức <code>getDetails()</code>:</p>
+      <pre>&lt;?php
+require('FileException.php');
+require('WriteToFileNew.php');
+
+
+try {
+    // Tạo một đối tượng file để lưu dữ liệu
+    $fp = new WriteToFileNew('data.txt', 'w');
+
+    // Ghi vào file dữ liệu
+    $fp-&gt;write('This is a line of data.');
+
+    // Đóng file
+    $fp-&gt;close();
+
+    // Xóa đối tượng
+    unset($fp);
+
+    // Mọi việc hoàn thành, in ra một message
+    echo "Ghi dữ liệu vào file thành công.\n";
+} catch (FileException $e) {
+    // Nếu lỗi xảy ra, in ra màn hình message
+    echo 'Quá trình xử lý file lỗi: ' . $e-&gt;getDetails() . "\n";
+}
+</pre>
+      <p>Thực thi file:</p>
+      <pre>php WriteToFileNewTest.php</pre>
+      <p>Chúng ta sẽ nhận được thông báo "<em>Quá trình xử lý file lỗi: File không
+          tồn tại</em>".</p>
+      <h3>Lời kết</h3>
+      <p>Qua bài viết chúng ta đã hoàn toàn quản lý được các lỗi xảy ra trong
+        chương trình theo cách thủ tục hoặc sử dụng giải pháp hướng đối tượng
+        Exception. Thiết kế và viết mã quản lý lỗi tốt giúp cho ứng dụng hoạt
+        động trơn tru và mang lại trải nghiệm tốt cho người dùng. Thay vì những
+        thông báo lỗi thuần túy kỹ thuật, chúng ta nên đưa ra các thông báo lỗi
+        dễ hiểu không gây hoang mang cho người sử dụng.</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://allaravel.com/blog/lap-trinh-huong-doi-tuong-trong-php-phan-4-quan-ly-loi-voi-exception">https://allaravel.com/blog/lap-trinh-huong-doi-tuong-trong-php-phan-4-quan-ly-loi-voi-exception</a></p>
+      <p></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

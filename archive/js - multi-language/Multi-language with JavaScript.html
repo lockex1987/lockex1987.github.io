@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Multi-language with JavaScript</title>
+  </head>
+  <body>
+    <h2>Đa ngôn ngữ với JavaScript</h2>
+    <p>Sử dụng jquery-lang cho đơn giản.</p>
+    <p>https://github.com/Irrelon/jquery-lang-js</p>
+    <h3>Bắt đầu</h3>
+    <p>Thêm các thư viện cần thiết</p>
+    <ul>
+      <li>jQuery</li>
+      <li>JS Cookie</li>
+      <li>jQuery Lang</li>
+    </ul>
+    <pre><code class="html">&lt;script src="lib/jquery/js/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="lib/js-cookie/js/js.cookie.js"&gt;&lt;/script&gt;
+&lt;script src="lib/jquery-lang/js/jquery-lang.js"&gt;&lt;/script&gt;</code></pre>
+    <p>Thêm đoạn code sau vào head hoặc body (nên thêm vào head).</p>
+    <pre><code class="javascript">var lang = new Lang();
+lang.dynamic('vi', 'lib/jquery-lang/langpack/vi.json');
+lang.init({
+    defaultLang: 'en'
+});</code></pre>
+    <p>Hàm init có thể có các tham số sau:</p>
+    <ul>
+      <li>defaultLang</li>
+      <li>currentLang</li>
+      <li>cookie</li>
+      <li>allowCookieOverride</li>
+    </ul>
+    <p>Load gói ngôn ngữ động (Nên dùng)</p>
+    <pre><code class="javascript">lang.dynamic('vi', 'lib/jquery-lang/langpack/vi.json');</code></pre>
+    <p>Cấu trúc file ngôn ngữ như sau:</p>
+    <pre><code class="json">{<br>    // Define token (exact phrase) replacements here<br>&nbsp;&nbsp;&nbsp; "token": {<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "Translate me": "Dịch tôi",<br>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp; "http://www.ioling.org/images/flags/uk.gif": "http://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_Thailand.svg/1280px-Flag_of_Thailand.svg.png",<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "http://www.google.com/": "http://www.yahoo.com/",<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "lorem" : "Lorem Ipsum"<br>&nbsp;&nbsp;&nbsp; },<br>    // Define regular expression replacements here<br>&nbsp;&nbsp;&nbsp; "regex": [<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ["Budget", "งบประมาณ"],<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ["^Something at start of text", ""],<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ["This will be case insensitive", "i", ""]<br>&nbsp;&nbsp;&nbsp; ]<br>}</code></pre><p>Định nghĩa các đối tượng để dịch</p><p>Thêm thuộc tính lang vào các thẻ</p><p>Nó sẽ dịch:</p><ul><li>Nội dung thẻ</li><li>Thuộc tính placeholder</li><li>Thuộc tính title</li><li>Thuộc tính alt</li><li>Thuộc tính href</li><li>Thuộc tính src</li></ul><p>Thêm thuộc tính bằng cách:</p><pre><code
+class="javascript">Lang.prototype.attrList.push('data-name');</code></pre><p>TODO: Bỏ href?</p><p>Bạn có thể sử dụng JavaScript:</p><pre><code
+class="javascript">window.lang.translate('Translate me')</code></pre><p>Bạn có thể sử dụng data-lang-token với văn bản dài (key trong file JSON đỡ dài).</p><h3>Dynamic Content</h3><p>If you load content dynamically and add it to the DOM using jQuery the plugin will AUTOMATICALLY translate to the current language. Ensure you have added "lang" attributes to any HTML that you want translated BEFORE you add it to the DOM.</p><h3>Switching languages</h3><p>To switch languages simply call the .change() method, passing the two-letter language code to switch to. For instance here is a switcher that will change between English and Thai as used in the example page:</p><pre><code
+class="javascript">window.lang.change('vi')</code></pre><p>The onclick event is the only part that matters, you can apply the onclick to any element you prefer.</p><p><br></p><p><br></p><p>-----------------------------</p><p><br></p><p>jquery-lang<br>&nbsp;&nbsp;&nbsp; Có thể dịch kiểm<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "ABC": "123"<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "DEF": "456"<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;p lang="en"&gt;<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ABC<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;strong&gt;{{angular}}&lt;/strong&gt;<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; DEF<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &lt;/p&gt;<br>jQuery-lang đang dịch href mà không dịch title<br>&nbsp;&nbsp;&nbsp; Sửa thành ngược lại</p><p><br></p><p><br></p><p><br></p><p><br>
+    </p>
+  
+
+</body></html>

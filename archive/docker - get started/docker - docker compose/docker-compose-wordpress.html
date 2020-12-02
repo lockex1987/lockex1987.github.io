@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Docker Compose WordPress</title>
+  </head>
+  <body>
+    <p>Như mọi khi dùng WordPress để demo là cách tốt nhất cho các bạn muốn học
+      Docker. </p>
+    <p>Để dùng Docker Compose thì bạn chỉ việc tạo một tập tin có tên là <code>docker-compose.yaml</code>
+      cú pháp nó theo định dạng YAML, nếu bạn chưa biết YAML là gì thì có thể
+      xem qua bài viết <a href="http://symfony.com/doc/current/components/yaml/yaml_format.html">YAML
+        Format</a>.</p>
+    <p>Tập tin <code>docker-composer.yml</code> có nội dung như sau:</p>
+    <pre>version: '2'
+
+services:
+    mysql:
+        image: mysql
+        restart: always
+        environment:
+           - variables.env
+        # volumes:
+        #     - ./data/mysql:/docker-entrypoint-initdb.d
+
+    nginx:
+        depends_on:
+            - phpfpm
+        image: nginx
+        ports:
+            - "80:80"
+        restart: always
+        working_dir: /var/www
+        volumes:
+            - ./wordpress:/var/www/
+            - ./conf/nginx/gsviec.conf:/etc/nginx/conf.d/default.conf
+        links:
+            - phpfpm
+
+    phpfpm:
+        image: phalconphp/php-apache:ubuntu-16.04
+        restart: always
+        working_dir: /var/www
+        ports:
+            - "8080:80"
+        volumes:
+            - ./wordpress:/var/www
+        depends_on:
+            - mysql
+
+    download:
+        image: nginx
+        restart: 'no'
+        volumes:
+            - ./:/var/www
+        command: sh download-wp.sh</pre>
+    <p>Hãy để tôi giải thích vài tham số cho bạn hiểu.</p>
+    <p>Dòng đầu tiên chỉ là định nghĩa <code>version</code> của Docker compose
+      thôi hiện tại nó đã có phiên bản là 3 nhưng tôi vẫn thích dùng 2.</p>
+    <p>Dưới dòng <code>services</code> tôi định nghĩa các image cần thiết để
+      chạy WordPress bao gồm nginx, mysql, php-fpm khi bạn chạy lệnh <code>docker-compose
+        up</code> nó sẽ tạo các container tương ứng từ các image mà bạn định
+      nghĩa.</p>
+    <p>Còn tập tin <code>variables.env</code> là các tham số cấu hình MySQL bạn
+      có thể thay đổi nó nếu bạn muốn, sau này bạn muốn thêm cấu hình thì chỉ
+      việc thêm vào thôi, rất tiện lợi để quản lý do với cách gõ trực tiếp từ
+      bash shell như ở trên, chẳng hạn sau này bạn muốn thêm một dịch vụ
+      phpmyadmin để quản lý MySQL thì chỉ cần đoạn code này vào tập tin <code>docker-compose.yml</code>
+      dưới chỗ services:</p>
+    <pre>phpmyadmin:
+    restart: always
+    image: phpmyadmin/phpmyadmin:4.6
+    depends_on:
+      - mysql
+    ports:
+      - "9080:80"
+    env_file:
+      - variables.env</pre>
+    <p>Còn trong tập tin <code>variables.env</code> bạn có thể thêm vào thông
+      số cấu hình PHPmyadmin như sau:</p>
+    <pre># phpMyAdmin settings
+PMA_ARBITRARY=1
+PMA_HOST=mysql
+PMA_PORT=3306
+PMA_USER=phalcon
+PMA_PASSWORD=secret</pre>
+    <p>Còn dòng code:</p>
+    <pre>ports:
+    - "8080:80"</pre>
+    <p>có nghĩa là tôi cho web server apache lắng nghe ở cổng 8080, nếu bạn muốn
+      lắng nghe ở cổng 80 thì chỉ việc thay đổi lại thành như sau:</p>
+    <pre>ports:<br>    - "80:80"</pre>
+        <p>Kế đến bạn chạy lệnh bên dưới này để pull (kéo) 4 cái image định nghĩa
+          bên trên rồi nó sẽ tự khởi tạo 3 cái container sau vài phút bạn chờ
+          đợi.</p>
+        <pre>docker-compose up -d</pre>
+        <p>Trong 4 cái image tôi định nghĩa ở trên có 1 cái là restart: ‘no’ nên
+          nó không khởi động, do đó khi bạn chạy lệnh:</p>
+        <pre>docker ps</pre>
+        <p>bạn chỉ thấy kết quả như thế này thôi:</p>
+        <p><img src="https://i2.wp.com/gsviec.com/blog/blog/blog/wp-content/uploads/2017/04/Screenshot-at-Apr-05-20-52-45.png?w=1280&amp;ssl=1"
+data-recalc-dims="1"></p>
+        <p>Cuối cùng bạn sau khi nó chạy xong kết quả sẽ có dạng như thế này nếu
+          như bạn truy cập vào đường dẫn http://you-ip:port trong trường hợp của
+          tôi là http://localhost.</p>
+        <p><img src="https://i2.wp.com/gsviec.com/blog/blog/blog/wp-content/uploads/2017/04/Screenshot-at-Apr-05-20-55-04.png?w=1280&amp;ssl=1"
+data-recalc-dims="1"></p>
+        <p>Chú ý mặc định docker compose nó sẽ lấy tên thư mục làm tên project
+          cho bạn như hình trên nó là <code>khoahocdockercanban</code>, nếu bạn muốn thay đổi
+          nó thì bạn thêm tham số -p.</p>
+        <p>Ngoài ra nếu bạn muốn restart và stop nó thì dùng lệnh sau:</p>
+        <pre>docker-compose restart<br>docker-compose stop</pre>
+                                          
+                                            
+                                              
+                                              <p>Tất nhiên bạn cũng có thể chạy
+                                                lệnh <code>docker-compose help</code> để thấy
+                                                các dòng lệnh nó hỗ trợ dưới đây
+                                                là một kết quả trên máy tôi:</p><pre>Commands:
+  build              Build or rebuild services
+  bundle             Generate a Docker bundle from the Compose file
+  config             Validate and view the compose file
+  create             Create services
+  down               Stop and remove containers, networks, images, and volumes
+  events             Receive real time events from containers
+  exec               Execute a command in a running container
+  help               Get help on a command
+  kill               Kill containers
+  logs               View output from containers
+  pause              Pause services
+  port               Print the public port for a port binding
+  ps                 List containers
+  pull               Pull service images
+  push               Push service images
+  restart            Restart services
+  rm                 Remove stopped containers
+  run                Run a one-off command
+  scale              Set number of containers for a service
+  start              Start services
+  stop               Stop services
+  top                Display the running processes
+  unpause            Unpause services
+  up                 Create and start containers
+  version            Show the Docker-Compose version information</pre>
+                                              
+                                                
+                                                  
+                                                  <h3>Kêt luận</h3>
+                                                  <p>Trên đây tôi đã hướng dẫn
+                                                    bạn cách sử dụng Docker
+                                                    Compose và cũng như cách cài
+                                                    đặt WordPress thông qua
+                                                    Docker Compose.</p><p><br></p><p><br></p>
+</body></html>

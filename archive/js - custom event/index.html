@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Custom Event</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Custom Event">
+ </head> 
+ <body> 
+  <article> 
+   <h1>Event constructor</h1> 
+   <p>Các biến global trong trình duyệt có một function Event hay còn gọi là constructor. Chúng ta có thể tạo object event như sau:</p> 
+   <pre data-file="">let event = new Event(event type[, options]);
+</pre> 
+   <p>Tham số:</p> 
+   <ul> 
+    <li>event type - có thể là <code>String</code>, như là "click", có thể custom tên event tùy theo mục đích của chúng ta</li> 
+    <li>options: phải là <code>Object</code> với 2 thuộc tính mở rộng 
+     <ul> 
+      <li>bubble: true/false – Nếu true thì event bubble được kích hoạt. Mặc định là false</li> 
+      <li>cancelable: true/false - Nếu true, “default action” sẽ được ngăn chặn như là chặn không request các tham số của form lên server. Mặc định là false</li> 
+     </ul> </li> 
+   </ul> 
+   <h1>dispatchEvent</h1> 
+   <p>Sau khi tạo object event, Chúng ta nên chạy chúng trên phần tử DOM bằng cách <code>elem.dispatchEvent(event)</code>. Ở ví dụ ở dưới đây, event click sẽ tự động được kích hoạt khi mới bắt đầu chạy chương trình. Hình thức này giống với việc chúng ta click vào một button.</p> 
+   <pre data-file="">&lt;button id="elem" onclick="alert('Click!');"&gt;Autoclick&lt;/button&gt;
+
+&lt;script&gt;
+  let event = new Event("click");
+  elem.dispatchEvent(event);
+&lt;/script&gt;
+</pre> 
+   <h2>Bubbling example</h2> 
+   <p>Chúng ta có thể tạo một bubbling event với tên là "hello" và chúng <code>dispatching</code> trên document</p> 
+   <pre data-file="">&lt;h1 id="elem"&gt;Hello from the script!&lt;/h1&gt;
+
+&lt;script&gt;
+  // catch on document...
+  document.addEventListener("hello", function(event) { // (1)
+    alert("Hello from " + event.target.tagName); // Hello from H1
+  });
+
+  // ...dispatch on elem!
+  let event = new Event("hello", {bubbles: true}); // (2)
+  elem.dispatchEvent(event);
+&lt;/script&gt;
+</pre> 
+   <p>Ở ví dụ này có 2 điểm lưu ý:</p> 
+   <ol> 
+    <li>Chúng ta nên sử dụng <code>addEventListener</code> trong custom event, không nên sử dụng on&lt;event&gt; trên phần tử DOM. Vì on&lt;event&gt; (onclick, ondblclick...) những thuộc tính mặc định đã tồn tại. <code>document.onhello</code> sẽ không hoạt được</li> 
+    <li>Tham số thứ 2 options của event mà thuộc tính của object options - <code>bubbles = true</code></li> 
+   </ol> 
+   <h1>MouseEvent, KeyboardEvent and others</h1> 
+   <p>Đây là danh sách class của UI Events. Đây là phần đặc tả về chúng <a href="https://www.w3.org/TR/uievents" target="_blank">UI Event specification</a></p> 
+   <ul> 
+    <li>UIEvent</li> 
+    <li>FocusEvent</li> 
+    <li>MouseEvent</li> 
+    <li>WheelEvent</li> 
+    <li>KeyboardEvent</li> 
+    <li>...</li> 
+   </ul> 
+   <p>Chúng ta nên sử dụng những class này để custom event mặc định của javascript. Tạo instance, <code>new MouseEvent("click")</code>. Khi chúng ta constructor chúng ta có thể thêm các thuộc tính mở rộng cho tham số options. Qua đây chúng ta thấy rằng constructor Event mà tham số options chỉ nhận 2 thuộc tính <code>{ bubbles: false, cancelable: false }</code>. Nhưng với các các class ở trên thì chúng ta có thể thêm bao nhiêu thuộc tính cũng được.</p> 
+   <pre data-file="">let event = new MouseEvent("click", {
+  bubbles: true,
+  cancelable: true,
+  clientX: 100,
+  clientY: 100
+});
+alert(event.clientX)
+</pre> 
+   <p>2 tham số clientX và clientY được thêm vào khi tạo instance. Và chúng ta có thể truy cập thuộc tính đó bằng cách <code>alert(event.clientX)</code>. Lưu ý cách khai báo này sẽ không hoạt động khi chúng ta tạo instance <code>contructor Event</code>.</p> 
+   <pre data-file="">let event = new Event("click", {
+  bubbles: true, // only bubbles and cancelable
+  cancelable: true, // work in the Event constructor
+  clientX: 100,
+  clientY: 100
+});
+
+alert(event.clientX); // undefined, the unknown property is ignored!
+</pre> 
+   <p>Lưu ý:</p> 
+   <ul> 
+    <li>Đây là danh sách đầy đủ các thuộc tính options mà được W3S đặc tả cho <a href="https://www.w3.org/TR/uievents/#mouseevent" target="_blank">MouseEvent</a>.</li> 
+   </ul> 
+   <h1>Custom Event</h1> 
+   <p>Chúng ta có thể tạo custom event "hello" bằng cách sử dụng <code>new CustomEvent</code>, <code>CustomEvent</code> cũng giống như <code>Event</code>. <code>CustomEvent</code> có tham số options (object) <code>details</code> - chúng ta có thể thêm các thuộc tính thông tin cần thiết khi tạo event. Với Event thì có không thuộc tính <code>details</code> của options này. Ví dụ:</p> 
+   <pre data-file="">&lt;h1 id="elem"&gt;Hello for John!&lt;/h1&gt;
+
+&lt;script&gt;
+  // additional details come with the event to the handler
+  elem.addEventListener("hello", function(event) {
+    alert(event.detail.name);
+  });
+
+  elem.dispatchEvent(new CustomEvent("hello", {
+    detail: { name: "John" }
+  });
+&lt;/script&gt;
+</pre> 
+   <h1>Summary</h1> 
+   <p>Qua bài viết này, mình đã chia sẽ cho làm thế nào để tạo một custom event trong javascript. Việc nắm bắt những kiến thức cơ bản này, cũng sẽ giống cho các bạn một phần nào đó khi sử dụng các library, framework javascript. Hiểu rõ hơn các thư viện javascript đã tạo custom event như thế nào.</p> 
+   <p>https://javascript.info/dispatch-events</p> 
+   <p>https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events</p> 
+   <p>https://gomakethings.com/custom-events-with-vanilla-javascript/<br> </p> 
+   <p></p> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p><br> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

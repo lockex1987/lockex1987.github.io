@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Page Load</title>
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		
+		.preloadPage {
+			/* Hiển thị toàn màn hình, che những phần còn lại */
+			width: 100vw;
+			height: 100vh;
+			background: #fff;
+			position: absolute;
+			z-index: 99999;
+			overflow: hidden;
+		}
+		
+		.preloadContainer {
+			/* Căn giữa */
+			position: absolute;
+			height: 50px;
+			width: 50px;
+			left: 50%;
+			top: 50%;
+			transform: translateX(-50%) translateY(-50%);
+			perspective: 200px;
+		}
+		
+		.cube {
+			height: 50px;
+			width: 50px;
+			transform-origin: 50% 50%;
+			transform-style: preserve-3d;
+			animation: rotate 4s infinite ease-in-out;
+		}
+		
+		.preload {
+			position: absolute;
+			display: block;
+			height: 50px;
+			width: 50px;
+		}
+		
+		.preload1 {
+			background: #41C3AC;
+			transform: translateZ(50px);
+		}
+		
+		.preload2 {
+			background: #FF884D;
+			transform: rotateY(90deg) translateZ(50px);
+		}
+		
+		.preload3 {
+			background: #32526E;
+			transform: rotateY(180deg) translateZ(50px);
+		}
+		
+		.preload4 {
+			background: #65A2C5;
+			transform: rotateY(-90deg) translateZ(50px);
+		}
+		
+		.preload5 {
+			background: #FFCC5C;
+			transform: rotateX(90deg) translateZ(50px);
+		}
+		
+		.preload6 {
+			background: #FF6B57;
+			transform: rotateX(-90deg) translateZ(50px);
+		}
+		
+		@keyframes rotate {
+			0% {
+				transform: rotateX(0deg) rotateY(0deg);
+			}
+			50% {
+				transform: rotateX(360deg) rotateY(0deg);
+			}
+			100% {
+				transform: rotateX(360deg) rotateY(360deg);
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="preloadPage">
+		<div class="preloadContainer">
+			<div class="cube">
+				<div class="preload preload1"></div>
+				<div class="preload preload2"></div>
+				<div class="preload preload3"></div>
+				<div class="preload preload4"></div>
+				<div class="preload preload5"></div>
+				<div class="preload preload6"></div>
+			</div>
+		</div>
+	</div>
+
+	<p>Page content</p>
+
+	<script>
+		function showLoader() {
+			document.querySelector('.preloadPage').style.display = '';
+		}
+
+		function hideLoader() {
+			document.querySelector('.preloadPage').style.display = 'none';
+		}
+
+		setTimeout(hideLoader, 3 * 1000);
+	</script>
+</body>
+
+</html>

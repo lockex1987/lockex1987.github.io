@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="module.exports, exports - require (Node), export - import (ES6)">
+    <title>Module</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Module trong JS</h2>
+      <p>Module là một phương pháp lập trình mà trong đó các đoạn code liên quan
+        được tách ra các phần khác nhau (hay còn gọi là module).</p>
+      <h3>Thư viện</h3>
+      <p>Trước ES6 một số thư viện JS hỗ trợ các cách viết code khác nhau để hỗ
+        trợ quản lý các module.</p>
+      <ul>
+        <li><a target="_blank" href="https://requirejs.org/">RequireJs</a></li>
+        <li><a target="_blank" href="https://github.com/amdjs/amdjs-api">AMD
+            (Asynchronous Module Definition)</a></li>
+        <li><a target="_blank" href="http://www.commonjs.org/">CommonJS</a></li>
+        <li><a target="_blank" href="https://github.com/umdjs/umd">UMD
+            (Universal Module Definition)</a></li>
+      </ul>
+      <p>CommonJS có dạng:</p>
+      <pre>function myModule() {
+    this.hello = function() {
+        return 'hello!';
+    }
+
+    this.goodbye = function() {
+        return 'goodbye!';
+    }
+}
+
+module.exports = myModule;</pre>
+      <p>AMD có dạng:</p>
+      <pre>define(['dep1', 'dep2'], function (dep1, dep2) {
+    console.log(dep1.eat());
+
+    return {
+        speak: function () {
+            console.log('speak');
+        },
+    };
+});</pre>
+      <p>UMD có dạng:</p>
+      <pre>(function (root, factory) {
+    if (typeof define === 'function' &amp;&amp; define.amd) {
+        // AMD
+        define(['myModule', 'myOtherModule'], factory);
+    } else if (typeof exports === 'object') {
+        // CommonJS
+        module.exports = factory(require('myModule'), require('myOtherModule'));
+    } else {
+        // Browser globals<br>        // Note: root is window
+        root.returnExports = factory(root.myModule, root.myOtherModule);
+  }
+}(this, function (myModule, myOtherModule) {
+    // Methods
+    function notHelloOrGoodbye() {}; // A private method<br>
+    function hello() {}; // A public method because it's returned (see below)<br>
+    function goodbye() {}; // A public method because it's returned (see below)
+
+    // Exposed public methods
+    return {
+        hello: hello,
+        goodbye: goodbye
+    };
+}));</pre>
+            <p>Khi chúng ta kiểm tra các script mà được transpile từ Webpack hoặc Babel thì sẽ thấy nó có dạng giống UMD.</p>
+      <h3>Module trong Node</h3>
+      <p>Ví dụ Node hỗ trợ sử dụng <code>require()</code> và <code>module.exports,
+          exports</code>.</p>
+      <p>Node sử dụng chuẩn CommonJS.</p>
+      <p>Tạo module trong file <code>say_hello.js</code>:</p>
+      <pre>const sayHello = (name) =&gt; {
+    console.log('Xin chào! Tên tôi là ' + name);
+};
+
+module.exports = {
+    sayHello: sayHello
+};</pre>
+      <p>Sử dụng module tạo ra ở trên trong file <code>hello.js</code>:</p>
+      <pre>const mod = require('./say_hello.js');
+
+mod.sayHello('Peter');</pre>
+      <p>Chạy file <code>hello.js</code>:</p>
+      <pre>$ node hello.js
+// Xin chào! Tên tôi là Peter</pre>
+      <h3>Module trong ES6</h3>
+      <p>Chúng ta có thể sử dụng câu lệnh <code>import</code> và <code>export</code>
+        trong phiên bản ES6 để thay thế cho <code>require()</code> và <code>module.export()</code>.
+      </p>
+      <p>Lưu ý: để sử dụng tính năng <code>export</code> và <code>import</code>
+        trong ES6 bạn cần sử dụng các trình duyệt hỗ trợ ES6 như Edge, Chrome,
+        Firefore và nâng cấp trình duyệt lên phiên bản mới nhất.</p>
+      <h4>Câu lệnh export</h4>
+      <p>Câu lệnh <code>export</code> dùng để xuất ra một module:</p>
+      <pre>let sayHello = function (name) {
+    console.log("Xin chào! Tên tôi là " + name);
+}
+
+export { sayHello };</pre>
+      <p>Bạn có thể export nhiều module trong cùng một file:</p>
+      <pre>let sayHello = function (name) {
+    console.log("Xin chào! Tên tôi là " + name);
+}
+
+let sayGoodbye = function () {
+    console.log("Chào tạm biệt!");
+}
+
+export { sayHello, sayGoodbye };</pre>
+      <h4>Câu lệnh import</h4>
+      <p>Câu lệnh <code>import</code> trong ES6 dùng để nhập vào module từ một
+        file cho trước (có thể là từ một thư viện hay module mà chúng ta tự định
+        nghĩa).</p>
+      <p>Ví dụ để nhập vào module <code>sayHello</code> được tạo ra ở ví dụ
+        trên:</p>
+      <pre>import { sayHello } from 'say_hello.js';</pre>
+      <p>Đoạn code trên sẽ nhập vào module <code>sayHello</code> từ tập tin <code>say_hello.js</code>
+        và gán giá trị của module này cho biến <code>sayHello</code>.</p>
+      <p>Bạn có thể tuỳ ý đặt tên biến khi import module <code>sayHello</code>
+        sử dụng từ khoá <code>as</code>:</p>
+      <pre>import { sayHello as sayHelloFunction } from 'say_hello.js';</pre>
+      <p>Lưu ý: Trong trường hợp có nhiều module được tạo ra trong cùng một file
+        thì bạn có thể tuỳ ý lựa chọn số lượng module nhập vào chứ không cần
+        thiết phải nhập tất cả.</p>
+      <p>Sử dụng ở trình duyệt hoặc <a target="_blank" href="https://webpack.js.org/">Webpack</a>, <a
+target="_blank" href="https://babeljs.io/">Babel</a>. Webpack, Babel sẽ dịch ra
+        CommonJS (module.exports, exports - require).</p>
+      <p><a target="_blank" href="es6/demo.html">Demo</a></p>
+      <h3>Tham khảo</h3><p><a target="_blank" href="https://javascript.info/modules-intro">Modules, introduction</a></p><p><a
+target="_blank" href="https://www.youtube.com/watch?v=cRHQNNcYf6s">JavaScript ES6 Modules - YouTube</a></p><p><a
+target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">JavaScript modules - JavaScript | MDN</a></p><p><a
+href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">import - JavaScript | MDN</a></p><p><a
+href="https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export">export - JavaScript | MDN</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+</body></html>

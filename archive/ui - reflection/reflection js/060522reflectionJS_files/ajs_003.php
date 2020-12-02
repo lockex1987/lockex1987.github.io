@@ -1,0 +1,18 @@
+var OX_96319cd8 = '';
+OX_96319cd8 += "<"+"script type=\"text/javascript\"><"+"!--\n";
+OX_96319cd8 += "google_ad_client = \"pub-2764696834666748\";\n";
+OX_96319cd8 += "google_ad_width = 728;\n";
+OX_96319cd8 += "google_ad_height = 90;\n";
+OX_96319cd8 += "google_ad_format = \"728x90_as\";\n";
+OX_96319cd8 += "google_ad_type = \"text_image\";\n";
+OX_96319cd8 += "google_ad_channel =\"5183335049\";\n";
+OX_96319cd8 += "google_color_border = \"7854AD\";\n";
+OX_96319cd8 += "google_color_bg = \"FFFFF5\";\n";
+OX_96319cd8 += "google_color_link = \"000066\";\n";
+OX_96319cd8 += "google_color_text = \"000000\";\n";
+OX_96319cd8 += "google_color_url = \"000066\";\n";
+OX_96319cd8 += "//--><"+"/script>\n";
+OX_96319cd8 += "<"+"script type=\"text/javascript\"\n";
+OX_96319cd8 += "src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\">\n";
+OX_96319cd8 += "<"+"/script><"+"div id=\'beacon_d2bbde1505\' style=\'position: absolute; left: 0px; top: 0px; visibility: hidden;\'><"+"img src=\'http://adsnew.hostreview.com/openx/www/delivery/lg.php?bannerid=47&amp;campaignid=17&amp;zoneid=117&amp;channel_ids=,&amp;loc=http%3A%2F%2Fwww.javascriptsearch.com%2Fnews%2Fnews%2F060522reflectionJS.html&amp;referer=http%3A%2F%2Fwww.google.com.vn%2Fsearch%3Fq%3Dreflection+effect+javascript%26btnG%3DSearch%26hl%3Den%26client%3Dfirefox-a%26rls%3Dorg.mozilla%253Aen-US%253Aofficial%26hs%3DIoj%26sa%3D2&amp;cb=d2bbde1505\' width=\'0\' height=\'0\' alt=\'\' style=\'width: 0px; height: 0px;\' /><"+"/div>\n";
+document.write(OX_96319cd8);

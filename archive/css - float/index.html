@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>CSS Layout - float and clear</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="CSS Layout - float and clear">
+ </head> 
+ <body> 
+  <article> 
+   <h2>CSS Layout - float and clear</h2> 
+   <p>The <code>float</code> property specifies whether or not an element should float.</p> 
+   <p>In its simplest use, the <code>float</code> property can be used to wrap text around images.</p> 
+   <p>The <code>clear</code> property is used to control the behavior of floating elements.</p> 
+   <p>Elements after a floating elements will flow around it. To avoid this, use <code>clear</code> property.</p> 
+   <p>The <code>clear</code> property specifies on which sides of an element floating elements are not allowed to float.</p> 
+   <h3>The clearfix hack</h3> 
+   <p>If an element is taller than the element containing it, and it is floated, it will overflow outside of its container.</p> 
+   <p>Then we can add <code>overflow:auto</code> to the containing element to fix the problem.</p> 
+   <p>The <code>overflow:auto</code> clearfix works well as long as you are able to keep control of your margins and padding (else you might see scrollbars). The new, modern clearfix hack however, is safer to use, and the following code is used for most webpages.</p> 
+   <pre><code class="css">.clearfix::after {<br>&nbsp;&nbsp;&nbsp; content: "";<br>&nbsp;&nbsp;&nbsp; clear: both;<br>&nbsp;&nbsp;&nbsp; display: table;<br>}</code></pre> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

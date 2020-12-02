@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Setting path">
+    <title>Cấu hình path trên Linux</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Sửa đường dẫn path</h2>
+      <p>Cấu hình ở file <code>/etc/profile</code></p>
+      <pre>JAVA_HOME=/opt/jdk-9.0.4
+M2_HOME=/home/locke/program/maven
+NODE_HOME=/home/locke/program/node
+PATH=$PATH:$JAVA_HOME/bin:$M2_HOME/bin:$NODE_HOME/bin</pre>
+      <p>Phải khởi động lại thì mới ăn.</p>
+      <p>Chúng ta cũng có thể sửa file <code>~/.bashrc</code> hoặc <code>~/.profile</code>
+        hoặc <code>~/.bash_profile</code>. Khi đó thay chỉ có hiệu lực với user
+        hiện tại.</p>
+      <p>File <code>~/.profile</code> sẽ không được đọc nếu <code>~/.bash_profile</code>
+        tồn tại.</p>
+      <p>PATH="$HOME/.composer/vendor/bin:$HOME/bin:$HOME/.local/bin:$PATH"</p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

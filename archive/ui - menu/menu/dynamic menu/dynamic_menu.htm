@@ -1,0 +1,178 @@
+﻿<HTML>
+<HEAD>
+<TITLE>JS - DYNAMIC CHIP MENU - Suu tam boi Mr HOT</TITLE>
+<STYLE type=text/css>
+DIV.c1 {
+	Z-INDEX: 1; LEFT: 20px; WIDTH: 33px; POSITION: absolute; TOP: 107px; HEIGHT: 31px
+}
+
+.out {
+	BORDER-RIGHT: #0099ff 1px solid; BORDER-TOP: #0099ff 1px solid; FONT-SIZE: 12px; Z-INDEX: 5; PADDING-BOTTOM: 1px; BORDER-LEFT: #0099ff 1px solid; WIDTH: 100%; COLOR: #0099ff; TEXT-INDENT: 4px; PADDING-TOP: 1px; BORDER-BOTTOM: #0099ff 1px solid; FONT-FAMILY: "Courier New", Courier, mono; BACKGROUND-COLOR: #99ccff; TEXT-ALIGN: center
+}
+
+.over {
+	BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid; FONT-SIZE: 12px; Z-INDEX: 5; PADDING-BOTTOM: 1px; BORDER-LEFT: #000000 1px solid; WIDTH: 100%; COLOR: #0099ff; TEXT-INDENT: 4px; PADDING-TOP: 1px; BORDER-BOTTOM: #000000 1px solid; FONT-FAMILY: "Courier New", Courier, mono; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: center
+}
+
+.down {
+	BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid; FONT-SIZE: 12px; Z-INDEX: 5; PADDING-BOTTOM: 1px; BORDER-LEFT: #000000 1px solid; WIDTH: 100%; COLOR: #000000; TEXT-INDENT: 4px; PADDING-TOP: 1px; BORDER-BOTTOM: #000000 1px solid; FONT-FAMILY: "Courier New", Courier, mono; BACKGROUND-COLOR: #ffffff; TEXT-ALIGN: center
+}
+
+.link1 {
+	FONT-SIZE: 14px; COLOR: #000000; FONT-STYLE: normal; FONT-FAMILY: "Courier New", Courier, mono
+}
+
+#menu1LYR {
+	LEFT: 100px; WIDTH: 200; CURSOR: pointer; POSITION: absolute; TOP: 25%; HEIGHT: 5%
+}
+#menu2LYR {
+	LEFT: 100px; WIDTH: 200; CURSOR: pointer; POSITION: absolute; TOP: 142; HEIGHT: 5%
+}
+#menu3LYR {
+	LEFT: 100px; WIDTH: 200; CURSOR: pointer; POSITION: absolute; TOP: 166; HEIGHT: 5%
+}
+#menu4LYR {
+	LEFT: 100px; WIDTH: 200; CURSOR: pointer; POSITION: absolute; TOP: 190; HEIGHT: 5%
+}
+#menu5LYR {
+	LEFT: 100px; WIDTH: 200; CURSOR: pointer; POSITION: absolute; TOP: 214; HEIGHT: 5%
+}
+#menu6LYR {
+	LEFT: 100px; WIDTH: 200; CURSOR: pointer; POSITION: absolute; TOP: 238; HEIGHT: 5%
+}
+#menu7LYR {
+	LEFT: 100px; WIDTH: 200; CURSOR: pointer; POSITION: absolute; TOP: 262; HEIGHT: 5%
+}
+
+A:link {
+	FONT-SIZE: 14px; COLOR: #0099ff;   FONT-FAMILY: "Courier New", Courier, mono; TEXT-DECORATION: none
+}
+</STYLE>
+
+<SCRIPT>
+px =  "px";
+timer1	= null;
+var decrease = 0.1; 
+var offset = 0;
+var selected_id = null;
+
+function getPosition(id) {
+	endPos = document.getElementById(id).offsetTop;
+}	
+
+var counter = 0;
+function actionMenu(obj, steps) {
+	if (document.getElementById) {
+		el = document.getElementById(obj) ;
+	}
+	el.xpos = el.offsetTop;
+	if (el.xpos < endPos) {
+		clearTimeout(timer1);
+		window.status = "STOP";
+	} else if (el.xpos >= endPos) {
+		clearTimeout(timer1);
+		window.status = "STOP";
+	}
+	//counter++;
+	//window.status = counter;
+	//window.status = "XPOS: " + el.xpos + "/" + endPos;
+	distance = endPos - el.xpos + offset;
+	steps = distance * decrease; 
+	el.xpos += steps;
+	el.style.top = el.xpos + px ;
+	timer1 = setTimeout("actionMenu('" + obj + "')", 25);
+}
+
+function initMenu() {
+	var args = initMenu.arguments;
+	switch (args[0]) {
+	case "menu_highlight" :
+		if (selected_id	!= args[1]) {
+			el = document.getElementById(args[1]);
+			el.className = args[2];
+		}
+		break;
+	case "menu_click" :
+		if (selected_id	!= null) {
+			document.getElementById(selected_id).className = args[2];
+		}
+		document.getElementById(args[1]).className = args[3];
+		selected_id = args[1];
+	break;
+	}
+}
+
+</SCRIPT>
+</HEAD>
+
+<BODY bgcolor=#ffffff>
+<DIV class=c1 id=pointer>
+	<IMG height=28 src="chipbay.gif" width=60 border=0 />
+</DIV>
+
+<div>
+<DIV class="out" 
+onmousedown="initMenu('menu_click','menu1LYR','out ','down'); " 
+id="menu1LYR"
+onmouseover="initMenu('menu_highlight','menu1LYR','over'); getPosition('menu1LYR'); actionMenu('pointer', '20')" 
+onmouseout="initMenu('menu_highlight','menu1LYR','out')">
+	<A href="http://ww.echip.com.vn" target=blank><SPAN class=link1>WWW.ECHIP.COM.VN</SPAN></A>
+</DIV>
+
+
+<DIV class="out" 
+onmousedown="initMenu('menu_click','menu2LYR','out ','down'); " 
+id="menu2LYR"
+onmouseover="initMenu('menu_highlight','menu2LYR','over'); getPosition('menu2LYR'); actionMenu('pointer', '20')" 
+onmouseout="initMenu('menu_highlight','menu2LYR','out')">
+	<A href="http://www.echip.com.vn/echiproot/javascript/" target=_blank><SPAN class=link1>TH&#431; VI&#7878;N JAVASCRIPT</SPAN></A>
+</DIV>
+
+<DIV class="out" 
+onmousedown="initMenu('menu_click','menu3LYR','out ','down'); " 
+id="menu3LYR"
+onmouseover="initMenu('menu_highlight','menu3LYR','over'); getPosition('menu3LYR'); actionMenu('pointer', '20')" 
+onmouseout="initMenu('menu_highlight','menu3LYR','out')">
+	<A href="http://www.echip.com.vn/" target=_blank><SPAN class=link1>PH&#7846;N M&#7872;M MI&#7876;N PH&#205;</SPAN></A>
+</DIV>
+
+<DIV class="out" 
+onmousedown="initMenu('menu_click','menu4LYR','out','down');" 
+id="menu4LYR"
+onmouseover="initMenu('menu_highlight','menu4LYR','over');getPosition('menu4LYR'); actionMenu('pointer', '20')" 
+onmouseout="initMenu('menu_highlight','menu4LYR','out')">
+	<A href="http://www.echip.com.vn/" target=_blank><SPAN class=link1>&#272;&#7884;C XONG V&#7884;C LI&#7872;N</SPAN></A>
+</DIV>
+
+<DIV class="out" 
+onmousedown="initMenu('menu_click','menu5LYR','out','down');" 
+id="menu5LYR"
+onmouseover="initMenu('menu_highlight','menu5LYR','over');getPosition('menu5LYR'); actionMenu('pointer', '20')" 
+onmouseout="initMenu('menu_highlight','menu5LYR','out')">
+	<A href="http://www.echip.com.vn/" target=_blank><SPAN class=link1>B&#192;I H&#7884;C TR&#7920;C TUY&#7870;N</SPAN></A>
+</DIV>
+
+<DIV class="out" 
+onmousedown="initMenu('menu_click','menu6LYR','out','down');" 
+id="menu6LYR"
+onmouseover="initMenu('menu_highlight','menu6LYR','over');getPosition('menu6LYR'); actionMenu('pointer', '20')" 
+onmouseout="initMenu('menu_highlight','menu6LYR','out')">
+	<A href="http://www.echip.com.vn/" target=_blank><SPAN class=link1>THỦ THUẬT WINDOW</SPAN></A>
+</DIV>
+
+<DIV class="out"
+onmousedown="initMenu('menu_click', 'menu7LYR', 'out', 'down');" 
+id="menu7LYR"
+onmouseover="initMenu('menu_highlight', 'menu7LYR', 'over'); getPosition('menu7LYR'); actionMenu('pointer', '20')" 
+onmouseout="initMenu('menu_highlight', 'menu7LYR', 'out')">
+	<A href="mailto:echip@vasc.com.vn" target=_blank><SPAN class=link1>LI&#202;N H&#7878;</SPAN></A>
+</DIV>
+
+</div>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<FONT color=#000000 face=verdana size=1 ><b>&nbsp; © 2004 S&#432;u t&#7847;m b&#7903;i 
+<a href=mailto:MrChiliHot@yahoo.com title='{ Lien he voi Mr HOT }'><b><font color=red> Mr HOT</b></a>.
+
+</BODY>
+</HTML>

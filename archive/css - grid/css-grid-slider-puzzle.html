@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSS Grid Slider Puzzle</title>
+  <style>
+body { background-color: #fe924f; }
+#grid { border: 1px solid #fff; display: grid; height: 90vmin; margin: 5vmin auto; width: 90vmin;
+    grid-template-areas: "one two three" "four five six" "seven eight nine"; }
+#grid .tile { background-size: cover; border: 1px solid #fff; cursor: pointer; background-color: #fff; }
+#grid .tile:first-child  { background-image: url(images/tileslider_01.jpg); grid-area: one; }
+#grid .tile:nth-child(2) { background-image: url(images/tileslider_02.jpg); grid-area: two; }
+#grid .tile:nth-child(3) { grid-area: three; }
+#grid .tile:nth-child(4) { background-image: url(images/tileslider_04.jpg); grid-area: four; }
+#grid .tile:nth-child(5) { background-image: url(images/tileslider_05.jpg); grid-area: five; }
+#grid .tile:nth-child(6) { background-image: url(images/tileslider_06.jpg); grid-area: six; }
+#grid .tile:nth-child(7) { background-image: url(images/tileslider_07.jpg); grid-area: seven; }
+#grid .tile:nth-child(8) { background-image: url(images/tileslider_08.jpg); grid-area: eight; }
+#grid .tile:nth-child(9) { background-image: url(images/tileslider_09.jpg); grid-area: nine; }
+  </style>
+</head>
+<body>
+  <div id='grid'>
+    <div class='tile'></div>
+    <div class='tile'></div>
+    <div class='tile'></div>
+    <div class='tile'></div>
+    <div class='tile'></div>
+    <div class='tile'></div>
+    <div class='tile'></div>
+    <div class='tile'></div>
+    <div class='tile'></div>
+  </div>
+
+  <script>
+let blankTile = document.getElementById("grid").children[2];
+
+document.addEventListener("click", e => toggleTile(e));
+
+toggleTile = (e) => {
+  let targetTile = e.target;
+  if (!targetTile.classList.contains('tile')) {
+    return;
+  }
+  let tileImage = window.getComputedStyle(targetTile).backgroundImage;
+  //console.log(targetTile.style.backgroundImage);
+  if (tileImage !== 'none') {
+    const NUM = { 'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9 };
+    // To get the grid-area value in both Chrome & Firefox, it looks like the value we need here is stored in gridColumnEnd
+    // in both browsers but not in gridArea in Firefox which is where I'd expect
+    let blankTileGridArea = NUM[window.getComputedStyle(blankTile).gridColumnEnd];
+    let targetTileGridArea = NUM[window.getComputedStyle(targetTile).gridColumnEnd];
+    //console.log(blankTileGridArea, targetTileGridArea);
+    if (
+      targetTileGridArea - 1 === blankTileGridArea && blankTileGridArea % 3 !== 0 ||
+      targetTileGridArea + 1 === blankTileGridArea && targetTileGridArea % 3 !== 0 ||
+      targetTileGridArea + 3 === blankTileGridArea ||
+      targetTileGridArea - 3 === blankTileGridArea
+    ) {
+      blankTile.style.backgroundImage = tileImage;
+      targetTile.style.backgroundImage = 'none';
+      blankTile = targetTile;
+    }
+  }
+}
+  </script>
+</body>
+</html>

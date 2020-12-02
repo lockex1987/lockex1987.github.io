@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Get start</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<script type="text/javascript" src="jquery/jquery.js"></script>
+	<script type="text/javascript" src="dynaTree/jquery-ui.custom.js"></script>
+	<script type="text/javascript" src="dynaTree/jquery.cookie.js"></script>
+	<script type="text/javascript" src="dynaTree/jquery.dynatree.js"></script>
+	<link href="dynaTree/skin/ui.dynatree.css" rel="stylesheet" type="text/css" />
+	<link href="theme.css" rel="stylesheet" type="text/css" />
+	<script>
+		$(function() {
+			$("#projectTree").dynatree();
+		});
+	</script>
+</head>
+
+<body>
+	<div id="main">
+		<h2 id="div1">1. Bắt đầu một dự án mới</h2>
+		<div>
+			Framework có cấu trúc như sau:
+			<br />
+			<div id="projectTree">
+				<ul style="display:none">
+					<li class="folder">
+						Web Pages
+						<ul>
+							<li class="folder">
+								META-INF
+								<ul>
+									<li><span class="xmlFile">context.xml</span></li>
+								</ul>
+							</li>
+							<li class="folder">
+								WEB-INF
+								<ul>
+									<li class="folder">
+										config
+										<ul>
+											<li><span class="tldFile">struts-bean.tld <span class="myComment">(thư viện thẻ Struts)</span></span>
+											</li>
+											<li><span class="tldFile">struts-html.tld <span class="myComment">(thư viện thẻ Struts)</span></span>
+											</li>
+											<li><span class="tldFile">struts-logic.tld <span class="myComment">(thư viện thẻ Struts)</span></span>
+											</li>
+											<li><span class="tldFile">struts-tiles.tld <span class="myComment">(thư viện thẻ Struts)</span></span>
+											</li>
+											<li><span class="tldFile">vsa-defs.tld <span class="myComment">(thư viện thẻ VSA, ngoài ra còn nhiều thư viện thẻ nữa chưa được sử dụng như JSTL)</span></span>
+											</li>
+											<li><span class="xmlFile">web.xml <span class="myComment">(cấu hình đầu tiên)</span></span>
+											</li>
+											<li><span class="xmlFile">struts-config.xml <span class="myComment">(cấu hình phụ, khai báo form, action, trang trả về)</span></span>
+											</li>
+											<li><span class="xmlFile">tiles-defs.xml <span class="myComment">(định dạng các trang trả về)</span></span>
+											</li>
+											<li><span class="xmlFile">struts-config-admin.xml <span class="myComment">(chia theo module)</span></span>
+											</li>
+											<li><span class="xmlFile">tiles-defs-admin.xml <span class="myComment">(chia theo module)</span></span>
+											</li>
+										</ul>
+									</li>
+									<li class="folder">
+										jsp
+										<ul>
+											<li class="folder">
+												admin
+												<ul>
+													<li class="folder"><span>categoryTemplate <span class="myComment">(Danh mục mẫu)</span></span>
+													</li>
+													<li class="folder"><span>reportConfig <span class="myComment">(Cấu hình động báo cáo)</span></span>
+													</li>
+													<li class="folder"><span>sysCat <span class="myComment">(Danh mục dùng chung)</span></span>
+													</li>
+													<li class="folder"><span>sysUser <span class="myComment">(Người dùng)</span></span>
+													</li>
+													<li class="folder"><span>systemParameter <span class="myComment">(Tham số hệ thống)</span></span>
+													</li>
+												</ul>
+											</li>
+											<li class="folder">
+												common
+												<ul>
+													<li><span class="jspFile">contact.jsp <span class="myComment">(Liên hệ, cho phép người dùng gửi mail góp ý)</span></span>
+													</li>
+													<li><span class="jspFile">downloadLink.jsp <span class="myComment">(Chứa link download khi export)</span></span>
+													</li>
+													<li><span class="jspFile">dpList.jsp <span class="myComment">(Trang trả về của dataPicker)</span></span>
+													</li>
+													<li><span class="jspFile">dpListMulti.jsp <span class="myComment">(Trang trả về của dataPicker, trường hợp chọn nhiều)</span></span>
+													</li>
+													<li><span class="jspFile">error.jsp <span class="myComment">(Trang lỗi, cho phép người dùng thông báo lỗi bằng mail)</span></span>
+													</li>
+													<li><span class="jspFile">help.jsp <span class="myComment">(Trang trợ giúp)</span></span>
+													</li>
+													<li><span class="jspFile">home.jsp <span class="myComment">(Trang chủ)</span></span>
+													</li>
+													<li><span class="jspFile">importResult.jsp <span class="myComment">(Kết quả import)</span></span>
+													</li>
+													<li><span class="jspFile">releaseLog.jsp <span class="myComment">(Theo dấu thay đổi qua các phiên bản)</span></span>
+													</li>
+													<li><span class="jspFile">saveResult.jsp <span class="myComment">(Phản ứng của chương trình với request của người dùng)</span></span>
+													</li>
+													<li><span class="jspFile">sessionTimeout.jsp <span class="myComment">(Trang timeout, thấy chả bao giờ vào trang này)</span></span>
+													</li>
+												</ul>
+											</li>
+											<li class="folder">
+												layout
+												<ul>
+													<li><span class="jspFile">baseLayout.jsp <span class="myComment">(Các trang chính sẽ base trên trang này)</span></span>
+													</li>
+													<li><span class="jspFile">externalCssJs.jsp <span class="myComment">(Nơi khai báo JS, CSS)</span></span>
+													</li>
+													<li><span class="jspFile">popupLayout.jsp <span class="myComment">(Các trang popup base trên trang này)</span></span>
+													</li>
+													<li><span class="jspFile">processing.jsp <span class="myComment">(Chứa thẻ div processing)</span></span>
+													</li>
+												</ul>
+											</li>
+											<li>index.jsp</li>
+										</ul>
+									</li>
+									<li class="folder">
+										tags
+										<ul>
+											<li class="folder">
+												common
+												<ul>
+													<li>attachmentForm.tag</li>
+													<li>button.tag</li>
+													<li>dataPicker.tag</li>
+													<li>dateChooser.tag</li>
+													<li>dialog.tag</li>
+													<li>link.tag</li>
+													<li>multiDataPicker.tag</li>
+													<li>navigator.tag</li>
+													<li>popupChooser.tag</li>
+													<li>tree.tag</li>
+													<li>treeChooser.tag</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="folder">
+								share
+								<ul>
+									<li class="folder"><span>export <span class="myComment">(Chứa các file khi xuất báo cáo)</span></span>
+									</li>
+									<li class="folder"><span>img <span class="myComment">(Thư mục ảnh, đang khá lộn xộn)</span></span>
+									</li>
+									<li class="folder"><span>import <span class="myComment">(Chứa template và config để import)</span></span>
+									</li>
+									<li class="folder"><span>template <span class="myComment">(Chứa các template để xuất báo cáo)</span></span>
+									</li>
+									<li class="folder"><span>js <span class="myComment">(Chứa các file JS)</span></span>
+									</li>
+									<li class="folder"><span>css <span class="myComment">(Chứa các file CSS)</span></span>
+									</li>
+									<li class="folder"><span>dynaTree <span class="myComment">(Thư viện JS)</span></span>
+									</li>
+									<li class="folder"><span>inlineValidation <span class="myComment">(Thư viện JS)</span></span>
+									</li>
+									<li class="folder"><span>jquery <span class="myComment">(Thư viện JS)</span></span>
+									</li>
+									<li class="folder"><span>notifyOsd <span class="myComment">(Thư viện JS)</span></span>
+									</li>
+									<li><span class="jspFile">logout.jsp <span class="myComment">(Trang logout)</span></span>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="folder">
+						Source Packages
+						<ul>
+							<li class="folder">
+								&lt;default package&gt;
+								<ul>
+									<li><span class="propFile">ApplicationResources.properties <span class="myComment">(Đa ngôn ngữ)</span></span>
+									</li>
+									<li><span class="propFile">cas.properties <span class="myComment">(Cấu hình passport)</span></span>
+									</li>
+									<li><span class="propFile">config.properties <span class="myComment">(Cấu hình cho ứng dụng)</span></span>
+									</li>
+									<li><span class="propFile">displaytag.properties <span class="myComment">(Cấu hình của display table)</span></span>
+									</li>
+									<li><span class="propFile">messages.properties <span class="myComment">(Cấu hình các phản hồi của ứng dụng với request)</span></span>
+									</li>
+									<li><span class="propFile">hibernate.cfg.xml <span class="myComment">(Cấu hình CSDL)</span></span>
+									</li>
+								</ul>
+							</li>
+							<li class="folder">com.viettel.admin.bo</li>
+							<li class="folder">
+								com.viettel.admin.controller
+								<ul>
+									<li><span class="javaFile">AuthenticateController <span class="myComment">(Xử lý hành động login)</span></span>
+									</li>
+								</ul>
+							</li>
+							<li class="folder">com.viettel.admin.dao</li>
+							<li class="folder">
+								com.viettel.admin.form
+								<ul>
+									<li><span class="javaFile">AttachmentFileForm <span class="myComment">(Form để đính kèm file)</span></span>
+									</li>
+									<li>AuthenticateForm</li>
+								</ul>
+							</li>
+							<li class="folder">com.viettel.admin.hbm</li>
+							<li class="folder">com.viettel.lttd.bean</li>
+							<li class="folder">com.viettel.lttd.util</li>
+						</ul>
+					</li>
+					<li class="folder">
+						Libraries
+						<ul>
+							<li>...</li>
+							<li>(Đang có nhiều thư viện jar, nhiều cái không dùng)</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			(Liệt kê các file, mục đích các file để không có file rác)
+			<br />
+			<br /> Để bắt đầu một project mới, hãy lấy clean framework từ SVN. Giả sử project mới có context path là "abc", chúng ta cần
+			làm các việc sau:
+			<br />
+			<ul>
+				<li>Refactor các package lttd --&gt; abc.</li>
+				<li>Thay đổi cấu hình file cas.properties, sửa domainCode và các URL.</li>
+				<li>Search &amp; Replace "lttd" thành "abc" cho đỡ sót (replace các đường dẫn ảnh ở các file ApplicationResources.properties,
+					viettel.js,...).</li>
+				<li>Sử dụng Hibernate generator để sinh BO, hbm, hibernate.cfg.xml.</li>
+				<li>Sử dụng ApplicationResources generator để sinh đa ngôn ngữ.</li>
+				<li>Chia module ở web.xml, struts-confg.xml.</li>
+			</ul>
+
+			Chúng ta nên chia dự án thành các module to. Các module to này tương ứng với các menu cấp 1, các thư mục jsp cấp 1, các thư
+			mục tag cấp 1, các package Java (mỗi module có 4 package Java là bo, controller, dao, form, hbm). VD dự án quản lý nhân
+			sự có các module là:
+			<br />
+			<ul>
+				<li>admin (quản trị)</li>
+				<li>category (danh mục)</li>
+				<li>employee (quân số)</li>
+				<li>evaluation (đánh giá)</li>
+				<li>organization (tổ chức biên chế)</li>
+				<li>policy (chính sách)</li>
+				<li>salary (tiền lương)</li>
+				<li>timekeeping (chấm công)</li>
+			</ul>
+			Thường dự án nào cũng có admin (chúng ta sẽ copy &amp; paste, không đóng thư viện), category.
+			<br />
+			<br /> Trong các module sẽ có các chức năng. Các chức năng tương ứng với các menu con, các thư mục jsp lá, tag con, các lớp
+			Java. Chúng ta nên đặt tên các thư mục jsp, tag và các lớp Java giống nhau, và giống tên bảng chính của chức năng đó trong
+			CSDL.
+			<br />
+			<br /> Chúng ta cần đặt tên theo đúng convention. Tên jsp, tag, thư mục đặt theo chuẩn tên biến Java (viết thường chữ cái đầu
+			tiên). Tên lớp Java đặt theo chuẩn Java, có prefix package. VD ở chức năng quản lý nhân viên, chúng ta sẽ có thư mục jsp
+			employee, thư mục tag employee, các lớp EmployeeForm, EmployeeController, EmployeeDAO.
+			<br />
+			<br /> Để bắt đầu một chức năng mới, đầu tiên chúng ta cần làm các bước sau:
+			<br />
+			<ul>
+				<li>Khai báo Form, DAO, Controller.</li>
+				<li>Tạo thư mục, tạo các trang JSP.</li>
+				<li>Khai báo các action, trang forward trên struts-config-...xml, tiles-defs-...xml.</li>
+				<li>Tạo một đường link, hoặc khai báo menu và phân quyền menu đó cho người dùng.</li>
+			</ul>
+			Chú ý:
+			<br />
+			<ul>
+				<li>Các file JSP chúng ta nên có prefix để dễ quản lý trong tiles-defs, thường có các đuôi là Index, List, Form.</li>
+				<li>Form nên có các thuộc tính giống với BO để có thể sử dụng phương thức ViettelBeanUtil.copyProperties.</li>
+				<li>Form thường sẽ thêm một thuộc tính Long[] arrId để lấy danh sách các bản ghi được để xóa.</li>
+				<li>Controller không được có các thao tác với CSDL ở đây, có thuộc tính là các lớp DAO, có hằng là các pageForward.</li>
+				<li>Lớp DAO sẽ xử lý các thao tác với CSDL.</li>
+				<li>Các lớp phải có comment đúng convention.</li>
+			</ul>
+		</div>
+	</div>
+</body>
+
+</html>

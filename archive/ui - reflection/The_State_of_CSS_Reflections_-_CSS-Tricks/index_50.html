@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html class=" -moz-">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico">
+  <link rel="mask-icon" type="" href="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111">
+  <meta name="robots" content="noindex">
+  <title>CodePen - bar loader 2.3.4 fading the reflection</title>
+  
+  
+  
+  
+      
+
+  
+
+  
+
+  
+  
+
+
+<link media="all" href="index_50.css" type="text/css" rel="stylesheet">
+</head>
+<body translate="no">
+
+  
+<svg viewBox="-625 -625 1250 1250">
+  <defs>
+    <rect id="bar" y="-625" width="125" height="625"></rect>
+  </defs>
+  <linearGradient id="grad" x2="0%" y2="100%">
+    <stop offset="0" stop-color="#fff" stop-opacity="0"></stop>
+    <stop offset="1" stop-color="#fff" stop-opacity=".7"></stop>
+  </linearGradient>
+  <mask id="fader" maskContentUnits="objectBoundingBox">
+    <rect width="1" height="1" fill="url(#grad)"></rect>
+  </mask>
+  <g id="loader">
+    <use xlink:href="#bar" x="-625"></use>
+    <use xlink:href="#bar" x="-500"></use>
+    <use xlink:href="#bar" x="-375"></use>
+    <use xlink:href="#bar" x="-250"></use>
+    <use xlink:href="#bar" x="-125"></use>
+    <use xlink:href="#bar" x="0"></use>
+    <use xlink:href="#bar" x="125"></use>
+    <use xlink:href="#bar" x="250"></use>
+    <use xlink:href="#bar" x="375"></use>
+    <use xlink:href="#bar" x="500"></use>
+  </g>
+  <use xlink:href="#loader" transform="scale(1 -1)" mask="url(#fader)"></use>
+</svg>
+  
+  
+  
+  
+  
+
+
+
+ </body>
+</html>

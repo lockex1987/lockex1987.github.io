@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PHP Closure">
+    <title>PHP Closure</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>PHP Closure</h2>
+      <p>Vừa qua mình gặp 1 tình huống là phải dùng hàm callback để xử lý vấn
+        đề, thế là tìm hiểu luôn cái lý thuyết về PHP Closure xem nó là như thế
+        nào. Trước hết là tìm hiểu Lambda.</p>
+      <h3>Lambda là gì?</h3>
+      <p>Các hàm Lambda là các hàm ẩn danh (anonymous function), sử dụng một
+        lần, có thể được định nghĩa vào bất cứ lúc nào, và thường gắn với một
+        biến hoặc gán vào một hàm khác như một tham số. Các hàm này chỉ tồn tại
+        trong phạm vi của biến mà nó được định nghĩa, vì vậy khi biến đó vượt ra
+        ngoài phạm vi, thì hàm này cũng không còn nữa.</p>
+      <h4>Hàm ẩn danh</h4>
+      <p>Một hàm ẩn danh chỉ đơn giản là một hàm không có tên. Ví dụ:</p>
+      <pre>// Hàm thường
+function helloWorld()
+{
+    return 'Hello world';
+}
+
+// Hàm ẩn danh
+function ()
+{
+    return 'Hello world';
+};
+</pre>
+      <h4>Sử dụng hàm ẩn danh</h4>
+      <p>Bởi vì các hàm này không có tên, chúng ta không thể gọi nó như một chức
+        năng thường xuyên. Thay vào đó ta phải gán nó vào một biến hoặc cho vào
+        1 hàm khác khác như là một tham số. Ví dụ:</p>
+      <pre>// Hàm ẩn danh gán cho 1 biến
+$hello = function () {
+    return 'Hello world';
+};
+
+// Gọi hàm bình thường
+echo helloWorld() . PHP_EOL;
+
+// Gọi hàm ẩn danh
+echo $hello() . PHP_EOL;
+</pre>
+      <p>Để sử dụng các hàm ẩn danh, chúng ta gán nó vào một biến và sau đó gọi
+        là biến như là một function như trên. Hoặc sử dụng Lambda như thế này:</p>
+      <pre>// Pass Lambda to function
+function shout($message)
+{
+    echo $message() . PHP_EOL;
+}
+
+// Call function
+shout(function () {
+    return 'Hello world';
+});
+</pre>
+      <h4>Tại sao dùng Lambda</h4>
+      <p>Lambda rất hữu dụng, bởi vì chúng ta không cần phải tạo hẳn một hàm cho
+        một lần sử dụng duy nhất.</p>
+      <p>Thông thường, chúng ta sẽ cần một hàm để làm một công việc, nhưng nó
+        không có nghĩa là chúng ta sẽ dùng nó trong phạm vi global. Thay vì có
+        một hàm sử dụng một lần và sau đó bỏ đi để nó ở đó, chúng ta có thể sử
+        dụng một Lambda để thay thế.</p>
+      <p>Tất nhiên, chúng ta có thể sử dụng chức năng <code>create_function</code>
+        trong PHP. Điều này về cơ bản là giống nhau:</p>
+      <pre>// Use create_function
+$hello = create_function('', 'echo "Hello World!";');
+
+// Call function
+$hello();
+</pre>
+      <h3>Closure là gì?</h3>
+      <p>Một Closure (bao đóng) về cơ bản giống như một Lambda, ngoài ra nó có
+        thể truy cập các biến bên ngoài phạm vi mà nó được tạo ra. Ví dụ:</p>
+      <pre>// Create a user
+$user = 'Thỏ 7 màu';
+
+// Create a Closure
+$helloUser = function () use ($user) {
+    echo "Hello $user\n";
+};
+
+// Greet the user
+$helloUser();
+</pre>
+      <p>Như chúng ta có thể thấy ở trên, Closure có thể truy cập biến <code>$user</code>.
+        Bởi vì nó đã được khai báo trong các điều khoản sử dụng <code>use
+          ($user)</code> của định nghĩa hàm Closure.</p>
+      <p>Nếu chúng ta thay đổi biến <code>$user</code> ban đầu trong Closure,
+        nó sẽ không ảnh hưởng đến các biến ban đầu. Để cập nhật các biến ban
+        đầu, chúng ta có thể thêm một dấu <code>&amp;</code>. Một dấu <code>&amp;</code>
+        trước một biến có nghĩa đây là một reference và vì vậy các biến ban đầu
+        cũng được cập nhật.</p>
+      <pre>// Set counter
+$i = 0;
+
+// Increase counter within the scope of the function
+$closure1 = function () use ($i)
+{
+    $i++;
+};
+
+// Run the function
+$closure1();
+
+// The global count hasn't changed
+echo $i . PHP_EOL; // returns 0
+
+// Reset count
+$i = 0;
+
+// Increase counter within the scope of the function but pass it as a reference
+$closure2 = function () use (&amp;$i)
+{
+    $i++;
+};
+
+// Run the function
+$closure2();
+
+// The global count has increased
+echo $i . PHP_EOL; // returns 1
+</pre>
+      <p>Closure cũng rất hữu ích khi sử dụng các hàm PHP mà chấp nhận hàm call
+        back như <code>array_map</code>, <code>array_filter</code>, <code>array_reduce</code>
+        hoặc <code>array_walk</code>. Ví dụ:</p>
+      <pre>// An array of names
+$users = [
+    'Thỏ 7 màu',
+    'Đậu đỏ',
+    'Gấu AK',
+    'Bé đội xô'
+];
+
+// Pass the array to array_walk
+array_walk($users, function ($name) {
+    echo "Hello $name\n";
+});
+</pre>
+      <p>Ngoài ra, chúng ta có thể truy cập các biến bên ngoài phạm vi của
+        Closure bằng cách sử dụng <code>use</code>:</p>
+      <pre>// Set a multiplier
+$multiplier = 3;
+
+// Create a list of numbers
+$numbers = [1, 2, 3, 4];
+
+// Use array_walk to iterate through the list and multiply
+array_walk($numbers, function ($number) use ($multiplier) {
+    echo ($number * $multiplier) . PHP_EOL;
+});
+</pre>
+      <h3>Sử dụng Closure trong trường hợp cụ thể</h3>
+      <p>Ví dụ trong Laravel:</p>
+      <pre>Route::get('user/(:any)', function ($name) {
+    return "Hello " . $name;
+});
+</pre>
+      <p>Như vậy là có một link <code>user/Tho7mau</code> thì sẽ có "Hello
+        Tho7mau".</p>
+      <p>Đó là ví dụ, còn tình huống của mình là thế này (bao các điều kiện OR
+        khi filter DB query):</p>
+      <pre>class A {
+    public static function f($query, $callback = null)
+    {
+        $query-&gt;where(...);
+        //code
+        $query-&gt;where(function ($currentQuery) use ($keyword, $callback) {
+                $currentQuery-&gt;orWhere(...);
+
+                if ($callback &amp;&amp; is_callable($callback)) {
+                    $currentQuery = $callback($currentQuery);
+                }
+         });
+         $query-&gt;someWhere(...);
+         return $query-&gt;paginate($xxx);
+    }
+}
+
+class B extends A {
+    public static function f1($yyy)
+    {
+        //code
+        $query-&gt;where(...);
+        //code
+
+        return parent::f($query, __CLASS__ . '::f2');
+    }
+
+    public static function f2($query)
+    {
+        return $query-&gt;orWhere(...);
+    }
+}
+</pre>
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://viblo.asia/p/lambda-va-closures-trong-php-DXOGRZZnGdZ">https://viblo.asia/p/lambda-va-closures-trong-php-DXOGRZZnGdZ</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

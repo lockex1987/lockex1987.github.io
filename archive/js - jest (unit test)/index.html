@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="date" content="2020-02-27 10:22:00">
+    <meta name="description" content="Unit test với Jest">
+    <title>Unit test với Jest</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Unit test với Jest</h2>
+      <p>Jest là một JS testing framework khá là dễ sử dụng và cài đặt, tuy
+        nhiên vẫn đầy đủ tính năng để bạn có thể sử dụng.</p>
+      <h3>Tại sao chọn Jest</h3>
+      <ul>
+        <li>GitHub star nhiều</li>
+        <li>Đơn giản, dễ hiểu: bạn ko cần phải đi mò giữa nhiều thư viện khác
+          nhau, chỉ lên trang chủ Jest là đủ.</li>
+        <li>Không cần cấu hình gì cả: vâng, hoàn toàn không. Chỉ cần kéo thư
+          viện về là bạn có thể bắt đầu viết test và test code được rồi.</li>
+        <li>All in one: một mình Jest là đã cân đầy đủ test runner, assert và
+          mock. Ngoài ra còn có thêm cả Coverage reports… rất ngầu.</li>
+        <li>Nhanh: phải nói là rất nhanh, ngoài ra terminal của test rất đẹp và
+          thân thiện, khi dùng cảm giác rất cool.</li>
+      </ul>
+      <h3>Cài đặt</h3>
+      <p>Sử dụng npm:</p>
+      <pre>npm install --save-dev jest</pre>
+      <p>Sau đó thêm đoạn code sau vào file <code>package.json</code>:</p>
+      <pre>{
+  "scripts": {
+    "test": "jest"
+  }
+}</pre>
+      <h3>Ví dụ đơn giản</h3>
+      <p>Tạo file nguồn <code>src/math.js</code>:</p>
+      <pre>function sum(a, b) {
+    return a + b;
+}
+
+const MathJS = {
+    sum
+}
+
+module.exports = MathJS;</pre>
+      <p>Tạo file test <code>test/math.test.js</code>:</p>
+      <pre>const MathJS = require('../src/math');
+
+it('Adds 1 + 1 to equals 2', () =&gt; {
+    expect(MathJS.sum(1, 1)).toBe(2);
+});</pre>
+      <p>Để chạy, chúng ta dùng lệnh:</p>
+      <pre>npm run test</pre>
+      <p>Hint:</p>
+      <ul>
+        <li>Trường hợp bạn có nhiều test suite và chỉ muốn test một test suite
+          bất kỳ, ví dụ <code>sum.test.js</code>, gõ <code>npm test
+            sum.test.js</code>.</li>
+        <li>Giả sử trong test suite <code>sum.test.js</code> có nhiều hơn một
+          test và bạn chỉ muốn test một case là "foo is bar", gõ <code>npm test
+            -t 'foo is bar'</code>.</li>
+        <li>Chỉ test case "foo is bar" trong test suite <code>sum.test.js</code>,
+          gõ <code>npm test sum.test.js -t 'foo is bar'</code>.</li>
+      </ul>
+      <h3>Các matcher trong Jest</h3>
+      <p>Ở trong đoạn code trên:</p>
+      <pre>expect(MathJS.sum(1, 1)).toBe(2);</pre>
+      <p><code>.toBe()</code> chính là một matcher trong jest. Nó giống như phép
+        so sánh bằng bình thường vậy. Ví dụ:</p>
+      <pre>expect(result).toBe(2);
+expect(result).toBe(true);
+expect(result).toBe({ a: 1, b: 2 });</pre>
+      <p>Tuy nhiên khi so sánh một Object bạn nên sử dụng <code>.toEqual()</code>.
+        Lý do là vì <code>.toBe()</code> thực tế sử dụng <code>===</code> để
+        so sánh và đưa ra kết quả. Và chúng ta đều biết trong JS:</p>
+      <pre>a = {};
+b = {};
+a === b; // =&gt; false</pre>
+      <p>Còn <code>.toEqual()</code> theo như Jest sẽ lần lượt kiểm tra tất các
+        trường của Object, hoặc mảng để so sánh. Vì vậy thay vì viết:</p>
+      <pre>expect(result).toBe({ a: 1, b: 2 });</pre>
+      <p>Hãy viết:</p>
+      <pre>expect(result).toEqual({ a: 1, b: 2 });</pre>
+      <p>Ngoài ra còn các matchers khác.</p>
+      <h4>Truthiness</h4>
+      <ul>
+        <li><code>toBeNull()</code> so sánh với giá trị <code>null</code>.</li>
+        <li><code>toBeUndefined()</code> so sánh với giá trị <code>undefined</code>.</li>
+        <li><code>toBeDefined()</code> là hàm cho kết quả ngược lại <code>toBeUndefined()</code>.</li>
+        <li><code>toBeTruthy()</code> so sánh với giá trị <code>true</code>.</li>
+        <li><code>toBeFalsy()</code> so sánh với giá trị <code>false</code>.</li>
+      </ul>
+      <h4>Number</h4>
+      <pre>it('two plus two', () =&gt; {
+    const value = 2 + 2;
+    expect(value).toBeGreaterThan(3);
+    expect(value).toBeGreaterThanOrEqual(3.5);
+    expect(value).toBeLessThan(5);
+    expect(value).toBeLessThanOrEqual(4.5);
+
+    // toBe and toEqual are equivalent for numbers
+    expect(value).toBe(4);
+    expect(value).toEqual(4);
+});</pre>
+      <p>Đối với số thập phân, bạn nên sử dụng <code>toBeCloseTo()</code>:</p>
+      <pre>it('adding floating point numbers', () =&gt; {
+    const value = 0.1 + 0.2;<br><br>    // This won't work because of rounding error
+    //expect(value).toBe(0.3);<br><br>    // This works
+    expect(value).toBeCloseTo(0.3);
+});</pre>
+      <h4>String</h4>
+      <p>Bạn có thể kiểm tra một đoạn văn bản với regular expressions bằng <code>toMatch()</code>:</p>
+      <pre>it('there is no I in team', () =&gt; {
+    expect('team').not.toMatch(/I/);
+});
+
+it('but there is a "stop" in Christoph', () =&gt; {
+    expect('Christoph').toMatch(/stop/);
+});</pre>
+      <h4>Array</h4>
+      <p>Để kiểm tra giá trị có trong một mảng, bạn có thể dùng <code>toContain()</code>:</p>
+      <pre>const array = [1, 2, 10, 1000];
+it('array has 1000 on it', () =&gt; {
+    expect(array).toContain(1000);
+});</pre>
+      <h4>Exception</h4>
+      <p>Để kiểm tra một lỗi có thể xảy ra bạn có thể sử dụng <code>toThrow()</code>:</p>
+      <pre>function compileAndroidCode() {
+    throw new ConfigError('you are using the wrong JDK');
+}
+
+test('compiling android goes as expected', () =&gt; {
+    expect(compileAndroidCode).toThrow();
+    expect(compileAndroidCode).toThrow(ConfigError);
+
+    // You can also use the exact error message or a regexp
+    expect(compileAndroidCode).toThrow('you are using the wrong JDK');
+    expect(compileAndroidCode).toThrow(/JDK/);
+});</pre>
+      <h3>Integration test</h3>
+      <p>Integration test nôm na là test xem code của mình mà có dùng đến code
+        khác chạy có đúng không.</p>
+      <p>Phần code khác, được hiểu là code của 1 unit khác, hoặc 1 thư viện mà
+        mình nhúng vào để sử dụng.</p>
+      <p>Để test được case này thì ta sẽ phải mô phỏng hành vi của phần code
+        khác (gọi là mock), và test phần code của mình.</p>
+      <h4>Mock một module</h4>
+      <p>Giả sử mình có 1 module là total(array), nó sẽ sử dụng module sum ở
+        trên để tính tổng các phần tử của 1 array.</p>
+      <p>total.js:</p>
+      <pre>const sum = require('./sum');
+
+function total(values = []) {
+    return values.reduce(sum, 0);
+}
+
+module.exports = total;</pre>
+      <p>Unit tests total:</p>
+      <p>total.test.js:</p>
+      <pre>const total = require('./total');<br>
+test('works', () =&gt; {
+    expect(total([1, 2, 3, 4])).toEqual(10);
+})</pre>
+      <p>Giờ mình sẽ mock hàm sum để nó luôn trả ra là 1 nhé. Test của chúng ta
+        sẽ fail, báo là expected value 10, received 1:</p>
+      <p>total.test.js:</p>
+      <pre>jest.mock('./sum');
+
+const sum = require('./sum');
+
+sum.mockReturnValue(1);
+
+const total = require('./total');
+
+test('works', () =&gt; {
+    expect(total([1, 2, 3, 4])).toEqual(10);
+});</pre>
+      <p>Mock module thì chỉ đơn giản như vậy. Bạn có thể tham khảo kỹ hơn về
+        mock trên <a href="https://jestjs.io/docs/en/mock-functions.html" target="_blank">trang
+          chủ của Jest</a>.</p>
+      <p>Tất nhiên với case hàm total và sum ở trên thì bạn không cần mock vì
+        mấy hàm này gần như cô lập và đã chạy rất nhanh.</p>
+      <p>Giờ ta sẽ sang 1 case thực tế hơn, ví dụ bạn có 1 function, trong
+        function đó gọi đến việc đọc thông tin 1 file trên ổ cứng. Trường hợp
+        này mock sẽ giúp test case chạy nhanh hơn, mock được nhiều case hơn và
+        bạn không cần chuẩn bị file trên ổ cứng để test.<br>
+      </p>
+      <h4>Mock Node core module</h4>
+      <p>Ví dụ mình có 1 hàm sử dụng core module fs để đọc thông tin file.</p>
+      <p>readContent.js:</p>
+      <pre>const fs = require('fs');
+
+function readContent(file) {
+    return fs.readFileSync(file);
+}
+
+module.exports = readContent;</pre>
+      <p>Giờ mình sẽ mock để hàm fs.readFileSync() luôn trả về nội dung là foo
+        nhé:</p>
+      <p>readContent.test.js</p>
+      <pre>const fs = require('fs');
+const readContent = require('./readContent');
+
+jest.mock('fs');
+fs.readFileSync = jest.fn().mockReturnValue('foo');
+
+test('works', () =&gt; {
+    expect(readContent('/tmp/foo.txt')).toEqual('foo');
+});</pre>
+      <h4>Mock Axios</h4>
+      <p>Giả sử bạn có 1 unit gọi đến 1 http api và bạn đang dùng thư viện Axios
+        để gửi request. Với môi trường CI thì rõ ràng mỗi lần chạy test bạn sẽ
+        không muốn gọi đến api thật vì vừa chậm, vừa ảnh hưởng đến api.</p>
+      <p>Mock Axios khá đơn giản, đoạn code dưới đây mình sẽ mock thử hàm get
+        của axios để trả về 1 kết quả hoàn toàn khác.</p>
+      <p>mockAxios.test.js</p>
+      <pre>const axios = require('axios');
+
+jest.mock('axios', () =&gt; ({
+    get: jest.fn().mockResolvedValue({ data: { foo: 'bar' }});
+}))
+
+test('mock axios.get', async () =&gt; {
+    const response = await axios.get('https://jsonplaceholder.typicode.com/posts/1');
+    expect(response.data).toEqual({ foo: 'bar' });
+});</pre>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Một số ví dụ</h3>
+      <h4>Test một event trong Jquery</h4>
+      <pre>it('should fire a alert', () =&gt; {
+    const alert = jest.fn();
+
+    document.body.innerHTML =
+        '&lt;div&gt;' +
+        '  &lt;span id="username" /&gt;' +
+        '  &lt;button id="button" /&gt;' +
+        '&lt;/div&gt;';
+
+    $('#button').click(() =&gt; {
+        alert('click');
+    });
+
+    $('#button').click();<br>
+    expect(alert).toBeCalled();
+
+    // the mock function is called one time
+    expect(alert.mock.calls.length).toBe(1);
+
+    // The first argument of the first call to the function was click
+    expect(alert.mock.calls[0][0]).toBe('click');
+});</pre>
+      <p>Bạn có thể thấy <code>const alert = jest.fn();</code>. Đây là một tính
+        năng trong Jest giúp bạn mock một function. Hay mô phỏng lại hàm cần
+        test.</p>
+      <h4>Test với module axios</h4>
+      <pre>const axios = require('axios');
+
+jest.mock('axios', () =&gt; ({
+    get: jest.fn().mockResolvedValue({ data: { message: 'hello' }})
+}));
+
+test('mock axios.get', async () =&gt; {
+    const response = await axios.get('https://test.com/t/1');
+    expect(response.data).toEqual({ foo: 'bar' });
+});</pre>
+      <p>Trong ví dụ này mình đã mock module axios, và đặt giá trị trả về cho
+        hàm get. Như vậy khi test bạn sẽ không cần phải gửi request thật, tránh
+        mất thời gian. Các module khác bạn cũng có thể làm cách tương tự.</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://viblo.asia/p/tim-hieu-ve-jestjs-viet-unit-test-cho-javascript-gDVK2pkXlLj"
+          target="_blank">Tìm hiểu về Jest, viết unit test cho JS - Viblo</a></p>
+      <p><a href="https://tuduydongian.com/2018/04/test-javascript-with-jest/" target="_blank">Test
+          JS code với Jest | Tư Duy Đơn Giản</a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

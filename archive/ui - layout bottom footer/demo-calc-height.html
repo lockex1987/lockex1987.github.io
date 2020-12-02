@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Thiết lập height với calc</title>
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+		html, body {
+			height: 100%;
+		}
+
+		article {
+			height: 100%;
+		}
+
+		header {
+			height: 100px;
+		}
+
+		footer {
+			height: 100px;
+		}
+
+		main {
+			min-height: calc(100% - 200px);
+		}
+	</style>
+</head>
+
+<body>
+	<article>
+		<header>
+			Header
+		</header>
+		<main>
+			<p>Nội dung của trang vẫn đang còn ít.</p>
+			<p><button id="add">Thêm nội dung</button></p>
+		</main>
+		<footer>
+			Footer
+		</footer>
+	</article>
+
+	<script src="js/index.js"></script>
+</body>
+</html>

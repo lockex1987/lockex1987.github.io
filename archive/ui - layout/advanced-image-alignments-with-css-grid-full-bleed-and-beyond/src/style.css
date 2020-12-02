@@ -1,0 +1,136 @@
+body {
+  margin: 0;
+  background-color: hsl(0, 0%, 90%);
+  font-size: 100%;
+  font-size: 1.2em;
+}
+
+figure {
+  margin: 0 0 1.5em 0;
+}
+
+.caption {
+  padding-top: .5em;
+  text-align: center;
+  font-style: italic;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+code {
+  font-weight: bold;
+  font-style: normal;
+  font-size: 120%;
+}
+
+p {
+  margin-top: 0;
+  line-height: 1.3em;
+}
+
+.intro {
+  font-family: sans-serif;
+}
+
+.main-content {
+  background-color: white;
+  position: relative;
+  max-width: 80vw;
+  margin: 0 auto;
+  padding: 1em 0;
+}
+
+.post-title,
+.entry-content {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+.post-title {
+  padding: 1em 0 .5em;
+}
+
+.align-left {
+  width: 50%;
+  margin-right: 1em;
+  float: left;
+}
+
+.align-right {
+  width: 50%;
+  margin-left: 1em;
+  float: right;
+}
+
+@media screen and (min-width: 50rem) {
+  .align-half,
+  .align-full,
+  .align-full-left,
+  .align-full-right,
+  .align-half-left,
+  .align-half-right {
+    margin-left: calc(((80vw - 40rem) / 2) * -1);
+    width: 80vw;
+    display: grid;
+    grid-template-columns: 
+      [full-start] minmax(1em, 1fr) 
+      [wide-start] minmax(0, 1fr)
+      [content-start] minmax(0, 40rem) [content-end]
+      minmax(0, 1fr) [wide-end]
+      minmax(1em, 1fr) [full-end];
+  }
+
+  .align-half > * {
+    grid-column: wide;
+  }
+
+  .align-full > * {
+    grid-column: full;
+  }
+
+  .align-full-left a {
+    grid-column: full-start/content-end;
+  }
+
+  .align-full-left .caption {
+    grid-column: content-end/full-end;
+    align-self: end;
+    text-align: left;
+    padding-left: 1em;
+  }
+
+  .align-full-right a {
+    grid-column: content-start/full-end;
+    grid-row: 1;
+  }
+
+  .align-full-right .caption {
+    grid-column: full-start/content-start;
+    grid-row: 1;
+    align-self: end;
+    text-align: right;
+    padding-right: 1em;
+  }
+
+  .align-half-left a {
+    grid-column: full-start/wide-end;
+  }
+
+  .align-half-left .caption {
+    grid-column: full-start/content-start;
+    grid-row: 2;
+  }
+
+  .align-half-right a {
+    grid-column: wide-start/full-end;
+  }
+
+  .align-half-right .caption {
+    grid-column: content-end/full-end;
+    grid-row: 2;
+  }
+}

@@ -1,0 +1,38 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+}
+
+.drag-container {
+    display: flex;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.panel {
+    padding: 20px;
+    height: calc(100vh - 300px);
+    overflow: auto;
+}
+
+.panel-left {
+    /* Vùng bên phải có kích thước theo pixel, và sẽ thay đổi khi drag */
+    width: 400px;
+    background-color: #f8f9fa;
+}
+
+.panel-right {
+    /* Vùng bên phải sẽ chiếm hết chiều rộng còn lại */
+    flex: 1;
+    background-color: #FFF;
+}
+
+.dragbar {
+    width: 12px;
+    cursor: col-resize;
+    background-color: #FFF;
+    background-image: url(../images/grab-handle.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+}

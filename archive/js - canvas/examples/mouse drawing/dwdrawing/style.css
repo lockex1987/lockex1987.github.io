@@ -1,0 +1,110 @@
+@CHARSET "UTF-8";
+/*các định dạng chung cơ bản------------------------*/
+body {
+	background: url("images/bg.png")!important;
+}
+
+.ui-page {
+	background: none!important;
+}
+
+#state {
+	background: #fff;
+	border: solid 3px #444;
+}
+
+ul {
+	margin: 5px 0 25px 0;
+	padding: 0;
+}
+
+li {
+	list-style: none;
+	cursor: pointer;
+	opacity:0.4;
+	width:40px;
+}
+/*---------------------------------------------------*/
+
+/* các định dạng layout------------------------------*/
+#wrapper{
+	width: 706px;
+	height: 400px;
+	margin: 40px auto;
+}
+
+#tools {
+	float: right;
+	width: 100px;
+}
+/* -------------------------------------------------- */
+
+
+/* định dạng cho các nút trong phần tools-------------*/
+#colors li {
+	height: 34px;
+}
+
+#pens li {
+	height: 45px;
+}
+
+li.l030303 {
+	background: url("images/030303.png") right no-repeat;
+}
+
+li.l077ff0 {
+	background: url("images/077ff0.png") right no-repeat;
+}
+
+li.l0eee12 {
+	background: url("images/0eee12.png") right no-repeat;
+}
+
+li.ld507e5 {
+	background: url("images/d507e5.png") right no-repeat;
+}
+
+li.le86d06 {
+	background: url("images/e86d06.png") right no-repeat;
+}
+
+li.led262b {
+	background: url("images/ed262b.png") right no-repeat;
+}
+
+li.lffae00 {
+	background: url("images/ffae00.png") right no-repeat;
+}
+
+li.cycle {
+	background: url("images/cycle.png") center no-repeat;
+}
+
+li.rect {
+	background: url("images/rect.png") center no-repeat;
+}
+
+li.path {
+	background: url("images/path.png") center no-repeat;
+}
+
+/* trạng thái một nút được kích hoạt-----------------------*/
+li.active {
+	width: 60px;
+	opacity:0.9;
+}
+
+#pens li.active {
+	background-color: #f7f7f7;
+	border-top-right-radius:30px;
+	border-bottom-right-radius:30px;
+	-moz-border-top-right-radius:30px;
+	-moz-border-bottom-right-radius:30px;
+	-o-border-top-right-radius:30px;
+	-o-border-bottom-right-radius:30px;
+	-webkit-border-top-right-radius:30px;
+	-webkit-border-bottom-right-radius:30px;
+	box-shadow:2px 3px 5px #444;
+	border-left: solid 1px #444;
+}

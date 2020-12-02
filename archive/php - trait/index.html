@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Trait trong php</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Trait trong php">
+ </head> 
+ <body> 
+  <article> 
+   <p>Nhiều developer nhầm lẫn "Trait", một khái niệm mới trong php 5.4.0. Traits hoạt động như các lớp nhưng lại giống như interface. Một đặc điểm của Traits là triển khai thực hiện 1 phần (vd: hằng số, thuộc tính, phương thức) có thể được dùng bởi một hay nhiều class PHP.</p> 
+   <p>Bạn có thể quen thuộc với các đặc điểm của trait trong các ngôn ngữ khác. Php traits giống như là các modules composable của Ruby, or mixins (vue...).</p> 
+   <p>Khái niệm Trait chúng ta hiểu đơn giản như sau: gom những đoạn code trùng lặp ra một nơi sử dụng ơ nhiều nơi và nếu cần thay đổi bạn chỉ cần sửa đổi ở một file duy nhất.</p> 
+   <p>Nó là một bổ sung cho thừa kế truyền thống, áp dụng cho các lớp mà không yêu cầu thừa kế.</p> 
+   <p>Cũng giống như Abstract Class chúng ta không thể khởi tạo một đối tượng mới từ Traits.</p> 
+   <h3>Cách sử dụng Trait</h3> 
+   <p>Ví dụ ta có 1 bài Blog muốn get Post content, và Comment cũng muốn get bài Post thì ta viết như sau:</p> 
+   <p>Sử dụng từ khóa <code>trait</code> để khai báo 1 trait:</p> 
+   <pre><code>&lt;?php
+trait PostCommon {
+    public function getPost() {
+        return 'Post content';
+    }
+}
+</code></pre> 
+   <p>class Blog:</p> 
+   <pre><code>&lt;?php
+class Blog{
+    use PostCommon;
+    
+    public function showPost() {
+        return $this-&gt;getPost();
+    }
+}
+</code></pre> 
+   <p>class Comment:</p> 
+   <pre><code>class Comment{
+    use PostCommon;
+    
+    public function showPost() {
+        return $this-&gt;getPost();
+    }
+}
+</code></pre> 
+   <p>dùng use để import trait</p> 
+   <h3>Tại sao chúng ta sử dụng traits</h3> 
+   <p>PHP chỉ cho phép mỗi class thừa kế từ tối đa là 1 class khác.</p> 
+   <p>Trong khi trait có thể hỗ trợ đa kế thừa. ví dụ ta tạo thêm một trait để get user name.</p> 
+   <pre><code>&lt;? php 
+trait UserCommon{
+    public function getNameUser() {
+        return 'Name user';
+    }
+}
+</code></pre> 
+   <p>Cách dùng thêm trait:</p> 
+   <pre><code>class Comment{
+    use PostCommon;
+    use UserCommon;
+    
+    public function showPost() {
+        return $this-&gt;getPost();
+    }
+}
+</code></pre> 
+   <p>Nhiều bạn sẽ thắc mắc tại tai sao không dùng implement nó cũng hỗ trợ đa kế thừa?. Implements nó giúp cho chúng ta thực hiện lại các khuân mẫu mà interface đã định ra. Interface thì chỉ có thể khai báo phương thức chứ không được triển khai code cho phương thức đó, còn trait thì có thể.</p> 
+   <p>Và trait giúp chúng ta tránh việc lặp code.</p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

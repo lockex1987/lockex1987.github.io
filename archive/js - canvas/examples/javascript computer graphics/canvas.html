@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>HTML5 - Canvas</title>
+</head>
+<body>
+<h1>Giới thiệu Canvas trong HTML5</h1>
+<canvas id="canvas" width="600" height="500"></canvas>
+
+<script>
+    function loader() {
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+
+        // Vẽ 3 hình chữ nhật xanh, vàng, đỏ
+        /*
+         ctx.fillStyle = "rgba(52,119,187, 1)";
+         ctx.fillRect(30, 30, 75, 70);
+         ctx.fillStyle = "rgba(200, 200, 0, 1)";
+         ctx.fillRect(70, 50, 55, 70);
+         ctx.fillStyle = "rgba(200, 0, 0, 1)";
+         ctx.fillRect(90, 50, 75, 50);
+         */
+
+        // Vẽ và tô màu xanh lục cho hình tam giác
+        /*
+         ctx.fillStyle = "rgba(0, 200, 0, 0.5)";
+         ctx.beginPath();
+         ctx.moveTo(225, 25);
+         ctx.lineTo(305, 25);
+         ctx.lineTo(225, 105);
+         ctx.closePath();
+         ctx.fill();
+         */
+
+        // Vẽ đường viền 3 hình tam giác
+        /*
+         ctx.beginPath();
+         ctx.strokeStyle = "rgba(200, 0, 0, 0.5)";
+         ctx.moveTo(110, 205);
+         ctx.lineTo(110, 125);
+         ctx.lineTo(30, 205);
+         ctx.closePath();
+         ctx.stroke();
+         ctx.beginPath();
+         ctx.moveTo(100, 205);
+         ctx.lineTo(100, 125);
+         ctx.lineTo(20, 205);
+         ctx.closePath();
+         ctx.stroke();
+         ctx.beginPath();
+         ctx.moveTo(90, 205);
+         ctx.lineTo(90, 125);
+         ctx.lineTo(10, 205);
+         ctx.closePath();
+         ctx.stroke();
+         */
+
+        // Vẽ và tô hình trái tim
+        /*
+         ctx.fillStyle = "rgba(200, 0, 0, 0.5)";
+         ctx.beginPath();
+         ctx.moveTo(75, 250);
+         ctx.bezierCurveTo(75, 247, 70, 235, 50, 235);
+         ctx.bezierCurveTo(20, 235, 20, 272.5, 20, 272.5);
+         ctx.bezierCurveTo(20, 290, 40, 312, 75, 330);
+         ctx.bezierCurveTo(110, 312, 130, 290, 130, 272.5);
+         ctx.bezierCurveTo(130, 272.5, 130, 235, 100, 235);
+         ctx.bezierCurveTo(85, 235, 75, 247, 75, 250);
+         ctx.closePath();
+         ctx.fill();
+         */
+
+        // Vẽ đường cong Quadratic
+        /*
+         ctx.strokeStyle = "rgba(0, 0, 0, 1)";
+         ctx.beginPath();
+         ctx.moveTo(275, 125);
+         ctx.quadraticCurveTo(225, 125, 225, 162);
+         ctx.quadraticCurveTo(260, 200, 265, 200);
+         ctx.quadraticCurveTo(325, 200, 325, 162);
+         ctx.quadraticCurveTo(325, 125, 275, 125);
+         ctx.closePath();
+         ctx.stroke();
+         */
+
+        // Vẽ các cung
+        /*
+         ctx.beginPath();
+         ctx.arc(275, 275, 50, 0, Math.PI * 2, true);
+         ctx.moveTo(310, 275);
+         ctx.arc(275, 275, 35, 0, 0.75 * Math.PI, false);
+         ctx.moveTo(300, 255);
+         ctx.arc(265, 255, 35, 0, 0.5 * Math.PI, false);
+         ctx.moveTo(280, 255);
+         ctx.arc(245, 255, 35, 0, 0.2 * Math.PI, false);
+         ctx.closePath();
+         ctx.stroke();
+         ctx.font = 'italic 40px sans-serif';
+         ctx.strokeText("Welcome to ITSTUDENT.net!", 50, 400);
+         */
+
+        bresenhamLine(10, 10, 300, 200, ctx);
+        bresenhamLine(30, 55, 350, 420, ctx);
+    }
+
+    function bresenhamLine(x0, y0, x1, y1, ctx) {
+        var dx = Math.abs(x1 - x0);
+        var dy = Math.abs(y1 - y0);
+        var sx = (x0 < x1) ? 1 : -1;
+        var sy = (y0 < y1) ? 1 : -1;
+        var err = dx - dy;
+
+        ctx.moveTo(x0, y0);
+        while (true) {
+            ctx.lineTo(x0, y0);
+
+            if ((x0 == x1) && (y0 == y1)) break;
+            var e2 = 2 * err;
+            if (e2 > -dy) {
+                err -= dy;
+                x0 += sx;
+            }
+            if (e2 < dx) {
+                err += dx;
+                y0 += sy;
+            }
+        }
+        ctx.stroke();
+    }
+
+    loader();
+
+</script>
+
+</body>
+</html>

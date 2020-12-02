@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MutationObserver Example Shit</title>
+</head>
+
+<body>
+	<div id="testRemoveDiv">
+		The div to be removed
+	</div>
+	
+	<div id="testUpdateDiv">
+		The div to be updated
+	</div>
+	
+	<div foo="bitch">
+		Son of a bitch, bastard, asshole, Orgasm, SHiT, shitit, Bitch, asshole, fuck, địt, mả cha mày, lồn, đa, đ bị lỗi, a vẫn được, ợn, ôn, bố
+	</div>
+	
+	<!-- Bitch -->
+
+	<script>
+function initObserver() {
+	// Hàm callback khi có thay đổi
+	var callback = function(mutations) {
+		mutations.forEach(function(mutation) {
+			mutation.addedNodes.forEach(function(node) {
+				traverseElements(node);
+			});
+		});
+	};
+
+	// Khởi tạo đối tượng MutationObserver
+	var observer = new MutationObserver(callback);
+	
+	// Theo dõi phần tử DOM nào
+	var target = document;
+
+	// Cấu hình
+	var config = {
+		//attributes: true,
+		childList: true,
+		//characterData: true,
+		subtree: true
+	};
+	 
+	// Theo dõi
+	observer.observe(target, config);
+	
+	// Bỏ theo dõi
+	//observer.disconnect();
+}
+
+function testObserver() {
+	// Let's add a sample node to see what the MutationRecord looks like
+	var addedNode = document.createElement('p');
+	addedNode.textContent = "I'm a new bastard";
+	document.body.appendChild(addedNode);
+
+	// Now let's explore the MutationRecord when a node is removed
+	document.body.removeChild(document.querySelector('#testRemoveDiv'));
+	
+	document.querySelector('#testUpdateDiv').textContent = "Update this asshole";
+	
+	document.title = "New shit title";
+
+	// What do attribute changes look like?
+	document.body.setAttribute('id', 'fuck');
+}
+	</script>
+
+	<script>
+var replaceCount = 0;
+var profanityWords;
+
+// Parse the profanity list
+// https://stackoverflow.com/questions/26543329/java-regex-to-match-vietnamese-chars
+// https://stackoverflow.com/questions/10590098/javascript-regexp-word-boundaries-unicode-characters
+// https://stackoverflow.com/questions/2881445/utf-8-word-boundary-regex-in-javascript
+
+function generateProfanityList() {
+	var keywords = "Fuck, shit, asshole, bitch, bastard, boob, pussy, vagina, piss, địt, mả cha mày, lồn, cực múp";
+	var wordList = keywords.split(",");	
+	for (var i = 0; i < wordList.length; i++) {
+		wordList[i] = wordList[i].trim();
+	}
+	//console.log(wordList.join('|'));
+	
+	// \b (word boundary) phải liền sau hoặc liền trước bằng một ký tự ASCII bình thường,
+	// không được bắt đầu bằng đ (địt), không được kết thúc bằng ô (bố)
+	
+	//profanityWords = new RegExp('\\b(' + wordList.join('|') + ')\\b', 'gi');
+	//profanityWords = new RegExp('(\\b|\\s|^)(' + wordList.join('|') + ')(\\b|\\s|$)', 'gi');
+	profanityWords = new RegExp('(' + wordList.join('|') + ')', 'gi');
+}
+
+function replaceFunction(match, p1, p2, p3, offset, wholeString) {
+	replaceCount++;
+	//var starString = p1 + p2[0] + "*".repeat(p2.length - 1) + p3;
+	var starString = match[0] + "*".repeat(match.length - 1);
+	return starString;
+}
+
+function traverseElements(el) {
+	// Bỏ qua thẻ comment, script
+	// nodeType 2 represents an attribute || el.nodeType === 2
+	// || el.nodeName === "#comment"
+	if (el.nodeName === "SCRIPT") {
+		return;
+	}
+	if (el.nodeName === "#text") {
+		purgeElement(el);
+	} else {
+		for (var i = 0; i < el.childNodes.length; i++) {
+			traverseElements(el.childNodes[i]);
+		}
+	}
+}
+
+function purgeElement(el) {
+	el.data = el.data.replace(profanityWords, replaceFunction);
+}
+
+function init() {
+	generateProfanityList();
+	traverseElements(document);
+	console.log("replaceCount: " + replaceCount);
+
+	initObserver();
+	testObserver();
+}
+
+document.addEventListener('DOMContentLoaded', init);
+	</script>
+</body>
+</html>
+

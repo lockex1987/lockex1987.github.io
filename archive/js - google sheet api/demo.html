@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Demo Google Sheets API</title>
+    <meta charset='utf-8' />
+</head>
+
+<body>
+    <h2>Demo Google Sheets API</h2>
+
+    <button id="authorize-button"
+            style="display: none;"
+            onclick="handleAuthClick()">
+        Đăng nhập
+    </button>
+
+    <button id="signout-button"
+            style="display: none;"
+            onclick="handleSignoutClick()">
+        Đăng xuất
+    </button>
+
+    <pre id="content"></pre>
+
+    <script src="js/demo.js"></script>
+
+    <script async
+            defer
+            src="https://apis.google.com/js/api.js"
+            onload="this.onload = function () {}; handleClientLoad()"
+            onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+</head>
+
+<body>
+	<p>Kích vào button để lấy vị trí.</p>
+	<button onclick="getLocation()">Lấy vị trí</button>
+	<p id="demo"></p>
+
+	<script>
+var x = document.getElementById("demo");
+
+function getLocation() {
+	if (navigator.geolocation) {
+		navigator.geolocation.watchPosition(showPosition);
+	} else {
+		x.innerHTML = "Geolocation is not supported by this browser.";
+	}
+}
+
+function showPosition(position) {
+	x.innerHTML = "Kinh độ: " + position.coords.latitude + "<br>Vĩ độ: " + position.coords.longitude;
+}
+	</script>
+</body>
+</html>

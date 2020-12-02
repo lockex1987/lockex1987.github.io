@@ -1,0 +1,109 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+body {
+    min-width: 400px;
+	padding: 0 10px 10px 10px;
+	line-height: 1.5;
+	/*font-family: Verdana,sans-serif;*/
+	font-family: "helvetica neue", helvetica, arial, "lucida grande", sans-serif;
+	font-size: 14px;
+}
+label {
+    cursor: pointer;
+}
+p {
+    padding-top: 5px;
+	padding-bottom: 5px;
+}
+h1 + p, h2 + p, h3 + p, h4 + p, h5 + p, h6 + p {
+	padding-top: 0;
+}
+
+h2, h3 {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+h2 {
+	color: red;
+	font-size: 18px;
+}
+h3 {
+    color: #4990e2;
+	font-size: 14px;
+}
+h2 + h3 {
+	padding-top: 0;
+}
+h3::before {
+    content: '# ';
+}
+header {
+	/*
+	font-size: 18px;
+	font-weight: bold;
+	*/
+	padding: 10px 0;
+}
+header img {
+	vertical-align: middle;
+}
+
+textarea {
+    font-size: 12px;
+    line-height: 16px;
+    border: 1px solid #DCDEE3;
+    box-sizing: border-box;
+    width: 100%;
+	max-width: 500px;
+	height: 200px;
+}
+
+#addForm input {
+	width: 250px;
+	margin-right: 10px;
+	padding: 5px 0;
+	border: none;
+	border-bottom: 1px solid #EEE;
+	outline: none;
+}
+#addForm input:focus {
+	border-bottom: 1px solid green;
+}
+
+.panel h2 {
+	background-size: 16px 16px;
+	background-repeat: no-repeat;
+	background-position: left center;
+	padding-left: 22px;
+	cursor: pointer;
+}
+.panel-open h2 {
+	background-image: url("../images/up.png");
+}
+.panel-open .panel-content {
+	display: block;
+}
+.panel-closed h2 {
+	background-image: url("../images/down.png");
+}
+.panel-closed .panel-content {
+	display: none;
+}

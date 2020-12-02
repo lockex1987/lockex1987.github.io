@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="description" content="Phân chia module trong Python"/>
+	<meta name="keywords" content="python, module"/>
+	<meta name="author" content="lockex1987"/>
+	
+	<title>Phân chia module trong Python</title>
+
+	<link rel="icon" href="../../images/favicon.png"/>
+	<link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body>
+	<article>
+    <h2>Phân chia module trong Python</h2>
+    <p>Đối với các dự án lớn, có nhiều chức năng thì chúng ta cần chia nhỏ
+      thành các file khác nhau để giúp dễ bảo trì và tái sử dụng.</p>
+    <p>Để tải một module vào script của bạn, sử dụng cú pháp sau:</p>
+    <pre>import modulename</pre>
+    <p>Khi gặp câu lệnh trên thì trình biên dịch sẽ tiến hành tìm kiếm file
+      module tương ứng theo thứ tự thư mục sau:</p>
+    <ul>
+      <li>Thư mục hiện hành mà script đang gọi</li>
+      <li>Các thư mục trong PYTHONPATH (nếu có set)</li>
+      <li>Các thư mục cài đặt chuẩn trên Linux/Unix...</li>
+    </ul>
+    <p>Để lấy được đường dẫn mà một module đã được load bằng trường __file__.</p>
+    <p>Để lấy được danh sách các thuộc tính và phương thức mà module hỗ trợ, sử
+      dụng hàm <code>dir(modulename)</code>. Có thể gọi hàm <code>dir()</code>
+      không tham số để lấy các thuộc tính và phương thức của scope hiện tại.</p>
+    <pre><code class="python">import math<br>import random<br><br>print(math.__file__)<br>print(random.__file__)<br>dir(math)<br>dir(random)<br>dir()</code></pre>
+    <p>Kết quả chạy thực tế như sau:</p>
+<img
+
+alt="" src="images/module.png"><p>Tạo một module riêng của chúng ta (<a href="source/common_util.py">common_util.py</a>):</p><div
+
+style="color: #d4d4d4;background-color: #1e1e1e;font-family: Consolas, 'Courier New', monospace;font-weight: normal;font-size: 14px;line-height: 19px;white-space: pre;"><div><span
+
+style="color: #c586c0;">from</span><span style="color: #d4d4d4;"> datetime </span><span
+
+style="color: #c586c0;">import</span><span style="color: #d4d4d4;"> datetime</span></div><br><div><span
+
+style="color: #d4d4d4;">DATE_PATTERN = </span><span style="color: #ce9178;">'%d/%m/%Y'</span></div><br><div><span
+
+style="color: #ce9178;">'''</span></div><div><span style="color: #ce9178;">Notes:</span></div><div><span
+
+style="color: #ce9178;">    strptime = "string parse time"</span></div><div><span
+
+style="color: #ce9178;">    strftime = "string format time"</span></div><div><span
+
+style="color: #ce9178;">'''</span></div><div><span style="color: #569cd6;">def</span><span
+
+style="color: #d4d4d4;"> </span><span style="color: #dcdcaa;">string_to_date</span><span
+
+style="color: #d4d4d4;">(</span><span style="color: #9cdcfe;">date_str</span><span
+
+style="color: #d4d4d4;">):</span></div><div><span style="color: #d4d4d4;">    </span><span
+
+style="color: #c586c0;">return</span><span style="color: #d4d4d4;"> datetime.strptime(date_str, DATE_PATTERN)</span></div><br><div><span
+
+style="color: #569cd6;">def</span><span style="color: #d4d4d4;"> </span><span style="color: #dcdcaa;">format_date</span><span
+
+style="color: #d4d4d4;">(</span><span style="color: #9cdcfe;">date_obj</span><span
+
+style="color: #d4d4d4;">):</span></div><div><span style="color: #d4d4d4;">    </span><span
+
+style="color: #c586c0;">return</span><span style="color: #d4d4d4;"> datetime.strftime(date_obj, DATE_PATTERN)</span></div></div><p></p><p>Sử dụng module trên (<a
+
+href="source/demo_module.py">demo_module.py</a>):</p><div style="color: #d4d4d4;background-color: #1e1e1e;font-family: Consolas, 'Courier New', monospace;font-weight: normal;font-size: 14px;line-height: 19px;white-space: pre;"><div><span
+
+style="color: #c586c0;">from</span><span style="color: #d4d4d4;"> datetime </span><span
+
+style="color: #c586c0;">import</span><span style="color: #d4d4d4;"> datetime</span></div><div><span
+
+style="color: #c586c0;">import</span><span style="color: #d4d4d4;"> common_util </span><span
+
+style="color: #c586c0;">as</span><span style="color: #d4d4d4;"> cu</span></div><br><div><span
+
+style="color: #dcdcaa;">print</span><span style="color: #d4d4d4;">(cu.string_to_date(</span><span
+
+style="color: #ce9178;">'05/05/2018'</span><span style="color: #d4d4d4;">))</span></div><div><span
+
+style="color: #dcdcaa;">print</span><span style="color: #d4d4d4;">(cu.format_date(datetime(</span><span
+
+style="color: #b5cea8;">2011</span><span style="color: #d4d4d4;">, </span><span
+
+style="color: #b5cea8;">1</span><span style="color: #d4d4d4;">, </span><span style="color: #b5cea8;">3</span><span
+
+style="color: #d4d4d4;">, </span><span style="color: #b5cea8;">0</span><span style="color: #d4d4d4;">, </span><span
+
+style="color: #b5cea8;">0</span><span style="color: #d4d4d4;">)))</span></div><div><span
+
+style="color: #dcdcaa;">print</span><span style="color: #d4d4d4;">(cu.format_date(datetime.now()))</span></div></div><p></p><p><a
+
+href="source.zip">Source</a></p><p><br></p>
+	</article>
+
+	<script src="../../js/docs.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Cấu hình proxy cho Composer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta name="description" content="Composer proxy">
+  </head>
+  <body>
+    <article>
+      <h2>Cấu hình proxy cho Composer</h2>
+      <p>Thiết lập proxy cho shell.</p>
+      <h3>Windows</h3>
+      <pre>set http_proxy=http://proxy.cyberspace.vn:3128
+set https_proxy=http://proxy.cyberspace.vn:3128
+
+echo %http_proxy%
+echo %https_proxy%
+
+set http_proxy=
+set https_proxy=</pre>
+      <h3>Linux</h3>
+      <pre>export http_proxy=http://proxy.cyberspace.vn:3128
+export https_proxy=http://proxy.cyberspace.vn:3128
+
+echo $http_proxy
+echo $https_proxy
+
+unset http_proxy
+unset https_proxy</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

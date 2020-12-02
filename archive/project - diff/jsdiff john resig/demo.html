@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <style>
+.diff del {
+    background-color: #FFE6E6;
+}
+.diff ins {
+    background-color: #E6FFE6;
+}
+    </style>
+  </head>
+
+  <body>
+      <div id="outputDiv" class="diff"></div>
+
+  <script src="jsdiff.js"></script>
+  <script>
+      var text1 = `I am the very model of a modern Major-General,
+Ive information vegetable, animal, and mineral,
+I know the kings of England, and I quote the fights historical,
+From Marathon to Waterloo, in order categorical.
+Nguyễn Văn Huyên`;
+
+  var text2 = `I am the very model of a cartoon individual,
+My animations comical, unusual, and whimsical,
+Im quite adept at funny gags, comedic theory I have read,
+From wicked puns and stupid jokes to anvils that drop on your head.
+Nguyễn Văn Huyên (Dương)`;
+
+text1 = "<h1>Heading 1</h1><p>The red brown fox jumped over the rolling log.</p>";
+  text2 = "<h2>Heading 2</h2><p>The brown spotted fox leaped over the rolling log.</p>";
+
+      document.getElementById('outputDiv').innerHTML = diffString(text1, text2);
+  </script>
+  </body>
+</html>

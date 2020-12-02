@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="chéo, transform skew, gradient background, css shape triangle" />
+
+    <title>Diagonal background</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+	
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <article>
+        <h2>Diagonal background</h2>
+
+        <h3 class="heading-bottom heading-margin diagonal-by-gradient-background">
+            Sử dụng gradient background
+        </h3>
+        <p>Chỉ cần một phần tử h3.</p>
+        <p>Chiều rộng không theo nội dung.</p>
+
+        <div class="heading-bottom heading-margin diagonal-by-border">
+            <h3>
+                Sử dụng border
+            </h3>
+        </div>
+
+        <p>Sử dụng các phần tử pseudo để mã HTML ít.</p>
+
+        <div class="heading-bottom heading-margin diagonal-by-skew">
+            <div class="diagonal-outer">
+                <h3 class="diagonal-inner">
+                    Sử dụng transform skew
+                </h3>
+            </div>
+        </div>
+        <p>Bắt buộc phải dùng 3 phần tử.</p>
+
+        <div class="custom-section mb-5">
+            <div class="block -left">
+                <img class="background" src="images/left.jpeg" />
+                <a class="link text-decoration-none text-center" href="">Summer</a>
+            </div>
+            <div class="block -right">
+                <img class="background" src="images/right.jpeg" />
+                <a class="link text-decoration-none text-center" href="">Winter</a>
+            </div>
+
+            <div class="position-absolute h-100 bg-danger d-none" style="width: 10px; left: calc(50% - 5px);"></div>
+        </div>
+
+
+
+        
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

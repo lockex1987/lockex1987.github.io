@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="jQuery UI datepicker"/>
+    
+    <title>jQuery UI datepicker</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+
+    <link rel="stylesheet" href="libs/jquery-ui/jquery-ui.css">
+    <!--link rel="stylesheet" href="css/jquery-datepicker-flat.css"-->
+</head>
+<body>
+    <article>
+        <h2>jQuery UI Datepicker</h2>
+		
+		<p><a href="https://jqueryui.com/datepicker/" target="_blank">jqueryui.com/datepicker</a></p>
+
+        <h3>Tính năng mặc định</h3>
+        <p><input type="text" id="datepicker1"></p>
+        
+        <h3>Animation</h3>
+        <p><input type="text" id="datepicker2"></p>
+        <p>Animation:<br>
+            <select id="anim">
+                <option value="show">Show (default)</option>
+                <option value="slideDown">Slide down</option>
+                <option value="fadeIn">Fade in</option>
+                <option value="blind">Blind (UI Effect)</option>
+                <option value="bounce">Bounce (UI Effect)</option>
+                <option value="clip">Clip (UI Effect)</option>
+                <option value="drop">Drop (UI Effect)</option>
+                <option value="fold">Fold (UI Effect)</option>
+                <option value="slide">Slide (UI Effect)</option>
+                <option value="">None</option>
+            </select>
+        </p>
+        
+        <h3>Ngày ở tháng khác</h3>
+        <p><input type="text" id="datepicker3"></p>
+        
+        <h3>Hiển thị button bar</h3>
+        <p>Có thêm nút "Hôm nay" và "Đóng"</p>
+        <p><input type="text" id="datepicker4"></p>
+        
+        <h3>Hiển thị inline</h3>
+        <div id="datepicker5"></div>
+        
+        <h3>Hiển thị dropdown tháng và năm</h3>
+        <p><input type="text" id="datepicker6"></p>
+        
+        <h3>Hiển thị nhiều tháng</h3>
+        <p><input type="text" id="datepicker7"></p>
+        
+        <h3>Format ngày</h3>
+        <p>Ngày: <input type="text" id="datepicker8" size="30"></p>
+        <p>Format:<br>
+            <select id="format">
+                <option value="mm/dd/yy">Default - mm/dd/yy</option>
+                <option value="dd/mm/yy">Việt Nam - dd/mm/yy</option>
+                <option value="yy-mm-dd">ISO 8601 - yy-mm-dd</option>
+                <option value="d M, y">Short - d M, y</option>
+                <option value="d MM, y">Medium - d MM, y</option>
+                <option value="DD, d MM, yy">Full - DD, d MM, yy</option>
+                <option value="&apos;day&apos; d &apos;of&apos; MM &apos;in the year&apos; yy">With text - 'day' d 'of' MM 'in the year' yy</option>
+            </select>
+        </p>
+        
+        <h3>Hiển thị icon trigger</h3>
+        <p><input type="text" id="datepicker9"></p>
+        
+        <h3>Địa phương hóa</h3>
+        <p><input type="text" id="datepicker10">&nbsp;
+        <select id="locale">
+            <option value="ar">Arabic (&#8235;(&#1575;&#1604;&#1593;&#1585;&#1576;&#1610;&#1577;</option>
+            <option value="zh-TW">Chinese Traditional (&#32321;&#39636;&#20013;&#25991;)</option>
+            <option value="">English</option>
+            <option value="vi-VN">Việt Nam</option>
+            <option value="fr" selected="selected">French (Fran&ccedil;ais)</option>
+            <option value="he">Hebrew (&#8235;(&#1506;&#1489;&#1512;&#1497;&#1514;</option>
+        </select></p>
+        
+        <h3>Hiển thị ở trường khác nữa</h3>
+        <p>
+            <input type="text" id="datepicker11">
+            &nbsp;
+            <input type="text" id="alternate">
+        </p>
+        
+        <h3>Giới hạn khoảng ngày</h3>
+        <p><input type="text" id="datepicker12"></p>
+        
+        <h3>Chọn khoảng ngày</h3>
+        <p>
+            <label for="from">Từ</label>
+            <input type="text" id="from" name="from">
+            <label for="to">đến</label>
+            <input type="text" id="to" name="to">
+        </p>
+        
+        <h3>Hiển thị tuần</h3>
+        <p><input type="text" id="datepicker14"></p>
+    </article>
+
+    <script src="libs/jquery/jquery.js"></script>
+    <script src="libs/jquery-ui/jquery-ui.js"></script>
+	
+	<script src="libs/jquery-ui/i18n/datepicker-ar.js"></script>
+	<script src="libs/jquery-ui/i18n/datepicker-fr.js"></script>
+	<script src="libs/jquery-ui/i18n/datepicker-he.js"></script>
+    <script src="libs/jquery-ui/i18n/datepicker-zh-TW.js"></script>
+    <script src="libs/jquery-ui/i18n/datepicker-vi-VN.js"></script>
+	
+	<script src="js/script.js"></script>
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

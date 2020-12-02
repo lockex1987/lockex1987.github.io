@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Cho phép chọn ngày, khoảng ngày, tuần, tháng, mùa, năm"/>
+    
+    <title>Datepicker Dialog</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+
+    <link rel="stylesheet" href="libs/jquery-ui/jquery-ui.css"/>
+    <link rel="stylesheet" href="css/datepicker-dialog.css"/>
+
+    <style>
+		.datePicker {
+			border: 1px solid #00F;
+			cursor: pointer;
+			text-align: center;
+			width: 200px;
+			margin: 10px auto;
+		}
+		.datePicker:hover {
+			background-color: #0FF;
+		}
+		
+		.btnPeriod {
+			cursor: pointer;
+			background-color: #FF0;
+			width: 50px;
+			text-align: center;
+			margin: 10px auto;
+		}
+	</style>
+</head>
+<body>
+    <article>
+        <h2>Datepicker Dialog</h2>
+
+        <div id="btnBackPeriod1" class="btnPeriod">
+            &lt;
+        </div>
+        <div id="datePickerDiv1" class="datePicker">
+            Date Picker 1
+        </div>
+        <div id="btnNextPeriod1" class="btnPeriod">
+            &gt;
+        </div>
+        <div id="datePickerDiv2" class="datePicker">
+            Date Picker 2
+        </div>
+    </article>
+
+    <script src="libs/jquery/jquery.js"></script>
+	<script src="libs/jquery-ui/jquery-ui.js"></script>
+    <script src="libs/jquery-ui/i18n/datepicker-vi.js"></script>
+	<script src="libs/maskedinput/jquery.maskedinput.min.js"></script>
+	
+	<script src="js/messages-vi.js"></script>
+	<script src="js/common.js"></script>
+    <script src="js/datepicker-dialog.js"></script>
+    
+    <script>
+		function redrawPopup1(fromDate, toDate, typePicker, season) {
+			//alert("Alert from 1:\n" + fromDate + "\n" + toDate + "\n" + typePicker + "\n" + season);
+		}
+		
+		function redrawPopup2(fromDate, toDate, typePicker, season) {
+			//alert("Alert from 2:\n" + fromDate + "\n" + toDate + "\n" + typePicker + "\n" + season);
+		}
+		
+		$(function() {
+			// Phải khởi tạo bằng hàm callback thế này thì mới đảm bảo thực hiện hàm này
+			// sau khi đã đổi giao diện của datepicker thành tiếng Pháp (trong file datepicker-fr.js)
+			datePickerDialog("datePickerDiv1", 'btnBackPeriod1', 'btnNextPeriod1', redrawPopup1);
+			datePickerDialog("datePickerDiv2", null, null, redrawPopup1);
+		});
+	</script>
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

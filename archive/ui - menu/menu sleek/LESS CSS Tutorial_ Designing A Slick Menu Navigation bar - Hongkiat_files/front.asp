@@ -1,0 +1,4 @@
+if('undefined'==typeof VM){VM={};};VM.dropScript=function(src){var script=document.createElement("script");script.async=true;script.src=src;document.getElementsByTagName("head")[0].appendChild(script);};VM.pageView={
+pvu:'92AB9C2AB2F34A13B6B1BB028CA31871',pvm:'33b51e3cfe46c3dc8daabe0b76859970',ts:'1443886511352',ipid:'29794'};
+VM.dropScript('//p.vibrant.co/s/1?pvu=92AB9C2AB2F34A13B6B1BB028CA31871');
+(function(){var scripts=document.getElementsByTagName('script');var element,src,script;for(var i=0;i<scripts.length;i++){element=scripts[i];src=element.src;if(src&&src.indexOf('/intellitxt/front.asp')>-1){script=document.createElement('script');script.async=true;script.src=src.replace(/\/intellitxt\/front.asp/,'/v4/load');script.src+='&ts=1443886511352&pvu=92AB9C2AB2F34A13B6B1BB028CA31871&pvm=33b51e3cfe46c3dc8daabe0b76859970';var entry=scripts[0];entry.parentNode.insertBefore(script,entry);break;}}})();

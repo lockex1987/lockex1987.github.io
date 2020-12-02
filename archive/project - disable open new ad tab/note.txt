@@ -1,0 +1,59 @@
+Disable open new tab when clicking
+	Disable all JavaScript
+		Ẩn hiện nội dung
+		Video?
+	
+http://europeanclassiccomic.blogspot.com
+	Disable JS thì được, nhưng hiển thị noscript
+https://www5.zippyshare.com/v/ocPOEcDn/file.html
+	http://www.socialhub.online/
+
+https://chrome.google.com/webstore/detail/disable-javascript/jfpdlihdedhlmhlbgooailmfhahieoem
+https://github.com/dpacassi/disable-javascript
+https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+
+
+function removeEvent(el, type) {
+	var a = getEventListeners(el);
+	//console.log(a);
+	
+	if (type) {
+		a[type] && a[type].forEach(function(o) {
+			console.log(el); // .tagName
+			console.log(o);
+			console.log(o.listener.toString());
+			el.removeEventListener(type, o.listener);
+		});
+	}
+}
+
+function process(node) {
+	/*
+	if ([
+			'IFRAME',
+			'TITLE',
+			'META'
+		].includes(node.tagName)) {
+		return;
+	}*/
+	
+	removeEvent(node, 'click');
+	removeEvent(node, 'mousedown');
+	removeEvent(node, 'focus');
+	
+	//console.log(node.tagName);
+}
+
+function traverseNode(node, callback) {
+	callback(node);
+	node.childNodes.forEach(function(child) {
+		traverseNode(child, callback);
+	});
+}
+
+traverseNode(document, process);
+
+
+removeEvent(window, 'click');
+removeEvent(window, 'mousedown');
+removeEvent(window, 'focus');

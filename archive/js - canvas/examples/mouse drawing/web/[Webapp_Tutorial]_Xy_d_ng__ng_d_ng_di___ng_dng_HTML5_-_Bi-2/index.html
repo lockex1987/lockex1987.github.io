@@ -1,0 +1,672 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="vi-vn" dir="ltr" slick-uniqueid="3" class="firefox firefox51" lang="vi-vn">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+   
+  
+  <meta name="keywords" content="thiet ke web, lap trinh web, lam seo, hoc seo,  online marketing">
+  <meta name="author" content="Mai Thị Mỹ Tuyên">
+  <meta name="description" content="Cẩm nang Dân Web - Làm Web, làm SEO và triển khai chiến dịch Online Marketing.">
+  <meta name="generator" content="Joomla! - Open Source Content Management">
+  <title>[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 5</title>
+  <link href="favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+  <link href="http://danweb.vn/component/search/?Itemid=516&amp;catid=93&amp;id=200&amp;format=opensearch" rel="search" title="Tìm kiếm Dân web" type="application/opensearchdescription+xml">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+ 
+ 
+ 
+ <!--[if IE 6]><link rel="stylesheet" href="/templates/danweb/css/template.ie6.css" type="text/css" media="screen" /><![endif]-->
+ <!--[if IE 7]><link rel="stylesheet" href="/templates/danweb/css/template.ie7.css" type="text/css" media="screen" /><![endif]-->
+ 
+ 
+ 
+ 
+ 
+  
+
+<link media="all" href="index.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<!--
+ <div id="Basement" style="">
+  
+    <div id="Slideshow">
+      <div id="slice1"><img src="/templates/danweb/images/danweb1.png" alt="keke" />
+      </div>
+      <div id="slice2"><img src="/templates/danweb/images/danweb2.png" alt="keke" />
+      </div>
+     
+    </div>
+ </div>
+   --->
+
+<div id="top_all">
+
+  <div class="menu_chinh">
+	<ul id="login-form">
+		<li>
+			<a href="http://danweb.vn/dang-ky.html">
+			Tạo tài khoản</a>
+		</li>
+		<a href="http://danweb.vn/">|</a>
+		<li>
+			<a href="http://danweb.vn/dang-nhap.html">
+			Đăng nhập</a>
+		</li>
+	</ul>
+<ul class="menu"><li class="item-497"><a href="http://danweb.vn/lien-he.html">Liên hệ</a></li><li class="item-524"><a href="http://danweb.vn/vui-cuoi-it.html">Vui cười IT</a></li><li class="item-496"><a href="http://danweb.vn/faqs.html">FAQs</a></li><li class="item-495"><a href="http://forum.webchuyennghiep.net/" target="_top">Diễn đàn</a></li><li class="item-494"><a href="http://danweb.vn/su-kien.html">Sự kiện</a></li><li class="item-492"><a href="#">Bài viết</a></li><li class="item-491"><a href="#">Tin tức</a></li><li class="item-490"><a href="http://danweb.vn/">Dân web</a></li></ul></div>
+    </div>
+
+
+  <div class="cleared reset-box"></div>
+<div id="art-main">
+    <div class="cleared reset-box"></div>
+  
+<div id="art-header-bg" class="art-header">
+</div>
+<div class="cleared reset-box"></div>
+<div id="art-hmenu-bg" class="art-bar art-nav">
+</div>
+<div class="cleared reset-box"></div>
+<div class="art-box art-sheet">
+    <div class="art-box-body art-sheet-body">
+  <!--st fir-->
+    <div id="mblfireworks2">
+<div class="art-header">
+<div class="art-headerobject">
+<div class="art-nostyle">
+
+
+<div class="custom">
+	<p><a href="http://danweb.vn/"><img src="header-object.png" alt="header-object" width="258" height="130"></a></p></div>
+</div>
+</div>
+<div class="art-logo">
+    <div class="p_search"><form action="http://danweb.vn/lap-trinh-di-dong.html" method="post">
+	<div class="search">
+		<input name="searchword" id="mod-search-searchword" maxlength="20" class="inputbox" size="20" value="Tìm kiếm..." onblur="if (this.value=='') this.value='Tìm kiếm...';" onfocus="if (this.value=='Tìm kiếm...') this.value='';" type="text">	<input name="task" value="search" type="hidden">
+	<input name="option" value="com_search" type="hidden">
+	<input name="Itemid" value="" type="hidden">
+	</div>
+</form>
+</div>
+   
+</div>
+
+</div>
+<!--end head-->
+</div>
+<!--end fir-->
+<div class="cleared reset-box"></div>
+<div class="art-bar art-nav">
+<div class="art-nav-outer">
+      <ul class="art-hmenu"><li class="item-518 deeper parent"><a href="http://danweb.vn/thiet-ke-website.html">Thiết kế website</a><ul><li class="item-482"><a href="http://danweb.vn/thiet-ke-website/html-css.html">HTML &amp; CSS / CSS3</a></li><li class="item-514"><a href="http://danweb.vn/thiet-ke-website/my-thuat-website.html">Mỹ thuật website</a></li><li class="item-481"><a href="http://danweb.vn/thiet-ke-website/giao-dien-web.html">Giao diện web</a></li><li class="item-483"><a href="http://danweb.vn/thiet-ke-website/template-dep.html">Template đẹp</a></li><li class="item-525"><a href="http://danweb.vn/thiet-ke-website/ky-nang-web.html">Kỹ năng web</a></li><li class="item-547"><a href="http://danweb.vn/thiet-ke-website/template-danweb.html">Template Dân web</a></li><li class="item-559"><a href="http://danweb.vn/thiet-ke-website/thiet-ke-flash.html">Thiết kế Flash</a></li></ul></li><li class="item-517 deeper parent"><a href="http://danweb.vn/lap-trinh-website.html">Lập trình website</a><ul><li class="item-485"><a href="http://danweb.vn/lap-trinh-website/php-mysql.html">PHP &amp; MYSQL</a></li><li class="item-486"><a href="http://danweb.vn/lap-trinh-website/lap-trinh-joomla.html">Lập trình Joomla</a></li><li class="item-519"><a href="http://danweb.vn/lap-trinh-website/zend-framework.html">Zend Framework</a></li><li class="item-522"><a href="http://danweb.vn/lap-trinh-website/javascript-jquery.html">Javascript &amp; Jquery</a></li><li class="item-551"><a href="http://danweb.vn/lap-trinh-website/asp-asp-net.html">ASP &amp; ASP.NET</a></li><li class="item-558"><a href="http://danweb.vn/lap-trinh-website/lap-trinh-action-script.html">Lập trình Action Script</a></li></ul></li><li class="item-516 current active deeper parent"><a class=" active" href="http://danweb.vn/lap-trinh-di-dong.html">Lập trình di động</a><ul><li class="item-488"><a href="http://danweb.vn/lap-trinh-di-dong/lap-trinh-android.html">Lập trình Android</a></li><li class="item-521"><a href="http://danweb.vn/lap-trinh-di-dong/lap-trinh-iphone.html">Lập trình Iphone</a></li></ul></li><li class="item-515 deeper parent"><a href="http://danweb.vn/internet-marketing.html">Internet Marketing </a><ul><li class="item-489"><a href="http://danweb.vn/internet-marketing/seo-search-engine-optimization.html">SEO - Search Engine Optimization</a></li><li class="item-520"><a href="http://danweb.vn/internet-marketing/google-adwords.html">Google Adwords</a></li></ul></li><li class="item-523"><a href="http://danweb.vn/hosting-domain.html">Hosting - Domain</a></li><li class="item-533 deeper parent"><a href="http://danweb.vn/video.html">Video</a><ul><li class="item-534"><a title="Hoc Lập trình JQuery Online" href="http://danweb.vn/video/hoc-lap-trinh-jquery-online.html">Học Lập trình JQuery Online</a></li></ul></li><li class="item-531 deeper parent"><a href="http://danweb.vn/su-kien.html">Sự kiện</a><ul><li class="item-613"><a href="http://danweb.vn/su-kien/tim-kiem-tai-nang-thiet-ke-website-viet.html">Tìm kiếm tài năng thiết kế website Việt</a></li><li class="item-527"><a href="http://danweb.vn/su-kien/seoer-hoi-ngo-dinh-cao.html">SEOer - Hội ngộ đỉnh cao 2012</a></li><li class="item-550"><a href="http://danweb.vn/su-kien/viet-slogan-hoang-nguyen.html">Viết Slogan Hoàng Nguyễn</a></li><li class="item-555"><a href="http://danweb.vn/su-kien/lich-su-kien.html">Lịch sự kiện</a></li><li class="item-572"><a href="http://danweb.vn/su-kien/gio-vang.html">Giờ vàng</a></li></ul></li></ul></div>
+</div>
+<div class="cleared reset-box"></div>
+<div class="spcontent"></div>
+<div class="art-layout-wrapper">
+    <div class="art-content-layout">
+        <div class="art-content-layout-row">
+<div class="art-layout-cell art-content">
+
+<div class="bre"><div class="art-box art-post">
+    <div class="art-box-body art-post-body">
+<div class="art-post-inner">
+<div class="art-postcontent">
+
+<div class="breadcrumbs">
+<a href="http://danweb.vn/" class="pathway">Trang chủ</a> <img src="arrow.png" alt=""> <a href="http://danweb.vn/lap-trinh-di-dong.html" class="pathway">Lập trình di động</a></div>
+
+</div>
+<div class="cleared"></div>
+</div>
+
+		<div class="cleared"></div>
+    </div>
+</div>
+</div><div class="item-page"><div class="art-box art-post">
+    <div class="art-box-body art-post-body">
+<div class="art-post-inner">
+<h2 class="art-postheader"><a href="http://danweb.vn/lap-trinh-di-dong/200-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-5.html" class="PostHeader">[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 5</a></h2>
+<div class="art-postcontent">
+<div class="art-article">
+<p style="text-align: justify;">Chúng ta sẽ lần lượt làm 2 việc này ngay sau đây. Tuy&nbsp; nhiên, để có thể nắm được những điều sẽ trình bày ngay sau đây bạn cần có các kiến thức nền như sau:</p>
+<ol style="text-align: justify;">
+<li>Biết cơ bản về lập trình javascript, hiểu biết về DOM và cách javascript thao tác với DOM Elements</li>
+<li>Biết cơ bản về lập trình với JQuery</li>
+</ol>
+<p style="text-align: justify;">Bắt tay vào việc thôi, trong thư mục của ứng dụng hãy tạo tập tin có tên <strong>dwdrawing.js</strong>,sử dụng thẻ &lt;script&gt; nhúng tập tin này vào tập tin dwdrawing.html ngay sau 2 thẻ &lt;script&gt; đã có ở trong phần &lt;head&gt;. Trong tập tin mới tạo này chúng ta sẽ viết mã javascript để tạo ra một Widget cho JQuery Mobile.</p>
+<h3 style="text-align: justify;">&nbsp;</h3>
+<h3 style="text-align: justify;">5.1. Kiến thức cơ bản về việc viết JQuery Mobile-Widge</h3>
+<p style="text-align: justify;">JQuery Mobile cung cấp cơ chế cho phép lập trình viên dễ dàng tích hợp thêm tính năng vào bộ thư viện đã có một cách “chính quy”. Đó là cơ chế thêm vào các Widget.<br> Bản thân một phần trong JQuery Mobile được tạo nên từ nhiều Widget khác nhau. Mỗ Widget chứa các xử lý cho một nhóm chức năng trên một đối tượng nào đó. Lấy ví dụ đơn giản như</p>
+<ol style="text-align: justify;">
+<li>Xử lý việc hiển thị và hiệu ứng trên thanh header và thanh footer (gọi chung là fixedtoolbar)</li>
+<li>Xử lý việc hiển thị page như là một dialog</li>
+<li>Xử lý việc hiển thị và các thao tác, sự kiện cho các nút nhấn (button)</li>
+<li>…</li>
+</ol>
+<p style="text-align: justify;">Tương tự như thế, để viết mã JQuery Mobile một cách đúng chuẩn, chúng ta sẽ viết một widget và tạm đặt tên cho widget này là dwdrawing<br> Mở tập tin dwdrawing.js và nhập vào đoạn mã cơ bản để khai báo thêm một widget&nbsp; có tên dwdrawing như sau:</p>
+<pre class="brush:php">(function( $, undefined ) {
+	$.widget( "mobile.dwdrawing", $.mobile.widget, {
+		
+	});
+})( jQuery );
+</pre>
+<p style="text-align: justify;">Để cho người dùng vẽ hình, tất nhiên chúng ta cần biết người dùng đang vẽ loại hình gì (Hình chữ nhật, Elip hay Path) và người dùng đang chọn màu gì (trong số 7 màu&nbsp; tương ứng với 7 cây bút của chúng ta). Để lưu trữ hai giá trị này chúng ta sẽ thêm vào thuộc tính có tên là options, mã sẽ như sau:</p>
+<pre class="brush:php">(function( $, undefined ) {
+	$.widget( "mobile.dwdrawing", $.mobile.widget, {
+		options:{
+			color:'#077ff0',
+			pen:'path'//lát có lẽ cần sửa lại chỗ này
+		}
+	});
+})( jQuery );
+</pre>
+<p style="text-align: justify;">Mỗi đối tượng widget yêu cầu một hàm khởi tạo có tên _create, hàm này sẽ được JQuery Mobile gọi bất kì khi nào trong mã Javascript sau này chúng ta gọi gởi tạo Widget bằng cách dùng cú pháp dạng: $(selector).dwdrawing(optionsObj);<br> Hãy thêm vào phương thức này và mã của chúng ta sẽ có chút ít thay đổi như sau:</p>
+<p style="text-align: justify;">&nbsp;</p>
+<pre class="brush:php">(function( $, undefined ) {
+	$.widget( "mobile.dwdrawing", $.mobile.widget, {
+		options:{
+			color:'#077ff0',
+			pen:'path'
+		},
+		
+		_create: function(){
+			/*tạo một vài biến sẽ dùng tới sau*/
+			var self = this,
+			canvas = this.element,
+			o = this.options;
+		}
+	});
+})( jQuery );
+</pre>
+<p style="text-align: justify;">Tiếp sau, chúng ta sẽ thêm vào đoạn mã thực hiện khởi tạo widget này tự động mỗi khi trang được tạo xong. Để làm việc này chúng ta sẽ nghe ngóng sự kiện trang được tạo xong “pagecreate”, khi sự kiện này diễn ra chúng ta sẽ gọi khởi tạo widget dwdrawing. Code để làm đoạn này được thêm vào như sau:</p>
+<pre class="brush:php">(function( $, undefined ) {
+	$.widget( "mobile.dwdrawing", $.mobile.widget, {
+		options:{
+			color:'#077ff0',
+			pen:'path'//lát có lẽ cần sửa lại chỗ này
+		},
+		
+		_create: function(){
+			/*tạo một vài biến sẽ dùng tới sau*/
+			var self = this,
+			canvas = this.element,
+			o = this.options;
+		}
+	});
+	
+	/*tự động khởi tạo mỗi khi trang được tạo xong*/
+	$( document ).bind( "pagecreate", function( e ) {
+		$(":jqmData(role='dwdrawing')", e.target)
+		.dwdrawing({pensId:'pens',colorsId:'colors'});
+	});
+})( jQuery );
+</pre>
+<p style="text-align: justify;">Trở lại trang dwdrawing.html, hãy thêm vào thuộc tính data-role=“dwdrawing” cho thẻ &lt;canvas&gt; ván vẽ của chúng ta.<br> Xem ở đoạn code javascript mới thêm vào, các bạn thấy chúng ta đã truyền cho phương thức khởi tạo widget tham số là đối tượng:</p>
+<pre class="brush:php">{pensId:'pens',colorsId:'colors'}
+</pre>
+<p style="text-align: justify;">Để kiểm tra xem mọi chuyện có diễn ra đúng hay không, ta sẽ đặt một Break-point ngay phía cuối phương thức _create và refresh lại trang. Hình sau cho các bạn thấy kết quả khi Debug dùng Developer Tools trong trình duyệt Google Chrome.</p>
+<p><img src="h10.jpg" alt="h10" style="display: block; margin-left: auto; margin-right: auto;" width="100%"> Nhìn qua khung Watch Expressions, chúng ta thấy một vài điều</p>
+<ol style="text-align: justify;">
+<ul>
+<li><strong>canvas</strong>: chính là đối tượng tương đương với thẻ &lt;canvas&gt; trong HTML khi chúng ta lấy về thông qua JQuery</li>
+<li><strong>o</strong>: JQuery Mobile đã tự động thực hiện việc trộn các thuộc tính của options mà chúng ta khai báo (ở dòng 3 hình trên) với đối tượng là tham số truyền vào (chứa colorsId và pensId) khi khởi tạo widget.</li>
+</ul>
+</ol>
+<h3 style="text-align: justify;">&nbsp;</h3>
+<h3 style="text-align: justify;">5.2. Phương thức xử lý việc người dùng chọn một màu vẽ</h3>
+<p style="text-align: justify;">Chúng ta sẽ viết mã để khi người dùng bấm chọn một màu thì chương trình sẽ thực hiện 3 thao tác:</p>
+<ol style="text-align: justify;">
+<li>Việc 1. Cây bút màu hiện tại đang được chọn sẽ thụt lại và mờ đi</li>
+<li>Việc 2. Cây bút mới được chọn sẽ thò dài ra và hiện rõ lên</li>
+<li>Việc 3. Lấy màu tương ứng với cây bút mới được chọn vào thuộc tính color của đối tượng options (options hiện tại là một thuộc tính của đối tượng widget dwdrawing).</li>
+</ol>
+<p style="text-align: justify;">Chúng ta sẽ đặt tên cho nó là _changeColorListener và code của phương thức này sẽ được viết như sau:</p>
+<pre class="brush:javascript">/*nghe ngóng việc bấm chọn màu mới*/
+_changeColorListener:function(){
+	/*bắt sự kiện bấm vào một cây bút (thẻ li)*/
+	var self = this;
+	$("#"+this.options.colorsId+" li" )
+	.bind('vclick',function(e){
+		/*Việc 1. hiệu ứng làm mờ bút màu hiện tại*/
+		$("#"+self.options.colorsId+" li.active" )
+		.animate({opacity:0.4,width:40},150)
+		.removeClass('active');
+		
+		/*Việc 2. hiệu ứng hiện rõ bút màu mới click*/
+		$(this).animate({opacity:0.9,width:60},
+			200,
+			"linear",
+			function(){
+				/*Việc 3. thiết lập màu mới chọn vào options*/
+				self.options.color = "#"+$(this).attr('class').substring(1);
+				$(this).addClass('active');
+			});
+		});
+}//kết thúc _changeColorListener
+</pre>
+<p style="text-align: justify;">Bạn hãy đọc các ghi chú ở trên để hiểu rõ chúng ta thực hiện từng việc ra sao. Như đã nói, các bạn cần có kiến thức JQuery cơ bản để hiểu được đoạn code trên. Nếu bạn có hứng thú mà có điều gì đó không hiểu rõ, hãy đặt câu hỏi trên group facebook tại <a href="http://facebook.com/groups/danweb">http://facebook.com/groups/danweb</a> <br> Chúng ta sẽ gọi phương thức này trong khi khởi tạo widget, có nghĩa ngay trong phương thức _create, toàn bộ tập tin dwdrawing.js trở thành như sau:</p>
+<pre class="brush:php">(function( $, undefined ) {
+	$.widget( "mobile.dwdrawing", $.mobile.widget, {
+		options:{
+			color:'#077ff0',
+			pen:'path'//lát có lẽ cần sửa lại chỗ này
+		},
+		
+		_create: function(){
+			/*tạo một vài biến sẽ dùng tới sau*/
+			var self = this,
+			canvas = this.element,
+			o = this.options;
+			this._changeColorListener();
+		},
+		
+		/*nghe ngóng việc bấm chọn màu mới*/
+		_changeColorListener:function(){
+			/*bắt sự kiện bấm vào một cây bút (thẻ li)*/
+			var self = this;
+			$("#"+this.options.colorsId+" li" )
+			.bind('vclick',function(e){
+				/*Việc 1. hiệu ứng làm mờ bút màu hiện tại*/
+				$("#"+self.options.colorsId+" li.active" )
+				.animate({opacity:0.4,width:40},150)
+				.removeClass('active');
+				
+				/*Việc 2. hiệu ứng hiện rõ bút màu mới click*/
+				$(this).animate({opacity:0.9,width:60},
+					200,
+					"linear",
+					function(){
+						/*Việc 3. thiết lập màu mới chọn vào options*/
+						self.options.color = "#"+$(this).attr('class').substring(1);
+						$(this).addClass('active');
+					});
+				});
+		}//kết thúc _changeColorListener
+	});
+	
+	/*tự động khởi tạo mỗi khi trang được tạo xong*/
+	$( document ).bind( "pagecreate", function( e ) {
+		$(":jqmData(role='dwdrawing')", e.target)
+		.dwdrawing({pensId:'pens',colorsId:'colors'});
+	});
+})( jQuery );
+</pre>
+<h3 style="text-align: justify;">&nbsp;</h3>
+<h3 style="text-align: justify;">5.3. Phương thức xử lý việc người dùng bấm chọn kiểu vẽ</h3>
+<p style="text-align: justify;">Gần tương tự như trên, chúng ta sẽ viết phương thức _changePenListener nhằm xử lý việc người dùng chọn kiểu vẽ hình chữ nhật hay Elip hay Path.<br> mã nguồn của phương thức này như sau:</p>
+<pre class="brush:php">/*nghe ngóng việc bấm chọn kiểu vẽ*/
+_changePenListener:function(){
+	/*bắt sự kiện bấm vào một kiểu (thẻ li)*/
+	var self = this;
+	$("#"+this.options.pensId+" li" )
+	.bind('vclick',function(e){
+		/*Việc 1. hiệu ứng làm mờ kiểu hiện tại*/
+		$("#"+self.options.pensId+" li.active" )
+		.animate({opacity:0.4,width:40},150)
+		.removeClass('active');
+		
+		/*Việc 2. hiệu ứng hiện rõ kiểu mới click*/
+		$(this).animate({opacity:0.9,width:60},
+			200,
+			"linear",
+			function(){
+				/*Việc 3. thiết lập kiểu mới chọn vào options*/
+				self.options.pen = $(this).attr('class');
+				$(this).addClass('active');
+			});
+		});
+}//kết thúc _changePenListener
+</pre>
+<p style="text-align: justify;">Chúng ta cũng thực thi nó ngay khi khởi tạo widget này, thêm vào dòng lệnh gọi nó trong phương thức _create, toàn mã nguồn của tập tin dwdrawing.js sẽ như sau:</p>
+<pre class="brush:php">(function( $, undefined ) {
+	$.widget( "mobile.dwdrawing", $.mobile.widget, {
+		options:{
+			color:'#077ff0',
+			pen:'path'//lát có lẽ cần sửa lại chỗ này
+		},
+		
+		_create: function(){
+			/*tạo một vài biến sẽ dùng tới sau*/
+			var self = this,
+			canvas = this.element,
+			o = this.options;
+			this._changeColorListener();
+			this._changePenListener();
+		},
+		
+		/*nghe ngóng việc bấm chọn màu mới*/
+		_changeColorListener:function(){
+			/*bắt sự kiện bấm vào một cây bút (thẻ li)*/
+			var self = this;
+			$("#"+this.options.colorsId+" li" )
+			.bind('vclick',function(e){
+				/*Việc 1. hiệu ứng làm mờ bút màu hiện tại*/
+				$("#"+self.options.colorsId+" li.active" )
+				.animate({opacity:0.4,width:40},150)
+				.removeClass('active');
+				
+				/*Việc 2. hiệu ứng hiện rõ bút màu mới click*/
+				$(this).animate({opacity:0.9,width:60},
+					200,
+					"linear",
+					function(){
+						/*Việc 3. thiết lập màu mới vào options*/
+						self.options.color = "#"+$(this).attr('class').substring(1);
+						$(this).addClass('active');
+					});
+				});
+		},//kết thúc _changeColorListener
+		
+		/*nghe ngóng việc bấm chọn kiểu vẽ*/
+		_changePenListener:function(){
+			/*bắt sự kiện bấm vào một kiểu (thẻ li)*/
+			var self = this;
+			$("#"+this.options.pensId+" li" )
+			.bind('vclick',function(e){
+				/*Việc 1. hiệu ứng làm mờ kiểu hiện tại*/
+				$("#"+self.options.pensId+" li.active" )
+				.animate({opacity:0.4,width:40},150)
+				.removeClass('active');
+				
+				/*Việc 2. hiệu ứng hiện rõ kiểu mới click*/
+				$(this).animate({opacity:0.9,width:60},
+					200,
+					"linear",
+					function(){
+						/*Việc 3.thiết lập kiểu mới vào options*/
+						self.options.pen = $(this).attr('class');
+						$(this).addClass('active');
+					});
+				});
+		}//kết thúc _changePenListener
+	});
+	
+	/*tự động khởi tạo mỗi khi trang được tạo xong*/
+	$( document ).bind( "pagecreate", function( e ) {
+		$(":jqmData(role='dwdrawing')", e.target)
+		.dwdrawing({pensId:'pens',colorsId:'colors'});
+	});
+})( jQuery );
+</pre>
+<p style="text-align: justify;">Để mọi chuyện được đơn giản trước khi chúng ta đi nội dung tiếp sau các bạn hãy tải source-code chúng ta đã cùng nhau làm cho tới thời điểm này tại đây: <a class="doclink" href="http://danweb.vn/component/docman/doc_download/16-dwdrawing-v3-zip.html?Itemid=">dwdrawing-v3.zip</a><br> Kiểm tra việc hiển thị và sự kiện bấm chọn công cụ trên trình duyệt Safari của IOS, mọi test-case đều ok</p>
+<p><img src="h11.png" alt="h11" style="display: block; margin-left: auto; margin-right: auto;" width="100%"></p>
+<p style="text-align: justify;">Kiểm tra việc hiển thị và việc thực hiện chọn công cụ trên Buit-in Browser của Android 3.1, mọi tesk-case đều ok.</p>
+<p><img src="h12.jpg" alt="h12" style="display: block; margin-left: auto; margin-right: auto;" width="100%"></p>
+<p>&nbsp;</p>
+<p style="text-align: right;"><em>Còn tiếp...<br></em></p>
+<p style="text-align: right;"><em>&nbsp;</em></p>
+<p style="text-align: right;"><em>&nbsp;</em></p>
+<p style="text-align: right;"><em>Đào Ngọc Giang</em></p><div class="extranews_separator"></div><div class="extranews_box"><h3><strong>Tin mới</strong></h3><div class="extranews_newer"><ul class="newer"><li><a href="http://danweb.vn/lap-trinh-di-dong/246-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-cuoi.html" title="[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài cuối">[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài cuối - <span class="extranews_date">17/12/2012 09:43</span></a></li><li><a href="http://danweb.vn/lap-trinh-di-dong/222-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-8.html" title="[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 8">[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 8 - <span class="extranews_date">05/12/2012 09:12</span></a></li><li><a href="http://danweb.vn/lap-trinh-di-dong/208-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-7.html" title="[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 7">[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 7 - <span class="extranews_date">27/11/2012 09:43</span></a></li><li><a href="http://danweb.vn/lap-trinh-di-dong/207-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-6.html" title="[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 6">[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 6 - <span class="extranews_date">27/11/2012 09:17</span></a></li></ul></div></div><div class="extranews_box"><h3><strong>Các tin khác</strong></h3><div class="extranews_older"><ul class="older"><li><a href="http://danweb.vn/lap-trinh-di-dong/198-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-4.html" title="[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 4">[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 4 - <span class="extranews_date">23/11/2012 15:48</span></a></li><li><a href="http://danweb.vn/lap-trinh-di-dong/190-webapp-tutorial-html5-xay-dung-ung-dung-di-dong-part3.html" title="[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 3">[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 3 - <span class="extranews_date">20/11/2012 16:40</span></a></li><li><a href="http://danweb.vn/lap-trinh-di-dong/188-webapp-tutorial-html5-xay-dung-ung-dung-di-dong-part2.html" title="[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 2">[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 2 - <span class="extranews_date">19/11/2012 20:19</span></a></li><li><a href="http://danweb.vn/lap-trinh-di-dong/187-webapp-tutorial-html5-xay-dung-ung-dung-di-dong.html" title="[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 1">[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 1 - <span class="extranews_date">19/11/2012 18:22</span></a></li></ul></div></div></div>
+<div class="line_jc"></div>
+<div id="jc">
+<div id="comments"><h4>Bình luận <a class="refresh" href="#" title="Làm mới bình luận" onclick="jcomments.showPage(200,'com_content',0);return false;">&nbsp;</a></h4>
+<div id="comments-list" class="comments-list">
+	<div class="even" id="comment-item-83"><div class="rbox"><div class="rbox_tr"><div class="rbox_tl"><div class="rbox_t">&nbsp;</div></div></div><div class="rbox_m">
+<div class="comment-box">
+<span class="comments-vote">
+	<span id="comment-vote-holder-83">
+<a href="#" class="vote-good" title="Bình luận hay!" onclick="jcomments.voteComment(83, 1);return false;"></a><a href="#" class="vote-poor" title="Bình luận dở!" onclick="jcomments.voteComment(83, -1);return false;"></a>
+<span class="vote-none">0</span>
+	</span>
+</span>
+<a class="comment-anchor" href="http://danweb.vn/lap-trinh-di-dong/200-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-5.html#comment-83" id="comment-83">#2</a>
+<span class="comment-author">Đào Ngọc Giang</span>
+<span class="comment-date">Thứ 2-04-13 17:15</span>
+<div class="comment-body" id="comment-body-83">Hi Vương!<br>Về câu hỏi 1:<br>- Đoạn {pensId:'pens',<span style="font-size: 0px; padding: 0px; margin: 0px;"> </span>colorsId:'color<span style="font-size: 0px; padding: 0px; margin: 0px;"> </span>s'} trong Javascript là 1 đối tượng không tên, có 2 thuộc tính (property). Thuộc tính pensId mang giá trị là 'pens', thuộc tính colorsId mang giá trị là 'colors'.<br>- Vậy đoạn .dwdrawing({pensId:'pens',<span style="font-size: 0px; padding: 0px; margin: 0px;"> </span>colorsId:'color<span style="font-size: 0px; padding: 0px; margin: 0px;"> </span>s'}); có nghĩa gọi phương thức dwdrawing() và truyền vào tham số cho nó là đối tượng ta vừa đề cập trên.<br><br>Về câu hỏi 2:<br>- nếu bắt buộc li có 2 class thì bạn không dùng thuộc tính class làm mã màu nữa. Thay vào đó bạn có thể đặt một thuộc tính có tên ví dụ dạng data-color="#ff<span style="font-size: 0px; padding: 0px; margin: 0px;"> </span>0000" rồi sau đó get giá trị mã màu theo kiểu $('li').attr('d<span style="font-size: 0px; padding: 0px; margin: 0px;"> </span>ata-color')</div>
+<span class="comments-buttons">
+<a href="#" onclick="jcomments.quoteComment(83); return false;">Trích dẫn</a>
+</span>
+</div><div class="clear"></div>
+</div><div class="rbox_br"><div class="rbox_bl"><div class="rbox_b">&nbsp;</div></div></div></div>
+</div>
+	<div class="odd" id="comment-item-79"><div class="rbox"><div class="rbox_tr"><div class="rbox_tl"><div class="rbox_t">&nbsp;</div></div></div><div class="rbox_m">
+<div class="comment-box">
+<span class="comments-vote">
+	<span id="comment-vote-holder-79">
+<a href="#" class="vote-good" title="Bình luận hay!" onclick="jcomments.voteComment(79, 1);return false;"></a><a href="#" class="vote-poor" title="Bình luận dở!" onclick="jcomments.voteComment(79, -1);return false;"></a>
+<span class="vote-none">0</span>
+	</span>
+</span>
+<a class="comment-anchor" href="http://danweb.vn/lap-trinh-di-dong/200-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-5.html#comment-79" id="comment-79">#1</a>
+<span class="comment-author">Nguyễn Đức Vương</span>
+<span class="comment-date">Thứ 2-04-13 09:13</span>
+<div class="comment-body" id="comment-body-79">Chào anh, anh có thể cho em hỏi đoạn {pensId:'pens',<span style="font-size: 0px; padding: 0px; margin: 0px;"> </span>colorsId:'color<span style="font-size: 0px; padding: 0px; margin: 0px;"> </span>s'} hoạt động như nào được không. Nó lấy giá trị của 2 cái ul hay chỉ ngẫu nhiên trùng tên. <br>Nếu cái đoạn li color em có 2 class thì phải làm sao để chọn được class màu.<br>Em xin cảm ơn</div>
+<span class="comments-buttons">
+<a href="#" onclick="jcomments.quoteComment(79); return false;">Trích dẫn</a>
+</span>
+</div><div class="clear"></div>
+</div><div class="rbox_br"><div class="rbox_bl"><div class="rbox_b">&nbsp;</div></div></div></div>
+</div>
+</div>
+<div id="comments-list-footer"><a class="refresh" href="#" title="Làm mới bình luận" onclick="jcomments.showPage(200,'com_content',0);return false;">Làm mới bình luận</a></div>
+</div>
+<h4>Thêm ý kiến</h4>
+<a id="addcomments" href="#addcomments"></a>
+<form id="comments-form" name="comments-form" action="javascript:void(null);">
+<p>
+	<span>
+		<input id="comments-form-name" name="name" value="" maxlength="20" size="22" tabindex="1" type="text">
+		<label for="comments-form-name">Tên (bắt buộc)</label>
+	</span>
+</p>
+<p>
+	<span>
+		<input id="comments-form-email" name="email" value="" size="22" tabindex="2" type="text">
+		<label for="comments-form-email">E-mail (bắt buộc, nhưng sẽ không hiển thị)</label>
+	</span>
+</p>
+<p>
+	<span>
+		<textarea id="comments-form-comment" name="comment" cols="65" rows="8" tabindex="5"></textarea>
+	</span>
+</p>
+<p>
+	<span>
+		<input class="checkbox" id="comments-form-subscribe" name="subscribe" value="1" tabindex="5" type="checkbox">
+		<label for="comments-form-subscribe">Thông báo cho tôi khi có thảo luận</label><br>
+	</span>
+</p>
+<p>
+	<span>
+		<img class="captcha" onclick="jcomments.clear('captcha');" id="comments-form-captcha-image" src="64044.html" alt="Security code" width="121" height="60"><br>
+		<span class="captcha" onclick="jcomments.clear('captcha');">Làm mới</span><br>
+		<input class="captcha" id="comments-form-captcha" name="captcha_refid" value="" size="5" tabindex="6" type="text"><br>
+	</span>
+</p>
+<div id="comments-form-buttons">
+	<div class="btn" id="comments-form-send"><div><a href="#" tabindex="7" onclick="jcomments.saveComment();return false;" title="Gửi (Ctrl+Enter)">Gửi</a></div></div>
+	<div class="btn" id="comments-form-cancel" style="display: none;"><div><a href="#" tabindex="8" onclick="return false;" title="Hủy bỏ">Hủy bỏ</a></div></div>
+	<div style="clear: both;"></div>
+</div>
+<div>
+	<input name="object_id" value="200" type="hidden">
+	<input name="object_group" value="com_content" type="hidden">
+</div>
+</form>
+
+
+ 
+</div>
+</div>
+<div class="cleared"></div>
+</div>
+
+		<div class="cleared"></div>
+    </div>
+</div>
+</div>
+  <div class="cleared"></div>
+</div>
+<div class="art-layout-cell art-sidebar2">
+        <div class="art-box art-block">
+            <div class="art-box-body art-block-body">
+        
+                        <div class="art-box art-blockcontent">
+            <div class="art-box-body art-blockcontent-body">
+        
+        
+
+<div class="customdk">
+	<p style="margin: 0px;"><a href="http://danweb.vn/bao-gia-seo.html" title="Báo giá Dịch vụ SEO"><br><img src="2.gif" alt="2" width="240" height="150"></a></p></div>
+
+        
+        		<div class="cleared"></div>
+            </div>
+        </div>
+        
+        
+        		<div class="cleared"></div>
+            </div>
+        </div>
+        
+        <div class="art-box art-block">
+            <div class="art-box-body art-block-body">
+        
+                <div class="art-bar art-blockheader">
+            <h3 class="t">
+        Công cụ SEO</h3>
+        </div>
+                <div class="art-box art-blockcontent">
+            <div class="art-box-body art-blockcontent-body">
+        
+        <ul class="menu"><li class="item-584"><a href="http://danweb.vn/bao-gia-seo.html">Báo giá SEO</a></li><li class="item-557"><a href="http://danweb.vn/them-moi-website.html">iSPIN - Đảo nội dung bài viết</a></li><li class="item-571"><a href="http://danweb.vn/internet-marketing/seo-search-engine-optimization/256-huong-dan-su-dung-plugin-ispin.html">Hướng dẫn sử dụng Plugin iSPIN</a></li></ul>
+        
+        		<div class="cleared"></div>
+            </div>
+        </div>
+        
+        
+        		<div class="cleared"></div>
+            </div>
+        </div>
+        
+        <div class="art-box art-block">
+            <div class="art-box-body art-block-body">
+        
+                <div class="art-bar art-blockheader">
+            <h3 class="t">
+        Học SEO tại Hoàng Nguyễn</h3>
+        </div>
+                <div class="art-box art-blockcontent">
+            <div class="art-box-body art-blockcontent-body">
+        
+        
+
+<div class="custom">
+	<p><a href="http://hoangnguyen.edu.vn/khoa-hoc/khoa-hoc-seo-dao-tao-seo-day-seo-web-top-10-google.html" target="_top"><img src="khoa-hoc-seo-hcm.jpg" width="100%"></a><a href="http://tinhocdoanhnghiep.edu.vn/tin-hoc-van-phong-ung-dung-doanh-nghiep.html">Dạy học Tin học Văn phòng Thư ký nâng cao</a></p></div>
+
+        
+        		<div class="cleared"></div>
+            </div>
+        </div>
+        
+        
+        		<div class="cleared"></div>
+            </div>
+        </div>
+        
+        <div class="art-box art-block">
+            <div class="art-box-body art-block-body">
+        
+                <div class="art-bar art-blockheader">
+            <h3 class="t">
+        Thảo luận</h3>
+        </div>
+                <div class="art-box art-blockcontent">
+            <div class="art-box-body art-blockcontent-body">
+        
+        <ul class="jcomments-latest-commented">
+		<li>
+		<a href="http://danweb.vn/thiet-ke-website/html-css/255-mo-hinh-cau-truc-html5.html#comments">
+							Mô hình cấu trúc HTML5&nbsp;(23)
+					</a>
+	</li>
+		<li>
+		<a href="http://danweb.vn/lap-trinh-di-dong/lap-trinh-android/98-su-kien-tren-giao-dien.html#comments">
+							Sự kiện trên giao diện&nbsp;(20)
+					</a>
+	</li>
+		<li>
+		<a href="http://danweb.vn/thiet-ke-website/template-dep/91-12-template-thu-dong.html#comments">
+							12 Template mùa Thu, Đông&nbsp;(4)
+					</a>
+	</li>
+		<li>
+		<a href="http://danweb.vn/lap-trinh-di-dong/190-webapp-tutorial-html5-xay-dung-ung-dung-di-dong-part3.html#comments">
+							[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 3&nbsp;(6)
+					</a>
+	</li>
+		<li>
+		<a href="http://danweb.vn/lap-trinh-website/php-mysql/278-hieu-sau-ve-bien-trong-php.html#comments">
+							Bạn chẳng biết chút gì về biến trong PHP&nbsp;(5)
+					</a>
+	</li>
+		<li>
+		<a href="http://danweb.vn/lap-trinh-website/javascript-jquery/169-plugin-fancy-box-cua-jquery.html#comments">
+							Plugin Fancy Box của JQuery&nbsp;(4)
+					</a>
+	</li>
+		<li>
+		<a href="http://danweb.vn/thiet-ke-website/template-dep/283-10-trang-web-dep-ky-6.html#comments">
+							10 trang web đẹp - Kỳ 6&nbsp;(11)
+					</a>
+	</li>
+		<li>
+		<a href="http://danweb.vn/thiet-ke-website/giao-dien-web/232-mot-vai-dieu-ban-chua-biet-tu-cong-cu-crop-trong-photoshop.html#comments">
+							Một vài điều bạn chưa biết từ công cụ crop trong photoshop&nbsp;(1)
+					</a>
+	</li>
+		<li>
+		<a href="http://danweb.vn/lap-trinh-website/lap-trinh-joomla/106-template-trong-joomla-1.html#comments">
+							Template trong Joomla (1)&nbsp;(1)
+					</a>
+	</li>
+		<li>
+		<a href="http://danweb.vn/lap-trinh-di-dong/246-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-cuoi.html#comments">
+							[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài cuối&nbsp;(4)
+					</a>
+	</li>
+	</ul>
+
+        
+        		<div class="cleared"></div>
+            </div>
+        </div>
+        
+        
+        		<div class="cleared"></div>
+            </div>
+        </div>
+        
+        <div class="art-box art-block">
+            <div class="art-box-body art-block-body">
+        
+                <div class="art-bar art-blockheader">
+            <h3 class="t">
+        Facebook</h3>
+        </div>
+                <div class="art-box art-blockcontent">
+            <div class="art-box-body art-blockcontent-body">
+        
+        </div></div></div></div></div></div></div></div></div></div></div></body>
+</html>

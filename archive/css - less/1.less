@@ -1,0 +1,19 @@
+/* Cleaner structure with nesting */
+#header {
+    background-color: orangered;
+    #nav {
+        color: rgb(10, 10, 10);
+        ul {
+            padding: 0;
+            li {
+                margin: 0;
+                a {
+                    text-decoration: none;
+                    &:hover { color:red; }
+                    &:active { color: green; }
+                    &:visited { color: blue; }
+                }
+            }
+        }
+    }
+}

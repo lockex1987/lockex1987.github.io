@@ -1,0 +1,48 @@
+body {
+  background-color: grey;
+}
+section {
+  background-color: #eee;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 10px;
+  width: 350px;
+  overflow: hidden;
+}
+
+.mdl-card__supporting-text {
+  line-height: 1.4;
+}
+
+.mdl-card {
+  margin-bottom: 10px;
+}
+
+.news-source {
+  font-size: 12px;
+  padding: 16px 0 0 16px;
+}
+
+.news-title {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 16px 0 0 16px;
+}
+
+.news-content {
+  font-size: 14px;
+  padding: 0 0 0 16px;
+}
+
+.removing {
+  opacity: 0;
+  height: 0;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  transition: all 1s 300ms, transform 300ms 0s, opacity 300ms 0s;
+}
+
+.returning {
+  transition: transform 800ms 0s, opacity 300ms 0s;
+}

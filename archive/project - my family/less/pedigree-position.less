@@ -1,0 +1,75 @@
+.pedigreePosition {
+	font-size: 14px;
+
+	.generation {
+		position: relative;
+		float: left;
+		width: 200px;
+		height: 100%;
+
+		.siblings {
+			margin-bottom: 50px;
+
+			.couple {
+				position: absolute;
+
+				.personWrapper {
+					margin-bottom: 20px;
+					position: relative;
+
+					.person {
+						margin-left: 50px;
+						padding: 8px 10px;
+						border: 1px solid blue;
+						cursor: pointer;	
+						width: 100px;
+						height: 40px;
+
+						&:hover {
+							background-color: #AAA; 
+						}
+					}
+
+					.isDirect {
+						position: absolute;
+						top: 19px;
+						left: 0;
+						width: 50px;
+						height: 2px;
+						border: 1px solid red;
+					}
+				}
+
+				.coupleConnector {
+					position: absolute;
+					top: 40px;
+					left: 100px;
+					height: 20px;	
+					width: 2px;
+					border: 1px solid red;
+				}
+			}
+
+			.siblingsConnector {
+				position: absolute;
+				left: 0;
+				width: 2px;
+				border: 1px solid red;
+			}
+
+			.toParentConnector {
+				position: absolute;
+				left: 0;
+				width: 100px;
+				transform: translate(-100px, -1px);
+				border: 1px solid red;
+			}
+		}
+	}
+
+	&::after {
+		display: table;
+		content: "";
+		clear: both;
+	}
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bắt đầu học Vue">
+    <title>Bắt đầu học Vue (demo)</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <article>
+        <h2>Demo</h2>
+        <h3>Demo 1: Hiển thị dữ liệu</h3>
+        <div id="app-1"> {{ message }} </div>
+        <h3>Demo 2: Bind thuộc tính</h3>
+        <div id="app-2"> <span v-bind:title="myTitle"> Rê chuột lên đây một vài
+                giây để xem thuộc tính `title` được bind! </span> </div>
+        <h3>Demo 3: if</h3>
+        <div id="app-3"> <span v-if="seen"> Thoắt ẩn thoắt hiện </span> </div>
+        <p> <button onclick="toggleApp3()"> Toggle </button> </p>
+        <h3>Demo 4: for</h3>
+        <div id="app-4">
+            <ul>
+                <li v-for="todo in todos"> {{ todo.text }} </li>
+            </ul>
+        </div>
+        <h3>Demo 5: click</h3>
+        <div id="app-5">
+            <p> {{ message }} </p>
+            <button v-on:click="reverseMessage"> Reverse message </button>
+        </div>
+        <h3>Demo 6: model</h3>
+        <div id="app-6">
+            <p> {{ message }} </p>
+            <input v-model="message" type="text">
+            <!--button v-on:click="changeMessage">Thay đổi thông điệp</button-->
+        </div>
+        <h3>Demo 7: component</h3>
+        <div id="app-7">
+            <ul>
+                <todo-item v-bind:todo="e" v-for="e in groceryList"> </todo-item>
+            </ul>
+        </div>
+    </article>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

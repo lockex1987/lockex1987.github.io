@@ -1,0 +1,44 @@
+{
+	"manifest_version": 2,
+	"name": "Cloud Downloader",
+	"version": "1.2.0",
+	"description": "Download from userscloud, zippyshare automatically.",
+	"icons": {
+		"48": "images/frog-icon-48.png"
+	},
+	"content_scripts": [
+		{
+			"matches": ["*://*.userscloud.com/*"],
+			"js": ["js/userscloud-downloader.js"]
+		},
+		{
+			"matches": ["*://*.zippyshare.com/*"],
+			"js": ["js/zippyshare-downloader.js"]
+		},
+		{
+			"matches": ["*://*.fshare.vn/*"],
+			"js": ["js/fshare-downloader.js"]
+		},
+		{
+			"matches": ["*://*.mega.nz/*"],
+			"js": ["js/mega-downloader.js"]
+		},
+		{
+			"matches": ["*://*.mediafire.com/*"],
+			"js": ["js/mediafire-downloader.js"]
+		}
+	],
+
+	"browser_action": {
+		"default_icon": {
+			"48": "images/frog-icon-48.png"
+		},
+		"default_title": "Cloud Downloader"
+	},
+	"background": {
+		"scripts": ["js/background.js"]
+	},
+	"permissions": [
+	    "notifications", "downloads"
+	]
+}

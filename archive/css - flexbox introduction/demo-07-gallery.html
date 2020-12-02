@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox demo</title>
+    <link rel="icon" href="../../images/favicon.png"/>
+	<link rel="stylesheet" href="../../css/style.css"/>
+
+    <style>
+.row { display: flex; flex-wrap: wrap; padding: 0 4px; }
+
+/* Create four equal columns that sits next to each other */
+.column { flex: 100%; padding: 0 4px; }
+@media (min-width: 600px) {
+    .column { flex: 50%; }
+}
+@media (min-width: 800px) {
+    .column { flex: 25%; }
+}
+
+.column img { margin-top: 8px; vertical-align: middle; width: 100%; height: auto; }
+    </style>
+</head>
+
+<body>
+    <article>
+        <h2>Responsive Image Grid</h2>
+        <p>Resize the browser window to see the responsive effect.</p>
+
+
+<!-- Photo Grid -->
+<div class="row"> 
+  <div class="column">
+    <img src="images/wedding.jpg"/>
+    <img src="images/rocks.jpg"/>
+    <img src="images/falls2.jpg"/>
+    <img src="images/paris.jpg"/>
+    <img src="images/nature.jpg"/>
+    <img src="images/mist.jpg"/>
+    <img src="images/paris.jpg"/>
+  </div>
+  <div class="column">
+    <img src="images/underwater.jpg"/>
+    <img src="images/ocean.jpg"/>
+    <img src="images/wedding.jpg"/>
+    <img src="images/mountainskies.jpg"/>
+    <img src="images/rocks.jpg"/>
+    <img src="images/underwater.jpg"/>
+  </div>  
+  <div class="column">
+    <img src="images/wedding.jpg"/>
+    <img src="images/rocks.jpg"/>
+    <img src="images/falls2.jpg"/>
+    <img src="images/paris.jpg"/>
+    <img src="images/nature.jpg"/>
+    <img src="images/mist.jpg"/>
+    <img src="images/paris.jpg"/>
+  </div>
+  <div class="column">
+    <img src="images/underwater.jpg"/>
+    <img src="images/ocean.jpg"/>
+    <img src="images/wedding.jpg"/>
+    <img src="images/mountainskies.jpg"/>
+    <img src="images/rocks.jpg"/>
+    <img src="images/underwater.jpg"/>
+  </div>
+</div>
+
+    </article>
+    
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

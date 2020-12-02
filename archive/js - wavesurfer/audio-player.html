@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Wavesurfer Audio Player</title>
+	
+	<style>
+		main { width:50%; max-width: 800px; height:auto; margin:10px auto; display:block; }
+		.player { width:100%; border:solid 1px #dcd4f9; border-top:solid 3px #f27d0c; background:url("images/player-bg.png") no-repeat center;
+			background-size:cover; position:relative; }
+		.top-control { position:absolute; top:0; width:100%; float:left; }
+		#playPause { background:url("images/play-btn.png") center no-repeat; border:none; width:60px; height:60px; background-size:60px 60px;
+			position:relative; margin:10px; float:left; }
+		.sub-title { margin:10px 10px 10px 0; height:60px; position:relative; float:left; }
+		.song-title { background:#000000; color:#ffffff; padding:5px 7px 7px; margin-top:5px; text-decoration:underline;
+			font-family:Arial, Helvetica, sans-serif; font-weight:bold; font-size:14px; display:block; min-width:50%; height:17px; text-overflow:ellipsis;
+			overflow:hidden; white-space:nowrap; vertical-align:middle; }
+		#unmuted { background:url('images/unmuted-btn.png') center no-repeat; border:none; width:20px; height:20px; background-size:20px 20px;
+			margin-top:5px; display:inline-block; float:left; }
+		#muted { background:url('images/muted-btn.png') center no-repeat; border:none; width:20px; height:20px; background-size:20px 20px;
+			margin-top:5px; display:none; float:left; }
+		#waveform { position:absolute; bottom:0; width:100%; text-align:center; }
+		#seek { background:url('images/equalizer.png') center no-repeat; }
+		.line2-subtitle { font-family:"Courier New", Courier, monospace; font-weight:bold; height:20px; display:table-cell; vertical-align:middle;
+			float:left; margin-top:5px; margin-left:5px; }
+	</style>
+</head>
+
+<body>
+	<main>
+		<div class="player">
+			<div class="top-control">
+				<button id="playPause" class="btn btn-primary" onclick="wavesurfer.playPause()"></button>
+
+				<div class="sub-title">
+					<span class="song-title">Như Cánh Vạc Bay - Hồng Nhung</span>
+					<button id="unmuted"> </button>
+					<button id="muted"> </button>
+					<span id="currentTime" class="line2-subtitle">00:00</span>
+					<span class="line2-subtitle">/</span>
+					<span id="durationTime" class="line2-subtitle">00:00</span>
+				</div>
+			</div>
+
+			<div id="waveform" min="0" type="range" value="0"></div>
+		</div>
+	</main>
+
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.3/wavesurfer.min.js'></script>
+	<script>
+$(document).ready(function() {
+    var wPlayer = Math.round($(".player").width());
+    $(".player").css("height", wPlayer);
+    var wSongTitle = wPlayer - 100;
+    $(".sub-title").css("width", wSongTitle + "px");
+    $(window).resize(function () {
+        var wPlayer = Math.round($(".player").width());
+        $(".player").css("height", wPlayer);
+        var wSongTitle = wPlayer - 100;
+        $(".sub-title").css("width", wSongTitle + "px");
+        if (wPlayer < 250) {
+            $(".line2-subtitle").css("display", "none");
+        } else {
+            $(".line2-subtitle").css("display", "table-cell");
+        }
+    });
+});
+
+var wavesurfer = WaveSurfer.create({
+    container: '#waveform',
+    barWidth: 1,
+    waveColor: '#aecfe3',
+    progressColor: '#f48a23',
+    cursorColor: '#f27d0c',
+    cursorWidth: 2,
+    height: 50,
+    hideScrollbar: true,
+    minPxPerSec: 1,
+    normalize: true
+});
+
+//https://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3
+wavesurfer.load('https://rawgit.com/trongnghia203/wavesurfer-example/master/audio/Nhu-Canh-Vac-Bay-Hong-Nhung.mp3');
+
+var timeInterval;
+
+wavesurfer.on('ready', function () {
+    unmuted.onclick = function () {
+		//wavesurfer.toggleMute()
+        wavesurfer.setMute(true);
+        $("#unmuted").css("display", "none");
+        $("#muted").css("display", "inline-block");
+    };
+
+    muted.onclick = function () {
+        wavesurfer.setMute(false);
+        $("#unmuted").css("display", "inline-block");
+        $("#muted").css("display", "none");
+    };
+
+    playPause.addEventListener('click', playPauseMusic, false);
+
+    function playPauseMusic() {
+		//wavesurfer.playPause()
+        if (wavesurfer.isPlaying()) {
+            // Kiểm tra thời gian hiện tại của bài nhạc
+			if (!timeInterval) {
+				timeInterval = setInterval(timeUpdateMusic, 100);
+			}
+
+            $("#playPause").css("background", "url('images/pause-btn.png') center no-repeat");
+            $("#playPause").css("background-size", "60px 60px");
+        } else {
+			if (timeInterval) {
+				clearInterval(timeInterval);
+			}
+            $("#playPause").css("background", "url('images/play-btn.png') center no-repeat");
+            $("#playPause").css("background-size", "60px 60px");
+        }
+    }
+	
+	function timeformat(timeget) {
+		if (!timeget) {
+			return "00:00";
+		}
+
+		var min = Math.floor(timeget / 60);
+		var sec = Math.ceil(timeget) % 60;
+		return (min < 10 ? '0' : '') + min + ":" + (sec < 10 ? '0' : '') + sec;
+	}
+
+    function sformat(s) {
+        // Đổi giây sang MM:ss
+        var days = Math.floor(Math.floor(Math.floor(s / 60) / 60) / 24) % 24; //DAYS
+        var hours = Math.floor(Math.floor(s / 60) / 60) % 60; //HOURS
+        var minutes = Math.floor(s / 60) % 60; //MINUTES
+        var seconds = Math.floor(s) % 60; //SECONDS
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        return minutes + ':' + seconds;
+    }
+
+    function timeUpdateMusic() {
+        // Thời gian toàn bộ của bài nhạc    
+        durationTime.innerHTML = sformat(wavesurfer.getDuration());
+        // Thời gian hiện tại của bài nhạc
+        currentTime.innerHTML = sformat(wavesurfer.getCurrentTime());
+    }
+	
+	timeUpdateMusic();
+});
+	</script>
+</body>
+</html>

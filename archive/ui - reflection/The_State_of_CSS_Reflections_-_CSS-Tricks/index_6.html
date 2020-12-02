@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html class=" -moz-">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico">
+  <link rel="mask-icon" type="" href="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111">
+  <meta name="robots" content="noindex">
+  <title>CodePen - initial (stacked) vs. final (distributed)</title>
+  
+  
+  
+  
+      
+
+  
+
+  
+
+  
+  
+
+
+<link media="all" href="index_6.css" type="text/css" rel="stylesheet">
+</head>
+<body translate="no">
+
+  
+<svg viewBox="-3000 -1250 5000 2500">
+  <defs>
+    <rect id="br" width="#{bar_w}%" height="#{bar_h}%"></rect>
+    <marker id="a0" viewBox="-25 -15 45 30" refX="-20" markerUnits="strokeWidth" markerWidth="#{mrk_w}%" markerHeight="#{mrk_h}%" orient="auto">
+      <use xlink:href="#p1" transform="scale(-1 1)"></use>
+    </marker>
+    <marker id="a1" viewBox="-20 -15 45 30" refX="20" markerUnits="strokeWidth" markerWidth="#{mrk_w}%" markerHeight="#{mrk_h}%" orient="auto">
+      <path id="p1" d="M0,0L-5,-5L10,0L-5,5z"></path>
+    </marker>
+  </defs>
+  <text class="sl" x="#{-lbl_x}%" y="#{bar_iy}%">initial state (stacked)</text>
+  <text class="sl" x="#{-lbl_x}%">final state (distributed)</text>
+  <g id="axes">
+    <line x1="#{-axs_x}%" y1="#{bar_h}%" x2="#{axs_x}%" y2="#{bar_h}%" marker-end="url(#a1)"></line>
+    <text x="#{axs_x}%" y="#{bar_h}%">x<tspan class="code">(+)</tspan></text>
+    <text class="code" x="#{-axs_x}%" y="#{bar_h}%">(-)</text>
+    <line x1="#{-axs_x}%" y1="#{axs_y0}%" x2="#{axs_x}%" y2="#{axs_y0}%" marker-end="url(#a1)"></line>
+    <text x="#{axs_x}%" y="#{axs_y0}%">x<tspan class="code">(+)</tspan></text>
+    <text class="code" x="#{-axs_x}%" y="#{axs_y0}%">(-)</text>
+    <line y1="-50%" y2="#{axs_y2}%" marker-end="url(#a1)"></line>
+    <text y="#{axs_y2}%">y<tspan class="code">(+)</tspan></text>
+    <text class="code" y="-50%">(-)</text>
+  </g>
+  <g id="guides">
+    <line x1="#{-bar_fxe}%" x2="#{-bar_fxe}%" y2="50%"></line>
+    <line x1="#{bar_fxe}%" y1="#{gds_y0}%" x2="#{bar_fxe}%" y2="50%"></line>
+    <line x1="#{bar_fxi}%" y1="#{gds_y0}%" x2="#{bar_fxi}%"></line>
+    <line x1="#{bar_w}%" y1="#{axs_y0}%" x2="#{bar_w}%" y2="#{gds_y1}%"></line>
+  </g>
+  <g id="bars">
+    <line class="guide" x1="#{-bar_fxi}%" x2="#{bar_fxi}%"></line>
+    <line class="guide" x1="#{-bar_fxi}%" y1="#{bar_h}%" x2="#{bar_fxi}%" y2="#{bar_h}%"></line>
+    <use id="ini" xlink:href="#br" y="#{bar_iy}%"></use>
+    <use class="fin" xlink:href="#br" x="#{-bar_fxe}%"></use>
+    <use class="fin" xlink:href="#br" x="#{bar_fxi}%"></use>
+  </g>
+  <g id="meas">
+    <line x1="#{-bar_fxe}%" y1="#{mrk_y0}%" x2="#{bar_fxe}%" y2="#{mrk_y0}%" marker-start="url(#a0)" marker-end="url(#a1)"></line>
+    <text class="code" y="#{mrk_y0}%">$n*$bar-w</text>
+    <line y1="#{mrk_y1}%" x2="#{bar_fxe}%" y2="#{mrk_y1}%" marker-start="url(#a0)" marker-end="url(#a1)"></line>
+    <text class="code" x="#{-mrk_x1}%" y="#{mrk_y1}%">.5*$n*$bar-w</text>
+    <line x1="#{-bar_fxe}%" y1="#{mrk_y1}%" y2="#{mrk_y1}%" marker-start="url(#a0)" marker-end="url(#a1)"></line>
+    <text class="code" x="#{mrk_x1}%" y="#{mrk_y1}%">.5*$n*$bar-w</text>
+    <line x1="#{mrk_x20}%" y1="#{mrk_y2}%" x2="#{bar_fxe}%" y2="#{mrk_y2}%" marker-end="url(#a1)"></line>
+    <line x1="#{mrk_x21}%" y1="#{mrk_y2}%" x2="#{bar_fxi}%" y2="#{mrk_y2}%" marker-end="url(#a1)"></line>
+    <line x1="#{-mrk_out}%" y1="#{mrk_y2}%" y2="#{mrk_y2}%" marker-end="url(#a1)"></line>
+    <line x1="#{mrk_x22}%" y1="#{mrk_y2}%" x2="#{bar_w}%" y2="#{mrk_y2}%" marker-end="url(#a1)"></line>
+    <text class="code" x="#{mrk_x20}%" y="#{mrk_y2}%">$bar-w</text>
+    <text class="code" x="#{-mrk_out}%" y="#{mrk_y2}%">$bar-w</text>
+  </g>
+</svg>
+  
+  
+  
+  
+  
+
+
+
+ </body>
+</html>

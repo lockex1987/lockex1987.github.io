@@ -1,0 +1,39 @@
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Python Decorator</title> 
+  <script type="text/javascript" src="http://livejs.com/live.js"></script> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Python Decorator">
+ </head> 
+ <body> 
+  <article> 
+   <h2>Python Decorator</h2> 
+   <p>Trong Python, hàm cũng là đối tượng. Chúng ta có thể sử dụng hàm làm biến, làm tham số (như JavaScript).</p> 
+   <p>Nói một cách ngắn gọn, decorator bao một function và sửa đổi hành vi của function đó.</p> 
+   <p>Để đơn giản hành vi trên, Python sử dụng dấu <strong>@</strong> để thông báo đố là một decorator.</p> 
+   <p>Một hàm có thể có nhiều decorator. Khi đó decorator nào ở trên sẽ được bọc ở ngoài cùng và được thực hiện trước.</p> 
+   <p>Các ví dụ:</p> 
+   <ul> 
+    <li>Tính thời gian thực hiện hàm</li> 
+    <li>Kiểm tra thực hiện hàm thì cần đăng nhập</li> 
+    <li>Đóng mở kết nối</li> 
+    <li>Validate của resizeimage.py</li> 
+   </ul> 
+   <p>Hàm và phương thức của Python rất giống nhau, ngoại trừ một điểm, phương thức thuộc về một class mà nó luôn luôn có tham số đầu tiên là self (đối tượng hiện tại).</p> 
+   <p>Vì vậy, chúng ta có thể viết decorator cho phương thức giống như decorator cho hàm, chỉ với lưu ý rằng cần truyền tham số <code>self</code> cho wrapper.</p> 
+   <p>Decorator tổng quát</p> 
+   <p>Nếu bạn muốn xây dựng một decorator một cách tổng quát, có thể áp dụng cho mọi hàm với số lượng tham số khác nhau. Bạn chỉ cần sử dụng cú pháp *args và **kwargs</p> 
+   <p><br> </p> 
+   <p>Từ phiên bản 2.5 trở nên, Python có module functools trong đó có hàm functools.wraps giúp chúng ta copy tên, module, docstring, v.v. của hàm được decorate vào hàm wrapper của chúng ta.</p> 
+   <p>Python bản thân nó cũng có sẵn rất nhiều decorator như <code>@property</code>, <code>@classmethod</code>, v.v... Django cũng thường xuyên sử dụng decorator, nhất là khi phân quyền cho người dùng.</p> 
+   <h3>Source</h3> 
+   <p><a href="demo_decorator.py">demo_decorator.py</a></p> 
+   <h3>Tham khảo<br> </h3> 
+   <p><a target="_blank" href="https://manhhomienbienthuy.bitbucket.io/2015/Dec/22/exploring-python-decorators.html">https://manhhomienbienthuy.bitbucket.io/2015/Dec/22/exploring-python-decorators.html</a></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

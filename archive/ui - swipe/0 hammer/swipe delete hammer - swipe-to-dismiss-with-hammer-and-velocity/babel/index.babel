@@ -1,0 +1,52 @@
+// Constants
+const THRESH = 0.75;
+const TIMING = 250;
+
+// When the dom is loaded, set up hammer events.
+document.addEventListener('DOMContentLoaded', f => {
+  var lis = document.querySelectorAll('ul.swipe-list li');
+  for (let i = 0; i < lis.length; i++) {
+    let hammertime = new Hammer(lis[i]);
+    hammertime.on('panleft panright', e => handlePan(e));
+    hammertime.on('panend', e => reset(e));
+  }
+});
+
+// pane{left,right} handler
+function handlePan(e, model) {
+  var {target: el, deltaX: dx} = e;
+  if (doAction(dx, el)) {
+    el.classList.add('action');
+  } else {
+    el.classList.remove('action');
+  }
+  Velocity(el, {
+    translateX: dx
+  }, 0);
+}
+
+// panend handler
+function reset(e) {
+  var {target: el, deltaX: dx} = e;
+  // Should we remove the element?
+  if (doAction(dx, el)) {
+    Velocity(el, {
+      translateX: dx * 2
+    }, TIMING).then(() => {
+      return Velocity(el, {
+        height: 0
+      }, TIMING);
+    }).then(() => {
+      el.parentNode.removeChild(el);
+    });
+  } else {
+    Velocity(el, {
+      translateX: 0
+    }, TIMING);
+  }
+}
+
+// Determines if an element will be dismissed
+function doAction(dx, el) {
+  return Math.abs(dx) >= THRESH * el.clientWidth;
+}

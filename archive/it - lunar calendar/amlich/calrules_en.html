@@ -1,0 +1,282 @@
+<html>
+<head>
+<title> How to compute the Vietnamese lunar calendar </title>
+<meta name="author" content="Ho Ngoc Duc">
+<meta name="keywords" content="Vietnamese lunar calendar">
+</head>
+<body>
+
+<table width=100% border=5 bgcolor="#C0FF00">
+<tr>
+<td width=33% align=center> <a href="http://www.informatik.uni-leipzig.de/~duc"><b>Home</b></a> </td>
+<td width=33% align=center> <a href="mailto:duc@informatik.uni-leipzig.de"><b>Send email</b></a> </td>
+<td width=* align=center> <a href="http://jdictd.sourceforge.net/cgi-bin/guestbook.cgi"><b>Guestbook</b></a> </td>
+</tr>
+</table>
+
+<IFRAME align="right" name="MonthDisplay" src="http://www.ifis.uni-luebeck.de/~duc/amlich/JavaScript/currentmonth.html" width="188" height="228" scrolling="no" frameborder=0></IFRAME>
+
+<h1>Computing the Vietnamese lunar calendar</h1>
+
+<ul>
+<li><a href="#rules">Rules of the Vietnamese calendar</a></li>
+<li><a href="#explain">Applying the rules</a></li>
+<li><a href="#example">Sample calculation</a></li>
+<li><a href="#comparison">Differences to Chinese lunar calendar</a></li>
+<li><a href="#links">Links</a></li>
+</ul>
+
+<a name="rules">
+<h1>Vietnamese calendar rules</h1>
+</a>
+
+<p> The Vietnamese calendar is a kind of astronomical calendar. It can
+be calculated for any arbitrary year based on the motion of the Sun,
+the Earth and the Moon.  To be able to compute it for any time frame
+you basically need to compute 2 things: </p>
+
+<ul>
+<li>any New Moon, and</li>
+<li>the Principal Terms (trung khi') of any year</li>
+</ul>
+
+<p> New Moon is a time the Sun, the Moon and the Earth are on the same
+line (ho^.i die^.n).  It occurs once every about 29.5 days.  </p>
+
+The 12 Principal Terms (also called Major Terms) are points that
+divide the ecliptic (ddu+o+`ng hoa`ng dda.o) into equal sectors. Four
+of them are also used as seasonal markers in Western calendar: March
+equinox (Xua^n pha^n, around 20/3), June solstice (Ha. chi', around
+22/6), September equinox (Thu pha^n, around 23/9), and December
+solstice (Ddo^ng chi', around 22/12).
+
+<p>The New Moon are used to determine when the lunar months begin and
+end. The Principal Terms are used to determine the leap months
+(intercalary months, tha'ng nhua^.n) and the names of the lunar
+months. Because they are based on solar positions, the Vietnamese
+calendar is not a pure lunar one, but a <i>lunisolar</i> calendar (a^m
+du+o+ng li.ch).</p>
+
+<!--
+They are the times that the Earth takes the positions 30*N degrees
+on the ecliptic (N=0,1,...,11): Ddo^ng chi' = 0 deg., DDa.i tuye^'t = 30 deg.,
+DDa.i ha`n = 60 deg., Vu~ thuy? = 90 deg., Xua^n pha^n = 120 deg., v.v.
+-->
+
+<p> Once the New Moons and Major Terms are calculated, the following
+rules can be applied to determine the months and dates. The rules are
+adapted from the <a
+href="http://astro.nmsu.edu/~lhuber/leaphist.html">Explanatory
+Supplement to the Astronomical Almanac</a>, P. Kenneth Seidelmann,
+editor:
+
+<ol>
+
+<li> The first day of the month is the day on which the New Moon
+    occurs.
+
+<li> An ordinary year has twelve lunar months; an intercalary year has
+    thirteen lunar months.
+
+<li> The Winter Solstice always falls in month 11.
+
+<li> In an intercalary year, a month in which there is no Principal
+Term is the intercalary month. It is assigned the number of the
+preceding month, with the further designation of intercalary. If two
+months of an intercalary year contain no Principal Term, only the
+first such month after the Winter Solstice is considered intercalary.
+
+<li> Calculations are based on the meridian 105° East.
+
+</ol>
+
+<a name="explain"></a>
+<h1>How to apply the rules</h1>
+
+<p> There are quite a few computer programs to compute New Moons and
+Principal Terms with high precision (see <a href="#links">Links</a>
+for some pointers). Once you have the New Moons, you know when the
+lunar monts start and end. The first day of the lunar month (mu`ng
+mo^.t) is the one containing the New Moon.  However, here you need to
+be careful to consider the correct time zone. It is the reason why the
+Vietnamese and the Chinese calendars differ on many occations. For
+example, if you have New Moon at yyyy-02-18 16:24:45 GMT, then the
+first day of the Vietnamese lunar month is yyyy-02-18, because
+16:24:45 GMT is 23:24:45 Hanoi time of the same day.  The Chinese
+lunar month however begins on the following day, because the day in
+China begins a bit earlier, so that the New Moon (at yyyy-02-19
+00:24:45 Beijing time) is contained in yyyy-02-19.
+
+</p>
+
+<p> After having the start/end dates of the lunar months you can
+determined their names and the leap months as follows. The Winter
+Solstice (Ddo^ng chi') always falls in month 11 of the lunar year. So
+we need to compute 2 New Moons preceeding two consecutive Winter Solstices. If
+there are 12 lunar months between them then we are done: just number
+the months 11, 12, 1, 2, ... starting at the month containing the
+first Winter Solstice.  </p>
+
+<p> Matters are a bit more complicated when there are 13 lunar months
+between the lunar months containing the two Winter Solstices. Then we have a leap year (na(m
+nhua^.n) and need to find out what the leap month is. Here is he rule
+for doing it: the first lunar month after the first Winter Solstice
+that does not contain a Principal Term is the leap month. After
+finding the leap month you give the months the names 11, 12, 1, ...,
+M, M leap, M+1, ...  </p>
+
+<a name="example">
+<h1>Example: lunar calendar for 1984</h1>
+</a>
+
+<p> Let us apply the above rules to determine the lunar dates of the
+Vietnamese calendar for the year 1984 based on the following
+table.
+<p></p>
+
+<table align="center" border="15">
+<tr><td>Event</td><td>GMT time</td><td>Hanoi time</td><td>Beijing time</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>04/12/1983 12:25:49</td><td>04/12/1983</td><td>04/12/1983</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>22/12/1983 10:29:41</td><td>22/12/1983</td><td>22/12/1983</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>03/01/1984 05:15:34</td><td>03/01/1984</td><td>03/01/1984</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>20/01/1984 21:04:50</td><td>21/01/1984</td><td>21/01/1984</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>01/02/1984 23:46:20</td><td>02/02/1984</td><td>02/02/1984</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>19/02/1984 11:15:53</td><td>19/02/1984</td><td>19/02/1984</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>02/03/1984 18:30:51</td><td>03/03/1984</td><td>03/03/1984</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>20/03/1984 10:23:48</td><td>20/03/1984</td><td>20/03/1984</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>01/04/1984 12:09:34</td><td>01/04/1984</td><td>01/04/1984</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>19/04/1984 21:37:38</td><td>20/04/1984</td><td>20/04/1984</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>01/05/1984 03:45:21</td><td>01/05/1984</td><td>01/05/1984</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>20/05/1984 20:57:28</td><td>21/05/1984</td><td>21/05/1984</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>30/05/1984 16:47:52</td><td>30/05/1984</td><td>31/05/1984</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>21/06/1984 05:02:21</td><td>21/06/1984</td><td>21/06/1984</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>29/06/1984 03:18:24</td><td>29/06/1984</td><td>29/06/1984</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>22/07/1984 15:58:22</td><td>22/07/1984</td><td>22/07/1984</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>28/07/1984 11:51:08</td><td>28/07/1984</td><td>28/07/1984</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>22/08/1984 23:00:20</td><td>23/08/1984</td><td>23/08/1984</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>26/08/1984 19:25:21</td><td>27/08/1984</td><td>27/08/1984</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>22/09/1984 20:32:55</td><td>23/09/1984</td><td>23/09/1984</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>25/09/1984 03:10:31</td><td>25/09/1984</td><td>25/09/1984</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>23/10/1984 05:45:27</td><td>23/10/1984</td><td>23/10/1984</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>24/10/1984 12:08:13</td><td>24/10/1984</td><td>24/10/1984</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>22/11/1984 03:10:24</td><td>22/11/1984</td><td>22/11/1984</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>22/11/1984 22:56:45</td><td>23/11/1984</td><td>23/11/1984</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>21/12/1984 16:22:42</td><td>21/12/1984</td><td>22/12/1984</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>22/12/1984 11:46:36</td><td>22/12/1984</td><td>22/12/1984</td></tr>
+</table>
+
+<p>According to the rules, month 11 of a lunar year begins on the day
+of the New Moon before or on the day of the Winter Solstice and ends
+on the day before the first New Moon after it. So, month 11 of the
+lunar year 1983 last from 04/12/1983 to 02/01/1984 and month 11 of the
+lunar year 1984 last from 23/11/1984 to 21/12/1984.  </p>
+
+<p> Between 03/01/1984 (begin of the first month after lunar month 11
+of 1983) and 21/12/1984 (end of lunar month 11/1984) there are 12
+lunar months. Therefore, 1984 is not a leap year of the Vietnamese
+calendar, and the month names are straightforward: month 12 from
+03/01/1984 to 01/02/1984, month 1 from 02/02/1984 to 02/03/1984 etc.
+</p>
+
+<h2>Why 1985 has a leap lunar month?</h2>
+
+<p>The situation is different in 1985. Month 11 of the lunar year 1985
+last from 12/12/1985 to 09/01/1986. Between the months 11 of 1984
+(from 23/11/1984 to 21/12/1984) and 1985 there are 13 lunar months, so
+1985 is a leap year. The month from 21/03/1985 to 19/04/1985 does not
+contain a Principal Term and is therefore the leap month.  </p>
+
+<table title="1985 table" align="center" border="15">
+
+<tr>
+<td>Event</td><td>GMT time</td><td>Hanoi time</td><td>Beijing time</td></tr>
+
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>22/11/1984 22:56:45</td><td>23/11/1984</td><td>23/11/1984</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>21/12/1984 16:22:42</td><td>21/12/1984</td><td>22/12/1984</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>22/12/1984 11:46:36</td><td>22/12/1984</td><td>22/12/1984</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>20/01/1985 02:57:34</td><td>20/01/1985</td><td>20/01/1985</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>21/01/1985 02:28:16</td><td>21/01/1985</td><td>21/01/1985</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>18/02/1985 17:07:26</td><td>18/02/1985</td><td>19/02/1985</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>19/02/1985 18:42:38</td><td>20/02/1985</td><td>20/02/1985</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>20/03/1985 16:13:38</td><td>20/03/1985</td><td>21/03/1985</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>21/03/1985 11:58:36</td><td>21/03/1985</td><td>21/03/1985</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>20/04/1985 03:25:25</td><td>20/04/1985</td><td>20/04/1985</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>20/04/1985 05:22:00</td><td>20/04/1985</td><td>20/04/1985</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>19/05/1985 21:41:12</td><td>20/05/1985</td><td>20/05/1985</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>21/05/1985 02:42:34</td><td>21/05/1985</td><td>21/05/1985</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>18/06/1985 11:57:55</td><td>18/06/1985</td><td>18/06/1985</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>21/06/1985 10:43:55</td><td>21/06/1985</td><td>21/06/1985</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>17/07/1985 23:56:18</td><td>18/07/1985</td><td>18/07/1985</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>22/07/1985 21:36:11</td><td>23/07/1985</td><td>23/07/1985</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>16/08/1985 10:05:26</td><td>16/08/1985</td><td>16/08/1985</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>23/08/1985 04:35:24</td><td>23/08/1985</td><td>23/08/1985</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>14/09/1985 19:19:45</td><td>15/09/1985</td><td>15/09/1985</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>23/09/1985 02:07:19</td><td>23/09/1985</td><td>23/09/1985</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>14/10/1985 04:33:12</td><td>14/10/1985</td><td>14/10/1985</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>23/10/1985 11:21:42</td><td>23/10/1985</td><td>23/10/1985</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>12/11/1985 14:20:20</td><td>12/11/1985</td><td>12/11/1985</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>22/11/1985 08:50:30</td><td>22/11/1985</td><td>22/11/1985</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>12/12/1985 00:54:24</td><td>12/12/1985</td><td>12/12/1985</td></tr>
+<tr bgcolor="40FF00"><td>Principal Term</td><td>21/12/1985 22:07:30</td><td>22/12/1985</td><td>22/12/1985</td></tr>
+<tr bgcolor="#FFDF00"><td>New Moon</td><td>10/01/1986 12:21:38</td><td>10/01/1986</td><td>10/01/1986</td></tr>
+</table>
+
+<a name="comparison"></a>
+<h1>Comparison with Chinese calendar</h1>
+
+<p> 1985 is one of the few years where Vietnamese and Chinese
+calendars differ significantly: the Vietnamese New Year was 1 month
+earlier than the Chinese one. The reason can be detected from the
+above table. The Winter Solstice 1984 falls on 21/12/1984 Hanoi time,
+but on 22/12/1984 Beijing time, the same day as the New Moon. The
+month 11 of the Chinese year must contain the Winter Solstice, so it
+is not the month from 23/11/1984 to 21/12/1984 like in the Vietnamese
+calendar, but the one starting 22/12/1984. Consequently, the
+subsequent months (12, 1,...) also start about one month later than
+the corresponding months of the Vietnamese calendar. While New Year in
+Vietnam falls on 21/01/1985, it is on 20/02/1985 in China. The two
+calendars agree again after a leap month is inserted to the Vietnamese
+calendar (month from 21/03/1985 to 19/04/1985, as seen above). Also,
+in year 1984 the Chinese lunar month from 23/11/1984 to 21/12/1984 is
+the first lunar month after Winter Solstice 1983 that does not contain
+a Major Term and is therefore a leap month.  </p>
+
+<p>In the 21th century there are 3 years where the Lunar New Year
+begins at different dates in Vietnam and in China. In 2007 the
+Vietnamese New Year is on 17/02/2007, the Chinese one on
+18/02/2007. In 2030 the dates are 02/02/2030 and 03/02/2030, and in
+2053 they are 18/02/2053 and 19/02/2053.  </p>
+
+<a name="links"></a>
+<h1>Links</h1>
+
+<ul>
+
+<li><a href="calrules.html">Thu&#7853;t to&#225;n t&#237;nh &#226;m l&#7883;ch</a>
+(Algorithms for computing lunar calendar, in Vietnamese)</li>
+<li>Detailed information on many calendar systems and algorithms for
+computing them can be found in the book <a
+href="http://emr.cs.iit.edu/~reingold/calendars.shtml">Calendrical
+Calculations</a> by Edward M. Reingold and Nachum Dershowitz</li>
+
+<li>Helmer Aslaksen has written some papers on <a
+href="http://www.math.nus.edu.sg/aslaksen/calendar/">The Mathematics
+of the Chinese Calendar</a>.
+</li>
+
+<li><a href="http://www.ifis.uni-luebeck.de/~duc/amlich/LuniSolarCalendar.java">LuniSolarCalendar.java</a> - A small Java program (300 lines) for converting between Gregorian and Vietnamese luni-solar calendar</li>
+
+<li>Va`i ba`i tie^'ng Vie^.t: <a href="LichTa-DoanHung.html">Li.ch ta,
+li.ch Ta`u va` su+. kha'c bie^.t</a> cua Doan Hung, <a
+href="amlich.html">Ba Loa.i Li.ch ddang lu+u ha`nh</a>, cua Tran Thuong
+Thu.  (Need UTF-8 capable browser). The rules mentioned may be out of
+date.
+
+</ul>
+
+<hr>
+<address><a href="http://www.informatik.uni-leipzig.de/~duc">
+      Ho Ngoc Duc &lt;duc@informatik.uni-leipzig.de&gt;</a></address>
+
+</body>
+</html>

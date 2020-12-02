@@ -1,0 +1,28 @@
+.toc {
+    background: #fafafa;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-left: 3px solid #ffc035;
+    line-height: 1.8; // như thẻ p
+
+    @include media-breakpoint-up(xl) {
+        position: fixed; //absolute;
+        top: 200px;
+        max-height: calc(100vh - 300px);
+        max-width: calc(50vw - 450px);
+        right: calc(50vw + 450px);
+        border-left: none;
+        overflow: auto;
+        background: none;
+    }
+}
+
+.toc, .toc ul {
+    list-style-type: none;
+}
+
+/* Thêm hiệu ứng khi click vào link thì scroll đến vùng. */
+/* Phải thiết lập cho thẻ html, không cho thẻ body */
+html {
+    scroll-behavior: smooth;
+}

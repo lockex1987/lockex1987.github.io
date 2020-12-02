@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Simple Multi-language translation</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Simple Multi-language translation">
+ </head> 
+ <body> 
+  <article> 
+   <p>Các nội dung dịch được khai báo trong các thẻ span với thuộc tính lang như sau:</p> 
+   <pre>&lt;div&gt;
+    &lt;span lang="en"&gt;Hello world!&lt;/span&gt;
+    &lt;span lang="fr"&gt;Bonjour le monde!&lt;/span&gt;
+    &lt;span lang="cn"&gt;你好，世界！&lt;/span&gt;
+&lt;/div&gt;
+</pre> 
+   <p>Khai báo CSS để ẩn các ngôn ngữ không phải là mặc định:</p> 
+   <pre>&lt;style&gt;
+    span[lang="fr"] {display: none}
+    span[lang="cn"] {display: none}
+&lt;/style&gt;</pre> 
+   <p>Đổi ngôn ngữ bằng hàm switchLanguage, ví dụ:</p> 
+   <pre>&lt;a href="#" onclick="switchLanguage('en')"&gt;English&lt;/a&gt;
+&lt;a href="#" onclick="switchLanguage('fr')"&gt;French&lt;/a&gt;
+&lt;a href="#" onclick="switchLanguage('cn')"&gt;Chinese&lt;/a&gt;
+</pre> 
+   <p>Demo</p> 
+   <style>
+      span[lang="fr"] {display: none}
+      span[lang="cn"] {display: none}
+    </style> 
+   <div id="language-switcher"> 
+    <a href="#" onclick="switchLanguage('en')">English</a> 
+    <a href="#" onclick="switchLanguage('fr')">French</a> 
+    <a href="#" onclick="switchLanguage('cn')">Chinese</a> 
+   </div> 
+   <br> 
+   <div style="background:yellow"> 
+    <span lang="en">Hello world!</span> 
+    <span lang="fr">Bonjour le monde!</span> 
+    <span lang="cn">你好，世界！</span> 
+   </div> 
+   <script>
+	function switchLanguage(lang) {
+		document.querySelectorAll('span[lang]').forEach(function(span) {
+			if (lang == span.getAttribute("lang")) {
+				span.style.display = "inline";
+			} else {
+				span.style.display = "none";
+			}
+		});
+	}
+    </script> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

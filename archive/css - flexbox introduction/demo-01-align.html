@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox demo</title>
+    <link rel="icon" href="../../images/favicon.png"/>
+	<link rel="stylesheet" href="../../css/style.css"/>
+
+    <style>
+    .wrapper { display: flex; }
+    .controller { flex-grow: 1; }
+    .controller li { list-style: none; }
+    .container { flex-grow: 2; background-color: #ecf0f1ed; max-width: 960px; max-height: 1000px; margin: 0 auto; padding: 5px; display: flex; }
+    .item { margin: 5px; color: white; display: inline-block; }
+    .item:nth-child(1) { background-color: #2ecc70; padding: 10px 40px; }
+    .item:nth-child(2) { background-color: #f1c30e; padding: 20px 30px; }
+    .item:nth-child(3) { background-color: #e74b3c; padding: 30px 20px; }
+    .item:nth-child(4) { background-color: #3398da; padding: 40px 10px; }
+
+
+    /* Thử thiết lập thuộc tính order cho các item */
+    /*
+    .item:nth-child(1) { order: 4; }
+    .item:nth-child(2) { order: 3; }
+    .item:nth-child(3) { order: 1; }
+    .item:nth-child(4) { order: 2; }
+    */
+
+    /* 6: flex-grow: 1 se lay phan con lai cua container */
+      /*
+      .item1 {
+        flex-grow: 2;
+      }
+      .item2 {
+        flex-grow: 1;
+      }*/
+
+      /* 7: flex-shrink: 2 (mặc định là 1 rồi) */
+      /* flex-shrink: 0 thi se khong co gian */
+      /*
+      .item1 {
+        flex-shrink: 2;
+      }*/
+
+      /* 8: Kích thước */
+      /*
+      .item3 {
+        flex-basis: 300px;
+      }*/
+    </style>
+</head>
+
+<body>
+    <article>
+        <h2>Flexbox demo</h2>
+        <div class="wrapper">
+            <div class="controller">
+              <h3>flex-direction</h3>
+              <ul>
+                <li><input type="radio" name="flexDirection" value="row" onclick="changeFlexDirection(this)"/> row <i>(default)</i></li>
+                <li><input type="radio" name="flexDirection" value="column" onclick="changeFlexDirection(this)"/> column</li>
+                <li><input type="radio" name="flexDirection" value="row-reverse" onclick="changeFlexDirection(this)"/> row-reverse</li>
+                <li><input type="radio" name="flexDirection" value="column-reverse" onclick="changeFlexDirection(this)"/> column-reverse</li>
+              </ul>
+              <h3>justify-content</h3>
+              <ul>
+                <li><input type="radio" name="justifyContent" value="flex-start" onclick="changeJustifyContent(this)"/> flex-start <i>(default)</i></li>
+                <li><input type="radio" name="justifyContent" value="flex-end" onclick="changeJustifyContent(this)"/> flex-end</li>
+                <li><input type="radio" name="justifyContent" value="center" onclick="changeJustifyContent(this)"/> center</li>
+                <li><input type="radio" name="justifyContent" value="space-between" onclick="changeJustifyContent(this)"/> space-between</li>
+                <li><input type="radio" name="justifyContent" value="space-evenly" onclick="changeJustifyContent(this)"/> space-evenly</li>
+                <li><input type="radio" name="justifyContent" value="space-around" onclick="changeJustifyContent(this)"/> space-around</li>
+              </ul>
+              <h3>align-items</h3>
+              <ul>
+                <li><input type="radio" name="alignItems" value="flex-start" onclick="changeAlignItems(this)"/> flex-start</li>
+                <li><input type="radio" name="alignItems" value="flex-end" onclick="changeAlignItems(this)"/> flex-end</li>
+                <li><input type="radio" name="alignItems" value="center" onclick="changeAlignItems(this)"/> center</li>
+                <li><input type="radio" name="alignItems" value="baseline" onclick="changeAlignItems(this)"/> baseline</li>
+                <li><input type="radio" name="alignItems" value="stretch" onclick="changeAlignItems(this)"/> stretch <i>(default)</i></li>
+              </ul>
+            </div>
+            <div class="container" id="container">
+                <div class="item">1</div>
+                <div class="item">2</div>
+                <div class="item">3</div>
+                <div class="item">4</div>
+            </div>
+        </div>
+    </article>
+    
+    <script src="../../js/docs.js"></script>
+
+    <script>
+var container = document.querySelector("#container");
+
+function changeFlexDirection(radioTag) {
+    container.style.flexDirection = radioTag.value;
+}
+
+function changeJustifyContent(radioTag) {
+  container.style.justifyContent = radioTag.value;
+}
+
+function changeAlignItems(radioTag) {
+  container.style.alignItems = radioTag.value;
+}
+
+    </script>
+</body>
+</html>

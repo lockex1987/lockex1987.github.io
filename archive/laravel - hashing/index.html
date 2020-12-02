@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Laravel Hashing</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Laravel Hashing">
+ </head> 
+ <body> 
+  <article> 
+   <h1>Hashing</h1> 
+   <p>Laravel <code>Hash</code> facade cung cấp phương thức hash an toàn với Bcrypt để lưu mật khẩu của người dùng. Nếu bạn sử dụng <code>LoginController</code> và <code>RegisterController</code> có sẵn có Laravel, nó đã tự động thiết lập sử dụng sẵn Bcrypt cho việc đăng kí và xác thực.</p> 
+   <p> Bcrypt là một sự lựa chọn tốt cho hashing mật khẩu bởi vì "work factor" của nó có thể điều chỉnh được, có nghĩa là thời gian tốn để tạo ra một hash có thể tăng lên nếu như công suất của phần cứng tăng lên.</p> 
+   <h2>Sử dụng cơ bản</h2> 
+   <p>Bạn có thể hash mật khẩu bằng cách gọi hàm <code>make</code> trong <code>Hash</code> facade:</p> 
+   <pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
+
+class UpdatePasswordController extends Controller
+{
+    /**
+     * Update the password for the user.
+     *
+     * @param    Request  $request
+     * @return  Response
+     */
+    public function update(Request $request)
+    {
+        // Validate the new password length...
+
+        $request-&gt;user()-&gt;fill([
+            'password' =&gt; Hash::make($request-&gt;newPassword)
+        ])-&gt;save();
+    }
+}</code></pre> 
+   <h4>So sánh mật khẩu với một hash</h4> 
+   <p>Phương thức <code>check</code> cho phép bạn so sánh một chuỗi với một hash. Tuy nhiên, nếu bạn đang sử dụng <code>LoginController</code> của Laravel, thì bạn không cần sử dụng trực tiếp, vì nó việc xác nhận này đã được xử lý sắn trong controller:</p> 
+   <pre><code>if (Hash::check('plain-text', $hashedPassword)) {
+    // The passwords match...
+}</code></pre> 
+   <h4>Kiểm tra nếu mật khẩu cần được hash lại</h4> 
+   <p>Phương thức <code>needsRehash</code> cho phép bạn xác định nếu chỉ số hoạt động của máy hash đã thay đổi khi mật khẩu thay đổi:</p> 
+   <pre><code>if (Hash::needsRehash($hashed)) {
+    $hashed = Hash::make('plain-text');
+}</code></pre> 
+   <p>Nguồn: <a href="https://laravel.com/docs/5.3/hashing">https://laravel.com/docs/5.3/hashing</a></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

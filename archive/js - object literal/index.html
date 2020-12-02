@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Khai báo đối tượng">
+    <title>Object literal</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Object literal</h2>
+      <h3>Khai báo object kiểu cũ</h3>
+      <p>Object trong JS có thể được tạo theo một số cách khác nhau. Object
+        literal là kiểu cú pháp tạo object sử dụng cặp dấu ngoặc <code>{}</code>
+        và bên trong đó là danh sách các property (thuộc tính) của object.</p>
+      <p>Với phiên bản ECMAScript trước đây chúng ta thường sẽ khai báo như sau:</p>
+      <pre>var name = "John";
+var myObj = { name: name };</pre>
+      <p>Các property có giá trị là một hàm còn được gọi là method (phương thức):</p>
+      <pre>var name = "John";
+var myObj = {
+    name: name,
+    sayHi: function () {
+        console.log("Hi, my nam is " + this.name)
+    }
+};</pre>
+      <h3>Cú pháp object literal trong ES6</h3>
+      <p>Trong ECMAScript 6 cú pháp khởi tạo object sử dụng object literal được
+        đơn giản hoá hơn.</p>
+      <p>Với những property có tên trùng với giá trị như <code>name: name</code>
+        ở trong ví dụ trên thì lập trình viên có thể thay thế bởi <code>name</code>:</p>
+      <pre>let name = "John";
+let myObj = { name };</pre>
+      <p>Với các property nhận giá trị là một hàm (hay còn gọi là method) thì
+        lập trình viên có thể thay thế bằng cách khai báo một với tên của
+        property và đồng thời bỏ qua từ khoá <code>function</code>. Ví dụ:</p>
+      <pre>let name = "John";
+
+let myObj = { 
+    name,
+    sayHi() {
+        console.log("Hi, my nam is " + this.name)
+    }
+};
+</pre>
+      <h3>Khai báo data trong Vue</h3>
+      <p>Chú ý các thuộc tính để khởi tạo instance trong Vue đều là object.</p>
+      <p>Chúng ta có thể bắt gặp các cách khai báo data khác nhau như:</p>
+      <p>Cách 1:</p>
+      <pre>data: {
+    totalRecord: 0
+},</pre>
+      <p>Cách 2:</p>
+      <pre>data: () =&gt; {
+    return {
+        totalRecord: 0
+    };
+},</pre>
+      <p>Cách 3:</p>
+      <pre>data: () =&gt; ({
+    totalRecord: 0
+}),</pre>
+      <p>Cách 4:</p>
+      <pre>data() {
+    return {
+        totalRecord: 0
+    };
+},</pre>
+      <p>Ở cách 1, data sẽ là một object. Ở các cách 2, 3, 4, data sẽ là một hàm
+        trả về một object.</p>
+      <p>Cách 3 hơi khó hiểu một chút, nhưng cũng là một hàm trả về một object.</p>
+      <p></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

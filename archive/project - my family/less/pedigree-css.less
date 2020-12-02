@@ -1,0 +1,102 @@
+.tree {
+	//transform: scale(0.8);
+
+	ul {
+		padding-top: 20px;
+		padding-left: 0;
+		position: relative;
+
+		// Lam sao cho khong bi xuong dong?
+		white-space: nowrap;
+		//
+
+		// Time to add downward connectors from parents
+		ul::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 50%;
+			border-left: 1px solid #ccc;
+			width: 0;
+			height: 20px;
+		}
+	}
+
+	li {
+		float: left;
+		text-align: center;
+		list-style-type: none;
+		position: relative;
+		padding: 20px 5px 0 5px;
+		
+		//border: 1px solid #555;
+
+		// We will use ::before and ::after to draw the connectors
+		&::before, &::after {
+			content: '';
+			position: absolute;
+			top: 0;
+			right: 50%;
+			border-top: 1px solid #ccc;
+			width: 50%;
+			height: 20px;
+		}
+
+		&::after {
+			right: auto;
+			left: 50%;
+			border-left: 1px solid #ccc;
+		}
+
+		// We need to remove left-right connectors from elements without any siblings
+		&:only-child {
+			&::after, &::before {
+				display: none;
+			}
+
+			// Remove space from the top of single children
+			padding-top: 0;
+		}
+
+		// Remove left connector from first child and right connector from last child
+		&:first-child::before,
+		&:last-child::after {
+			border: 0 none;
+		}
+
+		// Adding back the vertical connector to the last nodes
+		&:last-child::before {
+			border-right: 1px solid #ccc;
+			border-radius: 0 5px 0 0;
+			transform: translateX(1px);
+		}
+
+		&:first-child::after {
+			border-radius: 5px 0 0 0;
+		}
+	}
+
+	div {
+		border: 1px solid #ccc;
+		display: inline-block;
+	}
+
+	a {
+		width: 80px;
+		display: inline-block;
+		background-color: yellow;
+		padding: 5px;
+		text-decoration: none;
+		font-size: 12px;
+		outline: none;
+
+		&:nth-child(2) {
+			border-left: 1px solid #CCC;
+		}
+
+		.indirect {
+			background: red;
+			color: white;
+		}
+	}
+}

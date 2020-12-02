@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <title>Config CKEditor - instance config</title>
+   <script src="../lib/ckeditor/ckeditor.js"></script>
+   <script>      
+       // Mầu nền mặc định
+       CKEDITOR.config.uiColor = '#FFE6E6';
+ 
+       // Không cho phép thay đổi kích thước
+       CKEDITOR.config.resize_enabled = false;
+   </script>
+</head>
+
+<body>
+   <h3>CKEditor instance config</h3>
+   <p>Mỗi một CKEditor trong trang bạn có thể cấu hình khác nhau cho chúng. Ví dụ một trang web có 2 CKEditor khác nhau với Toolbar khác nhau về số lượng Button.</p>
+ 
+   <p>CKEditor 1</p>
+   <textarea id="editor1" name="editor1">
+        <p>This is CKEditor 1</p>
+   </textarea>
+ 
+   <p>CKEditor 2</p>
+   <textarea id="editor2" name="editor2">
+        <p>This is CKEditor 2</p>
+   </textarea>
+    
+   <script>
+      CKEDITOR.replace('editor1', {
+         toolbar: [  [ 'Font', 'FontSize' ], [ 'Bold', 'Italic' ] ],
+         width: '300px',
+         height: '80px',
+         resize_enabled : true
+      } );
+ 
+      CKEDITOR.replace('editor2', {
+         toolbar: [ [ 'Font' ], [ 'Bold' ] ],
+         width: '500px',
+         height: '100px'          
+      } );    
+   </script>
+</body>
+</html>

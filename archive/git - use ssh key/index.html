@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Use SSH key with git">
+    <meta name="keywords" content="ssh key">
+    <meta name="author" content="lockex1987">
+    <title>Use SSH key with git</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Use SSH key with git</h2>
+      <h3>Thành phần của một SSH key</h3>
+      <p>Khi tạo ra một SSH key, bạn cần biết sẽ có 3 thành phần quan trọng như
+        sau:</p>
+      <ul>
+        <li>Public Key (dạng file và string) – Bạn sẽ copy ký tự key này sẽ bỏ
+          vào file <code>~/.ssh/authorized_keys</code> trên server của bạn.</li>
+        <li>Private Key (dạng file và string) – Bạn sẽ lưu file này vào máy
+          tính, sau đó sẽ thiết lập cho PuTTY, WinSCP, Git Bash,.. để có thể
+          login.</li>
+        <li>Keyphrase (dạng string, cần ghi nhớ) – Mật khẩu để mở private key,
+          khi đăng nhập vào server nó sẽ hỏi cái này.</li>
+      </ul>
+      <p>Và một SSH key bạn có thể sử dụng cho nhiều server khác nhau.</p>
+      <p>Keyphrase là không bắt buộc. Nếu bạn không nhập thì những lần sau khi
+        sử dụng bạn sẽ không phải điền.</p>
+      <h3>Tạo SSH key</h3>
+      <p>Nếu bạn đang sử dụng Linux thì không cần phần mềm mà sẽ sử dụng
+        Terminal để tạo. Hãy mở Terminal lên và gõ:</p>
+      <pre>$ ssh-keygen -t rsa</pre>
+      <p>Nó sẽ hỏi bạn muốn lưu private key này vào đâu, mặc định nó sẽ lưu vào
+        <code>~/.ssh</code>. Bạn có thể để trống và Enter.</p>
+      <p>Nếu bạn muốn nhiều key thì bạn phải đặt nó ở các file khác nhau.</p>
+      <p>Tiếp tục nó sẽ hỏi bạn có muốn thiết lập keypharse không, nếu muốn thì
+        nhập keypharse cần thiết lập vào rồi Enter.</p>
+      <img alt="" src="images/ssh-keygen.png">
+      <p>Trong đó bạn có thể thấy nó có ghi đường dẫn lưu file private key (<code>id_rsa</code>)
+        và file public key (<code>id_rsa.pub</code>).</p>
+      <p>Trong trường hợp trên, do tôi đặt lên tên file là bitbucket nên sẽ có 2
+        file <code>bitbucket</code> và <code>bitbucket.pub</code>.</p>
+      <h3>Cài đặt public key cho tài khoản Bitbucket</h3>
+      <p>Mở trình duyệt và đăng nhập tài khoản Bitbucket.</p>
+      <p>Trên menu bên phải, click chọn Avatar &gt; Manage Account.</p>
+      <img alt="" src="images/manage%20account.png">
+      <p>Click SSH keys: Trang sẽ hiển thị danh sách các khóa SSH bạn đã thêm từ
+        các máy khác nhau.</p>
+      <p>Copy toàn bộ nội dung khóa công khai đã tạo ở trên: <code>~/.ssh/id_rsa.pub</code>.</p>
+      <p>Click chọn Add key, đặt tên và dán nội dung file <code>id_rsa.pub</code>
+        vào ô tương ứng:</p>
+      <img alt="" src="images/add%20ssh%20key%20to%20bitbucket.png">
+      <p>Click Add key, để thêm vào tài khoản của bạn.</p>
+      <h3>Nạp ssh key tự động</h3>
+      <p>ssh-agent là trình quản lý SSH key của bạn.</p>
+      <p>Mỗi khi mở Git Bash, đánh các lệnh sau:</p>
+      <pre>$ ssh-agent<br>$ ssh-add ~/.ssh/id_rsa</pre>
+      <p>Chúng ta cần làm 1 việc cho thuận tiện khi làm việc với Git là nạp SSH
+        key tự động mỗi khi chạy Git Bash. Để làm vệc này ta tạo một file với
+        tên <code>~/.bashrc</code> với nội dung như sau:</p>
+      <p><a href=".bashrc">Link</a></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <h3>Cấu hình SSH config file</h3>
+      <p>Mở (hoặc tạo mới) file <code>~/.ssh/config</code>.</p>
+      <p>Thêm toàn bộ nội dung file như sau đây:</p>
+      <pre>Host bitbucket.org
+  IdentityFile ~/.ssh/id_rsa</pre>
+      <p>Dòng thứ 2 thụt vào 1 khoảng trắng. Là đường dẫn chỉ đến file private
+        key mà ta đã tạo ở trên.</p>
+      <p>Lưu và đóng file lại.</p>
+      <p>Khởi động lại Git Bash.</p>
+      <p><br>
+      </p>
+      <h3>CẤU HÌNH SSH-KEY CHO NHIỀU TÀI KHOẢN GIT TRÊN MỘT MÁY TÍNH CÁ NHÂN</h3>
+      <h4>1. Chuẩn bị</h4>
+      <p>Mình sẽ sử dụng 2 server git chính và ở đây là github và bitbucket. Môi
+        trường sẽ là Mac và Linux. Tài khoản mình sẽ có 3 tài khoản, 2 tài khoản
+        bitbucket và 1 tài khoản github. Bạn cũng chuẩn bị luôn 3 project tương
+        ứng để test tương ứng với 3 tài khoản.</p>
+      <p>Giả sử mình có các tài khoản + server git + project tương ứng như này:</p>
+      <ul>
+        <li>Server Bitbucket</li>
+        <ul>
+          <li>User: nguyenmanh9x / email: nguyenmanh9x@gmail.com | project
+            sample1</li>
+          <li>User: manh.nguyen / email: manh.nguyen@gmail.com | project sample2</li>
+        </ul>
+        <li>Server Github</li>
+        <ul>
+          <li>User: manhhip / email: nguyenmanh9x@gmail.com | project sample 3</li>
+        </ul>
+      </ul>
+      <p>Tương ứng với 3 tài khoản trên các bạn sẽ phải tạo 3 bộ ssh-key tương
+        ứng để cấu hình ssh tới server git. Trên màn hình command bạn làm các
+        thao tác sau:</p>
+      <pre>$ cd ~/.ssh<br>$ ssh-keygen -t rsa –C "option_email"</pre>
+      <p>This creates a new ssh key, using the provided email as a label.</p>
+      <p>(option_email bạn có thể điền email account của mình hoặc tùy ý hoặc ko
+        điền cũng được). =&gt; Nhập tên cho bộ ssh-key tương ứng.</p>
+      <p>Gợi ý là bạn lên đặt gần giống user git để sau này có nhìn lại key cũng
+        phân biệt cho dễ. =&gt; Lặp lại thao tác này 3 lần để có 3 bộ key khác
+        nhau. Sau khi hoàn tất mình có 3 bộ key (private và public) như thế này</p>
+      <ul>
+        <li>nguyenmanh9x / nguyenmanh9x.pub</li>
+        <li>manhnguyenkey / manhnguyenkey.pub</li>
+        <li>manhhipkey / manhhipkey.pub</li>
+      </ul>
+      <p>OK giờ đi cấu hình cho các hệ điều hành tương ứng nào.</p>
+      <h4>Cấu hình với hệ điều hành Mac OSX</h4>
+      <p>Bạn cần tạo file config trong thư mục <code>~/.ssh</code>. Tiến hành <code>vi
+          ~/.ssh/config</code>. Thêm vào file này thông tin như sau:</p>
+      <pre>Host bitbucket.org
+  HostName bitbucket.org
+  User nguyenmanh9x
+  IdentityFile ~/.ssh/nguyenmanh9xkey
+Host bitbucket.org
+  HostName bitbucket.org
+  User manh.nguyen
+  IdentityFile ~/.ssh/manhnguyenkey
+Host github.com
+  User manhhip
+  IdentityFile ~/.ssh/manhhipkey</pre>
+      <p>Save lại file config. Vẫn chưa xong bạn cần phải add các file private
+        key để đảm bảo các file này được lưu trữ lại. Trên cửa số dòng lệnh bạn
+        thực hiện các lệnh</p>
+      <pre>cd ~/.ssh
+eval `ssh-agent -s`
+ssh-add nguyenmanh9xkey &amp;&amp; ssh-add manhnguyenkey &amp;&amp; ssh-add manhhipkey</pre>
+      <p>Bước cuối cùng là thử clone các repo thui nào. Lên 3 sever repo git
+        tương ứng của bạn, chọn link để clone repo, thay vì clone bằng https thì
+        giờ bạn clone repo với ssh. Sau khi lấy hoàn chỉnh mình có 3 link repo
+        như sau.</p>
+      <ul>
+        <li>git@bitbucket.org:masterjsteam/sample1.git</li>
+        <li>git@bitbucket.org:demo_team/sample2.git</li>
+        <li>git@github.com:hard_team/sample3.git</li>
+      </ul>
+      <p>(Các phần team kia chỉ là các team tương ứng với project của mình thôi,
+        khi bạn lấy về bạn cũng sẽ có team tương ứng mà bạn tạo).</p>
+      <p>Chưa vội clone với các link này bạn cần thay đổi lại 1 chút các đường
+        link ở trên bằng cách thay tiền tố git ở trước bằng user tương ướng với
+        tài khoản git của bạn. Các link của mình sau thay thế sẽ trông giống như
+        thế này:</p>
+      <ul>
+        <li class="word-wrap">nguyenmanh9x@bitbucket.org:masterjsteam/sample1.git</li>
+        <li class="word-wrap">manh.nguyen@bitbucket.org:demo_team/sample2.git</li>
+        <li class="word-wrap">manhhip@github.com:hard_team/sample3.git</li>
+      </ul>
+      <p>Giờ hãy thử clone 1 repo để test với SSH key vừa add và config xem sao
+        các bạn nhé.</p>
+      <h4>Cấu hình với hệ điều hành&nbsp;Linux</h4>
+      <p>Linux cách config về cơ bản khá giống với trên Mac. Có điều hơi khác 1
+        chút về cách điền thông tin ở file config và link remote origin của nó:
+        (hiện tại mình config như trên môi trường mac nhưng mỗi lần thoát khỏi
+        cửa sổ control thì phải ssh-add lại key đó ms sử dụng được, ko rõ do làm
+        sao lên dưới đây là cách config lại của mình và đã apply thành công, các
+        bác có ghé hay đi qua cho mình vài lời tư vấn vơi nhé :D)</p>
+      <p>Vẫn là các thông tin như trên, bạn edit config và thêm nội dung file
+        config mới như sau:</p>
+      <pre>Host bitbucket-acc1
+  HostName bitbucket.org
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/nguyenmanh9xkey
+Host bitbucket-acc2
+  HostName bitbucket.org
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/manhnguyenkey
+Host github-acc1
+  HostName github.com
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/manhhipkey</pre>
+      <p>Thay lại các remote server như sau:</p>
+      <ul>
+        <li>git@bitbucket-acc1:masterjsteam/sample1.git</li>
+        <li>git@bitbucket-acc2:demo_team/sample2.git</li>
+        <li>git@github-acc1:hard_team/sample3.git</li>
+      </ul>
+      <p>Ok giờ bạn hay thử clone project với các remote như này coi sao nhé.</p>
+      <p>Vậy là với vài thao tác cơ bản bạn đã có thể thêm nhiều tài khoản git
+        vào hệ thống và sử dụng ssh-key để thao tác với nhiều repo git thuộc các
+        tài khoản khác nhau rồi. Chia sẻ cách mà bạn thực hiện cấu hình config
+        để mọi người cùng biết thêm nhé :D.</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Chuyển đổi</h3>
+      <p> Thay đổi URL của repository cũ:</p>
+      <pre>$ git remote set-url origin ssh://git@bitbucket.cyberspace.vn:7999/sn/safenet_front.git</pre>
+      <p> Clone: </p>
+      <pre>$ git clone ssh://git@bitbucket.cyberspace.vn:7999/sn/safenet_front.git</pre>
+      <p> https://techmaster.vn/posts/34411/github-su-dung-ssh-hay-https</p>
+      <p> <br>
+      </p>
+    </article>
+    
+  </body>
+</html>

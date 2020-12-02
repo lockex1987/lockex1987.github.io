@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <title>UI Color Picker</title>
+   <script src="../lib/ckeditor/ckeditor.js"></script>
+</head>
+<body>
+   <h1>UI Color</h1>
+
+   <textarea id="editor1" name="editor1" cols="80" rows="10">
+       <p>Hello <strong>CKEditor</strong></p>
+   </textarea>
+    
+   <script> 
+       CKEDITOR.replace('editor1', {
+           uiColor: '#14B8C4',
+           toolbar: [
+               [ 'Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink' ],
+               [ 'FontSize', 'TextColor', 'BGColor' ]
+           ]
+       });
+   </script>
+</body>
+</html>

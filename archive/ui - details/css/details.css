@@ -1,0 +1,8 @@
+details { margin: 1rem auto; padding: 0 1rem; border: 1px solid #78909C; border-radius: 2px; background-color: #ECEFF1; }
+details[open] { background-color: #FFF; padding-bottom: 1rem; }
+
+summary { padding: 1rem 2em 1rem 0; display: block; position: relative; font-size: 1.33em; font-weight: bold; cursor: pointer; outline: none; }
+summary::before, summary::after { width: .75em; height: 2px; position: absolute; top: 50%; right: 0; content: ''; background-color: currentColor; text-align: right; transition: transform .2s ease-in-out; transform: translateY(-50%); }
+summary::after { transform: translateY(-50%) rotate(90deg); }
+[open] summary::after { transform: translateY(-50%) rotate(180deg); }
+summary::-webkit-details-marker { display: none; }

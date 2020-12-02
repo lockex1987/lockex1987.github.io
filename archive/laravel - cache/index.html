@@ -1,0 +1,342 @@
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Xử lý cache trong Laravel">
+    <title>Xử lý cache trong Laravel</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Xử lý cache trong Laravel</h2>
+      <h3>Cấu hình</h3>
+      <p>Laravel cung cấp một API thống nhất cho các hệ thống cache khác nhau.
+        Cấu hình cho cache được đặt trong file <code>config/cache.php</code>.
+        Trong file này bạn có thể chỉ định cache driver nào bạn muốn sử dụng mặc
+        định trong ứng dụng. Laravel hỗ trợ sẵn các hệ thông cache phía backends
+        phổ biến như&nbsp;Memcached&nbsp;và&nbsp;Redis.</p>
+      <p>File cấu hình cache cũng chứa các tuỳ chọn khác, đều được ghi chú đầy
+        đủ bên trong, vì thế hãy nhớ đọc kĩ chỉ dẫn trong đó. Mặc định, Laravel
+        được cấu hình để sửa dụng cache driver là&nbsp;file, để lưu trữ các
+        cache object đã được serialized trong filesystem. Với các ứng dụng lớn
+        hơn, khuyên các bạn sử dụng in-memory cache như Memcached hay APC. Bạn
+        thậm chí có thể cấu hình để sử dụng nhiều cấu hình cache cho cùng một
+        driver.</p>
+      <h4>Yêu cầu cho cache</h4>
+      <h5>Database</h5>
+      <p>Khi sử dụng cache driver&nbsp;database, bạn sẽ cần thiết lập một bảng
+        để lưu trữ các cache items. Bạn sẽ thấy một ví dụ về khai
+        báo&nbsp;Schema&nbsp;cho bảng dưới đây:</p>
+      <pre>Schema::create('cache', function($table) {
+    $table-&gt;string('key')-&gt;unique();
+    $table-&gt;text('value');
+    $table-&gt;integer('expiration');
+});</pre>
+      <p> Bạn cũng có thể sử dụng câu lệnh Artisan&nbsp;<code>php artisan
+          cache:table</code>&nbsp;để tạo ra một migration với schema chuẩn xác.</p>
+      <h5>Memcached</h5>
+      <p>Sử dụng Memcached yêu cầu&nbsp;<a href="http://pecl.php.net/package/memcached">Memcached
+          PECL package</a>&nbsp;phải được cài đặt. Bạn có thể list tất cả
+        Memcached servers trong file cấu hình&nbsp;<code>config/cache.php</code>:</p>
+      <pre>'memcached' =&gt; [
+    [
+        'host' =&gt; '127.0.0.1',
+        'port' =&gt; 11211,
+        'weight' =&gt; 100
+    ],
+],</pre>
+      <p>Bạn cũng có thể thiết lập thông số&nbsp;host&nbsp;tới một đường dẫn tới
+        UNIX socket. Nếu làm thế này thì&nbsp;port&nbsp;cần được set về&nbsp;0:</p>
+      <pre>'memcached' =&gt; [
+    [
+        'host' =&gt; '/var/run/memcached/memcached.sock',
+        'port' =&gt; 0,
+        'weight' =&gt; 100
+    ],
+],</pre>
+      <h5>Redis</h5>
+      <p>Trước khi sử dụng Redis cache với Laravel, bạn cần phải cài đặt thư
+        viện Composer&nbsp;predis/predis&nbsp;package (~1.0).</p>
+      <p>Thông tin thêm chi tiết về cấu hình cho Redis, hãy tham khảo&nbsp;<a href="https://giaphiep.com/docs/5.3/redis#configuration">Laravel
+          documentation page</a>.</p>
+      <h3>Sử dụng cache</h3>
+      <h4>Lấy một đối tượng cache</h4>
+      <p>Hai&nbsp;Illuminate\Contracts\Cache\Factory&nbsp;và&nbsp;Illuminate\Contracts\Cache\Repository&nbsp;<a
+          href="https://giaphiep.com/docs/5.3/contracts">contracts</a>&nbsp;cung
+        cấp truy xuất tới Laravel cache services.
+        Contract&nbsp;Factory&nbsp;cung cấp truy cập tới tất cả các cache
+        drivers được khai báo cho ứng dụng. Contract&nbsp;Repository&nbsp;về cơ
+        bản là triển khai của cache driver mặc định cho ứng dụng mà bạn chỉ định
+        trong file cấu hình&nbsp;cache.</p>
+      <p>Tuy nhiên, bạn cũng có thể sử dụng&nbsp;Cache&nbsp;facade, mà bạn sẽ
+        thấy trong suốt tài liệu này.&nbsp;Cache&nbsp;facade cung cấp cách truy
+        xuất tiện và ngắn gọn tới các phần triển khai của các Laravel contracts:</p>
+      <pre>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Cache;
+
+class UserController extends Controller
+{
+    /**
+     * Show a list of all users of the application.
+     *
+     * @return  Response
+     */
+    public function index()
+    {
+        $value = Cache::get('key');
+
+        //
+    }
+}</pre>
+      <h4>Truy xuất tới nhiều cache store</h4>
+      <p>Sử dụng&nbsp;Cache&nbsp;facade cho phép bạn có thể truy xuất tới nhiều
+        cache store thông qua hàm&nbsp;store. Giá trị khoá truyền vào
+        hàm&nbsp;store&nbsp;cần ứng với một trong những store danh sách
+        các&nbsp;stores&nbsp;của mảng cấu hình trong file cấu hình&nbsp;cache:</p>
+      <pre>$value = Cache::store('file')-&gt;get('foo');
+
+Cache::store('redis')-&gt;put('bar', 'baz', 10);</pre>
+      <h4>Lấy các items trong cache</h4>
+      <p>Hàm&nbsp;get&nbsp;trong&nbsp;Cache&nbsp;facade được sử dụng để lấy các
+        item trong cache. Nếu như item không tồn tại trong cache, giá
+        trị&nbsp;null&nbsp;sẽ được trả về. Nếu muốn, bạn có thể truyền vào tham
+        số thứ hai để hàm&nbsp;get&nbsp;chỉ định giá trị mặc định nếu như item
+        không tồn tại:</p>
+      <pre>$value = Cache::get('key');
+
+$value = Cache::get('key', 'default');</pre>
+      <p>Bạn thậm chí có thể truyền vào một&nbsp;Closure&nbsp;như một giá trị
+        mặc định. Kết quả của&nbsp;Closure&nbsp;sẽ được trả về nếu item cần lấy
+        không tồn tại trong cache. Truyền vào một Closure cho phép bạn trì hoãn
+        lại việc lấy giá trị mặc định từ trong một database hay từ một dịch vụ
+        bên ngoài:</p>
+      <pre>$value = Cache::get('key', function () {
+    return DB::table(...)-&gt;get();
+});</pre>
+      <h4>Kiểm tra item có tồn tại hay không</h4>
+      <p>Hàm&nbsp;has&nbsp;có thể được sử dụng để kiểm tra xem một item có tồn
+        tại trong cache hay không:</p>
+      <pre>if (Cache::has('key')) {
+    //
+}</pre>
+      <h4>Tăng / giảm giá trị</h4>
+      <p>Hàm&nbsp;increment&nbsp;và&nbsp;decrement&nbsp;có thể được sử dụng để
+        điều chỉnh giá trị của các items số nguyên nằm trong cache. Cả hai hàm
+        này có tuỳ chọn cho phép tham số thứ hai chỉ định giá trị tăng giảm bao
+        nhiêu cho cache item:</p>
+      <pre>Cache::increment('key');
+Cache::increment('key', $amount);
+Cache::decrement('key');
+Cache::decrement('key', $amount);</pre>
+      <h4>Lấy và lưu</h4>
+      <p>Đôi lúc bạn muốn lấy ra một item trong cache, nhưng cũng muốn lưu giá
+        trị mặc định cho item nếu như không tồn tại. Ví dụ, bạn muốn lấy tất cả
+        users nằm trong cache hoặc, nếu chúng không tồn tại, thì sẽ lấy từ
+        database và thêm vào trong cache. Bạn có thể thực hiện việc này bằng
+        cách sử dụng hàm&nbsp;Cache::remember:</p>
+      <pre>$value = Cache::remember('users', $minutes, function () {
+    return DB::table('users')-&gt;get();
+});</pre>
+      <p>Nếu item không tồn tại trong cache, thì&nbsp;Closure&nbsp;truyền vào
+        trong hàm&nbsp;remember&nbsp;sẽ được thực thi và kết quả sẽ được lưu lại
+        vào trong cache.</p>
+      <h4>Lấy và xóa</h4>
+      <p>Nếu bạn muốn lấy ra một item trong cache và xoá đi, bạn có thể sử dụng
+        hàm&nbsp;pull. Giống như hàm&nbsp;get,&nbsp;<code>null</code> sẽ được
+        trả về nếu item không tồn tại trong cache từ trước đó:</p>
+      <pre>$value = Cache::pull('key');</pre>
+      <h4>Lưu trữ items vào trong cache</h4>
+      <p>Bạn có thể sử dụng hàm&nbsp;put&nbsp;của&nbsp;Cache&nbsp;facade để lưu
+        items vào trong cache. Khi bạn thêm một item vào trong cache, bạn sẽ cần
+        phải chỉ rõ số phút mà giá trị sẽ được lưu:</p>
+      <pre>Cache::put('key', 'value', $minutes);</pre>
+      <p>Thay vì truyền vào số phút cho tới khi item bị hết hạn, bạn cũng có thể
+        truyền vào một đối tượng PHP kiểu DateTime&nbsp;để thể hiện thời gian
+        hết hạn của item được cache:</p>
+      <pre>$expiresAt = Carbon::now()-&gt;addMinutes(10);
+
+Cache::put('key', 'value', $expiresAt);</pre>
+      <h4>Lưu nếu chưa tồn tại</h4>
+      <p>Hàm&nbsp;add&nbsp;sẽ chỉ thêm item vào cache nếu như nó chưa tồn tại
+        sẵn. Hàm sẽ trả về&nbsp;true&nbsp;nếu item thực sự được thêm vào <code>cache</code>.
+        Còn ngược lại thì hàm sẽ trả về&nbsp;<code>false</code>:</p>
+      <pre>Cache::add('key', 'value', $minutes);</pre>
+      <h4>Xoá các items ra khỏi cache</h4>
+      <p>Hàm&nbsp;forever&nbsp;có thể được sử dụng để lưu một item trong cache
+        vĩnh viễn. Những giá trị này cần phải được gỡ ra một cách thủ công sử
+        dụng hàm&nbsp;forget:</p>
+      <pre>Cache::forever('key', 'value');</pre>
+      <p> Nếu bạn đang sử dụng Memcached driver, items được lưu "forever" có thể
+        được xóa khi cache bị đầy.</p>
+      <h4>Xóa khỏi cache</h4>
+      <p>Bạn có thể xoá items khỏi cache sử dụng hàm&nbsp;forget:</p>
+      <pre>Cache::forget('key');</pre>
+      <p>Bạn có thể xoá toàn bộ cache sử dụng hàm&nbsp;flush:</p>
+      <pre>Cache::flush();</pre>
+      <p>Việc xoá toàn bộ cache không tuân theo tiền tố cache nào, mà sẽ thực
+        hiện xoá toàn bộ tất cả trong cache. Vì thế hãy thực sự cẩn trọng khi
+        xoá một giá trị cache mà được sử dụng chung giữa các ứng dụng.</p>
+      <h4>Hàm helper cache</h4>
+      <p>Ngoài ra khi sử dụng&nbsp;Cache&nbsp;facade hoặc&nbsp;<a href="https://giaphiep.com/docs/5.3/contracts">cache
+          contract</a>, bạn có thể sử dụng hàm&nbsp;cache&nbsp;để nhận và lưu dữ
+        liệu từ cache. Khi hàm cache&nbsp;được gọi một mình, tham số tring, nó
+        sẽ trả về giá trị của key:</p>
+      <pre>$value = cache('key');</pre>
+      <p>Nếu bạn cung cấp một mảng cặp key / value và thời gian hết hạn của hàm,
+        nó sẽ lưu giá trị vào cache với thời gian chỉ định:</p>
+      <pre>cache(['key' =&gt; 'value'], $minutes);
+
+cache(['key' =&gt; 'value'], Carbon::now()-&gt;addSeconds(10));</pre>
+      <p> Khi testing gọi hàm&nbsp;cache, bạn có thể dùng
+        hàm&nbsp;Cache::shouldReceive&nbsp;như bạn dùng&nbsp;<a href="https://giaphiep.com/docs/5.3/mocking#mocking-facades">testing
+          a facade</a>.</p>
+      <h3>Cache Tag</h3>
+      <p> Cache tag không hỗ trợ khi sử dụng cache driver
+        là&nbsp;file&nbsp;hoặc&nbsp;database. Thêm nữa, khi sử dụng nhiều tag
+        với cache được lưu dưới dạng "forever", hiệu năng sẽ đạt tốt nhất ở
+        driver có khả năng tự động xoá các danh sách đã lưu quá lâu
+        như&nbsp;memcached.</p>
+      <h4>Lưu các items đã được tag</h4>
+      <p>Cache tag cho phép bạn tag các item liên quan tới nhau trong cache và
+        có thể xoá hết các giá trị cache mà có chung một tag. Bạn có thể truy
+        xuất vào một cache được tag bằng cách truyền vào một mảng các tên tag.
+        Ví dụ, hãy truy cập một tagged cache và&nbsp;put&nbsp;giá trị vào cache:</p>
+      <pre>Cache::tags(['people', 'artists'])-&gt;put('John', $john, $minutes);
+
+Cache::tags(['people', 'authors'])-&gt;put('Anne', $anne, $minutes);</pre>
+      <h4>Truy xuất vào cache item được tag</h4>
+      <p>Để lấy một cache item được tag, truyền vào danh sách tương tự các tag
+        trong hàm&nbsp;tags&nbsp;và sau đó gọi hàm&nbsp;getvới key bạn muốn
+        nhận:</p>
+      <pre>$john = Cache::tags(['people', 'artists'])-&gt;get('John');
+
+$anne = Cache::tags(['people', 'authors'])-&gt;get('Anne');</pre>
+      <h4>Xóa cache được tag</h4>
+      <p>Bạn có thể xoá tất cả các item có chung một tag hoặc danh sách các tag.
+        Ví dụ, mã lệnh sau sẽ xoá tất cả các cache được tag với giá trị
+        là&nbsp;people,&nbsp;authors, hoặc cả hai. Vì vậy,
+        cả&nbsp;Anne&nbsp;và&nbsp;John&nbsp;sẽ bị khóa khỏi cache:</p>
+      <pre>Cache::tags(['people', 'authors'])-&gt;flush();</pre>
+      <p>Ngược lại, câu lệnh này sẽ chỉ xoá các cache có tag là&nbsp;authors, vì
+        vậy&nbsp;Anne&nbsp;sẽ bị xoá, còn&nbsp;John&nbsp;thì không:</p>
+      <pre>Cache::tags('authors')-&gt;flush();</pre>
+      <h3>Thêm một cache driver tùy biến</h3>
+      <h4>Viết driver</h4>
+      <p>Để viết một tùy biến cache driver, đầu tiên chúng ta cần thực
+        thi&nbsp;Illuminate\Contracts\Cache\Store contract. Vì vậy, MongoDB
+        cache thực thi sẽ giống như sau:</p>
+      <pre>&lt;?php
+
+namespace App\Extensions;
+
+use Illuminate\Contracts\Cache\Store;
+
+class MongoStore implements Store
+{
+    public function get($key) {}
+    public function many(array $keys);
+    public function put($key, $value, $minutes) {}
+    public function putMany(array $values, $minutes);
+    public function increment($key, $value = 1) {}
+    public function decrement($key, $value = 1) {}
+    public function forever($key, $value) {}
+    public function forget($key) {}
+    public function flush() {}
+    public function getPrefix() {}
+}</pre>
+      <p>Chúng ta chỉ cần thực thi mỗi phương thức khi sử dụng kết nối MongoDB.
+        Cho một ví dụ làm thế nào để thực thi các phương thức đó, để ý
+        trong&nbsp;Illuminate\Cache\MemcachedStore. Khi chúng ta đã thực thi,
+        chúng ta hoàn toàn có thể tùy biến đăng ký driver.</p>
+      <pre>Cache::extend('mongo', function($app) {
+    return Cache::repository(new MongoStore);
+});</pre>
+      <p> Nếu bạn tự hỏi khi nào put tùy biến code cache driver, bạn có thể tạo
+        một&nbsp;Extensions&nbsp;namespace bên trong thư mục&nbsp;app. Tuy
+        nhiên, hãy giữ cho Laravel không có một cấu trúc ứng dụng cứng nhắc và
+        bạn có thể thaoir mái tổ chức theo ý của bạn.</p>
+      <h4>Đăng ký driver</h4>
+      <p>Để đăng ký tùy biến cache driver với Laravel, chúng ta sử dụng
+        hàm&nbsp;extend&nbsp;trong&nbsp;Cache&nbsp;facade.
+        Gọi&nbsp;Cache::extend&nbsp;có thể được thực hiện trong
+        hàm&nbsp;boot&nbsp;của&nbsp;App\Providers\AppServiceProvider&nbsp;mặc
+        định, hoặc bạn có thể tạo tùy biến service provider để mở rộng - đừng
+        quên dăng ký provider trong mảng&nbsp;config/app.phpprovider:</p>
+      <pre>&lt;?php
+
+namespace App\Providers;
+
+use App\Extensions\MongoStore;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\ServiceProvider;
+
+class CacheServiceProvider extends ServiceProvider
+{
+    /**
+     * Perform post-registration booting of services.
+     *
+     * @return  void
+     */
+    public function boot()
+    {
+        Cache::extend('mongo', function($app) {
+            return Cache::repository(new MongoStore);
+        });
+    }
+
+    /**
+     * Register bindings in the container.
+     *
+     * @return  void
+     */
+    public function register()
+    {
+        //
+    }
+}</pre>
+      <p>Tham số đầu tiên truyền vào hàm&nbsp;extend&nbsp;là tên của driver. Nó
+        tương ứng với&nbsp;driver&nbsp;lựa chọn trong file cấu
+        hình&nbsp;config/cache.php. Tham số thứ hai là một Closure that nên trả
+        về một&nbsp;Illuminate\Cache\Repository&nbsp;instance. Closure sẽ truyền
+        vào một&nbsp;$app&nbsp;instance, nó là instance của&nbsp;<a href="https://giaphiep.com/docs/5.3/container">service
+          container</a>.</p>
+      <p>Khi mở rộng của bạn được đăng ký, đơn giản chỉ cần cập nhật fiel cấu
+        hình&nbsp;config/cache.php&nbsp;giống với tên của mở rộng&nbsp;driver.</p>
+      <h3>Sự kiện</h3>
+      <p>Để thực thi code mỗi khi có một thao tác làm việc với cache xảy ra, bạn
+        có thể lắng nghe các&nbsp;<a href="https://giaphiep.com/docs/5.3/events">events</a>&nbsp;từ
+        cache. Về cơ bản, bạn nên đặt những phần này vào
+        trong&nbsp;EventServiceProvider:</p>
+      <pre>/**
+ * The event listener mappings for the application.
+ *
+ * @var  array
+ */
+protected $listen = [
+    'Illuminate\Cache\Events\CacheHit' =&gt; [
+        'App\Listeners\LogCacheHit',
+    ],
+
+    'Illuminate\Cache\Events\CacheMissed' =&gt; [
+        'App\Listeners\LogCacheMissed',
+    ],
+
+    'Illuminate\Cache\Events\KeyForgotten' =&gt; [
+        'App\Listeners\LogKeyForgotten',
+    ],
+
+    'Illuminate\Cache\Events\KeyWritten' =&gt; [
+        'App\Listeners\LogKeyWritten',
+    ],
+];</pre>
+      <h3>Tham khảo</h3>
+      <p> <a href="https://laravel.com/docs/5.8/cache" target="_blank">https://laravel.com/docs/5.8/cache</a>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

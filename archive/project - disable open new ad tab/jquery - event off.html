@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>off demo</title>
+  <style>
+    button { margin: 5px; }
+    button#theone { color: red; background: yellow; }
+  </style>
+</head>
+
+<body>
+  <p>http://api.jquery.com/off/</p>
+
+  <div>
+    <button id="theone">Does nothing...</button>
+    <button id="bind">Add Click</button>
+    <button id="unbind">Remove Click</button>
+  </div>
+
+  <div id="result" style="display:none;">Click!</div>
+
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script>
+    function flash() {
+      $("#result").show().fadeOut("slow");
+    }
+
+    $("#bind").click(function () {
+      $("body")
+        //.on("click", "#theone", flash)
+        .find("#theone")
+        .text("Can Click!");
+
+      //$("#theone").on('click', flash);
+
+      // Chỉ off được những phương thức mà được thêm vào bằng hàm on
+      // Không off được những phương thức được thêm vào mà không sử dụng JavaScript
+      document.querySelector('#theone').addEventListener('click', flash);
+    });
+
+    $("#unbind").click(function () {
+      $("body")
+        //.off( "click", "#theone", flash )
+        //.off("click", "#theone")
+        .find("#theone")
+        .text("Does nothing...");
+
+      $("#theone").off('click');
+    });
+
+  </script>
+
+</body>
+
+</html>

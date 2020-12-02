@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="input, textarea, select, checkbox, radio, toggle switch, file input, range, button">
+    <title>Hướng dẫn thiết kế form với Bootstrap</title>
+    <link rel="icon" href="../../images/favicon.png">
+	<link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <article>
+        <h2>Hướng dẫn thiết kế form với Bootstrap</h2>
+	    
+	    <p>https://element.eleme.io/#/en-US/component/upload</p>
+
+        <section>
+            <h3>Thẻ input</h3>
+			<p>Thêm <code>.form-control</code>.</p>
+            <form action="" class="">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" class="form-control" name="username">
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" class="form-control" name="password">
+                </div>
+            </form>
+        </section>
+
+        <section class="mt-3">
+            <h3>Nhóm input</h3>
+            <p>Bạn có thể mở rộng các form-control bằng cách thêm text hoặc các nút vào phía trước, phía sau hoặc cả hai
+                phía của bất kỳ input dạng này nào.</p>
+            <p>The <code>.input-group</code> class is a container to enhance an input by adding an icon, text or a
+                button in front
+                (<code>.input-group-prepend</code>) or behind (<code>.input-group-append</code>) the input field as a
+                "help text".</p>
+            <p>Use the <code>.input-group-text</code> class to style the specified help text.</p>
+            <p>Layout:</p>
+            <pre class="">div.input-group
+    div.input-group-prepend
+        span.input-group-text
+            &lt;Text hoặc icon&gt;
+    input.form-control
+    div.input-group-append
+        span.input-group-text
+            &lt;Text hoặc icon&gt;</pre>
+
+
+
+            <form action="" class="">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">@</span>
+                    </div>
+                    <input type="text" class="form-control">
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control">
+                    <div class="input-group-append">
+                        <span class="input-group-text">@example.com</span>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <section class="mt-3">
+            <h3>Thẻ textarea</h3>
+			<p>Thêm <code>.form-control</code>.</p>
+            <form action="" class="">
+                <div class="form-group">
+                    <label>Comment:</label>
+                    <textarea class="form-control" rows="5" name="text"></textarea>
+                </div>
+            </form>
+        </section>
+
+        <section class="mt-3">
+            <h3>Thẻ select</h3>
+			<p>Thêm <code>.form-control</code>.</p>
+            <form action="" class="">
+                <div class="form-group">
+                    <label>Select list (select one):</label>
+                    <select class="form-control" name="sellist1">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </div>
+            </form>
+        </section>
+
+        <section class="mt-3">
+            <h3>Custom select</h3>
+            <p>To create a custom select menu, add the <code>.custom-select</code> class to the select element:</p>
+            <form action="" class="">
+                <select name="cars" class="custom-select mb-3">
+                    <option selected>Custom Select Menu</option>
+                    <option value="volvo">Volvo</option>
+                    <option value="fiat">Fiat</option>
+                    <option value="audi">Audi</option>
+                </select>
+            </form>
+        </section>
+
+        <section class="mt-3">
+            <h3>Checkbox và radio</h3>
+
+            <div>
+                <h4>Checkbox</h4>
+                <form action="" class=" mb-3">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="check1" value="check1" checked>
+                            Option 1
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="check2" value="check2">
+                            Option 2
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" disabled>
+                            Option 3
+                        </label>
+                    </div>
+                </form>
+            </div>
+
+            <div>
+                <h4>Inline checkbox</h4>
+                <form action="" class=" mb-3">
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="check3" value="check3" checked>
+                            Option 1
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="check4" value="check4">
+                            Option 2
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" disabled>
+                            Option 3
+                        </label>
+                    </div>
+                </form>
+            </div>
+
+            <div>
+                <h4>Radio</h4>
+                <form action="" class=" mb-3">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="optradioA" value="option1" checked>
+                            Option 1
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="optradioA" value="option2">
+                            Option 2
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" disabled>
+                            Option 3
+                        </label>
+                    </div>
+                </form>
+            </div>
+
+            <div>
+                <h4>Inline radio</h4>
+                <form action="" class=" mb-3">
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="optradioB" value="option1" checked>
+                            Option 1
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" name="optradioB" value="option2">
+                            Option 2
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label">
+                            <input type="radio" class="form-check-input" disabled>
+                            Option 3
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="mt-3">
+            <h3>Custom checkbox và radio</h3>
+
+            <div>
+                <h4>Custom checkbox</h4>
+                <p>To create a custom checkbox, wrap a container element, like div, with a class of .custom-control and
+                    .custom-checkbox around the checkbox. Then add the .custom-control-input to the checkbox.</p>
+                <p><strong>Tip:</strong> If you use labels for accompanying text, add the .custom-control-label class to
+                    it.
+                    Note that the value of the for attribute should match the id of the checkbox:</p>
+                <form action="" class=" mb-3">
+					<label>
+						<input type="checkbox">
+						Default checkbox
+					</label>
+					
+					<label class="custom-control custom-checkbox mb-3">
+                        <input type="checkbox" class="custom-control-input">
+                        <span class="custom-control-label">Custom checkbox</span>
+                    </label>
+					
+                    <label class="custom-control custom-control-lg custom-control-animated custom-control-highlighted custom-control-outlined custom-checkbox mb-3">
+                        <input type="checkbox" class="custom-control-input">
+                        <span class="custom-control-label">Custom checkbox (lg, animated, highlighted, outlined)</span>
+                    </label>
+                </form>
+            </div>
+
+            <div>
+                <h4>Custom radio</h4>
+                <p>To create a custom radio button, wrap a container element, like div, with a class of .custom-control
+                    and
+                    .custom-radio around the radio button. Then add the .custom-control-input to the radio button.</p>
+                <p><strong>Tip:</strong> If you use labels for accompanying text, add the .custom-control-label class to
+                    it.
+                    Note that the value of the for attribute should match the id of the radio:</p>
+                <form action="" class=" mb-3">
+					<label>
+						<input type="radio" name="customRadio2">
+						Default radio
+					</label>
+					
+					<label class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" name="customRadio2">
+                        <span class="custom-control-label">Custom radio</span>
+                    </label>
+
+                    <label class="custom-control custom-control-lg custom-control-animated custom-control-highlighted custom-control-outlined custom-radio">
+                        <input type="radio" class="custom-control-input" name="customRadio2">
+                        <span class="custom-control-label">Custom radio (lg, animated, highlighted, outlined)</span>
+                    </label>
+                </form>
+            </div>
+
+            <div>
+                <h4>Inline custom form control</h4>
+                <p>If you want the custom form controls to sit side by side (inline), add the .custom-control-inline to
+                    the
+                    wrapper/container:</p>
+                <form action="" class="">
+                    <label class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" name="customRadio3">
+                        <span class="custom-control-label">Custom radio</span>
+                    </label>
+                    <label class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" class="custom-control-input" name="customRadio3">
+                        <span class="custom-control-label">Custom radio</span>
+                    </label>
+                </form>
+            </div>
+        </section>
+
+        <section class="mt-3">
+            <h3>Switch</h3>
+            <h4>Cơ bản</h4>
+            <p>A switch has the markup of a custom checkbox but uses the <code>.custom-switch</code> class to render a toggle switch.
+                Switches also support the disabled attribute.</p>
+            <label class="custom-control custom-control-highlighted custom-switch">
+                <input type="checkbox" class="custom-control-input">
+                <span class="custom-control-label">
+                    Toggle this switch element
+                </span>
+            </label>
+            <label class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" disabled>
+                <span class="custom-control-label">
+                    Disabled switch element
+                </span>
+            </label>
+
+            <h4>Các mẫu khác</h4>
+            <div>
+                <label class="material-switch">
+                    <input type="checkbox">
+                    <span>Switch</span>
+                </label>
+            </div>
+
+            <p>
+                <a href="toggle buttons/index.html" target="_blank">Demo</a>.
+            </p>
+        </section>
+
+        <section class="mt-3">
+            <h3>File input</h3>
+
+            <p>
+                Chúng ta tạo một đối tượng bao với class là <code>custom-file</code>.
+                Bên trong là đối tượng file input với class là <code>custom-file-input</code>
+                và label với class là <code>custom-file-label</code>.
+            </p>
+
+            <p>Demo:</p>
+            <div class="custom-file mb-3">
+                <input type="file" class="custom-file-input" id="customFile" name="customFile">
+                <label class="custom-file-label" for="customFile">Chọn file</label>
+            </div>
+
+            <p>Chú ý không hiển thị file đang được chọn là gì.</p>
+
+            <p>File input mặc định:</p>
+            <div class="mb-3 overflow-hidden">
+                <input type="file">
+            </div>
+
+            <p>
+                Nếu chỉ là form đơn giản với một trường input file, chúng ta nên sử dụng luôn mặc định.
+                Ở trường input file mặc định có hiển thị file đang được chọn.
+            </p>
+            <p>
+                Nếu như upload nhiều file, hoặc cần preview, hoặc cần kéo thả thì không nên sử dụng mặc định.
+                Ngoài ra cũng không nên sử dụng Bootstrap vì cũng không đủ chức năng.
+                Hãy tự làm, cũng đơn giản.
+            </p>
+
+            <script>
+                function displayChosenFile() {
+                    document.querySelector('#customFile').addEventListener('change', (evt) => {
+                        var input = evt.target;
+                        var file = input.files[0];
+                        document.querySelector('label[for="customFile"]').textContent = file.name;
+                    });
+                }
+
+                displayChosenFile();
+            </script>
+        </section>
+
+        <section class="mt-3">
+            <h3>Custom range</h3>
+
+            <p>To create a custom range menu, add the .custom-range class to the input element with type="range":</p>
+            <form action="" class="">
+                <label for="customRange">Custom range</label>
+                <input type="range" class="custom-range" id="customRange" name="points1">
+                <label for="defaultRange">Default range</label>
+                <input type="range" id="defaultRange" name="points2">
+            </form>
+        </section>
+
+        <section class="mt-3">
+            <h3>Button</h3>
+
+            <h4>Cơ bản</h4>
+            <div class="py-3">
+                <button type="button" class="mb-2 btn">Basic</button>
+                <button type="button" class="mb-2 btn btn-primary btn-ripple">Primary</button>
+                <button type="button" class="mb-2 btn btn-secondary">Secondary</button>
+                <button type="button" class="mb-2 btn btn-success">Success</button>
+                <button type="button" class="mb-2 btn btn-info">Info</button>
+                <button type="button" class="mb-2 btn btn-warning">Warning</button>
+                <button type="button" class="mb-2 btn btn-danger">Danger</button>
+                <button type="button" class="mb-2 btn btn-dark">Dark</button>
+                <button type="button" class="mb-2 btn btn-light">Light</button>
+                <button type="button" class="mb-2 btn btn-link">Link</button>
+            </div>
+
+            <h4>Outline</h4>
+            <div class="py-3">
+                <button type="button" class="mb-2 btn btn-outline-primary btn-ripple">Primary</button>
+                <button type="button" class="mb-2 btn btn-outline-secondary">Secondary</button>
+                <button type="button" class="mb-2 btn btn-outline-success">Success</button>
+                <button type="button" class="mb-2 btn btn-outline-info">Info</button>
+                <button type="button" class="mb-2 btn btn-outline-warning">Warning</button>
+                <button type="button" class="mb-2 btn btn-outline-danger">Danger</button>
+                <button type="button" class="mb-2 btn btn-outline-dark">Dark</button>
+                <button type="button" class="mb-2 btn btn-outline-light text-dark">Light</button>
+            </div>
+
+            <h4>Kích thước</h4>
+            <div class="py-3">
+                <button type="button" class="mb-2 btn btn-primary btn-lg btn-ripple">Large</button>
+                <button type="button" class="mb-2 btn btn-primary btn-md">Default</button>
+                <button type="button" class="mb-2 btn btn-primary btn-sm">Small</button>
+            </div>
+
+            <h4>Block button</h4>
+            <div class="py-3">
+                <button type="button" class="btn btn-primary btn-block btn-ripple">Button 1</button>
+                <button type="button" class="btn btn-success btn-block">Button 2</button>
+                <br>
+                <button type="button" class="btn btn-primary btn-lg btn-block">Button 1</button>
+                <button type="button" class="btn btn-success btn-lg btn-block">Button 2</button>
+                <br>
+                <button type="button" class="btn btn-primary btn-sm btn-block">Button 1</button>
+                <button type="button" class="btn btn-success btn-sm btn-block">Button 2</button>
+            </div>
+
+            <h4>Hiệu ứng click</h4>
+            <p>Thêm class <code>.btn-ripple</code>.</p>
+
+            <h4>Hiệu ứng hover</h4>
+            <p>Theo mặc định của Bootstrap.</p>
+            <p>Link ở <a href="https://lockex1987.github.io/posts/css%20-%20animation/button%20hover%20effects%20with%20box%20shadow/index.html" target="_blank">CSS animation</a>.</p>
+        </section>
+
+        <section class="mt-3">
+            <h3>Stacked form (form dọc)</h3>
+
+            <p>Mình hay làm các ứng dụng quản lý, do đó việc nhập liệu form là
+                một thao tác cơ bản hay gặp. Ngày xưa hay sử dụng table để thiết
+                lập form. Cách này không phải là không tốt. Code rất đơn giản.</p>
+            <p>Chúng ta hãy tìm hiểu code form theo chuẩn Bootstrap là như thế
+                nào.</p>
+            <p>Một số nguyên tắc:</p>
+            <ul>
+                <li>Ngoài cùng là thẻ <code>form</code> (để bắt được sự kiện nhấn Enter).</li>
+                <li>Bọc label và các field ở trong thẻ <code>&lt;div&gt;</code>
+                    với class <code>.form-group</code>.</li>
+                <li>Thêm class&nbsp;<code>.form-control</code> vào các field dạng
+                    text như <code>input[type=text]</code>, <code>input[type=password]</code>, <code>textarea</code>,
+                    <code>select</code>.</li>
+                <li>Không thêm <code>.form-control</code> cho checkbox, radio,
+                    file. Chúng ta bao bởi <code>div.form-check</code> và <code>label.form-check-label</code>.
+                    Các phần tử có class là <code>.form-check-input</code>.</li>
+            </ul>
+            <p>Có 3 dạng form:</p>
+            <ul>
+                <li>Form dọc: đây là dạng mặc định, từng thành phần trên một dòng</li>
+                <li>Form cùng dòng: cả label và field cùng trên một dòng</li>
+                <li>Form ngang: từng cặp label và field đứng cạnh nhau trên một
+                    dòng</li>
+            </ul>
+
+            <p>Layout:</p>
+            <pre class="">form&lt;.form-inline&gt;
+    div.form-group
+        label
+        (input|select|textarea).form-control
+        input[type=file]
+        p.help-block
+
+    div.form-group.form-check
+        div.(checkbox|radio)
+            label.form-check-label
+                input[type=(checkbox|radio)].form-check-input
+                &lt;Check text&gt;<br>&nbsp;
+    button.btn</pre>
+
+            <form action="" class="">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" placeholder="Enter email" name="email">
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" placeholder="Enter password" name="pwd">
+                </div>
+
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" name="remember">
+                        Remember me
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Submit
+                </button>
+            </form>
+        </section>
+
+        <section class="mt-3">
+            <h3>Inline form (form cùng dòng)</h3>
+
+            <p>Thêm class <code>.form-inline</code> vào thẻ <code>form</code>. Không có .form-group.</p>
+            <p>Nếu màn hình quá bé (nhỏ hơn 576px) thì lại chuyển thành form dọc.</p>
+
+            <form class="form-inline " action="">
+                <label>Email:</label>
+                <input type="email" class="form-control">
+                <label>Password:</label>
+                <input type="password" class="form-control">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox">
+                        Remember me
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Submit
+                </button>
+            </form>
+
+            <p>Cần thêm margin nữa.</p>
+
+            <form class="form-inline ">
+                <label class="mb-2 mr-sm-2">Email:</label>
+                <input type="text" class="form-control mb-2 mr-sm-2">
+                <label for="pwd2" class="mb-2 mr-sm-2">Password:</label>
+                <input type="text" class="form-control mb-2 mr-sm-2">
+                <div class="form-check mb-2 mr-sm-2">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox">
+                        Remember me
+                    </label>
+                </div>
+                <button type="button" class="btn btn-primary mb-2">
+                    Submit
+                </button>
+            </form>
+        </section>
+
+        <section class="mt-3">
+            <h3>Form ngang</h3>
+            <p>Chúng ta thêm các điều chỉnh sau:</p>
+            <ul>
+                <li>Thêm class <code>.form-horizontal</code> vào thẻ <code>&lt;form&gt;</code></li>
+                <li>Thêm class <code>.control-label</code> vào các thẻ <code>&lt;label&gt;</code></li>
+                <li>Thêm các class <code>.col-*-*</code> vào thẻ <code>&lt;label&gt;</code></li>
+                <li>Bọc các field ở trong thẻ <code>&lt;div&gt;</code> có class <code>.col-*-*</code></li>
+            </ul>
+            <p>Chú ý kể cả checkbox, radio, button cũng cần được bọc trong thẻ <code>.form-group</code>.</p>
+            <pre class="">form.form-horizontal<br>    div.form-group<br>        label.(control-label col-*-*)<br>        div.col-*-* [.col-*-offset-*]<br>           &nbsp;(input|select|textarea).form-control<br>            input[type=file]<br>            p.form-control-static<br>         &nbsp;  div.(checkbox|radio)<br>                label<br>                    input[type=(checkbox|radio)]<br>                    &lt;Check text&gt;<br>            label.(checkbox-inline|radio-inline)<br>                input[type=(checkbox|radio)]<br>                &lt;Check text&gt;<br>            button</pre>
+        </section>
+
+        <section class="mt-3">
+            <h3>Trạng thái</h3>
+            <p>Bootstrap cung cấp các style cho các validation như success, warning, error. Để sử dụng, thêm
+                <code>.has-success</code>, <code>.has-warning</code>, <code>.has-error</code> vào thành phần cha
+                (<code>.form-group</code>).</p>
+            <p>Để thêm icon:</p>
+            <ul>
+                <li>Thêm <code>.has-feedback</code> vào thành phần cha (<code>.form-group</code>)</li>
+                <li>Thêm một thẻ <code>&lt;span&gt;</code> icon với class <code>.form-control-feedback</code> vào phía
+                    sau
+                    <code>&lt;input&gt;</code></li>
+            </ul>
+            <p>Layout:</p>
+            <pre class="">form<br>    div.(form-group has-feedback (has-success|has-warning|has-error))<br>        input.form-control<br>        span.(glyphicon glyphicon-* form-control-feedback)</pre>
+            <ul>
+            </ul>
+        </section>
+
+        <section class="mt-3">
+            <h3>Kích thước</h3>
+            <p>Thiết lập chiều cao của các field bằng cách thêm class kiểu <code>.input-lg</code> và
+                <code>.input-sm</code>.
+            </p>
+            <p>Thiết lập chiều rộng bằng các class grid kiểu <code>.col-lg-*</code> và <code>.col-sm-*</code>.</p>
+            <p>Có thể thiết lập nhanh cả label và field bằng cách thêm <code>.form-group-*</code> vào thành phần
+                <code>&lt;div class="form-group"&gt;</code>.</p>
+            <p>Tương tự có thể thiết lập nhanh bằng cách thêm <code>.input-group-sm</code> hoặc
+                <code>.input-group-lg</code>.</p>
+        </section>
+
+        <section class="mt-3">
+            <h3>Sửa style của Bootstrap form</h3>
+            <p>Bỏ outline, box-shadow khi focus, active.</p>
+        </section>
+
+        <section class="mt-3">
+            <h3>Tham khảo</h3>
+            <p>
+                <a href="https://getbootstrap.com/docs/4.3/components/forms/" target="_blank">getbootstrap.com</a>
+            </p>
+        </section>
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

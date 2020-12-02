@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Sharing data between views"/>
+    <meta name="keywords" content="laravel, share, views"/>
+    <meta name="author" content="lockex1987"/>
+    
+    <title>Sharing data between views</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body>
+    <article>
+        <h2>Sharing data between views</h2>
+        
+<p>Giả sử ứng dụng web của bạn có nhiều trang. Phần lớn (hoặc tất cả)
+      các trang đều có chung một thành phần nào đó. Thành phần thường như:
+      widget thông báo, lịch sử tác động, danh sách bài viết phổ biến,...</p>
+<p>Giả sử bạn cần share widget thông báo cho các view. Nội dung thông báo tùy
+      thuộc user đang đăng nhập.</p>
+<h3>Cách 1:</h3>
+<p>Thêm ở tất cả các phương thức:</p>
+<pre>$alerts = ...<br/><br/>return view('... index', ['alerts' =&gt; $alerts]);</pre><p>Làm cách này sẽ bị lặp code nhiều. Nếu phần giống nhau phức tạp thì code lặp càng nhiều.</p><p>Bạn có thể giảm việc lặp code bằng hàm dùng chung hoặc là kế thừa.</p><h3>Cách 2:</h3><p>Sử dụng View::share()</p><p>Làm thế này thì tất cả các view đều phải xử lý? Nếu thế thì sẽ tốn hiệu năng.</p><p>Ngoài ra có thể tùy biến theo từng người dùng đăng nhập được không?</p><h3>Cách 3:</h3><p>Sử dụng @include và xử lý nghiệp vụ ở Blade.</p><p>Từ Blade liệu có gọi được DB trực tiếp không? Câu trả lời là có.</p><p>Nhưng nếu làm như vậy trong view lại có xử lý nghiệp vụ (đáng nhẽ nên để ở Controller).</p><p>Ví dụ trong file resources/views/layouts/header.blade.php ta có đoạn code sau:</p><pre>@include('layouts.alert')</pre><p>Trong resources/views/layouts/header.blade.php ta có đoạn code sau:</p><pre>&lt;?php
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+$userId = Auth::id();
+$count = DB::table('feedbacks')
+        -&gt;whereNull('is_read')
+        -&gt;count();
+?&gt;
+
+@if($count &gt; 0)
+    &lt;li class='dropdown dropdown-extended dropdown-notification'&gt;
+        &lt;a href='/feedbacks' class='dropdown-toggle'&gt;
+            &lt;i class='icon-bell'&gt;&lt;/i&gt;
+            &lt;span class='badge badge-warning'&gt;{{ $count }}&lt;/span&gt;
+        &lt;/a&gt;
+    &lt;/li&gt;
+@endif</pre><p>Ta có thể tạo hàm ở <code>helpers.php</code>:</p><pre>use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+
+function getAlertCountX() {
+    $count = DB::table('feedbacks')
+        -&gt;whereNull('is_read')
+        -&gt;count();
+    return $count;
+}</pre><p>Sửa lại resources/views/layouts/header.blade.php như sau:</p><pre>&lt;?php
+$count = getAlertCount();
+?&gt;
+
+@if($count &gt; 0)
+    &lt;li class='dropdown dropdown-extended dropdown-notification'&gt;
+        &lt;a href='/feedbacks' class='dropdown-toggle'&gt;
+            &lt;i class='icon-bell'&gt;&lt;/i&gt;
+            &lt;span class='badge badge-warning'&gt;{{ $count }}&lt;/span&gt;
+        &lt;/a&gt;
+    &lt;/li&gt;
+@endif</pre><h3>Cách 4:</h3><p>Sử dụng View Composer</p><p>https://scotch.io/tutorials/sharing-data-between-views-using-laravel-view-composers</p><p>Phải liệt kê danh sách các view.</p><h3>Cách 5:</h3><p>Sử dụng View Component</p><p>https://laravel-news.com/introducing-view-components-on-laravel-an-alternative-to-view-composers</p><p>Có vẻ ổn hơn.</p><h3>Cách 6:</h3><p>Sử dụng middle ware.</p><h3>Cách 7:</h3><p>Tạo directive riêng</p><p>https://scotch.io/tutorials/all-about-writing-custom-blade-directives</p><p>Phải sinh xâu HTML trong code PHP.</p><p>Bị cache.</p><h3>Cách 8:</h3><p>Sử dụng @inject.</p><p>http://itsolutionstuff.com/post/how-to-use-inject-view-in-laravel-5example.html</p><p>Tạo class App\Services\FeedbackService:</p><pre>&lt;?php
+namespace App\Services;
+
+use App\Repositories\FeedbackRepository;
+
+
+class FeedbackService {
+
+    protected $feedbackRepository;
+
+    function __construct(FeedbackRepository $feedbackRepository) {
+        $this-&gt;feedbackRepository = $feedbackRepository;
+    }
+
+    public function getAlertCount() {
+        $count = $this-&gt;feedbackRepository-&gt;getAlertCount();
+        return $count;
+    }
+}</pre><p>Chỉnh lại file alert.blade.php như sau:</p><pre>@inject('feedbackService','App\Services\FeedbackService')
+
+&lt;?php
+$count = $feedbackService-&gt;getAlertCount();
+?&gt;
+
+@if($count &gt; 0)
+    &lt;li class='dropdown dropdown-extended dropdown-notification'&gt;
+        &lt;a href='/feedbacks' class='dropdown-toggle'&gt;
+            &lt;i class='icon-bell'&gt;&lt;/i&gt;
+            &lt;span class='badge badge-warning'&gt;{{ $count }}&lt;/span&gt;
+        &lt;/a&gt;
+    &lt;/li&gt;
+@endif</pre><p>Nên làm theo cách này cho sáng sủa. Kiểm Dependency Injection.</p><p><br/></p>
+
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

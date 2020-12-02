@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Animated SVG Donut</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="donut">
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px" y="0px" width="340px" height="333px" viewBox="0 0 340 333" enable-background="new 0 0 340 333"
+            xml:space="preserve">
+
+            <defs>
+                <linearGradient id="quotaDonut__gradient">
+                    <stop stop-color="#fc0023" offset="0%"></stop>
+                    <stop stop-color="#00FF00" class="quotaDonut__gradientStopEnd" offset="100%"></stop>
+                </linearGradient>
+            </defs>
+
+            <g transform="translate(115, 115)">
+                <circle r="100" class="circle-back" />
+                <circle r="115" class="circle-border" />
+                <circle r="85" class="circle-border" />
+                <circle r="100" class="circle-front" transform="rotate(270.1)" />
+            </g>
+        </svg>
+    </div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="./script.js"></script>
+</body>
+</html>

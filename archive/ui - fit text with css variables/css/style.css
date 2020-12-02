@@ -1,0 +1,11 @@
+.data-fit-text {
+  /* Chiều rộng của phần tử */
+  --parentWidth: 570px;
+  --elementWidth: min(var(--parentWidth), 100vw);
+
+  /* Adjust scale depending on your exact font */
+  --scale: 0.9;
+
+  /* Tính toán font-size */
+  font-size: calc(var(--elementWidth) / (var(--length, 1) * 0.5) * var(--scale, 1));
+}

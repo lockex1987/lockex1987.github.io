@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Automatic editor height adjustment to content</title>
+	<script src="../lib/ckeditor/ckeditor.js"></script>
+</head>
+
+<body>
+	<h3>Editor 1</h3>
+	<textarea rows="10" cols="80" id="editor1" name="editor1">
+		&lt;p&gt;This editor instance was configured to &lt;strong&gt;automatically adjust its height to content&lt;/strong&gt; that is added to it.&lt;/p&gt;		&lt;p&gt;&lt;strong&gt;Add some content here &lt;/strong&gt;to see &lt;strong&gt;how the editor expands&lt;/strong&gt; in order to fit it in.&lt;/p&gt;
+	</textarea>
+	
+	<h3>Editor 2</h3>
+	<textarea rows="10" cols="80" id="editor2" name="editor2">
+		<p>Use autoGrow_onStartup: true</p>
+	</textarea>
+
+	<script>
+		CKEDITOR.replace('editor1', {
+			extraPlugins: 'autogrow',
+			autoGrow_minHeight: 200,
+			autoGrow_maxHeight: 600,
+			autoGrow_bottomSpace: 50,
+			removePlugins: 'resize'
+		});
+		
+		CKEDITOR.replace('editor2', {
+			autoGrow_onStartup: true
+		});
+	</script>
+</body>
+
+</html>

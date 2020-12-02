@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ẩn mũi tên ở thẻ input number">
+    <title>Ẩn mũi tên ở thẻ input number</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+      input[type=number].no-arrows::-webkit-inner-spin-button, 
+      input[type=number].no-arrows::-webkit-outer-spin-button { 
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      
+      input[type="number"].no-arrows {
+        -moz-appearance: textfield;
+      }
+    </style>
+  </head>
+  <body>
+    <article>
+      <h2>Ẩn mũi tên ở thẻ input number</h2>
+      <p>Thẻ input có thể có type là "number". Khi thiết lập type="number",
+        chúng ta chỉ có thể nhập số hoặc dấu chấm, đỡ một số validate. Ở màn
+        hình điện thoại cũng chỉ hiển thị các số cho chúng ta nhập.</p>
+      <p>Ví dụ:</p>
+      <p><input type="number"></p>
+      <p>Chúng ta có thể tăng giảm giá trị bằng cách click vào phím mũi tên.</p>
+      <p>Đôi lúc, việc hiển thị mũi tên là không mong muốn, nó làm thay đổi so
+        với design.</p>
+      <p>Chúng ta có thể thêm CSS như sau:</p>
+      <pre>input[type=number].no-arrows::-webkit-inner-spin-button, 
+input[type=number].no-arrows::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"].no-arrows {
+    -moz-appearance: textfield;
+}</pre>
+      <p>Ví dụ:</p>
+      <p><input class="no-arrows" type="number"></p>
+      <p>Chúng ta vẫn có thể tăng giảm giá trị bằng cách nhấn các nút mũi tên
+        trên bàn phím.</p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

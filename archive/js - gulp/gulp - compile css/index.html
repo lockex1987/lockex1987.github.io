@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Compile file LESS ra file CSS">
+    <title>Compile file LESS ra file CSS</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Compile file LESS ra file CSS</h2>
+      <p>Chúng ta sử dụng <code>gulp-less</code>.</p>
+      <p>Cài đặt như sau:</p>
+      <pre>npm install --save-dev gulp-less</pre>
+      <p>Sử dụng:</p>
+      <pre>var less = require('gulp-less');<br>var lessFiles = 'less/*.less';<br><br>gulp.task('less', function () {<br>    gulp.src(lessFiles)<br>        .pipe(less({ compress: true }))<br>        .pipe(gulp.dest('css'));<br>});</pre> 
+   <p>Tự động compile mỗi khi lưu file LESS:</p> 
+   <pre>gulp.task('watch', function () {<br>    gulp.watch(lessFiles, ['less']);<br>});</pre><p></p> 
+   <p><br> </p> 
+   <p><br> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>
+</body></html>

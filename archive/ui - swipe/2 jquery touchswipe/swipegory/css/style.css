@@ -1,0 +1,142 @@
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  padding: 0;
+  background: #eee;
+  font: 16px/2em 'Montserrat', sans-serif;
+}
+img {
+  max-width: 150px;
+  heigth: auto;
+  display: block;
+  margin: 0 auto;
+}
+h1 {
+  text-align: center;
+  font-size: 26px;
+  margin: 10px 0 20px 0;
+}
+p {
+  margin: 0 0 20px 0;
+}
+p.footer {
+  font-size: 12px;
+  text-align: center;
+}
+.swipegory {
+  position: relative;
+  max-width: 320px;
+  height: 480px;
+  margin: 0 auto;
+  background: #fff;
+  padding-top: 70px;
+  overflow: hidden;
+  transition: 1s height;
+  transform: translate3d(0, 0, 0);
+  margin-bottom: 5px;
+}
+.swipegory nav ul {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: #333;
+}
+.swipegory nav li {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  display: block;
+  transition: 1s all;
+  transform: translate3d(0, 0, 0);
+  line-height: 70px;
+  height: 70px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+.swipegory nav li.prev {
+  left: 0;
+}
+.swipegory nav li.cur {
+  left: 50%;
+}
+.swipegory nav li.cur a {
+  color: #fff;
+}
+.swipegory nav li.cur a:after {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+.swipegory nav li.next {
+  left: 100%;
+}
+.swipegory nav li.before {
+  left: 0;
+}
+.swipegory nav li.after {
+  left: 100%;
+}
+.swipegory nav li a {
+  position: relative;
+  color: #999;
+  text-decoration: none;
+  padding: 0 20px;
+  height: 70px;
+  line-height: 70px;
+  display: block;
+  overflow: hidden;
+  transition: 1s color;
+}
+.swipegory nav li a:after {
+  content: ' ';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: cyan;
+  width: 100%;
+  height: 3px;
+  opacity: 0;
+  transition: 1s all;
+  transform: translate3d(0, 3px, 0);
+}
+.swipegory ul.panes {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: move;
+}
+.swipegory ul.panes li {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  padding: 20px 20px 0 20px;
+  transition: 1s all;
+  transform: translate3d(0, 0, 0);
+}
+.swipegory ul.panes li.prev {
+  transform: translate3d(-200%, 0, 0);
+}
+.swipegory ul.panes li.cur {
+  transform: translate3d(-100%, 0, 0);
+}
+.swipegory ul.panes li.next {
+  transform: translate3d(0, 0, 0);
+}
+.swipegory ul.panes li.before {
+  transform: translate3d(-200%, 0, 0);
+}
+.swipegory ul.panes li.after {
+  transform: translate3d(0, 0, 0);
+}
+@media all and (min-width: 320px) {
+  body {
+    padding: 20px 0;
+  }
+}

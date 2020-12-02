@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Swipegory</title>
+  <meta name="viewport" content="width=device-width">
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+
+  <style>
+    /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    html,
+    body {
+      height: 100%;
+    }
+    
+    body {
+      padding: 0;
+      background: #eee;
+      font: 16px/2em 'Montserrat', sans-serif;
+    }
+    
+    img {
+      max-width: 150px;
+      heigth: auto;
+      display: block;
+      margin: 0 auto;
+    }
+    
+    h1 {
+      text-align: center;
+      font-size: 26px;
+      margin: 10px 0 20px 0;
+    }
+    
+    p {
+      margin: 0 0 20px 0;
+    }
+    
+    p.footer {
+      font-size: 12px;
+      text-align: center;
+    }
+    
+    .swipegory {
+      position: relative;
+      max-width: 320px;
+      height: 480px;
+      margin: 0 auto;
+      background: #fff;
+      padding-top: 70px;
+      overflow: hidden;
+      transition: 1s height;
+      transform: translate3d(0, 0, 0);
+      margin-bottom: 5px;
+    }
+    
+    .swipegory nav ul {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      background: #333;
+    }
+    
+    .swipegory nav li {
+      position: absolute;
+      top: 0;
+      left: 100%;
+      display: block;
+      transition: 1s all;
+      transform: translate3d(0, 0, 0);
+      line-height: 70px;
+      height: 70px;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+    
+    .swipegory nav li.prev {
+      left: 0;
+    }
+    
+    .swipegory nav li.cur {
+      left: 50%;
+    }
+    
+    .swipegory nav li.cur a {
+      color: #fff;
+    }
+    
+    .swipegory nav li.cur a:after {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+    
+    .swipegory nav li.next {
+      left: 100%;
+    }
+    
+    .swipegory nav li.before {
+      left: 0;
+    }
+    
+    .swipegory nav li.after {
+      left: 100%;
+    }
+    
+    .swipegory nav li a {
+      position: relative;
+      color: #999;
+      text-decoration: none;
+      padding: 0 20px;
+      height: 70px;
+      line-height: 70px;
+      display: block;
+      overflow: hidden;
+      transition: 1s color;
+    }
+    
+    .swipegory nav li a:after {
+      content: ' ';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: cyan;
+      width: 100%;
+      height: 3px;
+      opacity: 0;
+      transition: 1s all;
+      transform: translate3d(0, 3px, 0);
+    }
+    
+    .swipegory ul.panes {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      cursor: move;
+    }
+    
+    .swipegory ul.panes li {
+      position: absolute;
+      top: 0;
+      left: 100%;
+      width: 100%;
+      padding: 20px 20px 0 20px;
+      transition: 1s all;
+      transform: translate3d(0, 0, 0);
+    }
+    
+    .swipegory ul.panes li.prev {
+      transform: translate3d(-200%, 0, 0);
+    }
+    
+    .swipegory ul.panes li.cur {
+      transform: translate3d(-100%, 0, 0);
+    }
+    
+    .swipegory ul.panes li.next {
+      transform: translate3d(0, 0, 0);
+    }
+    
+    .swipegory ul.panes li.before {
+      transform: translate3d(-200%, 0, 0);
+    }
+    
+    .swipegory ul.panes li.after {
+      transform: translate3d(0, 0, 0);
+    }
+    
+    @media all and (min-width: 320px) {
+      body {
+        padding: 20px 0;
+      }
+    }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+
+</head>
+
+<body>
+
+  <div class="swipegory">
+    <nav>
+      <ul>
+        <li><a href="#item1">About</a></li>
+        <li><a href="#item2">Featured</a></li>
+        <li><a href="#item3">Recent</a></li>
+        <li><a href="#item4">Popular</a></li>
+        <li><a href="#item5">Lorem</a></li>
+        <li><a href="#item6">Ipsum</a></li>
+        <li><a href="#item7">Dolor</a></li>
+      </ul>
+    </nav>
+    <ul class="panes">
+      <li>
+        <h1>Swipegory</h1>
+        <p>Swipegory is a swipable content slider often used to swipe between categories in mobile apps.</p>
+        <p><img src="https://lh4.ggpht.com/LxWCQV9V0yWTDhIgcJAVY6tj0kr5DjFdpZobusVzBYMCkuxhPu11pO-tdbhhavTqVxHm=h900" /></p>
+      </li>
+      <li>
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
+          natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque
+          eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
+      </li>
+      <li>
+        <h1>Lorem</h1>
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
+          natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque
+          eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
+      </li>
+      <li>
+        <h1>Lorem</h1>
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
+          natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque
+          eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
+      </li>
+      <li>
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
+          natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque
+          eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
+      </li>
+      <li>
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
+          natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque
+          eu, pretium quis, sem. Nulla consequat massa quis enim.</li>
+      <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
+        natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque
+        eu, pretium quis, sem. Nulla consequat massa quis enim.</p>
+      </li>
+    </ul>
+  </div>
+  <p class="footer">
+    Inspired by Zedge on Android
+  </p>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.4/jquery.touchSwipe.min.js'></script>
+
+
+
+  <script src="js/index.js"></script>
+
+
+
+
+</body>
+
+</html>

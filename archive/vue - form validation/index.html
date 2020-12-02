@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Validate với Vue" />
+    <title>Vue form validation</title>
+
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+    <article>
+        <h2>Vue form validation</h2>
+        <p>Validate với Vue.</p>
+
+        <h3>Demo</h3>
+
+        <form id="app" @submit="checkForm" action="https://vuejs.org/" method="post" novalidate="true">
+            <p v-if="errors.length">
+                <b>Please correct the following error(s):</b>
+                <ul>
+                    <li v-for="error in errors">{{ error }}</li>
+                </ul>
+            </p>
+
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input id="name" v-model="name" type="text" name="name" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" v-model="email" type="email" name="email" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input id="age" v-model="age" type="number" name="age" min="0" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="movie">Favorite Movie</label>
+                <select id="movie" v-model="movie" name="movie" class="form-control">
+                    <option>Star Wars</option>
+                    <option>Vanilla Sky</option>
+                    <option>Atomic Blonde</option>
+                </select>
+            </p>
+
+            <p>
+                Given a budget of 100 dollars, indicate how much
+                you would spend on the following features for the
+                next generation Star Destroyer. Your total must sum up to 100.
+            </p>
+
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        Weapons
+                    </div>
+                    <div class="col-md-6">
+                        <input v-model.number="weapons" type="number" name="weapons" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        Shields
+                    </div>
+                    <div class="col-md-6">
+                        <input v-model.number="shields" type="number" name="shields" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        Coffee
+                    </div>
+                    <div class="col-md-6">
+                        <input v-model.number="coffee" type="number" name="coffee" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        Air Conditioning
+                    </div>
+                    <div class="col-md-6">
+                        <input v-model.number="ac" type="number" name="ac" class="form-control">
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        Mouse Droids
+                    </div>
+                    <div class="col-md-6">
+                        <input v-model.number="mousedroids" type="number" name="mousedroids" class="form-control">
+                    </div>
+                </div>
+
+                <p class="text-right">
+                    Current total: {{total}}
+                </p>
+            </div>
+
+            <p class="text-center">
+                <button type="submit" class="btn btn-primary">
+                    Submit
+                </button>
+            </p>
+
+        </form>
+
+    </article>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

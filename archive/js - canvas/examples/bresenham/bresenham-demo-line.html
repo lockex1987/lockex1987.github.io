@@ -1,0 +1,28 @@
+<html>
+<head>
+	<title>Bresenham</title>
+	<style>
+		body { margin: 10px; padding: 0; }
+		canvas { border: 1px solid black; }
+	</style>
+</head>
+
+<body>
+	<canvas id="draw1" width="400" height="400"></canvas>
+	
+	<p>Bresenham algorithm demo - line drawing ((L) Wojciech Mula)</p>
+	<p>http://wm.ite.pl/articles/bresenham-demo-line.html</p>
+
+	<script src="bresenham.js"></script>
+	<script src="bresenham-demo.js"></script>
+
+	<script>
+var canvas1 = document.getElementById('draw1');
+var ctx1 = canvas1.getContext('2d');
+canvas1.onclick = function(e) {
+    line_edit(e, ctx1);
+};
+update_line_view(ctx1);
+	</script>
+</body>
+</html>

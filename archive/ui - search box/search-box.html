@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+ <head>
+<meta charset="utf-8">
+<title>Awesome Search Bar!</title>
+<style>
+body {
+    padding: 10px;
+    background-color: #F4F4F4;
+}
+input[type=text] {
+    width: 260px;
+    padding: 5px;
+    padding-right: 40px;
+    outline: none;
+    border: 2px solid #999999;
+    border-radius: 5px;
+    background-color: #FBFBFB;
+    font-family: Cambria, Cochin, Georgia, serif;
+    font-size: 16px;
+    background-image: url('search.png');
+    background-position: 270px -10px;
+    background-repeat: no-repeat;
+
+    transition: background-color .2s ease-in, background-position .2s ease-in, box-shadow .3s ease-in;
+}
+input[type=text]:focus {
+    background-color: #FFFFFF;
+    border-color: #333333;
+    box-shadow: 0px 0px 25px -2px #333;
+    background-position: 270px -80px;
+}
+
+</style>
+</head>
+ 
+<body>
+    <form>
+        <div>
+            <input type="text" placeholder="Search here..."/>
+            <br>
+        </div>
+    </form>
+</body>
+</html>

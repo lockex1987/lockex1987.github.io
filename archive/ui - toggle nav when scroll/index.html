@@ -1,0 +1,37 @@
+<html>
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Toggle navigator when scrolling">
+    <title>Ẩn hiện navigator khi scroll</title>
+
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <article>
+        <h2>Ẩn hiện navigator khi scroll</h2>
+        <p>Fixed header khá là phổ biến hiện tại, nhiều trang web phổ biến đều sử dụng pattern này.</p>
+        <p>Ngày càng nhiều người sử dụng điện thoại di động (cả cả một người die-hard như mình). Ở đó không gian màn
+            hình là một thứ xa xỉ. Chúng ta nên tập trung vào nội dung.</p>
+        <p>Chúng ta sẽ xử lý:</p>
+        <ul>
+            <li>Ẩn header khi người dùng scroll xuống dưới (và scroll quá chiều cao của header)</li>
+            <li>Hiện header khi người dùng scroll lên (không cần chờ scroll đến đỉnh)</li>
+        </ul>
+        <p>Áp dụng với header phía trên hoặc floating button phía dưới.</p>
+        <p>Kỹ thuật</p>
+        <ul>
+            <li>Để header có position là fixed, sau đó điều chỉnh top của nó là số âm để ẩn hoặc bằng 0 để hiện. Thêm
+                transition là top để có hiệu ứng.</li>
+            <li>Lắng nghe sự kiện scroll của window. Lưu thêm một biến prevScrollPos để biết sự thay đổi là scroll xuống
+                hay scroll lên.</li>
+        </ul>
+        <p><a target="_blank" href="demo.html">Demo</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

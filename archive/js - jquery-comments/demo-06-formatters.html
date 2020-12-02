@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset=utf-8>
+		<meta name=viewport content="width=device-width, initial-scale=1">
+		<title>Jquery Comments Plugin 06 - Formatters</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+
+		<link rel="stylesheet" href="lib/jquery-comments/css/jquery-comments.css">
+		<script src="lib/jquery-comments/js/jquery-comments.js"></script>
+	</head>
+	<body>
+		<div id="comments-container"></div>
+
+		<script>
+$('#comments-container').comments({
+    timeFormatter: function(time) {
+		var d = new Date(time);
+		var s = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
+		return s;
+	},
+    getComments: function(success, error) {
+        var commentsArray = [{
+            id: 1,
+            created: '2015-10-01',
+            content: 'Lorem ipsum dolort sit amet',
+            fullname: 'Simon Powell',
+            upvote_count: 2,
+            user_has_upvoted: false
+        }];
+        success(commentsArray);
+    }
+});
+		</script>
+	</body>
+</html>

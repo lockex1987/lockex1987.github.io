@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="google authenticator, time-based one-time password, totp, 2fa, mac, hmac">
+    <title>Xác thực 2 lớp với Laravel</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Xác thực 2 lớp với Laravel</h2>
+      <h3>Tạo project Laravel</h3>
+      <p>Ta sử dụng phiên bản Laravel 5.7 mới nhất tại thời điểm viết bài.</p>
+      <p>Tạo project Laravel bằng 1 trong 2 lệnh sau:</p>
+      <pre>laravel new google2fa-laravel</pre>
+      <p>hoặc:</p>
+      <pre>composer create-project google2fa-laravel</pre>
+      <p>Thiết lập quyền ghi cho thư mục <code>storage</code> và <code>cache</code>:</p>
+      <pre>chmod -R 777 storage<br>chmod -R 777 bootstrap/cache</pre>
+      <p>Sửa cấu hình kết nối database trong file .env:</p>
+      <pre>DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=google2fa
+DB_USERNAME=root
+DB_PASSWORD=root</pre>
+      <p>Chạy lệnh <code>php artisan migrate</code> để tạo database.</p>
+      <p>Chạy lệnh <code>php artisan make:auth</code> để tạo mẫu đăng ký, đăng
+        nhập, đăng xuất.</p>
+      <p>Đến đây bạn có thể chạy thử server với câu lệnh:</p>
+      <pre>php artisan serve --port=8000</pre>
+      <p>Và xem kết quả tại <a href="http://localhost:8000" target="_blank">http://localhost:8000</a>.</p>
+      <p>Bài hướng dẫn của tôi:</p>
+      <p><a href="https://lockex1987.github.io/posts/laravel%20-%20authentication/"
+          target="_blank">Xác thực với Laravel</a></p>
+      <h3>Xác thực 2 lớp với TOTP</h3>
+      <p>Để xác thực 2 lớp với TOTP, chúng ta phải có các hàm sau:</p>
+      <ul>
+        <li>Tạo secretKey dài 16 ký tự</li>
+        <li>Tạo xâu URL theo quy ước để sinh QR code cho các ứng dụng như Google
+          Authenticator có thể đọc hiểu. Việc sinh QR code bạn có thể thực hiện
+          bằng thư viện JS, không nhất thiết phải dùng PHP. Ví dụ <a href="https://lockex1987.github.io/posts/js%20-%20qr%20code/"
+            target="_blank">QR code</a>.</li>
+        <li>Xác thực mã OTP do người dùng nhập. Người dùng có thể sử dụng ứng
+          dụng Google Authenticator để lấy mã OTP.</li>
+      </ul>
+      <p>Bạn chỉ cần thư viện PHP nào đó hỗ trợ những cái trên. Bạn không cần
+        một thư viện đặc trưng cho framework như là <code>google2fa-laravel</code>.</p>
+      <p>Tôi chọn thư viện <code>PHPGangsta/GoogleAuthenticator</code> vì nó
+        chỉ bao gồm 1 file source code, độc lập, đơn giản, dễ tích hợp.</p>
+      <h3>Tạo và hiển thị secret</h3>
+      <p>Thêm cột <code>totp_secret_key</code> kiểu <code>varchar(16)</code>
+        vào bảng <code>users</code>:</p>
+      <pre>alter table users<br>add totp_secret_key varchar(16);</pre>
+      <p>Cập nhật model <code>User</code>, ẩn cột <code>totp_secret_key</code>
+        ở kết quả trả về:</p>
+      <pre>// app/User.php
+
+protected $hidden = [
+    'password', 'remember_token', 'totp_secret_key'
+];</pre>
+      <p>Bạn nhớ tại ửng dụng Authenticator có sẵn trên Google Play và App Store
+        về điện thoại để quét mã QR code nhé. Kết quả quét của mình sẽ như sau:</p>
+      <div class="mb-3"> <img src="https://images.viblo.asia/d8421d5f-5ddf-4ff2-b0c2-86ed87027487.PNG"
+          alt=""> </div>
+      <br>
+      <p>Chú ý: khi thay đổi thư mục <code>vendor</code>, chúng ta phải xóa các
+        file trong thư mục <code>bootstrap/cache</code>. </p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://en.wikipedia.org/wiki/Time-based_One-time_Password_algorithm"
+          target="_blank">Time-based One-time Password algorithm - Wikipedia</a></p>
+      <p><a href="https://viblo.asia/p/laravel-57-two-factor-authentication-with-google2fa-E375z0n1ZGW"
+          target="_blank">Laravel 5.7: Two Factor Authentication with Google2FA</a></p>
+      <p><a href="https://github.com/antonioribeiro/google2fa" target="_blank">antonioribeiro/google2fa:
+          A One Time Password Authentication package, compatible with Google
+          Authenticator.</a></p>
+      <p><a href="https://github.com/antonioribeiro/google2fa-laravel" target="_blank">antonioribeiro/google2fa-laravel:
+          A One Time Password Authentication package, compatible with Google
+          Authenticator for Laravel</a></p>
+      <p><a href="https://github.com/antonioribeiro/google2fa-qrcode" target="_blank">antonioribeiro/google2fa-qrcode:
+          QRCode for Google2FA</a></p>
+      <p><a href="https://github.com/Spomky-Labs/otphp" target="_blank">Spomky-Labs/otphp:
+          A PHP library for generating one time passwords according to RFC 4226
+          (HOTP) and the RFC 6238 (TOTP)</a></p>
+      <p><a href="https://github.com/PHPGangsta/GoogleAuthenticator" target="_blank">PHPGangsta/GoogleAuthenticator:
+          PHP class to generate and verify Google Authenticator 2-factor
+          authentication</a></p>
+      <p><a href="https://www.idontplaydarts.com/2011/07/google-totp-two-factor-authentication-for-php/"
+          target="_blank">Google TOTP Two-factor Authentication for PHP |
+          Application Security</a></p>
+      <p><a href="https://www.blognow.org/blogs/view/e71ce135-acfb-4b0c-996e-55efb55c6245/how-to-implement-2-factor-authentication-with-google-authenticator-using-php-library-phpgangsta"
+          target="_blank">How to implement 2-factor authentication with Google
+          Authenticator using php library (PHPGangsta)</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

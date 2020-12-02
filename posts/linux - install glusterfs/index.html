@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="date" content="2020-02-23 01:01:01">
+    <meta name="description" content="GlusterFS">
+    <title>Cài đặt GlusterFS</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Cài đặt GlusterFS</h2>
+      <h3>Cài đặt</h3>
+      <p>Sửa file <code>/etc/hosts</code> trên cả ba máy:</p>
+      <pre>192.168.1.116   &nbsp;ubuntu-server-1.tk
+192.168.1.174   &nbsp;ubuntu-server-2.tk<br>
+#192.168.1.176   ubuntu-server-3.tk
+</pre>
+      <p>Cài đặt glusterfs-server trên hai server:</p>
+      <pre>apt install software-properties-common -y<br>apt install glusterfs-server -y</pre>
+      <p>Khởi tạo dịch vụ:</p>
+      <pre>systemctl status glusterd<br>systemctl start glusterd<br>systemctl status glusterd<br>systemctl enable glusterd</pre>
+      <p>Kiểm tra phiên bản:</p>
+      <pre>glusterfsd --version</pre>
+      <p>Từ server #1, thực hiện các lệnh sau để kết nối đến server #2:</p>
+      <pre>gluster peer probe ubuntu-server-2.tk<br><br>gluster peer status<br>gluster pool list</pre>
+      <p>Các thay đổi sẽ tự động được nhận ở server #2, bạn có thể kiểm tra từ
+        server #2:</p>
+      <pre>gluster peer status<br>gluster pool list</pre>
+      <p>Trên cả hai server, tạo thư mục:</p>
+      <pre>mkdir -p /glusterfs/distributed</pre>
+      <p>Từ một trong hai server, tạo volume và start:</p>
+      <pre>gluster volume create vol01 \<br>&nbsp; &nbsp; replica 2 \<br>&nbsp; &nbsp; transport tcp \
+&nbsp; &nbsp; ubuntu-server-1.tk:/glusterfs/distributed \
+&nbsp; &nbsp; ubuntu-server-2.tk:/glusterfs/distributed \
+&nbsp; &nbsp; force<br><br>gluster volume start vol01<br>gluster volume info vol01</pre>
+      <p>Tiến hành cài đặt trên máy client:</p>
+      <pre>apt install glusterfs-client -y</pre>
+      <p>Tạo thư mục (trên cả ba máy):</p>
+      <pre>mkdir -p /mnt/glusterfs</pre>
+      <p>Sau đó mount:</p>
+      <pre># Máy client<br>mount -t glusterfs ubuntu-server-1.tk:/vol01 /mnt/glusterfs<br><br># Máy server số 1<br>mount -t glusterfs ubuntu-server-1.tk:/vol01 /mnt/glusterfs<br><br># Máy server số 2<br>mount -t glusterfs ubuntu-server-2.tk:/vol01 /mnt/glusterfs</pre>
+      <p>Bạn có thể sửa file <code>/etc/fstab</code>:</p>
+      <pre># Trên server số 1<br>echo 'localhost:/vol01 /mnt/glusterfs glusterfs defaults,_netdev,backupvolfile-server=localhost 0 0' &gt;&gt; /etc/fstab
+<br># Trên server số 2
+echo 'localhost:/vol01 /mnt/glusterfs glusterfs defaults,_netdev,backupvolfile-server=localhost 0 0' &gt;&gt; /etc/fstab
+<br># Trên client
+echo 'ubuntu-server-1.tk:/vol01 /mnt/glusterfs glusterfs defaults,_netdev,backupvolfile-server=localhost 0 0' &gt;&gt; /etc/fstab</pre>
+      <p>Kiểm tra:</p>
+      <pre>ls /mnt/glusterfs</pre>
+      <h3>Tham khảo</h3>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <a href="https://docs.gluster.org/en/v3/Administrator%20Guide/Setting%20Up%20Volumes/"
+          target="_blank">Setting Up Volumes - Gluster Docs</a></p>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <a href="https://docs.gluster.org/en/latest/Quick-Start-Guide/Quickstart/">Quick
+          Start Guide - Gluster Docs</a></p>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <a href="https://1hosting.com.vn/glusterfs-la-gi-cau-hinh-glusterfs-nhu-nao-phan-1/">Glusterfs
+          là gì? Cấu hình Glusterfs như nào - Phần 1</a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,112 @@
+.tree {
+  /*
+  top: 0%;
+  left: 0%;
+  transform-origin: top left;
+  */
+  transform-origin: 0px 0px;
+  cursor: move;
+  user-select: none; }
+  .tree ul {
+    padding: 20px 0 0 0;
+    position: relative;
+    white-space: nowrap;
+    display: flex;
+    justify-content: center; }
+    .tree ul li {
+      display: inline-block;
+      text-align: center;
+      list-style-type: none;
+      position: relative;
+      padding: 20px 5px 0px 5px; }
+      .tree ul li span {
+        border: 1px solid #ccc;
+        text-decoration: none;
+        color: #666;
+        font-family: arial, verdana, tahoma;
+        font-size: 11px;
+        border-radius: 5px;
+        height: 5rem;
+        width: 5rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 10;
+        white-space: normal;
+        vertical-align: top;
+        padding: 0.5rem; }
+        .tree ul li span + span {
+          margin-left: 20px; }
+          .tree ul li span + span::before {
+            content: "";
+            position: absolute;
+            border-top: 1px solid #ccc;
+            top: 50%;
+            left: -21px;
+            width: 21px; }
+      .tree ul li:only-child {
+        padding-top: 0; }
+
+.tree ul li::before, .tree ul li::after {
+  content: "";
+  position: absolute;
+  border-top: 1px solid #ccc;
+  width: 51%;
+  height: 65px;
+  top: 0;
+  right: 50%; }
+.tree ul li::after {
+  right: auto;
+  left: 50%;
+  border-left: 1px solid #ccc; }
+.tree ul li:only-child::before, .tree ul li:only-child::after {
+  display: none; }
+.tree ul li:first-child::before {
+  border: 0 none; }
+.tree ul li:last-child::after {
+  border: 0 none; }
+.tree ul li:last-child::before {
+  border-right: 1px solid #ccc;
+  transform: translateX(1px);
+  border-radius: 0 5px 0 0; }
+.tree ul li:first-child::after {
+  border-radius: 5px 0 0 0; }
+.tree ul ul::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  border-left: 1px solid #ccc;
+  width: 0;
+  height: 80px; }
+
+.tree > ul > li > ul:before {
+  top: -40px; }
+
+/*
+.tree {
+    li {
+        span {
+            &:hover {
+                &,
+                &~ul li a {
+                    background: #c8e4f8;
+                    color: #000;
+                    border-color: #94a0b4;
+                }
+
+                // Connector styles on hover
+                &~ul li::after,
+                &~ul li::before,
+                &~ul::before,
+                &~ul ul::before {
+                    border-color: #94a0b4;
+                }
+            }
+        }
+    }
+}
+*/
+
+/*# sourceMappingURL=style.css.map */

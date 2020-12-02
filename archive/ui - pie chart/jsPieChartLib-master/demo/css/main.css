@@ -1,0 +1,126 @@
+body {
+  margin: 0;
+  font-size: 0;
+}
+
+#gear {
+  display: block;
+  width: 40px;
+  height: 40px;
+  background: url("../img/gear.png") no-repeat;
+  background-size: contain;
+  background-color: #e5e5e5;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1;
+  opacity: 0.8;
+  transition: opacity 500ms;
+}
+
+#download {
+  width: 40px;
+  height: 40px;
+  background: url("../img/download.png") no-repeat;
+  background-size: contain;
+  background-color: #e5e5e5;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  z-index: 1;
+  opacity: 0.8;
+  transition: opacity 500ms;
+}
+
+#gear:hover {
+  opacity: 1;
+}
+
+#download:hover {
+  opacity: 1;
+}
+
+#content {
+  width: 100vw;
+  height: 100vh;
+  /* http://www.allfreebackgrounds.com/ */
+  background: url("../img/graph.jpg") repeat;
+  text-align: center;
+  position: fixed;
+  z-index: 0;
+}
+
+#display {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#settings {
+  position: absolute;
+  top: 100vh;
+  z-index: 1;
+  width: 100%;
+  font-size: 16px;
+  background: #e5e5e5;
+  text-align: left;
+  box-shadow: 0px 0px 4px #999;
+}
+
+#general {
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%);
+  box-shadow: 0px 2px 4px #999;
+  padding: 10px;
+}
+
+#items {
+  padding: 40px;
+  padding-bottom: 0;
+}
+
+.item {
+  border: 1px solid #CCC;
+  border-bottom: 0;
+  padding: 20px;
+  background: #f5f5f5;
+}
+
+.item > div {
+  display: inline-block;
+  width: 90%;
+}
+
+.item > a {
+  display: inline-block;
+  float: right;
+  text-decoration: none;
+  color: #666;
+  font-family: "Lucida Console", monospace;
+  font-size: 25px;
+}
+
+#addItem {
+  margin: 40px;
+  margin-top: 0;
+  padding: 10px;
+  text-align: center;
+  color: #666;
+  border: 1px solid #CCC;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+#addItem:hover {
+  color: #333;
+}
+
+.color_picker {
+  width: 40px;
+  height: 20px;
+  vertical-align: text-bottom;
+  margin-right: 10px;
+}

@@ -1,0 +1,125 @@
+$border: 1px solid #AAA;
+
+
+@mixin fakeBorder {
+    content: '';
+    display: block;
+    position: absolute;
+
+    @content;
+}
+
+@mixin fakeBorderBottom {
+    @include fakeBorder {
+        border-bottom: $border;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+}
+
+@mixin fakeBorderTop {
+    @include fakeBorder {
+        border-top: $border;        
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+}
+
+@mixin fakeBorderRight {
+    @include fakeBorder {
+        border-right: $border;
+        top: 0;
+        bottom: 0;
+        right: 0;
+    }
+}
+
+
+.fixed-table {
+    border-collapse: collapse;
+    border: none;
+
+    td, th {
+        border: none;
+        border-bottom: $border;
+        border-right: $border;
+        white-space: nowrap;
+    }
+
+    thead {
+        th {
+            position: sticky !important;
+            top: 0px;
+            border-top: none;
+            z-index: 2;
+            background-color: #8cd9d9;
+
+            &.sticky-cell {
+                z-index: 3;
+            }
+
+            border-bottom: none;
+
+            // :after đã được data-sort-column sử dụng, chú ý bị xung đột
+            &:after {
+                @include fakeBorderBottom;
+            }
+
+            .fake-border-bottom {
+                @include fakeBorderBottom;
+            }
+        }
+    }
+
+    tbody {
+        tr:last-child {
+            td {
+                border-bottom: none;
+            }
+        }
+    }
+
+    tfoot {
+        td {
+            position: sticky;
+            bottom: 0;
+            border-bottom: none;
+            z-index: 2;
+            background-color: #8cd9d9;
+
+            &.sticky-cell {
+                z-index: 3;
+            }
+
+            &:after {
+                @include fakeBorderTop;
+            }
+        }
+    }
+
+    tr > .sticky-cell {
+        position: sticky; 
+        left: 0px;
+        border-left: none;
+        border-right: none;
+        z-index: 2;
+        background: #8cd9d9;
+
+        &:before {
+            @include fakeBorderRight;
+        }
+
+        .fake-border-right {
+            @include fakeBorderRight;
+        }
+    }
+}
+
+
+.fixed-table-wrapper {
+    overflow: auto;
+    border-top: $border;
+    border-left: $border;
+}

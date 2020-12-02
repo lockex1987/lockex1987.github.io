@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Giới hạn truy cập với Laravel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta name="description" content="Laravel Rate Limit">
+  </head>
+  <body>
+    <article>
+      <h2>Giới hạn truy cập với Laravel</h2>
+      <p>Rate limit là cách bạn giới hạn số lần truy cập trong một khoảng thời
+        gian nào đó. Nó có thể áp dụng với cổng, IP, đường dẫn,... Nó thường
+        được sử dụng để ngăn chặn các bot truy cập quá nhiều vào API của bạn. Ví
+        dụ, bạn có thể muốn giới hạn việc sử dụng API của mỗi người dùng được
+        nhiều nhất là 100 lần gọi API trong khoảng thời gian là 10 phút. Nếu có
+        quá nhiều request được nhận từ một người dùng trong một khoảng thời gian
+        nhất định, một response với status code là 429 (có nghĩa là "Có quá
+        nhiều request") nên được trả về.</p>
+      <h3>Ví dụ đơn giản</h3>
+      <p>Khởi tạo dự án:</p>
+      <pre>composer create-project --prefer-dist laravel/laravel rate-limit
+cd rate-limit
+php artisan serve</pre>
+      <p>Khai báo một API test đơn giản ở <code>routes/web.php</code>.</p>
+      <pre style="border: 1px solid green; border-radius: 5px;"><code style="color: rgb(248, 248, 242); background-color: rgb(43, 43, 43); display: block; padding: 5px;">Route::get(<span
+style="color: rgb(171, 227, 56);">'/test'</span>, <span style="color: rgb(248, 248, 242);"><span
+style="color: rgb(220, 198, 224);">function</span><span style="color: rgb(245, 171, 53);"> (Request $request)</span> </span>{
+    <span style="color: rgb(220, 198, 224);">return</span> [
+        <span style="color: rgb(171, 227, 56);">'code'</span> =&gt; <span style="color: rgb(245, 171, 53);">0</span>,
+        <span style="color: rgb(171, 227, 56);">'message'</span> =&gt; <span style="color: rgb(171, 227, 56);">'Success'</span>
+    ];
+});</code></pre>
+      <p>Truy cập <a target="_blank" href="http://localhost:8000/test">localhost:8000/test</a>.</p>
+      <p>Tiếp theo, chúng ta sẽ bảo vệ API bằng cách bao đoạn code trên ở trong
+        middleware như sau:</p>
+      <pre style="border: 1px solid green; border-radius: 5px;"><code style="color: rgb(248, 248, 242); background-color: rgb(43, 43, 43); display: block; padding: 5px;">Route::middleware(<span
+style="color: rgb(171, 227, 56);">'throttle:5,2'</span>)-&gt;group(<span style="color: rgb(248, 248, 242);"><span
+style="color: rgb(220, 198, 224);">function</span><span style="color: rgb(245, 171, 53);"> ()</span> </span>{
+    Route::get(<span style="color: rgb(171, 227, 56);">'/test'</span>, <span style="color: rgb(248, 248, 242);"><span
+style="color: rgb(220, 198, 224);">function </span><span style="color: rgb(245, 171, 53);">(Request $request)</span> </span>{
+        <span style="color: rgb(220, 198, 224);">return</span> [
+            <span style="color: rgb(171, 227, 56);">'code'</span> =&gt; <span style="color: rgb(245, 171, 53);">0</span>,
+            <span style="color: rgb(171, 227, 56);">'message'</span> =&gt; <span
+style="color: rgb(171, 227, 56);">'Success'</span>
+        ];
+    });
+});</code></pre>
+      <p>Middleware <code>throttle</code> có 2 tham số:</p>
+      <ul>
+        <li>Số đầu tiên là số lần request tối đa</li>
+        <li>Số thứ hai là khoảng thời gian (tính bằng phút)</li>
+      </ul>
+      <p>Ở trong ví dụ trên, bạn chỉ được phép gọi API tối đa 5 lần trong 2
+        phút.</p>
+      <p>Khi bạn gọi API trên, server sẽ trả về với các header sau:</p>
+      <pre>X-RateLimit-Limit: 5<br>X-RateLimit-Remaining: 0<br>Retry-After: 83</pre> 
+   <p>Header Retry-After chỉ có khi bạn đã vượt quá số lần truy cập cho phép.</p> 
+   <p>Nếu bạn truy cập quá nhiều, server sẽ trả về lỗi 429 Too Many Requests.</p> 
+   <p>Việc giới hạn truy cập này mặc định là theo IP. Tuy nhiên, nhiều ISP sử dụng giải pháp NAT, do đó nhiều người dùng sẽ có chung IP. Nếu bạn muốn giới hạn theo một cái gì đó khác IP, chúng ta có thể extend lớp <code>ThrottleRequests</code> và ghi đè hàm <code>resolveRequestSignature</code>.</p> 
+   <p>Mặc định các API khai báo ở <code>routes/api.php</code> sẽ được giới hạn 60 lần trong 1 phút. Bạn có thể xem ở <code>app/Http/Kernel.php</code>, đoạn code như sau:</p> 
+   <pre style="border: 1px solid green; border-radius: 5px;"><code id="output" style="color: rgb(248, 248, 242); background-color: rgb(43, 43, 43); display: block; padding: 5px;"><span
+style="color: rgb(220, 198, 224);">protected</span> $middlewareGroups = [
+    <span style="color: rgb(171, 227, 56);">'web'</span> =&gt; [
+        // ...
+    ],
+
+<span style="color: rgb(171, 227, 56);">    'api'</span> =&gt; [
+        <span style="color: rgb(171, 227, 56);">'throttle:60,1'</span>,
+        <span style="color: rgb(171, 227, 56);">'bindings'</span>,
+    ],
+];</code></pre> 
+   <p></p> 
+   <h3>Giới hạn đăng nhập</h3><p>Laravel mặc định cũng áp dụng việc giới hạn với chức năng đăng nhập. LoginController -&gt; AuthenticatesUsers -&gt; ThrottlesLogins. Mặc định sẽ là 5 lần trong 1 phút. Để thay đổi số lần và số phút, chúng ta hãy khai báo các thuộc tính <code>$maxAttempts</code>, <code>$decayMinutes</code>. Tham khảo 2 phương thức sau ở ThrottlesLogins:</p><pre>/**
+ * Get the maximum number of attempts to allow.
+ *
+ * @return int
+ */
+public function maxAttempts()
+{
+    return property_exists($this, 'maxAttempts') ? $this-&gt;maxAttempts : 5;
+}
+
+/**
+ * Get the number of minutes to throttle for.
+ *
+ * @return int
+ */
+public function decayMinutes()
+{
+    return property_exists($this, 'decayMinutes') ? $this-&gt;decayMinutes : 1;
+}</pre><p>Tham khảo thêm middleware ThrottleRequests và lớp RateLimiter.</p><h3>Tùy chỉnh</h3><p>Tự điều chỉnh middleware giới hạn truy cập theo ý mình:</p><ul><li>Thêm tham số thứ 3 là số phút sẽ khóa.</li><li>Chỉ giới hạn các request thất bại. Các request là thất bại nếu được đánh dấu trong nghiệp vụ.</li><li>Giới hạn theo từng URI (mặc định đang không phân biệt URI).</li></ul><p>Đăng ký middleware mới ở App\Http\Kernel.</p><pre>protected $routeMiddleware = [
+    //
+
+    'customThrottle' =&gt; \App\Http\Middleware\CustomThrottleRequests::class
+];</pre><p><a href="CustomThrottleRequests.php">CustomThrottleRequests.php</a></p><p><a
+href="CustomRateLimiter.php">CustomRateLimiter.php</a></p><p><br></p><p><br></p><p><br></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>
+</body></html>

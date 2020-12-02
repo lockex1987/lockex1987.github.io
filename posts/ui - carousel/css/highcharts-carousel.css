@@ -1,0 +1,40 @@
+/* Cần đảm bảo chiều rộng từng phần tử là nguyên */
+/* Phép tính width: calc((100% - (var(--carouselItemNum) - 1) * var(--carouselItemGap)) / var(--carouselItemNum)); ra giá trị nguyên */
+/* 2 nút trước sau có tổng chiều rộng là 64px */
+@media (min-width: 768px) {
+    #gallery {
+        --carouselItemGap: 16px;
+        --carouselItemNum: 2;
+
+        /* width - 64 - 16 chia hết cho 2 */
+        width: 720px;
+    }
+}
+
+@media (min-width: 1200px) {
+    #gallery {
+        --carouselItemNum: 3;
+
+        /* width - 64 - 32 chia hết cho 3 */
+        width: 1140px;
+    }
+}
+
+.chart {
+    height: 300px;
+}
+
+.nat-carousel-control {
+    width: 32px;
+    opacity: 0.5;
+    transition: opacity .15s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}
+
+.nat-carousel-control:hover {
+    opacity: 1;
+    text-decoration: none;
+}

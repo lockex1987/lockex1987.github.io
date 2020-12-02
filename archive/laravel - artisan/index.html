@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Thực hiện các lệnh PHP artisan">
+    <title>Laravel Artisan</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Console Commands</h2>
+      <h3>Giới thiệu</h3>
+      <p>Artisan là giao diện command-line đi theo Laravel. Nó cung cấp một danh
+        sách các câu lệnh hữu ích để sử dụng trong quá trình phát triển sản
+        phẩm. Artisan được phát triển dựa trên component Symfony Console khá
+        mạnh mẽ. Để xem danh sách các câu lệnh được cung cấp, bạn có thể sử dụng
+        câu lệnh <code>list</code> command:</p>
+      <pre><code>php artisan list</code></pre>
+      <p>Mỗi câu lệnh đều có kèm theo một màn hình "help" để hiển thị và mô tả
+        những đối số và tuỳ chọn có thể sử dụng. Để xem màn hình help, đơn giản
+        chỉ cần gõ tên câu lệnh kèm theo từ khoá <code>help</code>:</p>
+      <pre><code>php artisan help migrate</code></pre>
+      <h3>Viết Commands</h3>
+      <p>Ngoài việc sử dụng các câu lệnh được cung cấp sẵn, ban cũng có thể tạo
+        câu lệnh riêng để sử dụng cho ứng dụng của bạn. Bạn có thể lưu trữ các
+        câu lệnh riêng đó trong thư mục <code>app/Console/Commands</code>; tuy
+        nhiên, bạn thoải mái trong việc chọn vị trí lưu đặt mã nguồn các câu
+        lệnh với điều kiện là phải khai báo tự động khởi tạo trong cấu hình của.</p>
+      <h4>Tạo Commands</h4>
+      <p>Để tạo một câu lệnh mới, bạn có thể sử dụng câu lệnh <code>make:command</code>.
+        nó sẽ tạo ra các khung mã nguồn cơ bản để giúp bạn bắt đầu một cách dễ
+        dàng hơn <code>app/Console/Commands</code>. Đừng lo lắng nếu thư mục
+        không có trong project, vì nó sẽ được tạo trong lần chạy đầu tiên <code>make:command</code>.
+        Nó sẽ thêm vào các thuộc tính mặc định và phương thức có mặt trên tất cả
+        các lệnh:</p>
+      <pre><code>php artisan make:command SendEmails</code></pre>
+      <h4>Cấu trúc command</h4>
+      <p>Khi mà câu lệnh được tạo ra, bạn nên điền vào thông tin của hai thuộc
+        tính <code>signature</code> và <code>description</code> trong class,
+        vì chúng sẽ được dùng để hiển thị khi mà câu lệnh <code>list</code>
+        được thực thi. Hàm <code>handle</code> sẽ được gọi khi command được
+        thực thi. Bạn có thể viết logic vào trong hàm này.</p>
+      <p> Để việc tái sử dụng code được tốt hơn, nó là cách tốt để giữu cho
+        console commands sáng và để cho defer ứng dụng services để thực hiện
+        task của mình. Trong ví dụ bên dưới, chú ý là chúng inject một class
+        service để làm "heavy lifting" gửi e-mails.</p>
+      <p>Hãy xem một ví vụ command. Chú ý là chúng ta có thể inject bất kỳ
+        dependencies chúng ta cần vào hàm constructor. Laravel <a href="https://giaphiep.com/docs/5.3/container">service
+          container</a> sẽ tự động inject tất cả dependencies type-hinted trong
+        constructor:</p>
+      <pre><code>&lt;?php
+
+namespace App\Console\Commands;
+
+use App\User;
+use App\DripEmailer;
+use Illuminate\Console\Command;
+
+class SendEmails extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var  string
+     */
+    protected $signature = 'email:send {user}';
+
+    /**
+     * The console command description.
+     *
+     * @var  string
+     */
+    protected $description = 'Send drip e-mails to a user';
+
+    /**
+     * The drip e-mail service.
+     *
+     * @var  DripEmailer
+     */
+    protected $drip;
+
+    /**
+     * Create a new command instance.
+     *
+     * @param    DripEmailer  $drip
+     * @return  void
+     */
+    public function __construct(DripEmailer $drip)
+    {
+        parent::__construct();
+
+        $this-&gt;drip = $drip;
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return  mixed
+     */
+    public function handle()
+    {
+        $this-&gt;drip-&gt;send(User::find($this-&gt;argument('user')));
+    }
+}</code></pre>
+      <h4>Closure Commands</h4>
+      <p>Closure based commands cung cấp một cách định nghĩa khác của console
+        commands như classes. Giống như route closures là thay thế cho các
+        controllers, nghĩ command closures như là một thay thể của command
+        classes. Trong hàm <code>commands</code> của file <code>app/Console/Kernel.php</code>,
+        Laravel loads file <code>routes/console.php</code>:</p>
+      <pre><code>/**
+ * Register the Closure based commands for the application.
+ *
+ * @return  void
+ */
+protected function commands()
+{
+    require base_path('routes/console.php');
+}</code></pre>
+      <p>Mặc dù file này không được định nghĩa HTTP routes, nó định nghĩa
+        console based entry points (routes) vào ứng dụng. Bên trong file này,
+        bạn có thể định nghĩa tất cả closure based routes sử dụng hàm <code>Artisan::command</code>.
+        Hàm <code>command</code> chấp nhận hai tham số: <a href="https://giaphiep.com/docs/5.3/artisan#defining-input-expectations">command
+          signature</a> và một closure nhận tham số và tùy chọn:</p>
+      <pre><code>Artisan::command('build {project}', function ($project) {
+    $this-&gt;info("Building {$project}!");
+});</code></pre>
+      <p>Closure là ràng buộc để các command instance, vì vậy bạn có thể hoàn
+        toàn truy cập các hàm helper bạn muốn truy cập vào một full command
+        class.</p>
+      <h4>Type-Hinting Dependencies</h4>
+      <p>Ngoài ra để nhận tham số command và options, command closures ngoài ra
+        có thể type-hint thêm các dependencies bạn muốn để giải quyết khỏi <a href="https://giaphiep.com/docs/5.3/container">service
+          container</a>:</p>
+      <pre><code>use App\User;
+use App\DripEmailer;
+
+Artisan::command('email:send {user}', function (DripEmailer $drip, $user) {
+    $drip-&gt;send(User::find($user));
+});</code></pre>
+      <h4>Miêu tả closure command</h4>
+      <p>Khi bạn định nghĩa một closure-based command, bạn có thể sử dụng hàm <code>describe</code>
+        để thêm miêu tả cho command. Miêu tả này sẽ hiện khi chạy lệnh <code>php
+          artisan list</code> hoặc <code>php artisan help</code>:</p>
+      <pre><code>Artisan::command('build {project}', function ($project) {
+    $this-&gt;info("Building {$project}!");
+})-&gt;describe('Build the project');</code></pre>
+      <h3>Defining Input Expectations</h3>
+      <p>Khi viết console commands, người dùng thường thêm input qua tham số
+        lệnh. Laravel làm cho việc đó khá thuận tiện để xác định input bạn muốn
+        từ user sử dụng thuộc tính <code>signature</code> trong commands. Thuộc
+        tính <code>signature</code> cho phép bạn định nghĩa tên, đối số, và tùy
+        chọn cho command trong 1 single, expressive, route-like syntax.</p>
+      <h4>Tham số</h4>
+      <p>Tất cả các đối số và tùy chọn được nằm trong cặp ngoặc nhọn. Trong ví
+        dụ dưới đây, command định nghĩa một tham số <strong>bắt buộc</strong>:
+        <code>user</code>:</p>
+      <pre><code>/**
+ * The name and signature of the console command.
+ *
+ * @var  string
+ */
+protected $signature = 'email:send {user}';</code></pre>
+      <p>Bạn cũng có thể tạo tham số tùy chọn và định nghĩa giá trị mặc định cho
+        nó:</p>
+      <pre><code>// Optional argument...
+email:send {user?}
+
+// Optional argument with default value...
+email:send {user=foo}</code></pre>
+      <h4>Tùy chọn</h4>
+      <p>Tùy chọn, như tham số, là một dạng input khác của người dùng. Nó được
+        bắt đầu bằng hai dấu gạch nối (<code>--</code>) khi họ xác định chúng
+        trên command line. Có hai kiểu tùy chọn: nhận giá trị và không nhận giá
+        trị. Tùy chọn không nhận giá trị như boolean "switch". Hãy xem ví dụ về
+        kiểu tùy chọn:</p>
+      <pre><code>/**
+ * The name and signature of the console command.
+ *
+ * @var  string
+ */
+protected $signature = 'email:send {user} {--queue}';</code></pre>
+      <p>Trong ví dụ này, <code>--queue</code> switch có thể được chỉ định khi
+        gọi Artisan command. Nếu swith <code>--queue</code> được thông qua, giá
+        trị của tùy chọn là <code>true</code>. Ngược lại, giá trị sẽ là <code>false</code>:</p>
+      <pre><code>php artisan email:send 1 --queue</code></pre>
+      <h4>Tùy chọn với giá trị</h4>
+      <p>Tiếp theo, hãy xem một ví dụ với tùy chọn có giá trị mong đợi. Nếu
+        người dùng phải chỉ định một giá trị cho tùy chọn, hậu tố của tên tùy
+        chọn là ký hiệu <code>=</code>:</p>
+      <pre><code>/**
+ * The name and signature of the console command.
+ *
+ * @var  string
+ */
+protected $signature = 'email:send {user} {--queue=}';</code></pre>
+      <p>Trong ví dụ này, người dùng có thể truyền giá trị tùy chọn tùy ý như:</p>
+      <pre><code>php artisan email:send 1 --queue=default</code></pre>
+      <p>Bạn có thể gán giá trị mặc định cho tùy chọn bởi xác định giá trị mặc
+        định sau tên tùy chọn. Nếu không có giá trị truyền vào bởi user, giá trị
+        mặc định sẽ được sử dụng:</p>
+      <pre><code>email:send {user} {--queue=default}</code></pre>
+      <h4>Shortcuts của tùy chọn</h4>
+      <p>Để gán một shortcut khi định nghĩa một tùy chọn, bạn có thể chỉ định nó
+        trước tên và sử dụng ký tự | để tách shortcut từ tên đầy đủ của tùy
+        chọn:</p>
+      <pre><code>email:send {user} {--Q|queue}</code></pre>
+      <h4>Input Arrays</h4>
+      <p>Nếu bạn muốn định nghĩa nhiều tham số thành một mảng, bạn có thể sử
+        dụng ký tự <code>*</code>. Đầu tiên, hãy xem ví dụ có một mảng tham số:</p>
+      <pre><code>email:send {user*}</code></pre>
+      <p>Khi gọi hàm này, tham số <code>user</code> có thể được truyền vào
+        trong command line. Ví dụ, command sau sẽ đặt giá trị của <code>user</code>
+        thành <code>['foo', 'bar']</code>:</p>
+      <pre><code>php artisan email:send foo bar</code></pre>
+      <p>Khi định nghĩa một tùy chọn là một array, mỗi giá trị tùy chọn truyền
+        vào command nên được bắt đầu với tên tùy chọn:</p>
+      <pre><code>email:send {user} {--id=*}
+
+php artisan email:send --id=1 --id=2</code></pre>
+      <h4>Miêu tả đầu vào</h4>
+      <p>Bạn có thể gán miêu tả tham số đầu vào và tùy chọn bởi tách tham số từ
+        miêu tả sử dụng một dấu hai chấm. Nếu bạn cần thêm định nghĩa command,
+        bạn có thể định nghĩa chúng trên nhiều dòng:</p>
+      <pre><code>/**
+ * The name and signature of the console command.
+ *
+ * @var  string
+ */
+protected $signature = 'email:send
+                        {user : The ID of the user}
+                        {--queue= : Whether the job should be queued}';</code></pre>
+      <h3>Command I/O</h3>
+      <h4>Nhận đầu vào</h4>
+      <p>Khi câu lệnh được thực thi, rõ ràng là chúng ta cần lấy được giá trị
+        của các đối số và tuỳ chọn được nhận vào câu lệnh. Để làm được điều này,
+        bạn cần sử dụng tới phương thức <code>argument</code> và <code>option</code>:</p>
+      <pre><code>/**
+ * Execute the console command.
+ *
+ * @return  mixed
+ */
+public function handle()
+{
+    $userId = $this-&gt;argument('user');
+
+    //
+}</code></pre>
+      <p>Nếu bạn cần lấy tất cả đối số truyền vào dưới dạng một <code>array</code>,
+        gọi hàm <code>arguments</code>:</p>
+      <pre><code>$arguments = $this-&gt;arguments();</code></pre>
+      <p>Tuỳ chọn có thể nhận thông qua phương thức <code>option</code>. để
+        nhận tất cả tùy chọn như một mảng, gọi hàm <code>options</code>:</p>
+      <pre><code>// Retrieve a specific option...
+$queueName = $this-&gt;option('queue');
+
+// Retrieve all options...
+$options = $this-&gt;options();</code></pre>
+      <p>Nếu như đối số hay tuỳ chọn không tồn tại, giá trị <code>null</code>
+        sẽ được trả về.</p>
+      <h4>Yêu cần nhập Input</h4>
+      <p>Ngoài việc hiển thị, bạn cũng có thể yêu cầu người dùng nhập dữ liệu
+        trong quá trình thực thi câu lệnh. Phương thức <code>ask</code> sẽ yêu
+        cầu người dùng nhập dữ liệu với câu hỏi được đưa ra, nhận dữ liệu và
+        truyền dữ liệu nhập từ người dùng vào trong câu lệnh:</p>
+      <pre><code>/**
+ * Execute the console command.
+ *
+ * @return  mixed
+ */
+public function handle()
+{
+    $name = $this-&gt;ask('What is your name?');
+}</code></pre>
+      <p>Phương thức <code>secret</code> tương tự như <code>ask</code>, nhưng
+        dữ liệu mà người dùng nhập khi gõ bàn phím sẽ không được hiển thị lên.
+        Phương thức này rất hữu ích khi yêu cầu các thông tin nhạy cảm như mật
+        khẩu:</p>
+      <pre><code>$password = $this-&gt;secret('What is the password?');</code></pre>
+      <h4>Yêu cần xác nhận</h4>
+      <p>Nếu bạn đơn giản chỉ cần một xác nhận từ người sử dụng, bạn có thể sử
+        dụng phương thức <code>confirm</code>. method. Mặc định thì phương thức
+        này trả lại giá trị <code>false</code>. Tuy nhiên, nếu người dùng nhập
+        vào <code>y</code> thì phương thức sẽ trả về <code>true</code>.</p>
+      <pre><code>if ($this-&gt;confirm('Do you wish to continue? [y|N]')) {
+    //
+}</code></pre>
+      <h4>Auto-Completion</h4>
+      <p>Phương thức <code>anticipate</code> có thể sử dụng để cung cấp tự động
+        hoàn thành câu lệnh với một danh sách các sự gợi ý có thể. Người dùng
+        vẫn có thể đưa ra câu trả lời riêng không liên quan tới các gợi ý được
+        đưa ra:</p>
+      <pre><code>$name = $this-&gt;anticipate('What is your name?', ['Taylor', 'Dayle']);</code></pre>
+      <h4>Nhiều sự lựa chọn</h4>
+      <p>Nếu như bạn cần đưa ra một danh sách các sự lựa chọn, bạn có thể dùng <code>choice</code>.
+        Bạn có thể đặt giá trị mặc định được trả về nếu giá trị tùy chọn không
+        được chọn:</p>
+      <pre><code>$name = $this-&gt;choice('What is your name?', ['Taylor', 'Dayle'], $default);</code></pre>
+      <h4>Viết Output</h4>
+      <p>Để gửi output ra console, sử dụng <code>line</code>, <code>info</code>,
+        <code>comment</code>, <code>question</code> và <code>error</code>. Mỗi
+        phương thức sẽ sử dụng màu ANSI tương ứng với mục đích của nó. Ví dụ,
+        hãy định nghĩa một vài thông tin cở bản của user. Thông thường, hàm <code>info</code>
+        sẽ hiển thị chữ màu sinh trên console:</p>
+      <pre><code>/**
+ * Execute the console command.
+ *
+ * @return  mixed
+ */
+public function handle()
+{
+    $this-&gt;info('Display this on the screen');
+}</code></pre>
+      <p>Để hiển thị nội dung về lỗi, sử dụng <code>error</code>. Các nội dung
+        lỗi sẽ được hiển thị bằng màu đỏ:</p>
+      <pre><code>$this-&gt;error('Something went wrong!');</code></pre>
+      <p>Nếu bạn muốn hiển thị nội dung đơn thuẩn, sử dụng hàm <code>line</code>:</p>
+      <pre><code>$this-&gt;line('Display this on the screen');</code></pre>
+      <h4>Table Layouts</h4>
+      <p>Phương thức <code>table</code> sẽ giúp cho việc chỉnh hiển thị các dữ
+        liệu kiểu dòng / cột. Chỉ cần truyền vào headers và các dòng nội dung
+        vào trong phương thức. Chiều rộng vào chiều cao sẽ được tự động tính
+        toán căn chỉnh dựa trên dữ liệu đầu vào:</p>
+      <pre><code>$headers = ['Name', 'Email'];
+
+$users = App\User::all(['name', 'email'])-&gt;toArray();
+
+$this-&gt;table($headers, $users);</code></pre>
+      <h4>Progress Bars</h4>
+      <p>Với các tác vụ chạy lâu, thì việc sử dụng một thanh tiến trình khá là
+        hữu ích. Sử dụng output, chúng ta có thể khởi tạo, chạy tiến trình và
+        dừng thanh tiến trình. Bạn có thể khai báo số lượng steps khi bắt đầu
+        tiến trình và thực hiện chạy:</p>
+      <pre><code>$users = App\User::all();
+
+$bar = $this-&gt;output-&gt;createProgressBar(count($users));
+
+foreach ($users as $user) {
+    $this-&gt;performTask($user);
+
+    $bar-&gt;advance();
+}
+
+$bar-&gt;finish();</code></pre>
+      <p>Tham khảo thêm tại <a href="http://symfony.com/doc/2.7/components/console/helpers/progressbar.html">Symfony
+          Progress Bar component documentation</a>.</p>
+      <h3>Đăng ký Commands</h3>
+      <p>Khi mà câu lệnh hoàn thành, bạn cần phải đăng kí với Artisan để câu
+        lệnh có thể sử dụng được. Việc này sẽ thông qua file <code>app/Console/Kernel.php</code>.
+        Trong file này, bạn có thể thấy một danh sách câu lệnh trong thuộc tính
+        <code>commands</code>. Để đăng kí, đơn giản chỉ cần thêm tên class của
+        câu lệnh vào trong danh sách. Khi Artisan khởi tạo, tất cả các câu lệnh
+        trong danh sách này sẽ được duyệt bởi <a href="https://giaphiep.com/docs/5.3/container">service
+          container</a> và sẽ được đăng kí vào Artisan:</p>
+      <pre><code>protected $commands = [
+    Commands\SendEmails::class
+];</code></pre>
+      <h3>Gọi câu lệnh trên mã nguồn</h3>
+      <p>Đôi lúc bạn muốn thực thi một câu lệnh Artisan nằm ngoài CLI. Ví dụ,
+        bạn muốn gọi một câu lệnh Artisan từ một route hay controller. Bạn có
+        thể sử dụng <code>call</code> trong <code>Artisan</code> facade để
+        thực hiện việc này. Phương thức <code>call</code> nhận tên của câu lệnh
+        vào trong đối số đầu tiên, và một mảng danh sách các tham số thực thi
+        câu lệnh ở đối số thứ hai. Mã kết quả thực thi sẽ được trả lại:</p>
+      <pre><code>Route::get('/foo', function () {
+    $exitCode = Artisan::call('email:send', [
+        'user' =&gt; 1, '--queue' =&gt; 'default'
+    ]);
+
+    //
+});</code></pre>
+      <p>Khi sử dụng <code>queue</code> trong <code>Artisan</code> facade, thì
+        bạn của thể thực hiện câu lệnh trên hàng đợi và chúng sẽ được thực hiện
+        ở background bởi <a href="https://giaphiep.com/docs/5.3/queues">queue
+          workers</a>. Trước khi sử dụng hàm này, đảm bảo bạn có cấu hình queue
+        và đang chạy queue listener:</p>
+      <pre><code>Route::get('/foo', function () {
+    Artisan::queue('email:send', [
+        'user' =&gt; 1, '--queue' =&gt; 'default'
+    ]);
+
+    //
+});</code></pre>
+      <p>Nếu bạn cần chỉ rõ giá trị của tuỳ chọn không nhận kiểu string, ví dụ <code>--force</code>
+        trong lệnh <code>migrate:refresh</code>, bạn có thể truyền vào giá trị
+        boolean <code>true</code> hoặc <code>false</code>:</p>
+      <pre><code>$exitCode = Artisan::call('migrate:refresh', [
+    '--force' =&gt; true,
+]);</code></pre>
+      <h3>Thực thi câu lệnh từ câu lệnh khác</h3>
+      <p>Đôi lúc bạn muốn thực thi gọi câu lệnh từ một câu lệnh Artisan khác.
+        Bạn có thể sử dụng phương thức <code>call</code>. Hàm <code>call</code>
+        chấp nhận tên của lệnh và một mảng tham số:</p>
+      <pre><code>/**
+ * Execute the console command.
+ *
+ * @return  mixed
+ */
+public function handle()
+{
+    $this-&gt;call('email:send', [
+        'user' =&gt; 1, '--queue' =&gt; 'default'
+    ]);
+
+    //
+}</code></pre>
+      <p>Nếu bạn muốn thực thi một câu lệnh và chặn không muốn hiển thị nội dung
+        của nó ra ngoài, bạn có thể dùng <code>callSilent</code>. Hàm <code>callSilent</code>
+        này sử dụng tương tự hàm <code>call</code>:</p>
+      <pre><code>$this-&gt;callSilent('email:send', [
+    'user' =&gt; 1, '--queue' =&gt; 'default'
+]);</code></pre>
+      <p>Nguồn: <a href="https://laravel.com/docs/5.3/artisan">https://laravel.com/docs/5.3/artisan</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

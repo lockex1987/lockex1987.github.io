@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="upload, 413 Request Entity Too Large">
+    <title>Cấu hình upload size cho PHP</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Cấu hình upload size cho PHP</h2>
+      <p>Thỉnh thoảng bạn gặp lỗi <code>413 (Request Entity Too Large)</code>
+        khi upload file lớn với ứng dụng PHP.</p>
+      <p>Chúng ta sẽ cấu hình lại kích thước tối đa khi upload.</p>
+      <p>Cấu hình <code>client_max_body_size</code> ở phần <code>server</code>
+        hoặc <code>location</code> hoặc <code>http</code> trong nginx. Ví dụ:</p>
+      <pre>http {
+    client_max_body_size 20M;
+}</pre>
+      <p>Sửa <code>upload_max_filesize</code> và <code>post_max_size</code>
+        trong file <code>php.ini</code>. Ví dụ:</p>
+      <pre>upload_max_filesize = 2M
+post_max_size = 8M</pre>
+      <p>Bạn có thể cấu hình cả số lượng file <code>max_file_uploads</code>.</p>
+      <pre>max_file_uploads = 20</pre>
+	  <p>Ví dụ:</p>
+      
+      <pre>; Maximum allowed size for uploaded files.
+; http://php.net/upload-max-filesize
+upload_max_filesize = 1000M
+
+; Maximum number of files that can be uploaded via a single request
+max_file_uploads = 20
+
+; Maximum size of POST data that PHP will accept.
+; Its value may be 0 to disable the limit. It is ignored if POST data reading
+; is disabled through enable_post_data_reading.
+; http://php.net/post-max-size
+post_max_size = 1000M</pre>
+<p>Để xác nhận giá trị cấu hình hiện tại bạn có thể sử dụng hàm <code>phpinfo()</code> trong một file <code>.php</code>, hoặc thực hiện các câu lệnh sau:</p>
+<pre>php -i | grep upload_max_filesize
+php -i | grep post_max_size
+php -i | grep max_file_uploads</pre>
+      <p>Bạn có thể lấy vị trí của file <code>php.ini</code> bằng câu lệnh sau:</p>
+      <pre>php --ini</pre>
+	  <p>Sau khi sửa xong cấu hình PHP, bạn cần khởi động lại php-fpm:</p>
+	  <pre>systemctl restart php-fpm</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

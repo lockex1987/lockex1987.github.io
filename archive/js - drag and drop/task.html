@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+
+    <title>Quản lý công việc</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+
+    <link rel="stylesheet" href="css/drop-zone.css" />
+    <link rel="stylesheet" href="css/task.css" />
+</head>
+
+<body class="p-2">
+    <h2>Quản lý công việc</h2>
+
+    <div class="container-fluid">
+        <div class="task-form">
+            <form class="form-inline">
+                <input class="form-control mr-2" placeholder="Tiêu đề" type="text" />
+
+                <button class="btn btn-primary"
+                        onclick="addTask()"
+                        type="submit">
+                    Thêm nhiệm vụ
+                </button>
+            </form>
+        </div>
+
+        <hr />
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="task-list bg-light rounded h-100 task-container drop-zone"
+                        id="pending">
+                    <div class="bg-warning text-center py-3 font-weight-500">Nhiệm vụ mới</div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="task-list bg-light rounded h-100 task-container drop-zone"
+                        id="inProgress">
+                    <div class="bg-primary text-center py-3 font-weight-500">Đang thực hiện</div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="task-list bg-light rounded h-100 task-container drop-zone"
+                        id="completed">
+                    <div class="bg-success text-center py-3 font-weight-500">Đã hoàn thành</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/common.js"></script>
+    <script src="js/drop-zone.js"></script>
+    <script src="js/task.js"></script>
+</body>
+
+</html>

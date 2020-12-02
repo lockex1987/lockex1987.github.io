@@ -1,0 +1,155 @@
+// CHỈNH BOOTSTRAP BẰNG CÁC BIẾN
+
+// Background color
+//$body-bg: #1850a8;
+
+// Typography
+//$font-family-sans-serif: 'Nunito', sans-serif;
+//$font-size-base: 0.9rem;
+//$line-height-base: 1.6;
+
+// Ẩn shadow
+$input-btn-focus-box-shadow: none;
+$btn-active-box-shadow: none;
+$btn-focus-box-shadow: none;
+$btn-focus-width: 0;
+$custom-select-focus-box-shadow: none;
+
+// Chỉnh color
+/*
+$blue: #3490dc;
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66d9b;
+$red: #e3342f;
+$orange: #f6993f;
+
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+*/
+// $yellow: #ffed4a;
+$yellow: #fffa90;
+
+@import "../bootstrap/bootstrap";
+
+
+.breadcrumb-item + .breadcrumb-item::before {
+    padding-right: 0;
+    content: ">";
+}
+
+@each $position in $positions {
+    @include media-breakpoint-up(xl) {
+        .position-xl-#{$position} {
+            position: $position !important;
+        }
+    }
+}
+
+// Highlight input group
+.input-group:focus-within .input-group-text {
+    border-color: $input-focus-border-color;
+}
+
+/**
+ * Cấu hình lại, ghi đè các class của Bootstrap.
+ * Nên sửa các biến của Bootstrap.
+ */
+
+/*
+.modal-dialog {
+    color: #212529;
+}
+
+.modal-header {
+    background-color: #35A3FC;
+    color: #fff;
+}  
+*/
+
+.btn:active,
+.btn:focus,
+.form-control:active,
+.form-control:focus {
+    outline: 0 none;
+    box-shadow: none;
+}
+
+.form-control:focus,
+.form-control:active,
+.btn:focus,
+.btn:active,
+.custom-select:focus,
+.custom-select:active,
+.custom-control-input:focus ~ .custom-control-label::before,
+.custom-control-input:active ~ .custom-control-label::before {
+    outline: 0 none;
+    box-shadow: none;
+}
+
+/*
+.btn {
+    padding: 0px 24px;
+    line-height: 35px;
+    border: 1px solid #C4C4C4;
+    border-radius: 2px;
+}
+
+
+.btn-info {
+    background-color: #35A3FC;
+    border-color: #35A3FC;
+
+    &:hover, &:active, &:focus {
+        background-color: #0a8cf0;
+        border-color: #0985e4;
+    }
+}
+
+.btn-pill {
+    border-radius: 18px;
+}
+
+.btn-default {
+    color: #fff;
+    background-color: #0162A9;
+    border-color: #fff;
+
+    &:hover, &:active, &:focus {
+        background-color: #35A3FC;
+        border-color: #35A3FC;
+    }
+}
+
+.btn-secondary {
+    background: white;
+    border-color: #ebedf2;
+    color: #212529;
+
+    &:hover, &:active, &:focus {
+        border-color: #ebedf2;
+        background-color: #f4f5f8;
+        color: #212529;
+    }
+}
+*/
+
+/*
+.table td,
+.table th {
+    vertical-align: middle;
+}
+
+.table thead th {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #F4F5F8;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #F4F5F8;
+}
+*/

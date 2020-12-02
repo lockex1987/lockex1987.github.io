@@ -1,0 +1,151 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sử dụng Composer">
+    <title>Sử dụng Composer</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Sử dụng Composer</h2>
+      <p>Tìm hiểu Composer, cài đặt và sử dụng Composer để quản lý, cài đặt các
+        thư viện, phân phối thư viện lên Packagist.</p>
+      <h3>Composer là gì</h3>
+      <p>Composer là một công cụ quản lý các dependency trong PHP. Composer quản
+        lý thư viện dựa trên từng project PHP riêng biệt của bạn, nó cài đặt các
+        thư viện này vào một thư mục có tên <code>vendor</code> trong dự án
+        (mỗi dự án có một thư mục <code>vendor</code> riêng). Composer tự động
+        sinh ra file <code>vendor/autoload.php</code>, từ file này giúp bạn nạp
+        các thư viện đã cài đặt. Nó áp dụng cơ chế tự động nạp theo chuẩn <a href="https://xuanthulab.net/psr-4-autoloader-tieu-chuan-viet-tu-dong-nap-khoi-tao-php.html"
+
+          target="_blank">PSR-4 Autoloader</a> và cả <code>PSR-0</code> (lỗi
+        thời).</p>
+      <h3>Lợi ích khi sử dụng Composer</h3>
+      <p>Nói chung là các dự án PHP ngày nay là không thể thiếu Composer, vì
+        chúng thường sử dụng rất nhiều loại thự viện. Nếu cài đặt thư viện thủ
+        công thật sự là ác mộng (<i>tích hợp, cập nhật cực cừ mệt mỏi</i>). Khi
+        có Composer dùng thư viện nào chỉ việc khai báo hay gõ tích hợp, khi cập
+        nhật thự viện nào đó, nó cũng tự động giúp bạn cập nhật luôn các thư
+        viện khác mà thư viện cập nhật dùng tới.</p>
+      <h3>Cài đặt Composer</h3>
+      <p>Bạn xem hướng dẫn ở <a href="../linux%20-%20install%20composer/index.html"
+
+          target="_blank">bài viết này</a>.</p>
+      <h3>Kiểm tra Composer và vài lệnh tổng quan</h3>
+      <p>Từ dòng lệnh terminal gõ cách lệnh:</p>
+      <pre># Kiểm tra phiên bản Composer
+composer --version
+
+# Cập nhật bản thân Composer
+composer selfupdate
+
+# Xóa cache composer<br># Xóa đi các thư viện tải sẵn trong cache để bắt nó tải lại
+composer clearcache
+
+# Tìm các gói thư viện
+composer search &lt;từ tìm kiếm&gt;
+</pre>
+      <h3>Composer cho một dự án mới</h3>
+      <p>Mọi thiết lập Composer cho dự án đều chứa trong file <code>composer.json</code>,
+        nếu chưa có file này cho dự án thì bắt đầu khởi tạo như sau:</p>
+      <pre>composer init
+</pre>
+      <p>Sau lệnh này nó yêu cầu bạn nhập một số thông tin của dự án, hãy nhập
+        thông tin của bạn vào.</p>
+      <p>Ví dụ:</p>
+      <pre>{
+    "name": "huyennv9/demo-composer",
+    "description": "Demo",
+    "require": {}
+}</pre>
+      <p>Sau này, các tùy biến, thiết lập, tích hợp thư viện trên dự án của bạn
+        sẽ tự động cập nhật vào file này.</p>
+      <h3>Tích hợp thư viện vào dự án bằng Composer</h3>
+      <p>Trước hết xác định xem dự án của bạn cần thư viện nào, tìm tại <a href="https://packagist.org/"
+
+          target="_blank">packagist.org</a>.</p>
+      <p>Ví dụ, bạn muốn sử dụng thư viện <a href="https://packagist.org/packages/monolog/monolog"
+
+          target="_blank">monolog/monolog</a> phiên bản mới nhất (thư viện lưu
+        log thông dụng cho PHP), thì từ dòng lệnh gõ:</p>
+      <pre>composer require monolog/monolog
+</pre>
+      <p>Sau lệnh này, Composer sẽ tải tất cả các thành phần để dùng được thư
+        viện <code>monolog/monolog</code> vào dự án của bạn, nó lưu tại <code>vendor</code>,
+        đồng thời cũng có luôn file <code>vendor/autoload.php</code>.</p>
+      <p>Mở lại file <code>composer.json</code> bạn thấy đã có thêm đoạn mã:</p>
+      <pre>{
+    "require": {
+        "monolog/monolog": "^1.24"
+    }
+}</pre>
+      <p>Điều này cho biết, dự án bạn dùng thư viện nào, sau này bạn chia sẻ dự
+        án (copy dự án đi cho khác) bạn không cần phải copy cả thư mục <code>vendor</code>,
+        mà chỉ cần file <code>composer.json</code>, Composer sẽ cập nhật lại <code>vendor</code>
+        cho bạn.</p>
+      <p>Ngoài cách gõ lệnh như trên, bạn cũng có thể viết thư viện cần dùng vào
+        <code>composer.json</code> rồi gọi lệnh:</p>
+      <pre>composer update
+</pre>
+      <p>Nó cũng sẽ kiểm tra và cài đặt tất cả các thư viện cần thiết nếu chưa
+        có. Ví dụ, giờ bạn lại muốn dùng thêm thư viên <a href="https://packagist.org/packages/filp/whoops"
+
+          target="_blank">filp/whoops</a>, phiên bản 2.3.1 (thư viện chuyên hiện
+        thị thông báo lỗi đẹp mắt - tiện dụng để debug).</p>
+      <p>Thay vì cách gõ lệnh như trên, bạn sẽ chỉnh sửa <code>composer.json</code>
+        thêm vào nội dung phần <code>require</code> nội dung mô tả thư viện
+        whoops: <code>"tên-thư-viện":"^phiên-bản-nhỏ-nhất"</code></p>
+      <pre>{
+    "require": {
+        "monolog/monolog": "^1.24",
+        "filp/whoops": "^2.3.1"
+    }
+}</pre>
+      <p>Sau đó gõ lệnh <code>composer update</code>, để cài đặt thư viện. Với
+        cách này bạn có thể liệt kê tất cả các thư viện cần dùng, rồi gõ một
+        lệnh để cài đặt.</p>
+      <p>Như trên đã nói, Composer sinh ra file <code>vendor/autoload.php</code>,
+        bạn chỉ việc <code>include</code>, là có thể sử dụng các thư viện.</p>
+      <p>Ví dụ, sử dụng thư viện <code>monolog/monolog</code> ở trên trong file
+        <code>index.php</code>:</p>
+      <pre class="out-of-box">&lt;?php
+include 'vendor/autoload.php';
+
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+$log = new Logger('name');
+$log-&gt;pushHandler(new StreamHandler('mylogfile.log', Logger::WARNING));
+
+$log-&gt;warning('ghi log');
+$log-&gt;error('ghi log abc');</pre>
+      <h3>Xóa thư viện khỏi dự án</h3>
+      <p>Nếu một thư viện nào đã tích hợp vào dự án (<code>vendor</code>) mà giờ
+        không muốn dùng đến nữa, thì loại bỏ bằng 1 trong hai cách sau:</p>
+      <p>Cách 1: Gõ lệnh <code>composer</code>:</p>
+      <pre>composer remove vendor/package
+</pre>
+      <p>Ví dụ, không muốn dùng đến <code>filp/whoops</code> thì gõ:</p>
+      <pre>composer remove filp/whoops
+</pre>
+      <p>Sau lệnh này, nó sẽ xóa thư viện ra khỏi <code>vendor</code>, cập nhật
+        lại <code>vendor/autoload.php</code>, <code>composer.json</code>, đảm
+        bảo thư viện không còn tồn tại.</p>
+      <p>Cách 2: Cập nhật <code>composer.json</code>:</p>
+      <p>Muốn loại bỏ thư viện nào, mở file <code>composer.json</code>, xóa tên
+        thư viện đó trong phần <code>require</code>, cuối cùng gõ lệnh:</p>
+      <pre>composer update
+</pre>
+      <h3>Tham khảo</h3>
+      <p><a href="https://xuanthulab.net/su-dung-composer-trong-lap-trinh-php.html"
+
+          target="_blank">Sử dụng Composer trong lập trình PHP</a></p>
+      <p><a href="https://freetuts.net/huong-dan-su-dung-composer-php-699.html"
+
+          target="_blank">Hướng dẫn sử dụng Composer PHP - Freetuts</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

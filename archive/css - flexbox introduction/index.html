@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Giới thiệu Flexbox để xây dựng bố cục trang">
+    <meta name="keywords" content="css, flexbox, layout">
+    <meta name="author" content="lockex1987">
+    <title>Giới thiệu Flexbox</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Flexbox</h2>
+      <p>Từ thời xa xưa, chúng ta xây dựng layout bằng table. Sau đó là sử dụng
+        thẻ div, rồi sử dụng Bootstrap (sử dụng thuộc tính float và kỹ thuật
+        clear float). Hôm nay chúng ta sẽ tìm hiểu một cách xây dựng layout khác
+        với&nbsp; flexbox. Flexbox là một cơ chế xây dựng layout mới xuất hiện
+        trong phiên bản CSS3.</p>
+      <h3>Khái niệm</h3>
+      <p>Để nắm được flexbox, chúng ta cần nắm được các khái niệm container,
+        item, trục.</p>
+      <p>Với flexbox, chúng ta chỉ định 2 thành phần tham gia là container
+        (khung chứa) và các item (phần tử). Một container chứa một hoặc nhiều
+        item.</p>
+      <p> <img src="images/container-items.png" alt="Container and items"> </p>
+      <p>Trong container, ta cần phải khai báo <code>display: flex</code>
+        (container sẽ trở thành phần tử mức block) hoặc <code>display:
+          inline-flex</code> (container sẽ trở thành phần tử mức inline).</p>
+      <p>Khái niệm nữa chúng ta cần chú ý đó là có 2 trục vuông góc với nhau là
+        main (tạm gọi là chính) và cross (tạm gọi là phụ). Trục chính thường nằm
+        ngang, trục phụ thường nằm dọc. Thực tế không phải lúc nào cũng vậy.
+        Trục chính là một vector có phương và chiều theo thuộc tính
+        flex-direction. Trục đối xứng là một vector vuông góc với trục chính.</p>
+      <p><img src="images/main-and-cross-axes.png" alt="Axes"></p>
+      <h3>Các thuộc tính của container </h3>
+      <p><strong>flex-direction</strong>: xác định phương và chiều của trục
+        chính</p>
+      <ul>
+        <li><code>row</code> (mặc định): sắp xếp các item theo hàng từ trái qua
+          phải</li>
+        <li><code>column</code>: sắp xếp các item theo cột từ trên xuống dưới</li>
+        <li><code>row-reverse</code>: sắp xếp các item theo hàng từ phải qua
+          trái</li>
+        <li><code>column-reverse</code>: sắp xếp các item theo cột từ dưới lên
+          trên</li>
+      </ul>
+      <p><strong>justify-content</strong>:&nbsp;sắp xếp các item theo trục chính
+      </p>
+      <ul>
+        <li><code>flex-start</code> (mặc định): sắp xếp các item từ đầu của trục
+          chính (từ trái qua phải)</li>
+        <li><code>flex-end</code>: sắp xếp các item từ cuối của trục chính (từ
+          phải qua trái)</li>
+        <li><code>center</code>: căn giữa</li>
+        <li><code>space-between</code>: khoảng cách giữa 2 item liền kề bằng
+          nhau nhưng không bằng khoảng cách giữa item đầu tiên/cuối cùng</li>
+        <li><code>space-evenly</code>: khoảng cách giữa container và item đầu
+          tiên bằng khoảng cách giữa mỗi item và các item liền kề với nó</li>
+        <li><code>space-around</code>: khoảng cách giữa 2 item liền kề lớn gấp
+          đôi khoảng cách giữa item đầu tiên/cuối cùng so với container</li>
+      </ul>
+      <p><strong>align-items</strong>: sắp xếp các item theo trục phụ</p>
+      <ul>
+        <li><code>flex start</code>: sắp xếp các item từ điểm bắt đầu của trục
+          phụ (căn trên)</li>
+        <li><code>flex-end</code>: sắp xếp các item từ điểm kết thúc của trục
+          phụ (căn dưới)</li>
+        <li><code>center</code>: sắp xếp các item về điểm giữa của trục phụ (căn
+          giữa)</li>
+        <li><code>baseline</code>: toàn bộ item được căn chỉnh theo một đường cơ
+          sở</li>
+        <li><code>stretch</code> (mặc định): toàn bộ item sẽ giãn ra và phủ kín
+          container (đang không được)</li>
+      </ul>
+      <p><strong>flex-wrap</strong>: chỉ định xem các item có nên wrap (xuống
+        dòng) hay không</p>
+      <ul>
+        <li><code>no-wrap</code> (mặc định): toàn bộ item sẽ nằm trên một hàng
+          hoặc một cột</li>
+        <li><code>wrap</code>: các item có thể chia thành nhiều hàng nếu không
+          đủ diện tích với chiều là chiều của flex-direction</li>
+        <li><code>wrap-reverse</code>: các item có thể chia thành nhiều hàng nếu
+          không đủ diện tích với chiều là chiều ngược với flex-direction</li>
+      </ul>
+      <p><strong>flex-flow</strong> là cú pháp viết tắt của flex-direction và
+        flex-wrap. Ví dụ <code>flex-flow: column wrap</code>.</p>
+      <p><strong>align-content</strong> được sử dụng để căn chỉnh giữa các dòng.</p>
+      <ul>
+      </ul>
+      <h3>Các thuộc tính của item</h3>
+      <p><strong>order</strong>: chỉ định lại thứ tự sắp xếp của các item. Chúng
+        ta có thể cần trong trường hợp để tối ưu hóa SEO, chúng ta cần cho item
+        chứa nội dung ở đằng trước trong code, nhưng lại hiển thị sau.</p>
+      <p><strong>flex-grow</strong>: chỉ định một item sẽ grow kích thước như
+        thế nào tương đối so với các item khác. Các item sẽ phân bổ và chiếm
+        toàn bộ container. Cần chỉ định một giá trị số, mặc định là 0 (không
+        grow). Một item có <code>flex-grow: 2</code> sẽ có kích thước gấp đôi
+        một item khác có <code>flex-grow: 1</code>.</p>
+      <p><strong>flex-shrink</strong>: chỉ định một item sẽ shrink kích thước
+        như thế nào tương đối so với các item khác. Giá trị mặc định là 1. Chỉ
+        định <code>flex-shrink: 0</code> nghĩa là không được thu nhỏ item, luôn
+        giữ nguyên kích thước.</p>
+      <p><strong>flex-basis</strong>: chỉ định kích thước item. Có thể sử dụng
+        giá trị % hoặc px.</p>
+      <p><strong>flex</strong>: là viết tắt của <code>flex-grow</code>, <code>flex-shrink</code>,
+        <code>flex-basis</code> (theo thứ tự như vậy). Ví dụ <code>flex: 0 0
+          200px</code>.</p>
+      <p><strong>align-self</strong>: chỉ định căn chỉnh riêng cho một item
+        trong container, ghi đè lại giá trị căn chỉnh mặc định được thiết lập
+        bởi thuộc tính <code>align-items</code> của container.</p>
+      <h3>Demo</h3>
+      <p>Lý thuyết nhiều quá rồi, hãy thử một số demo sau:</p>
+      <ul>
+        <li><a href="demo-01-align.html">Căn chỉnh các item</a></li>
+        <li><a href="demo-02-flex-wrap.html">flex-wrap</a></li>
+        <li><a href="demo-03-align-items-baseline.html">align-items: baseline</a></li>
+        <li><a href="demo-04-align-content.html">align-content</a></li>
+        <li><a href="demo-05-center.html">Căn giữa theo chiều ngang và chiều dọc</a>
+          (sử dụng <code>justify-content: center</code> và <code>align-items:
+            center</code>)</li>
+        <li><a href="demo-06-align-self.html">align-self</a></li>
+        <li><a href="demo-07-gallery.html">Gallery</a></li>
+        <li><a href="demo-08-simple-layout.html" target="_blank">Simple layout</a>
+          (sửa <code>flex-direction</code> từ row sang column để chuyển từ
+          chiều ngang sang chiều dọc nhanh nhất)</li>
+      </ul>
+      <h3>Tham khảo</h3>
+      <ul>
+        <li>http://ntuts.com/huong-dan/cach-thuc-hoat-dong-cua-flexbox</li>
+        <li>https://www.w3schools.com/css/css3_flexbox.asp</li>
+        <li>https://css-tricks.com/snippets/css/a-guide-to-flexbox/</li>
+      </ul>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

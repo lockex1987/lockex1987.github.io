@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="text" />
+
+    <title>Bootstrap typography</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+	<link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <article class="container" style="max-width: 500px;">
+        <h2>Bootstrap typography</h2>
+
+        <h3>Căn lề</h3>
+        <p>Căn trái (<code>.text-left</code>), căn phải (<code>.text-right</code>), căn giữa
+            (<code>.text-center</code>), căn hai bên (<code>.text-justify</code>).</p>
+        <p class="text-left">Left-aligned text.</p>
+        <p class="text-right">Right-aligned text.</p>
+        <p class="text-center">Center-aligned text.</p>
+        <p class="text-justify">Justified text. Justified text. Justified text. Justified text. Justified text.
+            Justified text.</p>
+
+        <h3>Transform</h3>
+        <p>Viết thường (<code>.text-lowercase</code>), viết hoa (<code>.text-uppercase</code>), viết hoa chữ cái đầu
+            từng từ (<code>.text-capitalize</code>).</p>
+        <p class="text-lowercase">Lowercased text.</p>
+        <p class="text-uppercase">Uppercased text.</p>
+        <p class="text-capitalize">CapiTaliZed text.</p>
+
+        <h3>Chữ đậm, chữ nghiêng</h3>
+        <p>Chữ đậm (<code>.font-weight-bold</code>), chữ thường (<code>.font-weight-normal</code>), chữ nhẹ
+            (<code>.font-weight-light</code>), chữ nghiêng (<code>.font-italic</code>).</p>
+
+        <p class="font-weight-bold">Bold text.</p>
+        <p class="font-weight-bolder">Bolder weight text (relative to the parent element).</p>
+        <p class="font-weight-normal">Normal weight text.</p>
+        <p class="font-weight-light">Light weight text.</p>
+        <p class="font-weight-lighter">Lighter weight text (relative to the parent element).</p>
+        <p class="font-italic">Italic text.</p>
+
+        <h3>Bỏ gạch chân ở link</h3>
+        <p>Sử dụng <code>.text-decoration-none</code>.</p>
+        <p><a href="#" class="text-decoration-none">A link without underline.</a></p>
+
+        <h3>Wrap và overflow</h3>
+        <p>Wrap text with a <code>.text-wrap</code> class.</p>
+        <p>Prevent text from wrapping with a <code>.text-nowrap</code> class.</p>
+        <p>For longer content, you can add a <code>.text-truncate</code> class to truncate the text with an ellipsis. Requires
+            <code>display: inline-block</code> or <code>display: block</code>.</p>
+
+        <div class="text-wrap bg-primary p-1" style="width: 6rem;">
+            This text should wrap.
+        </div>
+        <div class="text-nowrap bg-warning p-1 mt-1" style="width: 6rem;">
+            This text should overflow the parent.
+        </div>
+
+        <div class="text-truncate bg-success p-1 mt-1" style="width: 6rem;">
+            Praeterea iter est quasdam res quas ex communi.
+        </div>
+
+        <div class="mt-1">
+            <span class="d-inline-block text-truncate bg-info p-1" style="width: 6rem;">
+                Praeterea iter est quasdam res quas ex communi.
+            </span>
+            xxx
+        </div>
+
+        <h3>Text break / Word break</h3>
+        <p>Sử dụng <code>.text-break</code> để các văn bản dài không làm vỡ giao diện.</p>
+        <p>Có <code>.text-break</code>:</p>
+        <p class="text-break">
+            AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZzAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZzAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZzAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz
+        </p>
+        <p>Không <code>.text-break</code>:</p>
+        <p>
+            AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZzAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZzAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZzAaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz
+        </p>
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

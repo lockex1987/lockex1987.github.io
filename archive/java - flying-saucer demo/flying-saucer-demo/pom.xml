@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>cttd</groupId>
+	<artifactId>flying-saucer-demo</artifactId>
+	<version>1.0.0</version>
+
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<!-- Cái này vẫn dùng iText, phiên bản 2 -->
+		<!-- https://mvnrepository.com/artifact/org.xhtmlrenderer/flying-saucer-pdf -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.xhtmlrenderer</groupId> -->
+		<!-- <artifactId>flying-saucer-pdf</artifactId> -->
+		<!-- <version>9.1.7</version> -->
+		<!-- </dependency> -->
+
+		<!-- Cái này dùng iText phiên bản mới hơn 5 -->
+		<!-- https://mvnrepository.com/artifact/org.xhtmlrenderer/flying-saucer-pdf-itext5 -->
+		<dependency>
+			<groupId>org.xhtmlrenderer</groupId>
+			<artifactId>flying-saucer-pdf-itext5</artifactId>
+			<version>9.1.7</version>
+		</dependency>
+	</dependencies>
+</project>

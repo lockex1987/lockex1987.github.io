@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>The Differences between su, sudo su, sudo -s and sudo -i</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="The Differences between su, sudo su, sudo -s and sudo -i">
+ </head> 
+ <body> 
+  <article> 
+   <p>https://www.maketecheasier.com/differences-between-su-sudo-su-sudo-s-sudo-i/</p> 
+   <p>On the Linux command line there are many different ways to get a root session in the terminal. This can create some confusion, as most beginner users who are looking to gain root might not be familiar with how each command can gain root access, how they are different and when these differences matter.</p> 
+   <p>It is because of this we will be taking apart each of the many different commands used to gain root access in a terminal. We’ll explain exactly how they gain root, when to use them, and everything in between.</p> 
+   <h3>su</h3> 
+   <p><img title="root-su" src="https://www.maketecheasier.com/assets/uploads/2016/10/root-su-e1478481270109.jpg"></p> 
+   <p>The <code>su</code> command substitutes the current user in use by the system in the shell. You can switch to any user by taking <code>su</code> and adding a username by it. This will tell the system to switch (and essentially log out of) the current user to the one specified. Alternatively, the <code>su</code> command can gain root access by entering <code>su</code> without specifying anything after the command.</p> 
+   <p>“su” is best used when a user wants direct access to the root account on the system. It doesn’t go through <code>sudo</code> or anything like that. Instead, the root user’s password has to be known and used to log in with. Furthermore, other ways of gaining root do not have the benefit of getting access to the root home directory and root environment.</p> 
+   <h3>sudo su</h3> 
+   <p><img title="root-sudo-su" src="https://www.maketecheasier.com/assets/uploads/2016/10/root-sudo-su.jpg"></p> 
+   <p>This command is essentially the same as just running <code>su</code> in the shell. Instead of telling the system to “switch users” directly, you’re telling it to run the “su” command as root. When <code>sudo su</code> is run, “.profile,” “.bashrc” and “/etc/profile” will be started, much like running <code>su</code> (or <code>su root</code>). This is because if any command is run with <code>sudo</code> in front of it, it’s a command that is given root privileges.</p> 
+   <p>Though there isn’t very much difference from “su,” <code>sudo su</code> is still a very useful command for one important reason: When a user is running “su” to gain root access on a system, they must know the root password. The way root is given with <code>sudo su</code> is by requesting the current user’s password. This makes it possible to gain root without the root password which increases security.</p> 
+   <h3>sudo -i</h3> 
+   <p><img title="root-sudo-i" src="https://www.maketecheasier.com/assets/uploads/2016/10/root-sudo-i.jpg"></p> 
+   <p>Using <code>sudo -i</code> is virtually the same as the <code>sudo su</code> command. Users can gain root by “sudo” and not by switching to the root user. Much like <code>sudo su</code>, the <code>-i</code> flag allows a user to get a root environment without having to know the root account password. <code>sudo -i</code> is also very similar to using <code>sudo su</code> in that it’ll read all of the environmental files (.profile, etc.) and set the environment inside the shell with it.</p> 
+   <p>Where it differs from “sudo su” is that <code>sudo -i</code> is a much cleaner way of gaining root and a root environment without directly interacting with the root user. How? With <code>sudo su</code> you’re using more than one root <code>setuid</code> commands. This fact makes it much more challenging to figure out what environmental variables will be kept and which ones will be changed (when swamping to the root environment). This is not true with <code>sudo -i</code>, and it is because of this most people view it as the preferred method to gain root without logging in directly.</p> 
+   <h3>sudo -s</h3> 
+   <p><img title="root-sudo-s" src="https://www.maketecheasier.com/assets/uploads/2016/10/root-sudo-s.jpg"></p> 
+   <p>The <code>-s</code> switch for “sudo” command reads the $SHELL variable of the current user executing commands. This command works as if the user is running <code>sudo /bin/bash</code>. <code>sudo -s</code> is a “non-login” style shell. This means that unlike a command like <code>sudo -i</code> or <code>sudo su</code>, the system will not read any environmental files. This means that when a user tells the shell to run <code>sudo -s</code>, it gains root but will not change the user or the user environment. Your home will not be the root home, etc.</p> 
+   <p>This command is best used when the user doesn’t want to touch root at all and just wants a root shell for easy command execution. Other commands talked about above gain root access, but touch root environmental files, and allow users more fuller access to root (which can be a security issue).</p> 
+   <h3>Conclusion: What command should I use?</h3> 
+   <p>Each command has its use-case. The important thing here is to understand what each command does and when to use them. As it stands, <code>sudo -i</code> is the most practical, clean way to gain a root environment. On the other hand, those using <code>sudo -s</code> will find they can gain a root shell without the ability to touch the root environment, something that has added security benefits.</p> 
+   <ins data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-8765285789552883"></ins> 
+   <p>There really isn’t one command on this list that is 100% the best. As users get more comfortable with the command line, they’ll need to take each way of gaining root (and there are many) into account and weigh the pros and cons and act accordingly. I hope that with the help of this article these decisions will be easier to make.</p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="centos, nginx, mariadb, php, redis">
+    <title>Cài đặt LEMP stack trên CentOS</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Cài đặt LEMP stack (và Redis) trên CentOS</h2>
+      <p>Máy ở nhà dùng là Linux Mint (dựa trên Ubuntu). Tuy nhiên, các server
+        trên công ty hay dùng CentOS (dựa trên Red Hat).</p>
+      <p>LEMP stack bao gồm:</p>
+      <ul>
+        <li>L: Linux</li>
+        <li>E: nginx</li>
+        <li>M: MariaDB</li>
+        <li>P: PHP</li>
+      </ul>
+      <p>Bạn có thể xem phiên bản CentOS của mình bằng lệnh sau:</p>
+      <pre>cat /etc/*release*</pre>
+      <h3>Cài đặt nginx</h3>
+      <p>Cài đặt:</p>
+      <pre>sudo yum install epel-release<br>sudo yum install nginx</pre>
+      <p>Sử dụng:</p>
+      <pre>sudo systemctl status nginx
+
+sudo systemctl start nginx
+sudo systemctl stop nginx
+sudo systemctl restart nginx
+
+sudo systemctl enable nginx</pre>
+      <h3>Cài đặt MariaDB</h3>
+      <p>Cài đặt:</p>
+      <pre>sudo yum install mariadb-server mariadb</pre>
+      <p>Sử dụng:</p>
+      <pre>sudo systemctl start mariadb</pre>
+      <p>Cấu hình:</p>
+      <pre>sudo mysql_secure_installation</pre>
+      <p>Start service khi khởi động:</p>
+      <pre>sudo systemctl enable mariadb</pre>
+      <h3>Cài đặt PHP</h3>
+      <p>Trong kho phần mềm chính thức của CentOS 7 thì PHP 5.4 đã cũ và không
+        còn được các nhà phát triển hỗ trợ, duy trì và cập nhật bản vá lỗi. Để
+        hỗ trợ cho những tính năng mới cũng như tăng cường khả năng bảo mật, bạn
+        cần phiên bản PHP mới hơn trên hệ thống CentOS 7.</p>
+      <p>Cài đặt:</p>
+      <pre>sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm<br><br>sudo yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm<br><br>sudo yum --enablerepo=remi-php72 install php php-common \<br>        php-cli \
+        php-mysql php-gd php-mbstring \
+        php-xml \
+        php-zip php-curl  php-ldap \
+        php-fileinfo php-redis \
+        php-mysqlnd php-json php-bcmath<br><br>sudo yum --enablerepo=remi-php72 install php-fpm</pre>
+      <p>Kiểm tra PHP:</p>
+      <pre>php --version</pre>
+      <p>Kiểm tra php-fpm:</p>
+      <pre>sudo systemctl status php-fpm<br><br>sudo systemctl start php-fpm<br><br>sudo systemctl enable php-fpm</pre>
+      <p>Cấu hình chạy PHP với nginx theo <a href="https://lockex1987.github.io/posts/linux%20-%20run%20php%20with%20nginx/"
+          target="_blank">hướng dẫn này</a>.</p>
+      <h3>Cài đặt Redis</h3>
+      <p>Cài đặt:</p>
+      <pre>sudo yum install epel-release<br>sudo yum install redis</pre>
+      <p>Sử dụng:</p>
+      <pre>sudo systemctl status redis<br><br>sudo systemctl start redis<br><br>sudo systemctl enable redis</pre>
+      <p>Kiểm tra:</p>
+      <pre>redis-cli ping</pre>
+      <h3>Tham khảo</h3>
+      <p><a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-centos-7"
+          target="_blank">How To Install Linux, Nginx, MariaDB, PHP (LEMP) stack
+          On CentOS 7 | DigitalOcean</a> </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="XMLHttpRequest vs Fetch API vs jQuery AJAX vs axios">
+  <title>AJAX</title>
+  <link rel="icon" href="../../images/favicon.png">
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+  <article>
+    <h2>AJAX</h2>
+    <p>AJAX là viết tắt của&nbsp;<strong>A</strong>synchronous <strong>J</strong>avaScript
+      <strong>A</strong>nd <strong>X</strong>ML. AJAX không phải là một ngôn
+      ngữ lập trình hay một thư viện. AJAX cho phép bạn trao đổi dữ liệu với
+      server ở background, cập nhật lại các phần của trang mà không phải load lại
+      toàn bộ.</p>
+    <p>Để sử dụng AJAX chỉ bằng JS thuần, chúng ta sử dụng đối tượng
+      XMLHttpRequest hoặc Fetch API. Chúng ta cũng có thể sử dụng các thư viện
+      như jQuery, axios.</p>
+    <p><a href="demo.html">Demo</a></p>
+    <p>Dù bạn sử dụng cái gì thì cũng cần chú ý đến những cái sau:</p>
+    <ul>
+      <li>encode tham số</li>
+      <li>Các dạng gửi dữ liệu khác nhau:</li>
+      <ul>
+        <li>GET</li>
+        <li>POST form</li>
+        <li>POST JSON</li>
+        <li>POST upload</li>
+      </ul>
+      <li>Xử lý dữ liệu trả về dạng HTML, JSON, binary</li>
+      <li>Hỗ trợ hiển thị upload progress</li>
+      <li>Hỗ trợ intercept:</li>
+      <ul>
+        <li>Thêm CSRF token</li>
+        <li>Kiểm tra lỗi session timeout, xử lý lỗi Laravel validation</li>
+        <li>Handle lỗi nói chung</li>
+      </ul>
+      <li>Xử lý nhiều request đồng thời và chờ tất cả request thành công</li>
+    </ul>
+  </article>
+  <script src="../../js/docs.js"></script>
+</body>
+
+</html>

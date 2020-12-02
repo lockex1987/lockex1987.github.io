@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="download">
+    <title>cURL</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>cURL</h2>
+      <h3>Hướng dẫn</h3>
+      <p>Một ứng dụng CURL thường có 4 bước cơ bản:</p>
+      <ol>
+        <li>Khởi tạo CURL</li>
+        <li>Cấu hình thông số cho CURL</li>
+        <li>Thực thi CURL</li>
+        <li>Ngắt CURL, giải phóng dữ liệu</li>
+      </ol>
+      <pre>// Tạo mới một CURL
+$ch = curl_init();
+
+// Cấu hình cho CURL
+curl_setopt($ch, CURLOPT_URL, 'https://viblo.asia/');
+
+// Thực thi CURL
+curl_exec($ch);
+
+// Ngắt CURL, giải phóng
+curl_close($ch);</pre>
+      <p>Hàm <code>curl_setopt()</code> có 3 tham số đầu vào:</p>
+      <ol>
+        <li>đối tượng CURL</li>
+        <li>tên cấu hình</li>
+        <li>là giá trị</li>
+      </ol>
+      <p>Một số tên cấu hình thông dụng:</p>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Cấu hình</th>
+              <th>Mô tả</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>CURLOPT_URL</code></td>
+              <td>Đường dẫn tới URL cần xử lý</td>
+            </tr>
+            <tr>
+              <td><code>CURLOPT_RETURNTRANSFER</code></td>
+              <td>Nếu <code>true</code> thì sẽ trả kết quả về ở hàm <code>curl_exec</code>
+                nên ta phải echo kết quả đó mới in lên trình duyệt, nếu <code>false</code>
+                thì thực thi là nó in kết quả lên trình duyệt luôn</td>
+            </tr>
+            <tr>
+              <td><code>CURLOPT_USERAGENT</code></td>
+              <td>Dùng để giả lập đang gửi ở trình duyệt nào (user agent)</td>
+            </tr>
+            <tr>
+              <td><code>CURLOPT_TIMEOUT</code></td>
+              <td>Thiết lập thời gian sống của một request CURL</td>
+            </tr>
+            <tr>
+              <td><code>CURLOPT_FILE</code></td>
+              <td>Lưu kết quả vào file</td>
+            </tr>
+            <tr>
+              <td><code>CURLOPT_POSTFIELDS</code></td>
+              <td>Giá trị của nó chính là một mảng các key =&gt; value, tương
+                ứng với name và value của nó trong các thẻ input khi submit FORM</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Demo</h3>
+      <p><a target="_blank" href="demo_get.php">Gọi GET</a> </p>
+      <p><a target="_blank" href="demo_post_form.php">Gọi POST form</a></p>
+      <p><a target="_blank" href="demo_post_json.php">Gọi POST JSON</a></p>
+      <p><a target="_blank" href="demo_upload.php">Upload file</a></p>
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://www.php.net/manual/en/book.curl.php">https://www.php.net/manual/en/book.curl.php</a></p>
+      <p><a target="_blank" href="https://lockex1987.github.io/posts/it%20-%20curl/">curl</a></p>
+      <p><a target="_blank" href="https://lockex1987.github.io/posts/php%20-%20ixudra%20curl/">https://lockex1987.github.io/posts/php - ixudra curl/</a></p>
+      <p><a target="_blank" href="https://lockex1987.github.io/posts/php%20-%20guzzle/">Sử dụng Guzzle để gọi API</a></p>
+      <p><a target="_blank" href="https://github.com/tcdent/php-restclient/blob/master/restclient.php">GitHub - tcdent/php-restclient: A generic REST API client for PHP</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Highchart datetime axis formatting">
+    <title>Các điểm không thẳng hàng với tọa độ x</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+
+</head>
+
+<body>
+    <article>
+        <h2>Các điểm không thẳng hàng với tọa độ x</h2>
+
+        <div id="container-offbyone-worse" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+        <p>You may not be seeing the same thing as me, but I get labels offset by
+            -4 hours, which look suspiciously like a UTC vs localized dates issue.
+            After trying a few solutions mostly involving Moment.js wizardry
+            (amazing library, by the way), i stumbled across <a
+                href="http://api.highcharts.com/highcharts#global.useUTC">this</a>.
+            The solution is quite simple:</p>
+
+        <pre>// Add this before rendering your chart
+Highcharts.setOptions({
+  global: {
+    useUTC: false
+  }
+});</pre>
+
+        <div id="container-offbyone-fixed" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    </article>
+
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+
+    <script>
+        new Highcharts.Chart('container-offbyone-worse', {
+            title: {
+                text: 'Issue #1',
+            },
+            xAxis: {
+                type: 'datetime',
+                labels: {
+                    formatter: function () {
+                        return moment(this.value).format("YYYY-MM-DD HH:mm:ss");
+                    }
+                }
+            },
+            series: [{
+                name: 'It should be obvious',
+                data: [
+                    [moment('2014-01-01').valueOf(), 7.0],
+                    [moment('2014-01-02').valueOf(), 6.9],
+                    [moment('2014-01-03').valueOf(), 9.5],
+                    [moment('2014-01-04').valueOf(), 14.5],
+                    [moment('2014-01-05').valueOf(), 18.2],
+                    [moment('2014-01-06').valueOf(), 21.5],
+                    [moment('2014-01-07').valueOf(), 25.2],
+                    [moment('2014-01-08').valueOf(), 26.5],
+                    [moment('2014-01-09').valueOf(), 23.3],
+                    [moment('2014-01-10').valueOf(), 18.3],
+                    [moment('2014-01-11').valueOf(), 13.9],
+                    [moment('2014-01-12').valueOf(), 9.6]
+                ]
+            }]
+        });
+
+
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });
+
+        new Highcharts.Chart('container-offbyone-fixed', {
+            title: {
+                text: 'Issue #1, fixed',
+            },
+            xAxis: {
+                type: 'datetime',
+                labels: {
+                    formatter: function () {
+                        return moment(this.value).format("YYYY-MM-DD HH:mm:ss");
+                    }
+                }
+            },
+            series: [{
+                name: 'Yay!',
+                data: [
+                    [moment('2014-01-01').valueOf(), 7.0],
+                    [moment('2014-01-02').valueOf(), 6.9],
+                    [moment('2014-01-03').valueOf(), 9.5],
+                    [moment('2014-01-04').valueOf(), 14.5],
+                    [moment('2014-01-05').valueOf(), 18.2],
+                    [moment('2014-01-06').valueOf(), 21.5],
+                    [moment('2014-01-07').valueOf(), 25.2],
+                    [moment('2014-01-08').valueOf(), 26.5],
+                    [moment('2014-01-09').valueOf(), 23.3],
+                    [moment('2014-01-10').valueOf(), 18.3],
+                    [moment('2014-01-11').valueOf(), 13.9],
+                    [moment('2014-01-12').valueOf(), 9.6]
+                ]
+            }]
+        });
+    </script>
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

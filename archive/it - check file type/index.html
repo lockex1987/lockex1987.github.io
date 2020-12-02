@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Kiểm tra định dạng file</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../../images/favicon.png">
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="description" content="extension, mime">
+</head>
+
+<body>
+  <article>
+    <h2>Kiểm tra định dạng file</h2>
+    <p>Không sử dụng đuôi file hoặc là MIME type vì có thể bị giả mạo đơn giản bằng cách đổi tên.</p>
+    <p>Hãy sử dụng file signature:</p>
+    <p>https://en.wikipedia.org/wiki/List_of_file_signatures</p>
+    <p>Các implement:</p>
+    <ul>
+      <li>Sử dụng lệnh <code>file</code> của Unix.</li>
+      <li>Tool TrID</li>
+      <li>https://hackernoon.com/determining-file-format-using-python-c4e7b18d4fc4</li>
+      <li>https://designshack.net/articles/php-articles/smart-file-type-detection-using-php/</li>
+      <li>http://php.net/manual/en/book.fileinfo.php</li>
+      <li>https://medium.com/the-everyday-developer/detect-file-mime-type-using-magic-numbers-and-javascript-16bc513d4e1e</li>
+      <li>https://www.npmjs.com/package/file-type</li>
+    </ul>
+
+    <h3>Demo 1 (tự làm)</h3>
+    <div>
+      <div><input type="file" id="file-selector"></div>
+
+      <div id="files"></div>
+    </div>
+
+
+    <h3>Demo 2 (sử dụng thư viện file-type)</h3>
+    <div id="demo2"></div>
+  </article>
+
+  <script src="../../js/docs.js"></script>
+  <script src="libs/file-type/file-type.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/demo2.js"></script>
+</body>
+
+</html>

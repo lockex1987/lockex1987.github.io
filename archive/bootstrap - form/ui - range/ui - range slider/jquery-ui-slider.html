@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Slider</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <style>
+    body { max-width: 700px; margin: 30px auto; }
+
+    #red, #green, #blue { float: left; clear: left; width: 300px; margin: 15px; }
+    
+    #red .ui-slider-range { background: #ef2929; }
+    #red .ui-slider-handle { border-color: #ef2929; }
+    
+    #green .ui-slider-range { background: #8ae234; }
+    #green .ui-slider-handle { border-color: #8ae234; }
+    
+    #blue .ui-slider-range { background: #729fcf; }
+    #blue .ui-slider-handle { border-color: #729fcf; }
+  </style>
+</head>
+
+<body>
+  <p>https://jqueryui.com/slider/</p>
+
+  <h3>Default</h3>
+  <div id="slider"></div>
+
+  <h3>Vertical</h3>
+  <p>
+    <label for="amount">Volume:</label>
+    <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+  </p>
+  <div id="slider-vertical" style="height:200px;"></div>
+
+
+  <h3>Color</h3>
+  <div id="red"></div>
+  <div id="green"></div>
+  <div id="blue"></div>
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <script>
+    $("#slider").slider();
+  </script>
+
+  <script>
+      $("#slider-vertical").slider({
+        orientation: "vertical",
+        range: "min",
+        min: 0,
+        max: 100,
+        value: 60,
+        slide: function (event, ui) {
+          $("#amount").val(ui.value);
+        }
+      });
+
+      $("#amount").val( $("#slider-vertical").slider("value") );
+  </script>
+
+  <script>
+      function refreshSwatch() {
+        var red = $("#red").slider("value");
+        var green = $("#green").slider("value");
+        var blue = $("#blue").slider("value");
+        console.log(red, green, blue);
+      }
+
+      $("#red, #green, #blue").slider({
+        orientation: "horizontal",
+        range: "min",
+        max: 255,
+        value: 127,
+        slide: refreshSwatch,
+        change: refreshSwatch
+      });
+
+      $("#red").slider("value", 255);
+      $("#green").slider("value", 140);
+      $("#blue").slider("value", 60);
+  </script>
+</body>
+</html>

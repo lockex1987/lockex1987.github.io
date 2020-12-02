@@ -1,0 +1,590 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Laravel Eloquent</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Laravel Eloquent">
+ </head> 
+ <body> 
+  <article> 
+   <h1>Eloquent: Bắt đầu</h1> 
+   <p><a></a></p> Eloquent ORM đi kèm với Laravel cung cấp một API ActiveRecord đơn giản và tuyệt vời khi làm việc với database. Mỗi database table sẽ có một "Model" tương ứng để tương tác với table đó. Model cho phép bạn query dữ liệu trong table, cũng như chèn thêm các dữ liệu mới. 
+   <p>Trước khi bắt đầu, hãy đảm bảo cấu hình kết nối database trong file <code>config/database.php</code>.</p> 
+   <p><a></a></p> 
+   <h2>Định nghĩa Models</h2> 
+   <p>Để bắt đầu, hãy cùng tạo một Eloquent model. Model về cơ bản nằm trong thư mục <code>app</code> nhưng bạn có thể tuỳ ý đặt chúng ở bất cứ đâu mà được cấu hình autoload trong file <code>composer.json</code>. Tất cả các Eloquent model đều kế thừa từ class <code>Illuminate\Database\Eloquent\Model</code>.</p> 
+   <p>Cách đơn giản nhất để tạo một model là sử dụng <code>make:model</code> Artisan command:</p> 
+   <pre><code>php artisan make:model User</code></pre> 
+   <p>Nếu bạn muốn tạo database migration đi kèm với model khi tạo thì sử dụng thêm cờ <code>--migration</code> hoặc <code>-m</code> option:</p> 
+   <pre><code>php artisan make:model User --migration
+
+php artisan make:model User -m</code></pre> 
+   <p><a></a></p> 
+   <h3>Quy tắc cho Eloquent Model</h3> 
+   <p>Bây giờ, hãy cùng nhau coi ví dụ về class model <code>Flight</code>, mà chúng ta sẽ dùng để lấy và lưu thông tin vào trong bảng <code>flights</code>:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Flight extends Model
+{
+    //
+}</code></pre> 
+   <h4>Tên bảng</h4> 
+   <p>Để ý là chúng ta không hề cho Eloquent biết là bảng nào được sử dụng cho model <code>Flight</code>. Vì kiểu "snake case", tên class ở số nhiều sẽ được sử dụng như tên table trừ khi có một tên khác được khai báo. Vì thế, trong trường hợp này, Eloquent sẽ coi model <code>Flight</code> lưu dữ liệu vào trong bảng <code>flights</code>. Bạn có thể chỉ định tên table khác cho model bằng cách khai báo thuộc tính <code>table</code> trong model:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Flight extends Model
+{
+    /**
+     * The table associated with the model.
+     *
+     * @var  string
+     */
+    protected $table = 'my_flights';
+}</code></pre> 
+   <h4>Primary Keys</h4> 
+   <p>Eloquent cũng coi mỗi table có một column là primary key tên là <code>id</code>. Bạn có thể định nghĩa một <code>$primaryKey</code> để đổi tên column này.</p> 
+   <p>Ngoài ra, Eloquent cũng coi primary key là một giá trị nguyên tăng dần, có nghĩa là về mặc định primary key sẽ được cast về kiểu <code>int</code> tự động. Nếu bạn muốn sử dụng primary không tăng dần hay không phải là dạng số, bạn cần thay đổi thuộc tính <code>$incrementing</code> trong model thành <code>false</code>.</p> 
+   <h4>Timestamps</h4> 
+   <p>Mặc định, Eloquent cần hai cột <code>created_at</code> và <code>updated_at</code> có mặt trong các bảng. Nếu bạn không muốn những columns này tự động được quản lý bởi Eloquent, thiết lập thuộc tính <code>$timestamps</code>trong model thành <code>false</code>:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Flight extends Model
+{
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var  bool
+     */
+    public $timestamps = false;
+}</code></pre> 
+   <p>Nếu bạn muốn thay đổi định dạng của timestamp, thiết lập vào thuộc tính <code>$dateFormat</code> trong model. Thuộc tính này xác định cách mà các thuộc tính kiểu date được lưu trong database cũng như cách format khi được serialize thành array hay JSON:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Flight extends Model
+{
+    /**
+     * The storage format of the model's date columns.
+     *
+     * @var  string
+     */
+    protected $dateFormat = 'U';
+}</code></pre> 
+   <h4>Kết nối database</h4> 
+   <p>Tất cả các Eloquent model sẽ sử dụng kết nối database mặc định được cấu hình. Nếu bạn muốn sử dụng một kết nối khác cho model, sử dụng thuộc tính <code>$connection</code>:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Flight extends Model
+{
+    /**
+     * The connection name for the model.
+     *
+     * @var  string
+     */
+    protected $connection = 'connection-name';
+}</code></pre> 
+   <p><a></a></p> 
+   <h2>Lấy nhiều Models</h2> 
+   <p>Khi bạn đã tạo được một model và bảng trong cơ sở dữ liệu liên kết của nó, bạn có thể sẵn sàng truy xuất dữ liệu từ database. Hãy coi mỗi Eloquent model như một query builder mạnh mẽ cho phép bạn thực hiện query tới database một cách liền mạch. Ví dụ:</p> 
+   <pre><code>&lt;?php
+
+use App\Flight;
+
+$flights = App\Flight::all();
+
+foreach ($flights as $flight) {
+    echo $flight-&gt;name;
+}</code></pre> 
+   <h4>Thêm ràng buộc bổ sung</h4> 
+   <p>Phương thức <code>all</code> sẽ trả về tất cả các kết quả trong table của model. Vì mỗi Eloquent model phục vụ như một query builder, nên bạn có thể tạo ràng buộc cho các query, và cuối cùng sử dụng hàm <code>get</code>để lấy kết quả:</p> 
+   <pre><code>$flights = App\Flight::where('active', 1)
+               -&gt;orderBy('name', 'desc')
+               -&gt;take(10)
+               -&gt;get();</code></pre> 
+   <p> Vì các Eloquent model là các query builder, bạn nên xem qua tất cả các hàm có thể sử dụng trên query builder. Bạn có thể áp dụng bất kì hàm nào trong này với Eloquent query.</p> 
+   <h3>Collections</h3> 
+   <p>Vì các hàm của Eloquent như <code>all</code> và <code>get</code> đều trả về nhiều kết quả, một instance từ <code>Illuminate\Database\Eloquent\Collection</code> sẽ được trả về. Class <code>Collection</code> cung cấp các hàm hữu íchcho phép làm việc với các kết quả Eloquent:</p> 
+   <pre><code>$flights = $flights-&gt;reject(function ($flight) {
+    return $flight-&gt;cancelled;
+});</code></pre> 
+   <p>Tất nhiên, bạn có thể foreach vòng lặp collection như một array:</p> 
+   <pre><code>foreach ($flights as $flight) {
+    echo $flight-&gt;name;
+}</code></pre> 
+   <p><a></a></p> 
+   <h3>Chunking Results</h3> 
+   <p>Nếu bạn muốn xử lý hàng ngàn kết quả từ Eloquent, sử dụng hàm <code>chunk</code>. Hàm <code>chunk</code> Hàm này sẽ lấy từng "chunk" của Eloquent models, cung cấp chúng thông qua <code>Closure</code> để xử lý. Sử dụng hàm <code>chunk</code> sẽ tiết kiệm được memory khi thao tác với tập dữ liệu kết quả lớn:</p> 
+   <pre><code>Flight::chunk(200, function ($flights) {
+    foreach ($flights as $flight) {
+        //
+    }
+});</code></pre> 
+   <p>Tham số đầu truyền vào là số record bạn muốn lấy từng "chunk". Closure truyền vào ở tham số thứ hai sẽ được gọi cho mỗi chunk được lấy từ database. Một database sẽ được thực thi để lấy mỗi "chuck" của records truyền vào Closure.</p> 
+   <h4>Sử dụng Cursors</h4> 
+   <p>Hàm <code>cursor</code> cho phép bạn duyệt qua records bằng cách sử dụng một cursor, nó chỉ thực thi cho một truy vấn. Khi dữ liệu lớn, hàm <code>cursor</code> có thể được sử dụng để giảm memory sử dụng:</p> 
+   <pre><code>foreach (Flight::where('foo', 'bar')-&gt;cursor() as $flight) {
+    //
+}</code></pre> 
+   <p><a></a></p> 
+   <h2>Lấy một Models / Aggregates</h2> 
+   <p>Ngoài việc lấy tất cả dữ liệu, bạn có thể lấy một kết quả sử dụng hàm <code>find</code> hoặc <code>first</code>. Thay vì trả về một collection model, những hàm này trả về một model instance:</p> 
+   <pre><code>// Retrieve a model by its primary key...
+$flight = App\Flight::find(1);
+
+// Retrieve the first model matching the query constraints...
+$flight = App\Flight::where('active', 1)-&gt;first();</code></pre> 
+   <p>Bạn có thể gọi hàm <code>find</code> với một mảng các primary key, với kết quả trả về là một collection các kết quả tìm thấy:</p> 
+   <pre><code>$flights = App\Flight::find([1, 2, 3]);</code></pre> 
+   <h4>Not Found Exceptions</h4> 
+   <p>Sẽ có lúc bạn muốn bắn ra một exception nếu một model không được tìm thấy. Điều này thực sự hữu ích khi làm việc trên route hay controller. Hàm <code>findOrFail</code> và <code>firstOrFail</code> sẽ trả lại kết quả đầu tiên của query. Tuy nhiên, nếu không có kết quả, thì <code>Illuminate\Database\Eloquent\ModelNotFoundException</code> sẽ được ném ra:</p> 
+   <pre><code>$model = App\Flight::findOrFail(1);
+
+$model = App\Flight::where('legs', '&gt;', 100)-&gt;firstOrFail();</code></pre> 
+   <p>Nếu exception mà không được bắt, một HTTP response <code>404</code> sẽ tự động được gửi lại cho user, vì thế, không cần thiết phải viết code riêng để kiểm tra để trả về <code>404</code> khi sử dụng những hàm này:</p> 
+   <pre><code>Route::get('/api/flights/{id}', function ($id) {
+    return App\Flight::findOrFail($id);
+});</code></pre> 
+   <h3>Lấy Aggregates</h3> 
+   <p>Bạn cũng có thể sử dụng các hàm như <code>count</code>, <code>sum</code>, <code>max</code>, and other hàm aggregate cung cấp bởi query builder. Những hàm này trả về một kết quả thay vì một model instance:</p> 
+   <pre><code>$count = App\Flight::where('active', 1)-&gt;count();
+
+$max = App\Flight::where('active', 1)-&gt;max('price');</code></pre> 
+   <h2>Thêm &amp; Cập nhật Models</h2> 
+   <h3>Thêm</h3> 
+   <p>Để thêm dữ liệu mới vào database, đơn giản hãy tạo một model instance mới, thiết lập các attributes vào model rồi gọi hàm <code>save</code>:</p> 
+   <pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Flight;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+class FlightController extends Controller
+{
+    /**
+     * Create a new flight instance.
+     *
+     * @param    Request  $request
+     * @return  Response
+     */
+    public function store(Request $request)
+    {
+        // Validate the request...
+
+        $flight = new Flight;
+        $flight-&gt;name = $request-&gt;name;
+        $flight-&gt;save();
+    }
+}</code></pre> 
+   <p>Ở ví dụ này, chúng ta có thể đơn giản chỉ gán tham số <code>name</code> từ HTTP request vào thuộc tính <code>name</code>của model <code>App\Flight</code>. Khi gọi hàm <code>save</code>, một record sẽ được thêm vào database. Timestamp <code>created_at</code> và <code>updated_at</code> timestamps sẽ tự động được thêm khi hàm <code>save</code> được gọi, và bạn không cần thay đổi thủ công giá trị này.</p> 
+   <h3>Cập nhật</h3> 
+   <p>Hàm <code>save</code> cũng được dùng để cập nhật model đã tồn tại sẵn trong database. Để update, bạn cần lấy model instance ra trước, thay đổi các attribute ban muốn, rồi gọi hàm <code>save</code>. Một lần nữa, giá trị của <code>updated_at</code> sẽ tự động được cập nhật, và bạn không cần thay đổi thủ công giá trị này:</p> 
+   <pre><code>$flight = App\Flight::find(1);
+$flight-&gt;name = 'New Flight Name';
+$flight-&gt;save();</code></pre> 
+   <h4>Mass Updates</h4> 
+   <p>Update cũng có thể được thực hiện cho nhiều model mà thoả mãn một điều kiện query. Ở ví dụ này, tất cả các flights mà <code>active</code> và có một <code>destination</code> là <code>San Diego</code> sẽ bị đánh dấu là delayed:</p> 
+   <pre><code>App\Flight::where('active', 1)
+          -&gt;where('destination', 'San Diego')
+          -&gt;update(['delayed' =&gt; 1]);</code></pre> 
+   <p>Hàm <code>update</code> nhận một mảng các cặp cột và giá trị tương ứng với các cột được cập nhật.</p> 
+   <p> Khi thực hiện một mass update bằng Eloquent, hàm <code>saved</code> và <code>updated</code> model events sẽ không được bắn ra cho các model updated. Vì các model thực ra chưa bao giờ lấy khi mass update.</p> 
+   <h3>Mass Assignment</h3> 
+   <p>Bạn cũng có thể sử dụng hàm <code>create</code> để tạo một model mới chỉ trong một dòng. Model instance được thêm mới sẽ được trả lại từ hàm. Tuy nhiên, để làm được điều đó, bạn cần thiết phải chỉ định thuộc tính <code>fillable</code> hoặc <code>guarded</code> trong model, để Eloquent model được bảo vệ trước mass-assignment.</p> 
+   <p>Lỗi bảo mật mass-assignment xảy ra khi một user truyền vào một tham số HTTP không mong muốn trong request, và tham số đó sẽ có thể thay đổi một column trong database mà bạn không ngờ tới. Ví dụ, một user xấu có thể gửi một tham số <code>is_admin</code> qua HTTP request, và khi giá trị này được map vào trong model qua hàm <code>create</code>, sẽ cho phép user thay đổi để biến thành một admin.</p> 
+   <p>Vì thế, để bắt đầu, bạn cần khai báo thuộc tính bạn muốn cho phép mass-assignment. Bạn có thể thiết lập qua thuộc tính <code>$fillable</code>. Ví dụ, hãy làm cho thuộc tính <code>name</code> của model <code>Flight</code> mass assignable:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Flight extends Model
+{
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var  array
+     */
+    protected $fillable = ['name'];
+}</code></pre> 
+   <p>Sau đó, chúng ta có thể sử dụng hàm <code>create</code> để tạo một record mới trong database. Hàm <code>create</code> sẽ trả về một model instance được lưu:</p> 
+   <pre><code>$flight = App\Flight::create(['name' =&gt; 'Flight 10']);</code></pre> 
+   <h4>Thuộc tính guarding</h4> 
+   <p>Trong khi <code>$fillable</code> dùng để lưu danh sách các thuộc tính "white list" được mass assignable, bạn có thể sử dụng <code>$guarded</code>. Thuộc tính <code>$guarded</code> để lưu các thuộc tính mà không được phép mass assignable. Các thuộc tính khác không lưu trong nó sẽ dượcd mass assignable. Vì vậy, <code>$guarded</code>giống như là một "black list". Tất nhiên, Bạn có thể sử dụng một trong hai, <code>$fillable</code> hoặc <code>$guarded</code>- không cả hai. Trong ví dụ dưới, tất cả các thuộc tính <strong>ngoại trừ <code>price</code></strong> sẽ được mass assignable:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Flight extends Model
+{
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var  array
+     */
+    protected $guarded = ['price'];
+}</code></pre> 
+   <p>Nếu bạn muốn tất cả các thuộc tính mass assignable, bạn định nghĩa thuộc tính <code>$guarded</code> là một mảng rỗng:</p> 
+   <pre><code>/**
+ * The attributes that aren't mass assignable.
+ *
+ * @var  array
+ */
+protected $guarded = [];</code></pre> 
+   <h3>Các hàm tạo khác</h3> 
+   <p>Còn hai hàm khác bạn có thể sử dụng để model bằng cách mass-assignment các thuộc tính: <code>firstOrCreate</code> và <code>firstOrNew</code>. Hàm <code>firstOrCreate</code> msẽ cố gắng tìm trong database sử dụng cặp column và giá trị truyền vào. Nếu model không được tìm thấy trong database, một dòng record mới sẽ được thêm vào với các attributes được truyền vào.</p> 
+   <p>Hàm <code>firstOrNew</code> giống như hàm <code>firstOrCreate</code> sẽ cố gắng tìm record trong database khớp với các attribute truyền vào. Tuy nhiên, nếu model không tìm tháy, một model instance mới sẽ được trả về. Chú ý là model được trả về bởi <code>firstOrNew</code> vẫn chưa được lưu vào database. Bạn cần gọi hàm <code>save</code>để lưu nó lại:</p> 
+   <pre><code>// Retrieve the flight by the attributes, or create it if it doesn't exist...
+$flight = App\Flight::firstOrCreate(['name' =&gt; 'Flight 10']);
+
+// Retrieve the flight by the attributes, or instantiate a new instance...
+$flight = App\Flight::firstOrNew(['name' =&gt; 'Flight 10']);</code></pre> 
+   <h2>Xóa Models</h2> 
+   <p>Để xóa một model, gọi hàm <code>delete</code> trong model instance:</p> 
+   <pre><code>$flight = App\Flight::find(1);
+$flight-&gt;delete();</code></pre> 
+   <h4>Xoá model tồn tại bằng một key</h4> 
+   <p>Ví dụ trên, chúng ta lấy model từ database trước khi gọi hàm <code>delete</code>. Tuy nhiên, nếu bạn đã biết primary key của model, bạn có thể xoá model mà không cần lấy nó ra. Để làm được việc này, bạn chỉ cần gọi hàm <code>destroy</code>:</p> 
+   <pre><code>App\Flight::destroy(1);
+
+App\Flight::destroy([1, 2, 3]);
+
+App\Flight::destroy(1, 2, 3);</code></pre> 
+   <h4>Xóa các Models bằng truy vấn</h4> 
+   <p>Bạn cũng có thể thực hiện gọi một query để xoá một tập hợp các model. Ở ví dụ này, chúng ta sẽ xoá tất cả các flights được đánh dấu là inactive:</p> 
+   <pre><code>$deletedRows = App\Flight::where('active', 0)-&gt;delete();</code></pre> 
+   <p> Khi thực thi một mass delete qua Eloquent, the <code>deleting</code> và <code>deleted</code> model events sẽ không được bắn ra cho các model deleted. Bởi vì các models thực ra chưa bao giờ lấy khi thực thi lệnh delete.</p> 
+   <h3>Soft Deleting</h3> 
+   <p>Thay vì thực sự xoá các record khỏi database, Eloquent cũng cung cấp kiểu "soft delete" models. Khi model được soft deleted, chúng chưa thực sự bị xoá khỏi database. Thay vì thế, một trường là <code>deleted_at</code> sẽ được thiết lập trong model và chèn vào trong database. Nếu model có giá trị <code>deleted_at</code> khác NULL, tức là model đã bị soft deleted. Để kích hoạt xoá mềm cho một model, sử dụng trait <code>Illuminate\Database\Eloquent\SoftDeletes</code> trên model và thêm vào cột <code>deleted_at</code> trong thuộc tính <code>$dates</code>:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Flight extends Model
+{
+    use SoftDeletes;
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var  array
+     */
+    protected $dates = ['deleted_at'];
+}</code></pre> 
+   <p>Tất nhiên là bạn cần phải thêm cột <code>deleted_at</code> vào trong table. Điều này có thể thực hiện qua việc sử dụng một helper được cung cấp để tạo trên schema builder:</p> 
+   <pre><code>Schema::table('flights', function ($table) {
+    $table-&gt;softDeletes();
+});</code></pre> 
+   <p>Bây giờ, khi bạn gọi hàm <code>delete</code> trên model, cột <code>deleted_at</code> sẽ được set vào current date và time. Và, khi thực hiện query một model có sử dụng soft delete, thì model đó sẽ tự động bị loại khỏi tất cả các kết qủa query.</p> 
+   <p>Để xác định nếu một model instance bị soft delete, sử dụng hàm <code>trashed</code>:</p> 
+   <pre><code>if ($flight-&gt;trashed()) {
+    //
+}</code></pre> 
+   <h3>Truy vấn các soft delete model</h3> 
+   <h4>Thêm các soft delete model vào kết quả</h4> 
+   <p>Như đã ghi chú ở trên, soft delete mode sẽ tự động bị tách khỏi các kết quả query. Tuy nhiên, bạn có thể ép các soft delete model xuất hiện trên tập kết quả sử dụng hàm <code>withTrashed</code>:</p> 
+   <pre><code>$flights = App\Flight::withTrashed()
+                -&gt;where('account_id', 1)
+                -&gt;get();</code></pre> 
+   <p>Hàm <code>withTrashed</code> ngoài ra có thể sử dụng cho truy vấn relationship:</p> 
+   <pre><code>$flight-&gt;history()-&gt;withTrashed()-&gt;get();</code></pre> 
+   <h4>Chỉ lấy các soft delete model vào kết quả</h4> 
+   <p>Hàm <code>onlyTrashed</code> sẽ <strong>chỉ</strong> lấy các soft delete model:</p> 
+   <pre><code>$flights = App\Flight::onlyTrashed()
+                -&gt;where('airline_id', 1)
+                -&gt;get();</code></pre> 
+   <h4>Phục hồi các soft delete model</h4> 
+   <p>Thi thoảng bạn cũng muốn "khôi phục" một soft deleted model. Để khôi phục lại một soft delete model về trạng thái active, hãy sử dụng hàm <code>restore</code> trong một model instance:</p> 
+   <pre><code>$flight-&gt;restore();</code></pre> 
+   <p>Bạn cũng có thể dùng hàm <code>restore</code> trên một query để nhanh chóng khôi phục nhiều model. Một lần nữa, giống như các lệnh "mass" khac, noa sẽ không được bắn ra bất kỳ model events cho models được restored:</p> 
+   <pre><code>App\Flight::withTrashed()
+        -&gt;where('airline_id', 1)
+        -&gt;restore();</code></pre> 
+   <p>Giống như hàm <code>withTrashed</code>, hàm <code>restore</code> ngoài ra cũng được sử dụng cho relationships:</p> 
+   <pre><code>$flight-&gt;history()-&gt;restore();</code></pre> 
+   <h4>Xoá các model vĩnh viễn</h4> 
+   <p>Bạn có thể cần thực xoá một model khỏi database. Để xoá vĩnh viễn một soft delete model, hãy sử dụng hàm <code>forceDelete</code>:</p> 
+   <pre><code>// Force deleting a single model instance...
+$flight-&gt;forceDelete();
+
+// Force deleting all related models...
+$flight-&gt;history()-&gt;forceDelete();</code></pre> 
+   <h2>Query Scopes</h2> 
+   <h3>Global Scopes</h3> 
+   <p>Global scope cho phép bạn thêm các constraint vào tất cả các truy vấn cho một model. Hàm soft delete của Laravel thực hiện trên global scope chỉ với các model "chưa bị xoá" trong database. Viết global scope riêng của bạn có thể tạo một cách dễ dàng để đảm bảo mỗi truy vấn cho một model nhận đúng constraint.</p> 
+   <h4>Viết Global Scopes</h4> 
+   <p>Viết một global scope khá đơn giản. Tạo một class triển khai từ interface <code>Illuminate\Database\Eloquent\Scope</code>. Interface này yêu cầu bạn viết mã cho một hàm: <code>apply</code>. Hàm <code>apply</code> có thể nhận constraint <code>where</code> vào query khi cần thiết:</p> 
+   <pre><code>&lt;?php
+
+namespace App\Scopes;
+
+use Illuminate\Database\Eloquent\Scope;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+
+class AgeScope implements Scope
+{
+    /**
+     * Apply the scope to a given Eloquent query builder.
+     *
+     * @param    \Illuminate\Database\Eloquent\Builder  $builder
+     * @param    \Illuminate\Database\Eloquent\Model  $model
+     * @return  void
+     */
+    public function apply(Builder $builder, Model $model)
+    {
+        $builder-&gt;where('age', '&gt;', 200);
+    }
+}</code></pre> 
+   <p> Không có thư mục định sẵn để lưu các scope trong Laravel, bạn hoàn toàn thoải mái tạo <code>Scopes</code> folder trong thư mục ứng dụng <code>app</code>.</p> 
+   <h4>Áp dụng Global Scopes</h4> 
+   <p>Để gán một global scope cho một model, bạn cần ghi đè lại hàm <code>boot</code> và sử dụng hàm <code>addGlobalScope</code>:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use App\Scopes\AgeScope;
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    /**
+     * The "booting" method of the model.
+     *
+     * @return  void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(new AgeScope);
+    }
+}</code></pre> 
+   <p>Sau khi thêm vào scope, một truy vấn <code>User::all()</code> sẽ tạo ra câu SQL như sau:</p> 
+   <pre><code>select * from `users` where `age` &gt; 200</code></pre> 
+   <h4>Các global scope vô danh</h4> 
+   <p>Eloquent cũng cho phép bạn tạo các global scope sử dụng Closure, điều này khá hữu ích cho các scope đơn giản mà không cần tạo class riêng:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+
+class User extends Model
+{
+    /**
+     * The "booting" method of the model.
+     *
+     * @return  void
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('age', function(Builder $builder) {
+            $builder-&gt;where('age', '&gt;', 200);
+        });
+    }
+}</code></pre> 
+   <p>Tham số đầu tiên truyền vào <code>addGlobalScope()</code> là identifier để loại bỏ scope khi cần thiết:</p> 
+   <pre><code>User::withoutGlobalScope('age')-&gt;get();</code></pre> 
+   <h4>Xóa các Global Scopes</h4> 
+   <p>Nếu bạn muốn bỏ một global scope cho một câu truy vấn, bạn có thể sử dụng hàm <code>withoutGlobalScope</code>. Hàm này nhận một tên class của global scope là đối số duy nhất:</p> 
+   <pre><code>User::withoutGlobalScope(AgeScope::class)-&gt;get();</code></pre> 
+   <p>Nếu bạn muốn bỏ một vài hoặc tất cả các global scope, bạn có thể dùng hàm <code>withoutGlobalScopes</code>:</p> 
+   <pre><code>// Remove all of the global scopes...
+User::withoutGlobalScopes()-&gt;get();
+
+// Remove some of the global scopes...
+User::withoutGlobalScopes([
+    FirstScope::class, SecondScope::class
+])-&gt;get();</code></pre> 
+   <h3>Local Scopes</h3> 
+   <p>Local scope cho phép bạn tạo tập hợp các ràng buộc thường dùng mà bạn có thể tái sử dụng trong chương trình. Ví dụ, bạn có thể hay lấy tất cả các "popular" users. Để tạo một scope, chỉ cần đặt tiền tố <code>scope</code> trong một hàm của Eloquent model.</p> 
+   <p>Scope luôn luôn trả về một instance của query builder:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    /**
+     * Scope a query to only include popular users.
+     *
+     * @return  \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePopular($query)
+    {
+        return $query-&gt;where('votes', '&gt;', 100);
+    }
+
+    /**
+     * Scope a query to only include active users.
+     *
+     * @return  \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeActive($query)
+    {
+        return $query-&gt;where('active', 1);
+    }
+}</code></pre> 
+   <h4>Sử dụng một Local Scope</h4> 
+   <p>hi scope được khai báo, bạn có thể sử dụng hàm của scope khi thực hiện query model. Tuy nhiên, bạn không cần thêm vào tiền tố <code>scope</code> khi gọi hàm. Bạn ngoài ra có thể gọi móc nối các scope liên tiếp:</p> 
+   <pre><code>$users = App\User::popular()-&gt;active()-&gt;orderBy('created_at')-&gt;get();</code></pre> 
+   <h4>Scopes động</h4> 
+   <p>Thỉnh thoảng cần muốn định nghĩa một scope có nhận tham số. Để bắt đầu, thêm các tham số vào scope. Tham số của Scope sẽ được định nghĩa sau tham số <code>$query</code>:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    /**
+     * Scope a query to only include users of a given type.
+     *
+     * @return  \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOfType($query, $type)
+    {
+        return $query-&gt;where('type', $type);
+    }
+}</code></pre> 
+   <p>Bây giờ, bạn có thể truyền vào tham số khi gọi scope:</p> 
+   <pre><code>$users = App\User::ofType('admin')-&gt;get();</code></pre> 
+   <h2>Events</h2> 
+   <p>Eloquent model bắn ra một số các events, cho phép bạn có thể hook vào nhiều điểm của model lifecycle sử dụng các hàm sau: <code>creating</code>, <code>created</code>, <code>updating</code>, <code>updated</code>, <code>saving</code>, <code>saved</code>, <code>deleting</code>, <code>deleted</code>, <code>restoring</code>, <code>restored</code>. Events cho phép bạn dễ dàng thực thi code mỗi lần class model class được lưu hoặc cập nhật vào database.</p> 
+   <p>Bất cứ khi nào một model mới được lưu lần đầu tiên, hai event <code>creating</code> và <code>created</code> sẽ được bắn ra. Nếu model đã tồn tại trong database và hàm <code>save</code> được gọi, hàm <code>updating</code> / <code>updated</code> được bắt ra. Tuy nhiên, cả hai trường hợp, hàm <code>saving</code> / <code>saved</code> đều được bắn ra.</p> 
+   <p>Ví dụ, cùng tạo một listener cho Eloquent event trong một service provider. Bên trong event listener, chúng ta sẽ gọi hàm <code>isValid</code> trên model, và trả về <code>false</code> nếu model không hợp lệ. Việc trả về giá trị <code>false</code> từ một Eloquent event listener sẽ huỷ bọ hai thao tác <code>save</code> / <code>update</code>:</p> 
+   <pre><code>&lt;?php
+
+namespace App\Providers;
+
+use App\User;
+use Illuminate\Support\ServiceProvider;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return  void
+     */
+    public function boot()
+    {
+        User::creating(function ($user) {
+            return $user-&gt;isValid();
+        });
+    }
+
+    /**
+     * Register the service provider.
+     *
+     * @return  void
+     */
+    public function register()
+    {
+        //
+    }
+}</code></pre> 
+   <p><a></a></p> 
+   <h3>Observers</h3> 
+   <p>Nếu bạn đang listening nhiều events trong model, bạn có thể sử dụng observers để nhóm tất cả các listeners thành một class. Observers classes có tên phương thức, nó sẽ tương tác với Eloquent events mà bạn muốn listen. Mỗi một phương thức nhận đối số duy nhất là tên model. Laravel không thêm thư mục mặc định cho observers, bạn có thể tạo chúng ở bất kỳ đâu để chứa observer classes:</p> 
+   <pre><code>&lt;?php
+
+namespace App\Observers;
+
+use App\User;
+
+class UserObserver
+{
+    /**
+     * Listen to the User created event.
+     *
+     * @param    User  $user
+     * @return  void
+     */
+    public function created(User $user)
+    {
+        //
+    }
+
+    /**
+     * Listen to the User deleting event.
+     *
+     * @param    User  $user
+     * @return  void
+     */
+    public function deleting(User $user)
+    {
+        //
+    }
+}</code></pre> 
+   <p>Để đăng ký một observer, sử dụng hàm <code>observe</code> trong model bạn muốn observe. Bạn có thể đăng ký observers trong hàm <code>boot</code> của service providers. Trong ví dụ này, chúng ta sẽ đăng ký observer trong <code>AppServiceProvider</code>:</p> 
+   <pre><code>&lt;?php
+
+namespace App\Providers;
+
+use App\User;
+use App\Observers\UserObserver;
+use Illuminate\Support\ServiceProvider;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return  void
+     */
+    public function boot()
+    {
+        User::observe(UserObserver::class);
+    }
+
+    /**
+     * Register the service provider.
+     *
+     * @return  void
+     */
+    public function register()
+    {
+        //
+    }
+}</code></pre> 
+   <p> Nguồn: <a href="https://laravel.com/docs/5.3/eloquent">https://laravel.com/docs/5.3/eloquent</a> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

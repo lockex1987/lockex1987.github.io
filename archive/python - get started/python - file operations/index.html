@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Thao tác với file trong Python">
+    <meta name="keywords" content="python, file">
+    <meta name="author" content="lockex1987">
+    <title>Thao tác với file trong Python</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Thao tác với file trong Python</h2>
+      <p>Để thao tác với file trong Python chúng ta thường sử dụng các module là
+        <code>os</code>, <code>os.path</code>, <code>shutil</code>.</p>
+      <h3>Tạo thư mục</h3>
+      <p>Để tạo thư mục, chúng ta sử dụng hàm <code>os.mkdir</code> hoặc <code>os.makedirs</code>.</p>
+      <p>Một số ví dụ:</p>
+      <img alt="" src="images/make%20folder.png">
+      <p>Giả sử chúng ta muốn tạo thư mục <strong>my_folder</strong>, trong
+        folder_3 lại có thư mục con là <strong>my_sub_folder</strong>. Khi đó
+        nếu chúng ta sử dụng lệnh <code>os.mkdir('my_folder/my_sub_folder')</code>
+        sẽ bị lỗi. Cần sử dụng hàm <code>os.makedirs('my_folder/my_sub_folder')</code>
+        trong trường hợp này.</p>
+      <h3>Xóa thư mục</h3>
+      <p>Để xóa thư mục, chúng ta sử dụng hàm <code>os.rmdir</code> hoặc <code>os.removedirs</code>.</p>
+      <img alt="" src="images/remove%20folder.png">
+      <p>Khi tôi test thì cả hai hàm&nbsp;<code>os.rmdir</code> và <code>os.removedirs</code>
+        chỉ xóa được thư mục rỗng. Để xóa thư mục đã chứa dữ liệu thì chúng ta
+        sử dụng <code>shutil.rmtree</code>.</p>
+      <h3>Liệt kê thư mục</h3>
+      <p>Để liệt kê thư mục, chúng ta sử dụng hàm <code>os.listdir</code>. Hàm
+        sẽ trả về một list str là tên các file hoặc thư mục con.</p>
+      <img alt="" src="images/list%20folder.png">
+      <h3>Đổi tên file</h3>
+      <p>Để đổi tên file hoặc di chuyển file, chúng chúng ta có thể sử dụng hàm
+        <code>os.rename</code>.</p>
+      <img alt="" src="images/rename.png">
+      <h3>Xóa file</h3>
+      <p>Sử dụng hàm <code>os.remove</code>.</p>
+      <img alt="" src="images/remove.png">
+      <h3>Thao tác với đường dẫn</h3>
+      <p>Để thao tác với đường dẫn, chúng ta sử dụng module <code>os.path</code>.</p>
+      <img alt="" src="images/path.png">
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="No application encryption key has been specified">
+    <title>Triển khai ứng dụng Laravel</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Triển khai ứng dụng Laravel</h2>
+      <p>Bài viết này sẽ hướng dẫn bạn deploy ứng dụng Laravel trên web server
+        nginx.</p>
+      <p>Giả sử bạn deploy một ứng dụng có tên là <code>sso</code>. Hãy thay
+        tên <code>sso</code> bằng tên tương ứng của bạn ở các câu lệnh và cấu
+        hình.</p>
+      <h3>Copy file</h3>
+      <p>Copy thư mục <code>sso</code> vào thư mục <code>/var/www/html</code>.</p>
+      <p>Bạn có thể sử dụng 2 script sau cho nhanh:</p>
+      <p><a target="_blank" href="deploy.sh">deploy.sh</a></p>
+      <p><a target="_blank" href="remote_deploy.sh">remote_deploy.sh</a></p>
+      <p>Các file script nằm trong thư mục của ứng dụng.</p>
+      <p>Không cần copy thư mục <code>.git</code>, <code>node_modules</code>,
+        <code>tests</code>, <code>database</code>,...</p>
+      <p>Phân quyền thư mục <code>cache</code> và <code>storage</code>:</p>
+      <pre>sudo su<br>cd /var/www/html/
+cd sso<br>chmod -R 777 bootstrap/cache
+chmod -R 777 storage</pre>
+      <h3>Tối ưu</h3>
+      <p>Tạo cache các cấu hình:</p>
+      <pre>php artisan config:cache</pre>
+      <p>Bạn hãy nhớ thực hiện lệnh này, vì nếu không khi ứng dụng của bạn có
+        nhiều request đồng thời, có thể xảy ra lỗi sau:</p>
+      <pre class="text-pre-wrap">production.ERROR: No application encryption key has been specified.</pre>
+      <p>Chú ý: hãy đảm bảo rằng bạn không sử dụng hàm <code>env()</code> mà
+        chỉ sử dụng hàm <code>config()</code> vì các cấu hình đã được cache.<br>
+      </p>
+      <h3>An toàn thông tin</h3>
+      <p>Nhớ cấu hình <code>APP_DEBUG</code> thành <code>false</code> ở file <code>.env</code>.
+        Đây là một cấu hình rất nhỏ, nhưng nếu xảy ra lỗi sẽ rất nguy hiểm, vì
+        nó hiển thị tất cả các thông số cấu hình của server.</p>
+      <h3>File cấu hình mẫu</h3>
+      <p>Tạo file <code>sso.conf</code> như sau:</p>
+      <pre class="out-of-box">server {
+    listen 80;
+    listen 443;
+    server_name sso.cttd.tk;
+    root "/var/www/html/sso/public";
+    index index.php index.html;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        # fastcgi_pass 127.0.0.1:9000;
+        fastcgi_pass   unix:/var/run/php/php7.2-fpm.sock;
+        fastcgi_param  SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+}</pre>
+      <p>Chú ý chỉnh đường dẫn <code>fastcgi_pass</code> cho đúng.</p>
+      <p>Thêm file <code>sso.conf</code> vào thư mục <code>/etc/nginx/conf.d/</code>.</p>
+      <h3>Kiểm tra</h3>
+      <p>Restart nginx:</p>
+      <pre>sudo systemctl restart nginx</pre>
+      <p>Sửa host:</p>
+      <ul>
+        <li>Ở Windows, chỉnh file <code>C:\Windows\System32\drivers\etc</code></li>
+        <li>Ở Linux, chỉnh file <code>/etc/hosts</code> (<code>sudo xed
+            /etc/hosts</code>)</li>
+      </ul>
+      <p>Nội dung chỉnh sửa:</p>
+      <pre>10.30.153.186   sso.dev.com
+127.0.1.1       sso.cttd.tk</pre>
+      <p>Vào địa chỉ sau:</p>
+      <p><a target="_blank" href="http://sso.cttd.tk/">http://sso.cttd.tk/</a></p>
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://laravel.com/docs/master/deployment">laravel.com/docs/master/deployment</a></p>
+      <p><a target="_blank" href="https://lockex1987.github.io/archive/it%20-%20file%20filter/">File
+          filter</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		div {
+			float: left;
+			margin: 16px;
+		}
+	</style>
+</head>
+
+<body>
+	<div>
+		<img id="scream" width="220" height="277" src="images/img_the_scream.jpg" alt="The Scream">
+	</div>
+	
+	<div>
+		<canvas id="myCanvas1" width="240" height="297" style="border:1px solid #d3d3d3;"></canvas>
+	</div>
+	
+	<div>
+		<canvas id="myCanvas2" width="240" height="297" style="border:1px solid #d3d3d3;">
+	</div>
+	
+	<div>
+		<canvas id="myCanvas3" width="300" height="150" style="border:1px solid #d3d3d3;">
+	</div>
+	
+	
+	<script>
+window.onload = function() {
+	var img = document.getElementById("scream");
+	
+	var c1 = document.getElementById("myCanvas1");
+	var ctx1 = c1.getContext("2d");
+	ctx1.drawImage(img, 10, 10);
+	
+	var c2 = document.getElementById("myCanvas2");
+	var ctx2 = c2.getContext("2d");
+	ctx2.drawImage(img, 10, 10, 150, 180);
+	
+	var c3 = document.getElementById("myCanvas3");
+	var ctx3 = c3.getContext("2d");
+	ctx3.drawImage(img, 90, 130, 50, 60, 10, 10, 50, 60);
+}
+	</script>
+</body>
+</html>

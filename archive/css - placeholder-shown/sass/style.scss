@@ -1,0 +1,36 @@
+.menu {
+    input[type=text] {
+        display: block;
+        margin-bottom: 5px;
+        
+        &:not(:placeholder-shown) + .results {
+            .list {
+                display: block;
+            }
+            
+            .tile {
+                display: none;
+            }
+        }
+    }
+    
+    .results {
+        > div {
+            padding: 5px;
+        }
+
+        .tile {
+            display: block;
+            background-color: yellow;
+        }
+        
+        .list {
+            display: none;
+            background-color: green;
+            color: white;
+
+            // Thêm animation?
+            transition: 0;
+        }
+    }  
+}

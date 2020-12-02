@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="date" content="2020-06-22 21:15:00">
+    <meta name="description" content="carousel, water margin, thủy hử, 108 vị anh hùng Lương Sơn Bạc, 108 heroes" />
+
+    <title>Carousel</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/css/line-awesome.min.css" />
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="no-float-button">
+    <article>
+        <h2>Carousel</h2>
+
+        <h3>Tính năng</h3>
+        <ul>
+            <li>Tự động khởi tạo, chỉ cần khai báo cấu trúc HTML, không cần khởi tạo bằng JS</li>
+            <li>Không bắt buộc thuộc tính <code>id</code></li>
+            <li>Hỗ trợ touch - drag</li>
+            <li>Responsive bằng các biến CSS</li>
+            <li>Hiển thị multi item</li>
+            <li>Hiển thị indicator</li>
+            <li>Có hàm <code>gotoItem</code>, <code>autoPlay</code></li>
+			<li>Thêm sự kiện sau khi chuyển item (dùng chỗ my calendar)</li>
+			<li>Khi trỏ chuột thì không autoPlay</li>
+        </ul>
+
+
+        <p><a href="bootstrap-carousel.html" target="_blank">Bootstrap carousel</a> đơn giản nhưng hỗ trợ ít.</p>
+        <p><strong>Chú ý:</strong> Phải tự style cho <code>nat-carousel-indicators</code> và <code>nat-carousel-control</code>.</p>
+
+        <h3>Cấu trúc HTML</h3>
+        <pre>.nat-carousel
+    .nat-carousel-wrapper
+        .nat-carousel-inner
+            .nat-carousel-item
+                img
+
+    .nat-carousel-indicators
+        [data-item-to]
+
+    .nat-carousel-control[data-direction=prev]
+    .nat-carousel-control[data-direction=next]</pre>
+
+        <h3>Demo 1</h3>
+
+        <div class="text-center mb-3 text-success font-size-1.5">
+            108 vị anh hùng Lương Sơn Bạc
+        </div>
+
+        <div id="gallery" class="nat-carousel out-of-box">
+            <div class="d-flex">
+                <!-- Nút điều khiển -->
+                <span
+                    class="nat-carousel-control cursor-pointer d-flex align-items-center text-muted opacity-0.5 hover:opacity-1 prev"
+                    data-direction="prev">
+                    <span class="la la-angle-left"></span>
+                </span>
+
+                <div class="flex-1 nat-carousel-wrapper">
+                    <div class="nat-carousel-inner">
+                        <!-- Các carousel-item ở đây -->
+                    </div>
+                </div>
+
+                <span
+                    class="nat-carousel-control cursor-pointer d-flex align-items-center text-muted opacity-0.5 hover:opacity-1 next"
+                    data-direction="next">
+                    <span class="la la-angle-right"></span>
+                </span>
+            </div>
+
+            <!-- Indicators -->
+            <!-- Chỉ khi hiển thị một phần tử một lúc mới hiển thị cái này -->
+            <ol class="nat-carousel-indicators justify-content-center my-3 list-unstyled d-flex d-md-none flex-wrap">
+            </ol>
+        </div>
+
+        <h3>Demo 2</h3>
+        <p>Carousel chỉ có một phần tử.</p>
+        <div class="nat-carousel">
+            <ol class="nat-carousel-indicators justify-content-center my-3 list-unstyled d-flex">
+                <li data-item-to="0" class="active"></li>
+                <li data-item-to="1"></li>
+                <li data-item-to="2"></li>
+            </ol>
+
+            <div class="nat-carousel-wrapper">
+                <div class="nat-carousel-inner">
+                    <div class="nat-carousel-item text-center">
+                        <img src="images/001_thien%20khoi%20tinh_ho%20bao%20nghia_tong%20giang.jpg">
+                    </div>
+
+                    <div class="nat-carousel-item text-center">
+                        <img src="images/002_thien%20cuong%20tinh_ngoc%20ky%20lan_lu%20tuan%20nghia.jpg">
+                    </div>
+
+                    <div class="nat-carousel-item text-center">
+                        <img src="images/003_thien%20co%20tinh_tri%20da%20tinh_ngo%20dung.jpg">
+                    </div>
+                </div>
+            </div>
+
+            <a class="nat-carousel-control" data-direction="prev">
+                <span class="la la-angle-left"></span>
+            </a>
+            <a class="nat-carousel-control" data-direction="next">
+                <span class="la la-angle-right"></span>
+            </a>
+        </div>
+
+        <h3>Demo 3</h3>
+        <p><a href="highcharts-carousel.html" target="_blank">Tích hợp carousel với Highcharts</a></p>
+
+        <h3>Demo 4</h3>
+        <p><a href="testimonial.html" target="_blank">Testimonial</a></p>
+
+        <h3>Demo 5</h3>
+        <p>Không phải carousel mà là <a href="fading.html" target="_blank">fading</a></p>
+
+        <h3>Tham khảo</h3>
+        <p><a href="https://owlcarousel2.github.io/OwlCarousel2/" target="_blank">Owl Carousel</a></p>
+        <p><a href="http://kenwheeler.github.io/slick/" target="_blank">slick - the last carousel you'll ever need</a></p>
+        <p><a href="https://cdnjs.com/libraries/slick-carousel" target="_blank">slick-carousel - cdnjs.com</a></p>
+        <p><a href="https://lockex1987.github.io/archive/project%20-%20comic%20reader/other-version.html" target="_blank">Comic Reader</a></p>
+        <p><a href="https://lockex1987.github.io/archive/ui%20-%20swipe/" target="_blank">Swipe</a></p>
+    </article>
+
+    <link rel="stylesheet" href="css/nat-carousel.css" />
+    <script src="js/nat-carousel.js"></script>
+
+    <script src="js/heroes.js"></script>
+    <script src="js/script.js"></script>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+
+<head>
+<style type="text/css">
+img.home {
+	width:46px;
+	height:44px;
+	background:url(img_navsprites.gif) 0 0;
+}
+img.next {
+	width:43px;
+	height:44px;
+	background:url(img_navsprites.gif) -91px 0;
+}
+#navlist{position:relative;}
+#navlist li{margin:0;padding:0;list-style:none;position:absolute;top:0;}
+#navlist li, #navlist a{height:44px;display:block;}
+
+#home{left:0px;width:46px;}
+#home{background:url('img_navsprites_hover.gif') 0 0;}
+#home a:hover{background: url('img_navsprites_hover.gif') 0 -45px;}
+
+#prev{left:63px;width:43px;}
+#prev{background:url('img_navsprites_hover.gif') -47px 0;}
+#prev a:hover{background: url('img_navsprites_hover.gif') -47px -45px;}
+
+#next{left:129px;width:43px;}
+#next{background:url('img_navsprites_hover.gif') -91px 0;}
+#next a:hover{background: url('img_navsprites_hover.gif') -91px -45px;}
+</style>
+</head>
+
+<body>
+<img class="home" src="img_trans.gif" width="1" height="1" />
+<br />
+<br />
+<img class="next" src="img_trans.gif" width="1" height="1" />
+<ul id="navlist">
+	<li id="home"><a href="default.asp"></a></li>
+	<li id="prev"><a href="css_intro.asp"></a></li>
+	<li id="next"><a href="css_syntax.asp"></a></li>
+</ul>
+</body>
+
+</html>

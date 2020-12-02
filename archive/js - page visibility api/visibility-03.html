@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A demo of the W3C Page Visibility API. In this example, the video should stop playing when you view another tab.">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/page-visibility.css">
+    <title>Demo: Page Visibility API</title>
+</head>
+<body>
+    <h1>Demo: Page Visibility API</h1>
+    
+    <main>
+        <video id="videoElement" controls poster="images/thumbnail.jpg">
+						<source src="media/the-village.mp4" type="video/mp4">
+					
+            <!--source src="https://s3-ap-northeast-1.amazonaws.com/daniemon/demos/The%2BVillage-Mobile.mp4" type="video/mp4" media="all and (max-width:680px)">
+            <source src="https://s3-ap-northeast-1.amazonaws.com/daniemon/demos/The%2BVillage-Mobile.webm" type="video/webm" media="all and (max-width:680px)"> 
+            <source src="https://s3-ap-northeast-1.amazonaws.com/daniemon/demos/The%2BVillage-SD.mp4" type="video/mp4">
+            <source src="https://s3-ap-northeast-1.amazonaws.com/daniemon/demos/The%2BVillage-SD.webm" type="video/webm"-->
+            
+            <p>Sorry, there's a problem playing this video. Please try using a different browser.</p>
+        </video>
+    </main>
+    
+    <aside>
+        <p>This is a demo of the <a href="http://www.w3.org/TR/page-visibility/">Page Visibility API</a>. When you view or open another tab the video should pause. This can be used for reducing power usage or stopping annoying background audio. For further details, Mozilla has a <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/User_experience/Using_the_Page_Visibility_API">good tutorial</a> or view the source of this page to see the code.</p>
+        
+        <p>Video: <a href="http://vimeo.com/25945509">The Village</a> by Pedro Sousa</p>
+    </aside>
+    
+    <footer>Here are more <a href="http://daniemon.com/tech/">web demos</a> by <a href="https://twitter.com/ourmaninjapan" rel="author">Daniel Davis</a>.</footer>
+
+    <script>
+    // Inline code is for educational purposes. Best practice is to put your scripts in external files.
+    // Based on the tutorial at https://developer.mozilla.org/en-US/docs/Web/Guide/User_experience/Using_the_Page_Visibility_API
+
+    (function() {
+        'use strict';
+        
+        // Set the name of the "hidden" property and the change event for visibility
+        var hidden, visibilityChange; 
+        if (typeof document.hidden !== "undefined") {
+          hidden = "hidden";
+          visibilityChange = "visibilitychange";
+        } else if (typeof document.mozHidden !== "undefined") {
+					// Firefox up to v17
+          hidden = "mozHidden";
+          visibilityChange = "mozvisibilitychange";
+        } else if (typeof document.webkitHidden !== "undefined") {
+					// Chrome up to v32, Android up to v4.4, Blackberry up to v10
+          hidden = "webkitHidden";
+          visibilityChange = "webkitvisibilitychange";
+        }
+
+        var videoElement = document.getElementById("videoElement");
+
+        // If the page is hidden, pause the video;
+        // if the page is shown, play the video
+        function handleVisibilityChange() {
+          if (document[hidden]) {
+            videoElement.pause();
+          } else {
+            videoElement.play();
+          }
+        }
+
+        // Warn if the browser doesn't support addEventListener or the Page Visibility API
+        if (typeof document.addEventListener === "undefined" || typeof document[hidden] === "undefined") {
+          alert("This demo requires a modern browser that supports the Page Visibility API.");
+        } else {
+          // Handle page visibility change   
+          document.addEventListener(visibilityChange, handleVisibilityChange, false);
+            
+          // When the video pauses and plays, change the title.
+          videoElement.addEventListener("pause", function() {
+            document.title = 'Paused';
+          }, false);
+
+          videoElement.addEventListener("play", function() {
+            document.title = 'Playing'
+          }, false);
+        }
+    })();
+    </script>
+</body>
+</html>

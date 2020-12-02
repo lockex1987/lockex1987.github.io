@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="exec, system, rar, 7z">
+    <title>Thực hiện các lệnh hệ thống với PHP</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Thực hiện các lệnh hệ thống với PHP</h2>
+      <p>Để escape các ký tự đặc biệt, không gây lỗi câu lệnh, chúng ta dùng các
+        hàm <code>escapeshellarg</code> và <code>escapeshellcmd</code>.</p>
+      <p>Đơn giản nhất là sử dụng backtick operator.</p>
+      <p>Để thực hiện các lệnh một cách đơn giản, chúng ta sử dụng các hàm:</p>
+      <ul>
+        <li><code>exec</code></li>
+        <li><code>shell_exec</code></li>
+        <li><code>system</code></li>
+        <li><code>passthru</code></li>
+      </ul>
+      <p><code>shell_exec(string $command): string</code></p>
+      <p>Thực hiện câu lệnh, trả về toàn bộ output kết quả như là một string.<br>
+      </p>
+      <p><code>exec(string $command, array &amp;$output, int &amp;$returnVar):
+          string</code></p>
+      <p>Thực hiện câu lệnh, trả về dòng kết quả cuối cùng. Chúng ta cũng có thể
+        lấy mảng string các dòng kết quả ở biến <code>$output</code> cũng như
+        lấy giá trị trả về của lệnh ở biến <code>$returnVar</code>.</p>
+      <p><code>system(string $command, int &amp;$returnVar): string</code></p>
+      <p>Thực hiện câu lệnh, tự động hiển thị output trong quá trình thực hiện,
+        trả về dòng kết quả cuối cùng. Chúng ta có thể lấy giá trị trả về của
+        lệnh ở biến <code>$returnVar</code>.</p>
+      <p><code>passthru(string $command, int &amp;$returnVar): string</code></p>
+      <p>Thực hiện câu lệnh, hiển thị output dạng raw.</p>
+      <p>Hàm <code>shell_exec</code> giống hệt backtick operator.</p>
+      <p>Để thực hiện một cách nâng cao (dạng process), chúng ta dùng các hàm:</p>
+      <ul>
+        <li><code>proc_open</code></li>
+        <li><code>proc_get_status</code></li>
+        <li><code>proc_close</code></li>
+        <li><code>proc_terminate</code></li>
+        <li><code>proc_nice</code></li>
+      </ul>
+      <p>Demo</p>
+      <p><a href="demo.php">demo.php</a></p>
+      <p>Tham khảo:</p>
+      <p><a href="https://sevenzip.osdn.jp/chm/cmdline/index.htm" target="_blank">7z
+          Command Line Guide</a></p>
+      <p><a href="https://www.php.net/manual/en/ref.exec.php" target="_blank">PHP:
+          Program execution Functions - Manual</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

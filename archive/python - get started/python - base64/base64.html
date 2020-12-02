@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Base64 Encoding</title>
+  </head>
+  <body>
+    <p>Mã hóa Base64</p>
+    <p>http://www.javadevchannel.com/2015/08/base64-la-gi-ma-hoa-file-theo-chuan.html</p>
+    <p>https://en.wikipedia.org/wiki/Base64</p>
+    <p>Base64 là gì?</p>
+    <p>Base64 là một chương trình mã hóa chuỗi ký tự bằng cách dùng thay thế các
+      ký tự trong bảng mã ASCII 8 bit thông dụng thành bảng mã 6 bit. Nó thường
+      được sử dụng để mã hóa các tập tin đa phương tiện (hình ảnh, âm thanh,
+      video,…). Ký tự 64 trong Base64 là đại diện cho 64 ký tự trong bãng mã
+      ASCII. Base64 thường được sử dụng trong việc truyền tải email. Tuy nhiên,
+      ngày nay người ta đã sử dụng nó vào việc truyền tải hình ảnh trên website.</p>
+    <p>Mã hoá file theo chuẩn Base64.</p>
+    <p>Chuẩn Base64 là một tập hợp gồm các ký tự (theo đúng thứ tự) : từ A đến
+      Z, từ a đến z, từ 0 đến 9, dấu +, dấu /</p>
+    <p>Tổng cộng là 64 ký tự biểu diễn 64 giá trị từ 0 đến 63. Như vậy, ký tự từ
+      A đến Z biểu diễn cho các giá trị từ 0 đến 25, từ a đến z biểu diễn cho
+      giá trị từ 26 đến 51, từ 0 đến 9 biểu diễn cho giá trị từ 52 đến 61, dấu +
+      biểu diễn cho giá trị 62, dấu / biểu diễn cho giá trị 63.</p>
+    <p>Một ký tự biểu diễn theo mã ASCII sẽ dùng 8 bits. Một ký tự theo Base64
+      sẽ dùng 6 bits. Như vậy, một file ở dạng Base64 sẽ có kích thước lớn hơn
+      khi ở dạng ASCII. Cụ thể, sẽ lớn gấp 4/3 lần (8 bits/6 bits).</p>
+    <p>Để chuyển đổi file sang dạng Base64, ta thực hiện theo các bước như sau :</p>
+    <p>1. Đọc nội dung file dưới dạng bit.</p>
+    <p>2. Cứ 6 bits ta tách thành một nhóm để xử lý.</p>
+    <p>3. Tra bảng mã Base64, mỗi nhóm 6 bits sẽ có giá trị tương ứng với một ký
+      tự.</p>
+    <p>4. Ghi ra file các ký tự đó.</p>
+    <p>Vậy là xong.</p>
+    <p>Ta sẽ thực hiện các thao tác trên qua một ví dụ cụ thể.</p>
+    <p>Chuyển từ Man sang mã base64 sẽ là TWFu</p>
+    <p>Trong ví dụ trên, mã ASCII, các kí tự M, a, n sẽ là 77, 97, và 110 với
+      8-bit nhị phân là 01001101, 01100001, và 01101110.</p>
+    <p>Có 3 giá trị được nối lại với nhau thành một chuổi 24bit cụ thể là
+      010011010110000101101110. Một nhóm 6 bit có tối đa 2^6 = 64 các giá trị
+      nhị phân khác nhau sẽ được tính từ trái sang phải. (trong trường hợp này
+      24 bit ta sẽ chia thành 4 nhóm từ trái sang phải 010011 010110 000101
+      101110 sau đó tra bảng mã base64 sẽ được giá trị base64 tương ứng).</p>
+    <p>Khi số bytes không chia hết cho 3 điều đó có nghĩa là thiếu 1 hay 2 bytes
+      thì ta thêm phần bytes phụ với giá trị bằng 0 và thực hiện chuyển đổi.</p>
+    <p><br>
+    </p>
+    <p>Tuy nhiên nếu số lượng bytes cần mã hóa không chia hết cho 3 (Điều này có
+      nghĩa là chỉ có 1 hoặc 2 bytes trong 24 bits mã hóa cuối cùng) . Chúng ta
+      sẽ “Thêm các bit 0 vào cuối cho đủ 24 bits, thực hiện mã hóa Base64 bình
+      thường, ngoại trừ những bytes cuối (1-2) gồm toàn bits 0 thì sẽ thay bằng
+      kí tự ‘=’ “</p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p>You can now java.util.Base64 with Java8. First, import it as you normally
+      do:</p>
+    <pre><code class="java">import java.util.Base64;</code></pre>
+    <p>Then use the Base64 static methods as follows:</p>
+    <pre><code class="java">byte[] encodedBytes = Base64.getEncoder().encode("Test".getBytes());
+System.out.println("encodedBytes " + new String(encodedBytes));
+byte[] decodedBytes = Base64.getDecoder().decode(encodedBytes);
+System.out.println("decodedBytes " + new String(decodedBytes));</code></pre>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+  </body>
+</html>

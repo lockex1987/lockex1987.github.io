@@ -1,0 +1,11 @@
+.list { margin-top: 20px; }
+.list input[type=radio] { display: none; }
+.list .episode { display: block; margin-bottom: 30px; }
+.list .episode::after { display: table; content: ''; clear: both; }
+.list .episode .thumbnail { float: left; width: 200px; margin: 0 10px 10px 0; }
+.list .episode .thumbnail img { max-width: 100%; height: auto; }
+.list .episode .number { color: red; }
+.list .episode .title { color: blue; }
+.list .episode .description { color: green; padding-top: 0px; text-align: justify; display: none; }
+
+.list input[type=radio]:checked + .episode .description { display: block; }

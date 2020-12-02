@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Git log">
+    <title>Git log</title>
+    
+    
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Git log</h2>
+      <p>Một việc bạn sẽ khá thường xuyên làm trong Git nếu làm việc theo nhóm
+        đó là kiểm tra xem những ai đã commit vào dự án bạn đang làm việc, cũng
+        như cách bạn undo lần commit trước đó nếu như bạn cảm thấy mình thiếu
+        một tập tin nào đó trong lần commit trước để bổ sung vào.</p>
+      <h3>Xem&nbsp;git log</h3>
+      <p>Để xem lịch sử của các lần commit trước đó, bạn sử dụng lệnh <code>git
+          log</code>&nbsp;là sẽ thấy.</p>
+      <pre>$ git log
+commit 3f1ef84ada3dfd936735d8724f9bbb3437c77b19
+Author: Thach Pham &lt;contact@thachpham.com&gt;
+Date: Tue Apr 21 17:16:37 2015 -0700
+
+ Hihi
+
+commit 6e729a49a36b31919daa6263f8f98f3a59d5bab3
+Author: Thach Pham &lt;contact@thachpham.com&gt;
+Date: Tue Apr 21 14:47:47 2015 -0700
+
+ First commit on Github</pre>
+      <p>Bạn thấy chứ? Mỗi lần commit sẽ có một checksum&nbsp;riêng, và nó cũng
+        có ghi rõ ai là người commit vào và commit vào ngày bao nhiêu, lúc nào.</p>
+      <p>Ngoài ra, bạn có thể chèn thêm tham số <code>-p</code>&nbsp;vào để
+        hiển thị chi tiết của mỗi lần commit.</p>
+      <pre>$ git log -p
+commit 3f1ef84ada3dfd936735d8724f9bbb3437c77b19
+Author: Thach Pham &lt;contact@thachpham.com&gt;
+Date: Tue Apr 21 17:16:37 2015 -0700
+
+ Hihi
+
+diff --git a/README.md b/README.md
+index db7e814..e08f24f 100644
+--- a/README.md
++++ b/README.md
+@@ -1 +1 @@
+-# Huong dan Git co ban
++hhih\n
+diff --git a/faq.html b/faq.html
+new file mode 100644
+index 0000000..e69de29
+
+commit 6e729a49a36b31919daa6263f8f98f3a59d5bab3
+Author: Thach Pham &lt;contact@thachpham.com&gt;
+Date: Tue Apr 21 14:47:47 2015 -0700
+
+ First commit on Github
+
+diff --git a/README.md b/README.md
+new file mode 100644
+index 0000000..db7e814
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1 @@
++# Huong dan Git co ban</pre>
+      <p><em>Note</em>: Nếu log quá dài, dùng phím mũi tên lên xuống để đọc tiếp
+        và ấn Ctrl + Z để thoát.</p>
+      <p>Hoặc nếu bạn muốn chỉ muốn xem 1 lần commit gần nhất thì thêm tham số <code>-1</code>&nbsp;vào.</p>
+      <p>Bạn còn có thể sử dụng thêm một số tùy chọn&nbsp;xem log sau để tối ưu
+        hơn quy trình đọc log.</p>
+      <ul>
+        <li><code>--since</code>, <code>--after</code>: Xem các lần commit kể
+          từ ngày nhất định.</li>
+        <li><code>--until</code>: Xem các lần commit trước&nbsp;từ ngày nhất
+          định.</li>
+        <li><code>--author</code>: Xem các lần commit của một người nào đó.</li>
+        <li><code>--grep</code>: Lọc các chuỗi trong log và in ra.</li>
+      </ul>
+      <p>Ví dụ:</p>
+      <pre>$ git log --author=contact@thachpham.com --pretty="%s"
+Hihi
+First commit on Github</pre>
+      <p>Cái <code>--pretty</code>&nbsp;là gì mình sẽ nói ở dưới.</p>
+      <h4>Lọc log với&nbsp;<code>--pretty</code></h4>
+      <p>Tham số <code>--pretty</code>&nbsp;rất có ích nếu bạn muốn lọc xem một
+        đối tượng nào đó trong lịch sử commit, ví dụ như chỉ xem lời nhắn commit
+        hoặc chỉ xem email của người commit.</p>
+      <p>Cách sử dụng tham số <code>--pretty</code>&nbsp;là bạn phải viết kèm
+        các tag của nó như sau:</p>
+      <pre>$ git log --pretty="%tag"</pre>
+      <p>Các <code>%tag</code>&nbsp;phải dược đặt trong cặp dấu ngoặc kép và
+        bạn có thể sử dụng nhiều <code>%tag</code>&nbsp;khác nhau.</p>
+      <p>Danh sách các <code>%tag</code>:</p>
+      <ul>
+        <li><code>%H</code>&nbsp;– &nbsp;Commit hash</li>
+        <li><code>%h</code>&nbsp;– Abbreviated commit hash</li>
+        <li><code>%T</code>&nbsp;–&nbsp;Tree hash</li>
+        <li><code>%t</code>&nbsp;–&nbsp;Abbreviated tree hash</li>
+        <li><code>%P</code>&nbsp;–&nbsp;Parent hashes</li>
+        <li><code>%p</code>&nbsp;–&nbsp;Abbreviated parent hashes</li>
+        <li><code>%an</code>&nbsp;–&nbsp;Author name</li>
+        <li><code>%ae</code>&nbsp;–&nbsp;Author e-mail</li>
+        <li><code>%ad</code>&nbsp;–&nbsp;Author date (format respects the
+          –date=option)</li>
+        <li><code>%ar</code>&nbsp;–&nbsp;Author date, relative</li>
+        <li><code>%cn</code>&nbsp;–&nbsp;Committer name</li>
+        <li><code>%ce</code>&nbsp;–&nbsp;Committer email</li>
+        <li><code>%cd</code>&nbsp;–&nbsp;Committer date</li>
+        <li><code>%cr</code>&nbsp;–&nbsp;Committer date, relative</li>
+        <li><code>%s</code>&nbsp;–&nbsp;Subject</li>
+      </ul>
+      <p>Ví dụ:</p>
+      <pre>$ git log --pretty="%an - %s"
+Thach Pham - Hihi
+Thach Pham - First commit on Github</pre>
+      <h3>Thủ thuật xem log đẹp hơn</h3>
+      <p>Bạn có thể thấy mỗi khi gõ git log mà không có các tham số kèm theo thì
+        nó hiện ra rất khó nhìn. Tuy nhiên có một cách để bạn có thể làm gọn cái
+        log mặc định, và thêm màu sắc cho nó để bạn dễ nhìn hơn.</p>
+      <p>Trước tiên bạn copy lệnh này để&nbsp;thiết lập.</p>
+      <pre>git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit"</pre>
+      <p>Bây giờ để xem log, bạn chỉ cần gõ <code>git lg</code>&nbsp;để xem.
+        Bạn có thể kết hợp nó với các tham số ở trên. Cái quan trọng nhất là với
+        cách xem này, bạn có thể thấy <strong>HEAD</strong> (con trỏ của branch
+        hiện tại) mà sau này khi bạn tìm hiểu tới branch bạn sẽ thấy nó rất có
+        ích.</p>
+      <p><img src="images/6-beauty-git-log.png"
+
+            alt="beauty-git-log"></p>
+      <h3>Undo commit</h3>
+      <p>Nếu bạn cần xóa bỏ lần commit trước và cần undo để commit lại thì có
+        thể sử dụng tham số <code>--amend</code>&nbsp;trong lệnh <code>git
+          commit</code>.</p>
+      <pre>$ git log --pretty="%s"
+Hihi
+First commit on Github
+$ git commit --amend -m "Hehe"
+[master 3682e56] Hehe
+ Date: Tue Apr 21 17:16:37 2015 -0700
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+ create mode 100644 faq.html
+$ git log --pretty="%s"
+Hehe
+First commit on Github</pre>
+      <p>Lưu ý rằng undo nghĩa là bạn quay trở lại bước commit lần trước, do vậy
+        nếu cần bổ sung tập tin nào vào để commit thì hãy đưa tập tin đó vào
+        Staging Area trước.</p>
+      <h3>Bỏ tập tin ra khỏi Staging Area</h3>
+      <p>Nếu bạn đã đưa một tập tin nào đó vào Staging Area nhưng bây giờ bạn
+        muốn loại bỏ nó ra khỏi đây để không phải bị commit theo thì có thể sử
+        dụng lệnh <code>git reset HEAD tên_file</code>. HEAD là cái gì thì tới
+        phần phân nhánh (Branch) mình sẽ giải thích.</p>
+      <h3>Lời kết</h3>
+      <p>Trong bài này bạn đã biết cách thao tác để xem lại lịch sử của những
+        lần commit để theo dõi các lần commit tốt hơn, cũng như cách bạn thao
+        tác phục hồi liên quan đến việc Commit. Tuy nhiên, bạn có thấy là mình
+        đã có nói qua về việc quản lý phiên bản trong Git chưa? Chưa có đúng
+        không? Được rồi, vậy thì ở bài sau mình sẽ hướng dẫn các bạn làm quen
+        với tính năng Tagging (đánh dấu) của Git và đây là cách để chúng ta quản
+        lý từng phiên bản trong mã nguồn.</p>
+    </article>
+
+    
+  </body>
+</html>

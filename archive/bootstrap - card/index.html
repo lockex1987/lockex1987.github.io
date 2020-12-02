@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bootstrap card">
+    <title>Bootstrap card</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Bootstrap card</h2>
+      <h3>Cấu trúc</h3>
+      <p> Card là một bộ chứa nội dung (content container) có cấu trúc, mềm dẻo
+        và có thể mở rộng (extensible). Nó có thể bao gồm các tùy chọn như
+        header, footer, các mầu nền theo ngữ cảnh,... Về cơ bản cấu trúc của
+        card giống như hình minh họa dưới đây:</p>
+      <p><img src="https://o7planning.org/vi/11971/cache/images/i/24205236.png"></p>
+      <p> Dưới đây là ví dụ một card đơn giản, nó bao gồm 2 thành phần <code>.card-img-top</code>
+        và <code>.card-body</code>:</p>
+      <p><img src="https://o7planning.org/vi/11971/cache/images/i/24216529.png"></p>
+      <p>Code: </p>
+      <pre>&lt;div class="card"&gt;
+    &lt;img class="card-img-top" src="../images/beach.png"&gt;
+    &lt;div class="card-body"&gt;
+        &lt;h5 class="card-title"&gt;Card title&lt;/h5&gt;<br>        &lt;h6 class="card-subtitle"&gt;Card subtitle&lt;/h6&gt;
+        &lt;p class="card-text"&gt;
+            Some quick example text to build on the card
+            title and make up the bulk of the card's content.
+        &lt;/p&gt;
+        &lt;a href="#" class="card-link"&gt;Go Somewhere&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre> 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   <p>Nếu muốn lấy ảnh làm background và hiển thị chữ trên ảnh, các bạn chỉ cần đổi class <code>card-body</code> thành <code>card-img-overlay</code>.</p> 
+   <p>Hoặc nếu muốn hiển thị thêm ảnh ở dưới title thì bạn chỉ cần thêm một thẻ <code>&lt;img&gt;</code> với class <code>card-img-bottom</code>.</p> 
+    
+   <h3>Định nghĩa chiều rộng và chiều cao cho card</h3> 
+   <p>Mặc định card sẽ lấy tất cả chiều rộng có sẵn trong thẻ <code>&lt;div&gt;</code> bao chúng, chiều cao sẽ được điều chỉnh sao cho hiển thị phù hợp với nội dung của card. Tuy nhiên, bạn cũng có thể tự thiết lập chiều rộng của chúng bằng cách thêm style <code>width</code> hay <code>max-width</code> và thay đổi chiều dài bằng cách thêm style <code>height</code>.</p> 
+    
+   <p>Như ví dụ dưới đây:</p> 
+   <pre>&lt;div class="card" style="width:20rem; height: 10rem;"&gt;
+    &lt;img class="card-img-top" src="../Beautiful-Dog.jpg"&gt;
+    &lt;div class="card-body"&gt;
+        &lt;h3 class="card-title"&gt;Card title&lt;/h3&gt;
+        &lt;h4 class="card-subtitle"&gt;Card subtitle&lt;/h4&gt;
+        &lt;p class="card-text"&gt;This is a simple Card example&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;   
+</pre> 
+   <p>Các bạn có để ý thấy là mình dùng đơn vị của <code>width</code> và <code>height</code> là <code>rem</code> thay vì <code>px</code> không? Mình viết vậy là bởi đơn vị <code>rem</code> có thể mở rộng được theo kích cỡ của màn hình, còn <code>px</code> thì không.</p> 
+   <p>Thay vì fix chiều rộng và chiều cao như thế, các bạn cũng có thể sử dụng Bootstrap grid, mình thì hay dùng cách này:</p> 
+   <pre>&lt;div class="row"&gt;
+    &lt;div class="col-sm-3"&gt;
+        &lt;div class="card"&gt;
+            &lt;img class="card-img-top" src="../Beautiful-Dog.jpg"&gt;
+            &lt;div class="card-body"&gt;
+                &lt;h3 class="card-title"&gt;Card title&lt;/h3&gt;
+                &lt;h4 class="card-subtitle"&gt;Card subtitle&lt;/h4&gt;
+                &lt;p class="card-text"&gt;This is a simple Card example&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;    
+</pre> 
+   <p>Với việc định nghĩa một card sẽ ứng với 3 column như trên, một hàng mình sẽ có được 4 card.</p> 
+    
+   <h3>Định nghĩa header và footer card</h3> 
+   <p>Các bạn chỉ cần thêm thẻ <code>&lt;div&gt;</code> với class <code>card-header</code> và <code>card-footer</code>.</p> 
+   <pre>&lt;div class="row"&gt;
+    &lt;div class="col-sm-3"&gt;
+        &lt;div class="card"&gt;
+            &lt;div class="card-header"&gt;
+                This is a header
+            &lt;/div&gt;
+            &lt;img class="card-img-top" src="../Beautiful-Dog.jpg"&gt;
+            &lt;div class="card-body"&gt;
+                &lt;h3 class="card-title"&gt;Card title&lt;/h3&gt;
+                &lt;h4 class="card-subtitle"&gt;Card subtitle&lt;/h4&gt;
+                &lt;p class="card-text"&gt;This is a simple Card example&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="card-footer"&gt;
+                This is a footer
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;  
+</pre> 
+   <h3>Thêm navigation</h3> 
+   <p>Một tính năng mới của Bootstrap card là khả năng thêm các mẫu tab hay navigation pill vào header. Để làm được điều này chúng ta sẽ thêm thẻ <code>&lt;ul&gt;</code> với các class <code>nav-tabs</code> và <code>card-header-tabs</code> vào <code>card-header</code>:</p> 
+   <pre>&lt;div class="card-header"&gt;
+    &lt;ul class="nav nav-tabs card-header-tabs"&gt;
+        &lt;li class="nav-item"&gt;
+            &lt;a class="nav-link active" href="#"&gt;Tab 1&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class="nav-item"&gt;
+            &lt;a class="nav-link" href="#"&gt;Tab 2&lt;/a&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;        
+&lt;/div&gt;
+</pre> 
+   <p>Tương tự chúng ta có thể thêm navigation pills vào bằng cách thay thế <code>nav-tabs</code> bằng <code>nav-pills</code> và <code>card-header-tabs</code> bằng <code>card-header-pill</code>.</p> 
+   <h3>Thêm liên kết</h3> 
+   <p>Chúng ta có thể dễ dàng thêm link vào nội dung content bằng cách thêm thẻ <code>&lt;a&gt;</code> và class <code>card-link</code>.</p> 
+   <pre>&lt;div class="card"&gt;
+    &lt;div class="card-body"&gt;
+        &lt;h3 class="card-title"&gt;Adding Links&lt;/h3&gt;
+        &lt;p class="card-text"&gt;These are simple links&lt;/p&gt;
+        &lt;a href="#" class="card-link"&gt;Link 1&lt;/a&gt;
+        &lt;a href="#" class="card-link"&gt;Link 2&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre><h3>Tạo layout với card</h3> 
+   <p>Như các bạn đã biết, card được sử dụng để tạo layout cho album ảnh, bài blog, sản phẩm thương mại điện tử... Có rất nhiều công ty lớn như Facebook, Google, Printest sử dụng đến nó.</p> 
+   <p>Thông thường, nếu các bạn muốn tạo ra những layout đẹp mắt thì bạn cần phải có những kiến thức chuyên sâu về HTML và CSS. Tuy nhiên, nhờ vào những tính năng mới của Bootstrap, chúng ta có thể nhanh chóng xây dựng các layouts như vậy bằng cách đặt các card bên trong thẻ <code>&lt;div&gt;</code>chứa những class đặc biệt như là <code>card-group</code>, <code>card-deck</code>, và <code>card-column</code>.</p> 
+   <h4>Grouping/nesting card</h4> 
+   <p>Group card chính là hiển thị 1 nhóm card cùng kích thước. Để làm được điều đó thì nó đã sử dụng thuộc tính <code>display:flex</code>, các card sẽ được đặt trong thẻ <code>&lt;div&gt;</code> với class <code>card-group</code>.</p> 
+    
+   <p>DEMO</p> 
+   <h4>Card deck</h4> 
+   <p>Tương tự như ví dụ trên, các bạn chỉ cần thay class <code>card-group</code> thành <code>card-deck</code>. Với card-group các card sẽ gắn liền nhau, còn card-deck sẽ có thêm khoảng cách giữa các card.</p> 
+   <h4>Card column</h4> 
+   <p>Cũng giống như card group và card deck, chúng ta cũng chỉ cần đặt card vào trong thẻ <code>&lt;div&gt;</code> với class <code>card-columns</code>. Nó sẽ giúp ta tạo ra 1 layout theo kiểu Masonry layout. Ưu điểm của masonry layout là nó thể hiện được nhiều hình ảnh với kích cỡ khác nhau mà không tạo ra sự lộn xộn đối với người xem.</p><p><img
+
+src="https://images.viblo.asia/56874e97-b16e-4c2c-a11d-d475a70124ae.png" data-zoom-target="https://images.viblo.asia/1600/56874e97-b16e-4c2c-a11d-d475a70124ae.png"></p></article> 
+  <script src="../../js/docs.js"></script>
+</body></html>

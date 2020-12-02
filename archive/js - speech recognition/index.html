@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="speech recognition, voice input, asr" />
+
+    <title>Nhận dạng tiếng nói</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <article>
+        <h2>Nhận dạng tiếng nói</h2>
+
+        <div id="info">
+            <p id="info_start">
+                Click vào biểu tượng loa và bắt đầu nói
+            </p>
+
+            <p id="info_speak_now" style="display:none">
+                Xin mời nói
+            </p>
+            <p id="info_no_speech" style="display:none">
+                No speech was detected. You may need to adjust your
+                <a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone settings</a>.
+            </p>
+            <p id="info_no_microphone" style="display:none">
+                No microphone was found. Ensure that a microphone is installed and that
+                <a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone settings</a>
+                are configured correctly.
+            </p>
+            <p id="info_allow" style="display:none">
+                Hãy cho phép sử dụng loa
+            </p>
+            <p id="info_denied" style="display:none">
+                Quyền sử dụng loa bị từ chối.
+                Thử click lại vào biểu tượng loa.
+            </p>
+            <p id="info_blocked" style="display:none">
+                Permission to use microphone is blocked.
+                To change, go to chrome://settings/contentExceptions#media-stream
+            </p>
+            <p id="info_upgrade" style="display:none">
+                Trình duyệt của bạn không hỗ trợ Web Speech API. Nâng cấp lên
+                <a href="//www.google.com/chrome">Chrome</a>
+                phiên bản 25 hoặc lớn hơn.
+            </p>
+        </div>
+
+
+        <div>
+            <div class="div_start">
+                <button class="start_button" id="start_button" onclick="startButton(event)">
+                    <img alt="Start" id="start_img" src="images/mic.gif">
+                </button>
+            </div>
+
+            <div class="results">
+                <span class="final" id="final_span"></span>
+                <span class="interim" id="interim_span"></span>
+            </div>
+        </div>
+
+        <!--div class="header">
+      <i class="fas fa-arrow-left"></i>
+      Thứ Ba, 31/07, 2018
+      <i class="fas fa-arrow-right"></i>
+    </div-->
+
+        <p>Bạn đã tiêu</p>
+        <div id="categories" class="categories"></div>
+
+        <p>Tổng số tiền đã tiêu trong ngày: <strong id="total"></strong> (<i>nghìn đồng</i>)</p>
+
+        <pre id="logs"></pre>
+    </article>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="js/voice_input.js"></script>
+    <script src="js/time_utils.js"></script>
+    <script src="js/category.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/money_manager.js"></script>
+    <script src="js/app.js"></script>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

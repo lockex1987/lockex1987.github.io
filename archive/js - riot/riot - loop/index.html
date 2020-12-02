@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Riot Loop</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Riot Loop">
+ </head> 
+ <body> 
+  <article> 
+   <p>Loops</p> 
+   <p>Loops are implemented with each attribute as follows:</p> 
+   <pre>&lt;todo&gt;
+  &lt;ul&gt;
+    &lt;li each={ items } class={ completed: done }&gt;
+      &lt;input type="checkbox" checked={ done }&gt; { title }
+    &lt;/li&gt;
+  &lt;/ul&gt;
+
+  this.items = [
+    { title: 'First item', done: true },
+    { title: 'Second item' },
+    { title: 'Third item' }
+  ]
+&lt;/todo&gt;</pre> 
+   <p>The element with the each attribute will be repeated for all items in the array. New elements are automatically added / created when the items array is manipulated using push(), slice() or splice methods for example.</p> 
+   <h3>Context</h3> 
+   <p>A new context is created for each item. These are tag instances. When loops are nested, all the children tags in the loop inherit any of their parent loop’s properties and methods they themselves have undefined. In this way, Riot avoids overriding things that should not be overridden by the parent tag.</p> 
+   <p>The parent can be explicitly accessed through the parent variable. For example:</p> 
+   <pre>&lt;todo&gt;
+  &lt;div each={ items }&gt;
+    &lt;h3&gt;{ title }&lt;/h3&gt;
+    &lt;a onclick={ parent.remove }&gt;Remove&lt;/a&gt;
+  &lt;/div&gt;
+
+  this.items = [ { title: 'First' }, { title: 'Second' } ]
+
+  remove(event) {
+
+  }
+&lt;/todo&gt;</pre> 
+   <p>In the looped element everything but the each attribute belongs to the child context, so the title can be accessed directly and remove needs to be prefixed with parent. since the method is not a property of the looped item.</p> 
+   <p>The looped items are tag instances. Riot does not touch the original items so no new properties are added to them.</p> 
+   <h3>Event handlers with looped items</h3> 
+   <p>Event handlers can access individual items in a collection with event.item. Now let’s implement the remove function:</p> 
+   <pre>&lt;todo&gt;
+  &lt;div each={ items }&gt;
+    &lt;h3&gt;{ title }&lt;/h3&gt;
+    &lt;a onclick={ parent.remove }&gt;Remove&lt;/a&gt;
+  &lt;/div&gt;
+
+  this.items = [ { title: 'First' }, { title: 'Second' } ]
+
+  remove(event) {
+
+    // looped item
+    var item = event.item
+
+    // index on the collection
+    var index = this.items.indexOf(item)
+
+    // remove from collection
+    this.items.splice(index, 1)
+  }
+&lt;/todo&gt;</pre> 
+   <p>After the event handler is executed the current tag instance is updated using this.update() (unless you set e.preventUpdate to true in your event handler) which causes all the looped items to execute as well. The parent notices that an item has been removed from the collection and removes the corresponding DOM node from the document.</p> 
+   <h3>Looping custom tags</h3> 
+   <p>Custom tags can also be looped. For example:</p> 
+   <pre>&lt;todo-item each="{ items }" data="{ this }"&gt;&lt;/todo-item&gt;</pre> 
+   <p>The currently looped item can be referenced with this which you can use to pass the item as an option to the looped tag.</p> 
+   <h3>Non-object arrays</h3> 
+   <p>The array elements need not be objects. They can be strings or numbers as well. In this case you need to use the { name, i in items } construct as follows:</p> 
+   <pre>&lt;my-tag&gt;
+  &lt;p each="{ name, i in arr }"&gt;{ i }: { name }&lt;/p&gt;
+
+  this.arr = [ true, 110, Math.random(), 'fourth']
+&lt;/my-tag&gt;</pre> 
+   <p>The name is the name of the element and i is the index number. Both of these labels can be anything that’s best suited for the situation.</p> 
+   <h3>Object loops</h3> 
+   <p>Plain objects can also be looped. For example:</p> 
+   <pre>&lt;my-tag&gt;
+  &lt;p each="{ value, name  in obj }"&gt;{ name } = { value }&lt;/p&gt;
+
+  this.obj = {
+    key1: 'value1',
+    key2: 1110.8900,
+    key3: Math.random()
+  }
+&lt;/my-tag&gt;</pre> 
+   <p>Object loops are not recommended since internally Riot detects changes on the object with JSON.stringify. The whole object is studied and when there is a change the whole loop is re-rendered. This can be slow. Normal arrays are much faster and only the changes are drawn on the page.</p> 
+   <h3>Loops advanced tips</h3> 
+   <h4>PERFORMANCES</h4> 
+   <p>The default each directive algorithm will sync the position of the looped DOM nodes together with the items in your collection via indexOf lookup. This strategy might be not efficient in case you are dealing with big collections of data. In that case if your looped tags don’t need to be reordered but just update their templates you can add the no-reorder options to them.</p> 
+   <pre>&lt;loop&gt;
+  &lt;!-- `items` here might be a huge collection of data... --&gt;
+  &lt;table&gt;
+    &lt;tr each="{ item in items }" no-reorder&gt;
+      &lt;td&gt;
+        { item.name }
+      &lt;/td&gt;
+      &lt;td&gt;
+        { item.surname }
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/loop&gt;</pre> 
+   <p>The table rows in the above example will be added/removed/updated without being reordered following the item position initially bound to them.</p> 
+   <h4>KEY</h4> 
+   <p>&gt;= v3.7</p> 
+   <p>Adding the key attribute to the looped tags you will provide a more precise strategy to track your items position. This will improve massively the loop performance in case your collections are immutable.</p> 
+   <pre>&lt;loop&gt;
+  &lt;ul&gt;
+    &lt;li each={ user in users } key="id"&gt;{ user.name }&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;script&gt;
+    this.users = [
+      { name: 'Gian', id: 0 },
+      { name: 'Dan', id: 1 },
+      { name: 'Teo', id: 2 }
+    ]
+  &lt;/script&gt;
+&lt;/loop&gt;</pre> 
+   <p>The key attribute can be generated also via expressions</p> 
+   <pre>&lt;loop&gt;
+  &lt;ul&gt;
+    &lt;li each={ user in users } key={ user.id() }&gt;{ user.name }&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;script&gt;
+    this.users = [
+      { name: 'Gian', id() { return 0 } },
+      { name: 'Dan', id() { return 1 } },
+      { name: 'Teo', id() { return 2 } }
+    ]
+  &lt;/script&gt;
+&lt;/loop&gt;</pre> 
+   <h4>THE VIRTUAL TAG</h4> 
+   <p>In some cases you may need to loop some html without having a particular wrapper tag. In that case you can use the &lt;virtual&gt; tag that will be removed rendering just the html tags wrapped in it. For example:</p> 
+   <pre>&lt;dl&gt;
+  &lt;virtual each={item in items}&gt;
+    &lt;dt&gt;{item.key}&lt;/dt&gt;
+    &lt;dd&gt;{item.value}&lt;/dd&gt;
+  &lt;/virtual&gt;
+&lt;/dl&gt;</pre> 
+   <p>virtual however is not exclusive to looping and can be used in conjuction with if for any tag</p> 
+   <pre>&lt;virtual data-is="my-tag" if={condition}&gt;
+  &lt;p&gt;Show me with no wrapper on condition&lt;/p&gt;
+&lt;/virtual&gt;</pre> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

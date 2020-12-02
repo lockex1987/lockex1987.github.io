@@ -1,0 +1,14 @@
+rect, line, path { stroke: currentcolor; stroke-width: 2px; vector-effect: non-scaling-stroke; }
+rect { fill: none; }
+path { stroke-miterlimit: 60; fill: currentcolor; }
+text { font: 6.25em/2 comic sans ms,verdana,arial,sans-serif; }
+.sl { dominant-baseline: hanging; text-anchor: end; }
+.code { font-family: courier,monospace; }
+[id="axes"] { opacity: 0.56; }
+[id="axes"] text.code:not(:last-of-type) { text-anchor: end; }
+[id="axes"] text.code:last-of-type { dominant-baseline: hanging; }
+[id="axes"] text:not(.code) { transform: translateY(0.75em); }
+[id="guides"], .guide { stroke-dasharray: 4px; }
+[id="guides"] { color: silver; }
+[id="bars"] { color: orange; }
+[id="meas"] text { text-anchor: middle; dominant-baseline: hanging; transform: translateY(0.25em); }

@@ -1,0 +1,82 @@
+.bg-image {
+    /* The image used */
+    background-image: url("../images/photographer.jpg");
+    
+    /* Add the blur effect */
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+    
+    /* Full height */
+    height: 500px;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+  
+/* Position text in the middle of the page/image */
+.bg-text {
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+    color: white;
+    font-weight: bold;
+    border: 3px solid #f1f1f1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 80%;
+    padding: 20px;
+    text-align: center;
+}
+
+.demo-2 {
+    background-image: url(../images/strawberry.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 500px;
+}
+
+.box {
+    background-color: rgba(255, 255, 255, 0.3);
+   -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);  
+    max-width: 50%;
+}
+
+
+.modal-x {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 5px;
+    color: #333;
+    font-family: sans-serif;
+    line-height: 1.5;
+    max-width: 50%;
+    padding: 1rem 2rem;
+  }
+
+  @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+    .modal-x {
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+  }
+
+  .container {
+            align-items: center;
+    
+    display: flex;
+    
+            justify-content: center;
+    height: 500px;
+
+    background-image: url("../images/america.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  }

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <div id="map" style="width: 100%; height: 500px;"></div>
+
+    <script>
+function myMap() {
+  var stavanger = new google.maps.LatLng(58.983991, 5.734863);
+  var amsterdam = new google.maps.LatLng(52.395715, 4.888916);
+  var london = new google.maps.LatLng(51.508742, -0.120850);
+
+  var mapCanvas = document.getElementById("map");
+  var mapOptions = { center: amsterdam, zoom: 4 };
+  var map = new google.maps.Map(mapCanvas, mapOptions);
+
+  var flightPath = new google.maps.Polyline({
+    path: [stavanger, amsterdam, london],
+    strokeColor: "#0000FF",
+    strokeOpacity: 0.8,
+    strokeWeight: 2
+  });
+  flightPath.setMap(map);
+}
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script>
+</body>
+
+</html>

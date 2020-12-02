@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>audio visualizer with audio element</title>
+    <style>
+body { background:#000; text-align:center; color:#fff; }
+    </style>
+</head>
+
+<body>
+    <canvas id='canvas' width="600" height="350"></canvas>
+    <br>
+    <br>
+    <audio src="sample.mp3" id="audio" controls style="width: 100%"></audio>
+	<!--audio src="https://api.soundcloud.com/tracks/42328219/stream?client_id=b1495e39071bd7081a74093816f77ddb" id="audio" controls style="width: 100%"></audio-->
+	
+	
+
+    <script>
+// https://github.com/wayou/audio-visualizer-with-controls
+// Không chạy được bằng file local, phải đẩy lên server
+// php -S localhost:8080
+// localhost:8080/audio-2.html
+
+
+window.onload = function() {
+	// Khởi tạo đối tượng Analyser
+    var audio = document.getElementById('audio');
+    var audioContext = new AudioContext();
+    var audioSrc = audioContext.createMediaElementSource(audio);
+    var analyser = audioContext.createAnalyser();
+    audioSrc.connect(analyser);
+
+    // Connect the analyser to the destination(the speaker), or we won't hear the sound
+    analyser.connect(audioContext.destination);
+
+    // Khởi tạo canvas context
+    var canvas = document.getElementById('canvas');
+	var ctx = canvas.getContext('2d');
+    var cwidth = canvas.width;
+    var cheight = canvas.height - 2;
+	
+	
+    var meterWidth = 10; // width of the meters in the spectrum
+    var gap = 2; //gap between meters
+    var capHeight = 2;
+    var meterNum = cwidth / (meterWidth + gap); // count of the meters
+	
+    var capYPositionArray = []; // store the vertical position of hte caps for the preivous frame
+	for (var i = 0; i < Math.round(meterNum); i++) {
+		capYPositionArray.push(0);
+	}
+
+	// Màu của cap
+    var capStyle = '#fff';
+
+	// Màu của meter
+    var gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(1, '#0f0');
+    gradient.addColorStop(0.5, '#ff0');
+    gradient.addColorStop(0, '#f00');
+
+    function renderFrame() {
+		// Lấy mảng dữ liệu
+		// Có 2 kiểu là theo Frequency hoặc TimeDomain
+        var array = new Uint8Array(analyser.frequencyBinCount);
+        //analyser.getByteFrequencyData(array);
+        analyser.getByteTimeDomainData(array);
+		
+        var step = Math.round(array.length / meterNum); //sample limited data from the total array
+
+        // Clear hết toàn bộ canvas
+        ctx.clearRect(0, 0, cwidth, cheight);
+
+        // Vẽ từng bar
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgb(255, 255, 255)';
+
+        ctx.beginPath();
+        for (var i = 0; i < meterNum; i++) {
+            var value = array[i * step];
+
+			// Draw the cap, with transition effect
+            ctx.fillStyle = capStyle;
+            // Draw the cap, with transition effect
+            if (value < capYPositionArray[i]) {
+                ctx.fillRect(i * 12, cheight - (--capYPositionArray[i]), meterWidth, capHeight);
+            } else {
+                ctx.fillRect(i * 12, cheight - value,                    meterWidth, capHeight);
+                capYPositionArray[i] = value;
+            };
+
+            // Vẽ kiểu thanh
+            ctx.fillStyle = gradient; // set the filllStyle to gradient for a better look
+            ctx.fillRect(i * (meterWidth + gap), cheight - value + capHeight, meterWidth, cheight); // the meter
+
+			// Vẽ kiểu sóng
+			/*
+            var x = i * (meterWidth + gap);
+            var y = cheight / 2 + 50 * (1 - value / 256);
+            if (i === 0) {
+                ctx.moveTo(x, y);
+            } else {
+                ctx.lineTo(x, y);
+            }
+			*/
+        }
+
+        //ctx.lineTo(canvas.width, canvas.height / 2);
+        //ctx.stroke();
+
+        requestAnimationFrame(renderFrame);
+    }
+
+    audio.play();
+    renderFrame();
+};
+
+    </script>
+</body>
+</html>

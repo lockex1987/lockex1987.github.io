@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>working-with-urls</title>
+        <link type="text/css" rel="stylesheet" href="style.css"/>
+    </head>
+    <body class="n1-cookbook">
+        <div class="wrap">
+            <div class="content">
+                <div class="col1"><div class="recipe"> 
+ <h1>Working with URLs</h1> 
+ <h2>Problem</h2> 
+ <p>You have a HTML document that contains relative URLs, which you need to resolve to absolute URLs.</p> 
+ <h2>Solution</h2> 
+ <ol> 
+  <li>Make sure you specify a <code>base URI</code> when parsing the document (which is implicit when loading from a URL), and</li> 
+  <li>Use the <code>abs:</code> attribute prefix to resolve an absolute URL from an attribute:</li> 
+ </ol> 
+ <pre><code class="prettyprint">Document doc = Jsoup.connect(&quot;http://jsoup.org&quot;).get();
+
+Element link = doc.select(&quot;a&quot;).first();
+String relHref = link.attr(&quot;href&quot;); // == &quot;/&quot;
+String absHref = link.attr(&quot;abs:href&quot;); // &quot;http://jsoup.org/&quot;
+</code></pre> 
+ <h2>Description</h2> 
+ <p>In HTML elements, URLs are often written relative to the document's location: <code>&lt;a&nbsp;href=&quot;/download&quot;&gt;...&lt;/a&gt;</code>. When you use the <code><a href="/apidocs/org/jsoup/nodes/Node.html#attr(java.lang.String)" title="Get an attribute's value by its key.">Node.attr(String key)</a></code> method to get a href attribute, it will be returned as it is specified in the source HTML.</p> 
+ <p>If you want to get an absolute URL, there is a attribute key prefix <code>abs:</code> that will cause the attribute value to be resolved against the document's base URI (original location): <code>attr(&quot;abs:href&quot;)</code></p> 
+ <p>For this use case, it is important to specify the base URI when parsing the document.</p> 
+ <p>If you don't want to use the <code>abs:</code> prefix, there is also a method <code><a href="/apidocs/org/jsoup/nodes/Node.html#absUrl(java.lang.String)" title="Get an absolute URL from a URL attribute that may be relative (i.e.">Node.absUrl(String key)</a></code> which does the same thing, but accesses via the natural attribute key.</p> 
+</div>
+                </div>
+                <div class="col2">
+                    <div class="toc box">
+                        <h2>Cookbook contents</h2>
+                        <h3>Introduction</h3>
+                        <ol start="1">
+                            <li><a href="parsing-a-document.htm">Parsing and traversing a Document</a></li>
+                        </ol>
+                        <h3>Input</h3>
+                        <ol start="2">
+                            <li><a href="parse-document-from-string.htm">Parse a document from a String</a></li>
+                            <li><a href="parse-body-fragment.htm">Parsing a body fragment</a></li>
+                            <li><a href="load-document-from-url.htm">Load a Document from a URL</a></li>
+                            <li><a href="load-document-from-file.htm">Load a Document from a File</a></li>
+                        </ol>
+                        <h3>Extracting data</h3>
+                        <ol start="6">
+                            <li><a href="dom-navigation.htm">Use DOM methods to navigate a document</a></li>
+                            <li><a href="selector-syntax.htm">Use selector-syntax to find elements</a></li>
+                            <li><a href="attributes-text-html.htm">Extract attributes, text, and HTML from elements</a></li>
+                            <li><a href="working-with-urls.htm">Working with URLs</a></li>
+                            <li><a href="example-list-links.htm">Example program: list links</a></li>
+                        </ol>
+                        <h3>Modifying data</h3>
+                        <ol start="11">
+                            <li><a href="set-attributes.htm">Set attribute values</a></li>
+                            <li><a href="set-html.htm">Set the HTML of an element</a></li>
+                            <li><a href="set-text.htm">Setting the text content of elements</a></li>
+                        </ol>
+                        <h3>Cleaning HTML</h3>
+                        <ol start="14">
+                            <li><a href="whitelist-sanitizer.htm">Sanitize untrusted HTML (to prevent XSS)</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

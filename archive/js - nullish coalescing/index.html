@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hợp nhất null, falsy, truthy">
+    <title>Nullish coalescing</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Nullish coalescing</h2>
+      <p>Chúng ta hay làm như sau để thiết lập giá trị mặc định:</p>
+      <pre>const player = inputPlayer || 'Ronaldo CR7';</pre>
+      <p>Tuy nhiên, nếu <code>inputPlayer</code> là một trong các giá trị falsy
+        (<code>0</code>, <code>''</code> xâu rỗng) nhưng không phải <code>false</code>,
+        <code>null</code>, <code>undefined</code>, <code>NaN</code> thì thế
+        nào?</p>
+      <p>Hãy sử dụng toán tử Nullish coalescing:</p>
+      <pre>const player = inputPlayer ?? 'Ronaldo CR7';</pre>
+    </article>
+    
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Laravel Eloquent Collections</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Laravel Eloquent Collections">
+ </head> 
+ <body> 
+  <article> 
+   <style>
+      #collection-method-list { column-count: 3; column-gap: 2em; }
+    #collection-method-list a { display: block; }
+      
+    </style> 
+   <h1>Eloquent: Collections</h1> 
+   <p>Tất cả các tập hợp nhiều kết quả bởi Eloquent đều là một instance từ<code> Illuminate\Database\Eloquent\Collection</code>, bao gồm kết quả lấy từ hàm <code>get</code> hay thông qua relationship. Các Eloquent collection object kế thừa từ Laravel <a href="https://giaphiep.com/docs/5.3/collections">base collection</a>, nên chúng đề kế thừa các hàm để làm xử lý với lớp dưới của Eloquent model.</p> 
+   <p>Tất nhiên là các collections đều có thể sử dụng như iterators, cho phép bạn thực hiện lặp như với một mảng PHP:</p> 
+   <pre><code>$users = App\User::where('active', 1)-&gt;get();
+
+foreach ($users as $user) {
+    echo $user-&gt;name;
+}</code></pre> 
+   <p>Tuy nhiên, collection còn mạnh hơn array nhiều và cung cấp thêm một số các xử lý map / reduce mà có thể móc nối được qua một interface dễ hiểu. Ví dụ, cùng nhau xoá các model inactive và thu thập tên của các user còn lại:</p> 
+   <pre><code>$users = App\User::where('active', 1)-&gt;get();
+
+$names = $users-&gt;reject(function($user) {
+    return $user-&gt;active === false;
+})
+-&gt;map(function($user) {
+    return $user-&gt;name;
+});</code></pre> 
+   <p> Trong khi hầu hết hàm Eloquent collection trả về một instance mới của một Eloquent collection, các hàm <code>pluck</code>, <code>keys</code>, <code>zip</code>, <code>collapse</code>, <code>flatten</code> và <code>flip</code> trả về một base collection instance. Tương tự, nếu một <code>map</code> trả về một collection không chứa bất kỳ Eloquent models nào, nó sẽ tự động biến thành một collection cơ bản.</p> 
+   <p><a></a></p> 
+   <h2>Các phương thức tồn tại</h2> 
+   <h3>Collection cơ bản</h3> 
+   <p>Tất cả các Eloquent collections đều kế thừa từ <a href="https://giaphiep.com/docs/5.3/collections">Laravel collection</a>; vì thế mà chúng kế thừa tất cả các hàm mạnh mẽ được cung cấp bởi lớp base collection:</p> 
+   <div id="collection-method-list"> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-all">all</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-avg">avg</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-chunk">chunk</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-collapse">collapse</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-combine">combine</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-contains">contains</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-count">count</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-diff">diff</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-diffkeys">diffKeys</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-each">each</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-every">every</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-except">except</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-filter">filter</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-first">first</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-flatmap">flatMap</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-flatten">flatten</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-flip">flip</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-forget">forget</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-forpage">forPage</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-get">get</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-groupby">groupBy</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-has">has</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-implode">implode</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-intersect">intersect</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-isempty">isEmpty</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-keyby">keyBy</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-keys">keys</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-last">last</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-map">map</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-max">max</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-merge">merge</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-min">min</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-only">only</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-pluck">pluck</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-pop">pop</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-prepend">prepend</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-pull">pull</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-push">push</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-put">put</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-random">random</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-reduce">reduce</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-reject">reject</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-reverse">reverse</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-search">search</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-shift">shift</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-shuffle">shuffle</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-slice">slice</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-sort">sort</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-sortby">sortBy</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-sortbydesc">sortByDesc</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-splice">splice</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-sum">sum</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-take">take</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-toarray">toArray</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-tojson">toJson</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-transform">transform</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-union">union</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-unique">unique</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-values">values</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-where">where</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-wherestrict">whereStrict</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-wherein">whereIn</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-whereinloose">whereInLoose</a> 
+    <a href="https://giaphiep.com/docs/5.3/collections#method-zip">zip</a> 
+   </div> 
+   <p><a></a></p> 
+   <h2>Tùy biến Collections</h2> 
+   <p>Nếu bạn muốn tạo một object <code>Collection</code> riêng với hàm mở rộng riêng, bạn có thể ghi đè hàm <code>newCollection</code> trong model:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use App\CustomCollection;
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    /**
+     * Create a new Eloquent Collection instance.
+     *
+     * @param    array  $models
+     * @return  \Illuminate\Database\Eloquent\Collection
+     */
+    public function newCollection(array $models = [])
+    {
+        return new CustomCollection($models);
+    }
+}</code></pre> 
+   <p>Khi bạn đã khai báo một hàm <code>newCollection</code>, bạn sẽ nhận được một instance của collection đó bất cứ khi nào Eloquent trả về một <code>Collection</code> của model. Nếu bạn muốn sử dụng collection riêng cho tất cả các model trong ứng dụng, bạn nên ghi đè vào hàm <code>newCollection</code> trong class base của model, mà được kế thừa từ tất cả các model khác.</p> 
+   <p> Nguồn: <a href="https://laravel.com/docs/5.3/eloquent-collections">https://laravel.com/docs/5.3/eloquent-collections</a> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

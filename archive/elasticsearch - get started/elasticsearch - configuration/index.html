@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Cấu hình Elasticsearch</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Cấu hình Elasticsearch">
+ </head> 
+ <body> 
+  <article> 
+   <p>Hướng dẫn cấu hình Elasticsearch, Truy cập từ xa Elasticsearch </p> 
+   <h3>Cấu hình Elasticsearch trên Ubuntu / Linux</h3> 
+   <p>Mặc định sau khi cài đặt, folder chứa các file cấu hình của Elasticsearch sẽ là: <code>/etc/elasticsearch</code></p> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/09/elasticsearch-config-1.png"><img src="https://stackjava.com/wp-content/uploads/2018/09/elasticsearch-config-1.png"></a></p> 
+   <p>Trong đó file quan trọng nhất là <code>elasticsearch.yml</code> nó sẽ chứa các cấu hình về host, port…</p> 
+   <p>Các file <code>log4j2.properties</code> cấu hình thông tin log, các file <code>users* role*</code> cấu hình thông tin user truy cập Elasticsearch.</p> 
+   <p>Mặc định các file log sẽ chứa ở <code>/var/log/elasticsearch</code>, các bạn có thể sửa lại folder log trong file <code>elasticsearch.yml</code></p> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/09/elasticsearch-config-2.png"><img src="https://stackjava.com/wp-content/uploads/2018/09/elasticsearch-config-2.png"></a></p> 
+   <h3>Cấu hình Elasticsearch trên window</h3> 
+   <p>Khác với Ubuntu, khi cài đặt Elasticsearch trên Window ta có thể lựa chọn ngay folder chứa data, các file cấu hình và log.</p> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-2.png"><img src="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-2.png"></a></p> 
+   <p>Ví dụ trên, mình</p> 
+   <p>Lưu data của Elasticsearch tại <code>C:\ProgramData\Elastic\Elasticsearch\data </code></p> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/09/elasticsearch-config-3.png"><img src="https://stackjava.com/wp-content/uploads/2018/09/elasticsearch-config-3.png"></a></p> 
+   <p>Các file cấu hình Elasticsearch lưu tại <code>C:\ProgramData\Elastic\Elasticsearch\config</code></p> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/09/elasticsearch-config-4.png"><img src="https://stackjava.com/wp-content/uploads/2018/09/elasticsearch-config-4.png"></a></p> 
+   <p>Các file log lưu tại <code>C:\ProgramData\Elastic\Elasticsearch\logs</code></p> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/09/elasticsearch-config-5.png"><img src="https://stackjava.com/wp-content/uploads/2018/09/elasticsearch-config-5.png"></a></p> 
+   <h3>Các thông tin cấu hình trong file <code>elasticsearch.yml</code></h3> 
+   <p>Một số thông tin cấu hình mặc định trong file <code>ealsticsearch.yml</code></p> 
+   <p>Cluster name, node name, node port…</p> 
+   <ul> 
+    <li>bootstrap.memory_lock: false</li> 
+    <li>## tên cluster</li> 
+    <li>cluster.name: elasticsearch-superman</li> 
+    <li>## cổng chạy elasticsearch</li> 
+    <li>http.port: 9200</li> 
+    <li>## cấu hình node cho trường hợp dùng kết hợp nhiều server elasticsearch</li> 
+    <li>node.data: true</li> 
+    <li>node.ingest: true</li> 
+    <li>node.master: true</li> 
+    <li>## tên node</li> 
+    <li>node.name: DESKTOP-G8Q40N2-superman</li> 
+    <li>## thư mục chứa data</li> 
+    <li>path.data: C:\ProgramData\Elastic\Elasticsearch\data</li> 
+    <li>## thư mục chứa log</li> 
+    <li>path.logs: C:\ProgramData\Elastic\Elasticsearch\logs</li> 
+    <li>transport.tcp.port: 9300</li> 
+    <li>xpack.license.self_generated.type: basic</li> 
+    <li>xpack.security.enabled: false</li> 
+    <li>## số phân đoạn của index khi tạo</li> 
+    <li>index.number_of_shards: 5</li> 
+    <li>## số bản sao của index khi tạo</li> 
+    <li>index.number_of_replicas: 1</li> 
+   </ul> 
+   <p>Một số lựa chọn cấu hình khác:</p> 
+   <p>Truy cập từ xa Elasticsearch</p> 
+   <p><code>network.host: 192.168.0.1</code>: public các địa chỉ ip của server elasticsearch.</p> 
+   <p>Ví dụ bạn để là <code>127.0.0.1</code>thì chỉ có thể truy cập Elasticsearch từ local, <code>192.168.0.1</code> là LAN IP thì bạn có thể truy cập Elasticsearch từ các mấy trong cùng mạng LAN… bạn có thể truyền nhiều ip vào <code>network.host</code> bằng cách phân cách nhau bởi dấu phẩy.</p> 
+   <p>Nếu bạn muốn cho phép truy cập Elasticsearch qua tất cả các IP thì có thể truyền <code>0.0.0.0</code> như thế có thể truy cập qua LAN IP, Public IP, domain…</p> 
+   <p>Tắt chức năng xóa toàn bộ index bằng thẻ <code>_all</code></p> 
+   <p><code>action.destructive_requires_name: true</code></p> 
+   <p> </p> 
+   <p>Okay, Done!</p> 
+   <p>References:</p> 
+   <p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/settings.html" target="_blank">https://www.elastic.co/guide/…/settings.html</a></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

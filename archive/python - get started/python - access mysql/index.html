@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="python, mysql, database">
+    <title>Truy cập MySQL với Python</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Truy cập MySQL với Python</h2>
+      <p>Chúng ta sẽ thực hành truy cập MySQL với thư viện pyMySQL trong Python.</p>
+      <p>Cài đặt thư viện như sau:</p>
+      <pre>$ pip install PyMySQL</pre>
+      <p>Mở kết nối, trả về đối tượng Connection.</p>
+      <p>Tiếp theo là tạo đối tượng cursor.</p>
+      <p>Sau đó thì thực hiện các câu lệnh bằng <code>cursor.execute</code>.</p>
+      <p>Tạo một bảng để test trong MySQL như sau:</p>
+      <pre>CREATE TABLE pymysql_demo (
+    id int(10) AUTO_INCREMENT,
+    full_name varchar(100),
+    access_time datetime,<br>    status int(1),
+    PRIMARY KEY (id)
+) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;</pre>
+      
+      <p><a href="pymysql_demo.py">Source</a></p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+</body></html>

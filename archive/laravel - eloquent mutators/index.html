@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Laravel Eloquent Mutators</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Laravel Eloquent Mutators">
+ </head> 
+ <body> 
+  <article> 
+   <h1>Eloquent: Mutators</h1> 
+   <p>Accessor và mutator cho phép bạn format các attributes của Eloquent khi lấy ra từ một model hay đặt giá trị cho chúng. Ví dụ, bạn có thể muốn sử dụng <a href="https://giaphiep.com/docs/5.3/encryption">Laravel encrypter</a> để mã hoá một giá trị khi được lưu vào trong database, và tự động giải mã attribute đó khi truy xuất từ trong Eloquent model.</p> 
+   <p>Ngoài việc hỗ trợ tạo accessor và mutator riêng, Eloquent cũng tự động chuyển các trường date thành <a href="https://github.com/briannesbitt/Carbon">Carbon</a> instance hoặc thậm chí <a href="https://giaphiep.com/docs/5.3/eloquent-mutators#attribute-casting">cast text fields to JSON</a>.</p> 
+   <p><a></a></p> 
+   <h2>Accessors &amp; Mutators</h2> 
+   <p><a></a></p> 
+   <h3>Định nghĩa một Accessor</h3> 
+   <p>Để khai báo một accessor, tạo một hàm <code>getFooAttribute</code> trong model với <code>Foo</code> là tên của cột bạn muốn truy cập sử dụng kiểu "camel". Ở ví dụ này, chúng ta sẽ khai báo một accessor cho <code>first_name</code>. Accessor sẽ tự động được gọi bởi Eloquent khi lấy giá trị của <code>first_name</code> attribute:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    /**
+     * Get the user's first name.
+     *
+     * @param    string  $value
+     * @return  string
+     */
+    public function getFirstNameAttribute($value)
+    {
+        return ucfirst($value);
+    }
+}</code></pre> 
+   <p>Như bạn thấy, giá trị gốc của column được truyền vào accessor, cho phép bạn thay đổi và trả về giá trị. Để lấy gía trị này, chỉ cần truyền vào tên attribute là <code>first_name</code> trong model instance:</p> 
+   <pre><code>$user = App\User::find(1);
+$firstName = $user-&gt;first_name;</code></pre> 
+   <p><a></a></p> 
+   <h3>Định nghĩa một Mutator</h3> 
+   <p>Để khai báo một mutator, khai báo một hàm <code>setFooAttribute</code> trong model <code>Foo</code> là tên của cột theo "studly". Vì vậy, lần nữa, định nghĩa một mutator cho thuộc tính <code>first_name</code>. Mutator sẽ được tự động gọi khi chúng ta set giá trị của thuộc tính <code>first_name</code> trong model:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    /**
+     * Set the user's first name.
+     *
+     * @param    string  $value
+     * @return  void
+     */
+    public function setFirstNameAttribute($value)
+    {
+        $this-&gt;attributes['first_name'] = strtolower($value);
+    }
+}</code></pre> 
+   <p>Mutator sẽ nhận giá trị được gán vào, cho phép bạn thay đổi tuỳ ý trong thuộc tính <code>$attributes</code> của Eloquent model. Ví dụ, chúng ta có thể gán giá trị thuộc tính <code>first_name</code> cho <code>Sally</code>:</p> 
+   <pre><code>$user = App\User::find(1);
+$user-&gt;first_name = 'Sally';</code></pre> 
+   <p>Ở ví dụ này, hàm <code>setFirstNameAttribute</code> sẽ được gọi với giá trị là <code>Sally</code>. Mutator rồi sẽ thực hiện hàm <code>strtolower</code> để chỉnh lại tên và gán giá trị vào trong mảng <code>$attributes</code>.</p> 
+   <p><a></a></p> 
+   <h2>Date Mutators</h2> 
+   <p>Mặc định, Eloquent sẽ convert <code>created_at</code> và <code>updated_at</code> thành instances của Carbon, một thư viện cung cấp rất nhiều hàm hữu ích và mở rộng class <code>DateTime</code> . Bạn có thể tùy biến trường nào sẽ được tự động mutate, và thậm chí có thể disable việc mutation này bằng cách ghi đè lên thuộc tính <code>$dates</code> trong model:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var  array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+}</code></pre> 
+   <p>Khi một column là kiểu date, bạn có thể đặt giá trị của nó là một UNIX timestamp, date string (<code>Y-m-d</code>), date-time string và tất nhiên là một instance của <code>DateTime</code> / <code>Carbon</code>, và giá trị của date sẽ tự động được lưu vào trong database:</p> 
+   <pre><code>$user = App\User::find(1);
+$user-&gt;deleted_at = Carbon::now();
+$user-&gt;save();</code></pre> 
+   <p>Như ghi ở trên, khi lấy các attributes liệt kê trong thuộc tính <code>$dates</code>, chúng sẽ tự động được cast thành instance của Carbon, cho phép bạn sử dụng các hàm Carbon trong attributes:</p> 
+   <pre><code>$user = App\User::find(1);
+
+return $user-&gt;deleted_at-&gt;getTimestamp();</code></pre> 
+   <h4>Date Formats</h4> 
+   <p>Mặc định, timestamps được format dưới dạng <code>'Y-m-d H:i:s'</code>. Nếu bạn muốn tuỳ chỉnh format của timestamp, thiết lập vào thuộc tính <code>$dateFormat</code> trong model. Thuộc tính này xác định các cách date attributes được lưu như thế nào trong database, cũng như format chúng khi model được serialize thành một array hay JSON:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Flight extends Model
+{
+    /**
+     * The storage format of the model's date columns.
+     *
+     * @var  string
+     */
+    protected $dateFormat = 'U';
+}</code></pre> 
+   <p><a></a></p> 
+   <h2>Attribute Casting</h2> 
+   <p>Thuộc tính <code>$casts</code> cung cấp một phương thức convert attributes thành các kiểu dữ liệu khác nhau khá tiện lợi. Thuộc tính <code>$casts</code> là một mảng có key là tên của attribute được cast, còn giá trị là kiểu dữ liệu bạn muốn cast. Các kiểu dữ liệu để cast được hỗ trợ bao gồm: <code>integer</code>, <code>real</code>, <code>float</code>, <code>double</code>, <code>string</code>, <code>boolean</code>, <code>object</code>, <code>array</code>, <code>collection</code>, <code>date</code>, <code>datetime</code>, và <code>timestamp</code>.</p> 
+   <p>Ví dụ, hãy cast attribute <code>is_admin</code>được lưu trong database là integer (<code>0</code> hợc <code>1</code>) thành giá trị boolean:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var  array
+     */
+    protected $casts = [
+        'is_admin' =&gt; 'boolean',
+    ];
+}</code></pre> 
+   <p>Bây giờ, attribute <code>is_admin</code> sẽ luôn luôn được cast thành boolean khi bạn truy cập nó, thậm chí nếu giá trị nó được lưu trong database là kiểu integer:</p> 
+   <pre><code>$user = App\User::find(1);
+
+if ($user-&gt;is_admin) {
+    //
+}</code></pre> 
+   <p><a></a></p> 
+   <h3>Array &amp; JSON Casting</h3> 
+   <p>Cast kiểu <code>array</code> hữu dụng khi làm việc với các columns được lưu thành JSON. Ví dụ, nếu database có một trường kiểu <code>JSON</code> hoặc <code>TEXT</code> có chứa serialized JSON, thêm vào <code>array</code> cast lên attribute sẽ tự động de-serialize attribute thành mảng PHP khi bạn access trong Eloquent model:</p> 
+   <pre><code>&lt;?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var  array
+     */
+    protected $casts = [
+        'options' =&gt; 'array',
+    ];
+}</code></pre> 
+   <p>Khi mà cast đã được khai báo, bạn có thể lấy giá trị <code>options</code> và nó sẽ tự dộng deserialize từ JSON thành PHP array. Khi bạn gán giá trị vào <code>options</code> attribute, nó sẽ tự động được serialize trở lại thành JSON để lưu vào trong cơ sở dữ liệu:</p> 
+   <pre><code>$user = App\User::find(1);
+$options = $user-&gt;options;
+$options['key'] = 'value';
+$user-&gt;options = $options;
+$user-&gt;save();</code></pre> 
+   <p> Nguồn: <a href="https://laravel.com/docs/5.3/eloquent-mutators">https://laravel.com/docs/5.3/eloquent-mutators</a> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

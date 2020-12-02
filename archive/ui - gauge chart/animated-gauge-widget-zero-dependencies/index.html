@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Animated gauge widget. Zero dependencies!</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="gauge1" class="gauge-container">
+    <span class="label">DEFAULT</span>
+</div>
+
+<div class="wrapper">
+  <div id="gauge2" class="gauge-container two">
+    <span class="label">.two</span>
+  </div>
+</div>
+
+<div id="gauge3" class="gauge-container three">
+  <span class="label">.three</span>
+</div>
+
+<div id="gauge4" class="gauge-container four">
+  <span class="label">.four</span>
+  <span class="value-text">km/hr</span>
+</div>
+
+<div id="gauge5" class="gauge-container five">
+  <span class="label">.five</span>
+</div>
+
+<div id="gauge6" class="gauge-container six">
+  <span class="label">.six</span>
+</div>
+
+<div id="gauge7" class="gauge-container seven">
+  <span class="label">.seven</span>
+</div>
+
+<div class="info">
+  Grab yours at <a class="link" href="https://github.com/naikus/svg-gauge" target="_blank">https://github.com/naikus/svg-gauge</a> Fork and star :D OR <pre>npm install svg-gauge</pre>
+</div>
+
+<div class="info">
+  New feature! Change dial colors for different values. 
+  
+  <p class="warn">
+  WARNING!! Some breaking changes: Gauge now uses a viewbox of 100x100 instead of previous 1000x1000. So all style stroke and font values need to be adjusted. (divide by 10)
+  </p>
+ 
+  
+  <p>
+    Also check out my tiny mobile framework/view manager for building simple SPAs
+    <a target="_blank" href="https://codepen.io/naikus/pen/PKgPyN" class="link">
+      https://codepen.io/naikus/pen/PKgPyN
+    </a>
+  </p>
+</div>
+<!-- partial -->
+  <script src='https://rawgit.com/naikus/svg-gauge/master/dist/gauge.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>

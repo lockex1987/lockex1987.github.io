@@ -1,0 +1,52 @@
+// Sử dụng !default để không định nghĩa lại biến, trong trường hợp nó đã được định nghĩa
+// Các biến này giống Bootstrap
+$spacer: 1rem !default;
+$spacers: (
+    0: 0,
+    1: $spacer * .25,
+    2: $spacer * .5,
+    3: $spacer,
+    4: $spacer * 1.5,
+    5: $spacer * 3,
+) !default;
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+
+@each $idx, $size in $spacers {
+    .grid-gap-#{$idx} {
+        grid-gap: $size;
+    }
+}
+
+.d-grid {
+    display: grid;
+}
+
+@each $prefix, $minWidth in $grid-breakpoints {
+    .d-#{$prefix}-grid {
+        @media (min-width: $minWidth) {
+            display: grid;
+        }
+    }
+}
+
+@for $i from 1 through 5 {
+    .grid-column-#{$i} {
+        grid-template-columns: repeat($i, 1fr);
+    }
+}
+
+@each $prefix, $minWidth in $grid-breakpoints {
+    @for $i from 1 through 5 {
+        .grid-column-#{$prefix}-#{$i} {
+            @media (min-width: $minWidth) {
+                grid-template-columns: repeat($i, 1fr);
+            }
+        }
+    }
+}

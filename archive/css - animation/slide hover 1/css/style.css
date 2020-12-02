@@ -1,0 +1,30 @@
+:root {
+    --screenWidth: 320px;
+    --screenHeight: 568px
+}
+
+
+
+.screen {
+    overflow: hidden;
+    width: var(--screenWidth);
+    height: var(--screenHeight);
+}
+
+.slider {
+    position: relative;
+    height: var(--screenHeight);
+    width: calc(var(--screenWidth) * 2);
+    left: 0;
+    transition: all 0.5s ease-in-out;
+}
+
+.screen:hover .slider {
+    left: calc(-1 * var(--screenWidth));
+}
+
+.slider img {
+    float: left;
+    height: var(--screenHeight);
+    width: var(--screenWidth);
+}

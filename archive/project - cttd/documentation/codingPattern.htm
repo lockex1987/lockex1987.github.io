@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Coding pattern</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<link href="theme.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="jquery/jquery.js"></script>
+	<script>
+		function tctToggleFieldset(toogleDiv) {
+			var contentDiv = $(toogleDiv).next();
+			if (contentDiv.is(":hidden")) {
+				contentDiv.show();
+			} else {
+				contentDiv.hide();
+			}
+		}
+	</script>
+	<style type="text/css">
+		h3 {
+			cursor: pointer;
+			font-size: 12px;
+			color: #090;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="main">
+		<h2>2. Các coding pattern điển hình</h2>
+		<div>Một số pattern đã được định nghĩa sẵn, thiết kế một cách độc lập. Dự án nếu cần sử dụng các pattern nào hãy copy phần đó
+			về và chỉnh sửa.</div>
+		<div>
+			<h3 onclick="tctToggleFieldset(this)">Đăng nhập</h3>
+			<div style="display:none;">
+				Chúng ta phải sửa index.jsp để điều hướng đến trang login. Trang login gồm các thông tin: tên đăng nhập, mật khẩu, captcha,
+				(và chọn ngôn ngữ?). Sửa tiếp AuthenticateController:
+				<ul>
+					<li>actionPrepareAuthenticate</li>
+					<li>actionProcessAuthenticate</li>
+					<li>actionRedirectAuthenticate</li>
+				</ul>
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Đổi mật khẩu</h3>
+			<div style="display:none;">
+				CTTD
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Danh mục dùng chung</h3>
+			<div style="display:none;">
+				Có nhiều danh mục có cùng cấu trúc: mã, tên, mô tả, ngày hết hạn, là mặc định. Nếu với mỗi danh mục chúng ta có một bảng
+				riêng, một chức năng quản lý riêng thì hệ thống sẽ phình ra vì những thành phần không quan trọng này. Chúng ta có thể
+				gộp chung các danh mục vào bảng SYS_CAT. Bảng SYS_CAT_TYPE là loại danh mục, sẽ xác định với mỗi dự án.
+				<br /> Các thành phần bao gồm:
+				<ul>
+					<li>SYS_CAT_TYPE, SYS_CAT</li>
+					<li>jsp/admin/sysCat</li>
+					<li>admin.form.SysCatForm.java</li>
+					<li>admin.controller.SysCatController.java</li>
+					<li>admin.dao.SysCatDAO.java</li>
+				</ul>
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Danh mục mẫu</h3>
+			<div style="display:none;">
+				Tương tự như danh mục dùng chung. Với nhiều bảng khác nhau, nhưng gần giống nhau về cấu trúc, chúng ta có một chức năng để
+				quản lý tất cả các bảng này. Bảng chỉ gồm code, name, description, is_default, expiry_date.
+				<br /> Các thành phần bao gồm:
+				<ul>
+					<li>Các bảng tùy hệ thống</li>
+					<li>jsp/admin/categoryTemplate</li>
+					<li>admin.form.CategoryTemplateForm.java</li>
+					<li>admin.controller.CategoryTemplateController.java</li>
+					<li>admin.dao.CategoryTemplateDAO.java</li>
+					<li>admin.bean.CategoryTemplateBean.java</li>
+					<li>admin.bean.CategoryTemplateConfigBean.java</li>
+				</ul>
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Danh mục đơn giản</h3>
+			<div style="display:none;">
+				Có một danh mục mẫu đơn giản để dev có thể copy về và tùy chỉnh theo dự án. Luồng đầy đủ: thêm, xóa, sửa.
+				<br /> Source code gồm các thành phần sau:
+				<ul>
+					<li>OPERATION</li>
+					<li>jsp/admin/operation</li>
+					<li>admin.form.OperationForm</li>
+					<li>admin.controller.OperationController</li>
+					<li>admin.dao.OperationDAO</li>
+				</ul>
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Danh mục cây</h3>
+			<div style="display:none;">
+				Danh mục có quan hệ cha con. Cần được chuẩn hóa (thêm path, fullPath). Có một danh mục mẫu chứa cây để dev có thể copy về
+				và tùy chỉnh theo dự án. Luồng đầy đủ: thêm, xóa, sửa.
+				<br /> Source code gồm các thành phần sau:
+				<ul>
+					<li>SYS_GROUP (ORGANIZATION, DEPARTMENT)</li>
+					<li>jsp/admin/sysGroup</li>
+					<li>admin.form.SysGroupForm</li>
+					<li>admin.controller.SysGroupController</li>
+					<li>admin.dao.SysGroupDAO</li>
+				</ul>
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Module phân quyền</h3>
+			<div style="display:none;">
+				Chúng ta nên để chức năng phân quyền menu, chức năng, miền dữ liệu về từng hệ thống. Chúng ta vẫn nên sử dụng cas hoặc passport
+				để tận dụng tính năng single sign-on. Migrate các menu cơ bản khi khởi tạo dự án mới. Một module phân quyền đầy đủ gồm:
+				<ul>
+					<li>Thêm, sửa, xóa tác động</li>
+					<li>Thêm, sửa, xóa tài nguyên và quyền</li>
+					<li>Thêm, sửa, xóa menu</li>
+					<li>Thêm, sửa, xóa vai trò; Gán quyền cho vai trò; Gán menu cho vai trò</li>
+					<li>Gán vai trò cho người dùng; Xem menu của người dùng; Gán miền dữ liệu cho người dùng; Gán nhanh miền dữ liệu</li>
+				</ul>
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Quản lý người dùng</h3>
+			<div style="display:none;">
+				Chúng ta vẫn nên thêm mới người dùng tập trung (trên vsaadmin) và có cơ chế đồng bộ theo tên đăng nhập về từng hệ thống.
+				Nhiều khi dự án cần lưu lại các thông tin của người dùng, các thao tác của người dùng (log), hoặc phân quyền cho người
+				dùng, hoặc lưu các thông tin mà CSDL tập trung không có. Có một chức năng [thêm, xóa?], sửa người dùng (Validate độ mạnh
+				mật khẩu; Không được sửa mật khẩu, chỉ reset; Không sửa username; Thêm chức năng sửa mật khẩu; Mã hóa password người
+				dùng). Các thành phần bao gồm:
+				<ul>
+					<li>SYS_USER</li>
+					<li>jsp/admin/sysUser</li>
+					<li>admin.form.SysUserForm.java</li>
+					<li>admin.controller.SysUserController.java</li>
+					<li>admin.dao.SysUserDAO.java</li>
+				</ul>
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Tham số hệ thống</h3>
+			<div style="display:none;">
+				Nhiều dự án sẽ có nhu cấu thiết lập các thông số chung ở bảng SYSTEM_PARAMETER và có chức năng quản lý các tham số đó. Đã
+				có một chức năng mẫu để dev copy về.
+				<br /> Source code gồm các thành phần sau:
+				<ul>
+					<li>SYSTEM_PARAMETER</li>
+					<li>jsp/admin/systemParameter</li>
+					<li>admin.form.SystemParameterForm.java</li>
+					<li>admin.controller.SystemParameterController.java</li>
+					<li>admin.dao.SystemParameterDAO.java</li>
+				</ul>
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Cấu hình động</h3>
+			<div style="display:none;">
+				Cấu hình hệ thống là các thông tin thô. VD: một con số, một mã. Cấu hình động sẽ chọn các bản ghi của các bảng trong CSDL.
+				Nó thường được sử dụng ở chức năng báo cáo.
+				<br /> Source code gồm các thành phần sau:
+				<ul>
+					<li>REPORT, CONFIG, REPORT_CONFIG</li>
+					<li>jsp/admin/reportConfig</li>
+					<li>admin.form.ReportConfigForm.java</li>
+					<li>admin.controller.ReportConfigController.java</li>
+					<li>admin.dao.ReportConfigDAO.java</li>
+				</ul>
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Demo các control</h3>
+			<div style="display:none;">
+				Có một trang demo các control (các commonTag).
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Upload file</h3>
+			<div style="display:none;">
+				Nhiều chức năng cần đính kèm file. Việc đính kèm file này cần được chuẩn hóa.
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Import Excel</h3>
+			<div style="display:none;">
+				Các bước thực hiện:
+				<br />
+				<span class="step">Bước 1: Tạo file template, file cấu hình</span>
+				<br /> Chúng ta đặt các file template và cấu hình ở thư mục share/import.
+				<br /> File template để người dùng download về và fill dữ liệu. Thư viện đang chỉ hỗ trợ import từ file Excel 2003, không hỗ
+				trợ Excel 2007.
+				<br /> File cấu hình phải gồm các thành phần sau:
+				<br />
+				<ul>
+					<li>Dòng thứ nhất là bảng trong CSDL, là bảng mà các dữ liệu import sẽ đẩy vào.</li>
+					<li>Dòng thứ hai là dòng bắt đầu dữ liệu trong file Excel (bắt đầu từ 1).</li>
+					<li>Dòng thứ ba là số cột. Số cột này bằng số cột trong file Excel, hoặc là hơn nếu chúng ta tạo các cột giả.</li>
+					<li>Dòng thứ tư là số bản ghi tối đa. Nếu nhỏ hơn hoặc bằng 0 nghĩa là không giới hạn.</li>
+					<li>Các dòng tiếp theo là cấu hình cho từng cột.</li>
+				</ul>
+				Ở các dòng cấu hình cho từng cột lại bao gồm các thành phần sau, cách nhau bởi dấu #:
+				<br />
+				<ul>
+					<li>Tên cột trong Excel.</li>
+					<li>Cột của bảng trong CSDL tương ứng với cột trong Excel.</li>
+					<li>Loại dữ liệu. Có bốn loại là "long", "double", "string", "date". Chú ý phải viết đúng và viết chữ thường.</li>
+					<li>Độ dài tối đa của dữ liệu.</li>
+					<li>Có kiểm tra trường bắt buộc hay không ("null" và "not_null").</li>
+					<li>Có kiểm tra trùng dữ liệu trong file import không ("x" và "o").</li>
+					<li>Giá trị lớn nhất. Nếu thêm dấu "+" thì tính cả giá trị lớn nhất.</li>
+					<li>Giá trị nhỏ nhất. Nếu thêm dấu "+" thì tính cả giá trị nhỏ nhất.</li>
+				</ul>
+				Với các trường mà không cần quan tâm (VD cột Stt), chúng ta chỉ cần cấu hình "Tên cột trong Excel".
+				<br /> Với các trường số (long, double), chúng ta cần cấu hình "Giá trị lớn nhất" và "Giá trị nhỏ nhất", nếu không có thể không
+				cấu hình.
+				<br /> Chúng ta có thể thiết lập các cột giả, cấu hình "Cột trong CSDL". VD...
+				<br />
+
+				<span class="step">Bước 2: Viết JSP</span>
+				<br /> Có form chọn file upload.
+
+				<br />
+				<span class="step">Bước 3: Viết Controller</span>
+				<br /> Khởi tạo đối tượng ImportExcel:
+				<br /> ImportUtils importUtils = new ImportUtils(req.getRealPath(Constants.COMMON.IMPORT_FOLDER + <span class="myComment">&lt;File cấu hình&gt;</span>));
+				<br
+				/> Kiểm tra các lỗi chung:
+				<br /> importUtils.validateCommon(req, uploadFile, fileName, dataList);
+				<br /> Thông báo lỗi:
+				<br /> importUtils.addError(row, col, <span class="myComment">&lt;Message lỗi&gt;</span>, content);
+				<br /> Đẩy vào CSDL:
+				<br /> importUtils.insertIntoDatabase(a);
+				<br />
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Export Excel</h3>
+			<div style="display:none;">
+				Các bước thực hiện:
+				<br />
+				<span class="step">Bước 1: Xây dựng dữ liệu</span>
+				<br /> Select từ CSDL ra các danh sách cần thiết.
+				<br />
+				<span class="step">Bước 2: Khởi tạo</span>
+				<br /> Khởi tạo đối tượng DynamicExport. Tất cả các thao tác đều phải thông qua lớp này cho thống nhất. Sau này phải sửa cái
+				gì thì chỉ cần sửa lớp này, sẽ đồng bộ được những chỗ khác.
+				<br />
+				<span class="step">Bước 3: Fill dữ liệu</span>
+				<br /> Sử dụng một vòng lặp để in dữ liệu ra file Excel.
+				<br />
+				<span class="step">Bước 4: Kết thúc</span>
+				<br /> Export ra file Excel, trả về trang DOWNLOAD_LINK.
+				<br />
+
+				<div class="myTip">
+					Thao tác export Excel thường được sử dụng trong chức năng báo cáo. Chúng ta hãy đặt tên các báo cáo có dạng R&lt;Tên báo
+					cáo&gt;Controller và R&lt;Tên báo cáo&gt;DAO.
+				</div>
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Thêm vào danh sách tạm thời, loại bỏ khỏi danh sách tạm thời</h3>
+			<div style="display:none;">
+				Trong nhiều trường hợp, chúng ta cần chọn một danh sách. Nhưng do các danh sách đều được lưu dưới dạng bảng và phân trang
+				nên việc chọn là khá bất tiện. Hiện Viettel đang thường hay giải quyết bằng cách thêm một danh sách tạm thời. Từ danh
+				sách chính có nút "Thêm vào danh sách". Từ danh sách tạm thời có nút "Loại khỏi danh sách". Chúng ta lưu danh sách ID
+				các phần tử trong danh sách tạm thời ở session. Thao tác này là khá cơ bản, mọi người có thể sử dụng hai hàm dùng chung
+				sau:
+
+				<div class="code">
+					/** * Them vao trong danh sach ID cua session. * @author HuyenNV * @param req Doi tuong HttpServletRequest * @param addedList
+					Mang ID cac doi tuong them vao danh sach * @param sessionAttribute Ten bien session * @return List Danh sach ID trong
+					session * @throws java.lang.Exception Exception */ public static List&lt;Long> addToSessionList(HttpServletRequest req,
+					Long[] addedList, String sessionAttribute) throws Exception { HttpSession session = req.getSession(); List&lt;Long&gt;
+					currentList = (List&lt;Long&gt;) session.getAttribute(sessionAttribute); if ((currentList != null) &amp;&amp; (currentList.size()
+					> 0)) { for (Long n : addedList) { if (!currentList.contains(n)) { currentList.add(n); } } } else { currentList = new
+					ArrayList(); for (Long n : addedList) { currentList.add(n); } } session.setAttribute(sessionAttribute, currentList);
+					return currentList; } /** * Loai bo khoi danh sach ID cua session. * @author HuyenNV * @param req Doi tuong HttpServletRequest
+					* @param deletedList Mang ID cac doi tuong loai khoi danh sach * @param sessionAttribute Ten bien session * @return
+					Danh sach ID trong session * @throws java.lang.Exception Exception */ public static List&lt;Long&gt; removeFromSessionList(HttpServletRequest
+					req, Long[] deletedList, String sessionAttribute) throws Exception { HttpSession session = req.getSession(); List&lt;Long&gt;
+					currentList = (List&lt;Long&gt;) session.getAttribute(sessionAttribute); for (Long n : deletedList) { currentList.remove(n);
+					} session.setAttribute(sessionAttribute, currentList); return currentList; }
+				</div>
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Lưu lại các giá trị người dùng nhập trên danh sách động</h3>
+			<div style="display:none;">Có một bảng danh sách động, trong đó mỗi hàng đều có text, textarea, checkbox, radio để người dùng nhập. Khi thêm vào
+				danh sách hoặc loại bỏ khỏi danh sách, yêu cần các giá trị đã nhập cũ cần phải được giữ nguyên.</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Câu lệnh HQL với hàm khởi tạo một bean</h3>
+			<div style="display:none;">Hiện tại mọi người thường cho quá nhiều trường vào BO, sau đó thêm hàm khởi tạo cho BO. Hãy chuyển cách dùng BO sang cách
+				dùng bean. Nhưng khi đó ta phải khởi tạo bean như thế nào? Hãy chỉ đường dẫn package đầy đủ của bean trong hàm khởi tạo.
+				<br/> Quy định lập trình mới: Dùng transformer, không dùng constructor nữa. Nhiều khi cũng thêm trường ở BO, không thêm Bean.
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Câu lệnh SQL trả về một danh sách bean</h3>
+			<div style="display:none;">Câu lệnh SQL chỉ trả về một danh sách Object[]. Nhưng khi chúng ta hiển thị ra display table, chúng ta cần chỉ định rõ
+				tên các trường. Do đó mọi người hay thực hiện một vòng for danh sách Object[] để thêm vào danh sách bean. Chúng ta có
+				thể trả về danh sách bean một cách nhanh chóng như ví dụ sau: getSession().createSQLQuery("SELECT NAME, BIRTHDATE FROM
+				CATS") .setResultTransformer(Transformers.aliasToBean(CatDTO.class)).list();
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Dùng tag hay dùng JSP?</h3>
+			<div style="display:none;">Giả sử có một trang có 3 vùng Ajax. Tùy phong cách code, người hay dùng tag sẽ làm như sau:
+				<ul>
+					<li>Có 1 file JSP chứa 3 tag, tương ứng với 3 vùng Ajax (trang J1 chứa 3 tag T1, T2, T3)</li>
+					<li>File JSP J2 chứa tag T3</li>
+					<li>File JSP J3 chứa tag T3</li>
+				</ul>
+				Người hay dùng JSP sẽ làm như sau:
+				<ul>
+					<li>Có một trang JSP, chứa hai trang JSP khác (J1 chứa J2 và J3). Nội dung J1 giống T1, nhưng thêm 2 thẻ include J2 và J3</li>
+					<li>Nội dung J2 giống T2</li>
+					<li>Nội dung J3 giống T3</li>
+				</ul>
+				Sử dụng JSP sẽ cần ít file hơn. Vậy bạn chọn cách nào?</div>
+
+			<h3 onclick="tctToggleFieldset(this)">So sánh với ngày hiện tại, so sánh hai ngày với nhau</h3>
+			<div style="display:none;">Có nhiều validate so sánh ngày. Có thể tham khảo hai hàm so sánh ngày sau:
+				<div class="code">
+					/**
+					<br /> * So sanh 2 ngay.
+					<br /> * Cac ngay co dinh dang 'dd/mm/yyyy'.
+					<br /> * @param date1
+					<br /> * @param date2
+					<br /> * @return
+					<br /> * nho hon 0 neu date1 nho hon date2
+					<br /> * 0 neu date1 bang date2
+					<br /> * lon hon 0 neu date1 lon hon date2
+					<br /> * @author HuyenNV
+					<br /> */
+					<br /> function tctCompareDates(date1, date2) {
+					<br /> var a1 = date1.split(&quot;/&quot;);
+					<br /> var a2 = date2.split(&quot;/&quot;);
+					<br />
+					<p> var year1 = parseFloat(a1[2]);
+						<br /> var year2 = parseFloat(a2[2]);
+						<br /> var month1 = parseFloat(a1[1]);
+						<br /> var month2 = parseFloat(a2[1]);
+						<br /> var day1 = parseFloat(a1[0]);
+						<br /> var day2 = parseFloat(a2[0]);</p>
+					<p> if (year1 != year2) {
+						<br /> return year1 - year2;
+						<br /> } else if (month1 != month2) {
+						<br /> return month1 - month2;
+						<br /> } else {
+						<br /> return day1 - day2;
+						<br /> }
+						<br /> }
+					</p>
+					<p>/**
+						<br /> * So sanh ngay nao do voi ngay hien tai.
+						<br /> * Ngay dua vao co dinh dang 'dd/mm/yyyy'.
+						<br /> * @param myDate
+						<br /> * @return
+						<br /> * nho hon 0 neu myDate nho hon ngay hien tai
+						<br /> * 0 neu myDate bang ngay hien tai
+						<br /> * lon hon 0 neu myDate lon hon ngay hien tai
+						<br /> * @author HuyenNV
+						<br /> */
+						<br /> function tctCompareToCurrentDate(myDate) {
+						<br /> var a = myDate.split(&quot;/&quot;);
+						<br /> var year1 = parseInt(a[2], 10);
+						<br /> var month1 = parseInt(a[1], 10);
+						<br /> var day1 = parseInt(a[0], 10);</p>
+					<p> var cd = new Date();
+						<br /> var year2 = cd.getFullYear();
+						<br /> var month2 = cd.getMonth() + 1;
+						<br /> var day2 = cd.getDate();</p>
+					<p> var n1 = year1 * 31 * 12 + month1 * 31 + day1;
+						<br /> var n2 = year2 * 31 * 12 + month2 * 31 + day2;</p>
+					<p> return n1 - n2;
+						<br /> }
+					</p>
+				</div>
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Các xử lý liên quan đến checkbox trong bảng</h3>
+			<div style="display:none;">Khi nhấn vào nút check all thì các checkbox khác cũng được check.</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Tìm những phần tử String có ở mảng thứ nhất mà không có ở mảng thứ hai</h3>
+			<div style="display:none;">Code sample:
+				<div class="code">AbstractSet setA = new AbstractSet(); setA.addAll(Arrays.asList(arrayA)); AbstractSet setB = new AbstractSet(); setB.addAll(Arrays.asList(arrayB));
+					setA.removeAll(setB); String[] cleanedA = setA.toArray(new String[] {});
+				</div>
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Tạo 1 ứng dụng chạy ngầm cùng webapp trên Tomcat</h3>
+			<div style="display:none;">Code sample: -Tạo 1 file JobScheduler.java ở package vd: com.viettel.qldtktts.server.email Nội dung:
+				<div class="code">import com.viettel.qldtktts.common.util.ResourceBundleUtils; import org.quartz.CronTrigger; import org.quartz.JobDetail;
+					import org.quartz.Scheduler; import org.quartz.SchedulerFactory; import org.quartz.impl.StdSchedulerFactory; /** * khoi
+					tao tien trinh ngam * @author DucHT * @since 09/07/2010 */ public class JobScheduler { private String delayMinute =
+					ResourceBundleUtils.getResource("sendMail.delayMinute").trim(); public JobScheduler() throws Exception { SchedulerFactory
+					sf = new StdSchedulerFactory(); Scheduler sche = sf.getScheduler(); JobDetail jDetail = new JobDetail("Newsletter",
+					"NJob", EmailTimerTask.class); CronTrigger crTrigger = new CronTrigger("cronTrigger", "NJob", "0 0/ 5 * * * ?"); sche.scheduleJob(jDetail,
+					crTrigger); sche.start(); } }
+				</div>
+				Chú ý: Tại dòng bôi đỏ , tham số cuối cùng có định dạng “ * * * * * ?”. Với ví dụ hiện tại : có nghĩa là tại thời điểm giây
+				là 0 và các thời điểm phút chia hết cho 5(Xem thêm trên google) . Ứng dụng sẽ được tự động chạy, cụ thể ở đây là chạy
+				hàm trong classEmailTimerTask. Class EmailTimerTask Khai báo như sau:
+				<div class="code">
+					/* * @EmailTimerTask.java?version 1.0?09/07/2010 * * Copyright 2010 Viettel Telecom. All rights reserved. * VIETTEL PROPRIETARY/CONFIDENTIAL.
+					Use is subject to license terms. */ package com.viettel.qldtktts.server.email; import com.viettel.qldtktts.common.util.Constants;
+					import com.viettel.qldtktts.common.util.ResourceBundleUtils; import com.viettel.qldtktts.database.BO.EmailBO; import
+					java.text.DateFormat; import java.text.SimpleDateFormat; import java.util.Date; import java.util.List; import org.hibernate.Query;
+					import org.hibernate.Session; import org.hibernate.SessionFactory; import org.quartz.Job; import org.quartz.JobExecutionContext;
+					import org.quartz.JobExecutionException; import org.hibernate.cfg.AnnotationConfiguration; /** * tien trinh ngam gui
+					mail * @author DucHT * @since 09/07/2010 */ public class EmailTimerTask implements Job { public EmailTimerTask() { }
+					/** * tim kiem trong db de gui mail * @param arg0 * @throws JobExecutionException */ public void execute(JobExecutionContext
+					arg0) throws JobExecutionException { /** code o day**/ } }
+				</div>
+				---Cuối cùng vào file web.xml định nghĩa cấu hình của app thêm đoạn sau vào gần đầu là con của thẻ web-app
+				<div class="code">&lt;servlet&gt; &lt;servlet-name&gt;LockListener&lt;/servlet-name&gt; &lt;servlet-class&gt;com.viettel.qldtktts.server.email.LockListener&lt;/servlet-class&gt;
+					&lt;load-on-startup&gt;1&lt;/load-on-startup&gt; &lt;/servlet&gt;
+				</div>
+				Build lại và chạy tomcat. Cứ sau 5 phút thì nó sẽ chạy tiến trình 1 phát.GoodLuck.
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Cách gọi procedure, function trên ứng dụng, bắt exception từ procedure, function (nếu có)</h3>
+			<div style="display:none;">
+				<div class="code">CallableStatement cs = conn.prepareCall("{call IMP_PL_AND_MAP.imp_pl_all(?, ?, ?, ?)}"); cs.setLong(1, partnerId); cs.setLong(2,
+					fileId); cs.setString(3, spliter); cs.registerOutParameter(4, java.sql.Types.VARCHAR); cs.executeUpdate(); String sReturnValue
+					= cs.getString(4); if (sReturnValue != null) { throw new Exception(sReturnValue); } return sReturnValue;
+				</div>
+				Hiện tại trong store procedure, có để bắt exception tuy nhiên bắt xong chỉ làm nhiệm vụ rollback chứ không báo lỗi ra. Hoặc
+				có chăng thì chỉ đẩy vào bảng lỗi. Nếu không đưa ra thông báo lỗi cho người dung mà chỉ làm ngầm thì rất khó check dữ
+				liệu (thường là phải vào db check) mà như thế thì khi bàn giao phần mềm lại phải có người đi kèm để check dữ liệu. Do
+				vậy đội kho WMS thực hiện đoạn code trên để vừa nhằm mục đích rollback, vừa có thể báo lỗi ra vừa có thể thực hiện thêm
+				các thao tác khác trên DAO (thông báo ra màn hình…)
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Xử lý vấn đề select in &gt; 1000 phần tử</h3>
+			<div style="display:none;">
+				<div class="code">StringBuilder hql = new StringBuilder("FROM BO a WHERE (1=1 "); StringBuilder sqlAppend = new StringBuilder(); int currIdx
+					= 0; do { List listTempId = currIdx + 900 &lt; listId.size() ? listId.subList(currIdx, currIdx + 900) : listId.subList(currIdx,
+					listId.size()); currIdx += 900; sqlAppend.append(" or a.id in ("); sqlAppend.append(listTempId.toString().substring(1,
+					listTempId.toString().length() - 1)); sqlAppend.append(") "); } while (currIdx &lt; listId.size()); hql.append(sqlAppend.toString()).append(")");
+					List listResult = getSession().createQuery(hql.toString()).list();
+				</div>
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Cách tạo Map lưu thứ tự khi put các phần tử vào</h3>
+			<div style="display:none;">Code sample: map không lưu thứ tự khi mình put vào nếu dùng class khởi tạo của nó là HashMap, muốn nó lưu thứ tự thì phải
+				dùng class LinkedHashMap thay vì HashMap Map mapEntitySn = new LinkedHashMap();</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Tùy biến cách so sánh các phần tử trong list theo mong muốn</h3>
+			<div style="display:none;">
+				(so sánh theo 1 giá trị của các đối tượng trong list) Code sample1: Để sort thứ tự trong 1 list mình có thể implement một
+				phương thức sort của class Collections, nó sẽ cho phép mình tùy biến cách so sánh các phần tử trong list theo mong muốn
+				của mình mà code trông pro và ngắn gọn hơn.
+				<div class="code">public List sortListByValueSn(List&lt;MerEntityBO&gt; listEntityProgress){ Collections.sort(listEntityProgress, new Comparator()
+					{ public int compare(Object o1, Object o2) { MerEntityBO tempBO1 = (MerEntityBO)o1; MerEntityBO tempBO2 = (MerEntityBO)o2;
+					return tempBO1.getSerialNumber().compareTo(tempBO2.getSerialNumber()); } }); return listEntityProgress; }
+				</div>
+				Đây là ví dụ của việc sort một list các MerEntityBO theo serialNumber Code sample2: Giả sử có một list dữ liệu chứa danh
+				sách các menu trả về từ VSA (giả sử là childObjects – danh sách các đối tượng kiểu ObjectToken), cần sắp xếp theo trường
+				order. Tạo một lớp để thực hiện sắp xếp cho đối tượng ObjectToken
+				<div class="code">public class MyIntComparable implements Comparator&lt;ObjectToken&gt; { @Override public int compare(ObjectToken o1,
+					ObjectToken o2) { if (o1 == null || o2 == null || o1.getOrder() == null || o2.getOrder() == null) { return -1; } else
+					{ return (o1.getOrder() &lt; o2.getOrder() ? -1 : (o1.getOrder() == o2.getOrder() ? 0 : 1)); } } }
+				</div>
+				Sử dụng câu lệnh sau để sắp xếp:
+				<div class="code">Collections.sort(childObjects, new MyIntComparable());</div>
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Xử lý ký tự đặc biệt HQL</h3>
+			<div style="display:none;">Tìm một xâu có ký tự đặc biệt /,_,%:
+				<div class="code">strBuffer.append(" AND lower(code) like ? ESCAPE '/'"); String code = forms.getCode().trim().toLowerCase(); lstParam.add("%"
+					+ code.replace("/", "//").replace("_", "/_").replace("%", "/%") + "%");</div>
+			</div>
+
+			<h3 onclick="tctToggleFieldset(this)">Ajax</h3>
+			<div style="display:none;">Ajax là kỹ thuật trả về từng vùng của trang không đồng bộ (Asynchronous JavaScript And XML). Cách sử dụng Ajax với Prototype.</div>
+		</div>
+
+		<h3 onclick="tctToggleFieldset(this)">Sắp xếp list dữ liệu tiếng việt với HQL</h3>
+		<div style="display:none;">Sắp xếp list dữ liệu tiếng việt với HQL oracle: VD: Chuyển phần sort thông thường: "order by code desc" thành: "order by
+			nlssort(lower(code),'nls_sort = Vietnamese') desc"
+		</div>
+
+		<h3 onclick="tctToggleFieldset(this)">Tạo tiến trình chạy ngầm để thực hiện các thao tác tính toán lâu (chạy offline)</h3>
+		<div style="display:none;">Code sample: Với những xử lý yêu cầu thời gian lâu (tính toán báo cáo offline), nên mở một tiến trình kích hoạt việc tính
+			toán, tránh để người dùng phải chờ đợi, đảm bảo được khi người dùng đóng browser sự kiện không bị ngắt, các bước thực
+			hiện: 1. Để riêng hàm cần thực hiện ra một class có implement Runable, ví dụ class T. 2. Khi thực hiện sự kiện thay vì
+			call trực tiếp tới hàm, thì thực hiện khởi tạo tiến trình: "Thread t = new Thread(new T()); t.start();" Cần quản lý trạng
+			thái tiến trình, có thể thông qua một table trong DB hoặc một biến static trong ứng dụng. </div>
+
+		<h3 onclick="tctToggleFieldset(this)">Tạo đối tượng Cloneable để tránh bị thay đổi giá trị</h3>
+		<div style="display:none;">
+			Code sample: Cloneable: dùng để tạo 1 object b có các giá trị trùng với object a được khai báo. Nếu thay đổi get set trong
+			a thì b không bị thay đổi theo. Với một lớp không có Cloneable
+			<div class="code">public class Demo { private String a; private String b; public String getA() { return a; } public void setA(String a)
+				{ this.a = a; } public String getB() { return b; } public void setB(String b) { this.b = b; } }
+			</div>
+			Nếu có đoạn code sau:
+			<div class="code">Demo x = new Demo(); x.setA("1"); x.setB("2"); Demo b = x; x.setA("13123123"); System.out.print(b.getA());
+			</div>
+			Người dùng muốn lưu object b để lưu history của x, rồi thay đổi x, nếu có gì thì có thể lấy lại dữ liệu cũ nằm trong b. Thế
+			nhưng khi x.setA("13123123"); khiến property trong object x thay đổi thì property tương ứng trong b cũng thay đổi là 13123123
+			chứ không lưu giá trị cũ là 1. Thêm lớp trên implements Cloneable thì sẽ không bị xảy ra hiện tượng trên
+		</div>
+
+		<h3 onclick="tctToggleFieldset(this)">Xuất báo cáo Excel ra nhiều sheet</h3>
+		<div style="display:none;">Xây dựng báo cáo = jxl. Khi số lượng bản ghi > 65536 (số lượng hàng tối đa của 1 sheet excel) thì chúng ta phải xuất báo
+			cáo ra nhiều sheet.
+			<div class="code">private String buildReportExample(CatStationForm forms, HttpServletRequest req) throws Exception { List&lt;ExampleBO&gt;
+				boList = getListExampleBO(); int recordCount = boList.size(); int headerRow = 4; // so hang danh cho header int titleRow
+				= 3; // so hang danh cho title bao cao int maxDisplayRow = MAX_EXCEL_ROW - headerRow - titleRow; //so hang bieu dien
+				du lieu nhieu nhat tren 1 sheet int sheetCount = 1; if (recordCount > 0) { //tinh toan so luong sheet dua tren so ban
+				ghi int tempCount = stationCount / maxDisplayRow; sheetCount = (stationCount % maxDisplayRow == 0) ? tempCount: tempCount
+				+ 1; } String filePathOut = REPORT_PATH_OUT_PREFIX + DateTimeUtils.getSysDateTime().replaceAll("/", "_").replaceAll(":",
+				"_") + ".xls"; // path out cua file report // Khoi tao file excel File out = new File(req.getRealPath(filePathOut));
+				WorkbookSettings wb = new WorkbookSettings(); wb.setCellValidationDisabled(false); wb.setSuppressWarnings(true); WritableWorkbook
+				copy = Workbook.createWorkbook(out, wb); //tao workbook List&lt;WritableSheet&gt; sheetList = new ArrayList(); // Dat
+				ten cho tung sheet for (int i = 0; i &lt; sheetCount; i++) { if (i == 0) { sheetList.add(copy.createSheet(ResourceBundleUtils.getApplicationResource("sheetName"),
+				0)); } else { sheetList.add(copy.createSheet(ResourceBundleUtils.getApplicationResource("sheetName_") + Integer.toString(i)
+				+ ")", i)); } } //cau hinh format WritableFont titleFont = new WritableFont(WritableFont.ARIAL, 18, WritableFont.BOLD);
+				WritableCellFormat titleFormat = new WritableCellFormat(titleFont); titleFormat.setAlignment(Alignment.CENTRE); titleFormat.setWrap(true);
+				titleFormat.setVerticalAlignment(VerticalAlignment.CENTRE); Label label = new Label(0, 0, ""); WritableCellFormat headerFormat
+				= new WritableCellFormat(); headerFormat.setAlignment(Alignment.CENTRE); headerFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
+				headerFormat.setVerticalAlignment(VerticalAlignment.CENTRE); headerFormat.setWrap(true); headerFormat.setBackground(Colour.IVORY);
+				WritableCellFormat valueFormat = new WritableCellFormat(); valueFormat.setAlignment(Alignment.LEFT); valueFormat.setBorder(Border.ALL,
+				BorderLineStyle.THIN); //valueFormat.setVerticalAlignment(VerticalAlignment.CENTRE); valueFormat.setWrap(true); // Tao
+				noi dung cho file excel, chinh do rong chieu cao cua cot, hang for (int i = 0; i &lt; sheetCount; i++) { sheetList.get(i).getSettings().setVerticalFreeze(7);
+				// khong cho 7 hang dau scroll khi keo thanh cuon sheetList.get(i).setRowView(4, 650); // set chieu cao cua row. Don
+				vi khong biet tinh theo don vi gi ca. Chinh theo truc quan :D sheetList.get(i).setRowView(5, 650); sheetList.get(i).setRowView(6,
+				650); sheetList.get(i).mergeCells(0, headerRow, 0, headerRow + 2); label = new Label(0, headerRow,?ResourceBundleUtils.getApplicationResource("label.order"),
+				headerFormat); sheetList.get(i).setColumnView(0, 6); // set do rong cua column. Don vi tinh theo char. O day la 6 char
+				sheetList.get(i).addCell(label); // Them 1 cell co vi tri, noi dung, format cua label //... } //ghi noi dung ra file
+				copy.write(); copy.close(); return filePathOut; }
+			</div>
+		</div>
+
+		<h3 onclick="tctToggleFieldset(this)">Deep Copies of Java Objects</h3>
+		<div style="display:none;">Deep copy: hàm clone mặc định của java chỉ có thể clone object ở mức cha, còn những object con thì không được clone. Hàm
+			deepCopy sẽ giải quyết được vấn đề này. Hàm này hay được sử dụng khi muốn tạo ra một bàn sao y hệt của một object để thao
+			tác (lưu ý không nhầm lẫn với việc tạo ra một Reference thứ 2 tới một Object ).
+			<div class="code">import java.io.InputStream; import java.io.IOException; /** * ByteArrayInputStream implementation that does not synchronize
+				methods. */ public class FastByteArrayInputStream extends InputStream { /** * Our byte buffer */ protected byte[] buf
+				= null; /** * Number of bytes that we can read from the buffer */ protected int count = 0; /** * Number of bytes that
+				have been read from the buffer */ protected int pos = 0; public FastByteArrayInputStream(byte[] buf, int count) { this.buf
+				= buf; this.count = count; } public final int available() { return count - pos; } public final int read() { return (pos
+				&lt; count) ? (buf[pos++] &amp; 0xff) : -1; } public final int read(byte[] b, int off, int len) { if (pos >= count) return
+				-1; if ((pos + len) > count) len = (count - pos); System.arraycopy(buf, pos, b, off, len); pos += len; return len; }
+				public final long skip(long n) { if ((pos + n) > count) n = count - pos; if (n &lt; 0) return 0; pos += n; return n;
+				} }
+			</div>
+			<p>FastByteArrayOutputStream</p>
+			<div class="code">import java.io.OutputStream; import java.io.IOException; import java.io.InputStream; import java.io.ByteArrayInputStream;
+				/** * ByteArrayOutputStream implementation that doesn't synchronize methods * and doesn't copy the data on toByteArray().
+				*/ public class FastByteArrayOutputStream extends OutputStream { /** * Buffer and size */ protected byte[] buf = null;
+				protected int size = 0; /** * Constructs a stream with buffer capacity size 5K */ public FastByteArrayOutputStream()
+				{ this(5 * 1024); } /** * Constructs a stream with the given initial size */ public FastByteArrayOutputStream(int initSize)
+				{ this.size = 0; this.buf = new byte[initSize]; } /** * Ensures that we have a large enough buffer for the given size.
+				*/ private void verifyBufferSize(int sz) { if (sz > buf.length) { byte[] old = buf; buf = new byte[Math.max(sz, 2 * buf.length
+				)]; System.arraycopy(old, 0, buf, 0, old.length); old = null; } } public int getSize() { return size; } /** * Returns
+				the byte array containing the written data. Note that this * array will almost always be larger than the amount of data
+				actually * written. */ public byte[] getByteArray() { return buf; } public final void write(byte b[]) { verifyBufferSize(size
+				+ b.length); System.arraycopy(b, 0, buf, size, b.length); size += b.length; } public final void write(byte b[], int off,
+				int len) { verifyBufferSize(size + len); System.arraycopy(b, off, buf, size, len); size += len; } public final void write(int
+				b) { verifyBufferSize(size + 1); buf[size++] = (byte) b; } public void reset() { size = 0; } /** * Returns a ByteArrayInputStream
+				for reading back the written data */ public InputStream getInputStream() { return new FastByteArrayInputStream(buf, size);
+				} }
+			</div>
+			<p>DeepCopy.java</p>
+			<div class="code">import java.io.IOException; import java.io.ByteArrayInputStream; import java.io.ByteArrayOutputStream; import java.io.ObjectOutputStream;
+				import java.io.ObjectInputStream; /** * Utility for making deep copies (vs. clone()'s shallow copies) of * objects. Objects
+				are first serialized and then deserialized. Error * checking is fairly minimal in this implementation. If an object is
+				* encountered that cannot be serialized (or that references an object * that cannot be serialized) an error is printed
+				to System.err and * null is returned. Depending on your specific application, it might * make more sense to have copy(...)
+				re-throw the exception. */ public class DeepCopy { /** * Returns a copy of the object, or null if the object cannot *
+				be serialized. */ public static Object copy(Object orig) { Object obj = null; try { // Write the object out to a byte
+				array FastByteArrayOutputStream fbos = new FastByteArrayOutputStream(); ObjectOutputStream out = new ObjectOutputStream(fbos);
+				out.writeObject(orig); out.flush(); out.close(); // Retrieve an input stream from the byte array and read // a copy of
+				the object back in. ObjectInputStream in = new ObjectInputStream(fbos.getInputStream()); obj = in.readObject(); } catch(IOException
+				e) { e.printStackTrace(); } catch(ClassNotFoundException cnfe) { cnfe.printStackTrace(); } return obj; } }
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+
+</html>

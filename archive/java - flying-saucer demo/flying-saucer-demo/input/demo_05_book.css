@@ -1,0 +1,44 @@
+@page {
+	size: A4;
+	margin: 0.25in;
+	/*padding: 0.5in;*/
+
+	/* Title */
+	@top-left {
+   content: "Tam quốc diễn nghĩa";
+   font-family: 'Times New Roman', Georgia, Serif;
+   font-size: 8px;
+   color: red;
+  }
+
+	/* Số trang */
+	@bottom-right {
+   content: counter(page) " / " counter(pages);
+   font-size: 8px;
+  }
+  
+  /* Copyright */
+  @bottom-left {
+   content: "© lockex1987.github.io";
+   font-size: 8px;
+   color: blue;
+  }
+}
+
+@page :first {
+	/* Ẩn header và footer */
+	@top-left { display: none; }
+	@bottom-right { display: none; }
+	@bottom-left { display: none; }
+	
+	margin: 0;
+	padding: 0;
+	padding-top: 200px;
+	background: url("demo_05_cover.jpg");
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	marks: crop cross;
+	prince-bleed: 0.25in;
+	prince-trim: 0.25in;
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>onmousedown event</title>
+	<style>
+		#board {
+			width: 300px;
+			height: 300px;
+			background: #AAA;
+		}
+	</style>
+</head>
+<body>
+	<div id="board" onmousedown="press()" onmouseup="unpress()">&nbsp;</div>
+	
+	<div id="result">0</div>
+	
+	<script>
+		var count = 0;
+		var result = document.getElementById("result");
+		var isPress = false;
+		var timing;
+		
+		function shoot() {
+			if (isPress) {
+				count++;
+				result.innerHTML = count;
+				timing = setTimeout(shoot, 100);
+			}
+		}
+
+		function press() {
+			isPress = true;
+			//timing = setInterval(shoot, 100);
+			shoot();
+		}
+		
+		function unpress() {
+			isPress = false;
+			//clearInterval(timing);
+		}
+	</script>
+</body>
+</html>

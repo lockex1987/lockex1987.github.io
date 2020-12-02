@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Algolia instantsearch.js Demo</title>
+  <link rel='stylesheet' href='http://cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.css'>
+  <link rel='stylesheet' href='http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css'>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <script id="movie" type="text/x-handlebars-template">
+    <article class="movie">
+      <img class="movie-image" src="{{image}}" />
+      <div class="movie-meta">
+        <div class="movie-title">
+          {{{_highlightResult.title.value}}}
+          <span class="movie-year">
+          {{year}}
+        </span>
+        </div>
+
+        <div class="movie-rating">
+          {{#stars}}
+          <span class="ais-star-rating--star{{^.}}__empty{{/.}}">
+          </span> {{/stars}}
+        </div>
+
+        <div class="movie-genres">
+          {{#genre}}
+          <div class="movie-genre">
+            {{.}}
+          </div>
+          {{/genre}}
+        </div>
+      </div>
+    </article>
+  </script>
+
+  <div class="container">
+    <div class="top">
+      <div class="search-button">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="input-container">
+        <input type="text" id="search-box" />
+        <div id="stats"></div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="facets">
+        <div class="facet">
+          <div class="facet-title">Genre</div>
+          <div id="genres"></div>
+        </div>
+
+        <div class="facet">
+          <div class="facet-title">Rating</div>
+          <div id="ratings"></div>
+        </div>
+
+        <div class="facet">
+          <div class="facet-title">Year</div>
+          <div id="year"></div>
+        </div>
+      </div>
+
+      <div class="canvas">
+        <div id="hits"></div>
+
+        <div id="pagination"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src='http://cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.js'></script>
+  <script src="js/index.js"></script>
+</body>
+</html>

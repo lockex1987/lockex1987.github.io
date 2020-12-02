@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Paper"/>
+    <meta name="keywords" content="paper, lines"/>
+    <meta name="author" content="lockex1987"/>
+    
+    <title>Paper</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+
+ <style>
+:root {
+    --bg-color-1: #F1EDE9;
+	--bg-color-2: #94ACD4;
+	--line-height: 32px;
+}
+
+.paper {
+	padding:3px 20px;
+	min-height:260px;
+	background:repeating-linear-gradient(
+		var(--bg-color-1),
+		var(--bg-color-1) calc(var(--line-height) - 1px),
+		var(--bg-color-2) calc(var(--line-height) - 1px),
+		var(--bg-color-2) var(--line-height)
+	);
+	font-family:"Comic Sans MS", "Comic Sans", cursive;
+	line-height:var(--line-height);
+	outline:0;
+	font-size:22px;
+}
+ </style>
+
+</head>
+<body>
+    <article>
+        <h2>Paper</h2>
+ <div class="paper" contenteditable="true">
+  Hello, this is a paper.
+  <br/>
+  Click to write your message.
+ </div>
+
+
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

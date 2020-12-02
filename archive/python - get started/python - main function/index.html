@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ý nghĩa của if __name__ == '__main__': trong Python">
+    <meta name="keywords" content="python, main">
+    <meta name="author" content="lockex1987">
+    <title>Ý nghĩa của if __name__ == '__main__': trong Python</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../lib/highlightjs/css/default.css">
+    <script src="../../lib/highlightjs/js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+  <body>
+    <article>
+      <h2>Ý nghĩa của if __name__ == '__main__': trong Python</h2>
+      <p>Khi đọc một số các file code Python mẫu trên mạng, có thể bạn sẽ rất
+        hay gặp dạng như sau:</p>
+      <pre><code class="python"># Các import và khai báo hàm
+if __name == '__main__':
+&nbsp; &nbsp; # Thực hiện hàm chính</code></pre>
+      <p>Như ta đã biết, Python là một ngôn ngữ thông dịch. Do đó các lệnh sẽ
+        được thực hiện từ trên xuống dưới. Kể cả khi chúng ta import một module
+        từ file nào đó thì các lệnh trong file cũng được thực hiện luôn.</p>
+      <p>Hãy tạo file <strong>test_module.py</strong> nội dung như sau:</p>
+      <pre><code class="python">print("In ra tu file test_module.py")</code></pre>
+      <p>Sau đó tạo file <strong>test_main.py</strong> có nội dung như sau:</p>
+      <pre><code class="python">import test_module</code></pre>
+      <p>Nếu chúng ta chạy file <strong>test_main.py</strong> thì dòng chữ <em>"In
+          ra tu file test_module.py"</em> cũng được in ra.</p>
+      <pre>python test_main.py</pre>
+      <p>Trước khi chạy những dòng code của module nào đó, Python Interpreter sẽ
+        định nghĩa một số biến đặc biệt, trong đó có biến <code>__name__</code>.
+        Thường biến này sẽ có giá trị bằng tên của module. Tuy nhiên nếu biến <code>__name__</code>
+        mà nằm trong file mà ta chạy trực tiếp bằng lệnh Python thì sẽ có giá
+        trị là xâu <em>__main__</em>.</p>
+      <p>Hãy chỉnh lại các file code như sau:</p>
+      <p><strong>test_module.py</strong>:</p>
+      <pre><code class="python">print("In ra tu file test_module.py")
+
+print('Gia tri bien __name__ trong test_module.py', __name__)
+
+if __name__ == '__main__':
+    print('Test module')</code></pre>
+      <p><strong>test_main.py</strong>:</p>
+      <pre><code class="python">import test_module
+
+print('Gia tri bien __name__ trong test_module.py', __name__)
+
+if __name__ == '__main__':
+    print('Test main')</code></pre>
+      <p>Bây giờ nếu chúng ta chạy file <strong>test_main.py</strong> thì sẽ
+        không hiển thị dòng chữ <em>"Test module"</em> mà hiển thị như sau:</p>
+      <img src="images/test_main.png" alt="">
+      <p>Nếu chúng ta chạy file <strong>test_module.py</strong> thì sẽ hiển thị
+        như sau:</p>
+      <img src="images/test_module.png" alt="">
+      <p>Bạn có thể download các file source <a href="source.zip">ở đây</a>.<br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

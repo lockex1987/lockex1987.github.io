@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Visibility API Example</title>
+<script>
+
+var timer = 0;
+
+var PERIOD_VISIBLE = 1000; // 1 second
+
+var PERIOD_NOT_VISIBLE = 10000; // 10 seconds
+
+var vendorHidden, vendorVisibilitychange;
+
+ 
+
+function detectHiddenFeature() {
+
+// draft standard implementation
+
+if (typeof document.hidden != "undefined") {
+
+vendorHidden = "hidden";
+
+vendorVisibilitychange = "visibilitychange";
+
+return true;
+
+}
+
+ 
+
+// IE10 prefixed implementation
+
+if (typeof document.msHidden != "undefined") {
+
+vendorHidden = "msHidden";
+
+vendorVisibilitychange = "msvisibilitychange";
+
+return true;
+
+}
+
+ 
+
+// Chrome 13 prefixed implementation
+
+if (typeof document.webkitHidden != "undefined") {
+
+vendorHidden = "webkitHidden";
+
+vendorVisibilitychange = "webkitvisibilitychange";
+
+return true;
+
+}
+
+ 
+
+// feature is not supported
+
+return false;
+
+}
+
+ 
+
+function onLoad() {
+
+// if the document.hidden feature is supported, vary interval based on visibility.
+
+// otherwise, just use setInterval with a fixed time.
+
+if (detectHiddenFeature()) {
+
+timer = setInterval(checkEmail, document[vendorHidden] ? PERIOD_NOT_VISIBLE : PERIOD_VISIBLE);
+
+document.addEventListener(vendorVisibilitychange, visibilityChanged);
+
+}
+
+else {
+
+timer = setInterval(checkEmail, PERIOD_VISIBLE);
+
+}
+
+}
+
+ 
+
+function checkEmail() {
+
+debugMessage("Checking email at " + new Date().toTimeString());
+
+}
+
+ 
+
+function visibilityChanged() {
+
+clearTimeout(timer);
+
+timer = setInterval(checkEmail, document[vendorHidden] ? PERIOD_NOT_VISIBLE : PERIOD_VISIBLE);
+
+debugMessage("Going " + (document[vendorHidden] ? "not " : "") + "visible at " + new Date().toTimeString());
+
+}
+
+ 
+
+function debugMessage(s) {
+
+var p = document.createElement("p");
+
+p.appendChild(document.createTextNode(s));
+
+document.body.appendChild(p);
+
+}
+
+</script>
+
+</head>
+
+<body onload="onLoad()">
+</body>
+</html>

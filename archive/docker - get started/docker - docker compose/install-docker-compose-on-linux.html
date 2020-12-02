@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Install Docker Compose on Linux</title>
+  </head>
+  <body>
+    <p>Theo hướng dẫn cài đặt Docker với Ubuntu, bạn sẽ có luôn docker-compose.
+      Tuy nhiên, bản docker-compose này có khi chưa phải là mới nhất, do đó khi
+      thực hiện lệnh có thể bị lỗi:</p>
+    <pre>ERROR: Version in "./docker-compose.yml" is unsupported. You might be seeing this error because you're using the wrong Compose file version. Either specify a version of "2" (or "2.0") and place your service definitions under the `services` key, or omit the `version` key and place your service definitions at the root of the file to use version 1.
+For more on the Compose file format versions, see https://docs.docker.com/compose/compose-file/</pre>
+    <p>Kiểm tra phiên bản hiện tại:</p>
+    <pre>$ sudo docker-compose --version
+docker-compose version 1.8.0, build unknown</pre>
+    <p>Chúng ta sẽ nâng cấp docker-compose lên bản mới hơn.</p>
+    <p>Đầu tiên là xóa bản hiện tại đã:</p>
+    <pre>$ sudo apt-get remove docker-compose</pre>
+    <p><br>
+    </p>
+    <p>On Linux, you can download the Docker Compose binary from the <a href="https://github.com/docker/compose/releases"
+        target="_blank">Compose repository release page on GitHub</a>.</p>
+    <p>Follow the instructions from the link, which involve running the <code>curl</code>
+      command in your terminal to download the binaries. These step by step
+      instructions are also included below.</p>
+    <p>Bước 1: Download file</p>
+    <p>Run this command to download the latest version of Docker Compose:</p>
+    <pre>sudo curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+</pre>
+    <p>Use the latest Compose release number in the download command (phần <code>1.23.1</code>).</p>
+    <p>The above command is an example, and it may become out-of-date. To ensure
+      you have the latest version, check the <a href="https://github.com/docker/compose/releases"
+        target="_blank">Compose repository release page on GitHub</a>.</p>
+    <p>Apply executable permissions to the binary:</p>
+    <pre>$ sudo chmod +x /usr/local/bin/docker-compose
+</pre>
+    <p>Test the installation.</p>
+    <pre>$ docker-compose --version
+docker-compose version 1.23.1, build 1719ceb</pre>
+  </body>
+</html>

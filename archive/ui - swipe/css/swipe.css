@@ -1,0 +1,4 @@
+.swipe-container { overflow-x: hidden; }
+.swipe-container .swipe-inner { display: flex; align-items: center; overflow-y: hidden; width: calc(var(--noOfChildren, 1) * 100%); height: 100%; transform: translate(calc(var(--draggedPixel, 0px) + var(--currentItemIndex, 0) / var(--noOfChildren, 1) * -100%)); }
+.swipe-container .swipe-inner .swipe-item { width: calc(100% / var(--noOfChildren, 1)); height: 100%; overflow: hidden; user-select: none; pointer-events: none; }
+.swipe-container .swipe-inner.smooth { transition: transform calc(var(--remainRatio, 1) * .5s) ease-out; }

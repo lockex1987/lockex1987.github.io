@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Cài đặt Elasticsearch trên Linux</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Cài đặt Elasticsearch trên Linux">
+ </head> 
+ <body> 
+  <article> 
+   <p>Hướng dẫn cài đặt Elasticsearch trên Ubuntu 16.04 </p> 
+   <h3>Yêu cầu</h3> 
+   <p>Elasticsearch yêu cầu Java 8 trở lên và phải thiết lập biến môi trường <code>JAVA_HOME</code> cho java, do đó trước khi cài Elasticsearch, hãy chắc chắn rằng bạn đã cài Java version &gt;= 8 trên máy rồi nhé.</p> 
+   <p>Kiểm tra bằng lệnh <code>java -version</code> để biết máy máy mình đã cài Java chưa và phiên bản Java đang cài là bao nhiêu:</p> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/07/ubuntu-install-elasticsearch-0-1.png"><img src="https://stackjava.com/wp-content/uploads/2018/07/ubuntu-install-elasticsearch-0-1.png"></a></p> 
+   <p>Kiểm tra biến môi trường JAVA_HOME đã được thiết lập chưa bằng lệnh: <code>echo $JAVA_HOME</code></p> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/05/ubuntu-install-elasticsearch-0.png"><img src="https://stackjava.com/wp-content/uploads/2018/05/ubuntu-install-elasticsearch-0.png"></a></p> 
+   <p>(Xem lại: Cài đặt <a href="https://stackjava.com/install/cai-dat-java-tren-linux-ubuntu-oracle-jdk-open-jdk.html">Java và thiết lập biến môi trường trên Ubuntu</a>)</p> 
+   <h3>Cài đặt Elasticsearch</h3> 
+   <p>Download và cài đặt Elasticsearch PGP Key bằng lệnh sau:</p> 
+   <ul> 
+    <li>wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -</li> 
+   </ul> 
+   <p>Để cài đặt Elasticsearch trên Ubuntu ta có 2 cách là cài từ Repository hoặc cài từ file <code>.deb</code></p> 
+   <p>Cách 1: Cách Elasticsearch bằng APT Repository</p> 
+   <p>Cài gói <code>apt-transport-https</code></p> 
+   <ul> 
+    <li>sudo apt-get install apt-transport-https</li> 
+   </ul> 
+   <p>Lưu định nghĩa repository vào <code>/etc/apt/sources.list.d/elastic-6.x.list:</code></p> 
+   <p>(Repository mặc định ko có elasticsearch)</p> 
+   <ul> 
+    <li>echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-6.x.list</li> 
+   </ul> 
+   <p>Cài đặt Elasticsearch bằng lệnh:</p> 
+   <ul> 
+    <li>sudo apt-get update &amp;&amp; sudo apt-get install elasticsearch</li> 
+   </ul> 
+   <p>Done!</p> 
+   <p>Cách 2: cài đặt elasticsearch bằng gói <code>.deb</code></p> 
+   <p>Chạy các lệnh dưới đây để tải và cài đặt elasticsearch bằng file <code>.deb</code></p> 
+   <ul> 
+    <li>wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.4.0.deb</li> 
+    <li>wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.4.0.deb.sha512</li> 
+    <li>shasum -a 512 -c elasticsearch-6.4.0.deb.sha512 </li> 
+    <li>sudo dpkg -i elasticsearch-6.4.0.deb</li> 
+   </ul> 
+   <p>Done!</p> 
+   <h3>Chạy elasticsearch</h3> Elasticsearch sau khi được cài đặt sẽ không tự động chạy. Để khởi động, start, stop elasticsearch ta làm như sau: Kích hoạt serivce elasticsearch và tự động start khi khởi động máy: 
+   <ul> 
+    <li>sudo /bin/systemctl daemon-reload</li> 
+    <li>sudo /bin/systemctl enable elasticsearch.service</li> 
+   </ul> 
+   <p>Để start, stop, xem thông tin service elasticsearch ta dùng các lệnh sau:</p> 
+   <ul> 
+    <li>sudo systemctl start elasticsearch</li> 
+    <li>sudo systemctl stop elasticsearch</li> 
+    <li>sudo systemctl status elasticsearch</li> 
+   </ul> 
+   <h3>Demo</h3> 
+   <p>Start elasticsearch và xem trạng thái:</p> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/07/ubuntu-install-elasticsearch-2.png"><img src="https://stackjava.com/wp-content/uploads/2018/07/ubuntu-install-elasticsearch-2.png"></a></p> 
+   <p>Sau khi cài đặt và start serice elasticsearch, mặc định elasticsearch sẽ chạy trên cổng 9200.</p> 
+   <p>Các bạn có thể dùng lệnh <code>curl localhost:9200</code> hoặc truy cập url <a href="localhost:9200">localhost:9200</a> trên trình duyệt để xem thông tin elasticsearch:</p> 
+   <p><img src="https://stackjava.com/wp-content/uploads/2018/07/ubuntu-install-elasticsearch-3.png"> <img src="https://stackjava.com/wp-content/uploads/2018/07/ubuntu-install-elasticsearch-4.png"></p> 
+   <h3>Gỡ bỏ elasticsearch</h3> 
+   <p>– Remove previous versions of ElasticSearch:</p> 
+   <pre><code>sudo apt-get --purge autoremove elasticsearch
+</code></pre> 
+   <p>– Remove the ElasticSearch directories:</p> 
+   <pre><code>sudo rm -rf /var/lib/elasticsearch/
+sudo rm -rf /etc/elasticsearch
+</code></pre> 
+   <p>Okay, Done!</p> 
+   <p>References:</p> 
+   <p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html" target="_blank">https://www.elastic.co/…/current/deb.html</a></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Upload file với Laravel">
+    <title>Upload file với Laravel</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Upload file với Laravel</h2>
+      <h3>Lấy file được upload</h3>
+      <p>Bạn có thể lấy file được upload từ một <code>Illuminate\Http\Request</code>
+        bằng cách sử dụng phương thức <code>file</code> hoặc sử dụng thuộc tính
+        động. Phương thức <code>file</code> sẽ trả về một class <code>Illuminate\Http\UploadedFile</code>,
+        nó kế thừa từ <code>SplFileInfo</code> class của PHP và cung cấp một số
+        phương thức để tương tác với file:</p>
+      <pre><code>$file = $request-&gt;file('photo');
+
+$file = $request-&gt;photo;</code></pre>
+      <p>Bạn có thể kiểm tra một file có tồn tại trên request hay không bằng
+        cách dùng phương thức <code>hasFile</code>:</p>
+      <pre><code>if ($request-&gt;hasFile('photo')) {
+    //
+}</code></pre>
+      <h4>Validate upload thành công</h4>
+      <p>Ngoài việc kiểm tra file upload tồn tại, bạn có thể kiểm tra xem có vấn
+        đề gì khi upload file bằng phương thức <code>isValid</code>:</p>
+      <pre><code>if ($request-&gt;file('photo')-&gt;isValid()) {
+    //
+}</code></pre>
+      <h4>Đường dẫn file và extension</h4>
+      <p>Class <code>UploadedFile</code> ngoài ra còn chưa phương thức lấy
+        đường dẫn đầy đủ và extension của file. Phương thức <code>extension</code>
+        sẽ cho phép đoán extension trên dựa nội dung của file. Extension này có
+        thể khác với extension được cung cấp bởi client:</p>
+      <pre><code>$path = $request-&gt;photo-&gt;path();
+
+$extension = $request-&gt;photo-&gt;extension();</code></pre>
+      <h4>Phương thức khác của file</h4>
+      <p>Có một số phương thức tồn tại trong class <code>UploadedFile</code>.
+        Chi tiết xem tại <a href="http://api.symfony.com/3.0/Symfony/Component/HttpFoundation/File/UploadedFile.html">tài
+          liệu API của class</a> để biết thêm chi tiết các phương thức đấy.</p>
+      <h3>Lưu file upload</h3>
+      <p>Để lưu một file upload, thông thường sử dụng một trong những cấu hình <a
+          href="https://giaphiep.com/docs/5.3/filesystem">filesystems</a>. Class
+        <code>UploadedFile</code> có phương thức <code>store</code> nó sẽ
+        chuyển file upload từ ổ cứng của bạn đến một nơi có thể là trên local
+        của bạn hoặc ngay cả trên cloud storage như Amazon S3.</p>
+      <p>Phương thức <code>store</code> chấp nhận đường dẫn file nên được lưu
+        trữ đường dẫn tương đối so với thư mục gốc cấu hình của filesystem.
+        Đường dẫn không được chứa tên file, tên sẽ tự động được sinh ra bằng
+        cách sử dụng mã hóa MD5 của nội dung file.</p>
+      <p>Phương thức <code>store</code> ngoài ra còn chấp nhận tham số thứ hai
+        có tên của nơi mà bạn sử dụng để lưu file. Phương thức sẽ trả về đường
+        dẫn tương đối của file đối với thư mục gốc:</p>
+      <pre><code>$path = $request-&gt;photo-&gt;store('images');
+
+$path = $request-&gt;photo-&gt;store('images', 's3');</code></pre>
+      <p>Nếu bạn không muốn tên file được tự động tạo ra, bạn có thể sử dụng
+        phương thức <code>storeAs</code>, nó sẽ chấp nhận các đối số như đường
+        dẫn, tên file, và tên nơi lưu:</p>
+      <pre><code>$path = $request-&gt;photo-&gt;storeAs('images', 'filename.jpg');
+
+$path = $request-&gt;photo-&gt;storeAs('images', 'filename.jpg', 's3');</code></pre>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

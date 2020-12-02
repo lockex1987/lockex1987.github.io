@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple list filter with Vue</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container" id="people">
+        <h2>Simple list filter with Vue</h2>
+        <p>Ôn lại kiến thức List Rendering và Computed Properties của Vue.</p>
+
+        <div>
+            <input type="text" v-model="query">
+        </div>
+
+        <ul class="people-list">
+            <li v-for="person in filteredPeople">
+                {{ person.name }}
+            </li>
+        </ul>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

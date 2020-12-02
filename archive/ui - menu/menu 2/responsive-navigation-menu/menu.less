@@ -1,0 +1,66 @@
+@headerHeight: 66px;
+@menuWidth: 250px;
+
+html, body {
+	font-family: 'Roboto', sans-serif; font-size: 1em; line-height: 1.4;
+	height: 100%; margin: 0; padding: 0;
+}
+a { text-decoration: none; color: inherit; }
+.header {
+  position: fixed; left: 0; right: 0;
+  height: @headerHeight; line-height: @headerHeight;
+  color: #fff; background-color: #3f51b5;
+	
+	.header__logo { font-weight: 700; padding: 0 25px; float: left; }
+	.menu {
+		float: left;
+		a {
+			padding: 0 10px;
+			&:hover { color: #c5cae9; }
+		}
+	}
+}
+.site-content {
+	padding-top: @headerHeight;	
+	.container { overflow: hidden; margin: 0 20px; }
+}
+
+@media only screen and (max-width: 768px) {
+	.site-container, .site-pusher { height: 100%; }
+	.site-container { overflow: hidden; }
+	.site-pusher { transition-duration: 0.3s; transition-property: transform; transform: translateX(0px); }
+	.header {
+		position: static;
+		.header__icon {
+			position: relative; display: block; float: left; width: 50px; height: @headerHeight; cursor: pointer;
+			&::after {
+				content: ''; position: absolute; display: block; width: 1rem;
+				height: 0; top: 16px; left: 15px;
+				box-shadow: 0 10px 0 1px #fff, 0 16px 0 1px #fff, 0 22px 0 1px #fff;
+			}
+		}
+		.menu {
+			position: absolute; left: 0; top: 0; bottom: 0;
+			background-color: #3849a2; width: @menuWidth; overflow-y: auto;
+			transform: translateX(-@menuWidth);
+			
+			a {
+				display: block; height: 40px; line-height: 40px;
+				border-bottom: 1px solid #3f51b5; text-align: center;
+			}
+		}
+	}
+  .site-content {
+    position: absolute; top: @headerHeight; right: 0; left: 0; bottom: 0;
+    padding-top: 0; overflow-y: scroll;
+  }
+  .with--sidebar {
+		.site-pusher {
+			transform: translateX(@menuWidth);
+		}
+		.site-cache {
+			position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+			background-color: rgba(0, 0, 0, 0.6);
+		}
+	} 
+}

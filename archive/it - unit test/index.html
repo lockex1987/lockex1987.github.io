@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Unit test">
+    <title>Unit test</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Unit test</h2>
+      <h3>Giới thiệu</h3>
+      <p>Trước khi có unit test, các lập trình viên thường code theo kiểu: code
+        – test – fix lại – code tiếp – test lại – fix tiếp. Đôi khi chỉ vì sửa 1
+        lỗi nho nhỏ mà ta phải test lại rất nhiều lần. Để giải quyết vấn đề này,
+        unit test và automation test ra đời.</p>
+      <p><br>
+      </p>
+      <p><strong>Unit test</strong>: Đây là test do <strong>developer</strong>
+        viết, được chạy để kiểm tra các hàm do developer viết ra có sai hay
+        không. Unit test thường được chạy mỗi khi build để đảm bảo các hàm đều
+        chạy đúng sau khi ta sửa code.</p>
+      <p><strong>Automation test</strong>: Đây là test do <strong>QA</strong>
+        viết, được chạy để kiểm thử hệ thống. Nếu không có automation test thì
+        QA kiểm thử bằng tay, gọi làm <strong>manual test</strong>.</p>
+      <p><br>
+      </p>
+      <p>Các loại test:</p>
+      <ul>
+        <li>Unit test</li>
+        <li>Integration test</li>
+        <ul>
+          <li>Test các thành phần khi liên kết</li>
+          <li>Độ phức tạp khi các thành phần (component) liên kết với nhau sẽ
+            lớn hơn tổng độ phức tạp của các thành phần (cấp số nhân, không phải
+            cấp số cộng)</li>
+        </ul>
+        <li>Functional test</li>
+        <li>Automation test: test tự động</li>
+        <li>Manual test: test thủ công</li>
+      </ul>
+      <p>Các thuật ngữ:</p>
+      <ul>
+        <li>TDD (Test-Driven Development): Viết test trước, sau đó viết code để
+          đáp ứng</li>
+        <li>BDD (Behavior-Driven Development)</li>
+      </ul>
+      <p>Các khái niệm:</p>
+      <ul>
+        <li>Assert</li>
+        <li>Mock dữ liệu</li>
+        <li>Chuẩn bị dữ liệu</li>
+        <li>Reset dữ liệu</li>
+        <li>Thứ tự test</li>
+        <li>Code coverage</li>
+      </ul>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Unit test là gì?</h3>
+      <p>Unit test để đảm bảo một phần (unit) của hệ thống chạy đúng, chứ không
+        phải là tìm ra bug.</p>
+      <p>Khi bạn thay đổi code của phần đó (nhưng không thay đổi mục đích, chức
+        năng) thì có thể dùng các test case để kiểm tra lại phần đó vẫn chạy
+        đúng.</p>
+      <p><br>
+      </p>
+      <p>Unit test là phương pháp trong đó các thành phần hoặc đơn vị phần mềm
+        riêng lẻ được kiểm tra để xác định sự phù hợp của chúng với các thông số
+        kỹ thuật được thiết kế và cũng bao gồm kiểm tra dữ liệu liên quan và quy
+        trình sử dụng. Một đơn vị chỉ đơn giản là một đoạn mã nhỏ cho bất kỳ
+        chức năng nào. </p>
+      <p>Bản thân bài kiểm tra đơn vị là một đoạn mã ngắn hoặc đoạn mã được
+        thiết kế để xác minh hành vi của một đơn vị cụ thể để tạo ra kết quả
+        vượt qua hoặc thất bại. Mục đích của thử nghiệm đơn vị là cho phép các
+        nhà phát triển chạy càng nhiều thử nghiệm đơn vị càng tốt để xác định
+        các lỗ hổng tiềm năng. Khi ứng dụng đã vượt qua thử nghiệm đơn vị, các
+        hình thức thử nghiệm khác sau đó sẽ cần được áp dụng để xác nhận thêm.</p>
+      <h3>Unit test có cần thiết không?</h3>
+      <p>Câu trả lời đương nhiên là cần thiết với một lập trình viên có trách
+        nhiệm với những dòng code của chính bản thân mình.</p>
+      <p><strong>Phát triển nhanh hơn</strong></p>
+      <p>Một khi các devloper viết các test case thì việc gỡ bug sẽ ít dành thời
+        gian hơn và sau đó sẽ tự tin hơn về việc thực hiện các thay đổi code.
+        Những kỹ năng về mọi mặt sẽ phát triển nhanh hơn các lập trình viên bình
+        thường.</p>
+      <p>Tính cận thận và trách nhiệm trong những bài unit test cũng khẳng định
+        ở bên ngoài cuộc sống của họ.</p>
+      <p><strong>Cấu trúc code tốt hơn</strong></p>
+      <p>Khi các nhà phát triển viết unit tests, sự nhấn mạnh của họ là suy nghĩ
+        về cách mã của họ sẽ được sử dụng trên toàn hệ thống, điều này thường
+        dẫn đến thiết kế tốt hơn.</p>
+      <p>Và còn nhiều lợi ích khác như là giảm công việc cho các tester, giảm
+        giá thành chi phí code, giúp giảm chi phí cho việc bảo trì trong tương
+        lai...</p>
+      <p>Lợi ích:</p>
+      <ul>
+        <li>Code quality</li>
+        <li>Assurance</li>
+        <li>Documentation</li>
+      </ul>
+      <h3>Nhược điểm</h3>
+      <p><strong>Không có thời gian cho unit test</strong></p>
+      <p>Viết Unit Test là tốn thời gian đó là lý do tại sao rất khó để đáp ứng
+        thời hạn. Trong thực tế, Unit Test có thể tiết kiệm rất nhiều thời gian
+        và nỗ lực phát triển trong thời gian dài.</p>
+      <p><strong>Unit test khác với viết code</strong></p>
+      <p>Đúng, bạn hãy nghĩ rằng để viết được một unit test đôi khi còn mất thời
+        gian hơn viết một chức năng code. Và có thể có những lập trình viên viết
+        được code nhưng chưa chắc viết được test case. Không có gì đảm bảo, ngay
+        cả khi mã được kiểm tra kỹ lưỡng, sẽ không có lỗi.</p>
+      <h3>Unit Testing Best Practices</h3>
+      <p>Unit Test cases should be independent. In case of any enhancements or
+        change in requirements, unit test cases should not be affected.</p>
+      <p>Test only one code at a time.</p>
+      <p>Follow clear and consistent naming conventions for your unit tests.</p>
+      <p>In case of a change in code in any module, ensure there is a
+        corresponding unit Test Case for the module, and the module passes the
+        tests before changing the implementation.</p>
+      <p>Bugs identified during unit testing must be fixed before proceeding to
+        the next phase in SDLC.</p>
+      <p>Adopt a "test as your code" approach. The more code you write without
+        testing, the more paths you have to check for errors.</p>
+      <h3>Mock dữ liệu</h3>
+      <p>Các kịch bản sau thường diễn ra:</p>
+      <ul>
+        <li>Chức năng A gọi tới chức năng B. Tuy nhiên, B chưa viết xong.</li>
+        <li>Chức năng A gọi tới chức năng B. Tuy nhiên, B khởi tạo rất phức tạp
+          (truy xuất database, yêu cầu nhiều tham số,...).</li>
+        <li>Muốn test chức năng A. Tuy nhiên A yêu cầu nỗ lực lớn của cả hệ
+          thống (yêu cầu có HTTP-server, authorization,...).</li>
+      </ul>
+      <p>Sử dụng mock đại loại như này:</p>
+      <pre>// Khi driver.get() được gọi, hãy trả ra một List(1,2,3)
+Mockito.when(driver.get())
+   .thenReturn(Arrays.asList(1, 2, 3));</pre>
+      <p><br>
+      </p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://github.com/sorrycc/awesome-javascript#testing-frameworks"
+          target="_blank">Testing frameworks, assertion, coverage, runner</a></p>
+      <p>Chọn Jest (unit test) và puppeteer (automation test) vì có nhiều GitHub
+        star.</p>
+      <p><a href="https://toidicodedao.com/2015/04/02/viet-unit-test-cho-javascript-voi-jasmine/">Viết
+          unit test cho JS | Tôi đi code dạo</a></p>
+      <p><a href="https://lockex1987.github.io/archive/java%20-%20unit%20test/"
+          target="_blank">Java unit test</a></p>
+      <p><a href="https://lockex1987.github.io/archive/php%20-%20phpunit/" target="_blank">PHP
+          unit test</a></p>
+      <p><a href="https://lockex1987.github.io/archive/laravel%20-%20testing/" target="_blank">Laravel
+          unit test</a></p>
+      <p>Vue unit test</p>
+      <p>Thư viện Jest</p>
+      <p>Thư viện puppeteer</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

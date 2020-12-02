@@ -1,0 +1,11 @@
+$filter-val: sepia(1) hue-rotate(200deg);
+
+html:before {
+	position: absolute;
+	width: 100vw; height: 100vh;
+	background: radial-gradient(rgba(#eee, .25), #eee 30em), 
+		url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/2017/tiger_lily.jpg) 50% 50%;
+	-webkit-filter: $filter-val;
+					filter: $filter-val;
+	content: '';
+}

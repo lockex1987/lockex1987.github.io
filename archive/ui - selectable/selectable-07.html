@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>jQuery UI Selectable</title>
+      <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+      <style>
+         #selectable-5 .ui-selecting,#selectable-6 .ui-selecting { 
+            background: #707070 ; }
+         #selectable-5 .ui-selected,#selectable-6 .ui-selected { 
+            background: #EEEEEE; color: #000000; }
+         #selectable-5,#selectable-6 { 
+            list-style-type: none; margin: 0; padding: 0; width: 20%; }
+         #selectable-5 li,#selectable-6 li { 
+            margin: 3px; padding: 0.4em; font-size: 16px; height: 18px; }
+         .ui-widget-content {
+            background: #cedc98;
+            border: 1px solid #DDDDDD;
+            color: #333333;
+         }
+      </style>
+      <script>
+         $(function() {
+            $( "#selectable-5" ).selectable();
+            $( "#selectable-5" ).selectable('disable');
+            $( "#selectable-6" ).selectable();
+            $( "#selectable-6" ).selectable( "option", "distance", 1 );	
+         });
+      </script>
+   </head>
+   <body>
+      <h3>Disabled using disable() method</h3>
+      <ol id="selectable-5">
+         <li class="ui-widget-content">Product 1</li>
+         <li class="ui-widget-content">Product 2</li>
+         <li class="ui-widget-content">Product 3</li>
+      </ol>
+      <h3>Select using method option( optionName, value )</h3>
+      <ol  id="selectable-6">
+         <li class="ui-widget-content">Product 4</li>
+         <li class="ui-widget-content">Product 5</li>
+         <li class="ui-widget-content">Product 6</li>
+         <li class="ui-widget-content">Product 7</li>
+      </ol>
+   </body>
+</html>

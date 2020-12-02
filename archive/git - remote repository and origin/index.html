@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Git">
+    <title>Git - Sơ lược Remote Repository và Git</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <p>Quay trở lại bài <a href="http://thachpham.com/tools/cach-tao-repository-cho-git.html">tạo
+          repository</a>, mình có hướng dẫn bạn cách tạo một repository trên
+        dịch vụ Github và Clone nó về máy. Như vậy, cái Github là một máy chủ
+        repository từ xa nên mình sẽ gọi nó là Remote Repository, nghĩa là
+        repository này không nằm trên máy tính của bạn.</p>
+      <p>Và ở phần đó, bạn có thấy mình kêu các bạn gửi dữ liệu lên repository
+        bằng cách dùng lệnh <code>git push origin master</code>&nbsp;sau khi
+        commit không? Cái <code>master</code>&nbsp;là tên branch mà mình sẽ
+        không nói ở bài này, nhưng cái <code>origin</code>&nbsp;trong đoạn đó
+        chính là <strong>tên remote repository</strong>. Mặc định khi clone một
+        repository thì nó tự đặt tên là&nbsp;<code>origin</code>.</p>
+      <p>Để kiểm tra tên remote, bạn có thể gõ lệnh <code>git remote -v</code>.</p>
+      <pre>$ git remote -v
+origin https://github.com/thachphamblog/hoc-git.git (fetch)
+origin https://github.com/thachphamblog/hoc-git.git (push)</pre>
+      <p>Trong đó bạn có thể thấy cái repository mình đã clone đều được đặt tên
+        là&nbsp;<code>origin</code>, và mỗi repository bạn có hai đều có hai
+        hành động là fetch (lấy dữ liệu về từ server) và push (gửi dữ liệu lên
+        server).</p>
+      <p>Nhìn lại đoạn lệnh <code>git push origin master</code>&nbsp;ở trên,
+        điều đó có nghĩa là bạn gửi tất cả các thay đổi trên mã nguồn ở máy bạn
+        lên remote tên là <code>origin</code>&nbsp;với branch&nbsp;<code>master</code>.</p>
+      <h3>Đổi tên remote</h3>
+      <p>Nếu bạn không thích tên <code>origin</code>&nbsp;thì có thể đổi tên nó
+        lại nó bằng tên khác cho dễ quản lý nếu như bạn có nhiều remote trong
+        một dự án với lệnh <code>git remote rename tên_cũ tên_mới</code>. Ví dụ
+        mình cần đổi từ <code>origin</code>&nbsp;sang <code>thach</code>&nbsp;thì
+        sẽ đổi như sau:</p>
+      <pre>$ git remote rename origin thach
+$ git remote -v
+thach https://github.com/thachphamblog/hoc-git.git (fetch)
+thach https://github.com/thachphamblog/hoc-git.git (push)</pre>
+      <p>Bây giờ khi commit hay push bạn có thể gõ <code>git push thach master</code>&nbsp;để
+        gửi mã nguồn lên remote repository này.</p>
+      <h3>Thêm một remote</h3>
+      <p>Trường hợp bạn cần thêm một cái remote để lấy dữ liệu khi cần thì có
+        thể sử dụng lệnh <code>git remote add tên_remote URL</code>. Ví dụ mình
+        cần remote một repository và đặt tên nó là inuit thì sẽ viết như sau:</p>
+      <pre>$ git remote add unuit https://github.com/thachpham92/inuit.css-web-template
+$ git remote -v
+thach https://github.com/thachphamblog/hoc-git (fetch)
+thach https://github.com/thachphamblog/hoc-git (push)
+inuit https://github.com/thachpham92/inuit.css-web-template (fetch)
+inuit https://github.com/thachpham92/inuit.css-web-template (push)</pre>
+      <p>Sau đó nếu bạn muốn lấy dữ liệu từ cái <code>inuit</code>&nbsp;kia về
+        thì chỉ cần sử dụng lệnh <code>git fetch inuit</code>.</p>
+      <pre>$ git fetch inuit
+warning: no common commits
+remote: Counting objects: 94, done.
+remote: Total 94 (delta 0), reused 0 (delta 0), pack
+Unpacking objects: 100% (94/94), done.
+From https://github.com/thachpham92/inuit.css-web-te
+ * [new branch] master -&gt; inuit/master</pre>
+      <p>Lưu ý là lệnh <code>git fetch</code>&nbsp;nó chỉ lấy về và lưu vào
+        database của Git trên máy chứ không được gộp vào repository của bạn. Để
+        gộp vào bạn có thể gõ thêm lệnh <code>git merge inuit</code>, trong đó
+        <code>inuit</code>&nbsp;là tên remote.</p>
+      <p>Còn nếu bạn muốn nó lấy về trực tiếp mà không cần gộp thì sử dụng lệnh
+        <code>git pull tên_remote</code>, tuy nhiên mình khuyến khích bạn nên
+        gộp vào branch khi cần và nhớ cẩn thận trong việc gộp, tốt nhất nên tạo
+        thư mục mới trong thư mục làm việc của bạn rồi vào đó mà lấy về.</p>
+      <h3>Sự khác nhau giữa<code> clone</code>, <code>fetch</code>&nbsp;và&nbsp;<code>pull</code></h3>
+      <p>Có thể bây giờ bạn đã biết được 3 lệnh để lấy dữ liệu về từ repository
+        đó là git clone, git fetch và git pull. Nhưng cả ba loại đều là lấy dữ
+        liệu, thế sự khác nhau của nó là gì?</p>
+      <h4>git clone</h4>
+      <p>Lệnh này sẽ sao chép toàn bộ dữ liệu trên repository và&nbsp;sao chép
+        luôn các thiết lập về repository, tức là nó sẽ tự động tạo một master
+        branch trên máy tính của bạn. Lệnh này chỉ nên sử dụng khi bạn cần tạo
+        mới một Git mới&nbsp;trên máy tính với toàn bộ dữ liệu và thiết lập của
+        một remote repository.</p>
+      <h4>git pull</h4>
+      <p>Lệnh này sẽ tự động lấy toàn bộ dữ liệu từ remote repository và gộp vào
+        cái branch hiện tại bạn đang làm việc.</p>
+      <h4>git fetch</h4>
+      <p>Lệnh này sẽ lấy toàn bộ dữ liệu từ remote repository nhưng sẽ cho phép
+        bạn gộp thủ công vào một branch nào đó trên thư mục Git ở máy tính.</p>
+      <p>Tạm thời bạn nên hiểu thế, ở bài branch bạn sẽ hiểu sâu hơn.</p>
+      <h3>Các loại giao thức của Remote Repository</h3>
+      <p>Chúng ta không chỉ kết nối với một remote repository qua giao thức HTTP
+        hay HTTPS mà còn có thể chọn nhiều giao thức khác, dưới đây là một vài
+        giao thức remote repository.</p>
+      <h4>Local Repository</h4>
+      <p>Giao thức này nghĩa là bạn kết nối tới một repository nào đó trên chính
+        máy tính của bạn và URL của giao thức sẽ có dạng <code>/path/repository/</code>.</p>
+      <h4>HTTP Repository</h4>
+      <p>Giao thức thông dụng nhất cũng như dễ hiểu nhất, thường được sử dụng
+        nếu bạn dùng các dịch vụ remote repository như Github hay Assembla, nó
+        sẽ bao gồm định dạng <code>http://domain.com/repository.git</code>&nbsp;hoặc
+        <code>https://domain.com/repository.git.</code></p>
+      <h4>SSH Repository</h4>
+      <p>Giao thức này thường được dùng trên các nhu cầu tạo một server
+        repository riêng và kết nối thông qua giao thức SSH. Đường dẫn của giao
+        thức này sẽ có dạng là <code>user@server:/path/repository.git</code>. Ở
+        phần cuối serie mình sẽ hướng dẫn bạn cách tạo một repository server
+        riêng và nó là lựa chọn rất tốt nếu bạn làm việc nhóm mà không cần phụ
+        thuộc vào các dịch vụ như Github hay Assembla.</p>
+      <h3>Lời kết</h3>
+      <p>Trong bài này chắc bạn đã có thể thấy được Git linh hoạt như thế nào
+        khi cho phép bạn lấy dữ liệu từ một remote repository hoặc nhiều
+        repository khác nhau. Mặc khác, mình cũng muốn giải đáp cho các bạn có
+        thắc mắc cái origin trên câu lệnh là gì vì trong các bài sau mình sẽ còn
+        dùng khá nhiều câu lệnh có chứa origin trong đó nữa.</p>
+    </article>
+
+    
+  </body>
+</html>

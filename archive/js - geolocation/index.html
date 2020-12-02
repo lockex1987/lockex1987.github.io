@@ -1,0 +1,129 @@
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Geolocation</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Geolocation">
+ </head> 
+ <body> 
+  <article> 
+   <p>Geolocation</p> 
+   <p>Phát triển ứng dụng chỉ đường</p> 
+   <p>https://www.izwebz.com/featured/html-5-apis-geolocation/</p> 
+   <p>Geolocation được sử dụng để xác định vị trí người dùng trong HTML5.</p> 
+   <p>Để bảo vệ quyền riêng tư, việc xác định vị trí chỉ được thực hiện khi người dùng đồng ý.</p> 
+   <p>Lưu ý: Việc định vị sẽ cho kết quả chính xác hơn khi sử dụng các thiết bị có GPS như: iPhone, iPad.</p> 
+   <p>Các trình duyệt hỗ trợ</p> 
+   <p>Dưới đây là bảng danh sách một&nbsp; sốphiên bản đầu tiên của trình duyệt hỗ trợ đầy đủ cho Geolocation.</p> 
+   <ul> 
+    <li>Chrome: 5.0 – 49.0 (http), 50.0 (https)</li> 
+    <li>IE: 9.0</li> 
+    <li>Firefox: 3.5</li> 
+    <li>Safari: 5.0</li> 
+    <li>Opera: 16.0</li> 
+   </ul> 
+   <p>Lưu ý: Với phiên bản Chrome 5.0, vì lý do bảo vệ quyền riêng tư, việc định vị vị trí&nbsp; sẽ chỉ hoạt động với giao thức bảo mật HTTPS. Nếu trang web của bạn sử dụng giao thức HTTP việc xác định vị trí của người dùng sẽ không hoạt động.</p> 
+   <p>Sử dụng Geolocation để định vị vị trí trong HTML</p> 
+   <p>Để trả về giá trị là vị trí của người dùng thì bạn có thể sử dụng hàm: getCurrentPosition().</p> 
+   <p>Dưới đây là ví dụ đơn giản minh họa cho hàm getCurrentPosition(), trả về tọa độ người dùng</p> 
+   <p>demo-01.html</p> 
+   <p>Giải thích ví dụ:</p> 
+   <ul> 
+    <li>Kiểm tra xem Geolocation có được trình duyệt hỗ trợ không</li> 
+    <li>Nếu trình duyệt hỗ trợ, chạy phương thức getCurrentPosition(). Nếu không, hiển thị thông báo cho người dùng.</li> 
+    <li>Nếu hàm getCurrentPosition() chạy thành công, thì nó trả về cho người dùng tọa độ vị trí thông qua hàm truyền tham số (showPosition)</li> 
+    <li>Hàm showPosition() in ra là kinh độ và vĩ độ của người dùng.</li> 
+   </ul> 
+   <p>Trên đây là ví dụ cơ bản của Geolocation, nó chưa thực hiện bắt các lỗi phát sinh.</p> 
+   <p>Xác định lỗi và hiển thị</p> 
+   <p>Tham số thứ 2 trong hàm getCurrentPosition() method sử dụng để xác định lỗi phát sinh trong quá trình định vị. Nó sẽ tự động gọi tới hàm định sẵn khi nhận được thông báo lỗi:</p> 
+   <p>demo-02.html</p> 
+   <p>Hiển thị vị trí người dùng trên bản đồ</p> 
+   <p>Để hiển thị vị trí trên bạn đồ, bạn có thể sử dụng các dịch vụ cung cấp bản đồ trực tuyến như: Google Maps.</p> 
+   <p>Trong ví dụ dưới đây, giá trị kinh độ và vĩ độ sẽ được hiển thị trên Google Map (sử dụng ảnh tĩnh):</p> 
+   <p>demo-03.html</p> 
+   <p>Ví dụ Google Map Script:</p> 
+   <p>demo-04.html</p> 
+   <p>Cung cấp thông tin vị trí</p> 
+   <p>Trong bài học này chúng ta đã biết làm thế nào để hiển thị vị trí người dùng trên bản đồ.</p> 
+   <p>Bên cạnh đó Geolocation còn cung cấp thêm các thông tin vị trí cụ thể, như:</p> 
+   <ul> 
+    <li>Hiển thị các địa điểm được yêu thích gần người dùng</li> 
+    <li>Chỉ đường cho người dùng (GPS)</li> 
+    <li>Cập nhật, lưu trữ thông tin về vị trí người dùng</li> 
+   </ul> 
+   <p>Hàm getCurrentPosition() – Hàm trả về kết quả</p> 
+   <p>Hàm getCurrentPosition() là hàm trả về kết quả là một đối tượng. Kinh độ, vĩ độ và độ chính xác là 3 kết quả được trả về. Những thuộc tính khác sẽ được trả về nếu có đủ các thông tin cần thiết. Chi tiết các thuộc tính trả về:</p> 
+   <table border="1"> 
+    <tbody> 
+     <tr> 
+      <td>Thuộc tính</td> 
+      <td>Giá trị trả về</td> 
+      <td>Ghi chú</td> 
+     </tr> 
+     <tr> 
+      <td>coords.latitude<br> </td> 
+      <td>Vĩ độ ở dạng số thập phân<br> </td> 
+      <td>Giá trị này luôn được trả về</td> 
+     </tr> 
+     <tr> 
+      <td>coords.longitude<br> </td> 
+      <td>Kinh độ ở dạng số thập phân<br> </td> 
+      <td>Giá trị này luôn được trả về</td> 
+     </tr> 
+     <tr> 
+      <td>coords.accuracy<br> </td> 
+      <td>Độ chính xác của vị trí<br> </td> 
+      <td>Giá trị này luôn được trả về</td> 
+     </tr> 
+     <tr> 
+      <td>coords.altitude</td> 
+      <td>Độ cao so với mực nước biển, đơn vị là mét</td> 
+      <td>Giá trị được trả về nếu có sẵn</td> 
+     </tr> 
+     <tr> 
+      <td>coords.altitudeAccuracy</td> 
+      <td>Sự chính xác của độ cao vừa định vị</td> 
+      <td>Giá trị được trả về nếu có sẵn</td> 
+     </tr> 
+     <tr> 
+      <td>coords.heading</td> 
+      <td>Hướng người dùng đang đi, đơn vị là độ, lấy hướng Bắc làm gốc</td> 
+      <td>Giá trị được trả về nếu có sẵn</td> 
+     </tr> 
+     <tr> 
+      <td>coords.speed</td> 
+      <td>Tốc độ di chuyển, đơn vị là met/giây</td> 
+      <td>Giá trị được trả về nếu có sẵn</td> 
+     </tr> 
+     <tr> 
+      <td>timestamp</td> 
+      <td>Thời điểm phản hồi yêu cầu định vị</td> 
+      <td>Giá trị được trả về nếu có sẵn</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <p>Geolocation – Những hàm khác</p> 
+   <p>Bên cạnh hàm Geolocation còn có một số hàm khác</p> 
+   <ul> 
+    <li>watchPosition() -Trả về vị trí hiện tại của người dùng và tiếp tục cập nhật vị trí khi người dùng di chuyển (giống như hệ thống GPS trong xe ô tô).</li> 
+    <li>clearWatch() – Ngừng sử dụng hàm watchPosition().</li> 
+   </ul> 
+   <p>Ví dụ dưới đây sẽ cho bạn thấy cách làm việc của hàm watchPosition(). Bạn cần phải có một thiết bị GPS để thực hiện ví dụ này (một chiếc điện thoại di động như iPhone):<br> </p> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p>Reference:</p> 
+   <p>Lấy địa chỉ từ kinh độ và vĩ độ</p> 
+   <p>https://nhanweb.com/lay-vi-tri-nguoi-dung-su-dung-html5-geolocation-api-va-php.html</p> 
+   <p>http://maps.googleapis.com/maps/api/geocode/json?latlng=21.0180696,105.7952859&amp;sensor=false</p> 
+   <p>https://developers.google.com/maps/documentation/geocoding/start?csw=1</p> 
+   <p>https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/Using_geolocation</p> 
+   <p>https://mobiforge.com/design-development/html5-mobile-web-a-guide-geolocation-api</p> 
+   <p>https://webdesign.tutsplus.com/articles/making-websites-location-aware-with-html5-geolocation--webdesign-10495</p> 
+   <p><br> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

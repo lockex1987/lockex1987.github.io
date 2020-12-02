@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Right click context menu"/>
+    
+    <title>Right click context menu</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+    <link rel="stylesheet" href="css/context_menu.css">
+</head>
+<body>
+    <article>
+        <h2>Right click context menu</h2>
+
+    <p>Chuột phải để xem context menu.</p>
+
+    <div>
+        <div class="context-menu-trigger" data-id="1">Task 1</div>
+        <div class="context-menu-trigger" data-id="2">Task 2</div>
+        <div class="context-menu-trigger" data-id="3">Task 3</div>
+    </div>
+
+    <div class="context-menu" id="myContextMenu">
+        <ul class="context-menu-content">
+            <li class="context-menu-option" data-action="back">Back</li>
+            <li class="context-menu-option" data-action="reload">Reload</li>
+            <li class="context-menu-option" data-action="save">Save</li>
+            <li class="context-menu-option" data-action="save-as">Save As</li>
+            <li class="context-menu-option" data-action="inspect">Inspect</li>
+        </ul>
+    </div>
+    </article>
+
+    <script src="js/context_menu.js"></script>
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+</html>
+

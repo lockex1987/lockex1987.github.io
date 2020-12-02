@@ -1,0 +1,26 @@
+body {
+  background: black;
+}
+
+#viewport {
+  margin: 0 auto;
+  width: 300px;
+  height: 200px;
+  border: white 1px solid;
+  animation: idle-rotation 10s alternate infinite;
+  transform-style: preserve-3d;
+}
+
+.threeDee {
+  position: relative;
+  display: block;
+}
+
+@keyframes idle-rotation {
+  0% {
+    transform: perspective(700px) rotateY(0deg);
+  }
+  100% {
+    transform: perspective(700px) rotateY(360deg);
+  }
+}

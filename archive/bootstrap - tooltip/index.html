@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <meta name="description" content="Bootstrap Tooltip">
+  <title>Bootstrap Tooltip</title> 
+  
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../css/style.css"> 
+ </head> 
+ 
+ <body> 
+  <article> 
+    <h2>Bootstrap Tooltip</h2>
+   <p>The Tooltip component is small pop-up box that appears when the user moves the mouse pointer over an element.</p> 
+   <p>To create a tooltip, add the <code>data-toggle="tooltip"</code> attribute to an element. Use the <code>title</code> attribute to specify the text that should be displayed inside the tooltip.</p> 
+   <pre>&lt;a href="#" data-toggle="tooltip" title="Hooray!"&gt;Hover over me&lt;/a&gt;</pre> 
+   <p>Tooltips must be initialized with jQuery: select the specified element and call the <code>tooltip()</code> method.</p> 
+   <pre>$('[data-toggle="tooltip"]').tooltip();</pre> 
+   <p>By default, the tooltip will appear on top of the element. Use the <code>data-placement</code> attribute to set the position of the tooltip on <code>top</code>, <code>bottom</code>, <code>left</code> or the <code>right</code> side of the element.</p> 
+
+   <h3>Demo</h3> 
+   <div class="demo"> 
+    <a href="#" data-toggle="tooltip" data-placement="top" title="Hooray!">Top</a> 
+    <a href="#" data-toggle="tooltip" data-placement="bottom" title="Hooray!">Bottom</a> 
+    <a href="#" data-toggle="tooltip" data-placement="left" title="Hooray!">Left</a> 
+    <a href="#" data-toggle="tooltip" data-placement="right" title="Hooray!">Right</a> 
+
+	<!-- Phải thêm data-html -->
+	<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-html="true" title="&lt;em&gt;Tooltip&lt;/em&gt; &lt;u&gt;with&lt;/u&gt; &lt;b&gt;HTML&lt;/b&gt;">Tooltip with HTML</button>
+   </div> 
+   
+   <h3>Tham khảo:</h3> 
+   <p>https://www.w3schools.com/bootstrap4/bootstrap_tooltip.asp</p>
+   <p>https://getbootstrap.com/docs/4.1/components/tooltips/</p>
+   
+   
+  </article> 
+  
+  <script src="../../js/docs.js"></script>  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script> 
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> 
+   <script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script> 
+ </body>
+</html>

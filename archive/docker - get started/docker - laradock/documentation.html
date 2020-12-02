@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Documentation</title>
+  </head>
+  <body>
+    <style>
+      h3 { color: green; }
+      h3.checked::after { color: #CCC; margin-left: 10px; content: "✓"; }
+    </style>
+    <h2>Documentation</h2>
+    <h3 class="checked">Hiển thị danh sách các container đang chạy</h3>
+    <pre><code>docker ps
+</code></pre>
+    <p>Bạn có thể sử dụng lệnh sau nếu bạn chỉ muốn xem các container của
+      project:</p>
+    <pre><code>docker-compose ps
+</code></pre>
+    <h3 class="checked">Đóng tất cả các container đang chạy</h3>
+    <pre><code>docker-compose stop
+</code></pre>
+    <p>Để dừng một container sử dụng:</p>
+    <pre><code>docker-compose stop {container-name}
+</code></pre>
+    <h3 class="checked">Xóa tất cả các container đang tồn tại</h3>
+    <pre><code>docker-compose down
+</code></pre>
+    <h3 class="checked">Truy cập một container (thực hiện lệnh trong một
+      container đang chạy)</h3>
+    <p>1 - Đầu tiên liệt kê danh sách các container đang chạy bằng lệnh <code>docker
+        ps</code></p>
+    <p>2 - Truy cập một container nào đó sử dụng:</p>
+    <pre><code>docker-compose exec {container-name} bash
+</code></pre>
+    <p>Ví dụ truy cập container MySQL:</p>
+    <pre><code>docker-compose exec mysql bash
+</code></pre>
+    <p>Ví dụ truy cập MySQL prompt bên trong container MySQL:</p>
+    <pre><code>docker-compose exec mysql mysql -u homestead -psecret
+</code></pre>
+    <p>3 - Để thoát khỏi một container, gõ lệnh <code>exit</code>.</p>
+    <h3 class="checked">Sửa cấu hình mặc định của container</h3>
+    <p>Mở file&nbsp;<code>docker-compose.yml</code> và sửa bất cứ thứ gì bạn
+      muốn.</p>
+    <p>Ví dụ:</p>
+    <p>Đổi tên database MySQL:</p>
+    <pre><code>    environment:
+        MYSQL_DATABASE: laradock
+    ...
+</code></pre>
+    <p>Đổi cổng mặc định của Redis sang 1111:</p>
+    <pre><code>    ports:
+        - "1111:6379"
+    ...
+</code></pre>
+    <h3 class="checked">Sửa một Docker image</h3>
+    <p>1 - Tìm đến <code>Dockerfile</code> của image mà bạn muốn sửa,</p>
+    <p>ví dụ với&nbsp;<code>mysql</code> đường dẫn sẽ là <code>mysql/Dockerfile</code>.</p>
+    <p>2 - Sửa file này theo cách mà bạn muốn.</p>
+    <p>3 - Re-build lại container:</p>
+    <pre><code>docker-compose build mysql
+</code></pre>
+    <p>Các thông tin thêm về việc rebuild container <a href="https://laradock.io/#Build-Re-build-Containers">ở
+        đây</a>.</p>
+    <h3 class="checked">Build/Re-build container</h3>
+    <p>Nếu bạn có thay đổi gì đó đến&nbsp;<code>Dockerfile</code> thì hãy thực
+      hiện lệnh này để các thay đổi có hiệu lực:</p>
+    <pre><code>docker-compose build
+</code></pre>
+    <p>Bạn cũng có thể chỉ định container sẽ rebuild (thay vì rebuild tất cả
+      container):</p>
+    <pre><code>docker-compose build {container-name}
+</code></pre>
+    <p>Bạn có thể sử dụng tùy chọn&nbsp;<code>--no-cache</code> nếu bạn muốn
+      rebuild một cách hoàn toàn (<code>docker-compose build --no-cache
+        {container-name}</code>).</p>
+    <h3 class="checked">Thêm phần mềm (Docker Image)</h3>
+    <p>Để thêm một image (phần mềm), hãy sửa file <code>docker-compose.yml</code>
+      và thêm các chi tiết về container của bạn. Để làm được vậy bạn cần quen
+      thuộc với <a href="https://docs.docker.com/compose/compose-file/">cú pháp
+        file docker compose</a>.</p>
+    <h3>View the Log files</h3>
+    <p>The NGINX Log file is stored in the <code>logs/nginx</code> directory.</p>
+    <p>However to view the logs of all the other containers (MySQL, PHP-FPM,…)
+      you can run this:</p>
+    <pre><code>docker-compose logs {container-name}
+</code></pre>
+    <pre><code>docker-compose logs -f {container-name}
+</code></pre>
+    <p>More <a href="https://docs.docker.com/compose/reference/logs/">options</a>.</p>
+    <h3 class="checked">Cài đặt PHP extension</h3>
+    <p>Trước khi cài đặt PHP extension, bạn phải quyết định xem bạn sẽ cần cho <code>FPM</code>
+      hay <code>CLI</code>, bởi vì mỗi cái lại có container riêng của chúng
+      khác nhau. Nếu bạn cần cho cả hai, bạn sẽ phải sửa cả hai container.</p>
+    PHP-FPM extension được cài đặt ở trong <code>php-fpm/Dockerfile-XX</code>
+    (thay XX với phiên bản PHP mặc định của bạn).
+    <p>PHP-CLI extension được cài đặt ở trong <code>workspace/Dockerfile</code>.</p>
+    <p>Có vẻ nó ở các biến dạng <code>PHP_FPM_INSTALL_</code> ở file <code>.env</code>
+      thì đúng hơn.</p>
+    <h3 class="checked">Đổi phiên bản PHP-FPM</h3>
+    <p>Mặc định phiên bản PHP stable mới nhất được cấu hình sử dụng.</p>
+    <p>PHP-FPM chịu trách nhiệm phục vụ mã nguồn chương trình của bạn. Bạn không
+      phải đổi phiên bản PHP-CLI nếu bạn có kế hoạch chạy chương trình của bạn ở
+      phiên bản PHP-FPM khác.</p>
+    <p>Ví dụ để đổi từ PHP 7.2 sang PHP 5.6<code></code>:</p>
+    <p>1 - Mở file <code>.env</code>.</p>
+    <p>2 - Tìm kiếm <code>PHP_VERSION</code>.</p>
+    <p>3 - Thiết lập đến phiên bản mong muốn:</p>
+    <pre><code>PHP_VERSION=5.6
+</code></pre>
+    <p>4 - Cuối cùng rebuild lại image</p>
+    <pre><code>docker-compose build php-fpm
+</code></pre>
+    <p>Muốn biết thêm thông tin chi tiết về PHP base image, truy cập <a href="https://hub.docker.com/_/php/">official
+        PHP docker images</a>.</p>
+    <h3 class="checked">Đổi phiên bản PHP-CLI</h3>
+    <p>Mặc định PHP-CLI 7.0 được chạy.</p>
+    <p>Chú ý: không nhất thiết phải đổi phiên bản PHP-CLI. PHP-CLI chỉ được sử
+      dụng cho các lệnh artisan và composer. Nó không phục vụ code chương trình
+      của bạn, đây là công việc của PHP-FPM.</p>
+    <p>PHP-CLI được cài đặt ở container <code>workspace</code>. Để đổi phiên
+      bản PHP-CLI bạn chỉ cần đơn giản sửa biến&nbsp;<code>PHP_VERSION</code>
+      trong file <code>.env</code> như sau:</p>
+    <p>1 - Mở file&nbsp;<code>.env</code>.</p>
+    <p>2 - Tìm kiếm <code>PHP_VERSION</code>.</p>
+    <p>3 - Thiết lập thành phiên bản mong muốn:</p>
+    <pre><code>PHP_VERSION=7.2
+</code></pre>
+    <p>4 - Cuối cùng rebuild lại image:</p>
+    <pre><code>docker-compose build workspace
+</code></pre>
+    <h3>Install xDebug</h3>
+    <p>1 - First install <code>xDebug</code> in the Workspace and the PHP-FPM
+      Containers: <br>
+      a) open the <code>.env</code> file <br>
+      b) search for the <code>WORKSPACE_INSTALL_XDEBUG</code> argument under
+      the Workspace Container <br>
+      c) set it to <code>true</code> <br>
+      d) search for the <code>PHP_FPM_INSTALL_XDEBUG</code> argument under the
+      PHP-FPM Container <br>
+      e) set it to <code>true</code></p>
+    <p>2 - Re-build the containers <code>docker-compose build workspace php-fpm</code></p>
+    <p>For information on how to configure xDebug with your IDE and work it out,
+      check this <a href="https://github.com/LarryEitel/laravel-laradock-phpstorm">Repository</a>
+      or follow up on the next section if you use linux and PhpStorm.</p>
+    <h3>Install phpdbg</h3>
+    <p>Install <code>phpdbg</code> in the Workspace and the PHP-FPM Containers:</p>
+    <p>1 - Open the <code>.env</code>.</p>
+    <p>2 - Search for <code>WORKSPACE_INSTALL_PHPDBG</code>.</p>
+    <p>3 - Set value to <code>true</code></p>
+    <p>4 - Do the same for <code>PHP_FPM_INSTALL_PHPDBG</code></p>
+    <pre><code>WORKSPACE_INSTALL_PHPDBG=true
+</code></pre>
+    <pre><code>PHP_FPM_INSTALL_PHPDBG=true
+</code></pre>
+    <h3>Setup remote debugging for PhpStorm on Linux</h3>
+    <ul>
+      <li>
+        <p>Make sure you have followed the steps above in the <a href="https://laradock.io/#install-xdebug">Install
+            Xdebug section</a>.</p>
+      </li>
+      <li>
+        <p>Make sure Xdebug accepts connections and listens on port 9000.
+          (Should be default configuration).</p>
+      </li>
+    </ul>
+    <p><img src="https://laradock.io/images/photos/PHPStorm/linux/configuration/debugConfiguration.png"
+
+        title="Debug Configuration">.</p>
+    <ul>
+      <li>Create a server with name <code>laradock</code> (matches
+        PHP_IDE_CONFIG key in environment file) and make sure to map project
+        root path with server correctly.</li>
+    </ul>
+    <p><img src="https://laradock.io/images/photos/PHPStorm/linux/configuration/serverConfiguration.png"
+
+        title="Server Configuration">.</p>
+    <ul>
+      <li>Start listening for debug connections, place a breakpoint and you are
+        good to go !</li>
+    </ul>
+    <h3>Start/Stop xDebug</h3>
+    <p>By installing xDebug, you are enabling it to run on startup by default.</p>
+    <p>To control the behavior of xDebug (in the <code>php-fpm</code>
+      Container), you can run the following commands from the Laradock root
+      folder, (at the same prompt where you run docker-compose):</p>
+    <ul>
+      <li>Stop xDebug from running by default: <code>.php-fpm/xdebug stop</code>.</li>
+      <li>Start xDebug by default: <code>.php-fpm/xdebug start</code>.</li>
+      <li>See the status: <code>.php-fpm/xdebug status</code>.</li>
+    </ul>
+    <p>Note: If <code>.php-fpm/xdebug</code> doesn’t execute and gives <code>Permission
+        Denied</code> error the problem can be that file <code>xdebug</code>
+      doesn’t have execution access. This can be fixed by running <code>chmod</code>
+      command with desired access permissions.</p>
+    <h3>Install ionCube Loader</h3>
+    <p>1 - First install <code>ionCube Loader</code> in the Workspace and the
+      PHP-FPM Containers: <br>
+      a) open the <code>.env</code> file <br>
+      b) search for the <code>WORKSPACE_INSTALL_IONCUBE</code> argument under
+      the Workspace Container <br>
+      c) set it to <code>true</code> <br>
+      d) search for the <code>PHP_FPM_INSTALL_IONCUBE</code> argument under the
+      PHP-FPM Container <br>
+      e) set it to <code>true</code></p>
+    <p>2 - Re-build the containers <code>docker-compose build workspace php-fpm</code></p>
+    <p>Always download the latest version of <a href="http://www.ioncube.com/loaders.php">Loaders
+        for ionCube </a>.</p>
+    <h3>Install Deployer (Deployment tool for PHP)</h3>
+    <p>1 - Open the <code>.env</code> file <br>
+      2 - Search for the <code>WORKSPACE_INSTALL_DEPLOYER</code> argument under
+      the Workspace Container <br>
+      3 - Set it to <code>true</code> </p>
+    <p>4 - Re-build the containers <code>docker-compose build workspace</code></p>
+    <p><a href="https://deployer.org/docs">Deployer Documentation Here</a></p>
+    <h3>Prepare Laradock for Production</h3>
+    <p>It’s recommended for production to create a custom <code>docker-compose.yml</code>
+      file. For that reason, Laradock is shipped with <code>production-docker-compose.yml</code>
+      which should contain only the containers you are planning to run on
+      production (usage example: <code>docker-compose -f
+        production-docker-compose.yml up -d nginx mysql redis ...</code>).</p>
+    <p>Note: The Database (MySQL/MariaDB/…) ports should not be forwarded on
+      production, because Docker will automatically publish the port on the
+      host, which is quite insecure, unless specifically told not to. So make
+      sure to remove these lines:</p>
+    <pre><code>ports:
+    - "3306:3306"
+</code></pre>
+    <p>To learn more about how Docker publishes ports, please read <a href="https://fralef.me/docker-and-iptables.html">this
+        excellent post on the subject</a>.</p>
+    <h3>Setup Laravel and Docker on Digital Ocean</h3>
+    <p><a href="https://laradock.io/guides/#Digital-Ocean">Full Guide Here</a></p>
+    <h3 class="checked">Cài đặt Laravel từ bên trong Docker container</h3>
+    <p>1 - Đầu tiên bạn cần truy cập vào container <code>workspace</code>.</p>
+    <p>2 - Cài đặt Laravel sử dụng Composer:</p>
+    <pre><code>composer create-project laravel/laravel my-cool-app "5.2.*"
+</code></pre>
+    <p>3 - Sửa file <code>.env</code> (của Laradock) để map tới đường dẫn ứng dụng
+      mới.</p>
+    <p>Mặc định, Laradock sẽ coi rằng ứng dụng Laravel được đặt ở thư mục cha
+      của thư mục laradock.</p>
+    <p>Do ứng dụng Laravel mới nằm ở thư mục <code>my-cool-app</code>, chúng ta
+      cần đổi <code>../:/var/www</code> thành <code>../my-cool-app/:/var/www</code>
+      như sau:</p>
+    <pre><code>  APP_CODE_PATH_HOST=../my-cool-app/
+</code></pre>
+    <p>4 - Di chuyển đến thư mục mới và bắt đầu làm việc.</p>
+    <pre><code>cd my-cool-app
+</code></pre>
+    <p>5 - Go back to the Laradock installation steps to see how to edit the <code>.env</code>
+      file.</p>
+    <h3 class="checked">Chạy các lệnh artisan</h3>
+    <p>Bạn có thể chạy các lệnh artisan và các lệnh terminal khác từ container <code>workspace</code>.</p>
+    <p>1 - Hãy chắc chắn rằng container workspace đang được chạy.</p>
+    <pre><code>docker-compose up -d workspace // ..and all your other containers
+</code></pre>
+    <p>2 - Tìm đến tên container workspace:</p>
+    <pre><code>docker-compose ps
+</code></pre>
+    <p>3 - Truy cập container workspace:</p>
+    <pre><code>docker-compose exec workspace bash
+</code></pre>
+    <p>Note: Should add <code>--user=laradock</code> (example <code>docker-compose
+        exec --user=laradock workspace bash</code>) to have files created as
+      your host’s user to prevent issue owner of log file will be changed to
+      root then laravel website cannot write on log file if using rotated log
+      and new log file not existed</p>
+    <p>4 - Chạy lệnh bạn muốn, ví dụ:</p>
+    <pre><code>php artisan
+</code></pre>
+    <pre><code>composer update
+</code></pre>
+    <pre><code>phpunit
+</code></pre>
+    <h3>Run Laravel Queue Worker</h3>
+    <p>1 - First add <code>php-worker</code> container. It will be similar as
+      like PHP-FPM Container. <br>
+      a) open the <code>docker-compose.yml</code> file <br>
+      b) add a new service container by simply copy-paste this section below
+      PHP-FPM container</p>
+    <pre><code>    php-worker:
+      build:
+        context: ./php-worker
+        args:
+          - INSTALL_PGSQL=${PHP_WORKER_INSTALL_PGSQL} #Optionally install PGSQL PHP drivers
+          - INSTALL_BCMATH=${PHP_WORKER_INSTALL_BCMATH} #Optionally install BCMath php package
+          - INSTALL_SOAP=${PHP_WORKER_INSTALL_SOAP} #Optionally install Soap php package
+      volumes_from:
+        - applications
+      depends_on:
+        - workspace
+      extra_hosts:
+        - "dockerhost:${DOCKER_HOST_IP}"
+      networks:
+        - backend
+</code></pre>
+    <p>2 - Start everything up</p>
+    <pre><code class="checked">docker-compose up -d php-worker
+</code></pre>
+    <h3>Use Mailu</h3>
+    <p>1 - You need register a domain.</p>
+    <p>2 - Required RECAPTCHA for signup email <a href="https://www.google.com/recaptcha/admin">HERE</a></p>
+    <p>2 - modify following environment variable in <code>.env</code> file</p>
+    <pre><code>MAILU_RECAPTCHA_PUBLIC_KEY=&lt;YOUR_RECAPTCHA_PUBLIC_KEY&gt;
+MAILU_RECAPTCHA_PRIVATE_KEY=&lt;YOUR_RECAPTCHA_PRIVATE_KEY&gt;
+MAILU_DOMAIN=laradock.io
+MAILU_HOSTNAMES=mail.laradock.io
+</code></pre>
+    <p>2 - Open your browser and visit <code>http://YOUR_DOMAIN</code>.</p>
+    <h3>Use NetData</h3>
+    <p>1 - Run the NetData Container (<code>netdata</code>) with the <code>docker-compose
+        up</code> command. Example:</p>
+    <pre><code>docker-compose up -d netdata
+</code></pre>
+    <p>2 - Open your browser and visit the localhost on port 19999: <code>http://localhost:19999</code></p>
+    <h3>Use Metabase</h3>
+    <p>1 - Run the Metabase Container (<code>metbase</code>) with the <code>docker-compose
+        up</code> command. Example:</p>
+    <pre><code>docker-compose up -d metabase
+</code></pre>
+    <p>2 - Open your browser and visit the localhost on port 3030: <code>http://localhost:3030</code></p>
+    <p>3 - You can use environment to configure Metabase container. See docs in:
+      <a href="https://www.metabase.com/docs/v0.12.0/operations-guide/running-metabase-on-docker.html">Running
+        Metabase on Docker</a></p>
+    <h3>Use Jenkins</h3>
+    <p>1) Boot the container <code>docker-compose up -d jenkins</code>. To
+      enter the container type <code>docker-compose exec jenkins bash</code>.</p>
+    <p>2) Go to <code>http://localhost:8090/</code> (if you didn’t chanhed your
+      default port mapping)</p>
+    <p>3) Authenticate from the web app.</p>
+    <ul>
+      <li>Default username is <code>admin</code>.</li>
+      <li>Default password is <code>docker-compose exec jenkins cat
+          /var/jenkins_home/secrets/initialAdminPassword</code>.</li>
+    </ul>
+    <p>(To enter container as root type <code>docker-compose exec --user root
+        jenkins bash</code>).</p>
+    <p>4) Install some plugins.</p>
+    <p>5) Create your first Admin user, or continue as Admin.</p>
+    <p>Note: to add user go to <code>http://localhost:8090/securityRealm/addUser</code>
+      and to restart it from the web app visit <code>http://localhost:8090/restart</code>.</p>
+    <p>You may wanna change the default security configuration, so go to <code>http://localhost:8090/configureSecurity/</code>
+      under Authorization and choosing “Anyone can do anything” or
+      “Project-based Matrix Authorization Strategy” or anything else.</p>
+    <h3 class="checked">Sử dụng Redis</h3>
+    <p>1 - Đầu tiên hãy chắc chắn rằng bạn có chạy container Redis (<code>redis</code>)
+      với lệnh <code>docker-compose up</code>.</p>
+    <pre><code>docker-compose up -d redis
+</code></pre>
+    <p>Để thực thi các lệnh Redis, đầu tiên truy cập vào container redis <code>docker-compose
+        exec redis bash</code>, sau đó thực hiện lệnh&nbsp;<code>redis-cli</code>.</p>
+    <p>2 - Mở file <code>.env</code> của ứng dụng Laravel và thiết lập <code>REDIS_HOST</code>
+      thành <code>redis</code></p>
+    <pre><code>REDIS_HOST=redis
+</code></pre>
+    <p>Nếu bạn đang sử dụng Laravel nhưng bạn không thấy biến <code>REDIS_HOST</code>
+      trong file <code>.env</code> thì mở file <code>config/database.php</code>
+      và đổi giá trị mặc định&nbsp;<code>127.0.0.1</code> thành <code>redis</code>
+      như sau:</p>
+    <pre><code>'redis' =&gt; [
+    'cluster' =&gt; false,
+    'default' =&gt; [
+        'host'     =&gt; 'redis',
+        'port'     =&gt; 6379,
+        'database' =&gt; 0,
+    ],
+],
+</code></pre>
+    <p>3 - Để thiết lập cache và session sử dụng Redis, sửa file <code>.env</code>
+      và thiết lập <code>CACHE_DRIVER</code>, <code>SESSION_DRIVER</code> thành
+      <code>redis</code> thay vì mặc định là <code>file</code>.</p>
+    <pre><code>CACHE_DRIVER=redis
+SESSION_DRIVER=redis
+</code></pre>
+    <p>4 - Cuối cùng hãy chắc chắn bạn có package <code>predis/predis</code> <code>(~1.0)</code>
+      thông qua Composer như sau:</p>
+    <pre>composer require predis/predis:^1.0
+</pre>
+    <p>5 - Bạn có thể test thủ công với đoạn code sau:</p>
+    <pre><code>\Cache::store('redis')-&gt;put('Laradock', 'Awesome', 10);
+</code></pre>
+    <h3>Use Mongo</h3>
+    <p>1 - First install <code>mongo</code> in the Workspace and the PHP-FPM
+      Containers: <br>
+      a) open the <code>.env</code> file <br>
+      b) search for the <code>WORKSPACE_INSTALL_MONGO</code> argument under the
+      Workspace Container <br>
+      c) set it to <code>true</code> <br>
+      d) search for the <code>PHP_FPM_INSTALL_MONGO</code> argument under the
+      PHP-FPM Container <br>
+      e) set it to <code>true</code></p>
+    <p>2 - Re-build the containers <code>docker-compose build workspace php-fpm</code></p>
+    <p>3 - Run the MongoDB Container (<code>mongo</code>) with the <code>docker-compose
+        up</code> command.</p>
+    <pre><code>docker-compose up -d mongo
+</code></pre>
+    <p>4 - Add the MongoDB configurations to the <code>config/database.php</code>
+      configuration file:</p>
+    <pre><code>'connections' =&gt; [
+
+    'mongodb' =&gt; [
+        'driver'   =&gt; 'mongodb',
+        'host'     =&gt; env('DB_HOST', 'localhost'),
+        'port'     =&gt; env('DB_PORT', 27017),
+        'database' =&gt; env('DB_DATABASE', 'database'),
+        'username' =&gt; '',
+        'password' =&gt; '',
+        'options'  =&gt; [
+            'database' =&gt; '',
+        ]
+    ],
+
+	// ...
+
+],
+</code></pre>
+    <p>5 - Open your Laravel’s <code>.env</code> file and update the following
+      variables:</p>
+    <ul>
+      <li>set the <code>DB_HOST</code> to your <code>mongo</code>.</li>
+      <li>set the <code>DB_PORT</code> to <code>27017</code>.</li>
+      <li>set the <code>DB_DATABASE</code> to <code>database</code>.</li>
+    </ul>
+    <p>6 - Finally make sure you have the <code>jenssegers/mongodb</code>
+      package installed via Composer and its Service Provider is added.</p>
+    <pre><code>composer require jenssegers/mongodb
+</code></pre>
+    <p>More details about this <a href="https://github.com/jenssegers/laravel-mongodb#installation">here</a>.</p>
+    <p>7 - Test it:</p>
+    <ul>
+      <li>First let your Models extend from the Mongo Eloquent Model. Check the
+        <a href="https://github.com/jenssegers/laravel-mongodb#eloquent">documentation</a>.</li>
+      <li>Enter the Workspace Container.</li>
+      <li>Migrate the Database <code>php artisan migrate</code>.</li>
+    </ul>
+    <h3 class="checked">Sử dụng PhpMyAdmin</h3>
+    <p>1 - Chạy container phpMyAdmin (<code>phpmyadmin</code>) với lệnh <code>docker-compose
+        up</code>, ví dụ:</p>
+    <pre><code># use with mysql
+docker-compose up -d mysql phpmyadmin
+
+# use with mariadb
+docker-compose up -d mariadb phpmyadmin
+</code></pre>
+    <p>Chú ý: để sử dụng với MariaDB, mở file&nbsp;<code>.env</code> và thiết lập
+      <code>PMA_DB_ENGINE=mysql</code> thành <code>PMA_DB_ENGINE=mariadb</code>.</p>
+    <p>2 - Mở trình duyệt vào truy cập localhost ở cổng 8080: <code>http://localhost:8080</code></p>
+    <h3>Use Gitlab</h3>
+    <p>1 - Run the Gitlab Container (<code>gitlab</code>) with the <code>docker-compose
+        up</code> command. Example:</p>
+    <pre><code>docker-compose up -d gitlab
+</code></pre>
+    <p>2 - Open your browser and visit the localhost on port 8989: <code>http://localhost:8989</code></p>
+    <p> Note: You may change GITLAB_DOMAIN_NAME to your own domain name like <code>http://gitlab.example.com</code>
+      default is <code>http://localhost</code></p>
+    <h3>Use Adminer</h3>
+    <p>1 - Run the Adminer Container (<code>adminer</code>) with the <code>docker-compose
+        up</code> command. Example:</p>
+    <pre><code>docker-compose up -d adminer
+</code></pre>
+    <p>2 - Open your browser and visit the localhost on port 8080: <code>http://localhost:8080</code></p>
+    <p>Note: We’ve locked Adminer to version 4.3.0 as at the time of writing <a
+
+        href="https://sourceforge.net/p/adminer/bugs-and-features/548/">it
+        contained a major bug</a> preventing PostgreSQL users from logging in.
+      If that bug is fixed (or if you’re not using PostgreSQL) feel free to set
+      Adminer to the latest version within <a href="https://github.com/laradock/laradock/blob/master/adminer/Dockerfile#L1">the
+        Dockerfile</a>: <code>FROM adminer:latest</code></p>
+    <h3>Use Portainer</h3>
+    <p>1 - Run the Portainer Container (<code>portainer</code>) with the <code>docker-compose
+        up</code> command. Example:</p>
+    <pre><code>docker-compose up -d portainer
+</code></pre>
+    <p>2 - Open your browser and visit the localhost on port 9010: <code>http://localhost:9010</code></p>
+    <h3>Use PgAdmin</h3>
+    <p>1 - Run the pgAdmin Container (<code>pgadmin</code>) with the <code>docker-compose
+        up</code> command. Example:</p>
+    <pre><code>docker-compose up -d postgres pgadmin
+</code></pre>
+    <p>2 - Open your browser and visit the localhost on port 5050: <code>http://localhost:5050</code></p>
+    <p>3 - At login page use default credentials:</p>
+    <p>Username : pgadmin4@pgadmin.org</p>
+    <p>Password : admin</p>
+    <h3>Use Beanstalkd</h3>
+    <p>1 - Run the Beanstalkd Container:</p>
+    <pre><code>docker-compose up -d beanstalkd
+</code></pre>
+    <p>2 - Configure Laravel to connect to that container by editing the <code>config/queue.php</code>
+      config file.</p>
+    <p>a. first set <code>beanstalkd</code> as default queue driver b. set the
+      queue host to beanstalkd : <code>QUEUE_HOST=beanstalkd</code></p>
+    <p>beanstalkd is now available on default port <code>11300</code>.</p>
+    <p>3 - Require the dependency package <a href="https://github.com/pda/pheanstalk">pda/pheanstalk</a>
+      using composer.</p>
+    <p>Optionally you can use the Beanstalkd Console Container to manage your
+      Queues from a web interface.</p>
+    <p>1 - Run the Beanstalkd Console Container:</p>
+    <pre><code>docker-compose up -d beanstalkd-console
+</code></pre>
+    <p>2 - Open your browser and visit <code>http://localhost:2080/</code></p>
+    <p>Note: You can customize the port on which beanstalkd console is listening
+      by changing <code>BEANSTALKD_CONSOLE_HOST_PORT</code> in <code>.env</code>.
+      The default value is 2080.</p>
+    <p>3 - Add the server</p>
+    <ul>
+      <li>Host: beanstalkd</li>
+      <li>Port: 11300</li>
+    </ul>
+    <p>4 - Done.</p>
+    <h3>Use ElasticSearch</h3>
+    <p>1 - Run the ElasticSearch Container (<code>elasticsearch</code>) with the
+      <code>docker-compose up</code> command:</p>
+    <pre><code>docker-compose up -d elasticsearch
+</code></pre>
+    <p>2 - Open your browser and visit the localhost on port 9200: <code>http://localhost:9200</code></p>
+    <blockquote>
+      <p>The default username is <code>elastic</code> and the default password
+        is <code>changeme</code>.</p>
+    </blockquote>
+    <h4>Install ElasticSearch Plugin</h4>
+    <p>1 - Install an ElasticSearch plugin.</p>
+    <pre><code>docker-compose exec elasticsearch /usr/share/elasticsearch/bin/plugin install {plugin-name}
+</code></pre>
+    <p>2 - Restart elasticsearch container</p>
+    <pre><code>docker-compose restart elasticsearch
+</code></pre>
+    <h3>Use Selenium</h3>
+    <p>1 - Run the Selenium Container (<code>selenium</code>) with the <code>docker-compose
+        up</code> command. Example:</p>
+    <pre><code>docker-compose up -d selenium
+</code></pre>
+    <p>2 - Open your browser and visit the localhost on port 4444 at the
+      following URL: <code>http://localhost:4444/wd/hub</code></p>
+    <h3>Use RethinkDB</h3>
+    <p>The RethinkDB is an open-source Database for Real-time Web (<a href="https://rethinkdb.com/">RethinkDB</a>).
+      A package (<a href="https://github.com/duxet/laravel-rethinkdb">Laravel
+        RethinkDB</a>) is being developed and was released a version for Laravel
+      5.2 (experimental).</p>
+    <p>1 - Run the RethinkDB Container (<code>rethinkdb</code>) with the <code>docker-compose
+        up</code> command.</p>
+    <pre><code>docker-compose up -d rethinkdb
+</code></pre>
+    <p>2 - Access the RethinkDB Administration Console <a href="http://localhost:8090/#tables">http://localhost:8090/#tables</a>
+      for create a database called <code>database</code>.</p>
+    <p>3 - Add the RethinkDB configurations to the <code>config/database.php</code>
+      configuration file:</p>
+    <pre><code>'connections' =&gt; [
+
+	'rethinkdb' =&gt; [
+		'name'      =&gt; 'rethinkdb',
+		'driver'    =&gt; 'rethinkdb',
+		'host'      =&gt; env('DB_HOST', 'rethinkdb'),
+		'port'      =&gt; env('DB_PORT', 28015),
+		'database'  =&gt; env('DB_DATABASE', 'test'),
+	]
+
+	// ...
+
+],
+</code></pre>
+    <p>4 - Open your Laravel’s <code>.env</code> file and update the following
+      variables:</p>
+    <ul>
+      <li>set the <code>DB_CONNECTION</code> to your <code>rethinkdb</code>.</li>
+      <li>set the <code>DB_HOST</code> to <code>rethinkdb</code>.</li>
+      <li>set the <code>DB_PORT</code> to <code>28015</code>.</li>
+      <li>set the <code>DB_DATABASE</code> to <code>database</code>.</li>
+    </ul>
+    <h3>Use Minio</h3>
+    <p>1 - Configure Minio: - On the workspace container, change <code>INSTALL_MC</code>
+      to true to get the client - Set <code>MINIO_ACCESS_KEY</code> and <code>MINIO_ACCESS_SECRET</code>
+      if you wish to set proper keys</p>
+    <p>2 - Run the Minio Container (<code>minio</code>) with the <code>docker-compose
+        up</code> command. Example:</p>
+    <pre><code>docker-compose up -d minio
+</code></pre>
+    <p>3 - Open your browser and visit the localhost on port 9000 at the
+      following URL: <code>http://localhost:9000</code></p>
+    <p>4 - Create a bucket either through the webui or using the mc client:</p>
+    <pre><code>  mc mb minio/bucket
+</code></pre>
+    <p>5 - When configuring your other clients use the following details:</p>
+    <pre><code>  S3_HOST=http://minio
+  S3_KEY=access
+  S3_SECRET=secretkey
+  S3_REGION=us-east-1
+  S3_BUCKET=bucket
+</code></pre>
+    <h3>Use Thumbor</h3>
+    <p>Thumbor is a smart imaging service. It enables on-demand crop, resizing
+      and flipping of images. (<a href="https://github.com/thumbor/thumbor">Thumbor</a>)</p>
+    <p>1 - Configure Thumbor: - Checkout all the options under the thumbor
+      settings</p>
+    <p>2 - Run the Thumbor Container (<code>minio</code>) with the <code>docker-compose
+        up</code> command. Example:</p>
+    <pre><code>docker-compose up -d thumbor
+</code></pre>
+    <p>3 - Navigate to an example image on <code>http://localhost:8000/unsafe/300x300/i.imgur.com/bvjzPct.jpg</code></p>
+    <p>For more documentation on Thumbor visit the <a href="http://thumbor.readthedocs.io/en/latest/index.html">Thumbor
+        documenation</a> page</p>
+    <h3>Use AWS</h3>
+    <p>1 - Configure AWS: - make sure to add your SSH keys in aws/ssh_keys
+      folder</p>
+    <p>2 - Run the Aws Container (<code>aws</code>) with the <code>docker-compose
+        up</code> command. Example:</p>
+    <pre><code>docker-compose up -d aws
+</code></pre>
+    <p>3 - Access the aws container with <code>docker-compose exec aws bash</code></p>
+    <p>4 - To start using eb cli inside the container, initialize your project
+      first by doing ‘eb init’. Read the <a href="http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-configuration.html">aws
+        eb cli</a> docs for more details.</p>
+    <h3>Use Grafana</h3>
+    <p>1 - Configure Grafana: Change Port using <code>GRAFANA_PORT</code> if
+      you wish to. Default is port 3000.</p>
+    <p>2 - Run the Grafana Container (<code>grafana</code>) with the <code>docker-compose
+        up</code>command:</p>
+    <pre><code>docker-compose up -d grafana
+</code></pre>
+    <p>3 - Open your browser and visit the localhost on port 3000 at the
+      following URL: <code>http://localhost:3000</code></p>
+    <p>4 - Login using the credentials User = <code>admin</code>, Password = <code>admin</code>.
+      Change the password in the web interface if you want to.</p>
+    <h3>Install CodeIgniter</h3>
+    <p>To install CodeIgniter 3 on Laradock all you have to do is the following
+      simple steps:</p>
+    <p>1 - Open the <code>docker-compose.yml</code> file.</p>
+    <p>2 - Change <code>CODEIGNITER=false</code> to <code>CODEIGNITER=true</code>.</p>
+    <p>3 - Re-build your PHP-FPM Container <code>docker-compose build php-fpm</code>.</p>
+    <h3>Install Symfony</h3>
+    <p>1 - Open the <code>.env</code> file and set <code>WORKSPACE_INSTALL_SYMFONY</code>
+      to <code>true</code>.</p>
+    <p>2 - Run <code>docker-compose build workspace</code>, after the step
+      above.</p>
+    <p>3 - The NGINX sites include a default config file for your Symfony
+      project <code>symfony.conf.example</code>, so edit it and make sure the <code>root</code>
+      is pointing to your project <code>web</code> directory.</p>
+    <p>4 - Run <code>docker-compose restart</code> if the container was already
+      running, before the step above.</p>
+    <p>5 - Visit <code>symfony.test</code></p>
+    <h3 class="checked">Thay đổi timezone</h3>
+    <p>Để đổi timezone cho container <code>workspace</code>, <code>mysql</code>,
+      sửa tham số <code>TZ</code> trong file Docker Compose thành một trong các
+      giá trị trong <a target="_blank" href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">TZ
+        database</a>.</p>
+    <p>Ví dụ, nếu bạn muốn đổi timezone về Việt Nam:</p>
+    <pre><code>    workspace:
+        build:
+            context: ./workspace
+            args:
+                - TZ=Asia/Ho_Chi_Minh
+    ...
+</code></pre>
+    <p>Bạn có thể đọc thêm <a target="_blank" href="http://www.camroncade.com/managing-timezones-with-laravel/">thiết
+        lập timezone trong Laravel</a>.</p>
+    <h3 class="checked">Thêm cron job</h3>
+    <p>Ở môi trường Windows chúng ta sẽ không có tiện ích contab. Thêm 1 lý do
+      nên sử dụng Docker.</p>
+    <p>Bạn có thể thêm cron job của bạn vào file <code>workspace/crontab/root</code>
+      sau dòng&nbsp;<code>php artisan</code>.</p>
+    <pre><code>* * * * * php /var/www/artisan schedule:run &gt;&gt; /dev/null 2&gt;&amp;1
+
+# Custom cron
+* * * * * root echo "Every Minute" &gt; /var/log/cron.log 2&gt;&amp;1
+</code></pre>
+    <p>Nếu bạn ở môi trường Windows, hãy xác nhận rằng ký tự kết thúc dòng cho
+      file chỉ là LF, nếu không cron job sẽ thất bại mà không thông báo lỗi gì.</p>
+    <h3>Access workspace via ssh</h3>
+    <p>You can access the <code>workspace</code> container through <code>localhost:2222</code>
+      by setting the <code>INSTALL_WORKSPACE_SSH</code> build argument to <code>true</code>.</p>
+    <p>To change the default forwarded port for ssh:</p>
+    <pre><code>    workspace:
+		ports:
+			- "2222:22" # Edit this line
+    ...
+</code></pre>
+    <p>Then login using:</p>
+    <pre><code>ssh -o PasswordAuthentication=no    \
+    -o StrictHostKeyChecking=no     \
+    -o UserKnownHostsFile=/dev/null \
+    -p 2222                         \
+    -i workspace/insecure_id_rsa    \
+    laradock@localhost
+</code></pre>
+    <p>To login as root, replace laradock@localhost with root@localhost.</p>
+    <h3 class="checked">Đổi phiên bản MySQL)</h3>
+    <p>Mặc định MySQL 8.0 được chạy.</p>
+    <p>MySQL 8.0 là bản development release. Bạn có thể muốn sử dụng phiên bản
+      stable mới nhất, hoặc thậm chí một phiên bản cũ. Nếu bạn muốn, bạn có thể
+      thay phiên bản MySQL được sử dụng.</p>
+    <p>Mở file <code>.env</code> và thiết lập biến&nbsp;<code>MYSQL_VERSION</code>
+      thành phiên bản mà bạn muốn cài.</p>
+    <pre><code>MYSQL_VERSION=5.7
+</code></pre>
+    <p>Các phiên bản sẵn có là 5.5, 5.6, 5.7, 8.0, hoặc latest. Xem thêm <a href="https://store.docker.com/images/mysql">https://store.docker.com/images/mysql</a>
+      để biết chi tiết.</p>
+    <h3 class="checked">Truy cập MySQL từ host</h3>
+    <p>Bạn có thể forward cổng MySQL/MariaDB đến host machine bằng cách thêm các
+      dòng sau vào phần <code>mysql</code> hoặc <code>mariadb</code> trong
+      file <code>docker-compose.yml</code> hoặc trong file <a href="https://docs.docker.com/compose/extends/">environment
+        specific Compose</a> của bạn.</p>
+    <pre><code>ports:
+    - "3306:3306"
+</code></pre>
+    <h3 class="checked">MySQL root access</h3>
+    <p>The default username and password for the root MySQL user are <code>root</code>
+      and <code>root</code>.</p>
+    <p>1 - Enter the MySQL container: <code>docker-compose exec mysql bash</code>.</p>
+    <p>2 - Enter mysql: <code>mysql -uroot -proot</code> for non root access
+      use <code>mysql -uhomestead -psecret</code>.</p>
+    <p>3 - See all users: <code>SELECT User FROM mysql.user;</code></p>
+    <p>4 - Run any commands <code>show databases</code>, <code>show tables</code>,
+      <code>select * from.....</code>.</p>
+    <h3 class="checked">Tạo nhiều database MySQL</h3>
+    <p>Tạo file&nbsp;<code>createdb.sql</code> từ file mẫu&nbsp;<code>mysql/docker-entrypoint-initdb.d/createdb.sql.example</code>
+      trong thư mục <code>mysql/docker-entrypoint-initdb.d/*</code> và thêm các
+      câu lệnh SQL như sau:</p>
+    <pre>CREATE DATABASE IF NOT EXISTS `your_db_1` COLLATE 'utf8_general_ci';
+GRANT ALL ON `your_db_1`.* TO 'mysql_user'@'%' ;
+</pre>
+    <h3 class="checked">Đổi cổng MySQL</h3>
+    <p>Mở file <code>mysql/my.cnf</code> để thiết lập cổng của bạn, ví dụ sử dụng
+      cổng&nbsp;<code>1234</code>:</p>
+    <pre><code>[mysqld]
+port=1234
+</code></pre>
+    <p>Nếu bạn muốn truy cập MySQL từ host machine, đừng quên forward cổng&nbsp;<code>"3306:3306"</code>
+     thành <code>"3306:1234"</code> trong file docker-compose.</p>
+    <h3>Use custom Domain (instead of the Docker IP)</h3>
+    <p>Assuming your custom domain is <code>laravel.test</code></p>
+    <p>1 - Open your <code>/etc/hosts</code> file and map your localhost
+      address <code>127.0.0.1</code> to the <code>laravel.test</code> domain,
+      by adding the following:</p>
+    <pre><code>127.0.0.1    laravel.test
+</code></pre>
+    <p>2 - Open your browser and visit <code>{http://laravel.test}</code></p>
+    <p>Optionally you can define the server name in the NGINX configuration
+      file, like this:</p>
+    <pre><code>server_name laravel.test;
+</code></pre>
+    <h3>Enable Global Composer Build Install</h3>
+    <p>Enabling Global Composer Install during the build for the container
+      allows you to get your composer requirements installed and available in
+      the container after the build is done.</p>
+    <p>1 - Open the <code>.env</code> file</p>
+    <p>2 - Search for the <code>WORKSPACE_COMPOSER_GLOBAL_INSTALL</code>
+      argument under the Workspace Container and set it to <code>true</code></p>
+    <p>3 - Now add your dependencies to <code>workspace/composer.json</code></p>
+    <p>4 - Re-build the Workspace Container <code>docker-compose build
+        workspace</code></p>
+    <h3>Install Prestissimo</h3>
+    <p><a href="https://github.com/hirak/prestissimo">Prestissimo</a> is a
+      plugin for composer which enables parallel install functionality.</p>
+    <p>1 - Enable Running Global Composer Install during the Build:</p>
+    <p>Click on this <a href="https://laradock.io/#Enable-Global-Composer-Build-Install">Enable
+        Global Composer Build Install</a> and do steps 1 and 2 only then
+      continue here.</p>
+    <p>2 - Add prestissimo as requirement in Composer:</p>
+    <p>a - Now open the <code>workspace/composer.json</code> file</p>
+    <p>b - Add <code>"hirak/prestissimo": "^0.3"</code> as requirement</p>
+    <p>c - Re-build the Workspace Container <code>docker-compose build
+        workspace</code></p>
+    <h3>Install Node + NVM</h3>
+    <p>To install NVM and NodeJS in the Workspace container</p>
+    <p>1 - Open the <code>.env</code> file</p>
+    <p>2 - Search for the <code>WORKSPACE_INSTALL_NODE</code> argument under
+      the Workspace Container and set it to <code>true</code></p>
+    <p>3 - Re-build the container <code>docker-compose build workspace</code></p>
+    <h3>Install Node + YARN</h3>
+    <p>Yarn is a new package manager for JavaScript. It is so faster than npm,
+      which you can find <a href="http://yarnpkg.com/en/compare">here</a>.To
+      install NodeJS and <a href="https://yarnpkg.com/">Yarn</a> in the
+      Workspace container:</p>
+    <p>1 - Open the <code>.env</code> file</p>
+    <p>2 - Search for the <code>WORKSPACE_INSTALL_NODE</code> and <code>WORKSPACE_INSTALL_YARN</code>
+      argument under the Workspace Container and set it to <code>true</code></p>
+    <p>3 - Re-build the container <code>docker-compose build workspace</code></p>
+    <h3>Install NPM GULP toolkit</h3>
+    <p>To install NPM GULP toolkit in the Workspace container</p>
+    <p>1 - Open the <code>.env</code> file</p>
+    <p>2 - Search for the <code>WORKSPACE_INSTALL_NPM_GULP</code> argument
+      under the Workspace Container and set it to <code>true</code></p>
+    <p>3 - Re-build the container <code>docker-compose build workspace</code></p>
+    <h3>Install NPM BOWER package manager</h3>
+    <p>To install NPM BOWER package manager in the Workspace container</p>
+    <p>1 - Open the <code>.env</code> file</p>
+    <p>2 - Search for the <code>WORKSPACE_INSTALL_NPM_BOWER</code> argument
+      under the Workspace Container and set it to <code>true</code></p>
+    <p>3 - Re-build the container <code>docker-compose build workspace</code></p>
+    <h3>Install NPM VUE CLI</h3>
+    <p>To install NPM VUE CLI in the Workspace container</p>
+    <p>1 - Open the <code>.env</code> file</p>
+    <p>2 - Search for the <code>WORKSPACE_INSTALL_NPM_VUE_CLI</code> argument
+      under the Workspace Container and set it to <code>true</code></p>
+    <p>3 - Re-build the container <code>docker-compose build workspace</code></p>
+    <h3>Install Linuxbrew</h3>
+    <p>Linuxbrew is a package manager for Linux. It is the Linux version of
+      MacOS Homebrew and can be found <a href="http://linuxbrew.sh/">here</a>.
+      To install Linuxbrew in the Workspace container:</p>
+    <p>1 - Open the <code>.env</code> file</p>
+    <p>2 - Search for the <code>WORKSPACE_INSTALL_LINUXBREW</code> argument
+      under the Workspace Container and set it to <code>true</code></p>
+    <p>3 - Re-build the container <code>docker-compose build workspace</code></p>
+    <h3>Common Terminal Aliases</h3>
+    <p>When you start your docker container, Laradock will copy the <code>aliases.sh</code>
+      file located in the <code>laradock/workspace</code> directory and add
+      sourcing to the container <code>~/.bashrc</code> file.</p>
+    <p>You are free to modify the <code>aliases.sh</code> as you see fit,
+      adding your own aliases (or function macros) to suit your requirements.</p>
+    <h3>Install Aerospike extension</h3>
+    <p>1 - First install <code>aerospike</code> in the Workspace and the
+      PHP-FPM Containers: <br>
+      a) open the <code>.env</code> file <br>
+      b) search for the <code>WORKSPACE_INSTALL_AEROSPIKE</code> argument under
+      the Workspace Container <br>
+      c) set it to <code>true</code> <br>
+      d) search for the <code>PHP_FPM_INSTALL_AEROSPIKE</code> argument under
+      the PHP-FPM Container <br>
+      e) set it to <code>true</code> </p>
+    <p>2 - Re-build the containers <code>docker-compose build workspace php-fpm</code></p>
+    <h3>Install Laravel Envoy (Envoy Task Runner)</h3>
+    <p>1 - Open the <code>.env</code> file <br>
+      2 - Search for the <code>WORKSPACE_INSTALL_LARAVEL_ENVOY</code> argument
+      under the Workspace Container <br>
+      3 - Set it to <code>true</code> </p>
+    <p>4 - Re-build the containers <code>docker-compose build workspace</code></p>
+    <p><a href="https://laravel.com/docs/5.3/envoy">Laravel Envoy Documentation
+        Here</a></p>
+    <h3>Install php calendar extension</h3>
+    <p>1 - Open the <code>.env</code> file <br>
+      2 - Search for the <code>PHP_FPM_INSTALL_CALENDAR</code> argument under
+      the PHP-FPM container <br>
+      3 - Set it to <code>true</code> <br>
+      4 - Re-build the containers <code>docker-compose build php-fpm</code> </p>
+    <h3>Install libfaketime in the php-fpm container</h3>
+    <p>Libfaketime allows you to control the date and time that is returned from
+      the operating system. It can be used by specifying a special string in the
+      <code>PHP_FPM_FAKETIME</code> variable in the <code>.env</code> file. For
+      example: <code>PHP_FPM_FAKETIME=-1d</code> will set the clock back 1 day.
+      See (<a href="https://github.com/wolfcw/libfaketime">https://github.com/wolfcw/libfaketime</a>)
+      for more information.</p>
+    <p>1 - Open the <code>.env</code> file <br>
+      2 - Search for the <code>PHP_FPM_INSTALL_FAKETIME</code> argument under
+      the PHP-FPM container <br>
+      3 - Set it to <code>true</code> <br>
+      4 - Search for the <code>PHP_FPM_FAKETIME</code> argument under the
+      PHP-FPM container <br>
+      5 - Set it to the desired string <br>
+      6 - Re-build the containers <code>docker-compose build php-fpm</code></p>
+    <h3>Install YAML PHP extension in the php-fpm container</h3>
+    <p>YAML PHP extension allows you to easily parse and create YAML structured
+      data. I like YAML because it’s well readable for humans. See <a href="http://php.net/manual/en/ref.yaml.php">http://php.net/manual/en/ref.yaml.php</a>
+      and <a href="http://yaml.org/">http://yaml.org/</a> for more info.</p>
+    <p>1 - Open the <code>.env</code> file <br>
+      2 - Search for the <code>PHP_FPM_INSTALL_YAML</code> argument under the
+      PHP-FPM container <br>
+      3 - Set it to <code>true</code> <br>
+      4 - Re-build the container <code>docker-compose build php-fpm</code></p>
+    <h3>PHPStorm Debugging Guide</h3>
+    <p>Remote debug Laravel web and phpunit tests.</p>
+    <p><a href="https://laradock.io/guides/#PHPStorm-Debugging">Debugging Guide
+        Here</a></p>
+    <h3>Keep track of your Laradock changes</h3>
+    <ol>
+      <li>Fork the Laradock repository.</li>
+      <li>Use that fork as a submodule.</li>
+      <li>Commit all your changes to your fork.</li>
+      <li>Pull new stuff from the main repository from time to time.</li>
+    </ol>
+    <h3>Upgrading Laradock</h3>
+    <p>Moving from Docker Toolbox (VirtualBox) to Docker Native (for
+      Mac/Windows). Requires upgrading Laradock from v3.* to v4.*:</p>
+    <ol>
+      <li>Stop the docker VM <code>docker-machine stop {default}</code></li>
+      <li>Install Docker for <a href="https://docs.docker.com/docker-for-mac/">Mac</a>
+        or <a href="https://docs.docker.com/docker-for-windows/">Windows</a>.</li>
+      <li>Upgrade Laradock to <code>v4.*.*</code> (<code>git pull origin master</code>)</li>
+      <li>Use Laradock as you used to do: <code>docker-compose up -d nginx
+          mysql</code>.</li>
+    </ol>
+    <p>Note: If you face any problem with the last step above: rebuild all your
+      containers <code>docker-compose build --no-cache</code> “Warning
+      Containers Data might be lost!”</p>
+    <h3>Improve speed on MacOS</h3>
+    <p>Docker on the Mac <a href="https://github.com/docker/for-mac/issues/77">is
+        slow</a>, at the time of writing. Especially for larger projects, this
+      can be a problem. The problem is <a href="https://forums.docker.com/t/file-access-in-mounted-volumes-extremely-slow-cpu-bound/8076">older
+        than March 2016</a> - as it’s a such a long-running issue, we’re
+      including it in the docs here.</p>
+    <p>So since sharing code into Docker containers with osxfs have very poor
+      performance compared to Linux. Likely there are some workarounds:</p>
+    <h4>Workaround A: using dinghy</h4>
+    <p><a href="https://github.com/codekitchen/dinghy">Dinghy</a> creates its
+      own VM using docker-machine, it will not modify your existing
+      docker-machine VMs.</p>
+    <p>Quick Setup giude, (we recommend you check their docs)</p>
+    <p>1) <code>brew tap codekitchen/dinghy</code></p>
+    <p>2) <code>brew install dinghy</code></p>
+    <p>3) <code>dinghy create --provider virtualbox</code> (must have
+      virtualbox installed, but they support other providers if you prefer)</p>
+    <p>4) after the above command is done it will display some env variables,
+      copy them to the bash profile or zsh or.. (this will instruct docker to
+      use the server running inside the VM)</p>
+    <p>5) <code>docker-compose up ...</code></p>
+    <h4>Workaround B: using d4m-nfs</h4>
+    <p>You can use the d4m-nfs solution in 2 ways, the first is by using the
+      built-in Laradock integration, and the second is using the tool
+      separately. Below is show case of both methods:</p>
+    <h4>B.1: using the built in d4m-nfs integration</h4>
+    <p>In simple terms, docker-sync creates a docker container with a copy of
+      all the application files that can be accessed very quickly from the other
+      containers. On the other hand, docker-sync runs a process on the host
+      machine that continuously tracks and updates files changes from the host
+      to this intermediate container.</p>
+    <p>Out of the box, it comes pre-configured for OS X, but using it on Windows
+      is very easy to set-up by modifying the <code>DOCKER_SYNC_STRATEGY</code>on
+      the <code>.env</code></p>
+    <h5>Usage</h5>
+    <p>Laradock comes with <code>sync.sh</code>, an optional bash script, that
+      automates installing, running and stopping docker-sync. Note that to run
+      the bash script you may need to change the permissions <code>chmod 755
+        sync.sh</code></p>
+    <p>1) Configure your Laradock environment as you would normally do and test
+      your application to make sure that your sites are running correctly.</p>
+    <p>2) Make sure to set <code>DOCKER_SYNC_STRATEGY</code> on the <code>.env</code>.
+      Read the <a href="https://github.com/EugenMayer/docker-sync/wiki/8.-Strategies">syncing
+        strategies</a> for details.</p>
+    <pre><code># osx: 'native_osx' (default)
+# windows: 'unison'
+# linux: docker-sync not required
+
+DOCKER_SYNC_STRATEGY=native_osx
+</code></pre>
+    <p>3) set <code>APP_CODE_PATH_CONTAINER=/var/www</code> to <code>APP_CODE_PATH_CONTAINER=/var/www:nocopy</code>
+      in the .env file</p>
+    <p>4) Install the docker-sync gem on the host-machine:</p>
+    <pre><code>./sync.sh install
+</code></pre>
+    <p>5) Start docker-sync and the Laradock environment. Specify the services
+      you want to run, as you would normally do with <code>docker-compose up</code></p>
+    <pre><code>./sync.sh up nginx mysql
+</code></pre>
+    <p>Please note that the first time docker-sync runs, it will copy all the
+      files to the intermediate container and that may take a very long time
+      (15min+). 6) To stop the environment and docker-sync do:</p>
+    <pre><code>./sync.sh down
+</code></pre>
+    <h5>Setting up Aliases (optional)</h5>
+    <p>You may create bash profile aliases to avoid having to remember and type
+      these commands for everyday development. Add the following lines to your <code>~/.bash_profile</code>:</p>
+    <pre><code>alias devup="cd /PATH_TO_LARADOCK/laradock; ./sync.sh up nginx mysql" #add your services
+alias devbash="cd /PATH_TO_LARADOCK/laradock; ./sync.sh bash"
+alias devdown="cd /PATH_TO_LARADOCK/laradock; ./sync.sh down"
+</code></pre>
+    <p>Now from any location on your machine, you can simply run <code>devup</code>,
+      <code>devbash</code> and <code>devdown</code>.</p>
+    <h5>Additional Commands</h5>
+    <p>Opening bash on the workspace container (to run artisan for example):</p>
+    <pre><code> ./sync.sh bash
+</code></pre>
+    <p>Manually triggering the synchronization of the files:</p>
+    <pre><code>./sync.sh sync
+</code></pre>
+    <p>Removing and cleaning up the files and the docker-sync container. Use
+      only if you want to rebuild or remove docker-sync completely. The files on
+      the host will be kept untouched.</p>
+    <pre><code>./sync.sh clean
+</code></pre>
+    <h5>Additional Notes</h5>
+    <ul>
+      <li>You may run laradock with or without docker-sync at any time using
+        with the same <code>.env</code> and <code>docker-compose.yml</code>,
+        because the configuration is overridden automatically when docker-sync
+        is used.</li>
+      <li>You may inspect the <code>sync.sh</code> script to learn each of the
+        commands and even add custom ones.</li>
+      <li>If a container cannot access the files on docker-sync, you may need to
+        set a user on the Dockerfile of that container with an id of 1000 (this
+        is the UID that nginx and php-fpm have configured on laradock).
+        Alternatively, you may change the permissions to 777, but this is
+        notrecommended.</li>
+    </ul>
+    <p>Visit the <a href="https://github.com/EugenMayer/docker-sync/wiki">docker-sync
+        documentation</a> for more details.</p>
+    <h4>B.2: using the d4m-nfs tool</h4>
+    <p><a href="https://github.com/IFSight/d4m-nfs">D4m-nfs</a> automatically
+      mount NFS volume instead of osxfs one.</p>
+    <p>1) Update the Docker [File Sharing] preferences:</p>
+    <p>Click on the Docker Icon &gt; Preferences &gt; (remove everything form
+      the list except <code>/tmp</code>).</p>
+    <p>2) Restart Docker.</p>
+    <p>3) Clone the <a href="https://github.com/IFSight/d4m-nfs">d4m-nfs</a>
+      repository to your <code>home</code> directory.</p>
+    <pre><code>git clone https://github.com/IFSight/d4m-nfs ~/d4m-nfs
+</code></pre>
+    <p>4) Create (or edit) the file <code>~/d4m-nfs/etc/d4m-nfs-mounts.txt</code>,
+      and write the following configuration in it:</p>
+    <pre><code>/Users:/Users
+</code></pre>
+    <p>5) Create (or edit) the file <code>/etc/exports</code>, make sure it
+      exists and is empty. (There may be collisions if you come from Vagrant or
+      if you already executed the <code>d4m-nfs.sh</code> script before).</p>
+    <p>6) Run the <code>d4m-nfs.sh</code> script (might need Sudo):</p>
+    <pre><code>~/d4m-nfs/d4m-nfs.sh
+</code></pre>
+    <p>That’s it! Run your containers.. Example:</p>
+    <pre><code>docker-compose up ...
+</code></pre>
+    <p>Note: If you faced any errors, try restarting Docker, and make sure you
+      have no spaces in the <code>d4m-nfs-mounts.txt</code> file, and your <code>/etc/exports</code>
+      file is clear.</p>
+    <h2></h2>
+    <code>
+    </code>
+    <p></p>
+    <script src="accordion.js"></script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+// change $url value below to any image of any aspect ratio
+$url: '../images/bg_sq_halloween_0.jpg';
+$w: 85vmin;
+$h: 65vmin;
+$f: .25;
+
+html { overflow: hidden; background: #333 }
+
+body {
+	margin: 0;
+	height: 100vh;
+	perspective: 125vmin;
+	filter: drop-shadow(-1vmin 1vmin 1vmin #000);
+}
+
+div {
+	position: absolute; 
+	transform-style: preserve-3d
+}
+
+.assembly {
+    top: 50%;
+    left: calc(50% - .5*var(--dx)*#{$w});
+	transform: rotatey(35deg);
+}
+
+.panel {
+	--mid: calc((var(--p) + var(--k)*#{$f})*#{$w});
+	transform: translate3d(calc(var(--dx)*#{$w}), 0, calc(var(--dz)*#{$w}));
+	
+	&:before, &:after {
+		position: absolute;
+		margin: -.5*$h (-.5*$w);
+		width: $w; height: $h;
+		background: url($url) 50%/ cover;
+		content: ''
+	}
+	
+	&:before {
+		transform-origin: var(--mid);
+		transform: rotatey(-90deg);
+		clip-path: inset(0 calc(100% - var(--mid)) 0 calc(var(--p)*100%));
+		filter: brightness(.4)
+	}
+	
+	&:after {
+		clip-path: inset(0 calc(100% - (var(--p) + var(--k))*#{$w}) 0 var(--mid))
+	}
+}

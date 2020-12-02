@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="description" content="CSS Grid"/>
+	<meta name="keywords" content="css, grid, ratio, gallery"/>
+	<meta name="author" content="lockex1987"/>
+	
+	<title>CSS Grid</title>
+
+	<link rel="icon" href="../../images/favicon.png"/>
+	<link rel="stylesheet" href="../../css/style.css"/>
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        .main { max-width: 1000px; margin: 30px auto; }
+
+        .fix-ratio-wrapper { position: relative; overflow: hidden; width: 100%; }
+        .hrect { padding-bottom: 50%; }
+        .square { padding-bottom: 100%; }
+        .fix-ratio-content { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .flex { display: flex; justify-content: space-between; }
+        .flex-column { display: flex; flex-direction: column; justify-content: space-between; }
+        .half { flex-basis: calc(50% - 1px); }
+        
+        .s1 { background-color: #ffdd57; color: #000; }
+        .s2 { background-color: #00d1b2; color: #fff; }
+        .s3 { background-color: #209cee; color: #fff; }
+        .s4 { background-color: #ff3860; color: #fff; }
+
+        .text span { font-size: 32px; }
+        .text img { display: none; }
+        .text .item { display: flex; justify-content: center; align-items: center; }
+        .text .item .fix-ratio-wrapper { display: none; }
+
+        .images span { display: none; }
+        .images img { display: block; }
+
+        .demo0 { padding-bottom: calc(50% - 1px); }
+        
+        img { cursor: pointer; transition: all 0.2s linear; }
+        img:hover { /*transform: scale(1.02); opacity: 0.8; */ }
+    </style>
+
+<style>
+.container { display: grid; }      
+      .item { font-size: 30px; color: #fff; display: flex; justify-content: center; align-items: center; }
+
+.item1 { background-color: #fd8471; }
+.item2 { background-color: #68e972; }
+.item3 { background-color: #64e0d5; }
+.item4 { background-color: #67a1eb; }
+.item5 { background-color: #7267ea; }
+.item6 { background-color: #cc67eb; }
+
+.demo-01 {
+  grid-template-columns: auto auto auto;
+  grid-template-rows: 100px 100px;
+  
+  grid-column-gap: 50px;
+  grid-row-gap: 25px;
+  grid-gap: 15px 20px;
+  grid-gap: 10px;
+}
+.demo-02 {
+  grid-template-columns: auto auto auto;
+  grid-template-rows: 100px 100px 100px;
+}
+.demo-02 .item1 { grid-column-start: 1; grid-column-end: 3; }
+.demo-02 .item3 { grid-row: 2 / 4; }
+.demo-02 .item4 { /*grid-column: 2 / span 2;*/ grid-column: 2 / 4; }
+      
+      
+      .demo-03 {
+  display: grid;
+  grid-template-areas:
+    'header header header header header header'
+    'menu main main main right right'
+    'menu footer footer footer footer footer';
+}
+      
+.demo-03 .item { padding:20px; }
+.demo-03 .item1 { grid-area: header; }
+.demo-03 .item2 { grid-area: menu; }
+.demo-03 .item3 { grid-area: main; }
+.demo-03 .item4 { grid-area: right; }
+.demo-03 .item5 { grid-area: footer; }
+      
+      .wrapper { position: relative; height: 0; width: 100%; padding-bottom: 50%; }
+.demo-04 { position: absolute; width: 100%; height: 100%; grid-gap: 1px; padding: 0px; grid-template-columns: auto auto auto auto; }
+
+.demo-04 .item1 { grid-area: 1 / 1 / span 2 / span 2; }
+.demo-04 .item2 { grid-area: 1 / 3 / 1 / span 2; }
+      .demo-04 img { width: 100%; height: 100%; object-fit: cover; }
+    </style>
+</head>
+<body>
+	<article>
+		<h2>CSS Grid</h2>
+
+<div class="main images"> <!-- text or images -->
+    <div class="fix-ratio-wrapper hrect container demo0">
+        <div class="fix-ratio-content flex">
+            <div class="half s1 item">
+                <span>1</span>
+                <div class="fix-ratio-wrapper square">
+                    <img src="images/brazil.jpg" class="fix-ratio-content"/>
+                </div>
+            </div>
+            <div class="half flex-column">
+                <div class="half s2 item">
+                    <span>2</span>
+                    <div class="fix-ratio-wrapper hrect">
+                        <img src="images/colombia.jpg" class="fix-ratio-content"/>
+                    </div>
+                </div>
+                <div class="half flex">
+                    <div class="half s3 item">
+                        <span>3</span>
+                        <div class="fix-ratio-wrapper square">
+                            <img src="images/argentina.jpg" class="fix-ratio-content"/>
+                        </div>
+                    </div>
+                    <div class="half s4 item">
+                        <span>4</span>
+                        <div class="fix-ratio-wrapper square">
+                            <img src="images/belgium.jpg" class="fix-ratio-content"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <p>CSS Grid</p>
+    <p>Layout của trang nên làm bằng grid.</p>
+    <p>Layout dạng lưới (grid) là một phần gần như không thể thiếu trong bất cứ
+      website nào. Trước đây, để phát triển grid trong CSS, chúng ta thường sử
+      dụng một số cách như sau:</p>
+    <ul>
+      <li>Dùng table hoặc float layout. Hai cách này giúp giải quyết ổn thỏa vấn
+        đề, nhưng khi viết code có đôi chút không tự nhiên, dẫn đến khó bảo trì
+        mã nguồn.</li>
+      <li>Dùng flexbox. Hạn chế của cách này là thiết kế cho lưới một chiều (chỉ
+        có một dòng duy nhất).</li>
+    </ul>
+    <p>May mắn thay, cuối cùng thì CSS Grid đã xuất hiện - là một giải pháp mạnh
+      mẽ, giúp việc xây dựng grid trở nên dễ dàng hơn bao giờ hết. CSS Grid cũng
+      được hỗ trợ bởi hầu hết các trình duyệt phổ biến hiện nay, như Apple
+      Safari, Google Chrome, Mozilla Firefox hay Microsoft Edge.</p>
+    <p>Cơ bản:</p>
+    <div class="container demo-01">
+      <div class="item item1">1</div>
+      <div class="item item2">2</div>
+      <div class="item item3">3</div>
+      <div class="item item4">4</div>
+      <div class="item item5">5</div>
+      <div class="item item6">6</div>
+    </div>
+    <p>Ô chiếm nhiều hàng (cột)</p>
+    <div class="container demo-02">
+      <div class="item item1">1</div>
+      <div class="item item2">2</div>
+      <div class="item item3">3</div>
+      <div class="item item4">4</div>
+      <div class="item item5">5</div>
+      <div class="item item6">6</div>
+    </div>
+    <p>Area</p>
+    <div class="container demo-03">
+      <div class="item item1">Header</div>
+      <div class="item item2">Left Side</div>
+      <div class="item item3">Main</div>
+      <div class="item item4">Right side</div>
+      <div class="item item5">Footer</div>
+    </div>
+    <p>Image grid</p>
+    <div class="wrapper">
+	<div class="container demo-04">
+		<div class="item item1"><img src="images/brazil.jpg"></div>
+		<div class="item item2"><img src="images/colombia.jpg"></div>
+		<div class="item item3"><img src="images/argentina.jpg"></div>  
+		<div class="item item4"><img src="images/belgium.jpg"></div>
+	</div>
+</div>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p>Grid container</p>
+    <p>display: grid;</p>
+    <p>grid-template-columns: auto auto auto;</p>
+    <p>grid-template-rows: 50px 50px;</p>
+    <p>grid-gap: 10px;</p>
+    <p>grid-column-gap: 10px;</p>
+    <p>grid-row-gap: 25px;</p>
+    <p><br>
+    </p>
+    <p>Grid Item</p>
+    <p>grid-column-start: 1;</p>
+    <p>grid-column-end: 3;</p>
+    <p>grid-column: 1 / 3;</p>
+    <p>grid-row: 1 / 3;</p>
+    <p><br>
+    </p>
+    <p>Thuộc tính grid-area</p>
+    <p>Thuộc tính grid-area có thể được dùng thay cho các thuộc tính
+      grid-row-start, grid-column-start, grid-row-end, và grid-column-end.</p>
+    <p>grid-area: 1 / 2 / 5 / 7;</p>
+    <p>item5 sẽ bắt đầu ở row-line 1 và column-line 2, và kết thúc ở row-line 5
+      và column-line 7. Kết quả: </p>
+    <p>Chúng ta có thể gán tên cho từng item với thuộc tính grid-area.</p>
+    <p><br>
+    </p>
+    <p>https://www.w3schools.com/css/css_grid.asp<br>
+    </p>
+    <p>https://ehkoo.com/bai-viet/can-ban-css-grid-phan-1</p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+
+	</article>
+
+	<script src="../../js/docs.js"></script>
+</body>
+</html>
+

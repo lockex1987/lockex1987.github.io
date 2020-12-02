@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <meta charset="utf-8">
+     <title>Massive inline editing</title>
+     <script src="../lib/ckeditor/ckeditor.js"></script>
+     <script>        
+        // Sự kiện "instanceCreated" sẽ được ném ra (fired) mỗi khi đối tượng CKEditor được tạo.
+        CKEDITOR.on('instanceCreated', function(event) {
+            var editor = event.editor,
+                element = editor.element;
+        
+            
+            // Nếu các element h1, h2, hoặc h3 hoặc có id = 'taglist' (Và contenteditable="true")
+            // CKEditor hiển thị sẽ không có các tính năng (smileys, templates, iframes ....)
+            if (element.is( 'h1', 'h2', 'h3' ) || element.getAttribute('id') == 'taglist') {
+               // Tùy chỉnh các cấu hình trình soạn thảo theo sự kiện "configLoaded",
+               // đó là sự kiện được ném ra (fire) sau khi file cấu hình tải lên và
+               // thực thi. Điều này làm cho nó có thể thay đổi
+               // cấu hình trước khi Editor khởi tạo vị trí hiển thị.
+                editor.on( 'configLoaded', function() {
+                    // Loại bỏ các plugin không cần thiết để Editor đơn giản hơn.
+                    editor.config.removePlugins = 'colorbutton,find,flash,font,' +
+                        'forms,iframe,image,newpage,removeformat,' +
+                        'smiley,specialchar,stylescombo,templates';
+        
+                    // Sắp xếp lại thứ tự các Item trên toolbar.
+                    editor.config.toolbarGroups = [
+                        { name: 'editing', groups: [ 'basicstyles', 'links' ] },
+                        { name: 'undo' },
+                        { name: 'clipboard', groups: [ 'selection', 'clipboard' ] },
+                        { name: 'about' }
+                    ];
+                });
+            }
+        });
+        
+     </script>
+  </head>
+  <body>
+     <h1>Massive inline editing</h1>
+     <p>
+    Ví dụ này thể hiện những tính năng chỉnh sửa nội tuyến (inline editing) - đối tượng CKEditor sẽ được tạo ra tự động từ các element với thuộc tính contenteditable = 'true'.
+    Bạn có thể sửa đổi nội dung bên trong các thẻ có thuộc tính contenteditable='true'
+</p>
+<p>
+    Nếu h1, h2, h3 hoặc thẻ có  id = taglist, và có contenteditable  = 'true', thì thanh công cụ đơn giản sẽ hiển thị (Đã loại bỏ các plugin  colorbutton, find, flash, fonts,... )
+    Ngược lại thanh công cụ sẽ hiển thị mặc định.
+</p>
+      
+     <div id="container" style="border: 1px solid blue;width: 700px; display:inline-block;padding:5px;">
+      
+          <h1 contenteditable="true" style="border:1px solid green;">
+              H1 With contenteditable='true'
+          </h1>
+          
+          <div contenteditable="true" style="border: 1px solid red; float: left;width: 300px;">
+             div with contenteditable='true'
+             <h1>H1 H1 H1</h1>
+             <h2>H2 H2</h2>
+             <h3>H3 H3</h3>              
+          </div>
+          
+          <div contenteditable="true" style="border: 1px solid red; float: right;width: 350px;">
+             div with contenteditable='true' <br><br>
+             Hello <b>CKEditor</b> ...            
+          </div>
+      </div>
+  </body>
+</html>

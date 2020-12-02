@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Reset mật khẩu với Laravel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta name="description" content="Thực hiện chức năng quên mật khẩu trong Laravel">
+  </head>
+  <body>
+    <article>
+      <h2>Reset mật khẩu với Laravel</h2>
+      <p>Hầu hết các ứng dụng web đều cung cấp cách khôi phục mật khẩu khi người
+        dùng quên. Thay vì bắt bạn thực hiện tích hợp nó cho mỗi ứng dụng,
+        Laravel cung cấp phương thức khá tiện về việc nhắc nhở mật khẩu và thực
+        hiện khôi phục mật khẩu.</p>
+      <h3>Những chú ý trước khi bắt đầu</h3>
+      <p>Sử dụng lệnh <code>php artisan make:auth</code> để tạo cơ chế xác thực
+        cơ bản.</p>
+      <pre>php artisan make:auth</pre>
+      <p>Trước khi sử dụng tính năng khôi phục mật khẩu của Laravel, người dùng
+        của bạn phải sử dụng <code>Illuminate\Notifications\Notifiable</code>
+        trait.</p>
+      <p>Để bắt đầu, hãy chắc chắn model <code>App\User</code> model tích hợp <code>Illuminate\Contracts\Auth\CanResetPassword</code>.
+        Tất nhiên, model <code>App\User</code> được thêm bởi framework đẽ được
+        tích hợp interface này, và sử dụng <code>Illuminate\Auth\Passwords\CanResetPassword</code>
+        trait để thêm vào phương thức cần thiết để thực hiện interface.</p>
+      <p>Tiếp theo, một bảng cần được tạo ra để lưu reset token của mật khẩu.
+        File migration cho bảng này đã được thêm vào bởi framework, nó nằm trong
+        thư mục <code>database/migrations</code>. Vì vậy, tất cả bạn cần làm là
+        chạy lệnh sau để migration database:</p>
+      <pre>php artisan migrate</pre>
+      <h3>Routing</h3>
+      <p>Laravel gồm class <code>Auth\ForgotPasswordController</code> và class
+        <code>Auth\ResetPasswordController</code> chứa những logic cần thiết để
+        gửi link password reset vào e-mail cho việc khôi phục mật khẩu. Tất cả
+        route cần làm việc đó được tạo ra bằng lệnh <code>make:auth</code> của
+        Artisan.</p>
+      <p>Tương ứng chúng ta cũng có 2 controller sau ở
+        app/Http/Controllers/Auth: </p>
+      <ul>
+        <li>ForgotPasswordController</li>
+        <li>ResetPasswordController</li>
+      </ul>
+      <p>Link đến form là:</p>
+      <ul>
+        <li>http://voice-landing-frontend.cttd.tk/password/reset</li>
+        <li>
+http://voice-landing-frontend.cttd.tk/password/reset/_token_</li>
+      </ul>
+      <p>Form nhập email:</p>
+      <img alt="" src="images/send%20reset%20password%20email%20form.png">
+      <p>Form nhập password mới:</p>
+      <p>TODO</p>
+      <h3>Views</h3>
+      <p>Một lần nữa, Laravel sẽ tạo ra tất cả những view cần thiết cho việc
+        khôi phục mật khẩu khi lệnh <code>make:auth</code> được thực thi. Những
+        view này được lưu tại thư mục <code>resources/views/auth/passwords</code>.
+        Bạn có thể tự do tùy biến nó trong ứng dụng của bạn.</p>
+      <p>Chúng ta có 2 view ở thư mục resources/views/auth/password là: </p>
+      <ul>
+        <li>emai.blade.php</li>
+        <li> reset.blade.php</li>
+      </ul>
+      <h3>Sau khi khôi phục mật khẩu</h3>
+      <p>Khi route và view được định nghĩa để khôi phục mật khẩu người dùng, bạn
+        có thể truy cập route bằng trình duyệt tại địa chỉ <code>/password/reset</code>.
+        Controller <code>ForgotPasswordController</code> được thêm bởi
+        framework đã chứa logic để gửi password reset vào mail, trong khi <code>ResetPasswordController</code>
+        chứa logic để khôi phục lại mật khẩu của người dùng.</p>
+      <p>Sau khi khôi phục mật khẩu, người dùng sẽ tự động đăng nhập và chuyển
+        đến trang <code>/home</code>. Bạn có thể tùy biến nó và chuyển đến
+        trang khác bằng thuộc tính <code>redirectTo</code> trong <code>ResetPasswordController</code>:</p>
+      <pre>protected $redirectTo = '/dashboard';</pre>
+      <p>Mặc định, password reset tokens sẽ hết hạn trong vòng 1 giờ. Bạn có thể
+        thay đổi hạn password reset <code>expire</code> trong file <code>config/auth.php</code>.</p>
+      <h3>Tùy biến</h3>
+      <h4>Tùy biến authentication guard</h4>
+      <p>Trong file <code>auth.php</code>, bạn có thể cấu hình nhiều "guards",
+        nó để sử dụng để định nghĩa xác thực nhiều bảng người dùng. Bạn có thể
+        tùy biến bao gồm <code>ResetPasswordController</code> sử dụng guard bạn
+        chọn ghi đè phương thức <code>guard</code> trong controller. Phương
+        thức trả về một thể hiện guard:</p>
+      <pre>use Illuminate\Support\Facades\Auth;
+
+protected function guard()
+{
+    return Auth::guard('guard-name');
+}</pre>
+      <h4>Tùy biến password Broker</h4>
+      <p>Trong file <code>auth.php</code>, bạn có thể cấu hình nhiều "brokers",
+        nó để sử dụng để khôi phục mật khẩu nhiều bảng người dùng. Bạn có thể
+        tùy biến bao gồm <code>ForgotPasswordController</code> và <code>ResetPasswordController</code>
+        sử dụng broker bạn chọn ghi đè phương thức <code>broker</code>:</p>
+      <pre>use Illuminate\Support\Facades\Password;
+
+/**
+ * Get the broker to be used during password reset.
+ *
+ * @return  PasswordBroker
+ */
+protected function broker()
+{
+    return Password::broker('name');
+}</pre>
+      <h4>Tùy biến Reset Email</h4>
+      <p>Nội dung email mẫu là:</p>
+      <img alt="" src="images/reset%20password%20email.png">
+      <p>Bạn có thể dễ dàng sửa thông báo gửi link password reset cho người
+        dùng. Để bắt đầu, ghi đè phương thức <code>sendPasswordResetNotification</code>
+        trong model <code>User</code>. Trong phương thức này, bạn có thể gửi
+        thông báo cho bất cứ lớp thông báo nào bạn thích. <code>$token</code>
+        là tham số thứ nhất của phương thức:</p>
+      <pre>/**
+ * Send the password reset notification.
+ *
+ * @param    string  $token
+ * @return  void
+ */
+public function sendPasswordResetNotification($token)
+{
+    $this-&gt;notify(new ResetPasswordNotification($token));
+}</pre>
+      <h3>Tham khảo</h3>
+      <p><a href="https://laravel.com/docs/5.8/passwords">https://laravel.com/docs/5.8/passwords</a></p>
+      <p>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</p>
+      <p>Sau một hồi tìm kiếm, tôi tìm thấy hàm gửi mail <code>Illuminate\Auth\Notifications\ResetPassword</code>
+        như sau:</p>
+      <pre>public function toMail($notifiable) {
+    if (static::$toMailCallback) {
+        return call_user_func(static::$toMailCallback, $notifiable, $this-&gt;token);
+    }
+
+    return (new MailMessage)
+        -&gt;subject(Lang::getFromJson('Reset Password Notification'))
+        -&gt;line(Lang::getFromJson('You are receiving this email because we received a password reset request for your account.'))
+        -&gt;action(Lang::getFromJson('Reset Password'), url(config('app.url').route('password.reset', $this-&gt;token, false)))
+        -&gt;line(Lang::getFromJson('If you did not request a password reset, no further action is required.'));
+}</pre>
+      <p>Nó sẽ lấy nội dung từ file email.blade.php ở thư mục
+        \vendor\laravel\framework\src\Illuminate\Notifications\resources\views.</p>
+      <p>Như vậy, để thay đổi tiếng Việt, chúng ta phải thêm 1 file JSON vi.json
+        ở resources/lang:</p>
+      <pre>{
+    "Reset Password Notification": "Thông báo thiết lập lại mật khẩu",
+    "You are receiving this email because we received a password reset request for your account.": "Bạn nhận được email này bởi vì chúng tôi nhận được một yêu cầu thiết lập lại mật khẩu cho tài khoản của bạn.",
+    "Reset Password": "Thiết lập lại mật khẩu",
+    "If you did not request a password reset, no further action is required.": "Nếu bạn không yêu cầu thiết lập lại mật khẩu thì không cần làm gì thêm.",
+    "If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\ninto your web browser: [:actionURL](:actionURL)": "Nếu bạn có khó khăn với việc click nút \":actionText\", copy và paste URL sau vào trình duyệt của bạn: [:actionURL](:actionURL)",
+    "Hello!": "Xin chào!",
+    "Regards": "Trân trọng"
+}</pre>
+      <p>Bạn phải cấu hình APP_URL ở file .env.</p>
+      <p>Publish vendor:</p>
+      <img alt="" src="images/publish%20vendor.png">
+      <p>Để thay đổi độ dài của token, có thể sửa file
+        Illuminate\Auth\Passwords\DatabaseTokenRepository như sau:</p>
+      <pre>/**
+ * Create a new token for the user.
+ *
+ * @return string
+ */
+public function createNewToken()
+{
+    // Độ dài token đang là 64, chuyển về 6
+    $oldToken = hash_hmac('sha256', Str::random(40), $this-&gt;hashKey);
+    return substr($oldToken, 0, 6);
+}</pre>
+      <p><br>
+      </p>
+    </article>
+
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

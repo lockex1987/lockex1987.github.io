@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Spritz Speed Reading V2</title>
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+  <style>
+    /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+    @charset "UTF-8";
+
+    .spritz {
+      position: relative;
+      max-width: 30rem;
+      padding: 1rem 0 1.2rem;
+      border-top: 2px solid #000;
+      border-bottom: 2px solid #000;
+      margin: 10rem auto;
+      font-size: 1em;
+    }
+
+    .spritz:before,
+    .spritz:after {
+      content: "";
+      position: absolute;
+      left: 40%;
+      height: 0.8rem;
+      width: 2px;
+      margin-left: -1px;
+      background-color: #000;
+    }
+
+    .night .spritz {
+      border-color: #555;
+    }
+
+    .night .spritz:before,
+    .night .spritz:after {
+      background-color: #555;
+    }
+
+    .spritz:before {
+      top: 0;
+    }
+
+    .spritz:after {
+      bottom: 0;
+    }
+
+    .spritz-word {
+      font-size: 1.6em;
+      line-height: 1.6em;
+      height: 1.7em;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .night .spritz-word {
+      color: #bbb;
+    }
+
+    .spritz-word div {
+      display: table-cell;
+    }
+
+    .spritz-word div:first-child {
+      width: 40%;
+      text-align: right;
+    }
+
+    .spritz-word div:nth-child(2) {
+      color: #e60000;
+    }
+
+    .night .spritz-word div:nth-child(2) {
+      color: #ff4d4d;
+    }
+
+    .spritz-word div:last-child {
+      width: 60%;
+      text-align: left;
+    }
+
+    .controls {
+      text-align: center;
+    }
+
+    .controls:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    .controls a {
+      display: inline-block;
+      vertical-align: bottom;
+      color: #aaa;
+      text-decoration: none;
+      transition: color 150ms linear;
+    }
+
+    .controls a:hover,
+    .controls a.active {
+      color: #777;
+    }
+
+    .night .controls a {
+      color: #444;
+    }
+
+    .night .controls a:hover,
+    .night .controls a.active {
+      color: #999;
+    }
+
+    .settings input,
+    .settings textarea,
+    .settings button {
+      box-sizing: border-box;
+      border: 0;
+      color: #000;
+      background: transparent;
+    }
+
+    .night .settings input,
+    .night .settings textarea,
+    .night .settings button {
+      color: #888;
+    }
+
+    .settings input:focus,
+    .settings textarea:focus,
+    .settings button:focus {
+      outline: none;
+    }
+
+    .settings-controls {
+      max-width: 30rem;
+      margin: 0 auto;
+    }
+
+    .settings-controls .speed {
+      float: left;
+    }
+
+    .settings-controls .interaction {
+      float: right;
+    }
+
+    .settings-controls a {
+      font-size: 3rem;
+      line-height: 4rem;
+    }
+
+    .settings-controls .save {
+      transition: opacity 0.2s linear;
+      opacity: 0;
+      font-size: 2.5rem;
+    }
+
+    .paused .settings-controls .save {
+      opacity: 1;
+    }
+
+    .autosave .settings-controls .save {
+      opacity: 0;
+    }
+
+    .settings-controls .save.active {
+      opacity: 0.4 !important;
+    }
+
+    .settings-controls .pause {
+      margin: 0;
+      width: 4rem;
+      text-align: center;
+      font-size: 4rem;
+    }
+
+    .paused .settings-controls .pause:before {
+      content: "";
+      position: relative;
+      margin-left: -0.4rem;
+    }
+
+    .wpm {
+      position: relative;
+      display: inline-block;
+      width: 7rem;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      font-weight: 600;
+      font-size: 2rem;
+      line-height: 4rem;
+      vertical-align: top;
+    }
+
+    .wpm::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+
+    .extra-controls {
+      margin: 5rem auto 0;
+    }
+
+    .extra-controls .toggle {
+      font-size: 2rem;
+      padding: 1rem 2rem;
+    }
+
+    .extra-controls .togglable {
+      display: none;
+    }
+
+    .extra-controls .zoom {
+      font-size: 2rem;
+    }
+
+    .extra-controls .zoom * {
+      display: inline-block;
+      padding: 0.6rem;
+    }
+
+    .extra-controls .autosave .checkbox {
+      display: none;
+    }
+
+    .extra-controls .autosave .checkbox:checked+.checkbox-label:before {
+      content: "";
+    }
+
+    .extra-controls .autosave .checkbox-label {
+      user-select: none;
+      cursor: pointer;
+    }
+
+    .extra-controls .autosave .checkbox-label:before {
+      position: relative;
+      display: inline-block;
+      margin-right: 1rem;
+      width: 1.4rem;
+      vertical-align: top;
+      overflow: visible;
+      font-size: 1.8rem;
+    }
+
+    .words {
+      max-width: 30rem;
+      margin: 0 auto;
+      position: relative;
+      transition: max-width 0.2s linear;
+    }
+
+    .fullscreen .words {
+      max-width: 60rem;
+    }
+
+    .fullscreen .words .demo-words {
+      height: 30rem;
+    }
+
+    .words .demo-words {
+      width: 100%;
+      height: 5em;
+      transition: height 0.2s linear;
+      padding: 1rem 1.5rem;
+      background-color: #eee;
+    }
+
+    .words .demo-words::-webkit-scrollbar {
+      width: 0.8rem;
+    }
+
+    .words .demo-words::-webkit-scrollbar-thumb {
+      background: #d5d5d5;
+    }
+
+    .night .words .demo-words {
+      background-color: #191919;
+    }
+
+    .night .words .demo-words::-webkit-scrollbar-thumb {
+      background: #2d2d2d;
+    }
+
+    .night .words .demo-words::-webkit-resizer {
+      background: #141414;
+    }
+
+    .progress-bar {
+      height: 2px;
+      width: 0;
+      background: red;
+      opacity: 0.4;
+    }
+
+    .words-controls {
+      margin: 0 0 2rem;
+    }
+
+    .words-controls a {
+      margin: 0 0.6rem;
+      font-size: 2rem;
+      line-height: 2rem;
+    }
+
+    .words-controls .refresh {
+      font-size: 2.6rem;
+    }
+
+    .fullscreen .words-controls .expand:before {
+      content: "";
+    }
+
+    .light {
+      position: absolute;
+      top: 2rem;
+      left: 3rem;
+      font-size: 3rem;
+      font-family: "Spritz", sans-serif;
+      text-decoration: none;
+    }
+
+    .light:after {
+      content: "";
+      color: #aaa;
+    }
+
+    .night .light:after {
+      content: "";
+      color: #444;
+    }
+
+    #alert {
+      position: absolute;
+      top: 0;
+      padding: 2rem;
+      box-sizing: border-box;
+      width: 100%;
+      text-align: center;
+      left: 0;
+      pointer-events: none;
+    }
+
+    html {
+      font-size: 10px;
+    }
+
+    body {
+      background: #ddd;
+      color: #000;
+      transition: background 0.1s linear;
+      margin: 3rem;
+    }
+
+    .night body {
+      background: #000;
+      color: #888;
+    }
+
+    body,
+    input,
+    textarea,
+    button {
+      font-size: 1.4rem;
+      font-family: Open Sans, sans-serif;
+    }
+
+    ::selection {
+      background: #aaa;
+      color: #eee;
+    }
+
+    .night ::selection {
+      background: #444;
+      color: #191919;
+    }
+
+    @font-face {
+      font-family: "Spritz";
+      src: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2361/spritz.eot?ziiuop");
+      src: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2361/spritz.eot?#iefixziiuop") format("embedded-opentype"), url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2361/spritz.woff?ziiuop") format("woff"), url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2361/spritz.ttf?ziiuop") format("truetype"), url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2361/spritz.svg?ziiuop#spritz") format("svg");
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    [class*="entypo-"]:before {
+      font-family: "Spritz", sans-serif;
+    }
+
+    .entypo-fast-backward:before {
+      content: "";
+    }
+
+    .entypo-fast-forward:before {
+      content: "";
+    }
+
+    .entypo-save:before {
+      content: "";
+    }
+
+    .entypo-left-open:before {
+      content: "";
+    }
+
+    .entypo-pause:before {
+      content: "";
+    }
+
+    .entypo-right-open:before {
+      content: "";
+    }
+
+    .entypo-dot-3:before {
+      content: "";
+    }
+
+    .entypo-minus:before {
+      content: "";
+    }
+
+    .entypo-search:before {
+      content: "";
+    }
+
+    .entypo-plus:before {
+      content: "";
+    }
+
+    .entypo-cancel:before {
+      content: "";
+    }
+
+    .entypo-doc-text:before {
+      content: "";
+    }
+
+    .entypo-cycle:before {
+      content: "";
+    }
+
+    .entypo-resize-full:before {
+      content: "";
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+  <link rel="icon" href="../../images/favicon.png">
+  <!--link rel="stylesheet" href="../../css/style.css">-->
+  <meta name="description" content="Spritz Speed Reading V2">
+</head>
+
+<body>
+
+  <div class="spritz" id="spritz">
+    <div class="spritz-word" id="spritz_word"></div>
+  </div>
+  <div class="settings">
+    <div class="controls settings-controls">
+      <span class="speed"><a class="slower entypo-fast-backward" id="spritz_slower" href="#" title="Slow Down"></a>
+        <input class="wpm" id="spritz_wpm" type="number" value="250" step="50" min="50"><a
+          class="faster entypo-fast-forward" id="spritz_faster" href="#" title="Speed Up"></a></span>
+      <a class="save entypo-save" id="spritz_save" href="#" title="Save"></a>
+      <span class="interaction"><a class="back entypo-left-open" id="spritz_back" href="#" title="Jog Back"></a><a
+          class="pause entypo-pause" id="spritz_pause" href="#" title="Pause/Play"></a><a
+          class="forward entypo-right-open" id="spritz_forward" href="#" title="Jog Forward"></a></span>
+    </div>
+    <div class="controls extra-controls">
+      <div class="togglable closed">
+        <div class="zoom">
+          <a class="smaller entypo-minus" id="spritz_smaller" href="#" title="Smaller"></a>
+          <span class="entypo-search" href="#" title="Smaller"></span>
+          <a class="bigger entypo-plus" id="spritz_bigger" href="#" title="Bigger"></a>
+        </div>
+        <div class="autosave">
+          <input class="checkbox" id="autosave_checkbox" type="checkbox">
+          <label class="checkbox-label entypo-cancel" id="spritz_autosave" for="autosave_checkbox">auto-save on
+            pause</label>
+        </div>
+      </div>
+      <a class="toggle entypo-dot-3" href="#" title="Extra Controls"></a>
+    </div>
+    <div class="words">
+      <div class="controls words-controls">
+        <a class="select entypo-doc-text" id="spritz_select" href="#" title="Select All"></a>
+        <a class="refresh entypo-cycle" id="spritz_refresh" href="#" title="Refresh Text"></a>
+        <a class="expand entypo-resize-full" id="spritz_expand" href="#" title="Text Area Resize"></a>
+      </div>
+      <div class="progress-bar" id="spritz_progress"></div>
+      <textarea class="demo-words" id="spritz_words">Spritz
+This is a jQuery implementation of Spritz technology.
+Reading is inherently  time consuming because your eyes have to move from word to word and line to line. Traditional reading also consumes huge amounts of physical space on a page or screen, which limits reading effectiveness on small displays. Scrolling, pinching, and resizing a reading area doesn’t fix the problem and only frustrates people. Now, with compact text streaming from Spritz, content can be streamed one word at a time, without forcing your eyes to spend time moving around the page. Spritz makes streaming your content easy and more comfortable, especially on small displays. Our “Redicle” technology enhances readability even more by using horizontal lines and hash marks to direct your eyes to the red letter in each word, so you can focus on the content that interests you. Best of all, Spritz’s patent-pending technology can integrate into photos, maps, videos, and websites to promote more effective communication.
+</textarea>
+    </div>
+  </div>
+  <a class="light" href="#" title="Change Theme"></a>
+  <div class="alert" id="alert"></div>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="js/index.js"></script>
+  <!--script src="../../js/docs.js"></script>-->
+</body>
+
+</html>

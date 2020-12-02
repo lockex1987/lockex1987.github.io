@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <title>Hướng dẫn làm prototype</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <link href="theme.css" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+        <div id="main">
+            <h2 id="div4">Hướng dẫn làm prototype</h2>
+            <div>
+                Prototype framework giúp việc làm prototype nhanh hơn, hiệu quả hơn, chi tiết hơn, thực tế hơn.<br />
+                Dev cũng có thể sử dụng lại prototype.<br />
+                Đặc điểm của Prototype framework là chạy không cần CSDL, không cần Form, Controller, DAO.<br />
+
+                <h3>Bước 1: Khai báo ở struts-config.xml</h3>
+                Tìm đến action Authenticate, thêm một trang trả về dạng:
+                <div class="myCode">
+                    &lt;forward name="<strong>report</strong>" path="<strong>report</strong>" /&gt;
+                </div>
+                Chú ý name, path phải là duy nhất.
+                <h3>Bước 2: Khai báo ở tiles-defs.xml</h3>
+                Tạo một definition trùng với khai báo ở struts-config.xml:
+                <div class="myCode">
+                    &lt;definition name="<strong>report</strong>" extends="base.definition"&gt;<br />
+                    &nbsp; &nbsp; &lt;put name="title" value="Báo cáo" /&gt;<br />
+                    &nbsp; &nbsp; &lt;put name="body" value="/WEB-INF/jsp/report/<strong>report</strong>.jsp" /&gt;<br />
+                    &lt;/definition&gt;
+                </div>
+                <h3>Bước 3: Tạo file JSP</h3>
+                Tạo file JSP trùng tên, ở cùng thư mục như khai báo trong tiles-defs.xml.
+                <h3>Bước 3: Tạo menu</h3>
+                Tạo một menu ở file baseLayout.jsp có dạng:
+                <div class="myCode">
+                    &lt;li&gt;<br />
+                    &lt;a href="${contextPath}/authenticateAction.do?&lt;commonTags:encrypt text="className=admin.controller.AuthenticateController&amp;methodName=actionGotoPage&amp;pageForward=<strong>report</strong>" /&gt;"&gt;Báo cáo&lt;/a&gt;<br />
+                    &lt;/li&gt;<br />
+                </div>
+                <br />
+                <br />
+                <br />
+                OK, vậy là chúng ta có thể làm prototype trên file JSP vừa tạo ra.
+            </div>
+        </div>
+    </body>
+</html>
+

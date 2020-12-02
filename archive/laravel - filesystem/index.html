@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Laravel Filesystem</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta name="description" content="Quản lý file (upload) với Laravel">
+  </head>
+  <body>
+    <article>
+      <h2>Laravel Filesystem</h2>
+      <h3>Giới thiệu</h3>
+      <p>Laravel cung cấp một lớp abstraction cho filesystem khá mạnh mẽ nhờ có
+        sử dụng tới PHP package tuyệt vời <a href="https://github.com/thephpleague/flysystem">Flysystem</a>
+        của Frank de Jonge. Việc tích hợp Flysystem vào Laravel cung cấp cách sử
+        dụng rất đơn giản để giao tiếp với các local filesystem, Amazon S3, và
+        Rackspace Cloud Storage. Thậm chí còn hay hơn, đó là có thể thay đổi các
+        storage này cực kì dễ dàng mà sử dụng chung API cho các hệ thống.</p>
+      <h3>Cấu hình</h3>
+      <p>File cấu hình cho filesystem được đặt tại <code>config/filesystems.php</code>.
+        Trong file này, bạn có thể cấu hình tất cả "disks" của bạn. Mỗi disk
+        tượng trưng cho một storage driver cụ thể và vị trí storage. Cấu hình ví
+        dụ cho mỗi driver nằm trong file cấu hình. Vì thế, hãy thay đổi giá trị
+        cấu hình sao cho hợp với ý của bạn.</p>
+      <p>Tất nhiên, bạn có thể cấu hình bao nhiêu disk tuỳ thích, và thậm chí có
+        thể sử dụng nhiều disks mà cùng sử dụng chung driver.</p>
+      <h4>Public disk</h4>
+      <p>Disk <code>public</code> dùng cho các files có thể được truy cập công
+        khai từ bên ngoài. Mặc định <code>public</code> disk sử dụng <code>local</code>
+        driver và lưu tại <code>storage/app/public</code>. Để chúng có thể truy
+        cập từ web, bạn nên tạo một symbolic link từ <code>public/storage</code>
+        vào <code>storage/app/public</code>. Cách này sẽ làm cho các file
+        public trong một thư mục mà có thể dễ dàng chia sẻ qua các lần triển
+        khai khi sử dụng hệ thống triển khai không mất thời gian như <a href="https://envoyer.io/">Envoyer</a>.</p>
+      <p>Để tạo symbolic link, bạn có thể sử dụng lệnh <code>storage:link</code>:</p>
+      <pre>php artisan storage:link</pre>
+      <p>Dĩ nhiên, khi mà file đã được lưu và symbolic link được tạo, bạn có thể
+        tạo một URL tới file sử dụng hàm helper <code>asset</code>:</p>
+      <pre>echo asset('storage/file.txt');</pre>
+      <h4>Local driver</h4>
+      <p>Khi sử dụng <code>local</code> driver, chú ý là tất cả các thao tác
+        tới file là relative tới thư mục <code>root</code> mà được khai báo
+        trong file cấu hình. Về mặc định, giá trị này được trỏ tới thư mục <code>storage/app</code>.
+        Vì thế, hàm sau đây sẽ lưu file vào trong <code>storage/app/file.txt</code>:</p>
+      <pre>Storage::disk('local')-&gt;put('file.txt', 'Contents');</pre>
+      <p>Ở Laravel phiên bản 5.8, mặc định sẽ sử dụng local disk.</p>
+      <p>Nên sử dụng public disk bằng cách thêm cấu hình <code>FILESYSTEM_DRIVER=public</code> ở file <code>.env</code></p>
+      <h3>Lấy đối tượng disk</h3>
+      <p>Hàm <code>Storage</code> facade có thể được sử dụng để tương tác với
+        bất kỳ disks được cấu hình. Ví dụ, bạn có thể sử dụng hàm <code>put</code>
+        trong facade để lưu avatar vào disk. Nếu bạn gọi phương thức trong <code>Storage
+          </code>facade không gọi hàm <code>disk</code> trước, hàm này sẽ tự
+        động truyền vào disk:</p>
+      <pre>use Illuminate\Support\Facades\Storage;
+
+Storage::put('avatars/1', $fileContents);</pre>
+      <p>Nếu ứng dụng của bạn tương tác với nhiều disks, bạn có thể sử dụng hàm
+        <code>disk</code> trong <code>Storage</code> facade để làm việc với
+        file trong disk:</p>
+      <pre>Storage::disk('s3')-&gt;put('avatars/1', $fileContents);</pre>
+      <h3>Lấy file</h3>
+      <p>Hàm <code>get</code> có thể sử dụng để lấy thông tin một file. Nội
+        dung dạng raw string của file sẽ được trả về. Nhớ rằng, tất cả các đường
+        dẫn để tương đối với thư mục "root" cấu hình disk:</p>
+      <pre>$contents = Storage::get('file.jpg');</pre>
+      <p>Hàm <code>exists</code> được dùng để kiểm tra xem một file có tồn tại
+        trên disk hay không:</p>
+      <pre>$exists = Storage::disk('s3')-&gt;exists('file.jpg');</pre>
+      <h4>Lấy URL của file</h4>
+      <p>Khi sử dụng <code>local</code> hoặc <code>s3</code> drivers, bạn có
+        thể dùng hàm <code>url</code> để lấy URL cho file. Nếu bạn sử dụng <code>local</code>
+        driver, nó sẽ tự động thêm vào <code>/storage</code> cho path và trả về
+        một relative URL của file. Nếu bạn sử dụng <code>s3</code> driver, URL
+        đầy đủ sẽ được trả về:</p>
+      <pre>use Illuminate\Support\Facades\Storage;
+
+$url = Storage::url('file1.jpg');</pre>
+      <p> Nhớ rằng, khi sử dụng <code>local</code> driver, tất cả files nên
+        được public trong thư mục <code>storage/app/public</code>. Hơn nữa, bạn
+        nên <a href="https://giaphiep.com/docs/5.3/filesystem#the-public-disk">tạo
+          một symbolic link</a> vào thư mục <code>storage/app/public</code>.</p>
+      <h4>Lấy metadata của file</h4>
+      <p>Khi đọc hoặc viết files, Laravel ngoài ra còn cung cấp thông tin về
+        files. Ví dụ, hàm <code>size</code> có thể dùng để lấy kích thước của
+        file theo bytes:</p>
+      <pre>use Illuminate\Support\Facades\Storage;
+
+$size = Storage::size('file1.jpg');</pre>
+      <p>Hàm <code>lastModified</code> trả về thời gian dạng UNIX timestamp lần
+        cuối cùng file được chỉnh sửa:</p>
+      <pre>$time = Storage::lastModified('file1.jpg');</pre>
+      <h3>Lưu file</h3>
+      <p>Hàm <code>put</code> có thể được dùng để lưu nội dung file dưới dạng
+        raw vào disk. Ngoài ra bạn có thể truyền vào một <code>resource</code>
+        PHP vào hàm <code>put</code>, nó sẽ sử dụng stream của Flysystem.
+        Khuyến khích sử dụng stream khi phải làm việc với file lớn:</p>
+      <pre>use Illuminate\Support\Facades\Storage;
+
+Storage::put('file.jpg', $contents);
+
+Storage::put('file.jpg', $resource);</pre>
+      <h4>Automatic streaming</h4>
+      <p>Nếu bạn muốn Laravel tự động quản lý streaming một file vào folder bạn
+        muốn lưu, bạn có thể sử dụng hàm <code>putFile</code> hoặc <code>putFileAs</code>.
+        Hàm này nhận một instance <code>Illuminate\Http\File</code> hoặc <code>Illuminate\Http\UploadedFile</code>
+        và sẽ tự động stream file vào nơi bạn muốn lưu:</p>
+      <pre>use Illuminate\Http\File;
+
+// Automatically calculate MD5 hash for file name...
+Storage::putFile('photos', new File('/path/to/photo'));
+
+// Manually specify a file name...
+Storage::putFileAs('photos', new File('/path/to/photo'), 'photo.jpg');</pre>
+      <p>Có vài điều quan trong mà bạn cần để ý khi dùng hàm <code>putFile</code>
+        . Chúng chỉ nhận tên đường dẫn được chỉ định, không phải tên file. Mặc
+        định, hàm <code>putFile</code> sẽ tự động sinh ra một filename based
+        trong nội dung của file. Điều này được thực hiện bằng cách lấy một MD5
+        hash của nội dung file. Đường dẫn sẽ được trả về bởi hàm <code>putFile</code>
+        và bạn có thể lưu đường dẫn đó, bao gồm tên file vào cơ sở dữ liệu.</p>
+      <p>Hàm <code>putFile</code> và <code>putFileAs</code> ngoài ra còn chấp
+        nhận một tham số đặc biệt "visibility" của các file. Nó sẽ rất hữu ích
+        nếu bạn lưu file trong cloud disk như S3 và bạn muốn public quyền truy
+        cập:</p>
+      <pre>Storage::putFile('photos', new File('/path/to/photo'), 'public');</pre>
+      <h4>Thêm nội dung vào đầu hay cuối file</h4>
+      <p>Hàm <code>prepend</code> và <code>append</code> cho phép bạn dễ dàng
+        chèn thêm nội dung vào đầu hay cuối file:</p>
+      <pre>Storage::prepend('file.log', 'Prepended Text');
+
+Storage::append('file.log', 'Appended Text');</pre>
+      <h4>Copy và di chuyển file</h4>
+      <p>Hàm <code>copy</code> có thể dùng để copy một file tồn tại vào một
+        folder mới trong disk, trong khi hàm <code>move</code> có thể được dùng
+        để đổi tên hoặc thay đổi một file đã tồn tại vào một folder mới:</p>
+      <pre>Storage::copy('old/file1.jpg', 'new/file1.jpg');
+
+Storage::move('old/file1.jpg', 'new/file1.jpg');</pre>
+      <h3>File upload</h3>
+      <p>Trong các ứng dụng web, một trong những cách phổ biến nhất là use-cases
+        cho lưu file là lưu các file người dùng tải lên như ảnh, avatar, tài
+        liệu. Laravel cung cấp cách rất dễ dàng để lưu là dùng hàm <code>store</code>
+        để tải một file instance. Đơn giản chỉ cần gọi hàm <code>store</code>
+        với đường dẫn thư mục bạn muốn lưu:</p>
+      <pre>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+class UserAvatarController extends Controller
+{
+    /**
+     * Update the avatar for the user.
+     *
+     * @param    Request  $request
+     * @return  Response
+     */
+    public function update(Request $request)
+    {
+        $path = $request-&gt;file('avatar')-&gt;store('avatars');
+        return $path;
+    }
+}</pre>
+      <p>Có vài điều bạn cần chú ý trong ví dụ trên. hàm này chỉ nhận tên thư
+        mục, không phải tên file. Mặc định, hàm <code>store</code> sẽ tự động
+        sinh ra một filename based trong nội dung của file. Điều này được thực
+        hiện bằng cách lấy một MD5 hash của nội dung file. Đường dẫn sẽ được trả
+        về bởi hàm <code>store</code> và bạn có thể lưu đường dẫn đó, bao gồm
+        tên file vào cơ sở dữ liệu.</p>
+      <p>Bạn cũng có thể dùng hàm <code>putFile</code> trong <code>Storage</code>
+        facade thực hiện cũng tương tự:</p>
+      <pre>$path = Storage::putFile('avatars', $request-&gt;file('avatar'));</pre>
+      <p> Nếu bạn nhận một file có kích thước lớn, bạn có thể tự chỉ định tên
+        file như hiển thị bên dưới. Tính toán một MD5 hash cho một file cực lớn
+        có thể tăng memory.</p>
+      <h4>Chỉ định tên file upload</h4>
+      <p>Nếu bạn không muốn tên file được tự động gán khi lưu file, bạn có thể
+        dùng hàm <code>storeAs</code>, nó nhận một đường dẫn, tên file, và tùy
+        chọn disk là các tham số:</p>
+      <pre>$path = $request-&gt;file('avatar')-&gt;storeAs(
+    'avatars', $request-&gt;user()-&gt;id
+);</pre>
+      <p>Tất nhiên, bạn có thể dùng hàm <code>putFileAs</code> trong <code>Storage</code>
+        facade, nó giống như như ví dụ trên:</p>
+      <pre>$path = Storage::putFileAs(
+    'avatars', $request-&gt;file('avatar'), $request-&gt;user()-&gt;id
+);</pre>
+      <h4>Chỉ định disk để lưu file upload</h4>
+      <p>Mặc định, hàm này sẽ sử dụng disk của bạn. Nếu bạn muốn disk khác,
+        truyền tên disk như là tham số thứ hai của hàm <code>store</code>:</p>
+      <pre>$path = $request-&gt;file('avatar')-&gt;store(
+    'avatars/'.$request-&gt;user()-&gt;id, 's3'
+);</pre>
+      <h3>File visibility</h3>
+      <p>Trong Laravel's Flysystem, "visibility" là một cái trừu tượng của quyền
+        file qua nhiều platforms. Files có thể được quyền <code>public</code>
+        hoặc <code>private</code>. Khi một file được quyền <code>public</code>,
+        bạn có thể chỉ rằng file này được quyền truy cập từ chỗ khác. Ví dụ, khi
+        sử dụng S3 driver, bạn có thể nhận URLs cho <code>public</code> files.</p>
+      <p>Bạn có thể đặt visibility khi đặt file qua hàm <code>put</code>:</p>
+      <pre>use Illuminate\Support\Facades\Storage;
+
+Storage::put('file.jpg', $contents, 'public');</pre>
+      <p>Nếu file đã tồn tại, có thể lấy và set thông qua hai hàm <code>getVisibility</code>
+        và <code>setVisibility</code> methods:</p>
+      <pre>$visibility = Storage::getVisibility('file.jpg');
+
+Storage::setVisibility('file.jpg', 'public')</pre>
+      <h3>Xóa file</h3>
+      <p>Hàm <code>delete</code> nhận một tên file hoặc một mảng tên file xóa
+        từ disk:</p>
+      <pre>use Illuminate\Support\Facades\Storage;
+
+Storage::delete('file.jpg');
+
+Storage::delete(['file1.jpg', 'file2.jpg']);</pre>
+      <h3>Thao tác với thư mục</h3>
+      <h4>Lấy các files trong một thư mục</h4>
+      <p>Hàm <code>files</code> trả về một mảng các files trong một thư mục.
+        Nếu bạn muốn lấy danh sách tất cả các file trong một thư mục bao gồm các
+        thư mục con, bạn có thể sử dụng hàm <code>allFiles</code>:</p>
+      <pre>use Illuminate\Support\Facades\Storage;
+
+$files = Storage::files($directory);
+
+$files = Storage::allFiles($directory);</pre>
+      <h4>Lấy tất cả các thư mục trong một thư mục</h4>
+      <p>Hàm <code>directories</code> trả về một mảng tất cả các thư mục bên
+        trong một thư mục cho trước. Thêm vào đó, bạn có thể sử dụng hàm <code>allDirectories</code>
+        để lấy danh sách tất cả các thư mục trong một thư mục và các thư mục con
+        của nó:</p>
+      <pre>$directories = Storage::directories($directory);
+
+// Recursive...
+$directories = Storage::allDirectories($directory);</pre>
+      <h4>Tạo một thư mục</h4>
+      <p>Hàm <code>makeDirectory</code> sẽ trả về một thư mục, bao gồm các thư
+        mục con:</p>
+      <pre>Storage::makeDirectory($directory);</pre>
+      <h4>Xóa một thư mục</h4>
+      <p>Cuối cùng, hàm <code>deleteDirectory</code> được dùng để xoá một thư
+        mục, bao gồm tất cả các file của nó:</p>
+      <pre>Storage::deleteDirectory($directory);</pre>
+      <h3>Tham khảo</h3>
+      <p>Chức năng quản lý document của vtcc.ai.</p>
+      <p><a href="https://laravel.com/docs/master/filesystem">laravel.com/docs/master/filesystem</a></p>
+      <p><a href="https://laravel.com/api/master/Illuminate/Contracts/Filesystem/Filesystem.html">Filesystem API</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

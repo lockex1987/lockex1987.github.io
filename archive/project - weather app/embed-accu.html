@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Embed</title>
+
+    <style>
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.weathers {
+    display: flex;
+    flex-direction: column;
+}
+
+.weather-item {
+    color: #FFF;
+    text-align: center;
+    padding: 10px;
+    width: 160px;
+}
+
+.weather-item.odd {
+    background: #2196F3;
+}
+
+.weather-item.even {
+    background: #263238;
+}
+
+.weather-item .title {
+    color: yellow;
+}
+
+.weather-item .icon {
+    padding: 10px;
+}
+
+.weather-item .icon img {
+    width: 24px;
+    height: auto;
+}
+
+.weather-item .description {    
+}
+
+.weather-item .temp {
+}
+    </style>
+</head>
+
+<body>
+    <div id="app" class="weathers">
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/accuWeatherApi.js"></script>
+    <script>
+        function checkLocalStorage() {
+            // Thời điểm hiện tại
+            var currenTimeMillis = new Date().getTime()
+            
+            // Chúng ta sẽ lưu 2 thông tin: thời điểm và nội dung
+            var localStorageNameTime = 'lastCheckWeatherTime'
+            var localStorageNameContent = 'weatherInfo'
+
+            // Có nên gọi API hay không
+            var shouldCallApi = true
+
+            // Lấy thời điểm cuối cùng kiểm tra thông tin
+            var lastCheckWeatherTime = localStorage.getItem(localStorageNameTime)
+            if (lastCheckWeatherTime) {
+                // Nếu lần cuối cùng là 2 giờ thì không gọi API nữa
+                if (currenTimeMillis - parseInt(lastCheckWeatherTime) < 2 * 60 * 60 * 1000) {
+                    shouldCallApi = false
+                }
+            }
+
+            if (shouldCallApi) {
+                // Gọi API
+                console.log('Gọi API')
+                accuWeatherApi.getHanoiWeather(function(data) {
+                    // Lưu localStorage
+                    localStorage.setItem(localStorageNameTime, currenTimeMillis)
+                    localStorage.setItem(localStorageNameContent, JSON.stringify(data))
+                    processWeatherInfo(data)
+                })
+            } else {
+                // Lấy ở localStorage luôn
+                console.log('Gọi localStorage')
+                var data = JSON.parse(localStorage.getItem(localStorageNameContent))
+                processWeatherInfo(data)
+            }
+        }
+
+        /**
+         * Xử lý dữ liệu thời tiết trả về.
+         */
+        function processWeatherInfo(data) {
+            console.log(data)
+            var today = data[0]
+            var tomorrow = data[1]
+
+            document.querySelector('#app').innerHTML = `
+                    <div class="weather-item odd">
+                        <div class="title">
+                            Ngày hôm nay
+                        </div>
+                        <div class="icon">
+                            <img src="${today.iconDay}">
+                        </div>
+                        <div class="description">
+                            ${today.weatherDay}
+                        </div>
+                        <div class="temp">
+                            ${today.maxTemp} &#176;C
+                        </div>
+                    </div>
+
+                    <div class="weather-item even">
+                        <div class="title">
+                            Đêm hôm nay
+                        </div>
+                        <div class="icon">
+                            <img src="${today.iconNight}">
+                        </div>
+                        <div class="description">
+                            ${today.weatherNight}
+                        </div>
+                        <div class="temp">
+                            ${today.minTemp} &#176;C
+                        </div>
+                    </div>
+
+                    <div class="weather-item odd">
+                        <div class="title">
+                            Ngày mai
+                        </div>
+                        <div class="icon">
+                            <img src="${tomorrow.iconDay}">
+                        </div>
+                        <div class="description">
+                            ${tomorrow.weatherDay}
+                        </div>
+                        <div class="temp">
+                            ${tomorrow.maxTemp} &#176;C
+                        </div>
+                    </div>
+
+                    <div class="weather-item even">
+                        <div class="title">
+                            Đêm mai
+                        </div>
+                        <div class="icon">
+                            <img src="${tomorrow.iconNight}">
+                        </div>
+                        <div class="description">
+                            ${tomorrow.weatherNight}
+                        </div>
+                        <div class="temp">
+                            ${tomorrow.minTemp} &#176;C
+                        </div>
+                    </div>
+                    `
+
+        }
+
+        checkLocalStorage()
+    </script>
+</body>
+</html>

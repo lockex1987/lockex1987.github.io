@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Responsive Menu One-Level 2</title>
+	<style>
+		/* Common */		
+		.nav { position: static; background: red; }
+		.nav li { margin: 0; padding: 0; list-style: none; display: inline-block; }
+		.nav a { padding: 5px; text-decoration: none; color: #999; line-height: 100%; }
+		.nav a:hover { background: #999; color: #fff; }
+		.nav .current a { background: #999; color: #fff; }
+		
+		/* Small */
+		@media screen and (max-width: 480px) {
+			.nav ul {
+				width: 180px;
+				position: absolute; top: 0; left: 10px;
+				border: solid 1px #aaa;
+				background: rgba(255, 255, 255, 1.0) url(icon-menu.png) no-repeat 5px 8px;
+				padding: 5px 0 5px 30px;
+				border-radius: 5px;
+				box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+			}
+			.nav li { display: none; /* hide all <li> items */ }
+			.nav .current { display: block; /* show only current <li> item */ }
+			.nav a { display: block; }
+			.nav .current a { background: none; color: #666; }
+			/* on nav hover */
+			.nav ul:hover li { display: block; }
+			.nav ul:hover a:hover { background: #999; color: #fff; }
+			.nav ul:hover .current a { background: #999; color: #fff; }
+			
+			#content { margin-top: 70px; }
+		}
+		/* Large */
+		@media screen and (min-width: 480px) {
+			.nav ul { position: relative; }
+		}
+	</style>
+</head>
+
+<body>
+
+	<nav class="nav">
+		<ul>
+			<li><a href="#">Portfolio</a></li>
+			<li class="current"><a href="#">Illustration</a></li>
+			<li><a href="#">Web Design</a></li>
+			<li><a href="#">Print Media</a></li>
+			<li><a href="#">Graphic Design</a></li>
+		</ul>
+	</nav>
+
+	<div id="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit accusantium ratione odit necessitatibus modi labore architecto ex totam repudiandae minus unde molestias quas provident non veniam nobis, natus, dignissimos possimus!</div>
+</body>
+
+</html>

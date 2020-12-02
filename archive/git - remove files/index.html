@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Remove Files</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Remove Files">
+ </head> 
+ <body> 
+  <article> 
+   <h3>Xoá Tập Tin</h3> 
+   <p>Để xoá một tập tin khỏi Git, bạn phải xoá nó khỏi danh sách được theo dõi (chính xác hơn, xoá nó khỏi khu vực tổ chức) và sau đó commit. Lệnh <code>git rm</code> thực hiện điều đó và cũng xoá tập tin khỏi thư mục làm việc vì thế bạn sẽ không thấy nó như là tập tin không được theo dõi trong những lần tiếp theo.</p> 
+   <p>Nếu bạn chỉ đơn giản xoá tập tin khỏi thư mục làm việc, nó sẽ được hiện thị trong phần "Thay đổi không được tổ chức để commit" (hay unstaged) khi bạn chạy <code>git status</code>:</p> 
+   <pre><code>$ rm grit.gemspec
+$ git status
+# On branch master
+#
+# Changes not staged for commit:
+#   (use "git add/rm &lt;file&gt;..." to update what will be committed)
+#
+#       deleted:    grit.gemspec
+#
+</code></pre> 
+   <p>Khi đó, nếu bạn chạy <code>git rm</code>, Git sẽ xoá tập tin đó khỏi khu vực tổ chức:</p> 
+   <pre><code>$ git rm grit.gemspec
+rm 'grit.gemspec'
+$ git status
+# On branch master
+#
+# Changes to be committed:
+#   (use "git reset HEAD &lt;file&gt;..." to unstage)
+#
+#       deleted:    grit.gemspec
+#
+</code></pre> 
+   <p>Lần commit tới, tập tin đó sẽ bị xoá và không còn được theo dõi nữa. Nếu như bạn đã sửa và thêm tập tin đó vào danh sách, bạn phải ép Git xoá đi bằng cách thêm lựa chọn <code>-f</code>. Đây là một chức năng an toàn nhằm ngăn chặn việc xoá nhầm dữ liệu chưa được lưu vào ảnh và nó sẽ không thể được khôi phục từ Git.</p> 
+   <p>Một chức năng hữu ích khác có thể bạn muốn sử dụng đó là giữ tập tin trong thư mục làm việc nhưng không thêm chúng vào khu vực tổ chức. Hay nói cách khác bạn muốn lưu tập tin trên ổ cứng nhưng không muốn Git theo dõi chúng nữa. Điều này đặc biệt hữu ích nếu như bạn quên thêm nó vào tập <code>.gitignore</code> và vô tình tổ chức (stage) chúng, ví dụ như một tập tin nhật ký lớn hoặc rất nhiều tập tin <code>.a</code>. Để làm được điều này, hãy sử dụng lựa chọn <code>--cached</code>:</p> 
+   <pre><code>$ git rm --cached readme.txt
+</code></pre> 
+   <p>Bạn có thể truyền vào tập tin, thư mục hay mẫu (patterns) vào lệnh <code>git rm</code>. Nghĩa là bạn có thể thực hiện tương tự như:</p> 
+   <pre><code>$ git rm log/\*.log
+</code></pre> 
+   <p>Chú ý dấu chéo ngược (<code>\</code>) đằng trước <code>*</code>. Việc này là cần thiết vì ngoài phần mở rộng mặc định Git còn sử dụng thêm phần mở rộng riêng - "This is necessary because Git does its own filename expansion in addition to your shell’s filename expansion". Trên Windows, dấu gạch ngược (<code>\</code>) phải bỏ đi. Lệnh này xoá toàn bộ tập tin có đuôi <code>.log</code> trong thư mục <code>log/</code>. Hoặc bạn có thể thực hiện tương tự như sau:</p> 
+   <pre><code>$ git rm \*~
+</code></pre> 
+   <p>Lệnh này xoá toàn bộ tập tin kết thúc bằng <code>~</code>.</p> 
+   <p></p> 
+   <p></p> 
+   <p><br> </p> 
+   <p></p> 
+   <p>Nhiều khi đã ignore file ở <code>.gitignore</code> rồi nhưng nó vẫn hiển thị ở <code>git status</code>.</p> 
+   <p>Hãy thử lệnh sau:</p> 
+   <pre>git rm -r --cached public/fonts</pre> 
+   <p>Remove a file from git without removing it from your file system</p> 
+   <p>Nếu bạn không cẩn thận trong khi <code>git add</code>, bạn có thể sẽ thêm các tệp mà bạn không muốn commit. Tuy nhiên, git rm sẽ xóa nó ra khỏi trạng thái staging, cũng như hệ thống tệp của bạn, có thể không phải là thứ bạn muốn. Trong trường hợp đó, hãy đảm bảo bạn chỉ xóa khỏi trạng thái staged và thêm tệp vào <code>.gitignore</code> của bạn để tránh mắc lỗi tương tự lần thứ hai.</p> 
+   <pre>git remove --cached filename<br>echo filename &gt;&gt; .gitingore</pre> 
+  </article> 
+    
+ </body>
+</html>

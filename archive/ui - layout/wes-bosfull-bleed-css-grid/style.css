@@ -1,0 +1,102 @@
+:root {
+    --yellow: #ffc600;
+}
+
+html {
+    color: #444;
+    font-family: Cambria, Cochin, Georgia, 'Times New Roman', Times, serif;
+    font-size: 20px;
+}
+
+p {
+    line-height: 1.8;
+}
+
+img {
+    max-width: 100%;
+}
+
+a {
+    color: black;
+    text-decoration: underline wavy var(--yellow);
+}
+
+h1,
+h2 {
+    font-size: 80px;
+    font-style: italic;
+    font-weight: 100;
+    margin: 0;
+}
+
+.post {
+    display: grid;
+    max-width: 1000px;
+    margin: 100px auto;
+    grid-gap: 10px 30px;
+    grid-template-columns: 1fr 3fr 1fr;
+}
+
+.post > * {
+    grid-column: 2 / -2;
+}
+
+.post figure {
+    margin: 0;
+    grid-column: 1 / -1;
+}
+
+figcaption {
+    font-size: 10px;
+    font-style: italic;
+}
+
+.post .tip {
+    background: #fafafa;
+    padding: 10px;
+    grid-row: span 5;
+    align-self: start;
+}
+
+.post .tip-right {
+    border-left: 3px solid #ffc035;
+    grid-column: span 1 / -1;
+
+}
+.post .tip-left {
+    border-right: 3px solid #ffc035;
+    text-align: right;
+    grid-column: 1 / span 1;
+}
+
+.post blockquote {
+    font-size: 60px;
+    text-align: center;
+    font-style: italic;
+    grid-column: 1 / -1;
+}
+
+.post blockquote p {
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+    .post {
+        grid-template-columns: 1fr 15fr 1fr;
+        margin: 50px 10px;
+        grid-gap: 5px;
+    }
+  
+    .post .tip {
+        grid-column: 2 / -2;
+    }
+  
+    .post blockquote {
+        font-size: 40px;
+        margin: 0;
+    }
+  
+    h1, h2 {
+        font-size: 60px;
+    }
+}

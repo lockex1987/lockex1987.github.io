@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Laravel Error</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Laravel Error">
+ </head> 
+ <body> 
+  <article> 
+   <h1>Errors</h1> 
+   <p>Khi bạn bắt đâu với một project mới, việc xử lý về error và exception đã được cấu hình cho bạn rồi. Class <code>App\Exceptions\Handler</code> là nơi mà tất cả đã được trigger ứng dụng của bạn đang đăng nhập và trả lại cho người dùng. Chúng ta sẽ tìm hiểu sâu hơn về nó trong suốt tài liệu này.</p> 
+   <h3>Configuration</h3> 
+   <p>The debug option in your config/app.php configuration file determines how much information about an error is actually displayed to the user. By default, this option is set to respect the value of the APP_DEBUG environment variable, which is stored in your .env file.</p> 
+   <p>For local development, you should set the APP_DEBUG environment variable to true. In your production environment, this value should always be false. If the value is set to true in production, you risk exposing sensitive configuration values to your application's end users.</p> 
+   <h2>The Exception Handler</h2> 
+   <h3>Phương thức report</h3> 
+   <p>Tất cả các exception được xử lý bởi class <code>App\Exceptions\Handler</code>. Class này chứa 2 phương thức: <code>report</code> và <code>render</code>. Chúng ta sẽ xem xét chi tiết hai phương thức này. Phương thức <code>report</code> được sử dụng để log các exception hoặc gửi chúng tới các dịch vụ ngoài như <a href="https://bugsnag.com/">Bugsnag</a> hoặc <a href="https://github.com/getsentry/sentry-laravel">Sentry</a>. Mặc định, phương thức <code>report</code> đơn giải chỉ đấy các exception về class nơi mà exception được log lại. Tuy nhiên, bạn có thể hoàn toàn tùy biến theo ý bạn muốn.</p> 
+   <p>Ví dụ, nếu bạn cần report nhiều kiểu exception theo nhiều cách khác nhau, bạn có thể sử dụng toán tử kiểm tra của PHP <code>instanceof</code>:</p> 
+   <pre><code>/**
+ * Report or log an exception.
+ *
+ * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
+ *
+ * @param    \Exception  $exception
+ * @return  void
+ */
+public function report(Exception $exception)
+{
+    if ($exception instanceof CustomException) {
+        //
+    }
+
+    return parent::report($exception);
+}</code></pre> 
+   <h4>Loại bỏ exception theo kiểu</h4> 
+   <p>Thuộc tính <code>$dontReport</code> của handler chứa một mảng các kiểu exception sẽ không cần log. Ví dụ, exceptions của lỗi 404, cũng như mội vài kểu lỗi khác, sẽ không được lưu vào file log. Bạn có thể thêm kểu exception khác vào mảng nếu cần thiết:</p> 
+   <pre><code>/**
+ * A list of the exception types that should not be reported.
+ *
+ * @var  array
+ */
+protected $dontReport = [
+    \Illuminate\Auth\AuthenticationException::class,
+    \Illuminate\Auth\Access\AuthorizationException::class,
+    \Symfony\Component\HttpKernel\Exception\HttpException::class,
+    \Illuminate\Database\Eloquent\ModelNotFoundException::class,
+    \Illuminate\Validation\ValidationException::class,
+];</code></pre> 
+   <h3>Phương thức Render</h3> 
+   <p>Phương thức <code>render</code> có tránh nhiệm chuyển đổi một exception thành một HTTP response để trả lại cho trình duyệt. Mặc định, exception được đẩy tới class cơ sở để tạo một response cho bạn. Tuy nhiên, bạn có thể thoải mái trong việc kiểm tra kiểu exception và trả về response tùy biến theo ý của bạn:</p> 
+   <pre><code>/**
+ * Render an exception into an HTTP response.
+ *
+ * @param    \Illuminate\Http\Request  $request
+ * @param    \Exception  $exception
+ * @return  \Illuminate\Http\Response
+ */
+public function render($request, Exception $exception)
+{
+    if ($exception instanceof CustomException) {
+        return response()-&gt;view('errors.custom', [], 500);
+    }
+
+    return parent::render($request, $exception);
+}</code></pre> 
+   <h2>HTTP Exceptions</h2> 
+   <p>Một số exceptions miêu tả mã HTTP từ server. Ví dụ, đây có thể là một lỗi "page not found" (404), một lỗi "unauthorized error" (401) hoặc lỗi 500. Để tạo ra response tương ứng với mã lỗi ở bất kỳ đâu trong ứng dụng, bạn có thể sử dụng phương thức <code>abort</code>:</p> 
+   <pre><code>abort(404);</code></pre> 
+   <p>Phương thức <code>abort</code> sẽ lập tức đẩy ra một exception sẽ được render bởi exception handler. Bạn cũng có thể tùy chọn cung cấp thêm nội dung response:</p> 
+   <pre><code>abort(403, 'Unauthorized action.');</code></pre> 
+   <h3>Tùy biến HTTP Error Pages</h3> 
+   <p>Laravel làm việc trả về trang lỗi tùy biến tương ứng với mã HTTP status rất dễ dàng. Ví dụ, nếu bạn chỉnh sửa trang lỗi tương ứng với mã 404 HTTP status, chỉ việc tạo một file <code>resources/views/errors/404.blade.php</code>. File này sẽ được gọi ra khi có lỗi 404 HTTP status được sinh ra trong ứng dụng của bạn. Các view nằm trong thư mục này phải trùng với mã lỗi HTTP status. <code>HttpException</code> có hàm <code>abort</code> nó sẽ được xem như là một biến <code>$exception</code>.</p> 
+   <p> Nguồn: <a href="https://laravel.com/docs/5.7/errors">https://laravel.com/docs/5.7/errors</a> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

@@ -1,0 +1,43 @@
+$main-color: #fff;
+$highlight-color: #66bb6a;
+$section-bgcolor__dark: #424242;
+$section-bgcolor__light: #a5d6a7;
+
+body {
+  font: normal 2em/1.5em "Helvetica Neue", Arial, sans-serif;
+  color: $main-color;
+}
+
+button.btn {
+  margin-top: 40px;
+  background: $highlight-color;
+  border-radius: 4px;
+}
+
+section {
+  &:nth-child(1) {
+    background-color: $highlight-color;
+  }
+  &:nth-child(2), &:nth-child(4) {
+    background-color: $section-bgcolor__dark;
+  }
+  &:nth-child(3) {
+    background-color: $section-bgcolor__light;
+  }
+}
+
+.fourth button {
+  margin-top: 20px;
+}
+
+p {
+  margin-bottom: 30px;
+}
+
+#fp-nav ul li a span {
+  background: $main-color;
+}
+
+img {
+  margin: 0 auto;
+}

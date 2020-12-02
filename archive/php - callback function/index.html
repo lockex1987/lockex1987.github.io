@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hàm callback trong PHP">
+    <title>Hàm callback trong PHP</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Hàm callback trong PHP</h2>
+      <h3>Callback là gì?</h3>
+      <p>Callback là khái niệm một hàm được truyền vào một hàm khác như một tham
+        số để nó có thể được thực hiện trước hoặc sau một sự kiện hoặc một thay
+        đổi trạng thái. Trong thực tế, callback nghĩa là gọi lại. Xem xét một ví
+        dụ sau, một người hỗ trợ sẽ thực hiện lấy các thông tin về lỗi của người
+        dùng sau đó mới gọi lại (callback) cho khách hàng. Trong PHP, thực hiện
+        callback là rất đơn giản. Chúng ta xem một ví dụ sau:</p>
+      <pre>function sayHello($callback)
+{
+    echo "Hello!\n";
+
+    $callback();
+}
+
+function sayGoodbye()
+{
+    echo "Goodbye!\n";
+}
+
+sayHello('sayGoodbye');</pre>
+      <p>Trên đây là một ví dụ rất đơn giản về callback trong PHP, hàm <code>sayGoodbye</code>
+        được truyền vào hàm <code>sayHello</code> như một tham số. Cách thực
+        hiện này rất hữu ích khi chúng ta muốn định nghĩa một hàm (<code>sayGoodbye</code>)
+        được thực hiện khi một sự kiện xảy ra (sau các câu chuyện khác). Ví dụ
+        trên đây khá dễ hiểu nhưng có một khía cạnh chưa được bàn đến là việc sử
+        dụng kết quả của hàm gọi trong hàm được gọi. Ví dụ tiếp theo cho thấy hỗ
+        trợ viên sau khi lấy thông tin về lỗi người dùng và sử dụng thông tin
+        này để gọi lại cho khách hàng:</p>
+      <pre>function sayHello2($first_name, $last_name, $callback)
+{
+    $full_name = $first_name . ' ' . $last_name;
+
+    $callback($full_name);
+}
+
+function formatName($full_name)
+{
+    echo 'Hello '. $full_name . "\n";
+}
+
+sayHello2('Nguyen Van', 'A', 'formatName');</pre>
+      <p>Bản chất của <code>$callback($full_name)</code> là gọi đến một hàm
+        được xây dựng sẵn trong PHP <a target="_blank" href="http://php.net/manual/en/language.types.callable.php">call_user_func</a>,
+        như vậy <code>$callback($full_name)</code> là tương đương với <code>call_user_func($callback,
+          $full_name)</code>. Sử dụng callback có thể có lỗi xảy ra nếu chúng ta
+        callback đến một hàm chưa được định nghĩa, vậy chúng ta cần kiểm tra
+        biến được truyền vào có phải là một hàm hay không bằng hàm <code>is_callable()</code>:</p>
+      <pre>function sayHello3($first_name, $last_name, $callback)
+{
+    $full_name = $first_name . ' ' . $last_name;
+
+    if (is_callable($callback)) {
+        call_user_func($callback, $full_name);
+    }
+}
+
+sayHello3('Nguyen Van', 'A', 'formatName');</pre>
+      <p>Source code <a target="_blank" href="demo.php">demo.php</a>.</p>
+      <h3>Sử dụng callback ở đâu?</h3>
+      <p>Callback thường được sử dụng trong những tình huống sau:</p>
+      <ul>
+        <li>Khi ứng dụng cần thực hiện một hàm khác dựa trên ngữ cảnh hoặc trạng
+          thái, hay nói một cách khác là muốn thực hiện một việc gì đó khi một
+          sự kiện xảy ra.</li>
+        <li>Lập trình đa luồng (multiple thread).</li>
+        <li>Sử dụng với các hàm nặc danh (anonymous function) hoặc với Closure.</li>
+      </ul>
+      <p>Ví dụ về lập xử lý đa luồng, chúng ta cần mở một file và ghi vào file
+        một cái gì đó, vì file này rất lớn nên việc mở file có thể mất một chút
+        thời gian. Nếu như viết theo cách cũ:</p>
+      <pre>fileObject = open(file);
+
+// Cần phải chờ file được mở thì mới ghi vào file được, có thể mất 5 phút chẳng hạn.
+fileObject.write("We are writing to the file.");
+
+// Tiếp theo mới làm được những việc khác
+doSomething();</pre>
+      <p>Sử dụng callback, chúng ta có thể thực hiện được những việc khác luôn</p>
+      <pre>fileObject = open(file, writeToFile)
+
+// Không cần phải chờ file mở và ghi vào file, chúng ta có thể thực hiện việc khác luôn.
+doSomething();</pre>
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://allaravel.com/blog/callback-trong-php-la-gi">https://allaravel.com/blog/callback-trong-php-la-gi</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

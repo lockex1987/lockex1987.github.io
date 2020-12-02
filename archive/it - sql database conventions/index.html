@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Database conventions">
+    <meta name="keywords" content="database, sql, convention">
+    <meta name="author" content="lockex1987">
+    <title>Thiết kế CSDL</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Hướng dẫn thiết kế CSDL</h2>
+      <h3>Giới thiệu</h3>
+      <p>Thiết kế database là công việc thường ngày của engineer, nhất là các
+        bạn database engineer. Giống với coding cần clean, database cũng cần
+        tính chất tương tự nhằm giúp việc vận hành, thay đổi, chuyển giao nó đỡ
+        tốn nhiều công sức hơn, do đó chúng ta cũng cần có một số quy tắc nhất
+        định trong việc thiết kế.</p>
+      <p>Thường thì mỗi nhóm hay công ty sẽ có bộ quy tắc riêng cho mình, cho dù
+        có được viết thành document rõ ràng hoặc không. Cũng giống như coding có
+        nhiều trường phái khác nhau, ví dụ python thì có hai đại diện tiêu biểu
+        là&nbsp;PEP8&nbsp;và&nbsp;Google Python Style Guide, Database
+        conventions cũng không nhất thiết phải tuân theo một chuẩn duy nhất,
+        miễn sao nó mang lại những giá trị mà theo tôi là quan trọng
+        nhất:&nbsp;Sự thống nhất (Consistency)&nbsp;và&nbsp;Dễ hiểu (Simplicity,
+        Self-explaining)</p>
+      <p>Đã bao giờ bạn nhìn vào thiết kế DB của hệ thống cũ khi gia nhập vào
+        một công ty mới hoặc khi bạn tham gia vào một team khác và tự hỏi những
+        câu giống như dưới đây không?</p>
+      <ul>
+        <li>“WTF is this field?”&nbsp;(ca này hay gặp nhất :D)</li>
+        <li>“Cái field&nbsp;status&nbsp;này có giá trị là 0-1 hay còn gì khác
+          không?”&nbsp;(chẹp,&nbsp;SELECT DISTINCT&nbsp;để tìm chân lý vậy)</li>
+        <li>(đang code)&nbsp;“Table&nbsp;random&nbsp;này thì PK
+          là&nbsp;id&nbsp;hay&nbsp;random_id&nbsp;nhỉ?”&nbsp;(mở DB ra coi lại)</li>
+      </ul>
+      <p>Well, cá nhân tôi đã gặp khá nhiều và trở thành ám ảnh khi phải tiếp
+        cận với một hệ thống lớn và phức tạp (ví dụ có 1000 table chẳng hạn) mà
+        lại thiếu document. Đừng hiểu nhầm, tôi không kỳ vọng một bộ document
+        cực kỳ lớn tới mức tôi phải lấy nhiều dũng cảm mới có thể đọc hết cho
+        1000 table kia, hoặc mỗi khi muốn biết 1 field là gì lại phải giở tài
+        liệu ra tìm kiếm. Phần lớn các field đều có thể hiểu nhanh được nếu đặt
+        tên tốt và có lúc cũng cần giải thích ngắn gọn đi kèm.</p>
+      <p>Sẽ dễ dàng hơn nếu ngay từ khi thiết kế, chúng ta tuân theo một quy tắc
+        là làm sao lần sau đụng tới thì tốn ít effort nhất có thể. Nhiều quy tắc
+        được tổng hợp và thống nhất trong team thì trở thành bộ Database
+        Conventions của team đó.</p>
+      <p>Trong bài này tôi sẽ đề cập tới một số conventions mà tôi và team của
+        mình hay dùng.</p>
+      <h3>DB Conventions</h3>
+      <h4>Một số quy tắc chung về đặt tên</h4>
+      <table>
+        <tbody>
+          <tr>
+            <td>Nên</td>
+            <td>Ví dụ</td>
+            <td>Không nên</td>
+            <td>Giải thích</td>
+          </tr>
+          <tr>
+            <td>Tên là danh từ tiếng Anh</td>
+            <td><br>
+            </td>
+            <td><br>
+            </td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>Chỉ dùng danh từ số ít</td>
+            <td>inventory<br>
+              shelf<br>
+              octopus</td>
+            <td>inventories<br>
+              octopodes<br>
+              shelves<br>
+              octopuses<br>
+              octopi</td>
+            <td>Đỡ mất thời gian nghĩ</td>
+          </tr>
+          <tr>
+            <td>Chỉ dùng&nbsp;lower_case</td>
+            <td>&nbsp;customer</td>
+            <td>customer</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>Chỉ dùng dấu gạch dưới&nbsp;_&nbsp;để nối các từ</td>
+            <td>&nbsp;first_name</td>
+            <td>FirstName firstName<br>
+              "First Name"</td>
+            <td>Dễ đọc hơn<br>
+              Đỡ thắc mắc khi nào thì có chữ hoa, khi nào thì có gạch dưới</td>
+          </tr>
+          <tr>
+            <td>Tên có tính tự giải thích<br>
+              Tránh dùng từ viết tắt<br>
+              Tránh dùng kiểu dữ liệu thay cho tên</td>
+            <td>&nbsp;middle_name<br>
+              &nbsp;blog.content<br>
+              amt</td>
+            <td>&nbsp;mid_nm<br>
+              &nbsp;blog.text<br>
+              amount</td>
+            <td>Dễ hiểu</td>
+          </tr>
+          <tr>
+            <td>Tránh dùng từ khóa của SQL</td>
+            <td>display_order<br>
+              updated_at<br>
+              user_name<br>
+            </td>
+            <td>order<br>
+              date<br>
+              name</td>
+            <td>Có thể bị báo lỗi syntax nếu không enquote</td>
+          </tr>
+          <tr>
+            <td>Tên ngắn gọn, không nên dài quá 64 ký tự</td>
+            <td><br>
+            </td>
+            <td><br>
+            </td>
+            <td><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Table</h4>
+      <table>
+        <tbody>
+          <tr>
+            <td>Nên</td>
+            <td>Ví dụ</td>
+            <td>Không nên</td>
+            <td>Giải thích</td>
+          </tr>
+          <tr>
+            <td>Đặt prefix cho các table liên quan</td>
+            <td>catalog_category<br>
+              catalog_product</td>
+            <td><br>
+            </td>
+            <td>Tìm kiếm table dễ hơn</td>
+          </tr>
+          <tr>
+            <td>Thêm suffix&nbsp;_tmp&nbsp;cho các table dùng tạm trong tính
+              toán nhưng không xóa</td>
+            <td>catalog_product_price_tmp</td>
+            <td><br>
+            </td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>Thêm prefix&nbsp;tmp_&nbsp;cho các table dùng tạm, có thể xóa</td>
+            <td>tmp_im_calculating</td>
+            <td><br>
+            </td>
+            <td><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Column</h4>
+      <table>
+        <tbody>
+          <tr>
+            <td>Nên</td>
+            <td>Ví dụ</td>
+            <td>Không nên</td>
+            <td>Giải thích</td>
+          </tr>
+          <tr>
+            <td>Tránh thêm tiền tố không cần thiết</td>
+            <td>product.name</td>
+            <td>product.product_name</td>
+            <td>Tên table đã nêu rõ context</td>
+          </tr>
+          <tr>
+            <td>Thêm prefix&nbsp;is_&nbsp;cho các field dạng YES/NO</td>
+            <td>is_active<br>
+              is_delivered<br>
+              is_free_shipping</td>
+            <td>active&nbsp;delivered<br>
+              free_shipping</td>
+            <td>Nhìn field là biết chỉ có 2 giá trị</td>
+          </tr>
+          <tr>
+            <td>Nên lưu các thời điểm thay đổi dữ liệu với từng record</td>
+            <td>created_at<br>
+              updated_at<br>
+              deleted_at</td>
+            <td><br>
+            </td>
+            <td>Theo dõi tính toàn vẹn dữ liệu</td>
+          </tr>
+          <tr>
+            <td>Không đặt tên chứa kiểu dữ liệu</td>
+            <td>return_code</td>
+            <td>int_return_code</td>
+            <td>Kiểu dữ liệu có thể thay đổi:<br>
+              – date =&gt; timestamp<br>
+              – int =&gt; bigint</td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Primary Key</h4>
+      <table>
+        <tbody>
+          <tr>
+            <td>Nên</td>
+            <td>Ví dụ</td>
+            <td>Không nên</td>
+            <td>Giải thích</td>
+          </tr>
+          <tr>
+            <td>Chỉ nên dùng PK là&nbsp;id</td>
+            <td>table&nbsp;.id</td>
+            <td>table&nbsp;.table_id</td>
+            <td>Dễ nhớ<br>
+              Giảm effort khi đổi tên table sau này</td>
+          </tr>
+          <tr>
+            <td>Mỗi table nên có 1 PK, bên cạnh các UNIQUE KEY khác</td>
+            <td>PRIMARY KEY (id),<br>
+              UNIQUE KEY idx_unique (key1,key2)</td>
+            <td><br>
+            </td>
+            <td>Làm việc với các record nhanh hơn</td>
+          </tr>
+          <tr>
+            <td>PK mặc định nên dùng kiểu Interger, Auto-increment</td>
+            <td><br>
+            </td>
+            <td><br>
+            </td>
+            <td><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Foreign Keys</h4>
+      <table>
+        <tbody>
+          <tr>
+            <td>Nên</td>
+            <td>Không nên</td>
+            <td>Giải thích</td>
+          </tr>
+          <tr>
+            <td>Tên FK được kết hợp từ tên field và tên table mà nó tham chiếu
+              tới</td>
+            <td>person_id&nbsp;là FK của table và field&nbsp;person.id</td>
+            <td>Dễ hiểu</td>
+          </tr>
+          <tr>
+            <td>Tùy chọn Cascading Update có thể dùng, nhưng Cascading Delete
+              thì nên tránh</td>
+            <td><br>
+            </td>
+            <td>Giảm rủi ro khi lỡ xóa record ở main table khiến cho toàn bộ dữ
+              liệu liên quan biến mất</td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Indexes</h4>
+      <table>
+        <tbody>
+          <tr>
+            <td>Nên</td>
+            <td>Ví dụ</td>
+            <td>Giải thích</td>
+          </tr>
+          <tr>
+            <td>Thêm prefix idx_ ở đầu</td>
+            <td>&nbsp;idx_created_at</td>
+            <td>Dễ nhớ, nhất là khi ALTER TABLE mà không dùng GUI Tool</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Chú ý</h3>
+      <p>Tuân thủ Oracle convention của trung tâm: đặt tên bảng, id, trường,
+        sequence, view, function, procedure, khóa chính, khóa ngoại,
+        constraint,... </p>
+      <p>Đặt tên các trường theo các danh từ điển hình như code, name,
+        description, status, type, start_date, end_date, parent_id...</p>
+      <p>Không cần thêm đặc trưng của bảng, VD bảng employee có trường code,
+        không cần có trường employee_code.</p>
+      <p>Khi thiết kế CSDL trên ER Studio, mình nên xác định rõ khóa chính, khóa
+        ngoại, nullable của khóa ngoại, nhưng không cần quan tâm đến nullable,
+        unique, default của các trường.</p>
+      <p>Chuẩn hóa kiểu dữ liệu, với Oracle chỉ dùng ba kiểu là:</p>
+      <ul>
+        <li>DATE</li>
+        <li>NVARCHAR2</li>
+        <li>NUMBER</li>
+      </ul>
+      <p>Với MySQL, các kiểu dữ liệu chuẩn là:</p>
+      <ul>
+        <li>INT (ID)</li>
+        <li>BIT (true, false)</li>
+        <li>NUMBERIC(15,0) (Tiền)</li>
+        <li>NUMERIC(10,5) (Hệ số)</li>
+        <li>DATE (Ngày tháng - không có giờ)</li>
+        <li>DATETIME (Ngày tháng giờ)</li>
+        <li>VARCHAR (Xâu)</li>
+        <li>TEXT hoặc BLOB (Văn bản)</li>
+      </ul>
+      <p>Cần comment đầy đủ ở ER Studio để sinh comment ở CSDL, sau đó chạy tiện
+        ích sinh ApplicationResource.</p>
+      <p>Các bảng mà đứng độc lập, dữ liệu là cố định (SYSTEM_PARAMETER) có thể
+        bỏ qua ID kiểu số, lấy trường code làm ID của bảng luôn.</p>
+      <p>Chuẩn hóa độ dài dữ liệu. Mình có thể định nghĩa thừa ra một tý cũng
+        không sao. Độ dài dữ liệu này là con số vàng rút ra từ kinh nghiệm các
+        dự án: </p>
+      <ul>
+        <li>Mã, số điện thoại, email: 50</li>
+        <li>Tên: 100</li>
+        <li>Mô tả: 200, 500</li>
+        <li>Số nguyên: NUMBER(1,0): trạng thái, loại</li>
+        <li>Số nguyên: NUMBER(10,0): số thứ tự, ID</li>
+        <li>Số thực: NUMBER(20,5): giá trị, tiền</li>
+      </ul>
+      <p>Giá trị của is_active nên là 0 hoặc 1, không phải là NULL hoặc 1. Sau
+        này khi tìm kiếm, các tùy chọn tìm kiếm sẽ là:</p>
+      <ul>
+        <li>"" (rỗng): tìm kiếm tất cả</li>
+        <li>"0": Tìm kiếm inactive</li>
+        <li>"1": Tìm kiếm active</li>
+      </ul>
+      <p>Trước chúng ta hay sử dụng "2" cho tùy chọn tất cả.</p>
+      <p>Giá trị của status bắt đầu từ 1.</p>
+      <p>Bài viết (ví dụ được soạn thảo từ CKEditor) nên để kiểu dữ liệu là ...?</p>
+      <h3>Tổng kết</h3>
+      <p>Có nhiều quy tắc để nhớ, tuy nhiên có thể dựa trên nguyên tắc thiết kế
+        ban đầu là:</p>
+      <p><strong>Be Consistent&nbsp;and&nbsp;Simple, don’t waste your brain any
+          single second for any unnecessary thing</strong></p>
+      <ul>
+      </ul>
+      <h3>Tham khảo</h3>
+      <p><a href="https://blog.topdev.vn/database-conventions/">blog.topdev.vn/database-conventions</a></p>
+      <ul>
+      </ul>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

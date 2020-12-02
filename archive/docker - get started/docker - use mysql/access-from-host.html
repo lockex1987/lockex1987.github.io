@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sử dụng MySQL với Docker">
+    <meta name="keywords" content="docker, mysql">
+    <meta name="author" content="lockex1987">
+    <title>Truy cập MySQL trong container từ máy host</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Truy cập MySQL trong container từ máy host</h2>
+      <p>Để truy cập được MySQL trong container bằng tool như Heidi SQL, chúng
+        ta làm như sau.</p>
+      <h3>Lấy IP của container</h3>
+      <pre>docker inspect mysql-2 | grep IPAddress
+</pre>
+      <p>Kết quả là 172.17.0.2.</p>
+      <h3>Lấy IP của Docker machine</h3>
+      <p>Nếu bạn đang ở trong Docker machine thì dùng lệnh <code>ifconfig</code>.
+        Vào Docker machine dùng lệnh <code>docker-machine ssh</code>.</p>
+      <p>Nếu bạn đang ở ngoài host machine (Windows 7) thì dùng lệnh <code>docker-machine
+          ip</code>.</p>
+      <p>Kết quả là 192.168.99.100.</p>
+      <h3>Thêm route từ máy host thật đến container</h3>
+      <p>Đánh lệnh sau trên Windows:</p>
+      <pre>route add 172.17.0.0 mask 255.255.0.0 192.168.99.100</pre>
+      <p>Chú ý <code>172.17.0.0</code> chứ không phải là <code>172.17.0.2</code>.</p>
+      <h3>Truy cập từ máy host</h3>
+      <p>Chúng ta truy cập MySQL bằng Heidi SQL với các thông số sau:</p>
+      <ul>
+        <li>IP: 172.17.0.2</li>
+        <li>Port: 3306</li>
+        <li>User: root</li>
+        <li>Password: 123456</li>
+      </ul>
+      <p>Chúng ta có thể gặp lỗi như sau:</p>
+      <pre>Authentication plugin 'caching_sha2_password' cannot be loaded</pre>
+      <p>Tuy nhiên, đây không phải là lỗi Docker mà là lỗi liên quan đến phiên
+        bản MySQL mới (8.0.13) và tool kết nối.</p>
+      <p>Để bỏ qua lỗi này và cho phép kết nối chúng ta vào MySQL thực hiện lệnh
+        sau:</p>
+      <pre>ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '123456';
+</pre>
+      <p></p>
+      <p>Trên host machine là Linux (Ubuntu), bạn có thể truy cập vào MySQL của
+        Docker container như sau:</p>
+      <pre>mysql --host=172.17.0.2 --port=3306 -uroot -p</pre>
+      <h3>Tham khảo<br>
+      </h3>
+      <p>https://itfromzero.com/linux/docker/ket-noi-mysql-workbench-voi-docker-mysql-container.html</p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

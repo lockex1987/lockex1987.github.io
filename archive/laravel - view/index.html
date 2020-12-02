@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Laravel View</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Laravel View">
+ </head> 
+ <body> 
+  <article> 
+   <h3>Tạo Views</h3> 
+   <p>Views chứa nội dung HTML phục vụ cho ứng dụng của bạn và tách riêng controller (logic ứng dụng) ra khỏi giao diện. Views chứa tại thư mục <code>resources/views</code>. Ví dụ đơn giản của view nhìn giống như sau:</p> 
+   <pre><code>&lt;html&gt;
+    &lt;body&gt;
+        &lt;h1&gt;Hello, {{ $name }}&lt;/h1&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre> 
+   <p>Nội dung view này lưu tại <code>resources/views/greeting.blade.php</code>, chúng ta sẽ trả dữ liệu về hàm <code>view</code> như sau:</p> 
+   <pre><code>Route::get('/', function() {
+    return view('greeting', ['name' =&gt; 'James']);
+});</code></pre> 
+   <p>Như bạn có thể thấy, tham số đầu tiên của hàm <code>view</code> tương ứng với tên tệp tin trong thư mục <code>resources/views</code>. Tham số thứ hai là một mảng dữ liệu cần dùng cho view. Trong trường hợp này, chúng ta truyền biến <code>name</code>, khi nó hiển thị ở view, sử dụng cú pháp Blade syntax.</p> 
+   <p>Tất nhiên, các view có thể nằm trong thư mục con của thư mục <code>resources/views</code>. "Dấu chấm" sẽ ngăn cách các thư mục con. Ví dụ, nếu view của bạn lưu trong thư mục <code>resources/views/admin/profile.blade.php</code>, thì khi đó nó sẽ như sau:</p> 
+   <pre><code>return view('admin.profile', $data);</code></pre> 
+   <p>Nếu bạn cần kiểm tra view có tồn tại hay không, bạn có thể dùng <code>View</code> facade. Phương thức <code>exists</code> sẽ trả về <code>true</code> nếu view tồn tại:</p> 
+   <pre><code>use Illuminate\Support\Facades\View;
+
+if (View::exists('emails.customer')) {
+    //
+}</code></pre> 
+   <p><a></a></p> 
+   <h3>Truyền dữ liệu vào view</h3> 
+   <p>Như bạn nhìn thấy ở ví dụ trước, bạn có thể truyền một mảng của dữ liệu vào view:</p> 
+   <pre><code>return view('greetings', ['name' =&gt; 'Victoria']);</code></pre> 
+   <p>Khi bạn truyền dữ liệu theo cách này, <code>$data</code> nên là một cặp key/value. Bên trong view, bạn có thể lấy giá trị bằng cách sử dụng key, như <code>&lt;?php echo $key; ?&gt;</code>. Bạn cũng có thể để truyền dữ liệu vào view <code>view</code>, bạn có thể dùng phương thức <code>with</code> như bên dưới:</p> 
+   <pre><code>return view('greeting')-&gt;with('name', 'Victoria');</code></pre> 
+   <p><a></a></p> 
+   <p>Có 3 cách hay được sử dụng:</p> 
+   <pre>class SampleController extends Controller
+{
+    /**
+     * Pass an array to the 'foo' view as a second parameter.
+     */
+    public function foo()
+    {
+        return view('foo', ['key' =&gt; 'The big brown fox jumped over the lazy dog']);
+    }
+
+    /**
+     * Pass a key variable to the 'foo view using the compact method as the second parameter.
+     */
+    public function bar()
+    {
+        $key = 'If a would chuck can chuck wood,';
+        return view('foo', compact('key'));
+    }
+
+    /**
+     * Pass a key, value pair to the view using the with method.
+     */
+    public function baz()
+    {
+        return view('foo')-&gt;with('key', 'How much woood would a woodchuck chuck.');
+    }
+}</pre> 
+   <h3>Chia sẻ dữ liệu cho tất cả views</h3> 
+   <p>Thỉnh thoảng, bạn cần chia sẻ một phần dữ liệu với tất cả các views trong ứng dụng của bạn. Bạn có thể sử dụng phương thức <code>share</code> của facade. Thông thương, bạn chỉ cần gọi phương thức <code>share</code> trong phương thức <code>boot</code> của service provider. Bạn có thể thoải mái thêm vào trong <code>AppServiceProvider</code> hoặc tự tạo ra một service provider khác:</p> 
+   <pre><code>&lt;?php
+
+namespace App\Providers;
+
+use Illuminate\Support\Facades\View;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return  void
+     */
+    public function boot()
+    {
+        View::share('key', 'value');
+    }
+
+    /**
+     * Register the service provider.
+     *
+     * @return  void
+     */
+    public function register()
+    {
+        //
+    }
+}</code></pre> 
+   <p><a></a></p> 
+   <br> 
+   <p> Nguồn: <a href="https://laravel.com/docs/5.3/views">https://laravel.com/docs/5.3/views</a> </p> 
+   <p></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

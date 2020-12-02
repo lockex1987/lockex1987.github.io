@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="falsy, isset, empty, Elvis operator, Null-coalescing operator">
+    <title>Các giá trị, hàm boolean trong PHP</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Các giá trị, hàm boolean trong PHP</h2>
+      <h3>Các giá trị falsy</h3>
+      <p>Những giá trị được coi là falsy là những giá trị khi được ép về kiểu
+        boolean sẽ cho giá trị là <code>false</code>. Bao gồm:</p>
+      <ul>
+        <li>Giá trị boolean <code>false</code></li>
+        <li>Xâu rỗng ""</li>
+        <li>Xâu "0"</li>
+        <li>Số nguyên 0</li>
+        <li>Số thực 0.0</li>
+        <li>Mảng không có phần tử</li>
+        <li><code>null</code> (gồm cả những biến không được set giá trị)</li>
+        <li>SimpleXML object được tạo từ tag rỗng</li>
+      </ul>
+      <p>Ngoài những giá trị là falsy kể trên, thì tất cả các giá trị khác đều
+        được coi là <code>true</code> (truthy).</p>
+      <h3>Hàm isset, empty, is_null</h3>
+      <p>Ba hàm hữu ích <code>isset</code>, <code>empty</code> và <code>is_null</code>
+        đều trả về một giá trị boolean.</p>
+      <p><code>isset</code> trả về true nếu một biến được gán giá trị và không
+        phải là null.</p>
+      <p><code>empty</code> trả về true nếu biến là trống không (một chuỗi rỗng,
+        false, mảng không có phần tử, NULL, “0 ?, 0 và một biến chưa được đặt).</p>
+      <p><code>is_null</code> trả về true nếu biến là null.</p>
+      <p><code>is_null</code> đối diện với <code>isset</code>, ngoại trừ một sự
+        khác biệt mà <code>isset</code> có thể được áp dụng cho các biến không
+        xác định, nhưng <code>is_null</code> chỉ với các biến được khai báo.</p>
+      <table cellspacing="0" cellpadding="0" border="1px solid">
+        <tbody>
+          <tr>
+            <th>Value of variable</th>
+            <th>boolean</th>
+            <th>isset</th>
+            <th>empty</th>
+            <th>is_null</th>
+          </tr>
+          <tr>
+            <td>false</td>
+            <td>false</td>
+            <td>true</td>
+            <td>true</td>
+            <td>false</td>
+          </tr>
+          <tr>
+            <td>"" (an empty string)</td>
+            <td>false</td>
+            <td>true</td>
+            <td>true</td>
+            <td>false</td>
+          </tr>
+          <tr>
+            <td>"0" (0 as a string)</td>
+            <td>false</td>
+            <td>true</td>
+            <td>true</td>
+            <td>false</td>
+          </tr>
+          <tr>
+            <td>0 (0 as an integer)</td>
+            <td>false</td>
+            <td>true</td>
+            <td>true</td>
+            <td>false</td>
+          </tr>
+          <tr>
+            <td>0.0 (0 as a float)</td>
+            <td>false</td>
+            <td>true</td>
+            <td>true</td>
+            <td>false</td>
+          </tr>
+          <tr>
+            <td>array() (an empty array)</td>
+            <td>false</td>
+            <td>true</td>
+            <td>true</td>
+            <td>false</td>
+          </tr>
+          <tr>
+            <td>null</td>
+            <td>false</td>
+            <td>false</td>
+            <td>true</td>
+            <td>true</td>
+          </tr>
+          <tr>
+            <td>true</td>
+            <td>true</td>
+            <td>true</td>
+            <td>false</td>
+            <td>false</td>
+          </tr>
+          <tr>
+            <td>Undefined</td>
+            <td>ERROR - false</td>
+            <td>false</td>
+            <td>true</td>
+            <td>ERROR - true</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><a target="_blank" href="demo.php">Demo</a> </p>
+      <h3>Toán tử Elvis</h3>
+      <p>Toán tử Elvis trả về giá trị toán hạng bên trái nếu toán hạng bên trái
+        là truthy, ngược lại trả về toán hạng bên phải.</p>
+      <p>Ví dụ</p>
+      <pre>foo = bar_1 ?: bar_2;</pre>
+      <p>sẽ tương đương với</p>
+      <pre>foo = bar_1 ? bar_1 : bar_2;</pre>
+      <p>Toán hạng bên trái <code>bar_1</code> chỉ tính toán một lần.</p>
+      <p>Nó được gọi là toán hạng Elvis vì giống mái tóc của Elvis Presley.</p>
+      <p><img src="https://i.stack.imgur.com/hQlrps.png"></p>
+      <h3>Toán tử null-coalesing</h3>
+      <p>Toán tử null-coalescing</p>
+      <pre>foo = bar_1 ?? bar_2;</pre>
+      <p>sẽ tương đương với</p>
+      <pre>foo = isset(bar_1) ? bar_1 : bar_2;</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

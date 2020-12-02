@@ -1,0 +1,364 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Bootstrap</title> 
+  <!-- Highlight --> 
+  <link rel="stylesheet" href="lib/highlight/css/default.css"> 
+  <script src="lib/highlight/js/highlight.pack.js"></script> 
+  <!-- jQuery --> 
+  <script src="lib/jquery/js/jquery.min.js"></script> 
+  <!-- Bootstrap --> 
+  <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css"> 
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script> 
+  <script>hljs.initHighlightingOnLoad();</script> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Bootstrap">
+ </head> 
+ <body class="container"> 
+  <article> 
+   <h1>Bootstrap</h1> 
+   <p>Tôi là một người luôn muốn tự code từ những cái thuần (pure), gốc (core) mà không sử dụng thư viện. Cái đó thì cũng tốt thôi, vì tôi sẽ hiểu được bản chất và sẽ tùy chỉnh được nhiều. Nhưng nếu sử dụng thư viện, chúng ta sẽ an tâm và có thể tập trung được vào "nghiệp vụ". "Nghiệp vụ" và "trải nghiệm" mới là cái quan trọng của một dự án.</p> 
+   <p>Hãy sử dụng library cho các dự án lớn (kể cả nhỏ).</p> 
+   <p>Hãy chọn lựa library:</p> 
+   <ul> 
+    <li>AngularJS: framework, single page application, interactive with server</li> 
+    <li>Bootstrap: GUI</li> 
+    <li>jQuery: library, interactive with GUI</li> 
+   </ul> 
+   <p>Library sẽ giúp chúng ta yên tâm hơn là tự làm vì nó đã được test nhiều. Chúng ta có thể tự làm các ví dụ đơn giản để hiểu nguyên lý, nhưng mà hãy sử dụng library.</p> 
+   <p>Library cũng dạy chúng ta cách code chuẩn.</p> 
+   <p>---------------------------------</p> 
+   <p>Bootstrap là một framework miễn phí và mã nguồn mở dùng để thiết kế các trang web. Nó bao gồm các pattern cho typography, form, button, navigation,... và các mở rộng JavaScript khác như carousel.</p> 
+   <p>Bootstrap được phát triển bởi Mark Otto và Jacob Thornton ở Twitter như là một framework để khuyến khích việc <strong>consistency</strong> giữa các ứng dụng. Trước Bootstrap, nhiều thư viện khác nhau được sử dụng dẫn đến việc inconsistency và khó bảo trì. File CSS có khi hàng chục nghìn dòng.</p> 
+   <p>Bootstrap được release thành mã nguồn mở vào năm 2011.</p> 
+   <p>Năm 2012, Bootstrap 2 được release, thêm hệ thống layout 12 cột responsive, Glyphicon,...</p> 
+   <p>Năm 2013, Bootstrap 3 được release, thiết kế lại các thành phần sử dụng flat design và cách tiếp cận mobile first.</p> 
+   <p>Năm 2014, Mark Otto thông báo đang phát triển Bootstrap 4. Đến thời điểm hiện tại (30/04/2017) thì phiên bản 4 này vẫn đang ở trạng thái alpha.</p> 
+   <h2>Bắt đầu</h2> 
+   <p>Dowload từ trạng chủ</p> 
+   <p><a href="http://getbootstrap.com/getting-started/">http://getbootstrap.com/getting-started/</a></p> 
+   <p>Sử dụng CDN:</p> 
+   <pre><code>&lt;!-- Latest compiled and minified CSS --&gt;<br>&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/&gt;<br><br>&lt;!-- Optional theme --&gt;<br>&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"/&gt;<br><br>&lt;!-- Latest compiled and minified JavaScript --&gt;<br>&lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"&gt;&lt;/script&gt;</code></pre> 
+   <p>Cách an toàn là download nó về local. Khi mất mạng hoặc khi ứng dụng được triển khai nội bộ thì đây là cách bắt buộc.</p> 
+   <p>Chúng ta sẽ sử dụng phiên bản 3.3.7.</p> 
+   <p>Chúng ta sẽ có cấu trúc sau:</p> 
+   <pre><code>bootstrap/
+├── css/
+│   ├── bootstrap.min.css
+│   ├── bootstrap-theme.min.css
+├── js/
+│   └── bootstrap.min.js
+└── fonts/
+    ├── glyphicons-halflings-regular.eot
+    ├── glyphicons-halflings-regular.svg
+    ├── glyphicons-halflings-regular.ttf
+    ├── glyphicons-halflings-regular.woff
+    └── glyphicons-halflings-regular.woff2</code></pre> 
+   <p>File JavaScript của Bootstrap yêu cầu jQuery. Sử dụng jQuery phiên bản 3.2.1.</p> 
+   <p>Chúng ta sẽ có một template như sau:</p> 
+   <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"/&gt;
+    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"/&gt;
+    &lt;title&gt;Bootstrap Basic Template&lt;/title&gt;
+    
+    &lt;!-- jQuery --&gt;
+    &lt;script src="lib/jquery/js/jquery.min.js"&gt;&lt;/script&gt;
+
+    &lt;!-- Bootstrap --&gt;
+    &lt;link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet"/&gt;
+    &lt;script src="lib/bootstrap/js/bootstrap.min.js"&gt;&lt;/script&gt;
+  &lt;/head&gt;
+    
+  &lt;body&gt;
+    &lt;h1&gt;Hello, world!&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre> 
+   <p>Bạn có thể vô hiệu hóa tính năng zoom ở các thiết bị di động bằng cách thêm <code>user-scalable=no</code> vào meta viewport. Người dùng khi đó sẽ chỉ có thể cuộn trang, tạo cảm giác người dùng đang sử dụng một ứng dụng điện thoại thuần túy.</p> 
+   <pre><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"&gt;</code></pre> 
+   <p><br></p> 
+   <p>Bootstrap chia màn hình thành 12 cột để hỗ trợ responsive. Bootstrap hỗ trợ các kích thước màn hình sau:</p> 
+   <div class="table-responsive"> 
+    <table class="table table-bordered table-striped"> 
+     <thead> 
+      <tr> 
+       <th><br></th> 
+       <th> Extra small devices Phones (&lt;768px) </th> 
+       <th> Small devices Tablets (≥768px) </th> 
+       <th> Medium devices Desktops (≥992px) </th> 
+       <th> Large devices Desktops (≥1200px) </th> 
+      </tr> 
+     </thead> 
+     <tbody> 
+      <tr> 
+       <th class="text-nowrap" scope="row">Grid behavior</th> 
+       <td>Horizontal at all times</td> 
+       <td colspan="3">Collapsed to start, horizontal above breakpoints</td> 
+      </tr> 
+      <tr> 
+       <th class="text-nowrap" scope="row">Container width</th> 
+       <td>None (auto)</td> 
+       <td>750px</td> 
+       <td>970px</td> 
+       <td>1170px</td> 
+      </tr> 
+      <tr> 
+       <th class="text-nowrap" scope="row">Class prefix</th> 
+       <td>.col-xs-</td> 
+       <td>.col-sm-</td> 
+       <td>.col-md-</td> 
+       <td>.col-lg-</td> 
+      </tr> 
+      <tr> 
+       <th class="text-nowrap" scope="row">Column width</th> 
+       <td class="text-muted">Auto</td> 
+       <td>~62px</td> 
+       <td>~81px</td> 
+       <td>~97px</td> 
+      </tr> 
+     </tbody> 
+    </table> 
+   </div> 
+   <h2><br></h2> 
+   <h2>Typography</h2> 
+   <p>Cỡ font mặc định là 14px, line-height là 1.428. Cái này được áp dụng với body và tất cả các đoạn văn (thẻ p).</p> 
+   <p>Ngoài ra, các thẻ p có margin-bottom bằng 1/2 line-height.</p> 
+   <p>Các thẻ h1, h2, h3, h4, h5, h6</p> 
+   <p>small</p> 
+   <p>mark</p> 
+   <p>abbr</p> 
+   <p>blockquote</p> 
+   <p>dl</p> 
+   <p>code</p> 
+   <p>kbd</p> 
+   <p>pre</p> 
+   <p>Chúng ta chỉ sử dụng thẻ, không thêm class nào.</p> 
+   <p>Để đổi màu chữ theo đúng ý nghĩa, chúng ta có các lớp sau: .text-muted, .text-primary, .text-success, .text-info, .text-warning, .text-danger.</p> 
+   <p>Để đổi màu nền, chúng ta sử dụng các lớp .bg-* tương ứng: .bg-primary, .bg-success, .bg-info, .bg-warning, .bg-danger.</p> 
+   <p>Bootstrap cũng cung cấp 1 số class sau:</p> 
+   <table class="table table-bordered"> 
+    <thead> 
+     <tr> 
+      <th>Element/Class</th> 
+      <th>Description</th> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>&lt;h1&gt; - &lt;h6&gt;<br>or<br>.h1 - .h6</td> 
+      <td>h1 - h6 headings</td> 
+     </tr> 
+     <tr> 
+      <td>&lt;small&gt;</td> 
+      <td>Creates a lighter, secondary text in any heading <h2>Heading <small>(secondary text)</small></h2></td> 
+     </tr> 
+     <tr> 
+      <td>.small</td> 
+      <td>Indicates smaller text (set to 85% of the size of the parent): <span class="small">Smaller text</span></td> 
+     </tr> 
+     <tr> 
+      <td>.lead</td> 
+      <td>Makes a text stand out: <span class="lead">Stand out text</span></td> 
+     </tr> 
+     <tr> 
+      <td>&lt;mark&gt;<br>or<br>.mark</td> 
+      <td>Highlights text: <span class="mark">Highlighted text</span></td> 
+     </tr> 
+     <tr> 
+      <td>&lt;del&gt;</td> 
+      <td>Indicates deleted text: <del>Deleted text</del></td> 
+     </tr> 
+     <tr> 
+      <td>&lt;s&gt;</td> 
+      <td>Indicates no longer relevant text: <s>No longer relevant text</s></td> 
+     </tr> 
+     <tr> 
+      <td>&lt;ins&gt;</td> 
+      <td>Indicates inserted text: <ins>Inserted text</ins></td> 
+     </tr> 
+     <tr> 
+      <td>&lt;u&gt;</td> 
+      <td>Indicates underlined text: <u>Underlined text</u></td> 
+     </tr> 
+     <tr> 
+      <td>&lt;strong&gt;</td> 
+      <td>Indicates bold text: <strong>Bold text</strong></td> 
+     </tr> 
+     <tr> 
+      <td>&lt;em&gt;</td> 
+      <td>Indicates italic text: <em>Italic text</em></td> 
+     </tr> 
+     <tr> 
+      <td>.text-left</td> 
+      <td>Indicates left-aligned text</td> 
+     </tr> 
+     <tr> 
+      <td>.text-center</td> 
+      <td>Indicates center-aligned text</td> 
+     </tr> 
+     <tr> 
+      <td>.text-right</td> 
+      <td>Indicates right-aligned text</td> 
+     </tr> 
+     <tr> 
+      <td>.text-justify</td> 
+      <td>Indicates justified text</td> 
+     </tr> 
+     <tr> 
+      <td>.text-nowrap</td> 
+      <td>Indicates no wrap text</td> 
+     </tr> 
+     <tr> 
+      <td>.text-lowercase</td> 
+      <td>Indicates lowercased text: <span class="text-lowercase">LOWERCASED TEXT</span></td> 
+     </tr> 
+     <tr> 
+      <td>.text-uppercase</td> 
+      <td>Indicates uppercased text: <span class="text-uppercase">uppercased text</span></td> 
+     </tr> 
+     <tr> 
+      <td>.text-capitalize</td> 
+      <td>Indicates capitalized text: <span class="text-capitalize">capitalized text</span></td> 
+     </tr> 
+     <tr> 
+      <td>&lt;abbr&gt;</td> 
+      <td>The &lt;abbr&gt; element indicates an abbreviation or acronym. Abbreviations with a title attribute have a dotted bottom border and a help cursor on hover, providing additional context on hover.</td> 
+     </tr> 
+     <tr> 
+      <td>.initialism</td> 
+      <td>Displays the text inside the &lt;abbr&gt; element in a slightly smaller font size</td> 
+     </tr> 
+     <tr> 
+      <td>&lt;address&gt;</td> 
+      <td>Presents contact information</td> 
+     </tr> 
+     <tr> 
+      <td>&lt;blockquote&gt;</td> 
+      <td>Indicates blocks of content from another source</td> 
+     </tr> 
+     <tr> 
+      <td>.blockquote-reverse</td> 
+      <td>Indicates a blockquote with right-aligned content</td> 
+     </tr> 
+     <tr> 
+      <td>&lt;ul&gt;</td> 
+      <td>Indicates an unordered list</td> 
+     </tr> 
+     <tr> 
+      <td>&lt;ol&gt;</td> 
+      <td>Indicates an ordered list</td> 
+     </tr> 
+     <tr> 
+      <td>.list-unstyled</td> 
+      <td>Removes the default list-style and left margin on list items (works on both &lt;ul&gt; and &lt;ol&gt;). This class only applies to immediate children list items (to remove the default list-style from any nested lists, apply this class to any nested lists as well)</td> 
+     </tr> 
+     <tr> 
+      <td>.list-inline</td> 
+      <td>Places all list items on a single line</td> 
+     </tr> 
+     <tr> 
+      <td>&lt;dl&gt;</td> 
+      <td>Indicates a description list</td> 
+     </tr> 
+     <tr> 
+      <td>.dl-horizontal</td> 
+      <td>Lines up the terms and descriptions in the &lt;dl&gt; element side-by-side. Starts off like default &lt;dl&gt;s, but when the browser window expands, it will line up side-by-side</td> 
+     </tr> 
+     <tr> 
+      <td>&lt;var&gt;</td> 
+      <td>Indicates variables: <var>x</var> = <var>a</var><var>b</var> + <var>y</var></td> 
+     </tr> 
+     <tr> 
+      <td>&lt;kbd&gt;</td> 
+      <td>Indicates input that is typically entered via the keyboard: <kbd>CTRL + P</kbd></td> 
+     </tr> 
+     <tr> 
+      <td>&lt;pre&gt;</td> 
+      <td>Indicates multiple lines of code</td> 
+     </tr> 
+     <tr> 
+      <td>&lt;pre class="pre-scrollable"&gt;</td> 
+      <td>Indicates multiple lines of code with scrollbar</td> 
+     </tr> 
+     <tr> 
+      <td>&lt;samp&gt;</td> 
+      <td>Indicates sample output from a computer program: <samp>Sample output</samp></td> 
+     </tr> 
+     <tr> 
+      <td>&lt;code&gt;</td> 
+      <td>Indicates inline snippets of code: <code class="w3-codespan">span</code>, <code class="w3-codespan">div</code></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <h2>Bảng</h2> 
+   <p>Bảng căn bản chỉ có padding nhỏ và ngăn cách theo chiều ngang.</p> 
+   <p>.table</p> 
+   <p>.table-stripped</p> 
+   <p>.table-bordered</p> 
+   <p>.table-hover</p> 
+   <p>.table-condensed</p> 
+   <p>.table-responsive</p> 
+   <p>Bảng sẽ được scroll theo chiều ngang trên các thiết bị nhỏ (dưới 768px).</p> 
+   <h2>Hình ảnh</h2> 
+   <p>.img-rounded</p> 
+   <p>.img-circle</p> 
+   <p>.img-thumbnail</p> 
+   <p>.img-responsive</p> 
+   <h2>Alert</h2> 
+   <p>.alert</p> 
+   <p>.alert-success</p> 
+   <p>.alert-info</p> 
+   <p>.alert-warning</p> 
+   <p>.alert-danger</p> 
+   <p>.alert-link</p> 
+   <p>Để đóng alert, thêm .alert-dismissable vào trong class container.</p> 
+   <p>Sau đó thêm class="close" và data-dismiss="alert" vào link và button.</p> 
+   <p>Thêm class .fade và .in để thêm hoạt họa.</p> 
+   <p>Button</p> 
+   <p>.btn</p> 
+   <p>.btn-default</p> 
+   <p>.btn-primary</p> 
+   <p>.btn-success</p> 
+   <p>.btn-info</p> 
+   <p>.btn-warning</p> 
+   <p>.btn-danger</p> 
+   <p>.btn-link</p> 
+   <p>Có thể áp dụng vào các đối tượng a, button, input.</p> 
+   <p>Kích thước</p> 
+   <p>.btn-lg</p> 
+   <p>.btn-md</p> 
+   <p>.btn-sm</p> 
+   <p>.btn-xs</p> 
+   <p>.btn-block</p> 
+   <p>.active</p> 
+   <p>.disabled</p> 
+   <p>.btn-group</p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p>Navigation Bar (Menu)</p> 
+   <p>Có các kiểu:</p> 
+   <p>nav-tabs</p> 
+   <p>nav-pills</p> 
+   <p>nav-stacked</p> 
+   <p><br></p> 
+   <h2>Reference</h2> 
+   <p>Wikipedia</p> 
+   <p>Homepage</p> 
+   <p><a href="https://www.w3schools.com/bootstrap/">w3school</a></p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p><br></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

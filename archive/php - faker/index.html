@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tạo dữ liệu với Faker">
+    <title>Tạo dữ liệu với Faker</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+	
+  </head>
+  <body>
+    <article>
+      <h2>Tạo dữ liệu với Faker</h2>
+      <p>Hiển thị dữ liệu giả nhưng đẹp.</p>
+      <h3>Cài đặt</h3>
+      <pre>composer require fzaninotto/faker</pre>
+      <h3>Sử dụng</h3>
+      <p>Sử dụng <code>Faker\Factory::create()</code> để khởi tạo generator,
+        cái mà sẽ sinh dữ liệu bằng các thuộc tính được đặt tên theo kiểu dữ
+        liệu mà bạn muốn.</p>
+      <pre>&lt;?php
+require_once 'vendor/autoload.php';
+
+$faker = Faker\Factory::create();
+
+echo $faker-&gt;name . "\n";
+echo $faker-&gt;address . "\n";
+echo $faker-&gt;text . "\n";
+
+for ($i = 0; $i &lt; 10; $i++) {
+    echo $faker-&gt;name, "\n";
+}</pre>
+      <h3>Formatter</h3>
+      <p>Mỗi thuộc tính sinh (như <code>name</code>, <code>address</code>, <code>lorem</code>)
+        được gọi là "formatter". Bộ sinh có rất nhiều các formatter, được đóng
+        gói trong các "provider". Sau đây là danh sách các formatter mặc định.</p>
+      <h4>Cơ bản</h4>
+      <p>Faker\Provider\Base</p>
+      <pre>randomDigit             // 7
+randomDigitNotNull      // 5
+randomNumber($nbDigits = NULL, $strict = false) // 79907610
+randomFloat($nbMaxDecimals = NULL, $min = 0, $max = NULL) // 48.8932
+numberBetween($min = 1000, $max = 9000) // 8567
+randomLetter            // 'b'
+// returns randomly ordered subsequence of a provided array
+randomElements($array = array ('a','b','c'), $count = 1) // array('c')
+randomElement($array = array ('a','b','c')) // 'b'
+shuffle('hello, world') // 'rlo,h eoldlw'
+shuffle(array(1, 2, 3)) // array(2, 1, 3)
+numerify('Hello ###') // 'Hello 609'
+lexify('Hello ???') // 'Hello wgt'
+bothify('Hello ##??') // 'Hello 42jz'
+asciify('Hello ***') // 'Hello R6+'
+regexify('[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}'); // sm0@y8k96a.ej
+</pre>
+      <h4>Văn bản</h4>
+      <p>Faker\Provider\Lorem</p>
+      <pre>word                                             // 'aut'
+words($nb = 3, $asText = false)                  // array('porro', 'sed', 'magni')
+sentence($nbWords = 6, $variableNbWords = true)  // 'Sit vitae voluptas sint non voluptates.'
+sentences($nb = 3, $asText = false)              // array('Optio quos qui illo error.', 'Laborum vero a officia id corporis.', 'Saepe provident esse hic eligendi.')
+paragraph($nbSentences = 3, $variableNbSentences = true) // 'Ut ab voluptas sed a nam. Sint autem inventore aut officia aut aut blanditiis. Ducimus eos odit amet et est ut eum.'
+paragraphs($nb = 3, $asText = false)             // array('Quidem ut sunt et quidem est accusamus aut. Fuga est placeat rerum ut. Enim ex eveniet facere sunt.', 'Aut nam et eum architecto fugit repellendus illo. Qui ex esse veritatis.', 'Possimus omnis aut incidunt sunt. Asperiores incidunt iure sequi cum culpa rem. Rerum exercitationem est rem.')
+text($maxNbChars = 200)                          // 'Fuga totam reiciendis qui architecto fugiat nemo. Consequatur recusandae qui cupiditate eos quod.'
+</pre>
+      <h4>Người</h4>
+      <p>Faker\Provider\en_US\Person</p>
+      <pre>title($gender = null|'male'|'female')     // 'Ms.'
+titleMale                                 // 'Mr.'
+titleFemale                               // 'Ms.'
+suffix                                    // 'Jr.'
+name($gender = null|'male'|'female')      // 'Dr. Zane Stroman'
+firstName($gender = null|'male'|'female') // 'Maynard'
+firstNameMale                             // 'Maynard'
+firstNameFemale                           // 'Rachel'
+lastName                                  // 'Zulauf'
+</pre>
+      <h4>Địa chỉ</h4>
+      <p>Faker\Provider\en_US\Address</p>
+      <pre>cityPrefix                          // 'Lake'
+secondaryAddress                    // 'Suite 961'
+state                               // 'NewMexico'
+stateAbbr                           // 'OH'
+citySuffix                          // 'borough'
+streetSuffix                        // 'Keys'
+buildingNumber                      // '484'
+city                                // 'West Judge'
+streetName                          // 'Keegan Trail'
+streetAddress                       // '439 Karley Loaf Suite 897'
+postcode                            // '17916'
+address                             // '8888 Cummings Vista Apt. 101, Susanbury, NY 95473'
+country                             // 'Falkland Islands (Malvinas)'
+latitude($min = -90, $max = 90)     // 77.147489
+longitude($min = -180, $max = 180)  // 86.211205
+</pre>
+      <h4>Số điện thoại</h4>
+      <p>Faker\Provider\en_US\PhoneNumber</p>
+      <pre>phoneNumber             // '201-886-0269 x3767'
+tollFreePhoneNumber     // '(888) 937-7238'
+e164PhoneNumber     // '+27113456789'
+</pre>
+      <h4>Công ty</h4>
+      <p>Faker\Provider\en_US\Company</p>
+      <pre>catchPhrase             // 'Monitored regional contingency'
+bs                      // 'e-enable robust architectures'
+company                 // 'Bogan-Treutel'
+companySuffix           // 'and Sons'
+jobTitle                // 'Cashier'
+</pre>
+      <h4>Văn bản 2</h4>
+      <p>Faker\Provider\en_US\Text</p>
+      <pre>realText($maxNbChars = 200, $indexSize = 2) // "And yet I wish you could manage it?) 'And what are they made of?' Alice asked in a shrill, passionate voice. 'Would YOU like cats if you were never even spoke to Time!' 'Perhaps not,' Alice replied."
+</pre>
+      <h4>Thời gian</h4>
+      <p>Faker\Provider\DateTime</p>
+      <pre>unixTime($max = 'now')                // 58781813
+dateTime($max = 'now', $timezone = null) // DateTime('2008-04-25 08:37:17', 'UTC')
+dateTimeAD($max = 'now', $timezone = null) // DateTime('1800-04-29 20:38:49', 'Europe/Paris')
+iso8601($max = 'now')                 // '1978-12-09T10:10:29+0000'
+date($format = 'Y-m-d', $max = 'now') // '1979-06-09'
+time($format = 'H:i:s', $max = 'now') // '20:49:42'
+dateTimeBetween($startDate = '-30 years', $endDate = 'now', $timezone = null) // DateTime('2003-03-15 02:00:49', 'Africa/Lagos')
+dateTimeInInterval($startDate = '-30 years', $interval = '+ 5 days', $timezone = null) // DateTime('2003-03-15 02:00:49', 'Antartica/Vostok')
+dateTimeThisCentury($max = 'now', $timezone = null)     // DateTime('1915-05-30 19:28:21', 'UTC')
+dateTimeThisDecade($max = 'now', $timezone = null)      // DateTime('2007-05-29 22:30:48', 'Europe/Paris')
+dateTimeThisYear($max = 'now', $timezone = null)        // DateTime('2011-02-27 20:52:14', 'Africa/Lagos')
+dateTimeThisMonth($max = 'now', $timezone = null)       // DateTime('2011-10-23 13:46:23', 'Antarctica/Vostok')
+amPm($max = 'now')                    // 'pm'
+dayOfMonth($max = 'now')              // '04'
+dayOfWeek($max = 'now')               // 'Friday'
+month($max = 'now')                   // '06'
+monthName($max = 'now')               // 'January'
+year($max = 'now')                    // '1993'
+century                               // 'VI'
+timezone                              // 'Europe/Paris'
+</pre>
+      <h4>Internet</h4>
+      <p>Faker\Provider\Internet</p>
+      <pre>email                   // 'tkshlerin@collins.com'
+safeEmail               // 'king.alford@example.org'
+freeEmail               // 'bradley72@gmail.com'
+companyEmail            // 'russel.durward@mcdermott.org'
+freeEmailDomain         // 'yahoo.com'
+safeEmailDomain         // 'example.org'
+userName                // 'wade55'
+password                // 'k&amp;|X+a45*2['
+domainName              // 'wolffdeckow.net'
+domainWord              // 'feeney'
+tld                     // 'biz'
+url                     // 'http://www.skilesdonnelly.biz/aut-accusantium-ut-architecto-sit-et.html'
+slug                    // 'aut-repellat-commodi-vel-itaque-nihil-id-saepe-nostrum'
+ipv4                    // '109.133.32.252'
+localIpv4               // '10.242.58.8'
+ipv6                    // '8e65:933d:22ee:a232:f1c1:2741:1f10:117c'
+macAddress              // '43:85:B7:08:10:CA'
+</pre>
+      <h4>UserAgent</h4>
+      <p>Faker\Provider\UserAgent</p>
+      <pre>userAgent              // 'Mozilla/5.0 (Windows CE) AppleWebKit/5350 (KHTML, like Gecko) Chrome/13.0.888.0 Safari/5350'
+chrome                 // 'Mozilla/5.0 (Macintosh; PPC Mac OS X 10_6_5) AppleWebKit/5312 (KHTML, like Gecko) Chrome/14.0.894.0 Safari/5312'
+firefox                // 'Mozilla/5.0 (X11; Linuxi686; rv:7.0) Gecko/20101231 Firefox/3.6'
+safari                 // 'Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_7_1 rv:3.0; en-US) AppleWebKit/534.11.3 (KHTML, like Gecko) Version/4.0 Safari/534.11.3'
+opera                  // 'Opera/8.25 (Windows NT 5.1; en-US) Presto/2.9.188 Version/10.00'
+internetExplorer       // 'Mozilla/5.0 (compatible; MSIE 7.0; Windows 98; Win 9x 4.90; Trident/3.0)'
+</pre>
+      <h4>Payment</h4>
+      <p>Faker\Provider\Payment</p>
+      <pre>creditCardType          // 'MasterCard'
+creditCardNumber        // '4485480221084675'
+creditCardExpirationDate // 04/13
+creditCardExpirationDateString // '04/13'
+creditCardDetails       // array('MasterCard', '4485480221084675', 'Aleksander Nowak', '04/13')
+// Generates a random IBAN. Set $countryCode to null for a random country
+iban($countryCode)      // 'IT31A8497112740YZ575DJ28BP4'
+swiftBicNumber          // 'RZTIAT22263'
+</pre>
+      <h4>Màu sắc</h4>
+      <p>Faker\Provider\Color</p>
+      <pre>hexcolor               // '#fa3cc2'
+rgbcolor               // '0,255,122'
+rgbColorAsArray        // array(0,255,122)
+rgbCssColor            // 'rgb(0,255,122)'
+safeColorName          // 'fuchsia'
+colorName              // 'Gainsbor'
+</pre>
+      <h4>File</h4>
+      <p>Faker\Provider\File</p>
+      <pre>fileExtension          // 'avi'
+mimeType               // 'video/x-msvideo'
+// Copy a random file from the source to the target directory and returns the fullpath or filename
+file($sourceDir = '/tmp', $targetDir = '/tmp') // '/path/to/targetDir/13b73edae8443990be1aa8f1a483bc27.jpg'
+file($sourceDir, $targetDir, false) // '13b73edae8443990be1aa8f1a483bc27.jpg'
+</pre>
+      <h4>Ảnh</h4>
+      <p>Faker\Provider\Image</p>
+      <pre>// Image generation provided by LoremPixel (http://lorempixel.com/)
+imageUrl($width = 640, $height = 480) // 'http://lorempixel.com/640/480/'
+imageUrl($width, $height, 'cats')     // 'http://lorempixel.com/800/600/cats/'
+imageUrl($width, $height, 'cats', true, 'Faker') // 'http://lorempixel.com/800/400/cats/Faker'
+imageUrl($width, $height, 'cats', true, 'Faker', true) // 'http://lorempixel.com/grey/800/400/cats/Faker/' Monochrome image
+image($dir = '/tmp', $width = 640, $height = 480) // '/tmp/13b73edae8443990be1aa8f1a483bc27.jpg'
+image($dir, $width, $height, 'cats')  // 'tmp/13b73edae8443990be1aa8f1a483bc27.jpg' it's a cat!
+image($dir, $width, $height, 'cats', false) // '13b73edae8443990be1aa8f1a483bc27.jpg' it's a filename without path
+image($dir, $width, $height, 'cats', true, false) // it's a no randomize images (default: `true`)
+image($dir, $width, $height, 'cats', true, true, 'Faker') // 'tmp/13b73edae8443990be1aa8f1a483bc27.jpg' it's a cat with 'Faker' text. Default, `null`.
+</pre>
+      <h4>UUID</h4>
+      <p>Faker\Provider\Uuid</p>
+      <pre>uuid                   // '7e57d004-2b97-0e7a-b45f-5387367791cd'
+</pre>
+      <h4>Barcode</h4>
+      <p>Faker\Provider\Barcode</p>
+      <pre>ean13          // '4006381333931'
+ean8           // '73513537'
+isbn13         // '9790404436093'
+isbn10         // '4881416324'
+</pre>
+      <h4>Linh tinh</h4>
+      <p>Faker\Provider\Miscellaneous</p>
+      <pre>boolean // false
+boolean($chanceOfGettingTrue = 50) // true
+md5           // 'de99a620c50f2990e87144735cd357e7'
+sha1          // 'f08e7f04ca1a413807ebc47551a40a20a0b4de5c'
+sha256        // '0061e4c60dac5c1d82db0135a42e00c89ae3a333e7c26485321f24348c7e98a5'
+locale        // en_UK
+countryCode   // UK
+languageCode  // en
+currencyCode  // EUR
+emoji         // 😁
+</pre>
+      <h4>Bias</h4>
+      <p>Faker\Provider\Biased</p>
+      <pre>// get a random number between 10 and 20,
+// with more chances to be close to 20
+biasedNumberBetween($min = 10, $max = 20, $function = 'sqrt')
+</pre>
+      <h4>HTML</h4>
+      <p>Faker\Provider\HtmlLorem</p>
+      <pre>//Generate HTML document which is no more than 2 levels deep, and no more than 3 elements wide at any level.
+randomHtml(2,3)   // &lt;html&gt;&lt;head&gt;&lt;title&gt;Aut illo dolorem et accusantium eum.&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&lt;form action="example.com" method="POST"&gt;&lt;label for="username"&gt;sequi&lt;/label&gt;&lt;input type="text" id="username"&gt;&lt;label for="password"&gt;et&lt;/label&gt;&lt;input type="password" id="password"&gt;&lt;/form&gt;&lt;b&gt;Id aut saepe non mollitia voluptas voluptas.&lt;/b&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;tr&gt;Non consequatur.&lt;/tr&gt;&lt;tr&gt;Incidunt est.&lt;/tr&gt;&lt;tr&gt;Aut voluptatem.&lt;/tr&gt;&lt;tr&gt;Officia voluptas rerum quo.&lt;/tr&gt;&lt;tr&gt;Asperiores similique.&lt;/tr&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;Sapiente dolorum dolorem sint laboriosam commodi qui.&lt;/td&gt;&lt;td&gt;Commodi nihil nesciunt eveniet quo repudiandae.&lt;/td&gt;&lt;td&gt;Voluptates explicabo numquam distinctio necessitatibus repellat.&lt;/td&gt;&lt;td&gt;Provident ut doloremque nam eum modi aspernatur.&lt;/td&gt;&lt;td&gt;Iusto inventore.&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Animi nihil ratione id mollitia libero ipsa quia tempore.&lt;/td&gt;&lt;td&gt;Velit est officia et aut tenetur dolorem sed mollitia expedita.&lt;/td&gt;&lt;td&gt;Modi modi repudiandae pariatur voluptas rerum ea incidunt non molestiae eligendi eos deleniti.&lt;/td&gt;&lt;td&gt;Exercitationem voluptatibus dolor est iste quod molestiae.&lt;/td&gt;&lt;td&gt;Quia reiciendis.&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Inventore impedit exercitationem voluptatibus rerum cupiditate.&lt;/td&gt;&lt;td&gt;Qui.&lt;/td&gt;&lt;td&gt;Aliquam.&lt;/td&gt;&lt;td&gt;Autem nihil aut et.&lt;/td&gt;&lt;td&gt;Dolor ut quia error.&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Enim facilis iusto earum et minus rerum assumenda quis quia.&lt;/td&gt;&lt;td&gt;Reprehenderit ut sapiente occaecati voluptatum dolor voluptatem vitae qui velit.&lt;/td&gt;&lt;td&gt;Quod fugiat non.&lt;/td&gt;&lt;td&gt;Sunt nobis totam mollitia sed nesciunt est deleniti cumque.&lt;/td&gt;&lt;td&gt;Repudiandae quo.&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Modi dicta libero quisquam doloremque qui autem.&lt;/td&gt;&lt;td&gt;Voluptatem aliquid saepe laudantium facere eos sunt dolor.&lt;/td&gt;&lt;td&gt;Est eos quis laboriosam officia expedita repellendus quia natus.&lt;/td&gt;&lt;td&gt;Et neque delectus quod fugit enim repudiandae qui.&lt;/td&gt;&lt;td&gt;Fugit soluta sit facilis facere repellat culpa magni voluptatem maiores tempora.&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Enim dolores doloremque.&lt;/td&gt;&lt;td&gt;Assumenda voluptatem eum perferendis exercitationem.&lt;/td&gt;&lt;td&gt;Quasi in fugit deserunt ea perferendis sunt nemo consequatur dolorum soluta.&lt;/td&gt;&lt;td&gt;Maxime repellat qui numquam voluptatem est modi.&lt;/td&gt;&lt;td&gt;Alias rerum rerum hic hic eveniet.&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Tempore voluptatem.&lt;/td&gt;&lt;td&gt;Eaque.&lt;/td&gt;&lt;td&gt;Et sit quas fugit iusto.&lt;/td&gt;&lt;td&gt;Nemo nihil rerum dignissimos et esse.&lt;/td&gt;&lt;td&gt;Repudiandae ipsum numquam.&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Nemo sunt quia.&lt;/td&gt;&lt;td&gt;Sint tempore est neque ducimus harum sed.&lt;/td&gt;&lt;td&gt;Dicta placeat atque libero nihil.&lt;/td&gt;&lt;td&gt;Et qui aperiam temporibus facilis eum.&lt;/td&gt;&lt;td&gt;Ut dolores qui enim et maiores nesciunt.&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Dolorum totam sint debitis saepe laborum.&lt;/td&gt;&lt;td&gt;Quidem corrupti ea.&lt;/td&gt;&lt;td&gt;Cum voluptas quod.&lt;/td&gt;&lt;td&gt;Possimus consequatur quasi dolorem ut et.&lt;/td&gt;&lt;td&gt;Et velit non hic labore repudiandae quis.&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;
+</pre>
+      <h3>Code mẫu</h3>
+      <p><a target="_blank" href="demo.php">demo.php</a></p>
+      <h3>Demo</h3>
+      <p>Sử dụng Faker PHP để tạo dữ liệu mock và đẩy vào DB với database
+        seeder.</p>
+      <p>Nếu chỉ là giả dữ liệu API trả về thì có thể sử dụng Faker.js.</p>
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://github.com/fzaninotto/Faker">fzaninotto/Faker:
+          Faker is a PHP library that generates fake data for you</a><a target="_blank"
+
+          href="https://github.com/fzaninotto/Faker"></a></p>
+      <p><a target="_blank" href="https://github.com/marak/Faker.js/">Marak/faker.js:
+          generate massive amounts of realistic fake data in Node.js and the
+          browser</a></p>
+    </article>
+
+    <script src="libs/faker/faker.min.js"></script>
+    <script src="js/demo-faker.js"></script>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Phân trang trong Laravel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta name="description" content="Laravel Pagination">
+  </head>
+  <body>
+    <article>
+      <h2>Phân trang trong Laravel</h2>
+      <p>Trong các framework khác, phân trang có thể khá vất vả. Phân trang của
+        Laravel được tích hợp với query builder and Eloquent ORM và khá thuận
+        tiện, đơn giản. Mã HTML sinh ra thì tương thích với Bootstrap CSS
+        framework.</p>
+      <h3>Phân trang kết quả từ query builder</h3>
+      <p>Có vài cách để phân trang. Đơn giản nhất là sử dụng hàm <code>paginate</code>
+        trong query builder hoặc một Eloquent query. The <code>paginate</code>
+        cung cấp bởi Laravel sẽ tự động xử lý việc tạo ra limit và vị trí trang
+        dựa trên trang hiện tại đang được xem bởi người dùng. Mặc định, trang
+        hiện tại được nhận biết thông qua giá trị <code>page</code> trên query
+        string trên HTTP request. Dĩ nhiên là giá trị này được tự động nhận biết
+        bởi Laravel, và cũng được tự động thêm vào các link sinh ra bởi
+        paginator.</p>
+      <p>Trong ví dụ này, chỉ truyền một tham số của hàm <code>paginate</code>
+        là số của items bạn cần hiển thị trong "một trang". Ở đây, chúng ta ví
+        dụ đặt chỉ số là <code>15</code> items trên một trang:</p>
+      <pre>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+
+class UserController extends Controller
+{
+    /**
+     * Show all of the users for the application.
+     *
+     * @return  Response
+     */
+    public function index()
+    {
+        $users = DB::table('users')-&gt;paginate(15);
+        return view('user.index', ['users' =&gt; $users]);
+    }
+}</pre>
+      <p> Hiện tại, việc phân trang sử dụng <code>groupBy</code> chưa thể thực
+        thi hiệu quả bởi Laravel. Nếu bạn cần sử dụng <code>groupBy</code> với
+        một tập kết quả phân trang, thì khuyến khích các bạn thực hiện query cơ
+        sở dữ liệu và tạo một paginator thủ công. </p>
+      <h3>Phân trang đơn giản</h3>
+      <p>Nếu bạn chỉ cần hiển thị link "Next" and "Previous" trong view, bạn có
+        thể sử dụng phương thức <code>simplePaginate</code> để thực hiện một
+        query hiệu quả hơn. Cách này rất hữu dụng với một tập dữ liệu lớn nếu
+        bạn không cần hiển thị một link cho mỗi số trang khi thực hiện render:</p>
+      <pre>$users = DB::table('users')-&gt;simplePaginate(15);</pre>
+      <h3>Phân trang kết quả từ Eloquent</h3>
+      <p>Bạn cũng có thể phân trang kết quả từ Eloquent. Trong ví dụ này, chúng
+        ta sẽ phân trang model <code>User</code> với <code>15</code> items
+        trong một trang. Như bạn thấy, cú pháp gần như giống hệt với phân trang
+        kết quả từ query builder:</p>
+      <pre>$users = App\User::paginate(15);</pre>
+      <p>Tất nhiên, bạn cũng có thể gọi <code>paginate</code> sau khi thiết lập
+        rằng buộc trên query, ví dụ như mệnh đề <code>where</code>:</p>
+      <pre>$users = User::where('votes', '&gt;', 100)-&gt;paginate(15);</pre>
+      <p>Bạn cũng có thể sử dụng phương thức <code>simplePaginate</code> khi
+        phân trang với Eloquent:</p>
+      <pre>$users = User::where('votes', '&gt;', 100)-&gt;simplePaginate(15);</pre>
+      <h3>Tạo một Paginator</h3>
+      <p>Đôi khi bạn muốn tạo một đối tượng xử lý phân trang riêng, truyền vào
+        cho nó một mảng các items. Bạn có thể thực hiện bằng cách tạo một đối
+        tượng từ <code>Illuminate\Pagination\Paginator</code> hoặc <code>Illuminate\Pagination\LengthAwarePaginator</code>
+        phục thuộc vào yêu cầu của bạn.</p>
+      <p>Class <code>Paginator</code> không quan tâm tổng số items trên tập kết
+        quả; tuy nhiên, chính vì thế mà class không có phương thức để lấy được
+        index của trang cuối cùng. Class <code>LengthAwarePaginator</code> nhận
+        đối số tương tự với <code>Paginator</code>; nhưng lại cần biết tổng số
+        items có trong tập kết quả.</p>
+      <p>Nói một cách khác, <code>Paginator</code> tương ứng với hàm <code>simplePaginate</code>
+        trên query builder và Eloquent, trong khi <code>LengthAwarePaginator</code>
+        tương ứng với hàm <code>paginate</code>.</p>
+      <p> Khi tự tạo một đối tượng paginator thủ công, bạn nên tự "cắt" mảng của
+        tập kết quả truyền vào cho paginator. Nếu bạn không chắc làm như thế
+        nào, hãy tham khảo hàm array_slice PHP. </p>
+      <h3>Hiển thị kết quả trong views</h3>
+      <p>Khi bạn gọi hàm <code>paginate</code>, bạn sẽ nhận được một đối tượng<code>Illuminate\Pagination\LengthAwarePaginator</code>.
+        Khi bạn gọi hàm <code>simplePaginate</code> bạn sẽ nhận được một đối
+        tượng <code>Illuminate\Pagination\Paginator</code>. Những đối tượng này
+        cung cấp vài phương thức mô tả tập kết quả. Ngoài những phương thức này,
+        các đối tượng paginator đều là các iterators và có thể được lặp như một
+        mảng. Vì vậy, khi bạn đã nhận được kết quả, bạn có thể hiển thị kết quả
+        và render vào page sử dụng Blade:</p>
+      <pre>&lt;div &gt;
+    @foreach ($users as $user)
+        {{ $user-&gt;name }}
+    @endforeach
+&lt;/div&gt;
+
+{{ $users-&gt;links() }}</pre>
+      <p>Hàm <code>links</code> sẽ render các link cho tới hết các trang trong
+        tập kết quả. Mỗi link này đều chứa sẵn một tham số <code>page</code>
+        với giá trị đúng. Nhớ rằng, mã HTML sinh ra bởi hàm <code>links</code>
+        tương thích với Bootstrap CSS framework.</p>
+      <h3>Tuỳ biến URI của phân trang</h3>
+      <p>Hàm <code>setPath</code> cho phép bạn tuỳ chọn URI sử dụng bởi
+        paginator khi sinh ra links. Ví dụ, nếu bạn muốn paginator sinh ra links
+        theo kiểu này <code>http://example.com/custom/url?page=N</code>, bạn
+        chỉ cần truyền <code>custom/url</code> vào hàm <code>setPath</code>:</p>
+      <pre>Route::get('users', function () {
+    $users = App\User::paginate(15);
+
+    $users-&gt;setPath('custom/url');
+
+    //
+});</pre>
+      <h3>Thêm vào link phân trang</h3>
+      <p>Bạn có thể thêm vào query string của link phân trang sử dụng hàm <code>appends</code>.
+        Ví dụ, để thêm vào <code>sort=votes</code> vào mỗi link, bạn nên thực
+        hiện gọi <code>appends</code> như sau:</p>
+      <pre>{{ $users-&gt;appends(['sort' =&gt; 'votes'])-&gt;links() }}</pre>
+      <p>Nếu bạn muốn thêm vào "hash fragment" vào URL của paginator, bạn có thể
+        sử dụng hàm <code>fragment</code>. Ví dụ, để thêm <code>#foo</code>
+        vào cuối mỗi link phân trang, gọi hàm <code>fragment</code>:</p>
+      <pre>{{ $users-&gt;fragment('foo')-&gt;links() }}</pre>
+      <h3>Chuyển kết quả sang JSON</h3>
+      <p>Các lớp kết quả phân trang của Laravel triển khai từ contract <code>Illuminate\Contracts\Support\Jsonable</code>
+        và mở ra hàm <code>toJson</code>, do đó, rất dễ dàng để có thể chuyển
+        kết quả thành. Bạn cũng có thể convert một đối tượng paginator sang JSON
+        bằng cách return nó từ một route hay controller action:</p>
+      <pre>Route::get('users', function () {
+    return App\User::paginate();
+});</pre>
+      <p>JSON tạo ra từ paginator sẽ chứa các thông tin meta như <code>total</code>,
+        <code>current_page</code>, <code>last_page</code>, và nhiều nữa. Các
+        đối tượng kết quả đều có trong khoá <code>data</code> của mảng JSON.
+        Đây là một ví dụ về JSON tạo bởi paginator từ một route:</p>
+      <pre>{
+   "total": 50,
+   "per_page": 15,
+   "current_page": 1,
+   "last_page": 4,
+   "next_page_url": "http://laravel.app?page=2",
+   "prev_page_url": null,
+   "from": 1,
+   "to": 15,
+   "data":[
+        {
+            // Result Object
+        },
+        {
+            // Result Object
+        }
+   ]
+}</pre>
+      <h3>Tùy biến phân trang trong view</h3>
+      <p>Mặc định, views rendered để hiển thị link phân trang tương thích với
+        Bootstrap CSS framework. Tuy nhiên, nếu bạn không sử dụng Bootstrap, bạn
+        có thể tự định nghĩa views cho chính bạn để render những link đó. Khi
+        gọi hàm <code>links</code> trong một paginator instance, truyền vào tên
+        view là đối số thứ nhất:</p>
+      <pre>{{ $paginator-&gt;links('view.name') }}</pre>
+      <p>Tuy nhiên, cách dễ nhất để tùy biến phân trang trong view là tạo ra
+        trong thư mục <code>resources/views/vendor</code> bằng lệnh <code>vendor:publish</code>:</p>
+      <pre>php artisan vendor:publish --tag=laravel-pagination</pre>
+      <p>Lệnh này sẽ đặt các view ở trong thư mục <code>resources/views/vendor/pagination</code>.
+        File <code>default.blade.php</code>trong đường dẫn tương ứng với phân
+        trang của view mặc định. Và rất đơn giản để thay đổi file HTML.</p>
+      <h3>Các phương thức của đối tượng Paginator</h3>
+      <p>Mỗi đối tượng paginator cung cấp các thông tin khác trong phân trang
+        thông qua các phương thức sau:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Phương thức</th>
+            <th>Mô tả</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>$results-&gt;count()</code></td>
+            <td>Lấy số phần tử của trang hiện tại</td>
+          </tr>
+          <tr>
+            <td><code>$results-&gt;currentPage()</code></td>
+            <td>Lấy số thứ tự trang hiện tại</td>
+          </tr>
+          <tr>
+            <td><code>$results-&gt;firstItem()</code></td>
+            <td>Lấy số thứ tự của phần tử đầu tiên<br>
+            </td>
+          </tr>
+          <tr>
+            <td><code>$results-&gt;hasMorePages()</code> </td>
+            <td> Có trang nữa hay không</td>
+          </tr>
+          <tr>
+            <td><code>$results-&gt;lastItem()</code> </td>
+            <td> Lấy số thứ tự của phần tử cuối cùng</td>
+          </tr>
+          <tr>
+            <td><code>$results-&gt;lastPage()</code> </td>
+            <td>Lấy số thứ tự của trang cuối cùng (không có khi sử dụng <code>simplePaginate</code>)
+            </td>
+          </tr>
+          <tr>
+            <td><code>$results-&gt;nextPageUrl()</code> </td>
+            <td> URL của trang tiếp theo</td>
+          </tr>
+          <tr>
+            <td><code>$results-&gt;perPage()</code> </td>
+            <td> Số phần tử của mỗi trang</td>
+          </tr>
+          <tr>
+            <td><code>$results-&gt;previousPageUrl()</code> </td>
+            <td> URL của trang phía trước</td>
+          </tr>
+          <tr>
+            <td><code>$results-&gt;total()</code> </td>
+            <td>Lấy tổng số phần tử (không có khi sử dụng <code>simplePaginate</code>)</td>
+          </tr>
+          <tr>
+            <td><code>$results-&gt;url($page)</code> </td>
+            <td> URL của một trang theo số thứ tự trang</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Ví dụ</h3>
+      <p>Controller</p>
+      <pre>/**
+ * Tìm kiếm.
+ */
+public function search()
+{
+    $search = request('search');
+    $orderBy = 'id';
+    $orderType = 'desc';
+    $pageSize = 10;
+    $users = User::where('name', 'LIKE', "%$search%")
+            -&gt;orWhere('email', 'LIKE', "%$search%")
+            -&gt;orWhere('fullname', 'LIKE', "%$search%")
+            -&gt;orWhere('phone', 'LIKE', "%$search%")
+            -&gt;orderBy($orderBy, $orderType)
+            -&gt;paginate($pageSize);
+    return view('users.list', compact('users', 'search'));
+}</pre>
+      <p>View </p>
+      <pre>@if (count($users) == 0)
+    &lt;div class="text-warning"&gt;
+        Không tồn tại bản ghi
+    &lt;/div&gt;
+@else
+    &lt;table class="table table-hover table-striped table-bordered order-column"&gt;
+        &lt;thead&gt;
+            &lt;tr&gt;
+                &lt;th class="text-right"&gt;#&lt;/th&gt;
+                &lt;th&gt;Tên tài khoản&lt;/th&gt;
+                &lt;th&gt;Tên đầy đủ&lt;/th&gt;
+                &lt;th&gt;Số điện thoại&lt;/th&gt;
+                &lt;th&gt;Email&lt;/th&gt;
+                &lt;th class="text-center"&gt;Là admin&lt;/th&gt;
+                &lt;th&gt;Ứng dụng&lt;/th&gt;
+                &lt;th&gt;Reset mật khẩu&lt;/th&gt;
+                &lt;th class="text-center"&gt;Thao tác&lt;/th&gt;
+            &lt;/tr&gt;                        
+        &lt;/thead&gt;
+
+        &lt;tbody&gt;
+            @foreach ($users as $idx =&gt; $u)
+                &lt;tr&gt;
+                    &lt;td class="text-right"&gt;{{ $users-&gt;firstItem() + $idx }}&lt;/td&gt;
+                    &lt;td&gt;{{ $u-&gt;name }}&lt;/td&gt;
+                    &lt;td&gt;{{ $u-&gt;fullname }}&lt;/td&gt;
+                    &lt;td&gt;{{ $u-&gt;phone }}&lt;/td&gt;
+                    &lt;td&gt;{{ $u-&gt;email }}&lt;/td&gt;
+                    &lt;td class="text-center"&gt;
+                        @if ($u-&gt;is_admin)
+                            &lt;i class="fa fa-check"&gt;&lt;/i&gt;
+                        @endif
+                    &lt;/td&gt;
+                    &lt;td&gt;
+                        Reputa test, Reputal local
+                    &lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;div class="validate-container"&gt;
+                            &lt;input type="text"
+                                    placeholder="Mật khẩu mới"
+                                    title="Nhập mật khẩu mới và nhấn ENTER"
+                                    class="table-action-reset pl-2"
+                                    data-id="{{ $u-&gt;id }}"/&gt;
+                        &lt;/div&gt;
+                    &lt;/td&gt;
+                    &lt;td class="text-center"&gt;
+                        &lt;span class="table-action table-action-edit" title="Sửa" onclick="openUpdateForm({{ $u-&gt;id }})"&gt;
+                            &lt;i class="fa fa-pencil text-info"&gt;&lt;/i&gt;
+                        &lt;/span&gt;
+                        &lt;span class="table-action table-action-delete" data-id="{{ $u-&gt;id }}" title="Xóa"&gt;
+                            &lt;i class="fa fa-trash-o text-danger"&gt;&lt;/i&gt;
+                        &lt;/span&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+            @endforeach
+        &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;div class="d-flex justify-content-between"&gt;
+        &lt;div class="text-muted"&gt;
+            Tìm thấy {{ $users-&gt;total() }} bản ghi,
+            hiển thị từ {{ $users-&gt;firstItem() }} đến {{ $users-&gt;lastItem() }}
+        &lt;/div&gt;
+
+        &lt;div&gt;
+            {{ $users-&gt;appends(['search' =&gt; $search])-&gt;links() }}
+        &lt;/div&gt;
+    &lt;/div&gt;
+@endif</pre>
+      <p>JS</p>
+      <pre>/**
+ * Tìm kiếm.
+ */
+function search(page) {
+    var params = {
+        search: $('#search').val().trim()
+    };
+    if (page) {
+        params.page = page;
+    }
+    $.ajax({
+        url: '/users/search',
+        data: params,
+        type: 'GET',
+        success: function (data) {
+            $('#searchResult').html(data);
+        }
+    });
+}
+
+/**
+ * Phân trang Laravel bằng AJAX.
+ */
+function handlePagination() {
+    $(document).on('click', '.pagination a', function (evt) {
+        evt.preventDefault();
+        var page = $(this).attr('href').split('page=')[1];
+        search(page);
+    });
+}</pre>
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://laravel.com/docs/5.8/pagination">https://laravel.com/docs/5.8/pagination</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

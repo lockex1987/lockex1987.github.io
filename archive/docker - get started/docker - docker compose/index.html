@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Docker Compose</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Docker Compose">
+ </head> 
+ <body> 
+  <article> 
+   <p>Theo như định nghĩa trên trang chủ thì nó là một công cụ dùng để quản lý các contianer cũng như liên kết các image đó với nhau. Tham khảo tại đây <a href="https://docs.docker.com/compose/">https://docs.docker.com/compose/</a>.</p> 
+   <p>Còn theo giải thích mì ăn liền của tôi là như thế này:</p> 
+   <p>Khi bạn chạy một ứng dụng web WordPress bạn cần hệ điều hành đó là Linux cụ thể là Ubuntu, cơ sở dữ liệu là MySQL, ngôn ngử lập trình là PHP cuối cùng là máy chủ web Nginx hoặc Apache.</p> 
+   <p>Chúng ta có thể đóng gói các thành phần đó lại với nhau gọi là LEMP hoặc LAMP vào một image rồi sau đó dùng nó để chạy WordPress thông qua dòng lệnh sau:</p> 
+   <pre>docker run --name some-wordpress --link some-mysql:mysql -d wordpress</pre> 
+   <p>hoặc:</p> 
+   <pre>docker run --name some-wordpress --link mysqlwp:mysql -p 80:80 \
+    -e WORDPRESS_DB_NAME=wordpress \
+    -e WORDPRESS_DB_USER=wordpress \
+    -e WORDPRESS_DB_PASSWORD=wordpresspwd \
+    -d wordpress</pre> 
+   <p>Nhưng bạn đã phạm phải một nguyên tắc căn bản trong Docker đó là mỗi một image trong Docker chỉ làm một công việc duy nhất đó chính là tính năng cơ bản trong micro-service mà Docker áp dụng vào, do đó thay vì dùng câu lệnh trên chúng ta có thể chạy câu lệnh thế này.</p> 
+   <pre><code>docker run --name nginx -p 80:80 -d nginx</code>
+<code>docker run --name php-fpm -p 9000:9000 -d gsviec/php</code>
+<code>docker run --name mysql -p 3600:3060 \</code>
+<code>    MYSQL_ROOT_PASSWORD=secret \</code>
+    <code></code><code>MYSQL_DATABASE=phanbook \</code>
+    <code></code><code>MYSQL_USER=phanbook \</code>
+    <code></code><code>MYSQL_PASSWORD=secret \</code>
+    <code></code><code>-d mysql</code></pre> 
+   <p>Nhưng thế này thì mỗi lần deploy hay chạy lại thêm các tham số cấu hình rất là phức tạp do đó thằng Docker Compose nó được sinh ra giúp cho việc quản lý dễ dàng hơn.</p> 
+   <p>Nói tóm lại công dụng của Docker Compose giúp cho việc quản lý và phát triển một dự án thông qua Docker nhanh hơn và trực quan hơn.</p> 
+   <h3>Các dùng</h3> 
+   <p>Thực hành với WordPress</p> 
+   <p>Thực hành với Flask</p> 
+   <p>Thực hành với Laravel</p> 
+   <p>Thực hành với Django</p> 
+   <p>https://viblo.asia/p/su-dung-docker-va-ca-docker-compose-cho-du-an-django-AQrMJbWNM40E</p> 
+   <p>https://manhhomienbienthuy.bitbucket.io/2016/Apr/10/using-docker-and-docker-compose-for-django-development.html</p> 
+   <p>Tham khảo</p> 
+   <p>https://docs.docker.com/compose/</p> 
+   <p>https://docs.docker.com/compose/compose-file/</p> 
+   <p>https://docs.docker.com/compose/reference/</p> 
+   <p><br> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

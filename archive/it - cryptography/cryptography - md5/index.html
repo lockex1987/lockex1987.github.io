@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="cryptography, md5">
+    <title>Hàm băm MD5</title>
+    <link rel="icon" href="../../../images/favicon.png">
+    <link rel="stylesheet" href="../../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Hàm băm MD5</h2>
+      <p> MD5 (Message-Digest algorithm 5) là một hàm băm không khóa.</p>
+      <p> Tất cả đầu vào (file, text,…) sau khi được băm bằng thuật toán MD5 sẽ
+        cho ra một chuỗi đầu ra 128 bit (16 byte) và thường được biểu diễn thành
+        32 chữ số hexa.</p>
+      <p> Ứng dụng của MD5:</p>
+      <ul>
+        <li> Đảm bảo tính toàn vẹn, tạo chuỗi kiểm tra lỗi. Ví dụ khi download
+          một file trên mạng bạn thường thấy người ta cung cấp kèm một chuỗi MD5
+          tương ứng. Sau khi download về ta sẽ băm lại file để kiểm tra chuỗi
+          MD5 có bị thay đổi không. Nếu đã bị thay đổi tức là trong quá trình
+          download file đã bị thiếu một phần nào đó hoặc file đã bị chỉnh sửa
+          (chèn virus, crack…). </li>
+        <li> Mã hóa mật khẩu. Các thông tin nhạy cảm như mật khẩu, thẻ ngân
+          hàng… thường sẽ được mã hóa trước khi lưu vào database. Nếu hacker
+          truy cập được vào database cũng sẽ không lấy được các thông tin đó.
+          Khi sử dụng, ví dụ khi đăng nhập ta sẽ băm mật khẩu thành một chuỗi
+          MD5 và so sánh nó với chuỗi MD5 trong database để xác thực.</li>
+      </ul>
+      <p> Để băm một đối tượng trong Java sử dụng MD5 ta sử dụng class <code>
+          java.security.MessageDigest</code>. Nó nhận đầu vào là một mảng byte
+        và kết quả trả về là một mảng byte đã được băm.</p>
+      <pre>MessageDigest md = MessageDigest.getInstance("MD5");
+md.update(dataInput);
+byte[] hashedData= md.digest();</pre>
+      <p> Sau đó để hiển thị ta sẽ chuyển mảng byte sau khi băm thành một chuỗi
+        hexa.</p>
+      <p> Tham khảo:</p>
+      <p><a href="%20https://stackjava.com/demo/md5-la-gi-code-vi-du-md5-voi-java.html"
+          target="_blank">
+          https://stackjava.com/demo/md5-la-gi-code-vi-du-md5-voi-java.html</a></p>
+    </article>
+    <script src="../../../js/docs.js"></script>
+  </body>
+</html>

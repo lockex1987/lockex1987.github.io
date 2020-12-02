@@ -1,0 +1,14 @@
+*, *:before, *:after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.css-grid { display: grid; grid-auto-flow: row dense; grid-template-columns: 1fr; }
+@media (min-width: 640px) { .css-grid { grid-gap: 1px; grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .css-grid { grid-template-columns: repeat(4, 1fr); } }
+.css-grid .item { width: auto; }
+@media (min-width: 640px) { .css-grid .item:nth-child(17n + 1) { grid-column-end: span 2; grid-row-end: span 2; } }
+.css-grid__link { position: relative; display: block; overflow: hidden; }
+.css-grid__link .absolute-bg { position: absolute; top: 0; left: 0; height: 100%; width: 100%; object-fit: cover; transition: transform 300ms ease; }
+.css-grid__link:before, .css-grid__link:after { content: ""; }
+.css-grid__link:before { display: block; padding-top: 100%; }
+.css-grid__link:after { position: absolute; top: 0; left: 0; height: 100%; width: 100%; background-color: #080808; opacity: 0; transition: opacity 300ms ease; }
+.css-grid__link:hover:after { opacity: 0.3; }
+.css-grid__link:hover .absolute-bg { transform: scale(1.1); }

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Rest Countries API with Color Theme Switcher</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,700,800&display=swap" />
+
+    <link rel="stylesheet" href="../../css/style.css" />
+
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="p-3">
+
+    <section id="mainScreen">
+        <nav class="d-flex justify-content-between">
+            <div id="search" class="position-relative">
+                <i class="fas fa-search position-absolute"></i>
+                <input type="text" placeholder="Search for a country..." id="searchInput" class="border-0">
+            </div>
+
+            <select name="Filter By Region" id="regionMenu" class="border-0">
+                <option value="all">Filter By Region</option>
+                <option value="Africa">Africa</option>
+                <option value="Americas">Americas</option>
+                <option value="Asia">Asia</option>
+                <option value="Europe">Europe</option>
+                <option value="Oceania">Oceania</option>
+            </select>
+        </nav>
+
+        <main id="result" class="d-flex justify-content-between mt-5 flex-wrap"></main>
+    </section>
+
+    <section id="detailScreen" style="display: none">
+        <nav class="mb-5">
+            <button id="backButton">
+                <i class="fas fa-long-arrow-alt-left"></i>
+                Back
+            </button>
+        </nav>
+
+        <main>
+            <div id="countryInfo"></div>
+
+            <p class="font-weight-700 font-size-1.25 mt-5">Border countries:</p>
+
+            <div id="borderInfo" class="mt-4 list-unstyled d-lg-flex"></div>
+        </main>
+    </section>
+
+    <script src="js/script.js"></script>
+    <script src="js/country.js"></script>
+</body>
+
+</html>

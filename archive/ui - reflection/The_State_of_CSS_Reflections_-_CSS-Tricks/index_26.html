@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html class=" -moz-">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico">
+  <link rel="mask-icon" type="" href="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111">
+  <title>CodePen - how CSS scaling w.r.t. various origins works</title>
+  
+  
+  
+  
+      
+
+  
+
+  
+
+  
+  
+
+
+<link media="all" href="index_26.css" type="text/css" rel="stylesheet">
+</head>
+<body translate="no">
+
+  
+<pre><code><span class="token--prp">transform-origin</span>: <span class="token--prc trigger" id="o#{cd}"><span class="curr"><span class="val">50</span>%</span><span class="popup hidden">
+        <input id="ro#{cd}" min="-25" max="125" value="50" type="range">
+        <label for="ro#{cd}">origin x coord</label></span></span> <span class="token--prc trigger" id="o#{cd}"><span class="curr"><span class="val">50</span>%</span><span class="popup hidden">
+        <input id="ro#{cd}" min="-25" max="125" value="50" type="range">
+        <label for="ro#{cd}">origin y coord</label></span></span>;<br><span class="token--prp">transform</span>: <span class="token--fnc trigger" id="fnc" data-dir=""><span class="curr"><span class="val">scale</span></span><span class="popup hidden">
+        <input name="fnc" id="fnc#{i}" checked="checked" type="radio">
+        <label for="fnc#{i}">scale</label>
+        <input id="iso" type="checkbox">
+        <label for="iso">isotropic</label>
+        <input name="fnc" id="fnc#{i}" type="radio">
+        <label for="fnc#{i}">scaleX</label>
+        <input name="fnc" id="fnc#{i}" type="radio">
+        <label for="fnc#{i}">scaleY</label></span></span><span class="values"><span>(</span> <span class="token--no trigger" id="f#{cd}"><span class="curr"><span class="val">1</span></span><span class="popup hidden">
+          <input id="rf#{cd}" min="-1.25" max="1.25" value="1" step=".01" type="range">
+          <label for="rf#{cd}"><span>x </span>scale factor</label></span></span><span class="punct">,</span> <span class="token--no trigger" id="f#{cd}"><span class="curr"><span class="val">1</span></span><span class="popup hidden">
+          <input id="rf#{cd}" min="-1.25" max="1.25" value="1" step=".01" type="range">
+          <label for="rf#{cd}"><span>y </span>scale factor</label></span></span><span>)</span></span></code></pre>
+<section>
+  <div class="boxes">
+    <div class="box" id="original">original</div>
+    <div class="box" id="scaled">scaled</div>
+  </div>
+  <div class="points">
+    <div class="point" data-ox="0" data-oy="0"></div>
+    <div class="point" data-ox="50" data-oy="0"></div>
+    <div class="point" data-ox="100" data-oy="0"></div>
+    <div class="point" data-ox="0" data-oy="50"></div>
+    <div class="point" data-ox="50" data-oy="50"></div>
+    <div class="point" data-ox="100" data-oy="50"></div>
+    <div class="point" data-ox="0" data-oy="100"></div>
+    <div class="point" data-ox="50" data-oy="100"></div>
+    <div class="point" data-ox="100" data-oy="100"></div>
+  </div>
+  <div class="box no-events">
+    <div class="point" id="origin"></div>
+  </div>
+</section>
+    
+
+  
+
+    
+
+  
+  
+
+
+
+ </body>
+</html>

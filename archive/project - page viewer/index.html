@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Đọc từng trang"/>
+    
+    <title>Page viewer</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+    <link rel="stylesheet" href="css/viewer.css"/>
+</head>
+
+<body>
+    <article>
+        <h2>Page viewer</h2>
+        <p>Mỗi lần đọc một trang.</p>
+        <p>Thay đổi từng trang như sách giấy.</p>
+        <h3>Demo localhost</h3>
+        <p>
+            <a href='javascript:(function(){let domain="http://localhost/",version=(new Date).getTime();function initViewer(){window.pageViewer||(window.pageViewer=new PageViewer),window.pageViewer.show()}function loadStyle(){if("undefined"==typeof PageViewer){let e=document.createElement("link");e.rel="stylesheet",e.href=domain+"posts/project - page viewer/css/viewer.css?v="+version,e.onload=loadScript,document.body.appendChild(e)}else initViewer()}function loadScript(){let e=document.createElement("script");e.setAttribute("src",domain+"posts/project - page viewer/js/viewer.js?v="+version),e.onload=initViewer,document.body.appendChild(e)}loadStyle();})();'>
+                Page viewer bookmarklet
+            </a>
+        </p>
+        <h3>Demo lockex1987.github.io</h3>
+        <p>
+            <a id="bookmarklet" href='javascript:(function(){let domain="https://lockex1987.github.io/",version=(new Date).getTime();function initViewer(){window.pageViewer||(window.pageViewer=new PageViewer),window.pageViewer.show()}function loadStyle(){if("undefined"==typeof PageViewer){let e=document.createElement("link");e.rel="stylesheet",e.href=domain+"posts/project - page viewer/css/viewer.css?v="+version,e.onload=loadScript,document.body.appendChild(e)}else initViewer()}function loadScript(){let e=document.createElement("script");e.setAttribute("src",domain+"posts/project - page viewer/js/viewer.js?v="+version),e.onload=initViewer,document.body.appendChild(e)}loadStyle();})();'>
+                Page viewer bookmarklet
+            </a>
+        </p>
+        <p>
+            <button id="btnCopyBookmarklet">
+                Copy lockex1987.github.io bookmarklet link
+            </button>
+        </p>
+
+        <h3>Demo inline bookmarklet</h3>
+        <p>Phải dùng inline vì Facebook có Content Security Policy không cho phép load file JS từ các nguồn ngoài whitelist.</p>
+        <p>Cần sửa đoạn code <code>t.innerHTML="&amp;#215;"</code> thành <code>t.innerHTML="&"+"#215;"</code> nếu không sẽ bị lỗi escape khi encodeURI.</p>
+        <p>
+            <a id="inlineBookmarklet" href='javascript:(function(){if(!window.pageViewer){function addCss(t){var e=document.createElement("style");e.styleSheet?e.styleSheet.cssText=t:e.appendChild(document.createTextNode(t)),document.head.appendChild(e)}addCss("html { overflow-y: auto; }\n    .viewer { box-sizing: border-box; position: absolute; top: 0; bottom: 0; left: 0; right: 0; width: 100%; height: 100%; z-index: 10000; background: #FFF; display: none; overflow: hidden; }\n    .viewer.show { display: block; }\n    .viewer.show .content-wrapper { animation: fadeIn 0.5s; }\n    .viewer .content-wrapper { height: 100%; width: 100%; max-width: 700px; margin: 0 auto; overflow: hidden; cursor: grab; }\n    .viewer .content-wrapper .content { height: 100%; user-select: none; pointer-events: none; }\n    .viewer .content-wrapper .content p { line-height: 1.5; font-size: 16px; text-align: justify; }\n    .viewer .content-wrapper .content table, .viewer .content-wrapper .content figure { break-inside: avoid; }\n    .viewer .info { position: absolute; top: 10px; text-align: center; left: 16px; font-size: small; color: rgba(0, 0, 0, 0.5); }\n    .viewer .btn { background: transparent; box-shadow: none; border: none; cursor: pointer; min-width: unset; margin: 0; height: auto; line-height: 1; padding: 0 16px; }\n    .viewer .btn:hover, .viewer .btn:focus { box-shadow: none; outline: none; }\n    .viewer .btn-close { position: absolute; right: 0px; top: 10px; color: #ee3724; font-weight: 700; font-size: 24px; width: 60px; }\n    .viewer .btn-nav { color: #007bff; font-size: 96px; position: absolute; top: 50%; transform: translateY(-50%); display: none; }\n    .viewer .btn-nav.btn-first { left: 0; }\n    .viewer .btn-nav.btn-last { right: 0; }\n    @media (min-width: 1000px) { .viewer .btn-nav { display: block; } }\n    @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); }\n      to { opacity: 1; transform: scale(1); } }\n    ");class t{constructor(t){try{this.initGui(),this.initHtml(t),this.content.style.columnWidth=this.content.parentNode.clientWidth+"px",this.calculatePageWidthAndColumnWidthAndTotalPage(),this.pageIndex=0,this.initResizeEvent(),this.startXCoord=0,this.isLocked=!1,this.initDrag()}catch(t){alert(t.message)}}initHtml(t){t?this.content.innerHTML=t:(t=this.getHtmlCode(),this.content.innerHTML=t)}getHtmlCode(){let t=window.location.hostname;if("vnca.cand.com.vn"==t)return document.querySelector(".detail-head").innerHTML+document.querySelector(".detail-content").innerHTML;if("localhost"==t||"lockex1987.github.io"==t)return document.querySelector("article").innerHTML;if("vnexpress.net"==t){let t=document.querySelector("#article_detail");return t?t.innerHTML:document.querySelector(".title_news_detail").outerHTML+document.querySelector(".description").outerHTML+document.querySelector(".content_detail").outerHTML}if(location.href.includes("m.facebook.com/story.php")){let t=document.querySelector(".story_body_container");if(t)return t.innerHTML}}initGui(){this.content=document.createElement("div"),this.content.className="content",this.content.style.columnGap="20px",this.info=document.createElement("div"),this.info.className="info";let t=document.createElement("div");t.className="content-wrapper",t.appendChild(this.content),this.viewer=document.createElement("div"),this.viewer.className="viewer",this.viewer.style.padding="50px 20px 20px",this.viewer.appendChild(t),this.viewer.appendChild(this.info),this.viewer.appendChild(this.initCloseButton()),this.viewer.appendChild(this.initFirstButton()),this.viewer.appendChild(this.initLastButton()),document.body.appendChild(this.viewer)}calculatePageWidthAndColumnWidthAndTotalPage(){let t=parseInt(this.content.style.columnGap.replace("px",""));this.content.style.columnWidth=this.content.parentNode.clientWidth+"px",this.pageWidth=this.content.clientWidth+t,this.totalPage=Math.round(this.content.scrollWidth/this.pageWidth)}initResizeEvent(){window.addEventListener("resize",()=>{this.updateDimension()})}updateDimension(){this.calculatePageWidthAndColumnWidthAndTotalPage(),this.updateScrollLeft(),this.updateInfo()}updateScrollLeft(){let t=this.pageIndex*this.pageWidth;this.content.style.transform=`translateX(${-t}px)`}initCloseButton(){let t=document.createElement("button");return t.innerHTML="&"+"#215;",t.className="btn btn-close",t.addEventListener("click",()=>{this.hide()}),t}initFirstButton(){let t=document.createElement("button");return t.textContent="«",t.className="btn btn-nav btn-first",t.addEventListener("click",()=>{this.pageIndex=0,this.content.style.transition="none",this.updateInfo(),this.updateScrollLeft()}),t}initLastButton(){let t=document.createElement("button");return t.textContent="»",t.className="btn btn-nav btn-last",t.addEventListener("click",()=>{this.pageIndex=this.totalPage-1,this.content.style.transition="none",this.updateInfo(),this.updateScrollLeft()}),t}show(){this.viewer.classList.add("show"),document.body.style.maxHeight="100vh",document.body.style.overflow="hidden",this.content.style.transition="none",this.pageIndex=0,this.updateDimension()}hide(){this.viewer.classList.remove("show"),document.body.style.maxHeight="unset",document.body.style.overflow="auto"}updateInfo(){this.info.innerHTML=this.pageIndex+1+"/"+this.totalPage}getXCoord(t){return(t.changedTouches?t.changedTouches[0]:t).clientX}startDrag(t){this.startXCoord=this.getXCoord(t),this.isLocked=!0,this.content.style.transition="none",this.content.parentNode.style.cursor="grabbing"}handleDrag(t){if(this.isLocked){let e=Math.round(this.getXCoord(t)-this.startXCoord);this.content.style.transform=`translateX(${e-this.pageIndex*this.pageWidth}px)`}}finishDrag(t){if(this.isLocked){let e=this.getXCoord(t)-this.startXCoord,n=Math.sign(e),i=Math.abs(e/this.content.parentNode.clientWidth);if(i>.2){let t=this.pageIndex;t-=n,t=Math.max(t,0),t=Math.min(t,this.totalPage-1),this.pageIndex=t,this.updateInfo()}this.isLocked=!1;let o=.5*(1-i);this.content.style.transition=`transform ${o}s ease-out`,this.content.parentNode.style.cursor="grab",this.updateScrollLeft()}}initDrag(){this.content.parentNode.addEventListener("mousedown",t=>{this.startDrag(t)}),this.content.parentNode.addEventListener("touchstart",t=>{this.startDrag(t)},{passive:!0}),this.content.parentNode.addEventListener("mousemove",t=>{this.handleDrag(t)}),this.content.parentNode.addEventListener("touchmove",t=>{this.handleDrag(t)},{passive:!0}),window.addEventListener("mouseup",t=>{this.finishDrag(t)}),window.addEventListener("touchend",t=>{this.finishDrag(t)})}}window.pageViewer=new t}window.pageViewer.show();})();'>
+                Page viewer bookmarklet
+            </a>
+        </p>
+        <p>
+            <button id="btnCopyInlineBookmarklet">
+                Copy inline bookmarklet link
+            </button>
+        </p>
+        
+        <h3>Tham khảo</h3>
+        <p>Cùng mục đích, sử dụng JS:</p>
+        <p><a href="https://lockex1987.github.io/posts/js%20-%20paginate%20text/" target="_blank">lockex1987.github.io/posts/js - paginate text</a></p>
+        <p><a href="https://lockex1987.github.io/posts/ui%20-%20page%20split/" target="_blank">lockex1987.github.io/posts/ui - page split</a></p>
+        <p>Thư viện, có thể thêm tính năng (TOC):</p>
+        <p><a href="https://www.pagedmedia.org/pagedjs-sneak-peeks/" target="_blank">pagedmedia.org/pagedjs-sneak-peeks</a></p>
+    </article>
+
+    <script src="js/viewer.js"></script>
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

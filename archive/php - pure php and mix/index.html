@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Không sử dụng Laravel">
+    <title>Sử dụng PHP thuần với Laravel Mix</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Sử dụng PHP thuần với Laravel Mix</h2>
+      <p>Tôi có một dự án, trong đó chia thành hai phần frontend và backend
+        riêng biệt. Frontend sử dụng PHP Laravel, dạng SPA với Vue. Backend do
+        đội khác phát triển bằng Java Spring. Frontend không có xử lý logic gì
+        bằng PHP, do đó nếu dùng cả framework Laravel thì có vẻ thừa nhiều quá.
+      </p>
+      <p>Tuy nhiên, tôi vẫn muốn một số tính năng mà Laravel cung cấp là:</p>
+      <ul>
+        <li>Lấy cấu hình từ file .env</li>
+        <li>Đường dẫn đến các tài nguyên CSS, JS được thêm các hash để đảm bảo
+          lấy file mới nhất (bằng cách sử dụng hàm mix() của Laravel)</li>
+      </ul>
+      <p>Tôi quyết định viết lại bằng PHP thuần mà vẫn có hai tính năng trên.</p>
+      <p>File mẫu:</p>
+      <p><a href="platform_index.php">platform_index.php</a></p>
+      <p>Cấu hình route ở nginx cho Laravel đã đáp ứng luôn rồi.</p>
+      <p>Chú ý, ở file webpack.mix.js, bạn phải có cấu hình:</p>
+      <pre>mix.setPublicPath('public');</pre>
+      <p>Mix có đoạn kiểm tra, nếu là project Laravel (có file <code>artisan</code>)
+        thì sẽ tự động cấu hình đường dẫn <code>publicPath</code> là <code>public</code>.</p>
+      <p>Bạn có thể sinh ra file HTML từ file PHP trên bằng lệnh:</p>
+      <pre>php index.php &gt; index.html</pre>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

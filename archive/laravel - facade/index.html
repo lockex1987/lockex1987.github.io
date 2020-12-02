@@ -1,0 +1,306 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Laravel Facade</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Laravel Facade">
+ </head> 
+ <body> 
+  <article> 
+   <h1>Facade</h1> 
+   <p>Facade cung cấp một interface "static" cho các class sử dụng trong <a href="https://giaphiep.com/docs/5.3/container">service container</a>. Laravel mang theo nhiều facades cung cấp cho hầu hết các tính năng của Laravel. Laravel facades phục vụ như "proxies tĩnh" cho các class bên dưới ở trong service container, cung cấp lợi ích của việc sử dụng cú pháp vừa ngắn gọn vừa có thể bảo trì có thể thoải mái hơn là sử dụng các phương thức tĩnh truyền thống.</p> 
+   <p>Tất cả facades của Laravel được định nghĩa trong <code>Illuminate\Support\Facades</code> namespace. Vì vậy, bạn có thể dễ dàng truy cập facade như sau:</p> 
+   <pre><code>use Illuminate\Support\Facades\Cache;
+
+Route::get('/cache', function() {
+    return Cache::get('key');
+});</code></pre> 
+   <p>Khắp tài liệu Laravel documentation, rất nhiều ví dụ sử dụng facades để chứng minh sự đa dạng tính năng của framework.</p> 
+   <h2>Khi nào sử dụng facade</h2> 
+   <p>Facade có rất nhiều lợi ích. Chúng cung cấp một cách gắn gọn, dễ nhớ cho phép bạn sử dụng tính năng của Laravel không cần nhớ tên dài của class nó phải được injected hoặc cấu hình thủ công. Hơn nữa, vì tính duy nhất của các phương thức tĩnh PHP, bạn có thể dễ dàng kiểm tra.</p> 
+   <p>Tuy nhiên, bạn phải cẩn thận khi sử dụng facades. Ngu hiểm nhất của facade là class scope creep. Khi facade dễ sử dụng và không yêu cầu injection, nó dễ dàng cho bạn phát triển nhiều facads trong một class. Sử dụng dependency injection, nó làm cho việc phát triển các dòng code trong class càng ngày càng lớn hơn. Vì vậy, khi sử dụng facade, đặc biệt để ý kích thước class của bạn để class ở phạm vi cho phép.</p> 
+   <p> Khi bạn sử dụng package thứ ba tương tác với Laravel, nó tốt hơn inject để <a href="https://giaphiep.com/docs/5.3/contracts">Laravel contracts</a> thay vì sử dụng facade. Khi các packages được xây dựng bên ngoài Laravel, bạn sẽ không thể truy cập facade Laravel kiểm tra helper.</p> 
+   <h3>Facades với Dependency Injection</h3> 
+   <p>Một trong những lợi ích chính của dependency injection là có khả năng hoán vị implementations của injected class. Nó thật hữu dụng khi bạn muốn kiểm tra inject một mock hoặc stub và xác nhận rằng các hàm khác cũng được gọi trong stub.</p> 
+   <p>Thông thường, nó không thể mock hoặc stub một phương thức static. Tuy nhiên, khi facades sử dụng phương thức động đến phương thức proxy gọi đến objects để giải quyết từ service container, chúng ta có thể thật sự test facades cũng như chúng ta test một injected class instance. Ví dụ, cho một route:</p> 
+   <pre><code>use Illuminate\Support\Facades\Cache;
+
+Route::get('/cache', function() {
+    return Cache::get('key');
+});</code></pre> 
+   <p>Chúng ta có thể viết test để kiểm chứng rằng phương thức <code>Cache::get</code> được gọi với tham số chúng ta mong đợi:</p> 
+   <pre><code>use Illuminate\Support\Facades\Cache;
+
+/**
+ * A basic functional test example.
+ *
+ * @return  void
+ */
+public function testBasicExample()
+{
+    Cache::shouldReceive('get')
+         -&gt;with('key')
+         -&gt;andReturn('value');
+
+    $this-&gt;visit('/cache')
+         -&gt;see('value');
+}</code></pre> 
+   <h3>Facades Vs Hàm helper</h3> 
+   <p>Ngoài, Facade của Laravel cung cấp vài hàm "helper" khác có thể thực hiện các task như sinh ra views, firing events, dispatching jobs, hoặc sending HTTP responses. Rất nhiều hàm helper giống như facade tương ứng. Ví dụ, facade call và helper call là tương đương:</p> 
+   <pre><code>return View::make('profile');
+
+return view('profile');</code></pre> 
+   <p>Tất nhiên là không có sự khác biệt giữa facades và hàm helper. Khi sử dụng hàm helper, bạn vẫn có thể test chúng chính xác như facade của nó.Ví dụ, cho một route:</p> 
+   <pre><code>Route::get('/cache', function () {
+    return cache('key');
+});</code></pre> 
+   <p>Hàm <code>cache</code> helper đang gọi một phương thức <code>get</code> trong class dưới <code>Cache</code> facade. Vì vậy, mặc dù chúng ta sử dụng hàm helper, chúng ta có thể viết test để kiểm tra phương thức được gọi với tham số chúng ta mong đợi:</p> 
+   <pre><code>use Illuminate\Support\Facades\Cache;
+
+/**
+ * A basic functional test example.
+ *
+ * @return  void
+ */
+public function testBasicExample()
+{
+    Cache::shouldReceive('get')
+         -&gt;with('key')
+         -&gt;andReturn('value');
+
+    $this-&gt;visit('/cache')
+         -&gt;see('value');
+}</code></pre> 
+   <h2>Facade hoạt động thế nào</h2> 
+   <p>Trong ứng dụng Laravel, một facade là một class nó cho phép truy cập object từ container. Các hàm hoạt động trong <code>Facade</code> class. facades Laravel, và bấn cứ tùy biến facades nào bạn tạo, nó sẽ kế thừa từ class base <code>Illuminate\Support\Facades\Facade</code>.</p> 
+   <p>Class base <code>Facade</code> có thể sử dụng phương thức magic <code>__callStatic()</code> để điều khiển thực thi từ facade tới object đã được resolve từ container. Trong ví dụ sau, một phương thức được tạo từ Laravel cache system. Nhìn liếc qua code, người ta có thể đoán được phương thức <code>get</code> được gọi trong class <code>Cache</code>:</p> 
+   <pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Cache;
+use App\Http\Controllers\Controller;
+
+class UserController extends Controller
+{
+    /**
+     * Show the profile for the given user.
+     *
+     * @param    int  $id
+     * @return  Response
+     */
+    public function showProfile($id)
+    {
+        $user = Cache::get('user:'.$id);
+
+        return view('profile', ['user' =&gt; $user]);
+    }
+}</code></pre> 
+   <p>Chú ý ở gần đầu file chúng ta có thực hiện "importing" vào facade <code>Cache</code>. Facade này đóng vai trò như một proxy để truy cập vào phần triển khai phía dưới của interface <code>Illuminate\Contracts\Cache\Factory</code>. Bất cứ việc gọi nào mà chúng ta sử dụng từ facade sẽ được đẩy tới instance phía dưới của Laravel cache service.</p> 
+   <p>Nếu chúng ta nhìn vào class <code>Illuminate\Support\Facades\Cache</code> bạn sẽ thấy không hề có phương thức tĩnh <code>get</code>:</p> 
+   <pre><code>class Cache extends Facade
+{
+    /**
+     * Get the registered name of the component.
+     *
+     * @return  string
+     */
+    protected static function getFacadeAccessor() { return 'cache'; }
+}</code></pre> 
+   <p>Thay vào đó, facade <code>Cache</code> mở rộng class base <code>Facade</code> à định nghĩa phương thức <code>getFacadeAccessor()</code>. Nhớ là nhiệm vụ của phương thức này là trả về tên của liên kết trong service container. Khi mà người dùng tham chiếu tới bất kì phương thức tĩnh nào trong facade <code>Cache</code>, Laravel thực hiện việc resolve <code>cache</code> binding từ <a href="https://giaphiep.com/docs/5.3/container">service container</a> và thực thi phương thức được gọi (trong trường hợp này <code>get</code>) đối với object.</p> 
+   <h2>Thao khảo các class facade</h2> 
+   <p>Dưới đây, bạn có thể tìm các facade và lớp dưới của nó, rất hữu ích khi bạn muốn tìm hiểu nhanh tài liệu API cho một facade nào đó. Các tên khoá bind vào trong <a href="https://giaphiep.com/docs/5.3/container">service container binding</a> cũng được ghi kèm theo nếu có.</p> 
+   <table> 
+    <thead> 
+     <tr> 
+      <th>Facade</th> 
+      <th>Class</th> 
+      <th>Service Container Binding</th> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>App</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Foundation/Application.html">Illuminate\Foundation\Application</a></td> 
+      <td><code>app</code></td> 
+     </tr> 
+     <tr> 
+      <td>Artisan</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Contracts/Console/Kernel.html">Illuminate\Contracts\Console\Kernel</a></td> 
+      <td><code>artisan</code></td> 
+     </tr> 
+     <tr> 
+      <td>Auth</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Auth/AuthManager.html">Illuminate\Auth\AuthManager</a></td> 
+      <td><code>auth</code></td> 
+     </tr> 
+     <tr> 
+      <td>Blade</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/View/Compilers/BladeCompiler.html">Illuminate\View\Compilers\BladeCompiler</a></td> 
+      <td><code>blade.compiler</code></td> 
+     </tr> 
+     <tr> 
+      <td>Bus</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Contracts/Bus/Dispatcher.html">Illuminate\Contracts\Bus\Dispatcher</a></td> 
+     </tr> 
+     <tr> 
+      <td>Cache</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Cache/Repository.html">Illuminate\Cache\Repository</a></td> 
+      <td><code>cache</code></td> 
+     </tr> 
+     <tr> 
+      <td>Config</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Config/Repository.html">Illuminate\Config\Repository</a></td> 
+      <td><code>config</code></td> 
+     </tr> 
+     <tr> 
+      <td>Cookie</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Cookie/CookieJar.html">Illuminate\Cookie\CookieJar</a></td> 
+      <td><code>cookie</code></td> 
+     </tr> 
+     <tr> 
+      <td>Crypt</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Encryption/Encrypter.html">Illuminate\Encryption\Encrypter</a></td> 
+      <td><code>encrypter</code></td> 
+     </tr> 
+     <tr> 
+      <td>DB</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Database/DatabaseManager.html">Illuminate\Database\DatabaseManager</a></td> 
+      <td><code>db</code></td> 
+     </tr> 
+     <tr> 
+      <td>DB (Instance)</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Database/Connection.html">Illuminate\Database\Connection</a></td> 
+     </tr> 
+     <tr> 
+      <td>Event</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Events/Dispatcher.html">Illuminate\Events\Dispatcher</a></td> 
+      <td><code>events</code></td> 
+     </tr> 
+     <tr> 
+      <td>File</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Filesystem/Filesystem.html">Illuminate\Filesystem\Filesystem</a></td> 
+      <td><code>files</code></td> 
+     </tr> 
+     <tr> 
+      <td>Gate</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Contracts/Auth/Access/Gate.html">Illuminate\Contracts\Auth\Access\Gate</a></td> 
+     </tr> 
+     <tr> 
+      <td>Hash</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Contracts/Hashing/Hasher.html">Illuminate\Contracts\Hashing\Hasher</a></td> 
+      <td><code>hash</code></td> 
+     </tr> 
+     <tr> 
+      <td>Lang</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Translation/Translator.html">Illuminate\Translation\Translator</a></td> 
+      <td><code>translator</code></td> 
+     </tr> 
+     <tr> 
+      <td>Log</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Log/Writer.html">Illuminate\Log\Writer</a></td> 
+      <td><code>log</code></td> 
+     </tr> 
+     <tr> 
+      <td>Mail</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Mail/Mailer.html">Illuminate\Mail\Mailer</a></td> 
+      <td><code>mailer</code></td> 
+     </tr> 
+     <tr> 
+      <td>Notification</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Notifications/ChannelManager.html">Illuminate\Notifications\ChannelManager</a></td> 
+     </tr> 
+     <tr> 
+      <td>Password</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Auth/Passwords/PasswordBrokerManager.html">Illuminate\Auth\Passwords\PasswordBrokerManager</a></td> 
+      <td><code>auth.password</code></td> 
+     </tr> 
+     <tr> 
+      <td>Queue</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Queue/QueueManager.html">Illuminate\Queue\QueueManager</a></td> 
+      <td><code>queue</code></td> 
+     </tr> 
+     <tr> 
+      <td>Queue (Instance)</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Contracts/Queue/Queue.html">Illuminate\Contracts\Queue\Queue</a></td> 
+      <td><code>queue</code></td> 
+     </tr> 
+     <tr> 
+      <td>Queue (Base Class)</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Queue/Queue.html">Illuminate\Queue\Queue</a></td> 
+     </tr> 
+     <tr> 
+      <td>Redirect</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Routing/Redirector.html">Illuminate\Routing\Redirector</a></td> 
+      <td><code>redirect</code></td> 
+     </tr> 
+     <tr> 
+      <td>Redis</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Redis/Database.html">Illuminate\Redis\Database</a></td> 
+      <td><code>redis</code></td> 
+     </tr> 
+     <tr> 
+      <td>Request</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Http/Request.html">Illuminate\Http\Request</a></td> 
+      <td><code>request</code></td> 
+     </tr> 
+     <tr> 
+      <td>Response</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Contracts/Routing/ResponseFactory.html">Illuminate\Contracts\Routing\ResponseFactory</a></td> 
+     </tr> 
+     <tr> 
+      <td>Route</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Routing/Router.html">Illuminate\Routing\Router</a></td> 
+      <td><code>router</code></td> 
+     </tr> 
+     <tr> 
+      <td>Schema</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Database/Schema/Blueprint.html">Illuminate\Database\Schema\Blueprint</a></td> 
+     </tr> 
+     <tr> 
+      <td>Session</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Session/SessionManager.html">Illuminate\Session\SessionManager</a></td> 
+      <td><code>session</code></td> 
+     </tr> 
+     <tr> 
+      <td>Session (Instance)</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Session/Store.html">Illuminate\Session\Store</a></td> 
+     </tr> 
+     <tr> 
+      <td>Storage</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Contracts/Filesystem/Factory.html">Illuminate\Contracts\Filesystem\Factory</a></td> 
+      <td><code>filesystem</code></td> 
+     </tr> 
+     <tr> 
+      <td>URL</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Routing/UrlGenerator.html">Illuminate\Routing\UrlGenerator</a></td> 
+      <td><code>url</code></td> 
+     </tr> 
+     <tr> 
+      <td>Validator</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Validation/Factory.html">Illuminate\Validation\Factory</a></td> 
+      <td><code>validator</code></td> 
+     </tr> 
+     <tr> 
+      <td>Validator (Instance)</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/Validation/Validator.html">Illuminate\Validation\Validator</a></td> 
+     </tr> 
+     <tr> 
+      <td>View</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/View/Factory.html">Illuminate\View\Factory</a></td> 
+      <td><code>view</code></td> 
+     </tr> 
+     <tr> 
+      <td>View (Instance)</td> 
+      <td><a href="http://laravel.com/api/5.3/Illuminate/View/View.html">Illuminate\View\View</a></td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <p>Nguồn: <a href="https://laravel.com/docs/5.3/facades">https://laravel.com/docs/5.3/facades</a></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

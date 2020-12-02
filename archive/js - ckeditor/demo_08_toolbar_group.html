@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>CKEditor Toolbar Groups Configuration</title>
+    <script src="../lib/ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.config.toolbarGroups = [
+            { name: 'document',    groups: [ 'mode', 'document' ] },           
+            { name: 'my_clipboard',   groups: [ 'clipboard', 'undo' ] },
+            '/',
+            { name: 'styles' },
+            { name: 'links' }
+        ];
+         
+        CKEDITOR.config.height = '300px';
+    </script>
+</head>
+
+<body>
+    <h3>CKEditor Toolbar Groups Configuration</h3>
+  
+    <textarea class="ckeditor" name="editor1">
+        <p>Groups</p>
+    </textarea>
+</body>
+</html>

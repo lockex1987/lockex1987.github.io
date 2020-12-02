@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sử dụng ở cả CSS và JS để chọn phần tử">
+    <title>CSS Selector</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>CSS Selector</h2>
+      <h3>Danh sách </h3>
+      <table>
+        <tbody>
+          <tr>
+            <th>Selector</th>
+            <th>Ví dụ</th>
+            <th>Mô tả</th>
+          </tr>
+          <tr>
+            <td>.<i>class</i></td>
+            <td>.intro</td>
+            <td>Các phần tử có class là "intro"</td>
+          </tr>
+          <tr>
+            <td><em>.class1.class2</em></td>
+            <td>.name1.name2</td>
+            <td>Các phần tử có class bao gồm cả "name1" và "name2". Ví dụ:<br>
+              <pre>&lt;div class="name1 name2"&gt;...&lt;/div&gt;</pre>
+            </td>
+          </tr>
+          <tr>
+            <td><em>.class1 .class2</em></td>
+            <td>.name1 .name2</td>
+            <td>Các phần tử có class là "name2" mà là con cháu của một phần tử
+              có class là "name1". Ví dụ:<br>
+              <pre>&lt;div class="name1"&gt;
+    &lt;div class="name2"&gt;
+        ...
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+              <em></em></td>
+          </tr>
+          <tr>
+            <td>#<i>id</i></td>
+            <td>#firstname</td>
+            <td>Các phần tử với id là "firstname"</td>
+          </tr>
+          <tr>
+            <td>*</td>
+            <td>*</td>
+            <td>Tất cả các phần tử</td>
+          </tr>
+          <tr>
+            <td><i>element</i></td>
+            <td>p</td>
+            <td>Các thẻ p</td>
+          </tr>
+          <tr>
+            <td><i>element,element</i></td>
+            <td>div, p</td>
+            <td>Các thẻ div và thẻ p</td>
+          </tr>
+          <tr>
+            <td><i>element</i> <i>element</i></td>
+            <td>div p</td>
+            <td>Các thẻ p bên trong thẻ div</td>
+          </tr>
+          <tr>
+            <td><i>element</i>&gt;<i>element</i></td>
+            <td>div &gt; p</td>
+            <td>Các thẻ p là con trực tiếp của thẻ div</td>
+          </tr>
+          <tr>
+            <td><i>element</i>+<i>element</i></td>
+            <td>div + p</td>
+            <td>Thẻ p mà được đặt ngay sau thẻ div</td>
+          </tr>
+          <tr>
+            <td><i>element1</i>~<i>element2</i></td>
+            <td>p ~ ul</td>
+            <td>Các thẻ ul mà có đằng trước là một thẻ p</td>
+          </tr>
+          <tr>
+            <td>[<i>attribute</i>]</td>
+            <td>[target]</td>
+            <td>Các phần tử với thuộc tính target</td>
+          </tr>
+          <tr>
+            <td>[<i>attribute</i>=<i>value</i>]</td>
+            <td>[target=_blank]</td>
+            <td>Các phần tử với thuộc tính target bằng "_blank"</td>
+          </tr>
+          <tr>
+            <td>[<i>attribute</i>~=<i>value</i>]</td>
+            <td>[title~=flower]</td>
+            <td>Các phần tử với thuộc tính title mà chứa từ "flower"</td>
+          </tr>
+          <tr>
+            <td>[<i>attribute</i>|=<i>value</i>]</td>
+            <td>[lang|=en]</td>
+            <td>Các phần tử với thuộc tính lang bắt đầu bằng "en"</td>
+          </tr>
+          <tr>
+            <td>[<i>attribute</i>^=<i>value</i>]</td>
+            <td>a[href^="https"]</td>
+            <td>Các phần tử a có thuộc tính href bắt đầu bằng "https"</td>
+          </tr>
+          <tr>
+            <td>[<i>attribute</i>$=<i>value</i>]</td>
+            <td>a[href$=".pdf"]</td>
+            <td>Các phần tử a có thuộc tính href kết thúc bằng ".pdf"</td>
+          </tr>
+          <tr>
+            <td>[<i>attribute</i>*=<i>value</i>]</td>
+            <td>a[href*="w3schools"]</td>
+            <td>Các phần tử a có thuộc tính href chứa xâu con "w3schools"</td>
+          </tr>
+          <tr>
+            <td>:active</td>
+            <td>a:active</td>
+            <td>Các link active</td>
+          </tr>
+          <tr>
+            <td>::after</td>
+            <td>p::after</td>
+            <td>Insert something after the content of each &lt;p&gt; element</td>
+          </tr>
+          <tr>
+            <td>::before</td>
+            <td>p::before</td>
+            <td>Insert something before&nbsp;the content of each &lt;p&gt;
+              element</td>
+          </tr>
+          <tr>
+            <td>:checked</td>
+            <td>input:checked</td>
+            <td>Các phần tử input với trạng thái được check</td>
+          </tr>
+          <tr>
+            <td>:default</td>
+            <td>input:default</td>
+            <td>Các phần tử input với trạng thái mặc định</td>
+          </tr>
+          <tr>
+            <td>:disabled</td>
+            <td>input:disabled</td>
+            <td>Các phần tử input với trạng thái disable</td>
+          </tr>
+          <tr>
+            <td>:empty</td>
+            <td>p:empty</td>
+            <td>Các phần tử p mà không có con (không có các text node)</td>
+          </tr>
+          <tr>
+            <td>:enabled</td>
+            <td>input:enabled</td>
+            <td>Các phần tử input với trạng thái enable</td>
+          </tr>
+          <tr>
+            <td>:first-child</td>
+            <td>p:first-child</td>
+            <td>Phần tử p mà là con đầu tiên của node cha.</td>
+          </tr>
+          <tr>
+            <td>::first-letter</td>
+            <td>p::first-letter</td>
+            <td>Chữ cái đầu tiên của các thẻ p</td>
+          </tr>
+          <tr>
+            <td>::first-line</td>
+            <td>p::first-line</td>
+            <td>Dòng đầu tiên của các thẻ p</td>
+          </tr>
+          <tr>
+            <td>:first-of-type</td>
+            <td>p:first-of-type</td>
+            <td>Phần tử p mà là phần tử p đầu tiên của node cha</td>
+          </tr>
+          <tr>
+            <td>:focus</td>
+            <td>input:focus</td>
+            <td>Các phần tử input mà đang được focus</td>
+          </tr>
+          <tr>
+            <td>:hover</td>
+            <td>a:hover</td>
+            <td>Link có chuột ở trên</td>
+          </tr>
+          <tr>
+            <td>:in-range</td>
+            <td>input:in-range</td>
+            <td>Selects input elements with a value within a specified range</td>
+          </tr>
+          <tr>
+            <td>:indeterminate</td>
+            <td>input:indeterminate</td>
+            <td>Selects input elements that are in an indeterminate state</td>
+          </tr>
+          <tr>
+            <td>:invalid</td>
+            <td>input:invalid</td>
+            <td>Selects all input elements with an invalid value</td>
+          </tr>
+          <tr>
+            <td>:lang(<i>language</i>)</td>
+            <td>p:lang(it)</td>
+            <td>Selects every &lt;p&gt; element with a lang attribute equal to
+              "it" (Italian)</td>
+          </tr>
+          <tr>
+            <td>:last-child</td>
+            <td>p:last-child</td>
+            <td>Selects every &lt;p&gt; element that is the last child of its
+              parent</td>
+          </tr>
+          <tr>
+            <td>:last-of-type</td>
+            <td>p:last-of-type</td>
+            <td>Selects every &lt;p&gt; element that is the last &lt;p&gt;
+              element of its parent</td>
+          </tr>
+          <tr>
+            <td>:link</td>
+            <td>a:link</td>
+            <td>Selects all unvisited links</td>
+          </tr>
+          <tr>
+            <td>:not(<i>selector</i>)</td>
+            <td>:not(p)</td>
+            <td>Selects every element that is not a &lt;p&gt; element</td>
+          </tr>
+          <tr>
+            <td>:nth-child(<i>n</i>)</td>
+            <td>p:nth-child(2)</td>
+            <td>Selects every &lt;p&gt; element that is the second child of its
+              parent</td>
+          </tr>
+          <tr>
+            <td>:nth-last-child(<i>n</i>)</td>
+            <td>p:nth-last-child(2)</td>
+            <td>Selects every &lt;p&gt; element that is the second child of its
+              parent, counting from the last child</td>
+          </tr>
+          <tr>
+            <td>:nth-last-of-type(<i>n</i>)</td>
+            <td>p:nth-last-of-type(2)</td>
+            <td>Selects every &lt;p&gt; element that is the second &lt;p&gt;
+              element of its parent, counting from the last child</td>
+          </tr>
+          <tr>
+            <td>:nth-of-type(<i>n</i>)</td>
+            <td>p:nth-of-type(2)</td>
+            <td>Selects every &lt;p&gt; element that is the second &lt;p&gt;
+              element of its parent</td>
+          </tr>
+          <tr>
+            <td>:only-of-type</td>
+            <td>p:only-of-type</td>
+            <td>Selects every &lt;p&gt; element that is the only &lt;p&gt;
+              element of its parent</td>
+          </tr>
+          <tr>
+            <td>:only-child</td>
+            <td>p:only-child</td>
+            <td>Selects every &lt;p&gt; element that is the only child of its
+              parent</td>
+          </tr>
+          <tr>
+            <td>:optional</td>
+            <td>input:optional</td>
+            <td>Selects input elements with no "required" attribute</td>
+          </tr>
+          <tr>
+            <td>:out-of-range</td>
+            <td>input:out-of-range</td>
+            <td>Selects input elements with a value outside a specified range</td>
+          </tr>
+          <tr>
+            <td>::placeholder</td>
+            <td>input::placeholder</td>
+            <td>Selects input elements with placeholder text</td>
+          </tr>
+          <tr>
+            <td>:read-only</td>
+            <td>input:read-only</td>
+            <td>Selects input elements with the "readonly" attribute specified</td>
+          </tr>
+          <tr>
+            <td>:read-write</td>
+            <td>input:read-write</td>
+            <td>Selects input elements with the "readonly" attribute NOT
+              specified</td>
+          </tr>
+          <tr>
+            <td>:required</td>
+            <td>input:required</td>
+            <td>Selects input elements with the "required" attribute specified</td>
+          </tr>
+          <tr>
+            <td>:root</td>
+            <td>:root</td>
+            <td>Selects the document's root element</td>
+          </tr>
+          <tr>
+            <td>::selection</td>
+            <td>::selection</td>
+            <td>Selects the portion of an element that is selected by a user</td>
+          </tr>
+          <tr>
+            <td>:target</td>
+            <td>#news:target </td>
+            <td>Selects the current active #news element (clicked on a URL
+              containing that anchor name)</td>
+          </tr>
+          <tr>
+            <td>:valid</td>
+            <td>input:valid</td>
+            <td>Selects all input elements with a valid value</td>
+          </tr>
+          <tr>
+            <td>:visited</td>
+            <td>a:visited</td>
+            <td>Selects all visited links</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Tham khảo </h3>
+      <p><a href="https://viblo.asia/p/30-css-selectors-can-nho-p1-0bDM6ko6G2X4"
+          target="_blank">https://viblo.asia/p/30-css-selectors-can-nho-p1-0bDM6ko6G2X4</a></p>
+      <p><a href="https://viblo.asia/p/30-css-selectors-can-nho-p2-aKYMNjelM83E"
+          target="_blank">https://viblo.asia/p/30-css-selectors-can-nho-p2-aKYMNjelM83E</a></p>
+      <p> <a href="https://www.w3schools.com/cssref/css_selectors.asp" target="_blank">https://www.w3schools.com/cssref/css_selectors.asp</a></p>
+      <p> <a href="https://www.w3schools.com/cssref/trysel.asp" target="_blank">https://www.w3schools.com/cssref/trysel.asp</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

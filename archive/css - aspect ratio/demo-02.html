@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Fixed Ratio</title>
+	<style>
+		body{ background: yellow; font-family: 'Lucida Sans Unicode','Lucida Grande',sans-serif; color: #222; }
+
+		/* Important part */
+		.box {
+			display: inline-block;
+			position: relative;
+			min-width: 200px;
+			margin: 10px;
+			float: left;
+			font-size: 12px;
+		}
+		.box:before {
+			content: "";
+			display: block;
+			padding-top: 100%; /* initial ratio of 1:1*/
+		}
+
+		/* Other ratios */
+		.ratio2_1:before{
+			padding-top: 50%;
+		}
+		.ratio1_2:before{
+			padding-top: 200%;
+		}
+		.ratio4_3:before{
+			padding-top: 75%;
+		}
+		.ratio16_9:before{
+			padding-top: 56.25%;
+		}
+		.content {
+			/* Positioning */
+			position:  absolute; top: 0; left: 0; bottom: 0; right: 0;
+
+			/* Styling */
+			background: black; padding: 30px; text-align: center; vertical-align: center; text-transform: uppercase; color: #fff;
+		}
+		.content span {
+			font-weight: bold; font-size: 3em; display: block;
+		}
+	</style>
+</head>
+<body>
+	<p>You can use this technique to work with flat navigations.</p>
+	<div class="box ratio1_1">
+		<div class="content">Aspect ratio of <span>1:1</span></div>
+	</div>
+	<div class="box ratio2_1">
+		<div class="content">Aspect ratio of <span>2:1</span></div>
+	</div>
+	<div class="box ratio1_2">
+		<div class="content">Aspect ratio of <span>1:2</span></div>
+	</div>
+	<div class="box ratio4_3">
+		<div class="content">Aspect ratio of <span>4:3</span></div>
+	</div>
+	<div class="box ratio16_9">
+		<div class="content">Aspect ratio of <span>16:9</span></div>
+	</div>
+</body>
+</html>

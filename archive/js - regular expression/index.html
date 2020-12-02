@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="regex">
+    <title>Biểu thức chính quy trong JS</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Biểu thức chính quy trong JS</h2>
+      <h3>Khởi tạo</h3>
+      <p>Có 2 cách:</p>
+      <pre>/pattern/modifiers<br>new RegExp(pattern, modifiers)</pre>
+      <p>Ví dụ:</p>
+      <pre>/w3schools/i<br>new RegExp('cat', 'i')</pre>
+      <p>Trong đó các modifier là:</p>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th>Modifier</th>
+            <th>Mô tả</th>
+          </tr>
+          <tr>
+            <td><code>i</code></td>
+            <td>Tìm kiếm không phân biệt chữ hoa chữ thường</td>
+          </tr>
+          <tr>
+            <td><code>g</code></td>
+            <td>Tìm kiếm toàn bộ thay vì dừng lại sau khi tìm thấy một cái đầu
+              tiên</td>
+          </tr>
+          <tr>
+            <td><code>m</code></td>
+            <td>Tìm kiếm nhiều dòng</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Sử dụng</h3>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td><code>str.search(regex)</code></td>
+            <td>Tìm kiếm pattern trong một xâu, trả về vị trí tìm thấy, hoặc -1
+              nếu không tìm thấy</td>
+          </tr>
+          <tr>
+            <td><code>str.replace(regex, ...)</code></td>
+            <td>Tìm kiếm và thay thế pattern</td>
+          </tr>
+          <tr>
+            <td><code>str.split(regex)</code></td>
+            <td>Tách xâu thành mảng các xâu con</td>
+          </tr>
+          <tr>
+            <td><code>str.match(regex)</code></td>
+            <td>Tìm kiếm, trả về một mảng hoặc <code>null</code> nếu không tìm
+              thấy</td>
+          </tr>
+          <tr>
+            <td><code>regex.exec(str)</code></td>
+            <td>Tìm kiếm, trả về một mảng hoặc <code>null</code> nếu không tìm
+              thấy</td>
+          </tr>
+          <tr>
+            <td><code>regex.test(str)</code></td>
+            <td>Tìm kiếm pattern trong một xâu, trả về <code>true</code> hoặc <code>false</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Nếu bạn chỉ muốn thực hiện tìm kiếm đơn giản và trả về <code>true</code>
+        hoặc <code>false</code>, sử dụng phương thức <code>regex.test(str)</code>
+        hoặc <code>str.search()</code>.</p>
+      <h3>Hàm str.match(regex)</h3>
+      <p><code>match()</code> là một phương thức của xâu, tìm kiếm trên biểu
+        thức chính quy.</p>
+      <pre>str.match(regex)</pre>
+      <p>Kết quả trả về:</p>
+      <ul>
+        <li>Nếu không tìm thấy trả về <code>null</code>.</li>
+        <li>Nếu tìm thấy thì trả về mảng:
+          <ul>
+            <li>Nếu regex CÓ bao gồm cờ <code>g</code>, mảng trả về là TẤT CẢ
+              các xâu tìm kiếm được, không bao gồm capture group.</li>
+            <li>Nếu regex KHÔNG bao gồm cờ <code>g</code>, <code>str.match(regex)</code>
+              trả về kết quả tìm kiếm đầu tiên được như <code>regex.exec(str)</code>.
+              Mảng có phần tử đầu tiên là xâu tìm kiếm được ĐẦU TIÊN, tiếp theo
+              là các capture group, ngoài ra còn có 2 thuộc tính <code>input</code>
+              và <code>index</code>.</li>
+          </ul>
+        </li>
+      </ul>
+      <p><a href="match_demo.js">match_demo.js</a></p>
+      <h3>Hàm regex.exec(str)</h3>
+      <p><code>exec()</code> là một phương thức của đối tượng biểu thức chính
+        quy, thực hiện việc tìm kiếm trên một xâu.</p>
+      <pre>regex.exec(str)</pre>
+      <p>Kết quả trả về:</p>
+      <ul>
+        <li>Nếu không tìm kiếm được thì trả về <code>null</code>.</li>
+        <li>Nếu tìm kiếm được thì phương thức trả về một mảng:
+          <ul>
+            <li>Mảng trả về bao gồm xâu tìm thấy là phần tử đầu tiên. Các phần
+              tử tiếp theo là xâu mà capture được giữa các dấu ngoặc.</li>
+            <li>Cập nhật các thuộc tính của đối tượng regex để có thể tìm kiếm
+              tiếp.</li>
+          </ul>
+        </li>
+      </ul>
+      <p>Hãy xét ví dụ sau:</p>
+      <pre>// Match "quick brown" followed by "jumps", ignoring characters in between
+// Remember "brown" and "jumps"
+// Ignore case
+var re = /quick\s(brown).+?(jumps)/ig;
+var result = re.exec('The Quick Brown Fox Jumps Over The Lazy Dog');</pre>
+      <p>Bảng sau mô tả kết quả của đoạn script:</p>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Đối tượng</th>
+            <th>Thuộc tính / Chỉ số</th>
+            <th>Mô tả</th>
+            <th>Ví dụ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="4"><code>result</code></td>
+            <td><code>[0]</code></td>
+            <td>The full string of characters matched</td>
+            <td><code>"Quick Brown Fox Jumps"</code></td>
+          </tr>
+          <tr>
+            <td><code>[1], ...[n]</code></td>
+            <td>The parenthesized substring matches, if any. The number of
+              possible parenthesized substrings is unlimited.</td>
+            <td><code>result[1] === "Brown"<br>
+                result[2] === "Jumps"</code></td>
+          </tr>
+          <tr>
+            <td><code>index</code></td>
+            <td>The 0-based index of the match in the string.</td>
+            <td><code>4</code></td>
+          </tr>
+          <tr>
+            <td><code>input</code></td>
+            <td>The original string that was matched against.</td>
+            <td><code>"The Quick Brown Fox Jumps Over The Lazy Dog"</code></td>
+          </tr>
+          <tr>
+            <td rowspan="5"><code>re</code></td>
+            <td><code>lastIndex</code></td>
+            <td>The index at which to start the next match. If <code>g</code>
+              is absent, this will always be <code>0</code>.</td>
+            <td><code>25</code></td>
+          </tr>
+          <tr>
+            <td><code>ignoreCase</code></td>
+            <td>Indicates if the <code>i</code> flag was used to ignore case.</td>
+            <td><code>true</code></td>
+          </tr>
+          <tr>
+            <td><code>global</code></td>
+            <td>Indicates if the <code>g</code> flag was used for a global
+              match.</td>
+            <td><code>true</code></td>
+          </tr>
+          <tr>
+            <td><code>multiline</code></td>
+            <td>Indicates if the <code>m</code> flag was used to search across
+              multiple lines.</td>
+            <td><code>false</code></td>
+          </tr>
+          <tr>
+            <td><code>source</code></td>
+            <td>The text of the pattern.</td>
+            <td><code>"quick\s(brown).+?(jumps)"</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Tìm kiếm liên tiếp</h4>
+      <p>If your regular expression uses the "<code>g</code>" flag, you can use
+        the <code>exec()</code> method multiple times to find successive
+        matches in the same string. When you do so, the search starts at the
+        substring of <code>str</code> specified by the regular expression's <code>lastIndex</code>
+        property.</p>
+      <p>Note that the <code>lastIndex</code> property will not be reset when
+        searching a different string it will start its search at its existing <code>lastIndex</code>.</p>
+      <p>For example, assume you have this script:</p>
+      <pre>const myRe = /ab*/g;
+const str = 'abbcdefabh';
+let myArray;
+while ((myArray = myRe.exec(str)) !== null) {
+    var msg = 'Found ' + myArray[0] + '. ';
+    msg += 'Next match starts at ' + myRe.lastIndex;
+    console.log(msg);
+}</pre>
+      <p>This script displays the following text:</p>
+      <pre>Found abb. Next match starts at 3
+Found ab. Next match starts at 9</pre>
+      <p>Note:</p>
+      <ul>
+        <li>Do not place the regular expression literal (or <code>RegExp</code>
+          constructor) within the <code>while</code> condition or it will
+          create an infinite loop if there is a match due to the <code>lastIndex</code>
+          property being reset upon each iteration.</li>
+        <li>Also be sure that the global flag ("<code>g</code>") is set or an
+          infinite loop will occur here also.</li>
+      </ul>
+      <p><a href="exec_demo.js">exec_demo.js</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

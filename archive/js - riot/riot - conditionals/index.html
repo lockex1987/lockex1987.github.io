@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Riot Conditionals</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Riot Conditionals">
+ </head> 
+ <body> 
+  <article> 
+   <p>Conditionals</p> 
+   <p>Conditionals let you show / hide elements based on a condition. For example:</p> 
+   <pre>&lt;div if={ is_premium }&gt;
+  &lt;p&gt;This is for premium users only&lt;/p&gt;
+&lt;/div&gt;</pre> 
+   <p>Again, the expression can be just a simple property or a full JavaScript expression. The following special attributes are available:</p> 
+   <ul> 
+    <li>show – show the element using style="display: ''" when the value is true</li> 
+    <li>hide – hide the element using style="display: none" when the value is true</li> 
+    <li>if – add (true value) or remove (false value) the element from the document</li> 
+   </ul> 
+   <p>The equality operator is == and not ===. For example: 'a string' == true.</p> 
+   <p><br> </p> 
+   <p><br> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

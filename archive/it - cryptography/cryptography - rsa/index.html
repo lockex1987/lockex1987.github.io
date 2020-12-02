@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RSA">
+    <title>RSA</title>
+    <link rel="icon" href="../../../images/favicon.png">
+    <link rel="stylesheet" href="../../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>RSA là gì?</h2>
+      <p><a href="https://en.wikipedia.org/wiki/RSA_%28cryptosystem%29" target="_blank">RSA</a>
+        là một giải thuật mã hóa được 3 nhà khoa học Ronald Rivest, Adi Shamir
+        và Leonard Adleman phát minh năm 1977. Tên giải thuật RSA lấy theo chữ
+        cái đầu của tên 3 ông.</p>
+      <p>Độ an toàn của RSA dựa trên tính khó của việc phân tích số nguyên rất
+        lớn (số có hàng trăm chữ số thập phân).</p>
+      <p>Kích thước khóa của RSA:</p>
+      <ul>
+        <li>Khóa &lt; 1024 bit không an toàn hiện nay.</li>
+        <li>Khuyến nghị dùng khóa &gt;= 2048 bit. Tương lai nên dùng khóa 3072
+          bit.</li>
+      </ul>
+      <p>RSA là mã hóa bất đối xứng, sử dụng một cặp khóa:</p>
+      <ul>
+        <li>Khóa công khai (public key) dùng để mã hóa.</li>
+        <li>Khóa riêng (private key) dùng để giải mã.</li>
+        <li>Chỉ khóa riêng cần giữ bí mật. Khóa công khai có thể công bố rộng
+          rãi.</li>
+      </ul>
+      <div class="mb-3"><img src="https://stackjava.com/wp-content/uploads/2018/03/Picture2.png"></div>
+      <h3>Code ví dụ RSA</h3>
+      <h4>Tạo cặp khóa private-public</h4>
+      <p>RsaGenerateKeys.java</p>
+      <p></p>
+      <p>Kết quả: 2 file <code>privateKey</code> và <code>publicKey</code>
+        được tạo ra. </p>
+      <h4>Mã hóa và giải mã</h4>
+      <p>Mỗi lần thực hiện mã hóa ta sẽ đọc file <code>publicKey</code> để lấy
+        public key thực hiện mã hóa, tương tự ta sẽ đọc file <code>privatekey</code>
+        để lấy private key thực hiện giải mã.</p>
+      <p></p>
+      <p>Kết quả:</p>
+      <p><br>
+      </p>
+      <p><a href="https://stackjava.com/demo/code-java-vi-du-ma-hoa-giai-ma-voi-rsa.html"
+          target="_blank">https://stackjava.com/demo/code-java-vi-du-ma-hoa-giai-ma-voi-rsa.html</a></p>
+    </article>
+    <script src="../../../js/docs.js"></script>
+  </body>
+</html>

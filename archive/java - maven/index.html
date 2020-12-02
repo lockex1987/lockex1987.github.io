@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cài đặt và sử dụng Maven">
+    <title>Bắt đầu với Maven</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../lib/highlightjs/css/androidstudio.css">
+    <script src="../../lib/highlightjs/js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+  <body>
+    <article>
+      <h2>Bắt đầu với Maven</h2>
+      <p>Maven thay cho cách quản lý các thư viện jar bằng tay. Có nhiều dự án
+        gần 70 file jar mà chả biết file nào để làm gì.</p>
+      <h3>Download</h3>
+      <p>Download file ZIP ở địa chỉ sau:</p>
+      <p><a href="https://maven.apache.org/download.cgi">https://maven.apache.org/download.cgi</a></p>
+      <p>Giải nén.</p>
+      <p>Sửa biến môi trường <code>PATH</code> ở file <code>/etc/profile</code>.
+        Ví dụ:</p>
+      <pre class="out-of-box">PATH=$PATH:/home/lockex1987/program/maven/bin:/home/lockex1987/program/node/bin<br>export PATH</pre>
+      <h3>Cài đặt</h3>
+      <p>Việc cài đặt Maven đơn giản chỉ là giải nén file ZIP và add thư mục bin
+        vào trong biến môi trường PATH.</p>
+      <p>Xác nhận kết quả của việc cài đặt với lệnh:</p>
+      <pre>mvn -v</pre>
+      <p>Kết quả mẫu là:</p>
+      <pre>Apache Maven 3.3.9 (bb52d8502b132ec0a5a3f4c09453c07478323dc5; 2015-11-10T23:41:47+07:00)<br>Maven home: /data/program/maven
+Java version: 1.8.0_60, vendor: Oracle Corporation
+Java home: /usr/local/java/jre
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "3.16.0-38-generic", arch: "i386", family:          "unix"</pre>
+      <h3>Cấu hình</h3>
+      <p>Có một số cách để cấu hình Maven. Tuy nhiên cách thông thường nhất đó
+        là sửa file <code>settings.xml</code> ở thư mục <code>~/.m2</code>,
+        hoặc sửa file <code>settings.xml</code> ở thư mục <code>$MAVEN_HOME/conf</code>.</p>
+      <p>Ví dụ:</p>
+      <pre><code class="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd"&gt;
+          
+	&lt;localRepository&gt;/data/program/maven/repository&lt;/localRepository&gt;
+
+	&lt;pluginGroups&gt;&lt;/pluginGroups&gt;
+	&lt;proxies&gt;&lt;/proxies&gt;
+	&lt;servers&gt;&lt;/servers&gt;
+	&lt;mirrors&gt;&lt;/mirrors&gt;
+	
+	&lt;profiles&gt;
+		&lt;profile&gt;
+			&lt;id&gt;downloadSources&lt;/id&gt;
+			&lt;properties&gt;
+				&lt;downloadSources&gt;true&lt;/downloadSources&gt;
+				&lt;downloadJavadocs&gt;true&lt;/downloadJavadocs&gt;
+			&lt;/properties&gt;
+		&lt;/profile&gt;
+	&lt;/profiles&gt;
+
+	&lt;activeProfiles&gt;
+		&lt;activeProfile&gt;downloadSources&lt;/activeProfile&gt;
+	&lt;/activeProfiles&gt;
+&lt;/settings&gt;</code></pre>
+      <p>Trong ví dụ trên, chúng ta có cấu hình lại thư mục repository trên
+        local. Chúng ta nên lưu nó ở thư mục dữ liệu (ổ D), không nên lưu ở thư
+        mục cài đặt (ổ C) để mỗi lần cài lại hệ điều hành thì không bị mất.</p>
+      <pre><code class="xml">&lt;localRepository&gt;/data/program/maven/repository&lt;/localRepository&gt;</code></pre>
+      <h3>Tích hợp IDE </h3>
+      <p>Chúng ta hãy thử tích hợp Maven với Eclipse.</p>
+      <p>Chọn menu <code>Window -&gt; Preferences -&gt; Maven -&gt; User
+          Settings</code>, ở mục Global Settings chọn lại đúng file. Mục Local
+        Repository sẽ tự động được điều chỉnh.</p>
+      <img alt="Maven Eclipse settings" src="images/maven-eclipse-settings.png">:
+      <h3>Cấu trúc thư mục chuẩn</h3>
+      <table>
+        <tbody>
+          <tr>
+            <td>src/main/java</td>
+            <td>Java code</td>
+          </tr>
+          <tr>
+            <td>src/main/resources</td>
+            <td>Các file cấu hình</td>
+          </tr>
+          <tr>
+            <td>src/main/webapp</td>
+            <td>Thư mục web</td>
+          </tr>
+          <tr>
+            <td>src/test/java</td>
+            <td>Unit Test source</td>
+          </tr>
+          <tr>
+            <td>src/test/resources</td>
+            <td>Test resource</td>
+          </tr>
+          <tr>
+            <td>pom.xml</td>
+            <td>Project Object Model</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Ở ngoài cùng là file pom.xml và thư mục src. Ngoài ra có thể có file
+        LICENSE.txt, README.md.</p>
+      <h3>File pom.xml</h3>
+      <p>File <code>pom.xml</code> là một file rất quan trọng.</p>
+      <p>Một file <code>pom.xml</code> mẫu đặc trưng là:</p>
+      <pre><code class="xml">&lt;project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+
+	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+	&lt;groupId&gt;cttd&lt;/groupId&gt;
+	&lt;artifactId&gt;&lt;/artifactId&gt;
+	&lt;version&gt;1.0.0&lt;/version&gt;
+
+	&lt;properties&gt;
+		&lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
+		&lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+		&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+	&lt;/properties&gt;
+
+
+	&lt;dependencies&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;junit&lt;/groupId&gt;
+			&lt;artifactId&gt;junit&lt;/artifactId&gt;
+			&lt;version&gt;4.12&lt;/version&gt;
+			&lt;scope&gt;test&lt;/scope&gt;
+		&lt;/dependency&gt;
+	&lt;/dependencies&gt;
+&lt;/project&gt;</code></pre>
+      <p>Trong file pom trên chúng ta sẽ có luôn các cấu hình là phiên bản Java,
+        source encoding UTF-8, jUnit.</p>
+      <p>Để chỉ định phiên bản Java, nếu sử dụng Spring Boot thì chỉ cấu hình:</p>
+      <pre><code class="xml">&lt;properties&gt;
+    &lt;java.version&gt;1.7&lt;/java.version&gt;
+&lt;/properties&gt;</code></pre>
+      <h3>Cấu hình proxy cho Maven</h3>
+      <p>Ở máy cơ quan chẳng hạn, nhiều khi bạn không thể truy cập Internet trực
+        tiếp mà phải qua proxy. Để thiết lập proxy cho Maven, hãy sửa file
+        settings.xml như sau:</p>
+      <pre><code class="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+						http://maven.apache.org/xsd/settings-1.0.0.xsd"&gt;
+	&lt;proxies&gt;
+		&lt;proxy&gt;
+			&lt;active&gt;true&lt;/active&gt;
+			&lt;protocol&gt;https&lt;/protocol&gt;
+			&lt;host&gt;10.225.1.1&lt;/host&gt;
+			&lt;port&gt;3128&lt;/port&gt;        
+			&lt;username&gt;&lt;/username&gt;
+			&lt;password&gt;&lt;/password&gt;    
+		&lt;/proxy&gt;
+	&lt;/proxies&gt;
+&lt;/settings&gt;</code></pre>
+      <h3>Maven command line</h3>
+      <p><strong>mvn compile</strong><br>
+        <br>
+        Lần đầu tiên thực thi command này, maven sẽ download toàn bộ các pluin
+        và các dependency liên quan. Nếu bạn thực thi lại lệnh này, maven sẽ
+        không download lại những gì nó đã có từ lần trước, vậy nên command sẽ
+        được thực thi nhanh hơn. Các class được compile sẽ được đưa vào
+        ${basedir}/target/classes </p>
+      <p><strong>mvn test</strong><br>
+        <br>
+        Bạn có một số unit tests và bạn muốn compile và thực thi chúng, bạn chỉ
+        cần sử dụng command trên.</p>
+      <p><strong>mvn test-compile</strong><br>
+        <br>
+        Nếu bạn chỉ muốn complie test sources mà không muốn thực thi, bạn sử
+        dụng command trên.</p>
+      <p><strong>mvn -Dtest=&lt;class&gt; test</strong></p>
+      <p>Để chạy test 1 file test nào đó. Ví dụ:</p>
+      <p><code>mvn -Dtest=TestApp1 test</code></p>
+      <p><code>mvn -Dtest=TestApp2 test</code></p>
+      <p><strong>mvn package</strong><br>
+        <br>
+        Bạn muốn xuất project của mình ra file jar để sử dụng. Bạn xem lại file
+        pom.xml, phần tử packaging phải có giá trị là jar (nếu là war thì maven
+        sẽ xuất ra file war). Sau đó, bạn sử dụng command trên.</p>
+      <p>Nếu bạn muốn bỏ qua test thì dùng lệnh:</p>
+      <p><code>mvn package -Dmaven.test.skip=true</code></p>
+      <p><strong>mvn install</strong><br>
+        <br>
+        Command mvn package chỉ mới xuất ra file jar vào thư mục
+        ${basedir}/target, để có thể đưa file jar vào trong local repository
+        thực thi thêm command</p>
+      <p><strong>mvn clean</strong><br>
+        <br>
+        Thư mục target sẽ bị xóa cùng với các dữ liệu trong đó trước khi project
+        được làm mới</p>
+      <p><strong>mvn clean install</strong><br>
+        <br>
+        Khi muốn build project thành các file chạy .jar hoặc .war, người ta
+        thường sử dụng đồng thời cả lệnh mvn clean và install.</p>
+      <p><strong>mvn site</strong><br>
+        <br>
+        Tạo 1 document site cho project, hiển thị các thông tin liên quan đến
+        project (ví dụ như các dependency, các plugin được sử dụng – khai báo
+        trong pom)<br>
+        <br>
+        <strong>mvn eclipse:eclipse</strong><br>
+        <br>
+        Nếu bạn sử dụng eclipse, lệnh này sẽ giúp project có thể dễ dàng import
+        và sử dụng trên eclipse </p>
+      <p><strong>mvn install</strong></p>
+      <p>Nhiều khi file jar của không có trên Maven repository, hoặc là bạn tạo
+        ra một file jar và muốn sử dụng cho dự án khác. Để cài đặt file jar<code><strong>.
+          </strong></code></p>
+      <code> </code>
+      <p><code>mvn install:install-file
+          -Dfile=QueryCrypt.jar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          -DgroupId=guhesan -DartifactId=querycrypt -Dversion=1.0
+          -Dpackaging=jar -DgeneratePom=true </code></p>
+      <code> </code>
+      <p><code>mvn install:install-file -Dfile=target/cttd-core-1.0.jar
+          -DgroupId=cttd&nbsp;&nbsp;&nbsp; -DartifactId=cttd-core&nbsp;
+          -Dversion=1.0 -Dpackaging=jar -DgeneratePom=true</code></p>
+      <h3>Tham khảo</h3>
+      <p>http://mvnrepository.com/</p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

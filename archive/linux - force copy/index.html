@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Force cp to overwrite without confirmation</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Force cp to overwrite without confirmation">
+ </head> 
+ <body> 
+  <article> 
+   <p>Bạn đã từng thử lệnh sau:</p> 
+   <pre>$ cp -r filtered/* /var/www/html/voice-landing/</pre> 
+   <p>Sau đó bạn phải nhấn <code>y</code> cho mỗi xác nhận ghi đè file. Hãy tưởng tượng bạn có 100 file cần ghi đè thôi.</p> 
+   <p>Bạn có thể trả lời <code>yes</code> cho tất cả các confirm bằng cách sau:</p> 
+   <pre>$ yes | cp -r filtered/* /var/www/html/voice-landing/</pre> 
+   <p></p> 
+   <p>Nhưng có gì đó sai sai ở đây.</p> 
+   <p>Bình thường, lệnh <code>cp</code> sẽ ghi đè mà không hỏi.</p> 
+   <p>Thêm tham số <code>-i</code> sẽ hiển thị xác nhận ghi đè.</p> 
+   <p>Thêm tham số <code>-n</code> sẽ luôn không ghi đè.</p> 
+   <p>Vậy tại sao lệnh đầu tiên lại hiển thị xác nhận? Đó là chạy bằng tài khoản root, và tài khoản đó thường được cấu hình như vậy.</p> 
+   <p>Bạn có thể xem ở file <code>.bashrc</code> hoặc file <code>.profile</code>, lệnh <code>alias</code>, lệnh <code>which</code>:</p> 
+   <pre>$ cat .bashrc 
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
+export HISTTIMEFORMAT="%d/%m/%y %T  "</pre> 
+   <p>--</p> 
+   <pre>$ alias
+alias cp='cp -i'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias grep='grep --color=auto'
+alias l.='ls -d .* --color=auto'
+alias ll='ls -l --color=auto'
+alias ls='ls --color=auto'
+alias mv='mv -i'
+alias rm='rm -i'
+alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'</pre> 
+   <p>--</p> 
+   <pre>$ which cp
+alias cp='cp -i'
+    /bin/cp</pre> 
+   <p>If you do have an alias defined, running unalias cp will abolish that for the current session, otherwise you can just remove it from your shell profile.</p> 
+   <p>You can temporarily bypass an alias and use the non-aliased version of a command by prefixing it with \, e.g. \cp whatever.</p> 
+   <p>Demo:</p> 
+   <pre>mkdir test1
+mkdir test2
+
+cat test1/file
+cat test2/file
+
+echo "1" &gt; test1/file
+echo "2" &gt; test2/file
+
+$ cp test1/file test2/<br>$ yes | cp test1/file test2/<br>$ cp -i test1/file test2/
+$ cp -n test1/file test2/
+$ \cp test1/file test2/</pre> 
+   <p><br></p> 
+   <p><br></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="date" content="2020-02-23 21:31:00">
+    <meta name="description" content="Khởi tạo dự án mới">
+    <title>Cài đặt Laravel</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Cài đặt Laravel</h2>
+      <h3>Yêu cầu server</h3>
+      <p>Để sử dụng Laravel framework thì server của bạn cần một số yêu cầu:</p>
+      <ul>
+        <li>PHP &gt;= 7.1.3</li>
+        <li>BCMath extension</li>
+        <li>Ctype extension</li>
+        <li>JSON extension</li>
+        <li>Mbstring extension</li>
+        <li>OpenSSL extension</li>
+        <li>PDO extension</li>
+        <li>Tokenizer extension</li>
+        <li>XML extension</li>
+      </ul>
+      <p>Để kiểm tra xem các extension đã đầy đủ chưa, bạn sử dụng lệnh sau:</p>
+      <pre>php -m</pre>
+      <p>Ví dụ một kết quả:</p>
+      <pre>$ php -m
+[PHP Modules]
+<strong class="text-success">bcmath</strong>
+bz2
+calendar
+Core
+<strong class="text-success">ctype</strong>
+curl
+date
+dom
+exif
+fileinfo
+filter
+ftp
+gd
+gettext
+hash
+iconv
+<strong class="text-success">json</strong>
+ldap
+libxml
+<strong class="text-success">mbstring</strong>
+mongodb
+mysqli
+mysqlnd
+<strong class="text-success">openssl</strong>
+pcntl
+pcre
+<strong class="text-success">PDO</strong>
+pdo_mysql
+pdo_sqlite
+Phar
+posix
+readline
+Reflection
+session
+shmop
+SimpleXML
+soap
+sockets
+SPL
+sqlite3
+standard
+sysvmsg
+sysvsem
+sysvshm
+<strong class="text-success">tokenizer</strong>
+wddx
+<strong class="text-success">xml</strong>
+xmlreader
+xmlwriter
+xsl
+zip
+zlib
+
+[Zend Modules]
+</pre>
+      <p>Với kết quả như trên thì các extension đã đầy đủ.</p>
+      <p>Nếu chưa đầy đủ, chúng ta có thể cài đặt như sau:</p>
+      <pre>sudo apt-get install php7.2-mbstring php7.2-xml \<br>    php7.2-json php7.2-zip php7.2-bcmath</pre>
+      <h3>Cài đặt Laravel</h3>
+      <p>Laravel sử dụng <a href="http://getcomposer.org/" target="_blank">Composer</a>
+        để quản lý các dependency. Vì vậy, trước khi bắt tay vào sử dụng Laravel
+        thì máy tính của bạn phải cài Composer trước.</p>
+      <p> Bạn có thể sử dụng Composer <code>create-project</code> trên
+        terminal:</p>
+      <pre>composer create-project --prefer-dist laravel/laravel blog</pre>
+      <h3>Phát triển trên local</h3>
+      <p>Nếu máy tính của bạn đã cài PHP rồi thì bạn có thể server PHP built-in
+        để phát triển server ứng dụng của bạn bằng cách sử dụng <code>serve</code>
+        Artisan command. Nó sẽ sinh ra phát triển một server tại địa chỉ <a target="_blank"
+          href="http://localhost:8000">localhost:8000</a>:</p>
+      <pre>php artisan serve</pre>
+      <h3>Tham khảo</h3>
+      <p> <a href="https://laravel.com/docs/master/installation" target="_blank">laravel.com/docs/master/installation</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>03 - Global options</title>
+    <style>
+        .container {
+            width: 800px;
+            height: 400px;
+            margin: 10px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="container1"></div>
+    </div>
+
+    <div class="container">
+        <div id="container2"></div>
+    </div>
+    
+
+    <script src="js/highcharts.js"></script>
+    <script>
+        Highcharts.setOptions({
+            chart: {
+                backgroundColorx: {
+                    linearGradient: [0, 0, 500, 500],
+                    stops: [
+                        [0, 'rgb(255, 255, 255)'],
+                        [1, 'rgb(240, 240, 255)']
+                    ]
+                },
+				backgroundColor: 'transparent',
+                //borderWidth: 2,
+                //plotBackgroundColor: 'rgba(255, 255, 255, .9)',
+                //plotShadow: true,
+                //plotBorderWidth: 1
+            },
+            credits: {
+                enabled: false
+            },
+			
+			lang: {
+				shortMonths: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+				weekdays: ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'],
+				shortMonths: ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12"]
+			},
+			legend: {
+				itemStyle: {
+					color: '#999',
+					/*
+					fontFamily: 'MavenPro-Regular',
+					fontWeight: 'nomal',
+					fontSize: '14px'
+					*/
+				},
+				itemHoverStyle: {
+					color: '#FFF'
+				},
+				itemHiddenStyle: {
+					color: '#111'
+				}
+			}
+        });
+
+        new Highcharts.Chart({
+            chart: {
+                renderTo: 'container1',
+            },
+            title: {
+                text: "Container 1"
+            },
+            subtitle: {
+                text: "NVH"
+            },
+            xAxis: {
+                type: 'datetime'
+            },
+            series: [
+                {
+                    data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+                    pointStart: Date.UTC(2010, 0, 1),
+                    pointInterval: 3600 * 1000 // one hour
+                }
+            ],
+            
+        });
+
+        Highcharts.chart({
+            chart: {
+                renderTo: 'container2',
+                type: 'column'
+            },
+            title: {
+                text: "Container 2"
+            },
+            subtitle: {
+                text: "CTTD"
+            },
+            xAxis: {
+                type: 'datetime'
+            },
+            series: [
+                {
+                    data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+                    pointStart: Date.UTC(2010, 0, 1),
+                    pointInterval: 3600 * 1000 // one hour
+                }
+            ],
+        });
+
+        
+    </script>
+</body>
+
+</html>

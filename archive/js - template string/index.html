@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Template string</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Template string">
+ </head> 
+ <body> 
+  <article> 
+   <h1>ES6 Template Literal</h1> 
+   <h2>Template Literal Là Gì</h2> 
+   <p>Template literal là tính năng mới trong ECMAScript 6 cho phép lập trình viên có thể nhúng biểu thứcJavaScript (ví dụ như giá trị của biến, hoặc kết quả của một phép toán...) bên trong chuỗi string một cách dễ dàng.</p> 
+   <p>Sử dụng phiên bản trước của ECMAScript thì việc nối chuỗi với giá trị của một biến hoặc biểu thức thường sử dụng toán tử <code>+</code> và chúng ta sẽ thường được thấy những đoạn code tương tự sau xuất hiện trong source code:</p> 
+   <pre><code>var spiderMan = {
+    name: "Peter",
+    age: 25
+};
+
+var superMan = {
+    name: "Clark",
+    age: 200
+};
+
+console.log("Hello, " + superMan.name
+    + ", my name is " + spiderMan.name
+    + ", I'm " + spiderMan.age + " years old."
+    + " And you're " + superMan.age + " years old."
+    + " Do you want to have a fight!!!");</code></pre> 
+   <p>Đoạn code trên khi chạy sẽ hiển thị kết quả sau trong tab console:</p> 
+   <pre><code>Hello, Clark, my name is Peter, I'm 25 years old. And you're 200 years old. Do you want to have a fight!!!</code></pre> 
+   <p>Sử Dụng template literal sẽ giúp chúng ta hạn chế sử dụng toán tử <code>+</code> như trên và source code nhìn sẽ gọn hơn.</p> 
+   <h2>Cú Pháp Template Literal</h2> 
+   <p>Template literal có cú pháp như sau:</p> 
+   <pre><code>`Text ${javascript_expression} other text...`</code></pre> 
+   <p>Trong đó <code>javascript_expression</code> là một biểu thức JavaScript.</p> 
+   <p>Ví dụ:</p> 
+   <pre><code>let firstName = "Peter";
+let lastName = "Parker";
+
+console.log(`Hello everyone! My name is ${firstName} ${lastName}.`);</code></pre> 
+   <p>Kết quả trả về:</p> 
+   <pre><code>Hello everyone! My name is Peter Parker.</code></pre> 
+   <p>Một ví dụ khác:</p> 
+   <pre><code>let toDay = new Date();
+
+console.log(`Hôm nay là ngày ${toDay.getDate()} tháng ${toDay.getMonth()} năm ${toDay.getYear()}`);</code></pre> 
+   <p>Đoạn code trên khi chạy sẽ hiển thị kết quả sau trong tab console:</p> 
+   <pre><code>Hôm nay là ngày 13 tháng 10 năm 117</code></pre> 
+   <p>Lưu ý: Đối với các ký tự đặc biệt như xuống dòng, tab... thì chúng ta vẫn sử dụng cú pháp thoát ký tự đặc biệt trong JavaScript như thông thường. Ví dụ <code>\n</code> để xuống dòng, <code>\t</code> để thêm tab...</p> 
+   <p>-----------------------------------</p> 
+   <p><a href="template-string.js">template-string.js</a></p> 
+   <p></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Xử lý base64 với Python">
+    <meta name="keywords" content="python, base64">
+    <meta name="author" content="lockex1987">
+    <title>Xử lý base64 với Python</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Xử lý base64 với Python</h2>
+      <p>Base64 thường được sử dụng để chuyển đổi qua lại giữa byte và xâu.</p>
+      <p>Để encode base64 trong Python sử dụng hàm <code>base64.b64encode</code>,
+        để decode thì dùng hàm <code>base64.b64decode</code>.</p>
+      <p>Chú ý có sự khác biệt lớn giữa Python 2 và Python 3.</p>
+      <ul>
+        <li>Trong Python 2:</li>
+        <ul>
+          <li>Hàm <code>base64.b64encode</code> và <code>base64.b64decode</code>
+            đều có tham số và giá trị trả về là xâu.</li>
+        </ul>
+        <li>Trong Python 3:</li>
+        <ul>
+          <li>Hàm <code>base64.b64encode</code> có tham số và giá trị trả về là
+            mảng byte.</li>
+          <li>Hàm <code>base64.b64decode</code> có tham số là mảng byte hoặc
+            xâu ASCII, giá trị trả về là mảng byte.</li>
+        </ul>
+      </ul>
+      <p>Như vậy, với Python 3 ta phải có thêm các bước biến đổi giữa mảng byte
+        và xâu.</p>
+      <ul>
+        <li>Sử dụng phương thức the_string.encode() của xâu để biến đổi thành
+          mảng byte.</li>
+        <li>Sử dụng phương thức the_bytes.decode() của mảng byte để biến đổi
+          thành xâu.</li>
+      </ul>
+      <p><a href="base64_demo.py">Source</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

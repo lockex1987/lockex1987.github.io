@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Redis Cluster</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta name="description" content="Redis Cluster">
+  </head>
+  <body>
+    <article>
+      <h2>Redis Cluster</h2>
+      <p>Redis cluster là một ứng dụng phân tán của Redis với các mục đích sau:</p>
+      <ul>
+        <li>Hiệu năng cao và khả năng scale theo chiều ngang tới 1000 node</li>
+        <li>Độ an toàn ghi chấp nhận được</li>
+        <li>Tính sẵn sàng</li>
+      </ul>
+      <p>Ví dụ chúng ta có một cluster với 6 node sau:</p>
+      <ul>
+        <li>Node A (master node)</li>
+        <li>Node B (master node)</li>
+        <li>Node C (master node)</li>
+        <li>Node D (slave của node A)</li>
+        <li>Node E (slave của node B)</li>
+        <li>Node F (slave của node C)</li>
+      </ul>
+      <p>Câu hỏi tự nhiên đặt ra là "Khi bạn ghi một key thì nó sẽ được lưu ở
+        node nào và nhân tố nào để chọn node đó".</p>
+      <p>Key space được chia thành 16,384 hash slot (2<sup>14</sup>). Mỗi master
+        node sẽ xử lý một tập con của 16,384 slot này.</p>
+      <p>Sự phân bố các slot với cấu hình như trên có thể như sau:</p>
+      <ul>
+        <li>Node A chứa các slot từ 0 đến 5,500.</li>
+        <li>Node B chứa các slot từ 5,501 đến 11,000</li>
+        <li>Node C chứa các slot từ 11,001 đến 16,383</li>
+      </ul>
+      <p>Reids sử dụng CRC-16 để ánh xạ một key đến một hash slot. Thuật toán cơ
+        bản là:</p>
+      <pre>hash_slot = CRC16(key) mod 16384</pre>
+      <p>Tổng kết lại, key sẽ quyết định hash slot và hash slot sẽ quyết định
+        node.</p>
+      <p>Redis cluster sẽ có các hạn chế sau:</p>
+      <p>Chúng ta không thể xử lý transaction hoặc các thao tác multi-key (SCAN,
+        KEYS, MGET) mà các key trên các node khác nhau.</p>
+      <p>Trên thực tế, nhiều khi chúng ta bắt buộc cần thực hiện các thao thác
+        multi-key. Vậy chúng ta làm sao có thể thực hiện được điều đó trên môi
+        trường cluster.</p>
+      <p>A simple answer is, by ensuring that the keys on which we perform
+        multi-key operation or transaction, are part of same hash slot range.
+        And we ensure this by "Hash Tagging" Redis keys.</p>
+      <p>Hash Tags are a way to ensure that multiple keys are allocated in the
+        same hash slot. There is an exception in the computation of hash slots
+        which is used in implementing Hash Tags.</p>
+      <p>In order to implement hash tags, the hash slot for a key is computed in
+        a slightly different way in certain conditions. If the key contains a
+        "{...}" pattern, only the substring between { and } is hashed in order
+        to obtain the hash slot. However, since it is possible that there are
+        multiple occurrences of { or }, the algorithm is well specified by the
+        following rules:</p>
+      <ul>
+        <li>IF the key contains a { character.</li>
+        <li>AND IF there is a } character to the right of {</li>
+        <li>AND IF there are one or more characters between the first occurrence
+          of { and the first occurrence of }</li>
+      </ul>
+      <p>Then instead of hashing the key, only what is between the first
+        occurrence of { and the following first occurrence of } is hashed. Let's
+        have a look at the following examples:</p>
+      <ul>
+        <li>The two keys <strong>{user1000}.following</strong> and <strong>{user1000}.followers</strong>
+          will hash to the same hash slot since only the substring <strong>user1000</strong>
+          will be hashed in order to compute the hash slot.</li>
+        <li>For the key <strong>foo{}{bar}</strong>, the whole key will be
+          hashed as usually since the first occurrence of { is followed by } on
+          the right without characters in the middle.</li>
+        <li>For the key <strong>foo{{bar}}zap</strong> the substring <strong>{bar</strong>
+          will be hashed, because it is the substring between the first
+          occurrence of { and the first occurrence of } on its right.</li>
+        <li>For the key <strong>foo{bar}{zap}</strong> the substring <strong>bar</strong>
+          will be hashed, since the algorithm stops at the first valid or
+          invalid (without bytes inside) match of { and }.</li>
+        <li>What follows from the algorithm is that if the key starts with {},
+          it is guaranteed to be hashed as a whole. This is useful when using
+          binary data as key names.</li>
+      </ul>
+      <p>So far we've seen how hash tagging can help us overcome the limitations
+        implied by Redis cluster.</p>
+      <p>Hope this article comes in handy for many of you while working with
+        Redis cluster.</p>
+      <p><br>
+      </p>
+      <p>Hướng giải quyết thứ 2 là chúng ta lấy ra danh sách các node (master
+        node). Sau đó với mỗi node chúng ta thực hiện việc scan bình thường,
+        từng node từng node một. Hầu hết các Redis client cung cấp 2 API:
+        Standalone API và Cluster-specific API. The Cluster-specific API usually
+        takes a command, inspects its key and routes the command to the
+        appropriate node. Commands without a key are either rejected or executed
+        on a default connection which usually defaults to the first node in the
+        connection string/address.</p>
+      <p>Bạn có thể làm việc này bằng Java (jedis) hoặc PHP (<a href="https://github.com/nrk/predis/issues/172">Predis</a>).</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p>https://www.codeproject.com/Articles/1135870/Hash-Tagging-Redis-Keys-in-a-Clustered-Environment</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+rect, line, path { stroke: currentcolor; stroke-width: 2px; vector-effect: non-scaling-stroke; }
+rect { fill: none; }
+path { stroke-miterlimit: 60; fill: currentcolor; }
+text { fill: currentcolor; font: 5.625em/2 comic sans ms,verdana,arial,sans-serif; }
+.code { font-family: courier,monospace; }
+[id="axes"] { opacity: 0.56; }
+[id="axes"] text.code:not(:last-of-type) { text-anchor: end; }
+[id="axes"] text.code:last-of-type { dominant-baseline: hanging; }
+[id="axes"] text:not(.code) { transform: translateY(0.75em); }
+[id="guides"], .guide { stroke-dasharray: 4px; }
+[id="guides"] { color: silver; }
+[id="bars"] { color: orange; }
+[id="bars"] text { text-anchor: middle; }
+[id="meas"] text:nth-of-type(2n+1) { text-anchor: middle; dominant-baseline: hanging; transform: translateY(0.25em); }
+[id="meas"] text:nth-of-type(2n) { dominant-baseline: middle; }
+[id="meas"] text:nth-of-type(2) { text-anchor: end; }

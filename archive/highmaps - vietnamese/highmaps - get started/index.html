@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <meta content="width=device-width, initial-scale=1.0"> 
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"> 
+  <title>Highmaps Get Started</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Highmaps Get Started">
+ </head> 
+ <body> 
+  <article> 
+   <p>https://www.highcharts.com/docs/maps/getting-started</p> 
+   <p><br> </p> 
+   <p>Highmaps is Highcharts for geo maps. Mainly <a href="http://en.wikipedia.org/wiki/Choropleth_map">choropleth maps</a> where the color intensity relates to some value of a geographic area, but Highmaps also supports different features like lines (roads, rivers etc.) and points (cities, points of interest) and more. Highmaps comes in two flavors, either as a standalone JavaScript file, or as a plugin for Highcharts.</p> 
+   <h2>LOAD THE REQUIRED FILES</h2> 
+   <p>For basics, see <a href="https://www.highcharts.com/docs/getting-started/installation">Highcharts installation</a>. The framework requirements and installation is the same for Highmaps as for Highcharts. To load Highmaps as a standalone product (if you don't have a license for Highcharts), include this script tag:</p> 
+   <pre>&lt;script src="http://code.highcharts.com/maps/highmaps.js"&gt;&lt;/script&gt;</pre> 
+   <p>If you already have Highcharts installed in the web page and want to run Highmaps as a plugin, include this script tag after <code>highcharts.js</code>:</p> 
+   <pre>&lt;script src="http://code.highcharts.com/maps/modules/map.js"&gt;&lt;/script&gt;</pre> 
+   <h2>LOAD THE MAP</h2> 
+   <p>Highmaps loads its maps from <a href="http://en.wikipedia.org/wiki/GeoJSON">GeoJSON</a>, an open standard for description of geographic features. Most GIS software supports this format as export from for instance Shapefile or KML export. Read more in the <a href="http://api.highcharts.com/highmaps#Highcharts.geojson">API reference</a> and <a href="http://jsfiddle.net/gh/get/jquery/1.7.2/highslide-software/highcharts.com/tree/master/samples/maps/demo/geojson-multiple-types/">see the live demo</a>.</p> 
+   <p>There are three basic sources for your map:</p> 
+   <ol> 
+    <li>Use our <a href="http://code.highcharts.com/mapdata/">Map collection</a>. Read the <a href="https://www.highcharts.com/docs/maps/map-collection">tutorial article</a> on the map collection to get started.</li> 
+    <li>Find an SVG map online and convert it using our (experimental) <a href="https://www.highcharts.com/studies/map-from-svg.htm">online converter</a>. </li> 
+    <li>Create your own map from scratch using an SVG editor, then convert them online. Read our tutorial on <a href="https://www.highcharts.com/docs/maps/custom-maps">Custom maps for Highmaps</a>.</li> 
+   </ol> 
+   <h2>INITIALIZE THE MAP</h2> 
+   <p>Read more on initializing a chart in <a href="https://www.highcharts.com/docs/getting-started/your-first-chart">Your first chart</a>. If you're running Highmaps as a jQuery plugin, the map is constructed with "Map" as the first argument: </p> 
+   <pre>$('#container').highcharts('Map', {<br>   ...<br>});</pre> 
+   <p>Otherwise, use the <code>Highcharts.Map</code> constructor like this:</p> 
+   <pre>var chart = new Highcharts.Map('container', {<br>   ...<br>});</pre> 
+   <p>Or, to avoid the <code>new</code> keyword, use the <code>Highcharts.mapChart</code> constructor:</p> 
+   <pre>Highcharts.mapChart('container', {<br>   ...<br>});</pre> 
+   <h2>ADD AND JOIN DATA</h2> 
+   <p>Once the empty map is in place, we're ready to add the data to the <a href="https://api.highcharts.com/highmaps/series.map.data">series.data</a> option. For the joining to work, each data point must have some identifier that relates to the same identifier in the map data set. This or these identifiers are then specified in the <a href="https://api.highcharts.com/highmaps/plotOptions.series.joinBy">joinBy</a> option. See detailed documentation and examples there.</p> 
+   <p>Another way to join the data is to simply skip the mapData and set the <a href="https://api.highcharts.com/highmaps/series.map.data.path">path</a> directly on the data point. This mixes the data and the structure and is not generally recommended, but it performs faster, and may be considered in situations where you have static data and a backed to perform the joining.</p> 
+   <p></p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p>https://www.highcharts.com/docs/maps/map-navigation</p> 
+   <p>Highmaps supports different ways of navigating around the map - zooming, panning, zooming to an area etc. The API options related to this can be viewed at <a href="https://api.highcharts.com/highmaps/mapNavigation">mapNavigation</a>.</p> 
+   <p>Please note that mapNavigation is disabled by default because the implementer should be concious that it may interfere with the navigation of the web page in general. When scrolling the mouse wheel over a map, the user may expect the web page to scroll, while Highmaps will capture the mousewheel event and zoom the map. The same goes for touch devices, where unless used right, the map may trap the user unable to zoom out to the page outside the map. So zooming should only be enabled in cases where the map actually needs it.</p> 
+   <h3>BUTTONS</h3> 
+   <p>Two buttons, [+] and [-], are by default shown on each map when navigation is enabled. These provide zooming in and zooming out.</p> 
+   <h3>MULTITOUCH</h3> 
+   <p>On touch devices, zooming and panning may be performed by pinch and touch-drag gestures.</p> 
+   <h3>MOUSEWHEEL</h3> 
+   <p>Mousewheeling zooms in and out the map around the point under the mouse.</p> 
+   <h3>DOUBLECLICK</h3> 
+   <p>Doubleclick by default zooms in, focused on the point under the mouse. Following the <a href="https://api.highcharts.com/highmaps/mapNavigation.enableDoubleClickZoomTo">enableDoubleClickZoomTo</a> option, double clicking may zoom fully in to a specific point.</p> 
+   <h3>PROGRAMMATIC</h3> 
+   <p>The map may be zoomed programmatically through the <a href="https://api.highcharts.com/class-reference/Highcharts.Chart#mapZoom">Chart.mapZoom</a> or <a href="https://api.highcharts.com/class-reference/Highcharts.Point#zoomTo">Point.zoomTo</a> methods.</p> 
+   <p></p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p>https://www.highcharts.com/docs/maps/color-axis</p> 
+   <p>The values on a <a href="http://en.wikipedia.org/wiki/Choropleth_map">choropleth</a> geo map or heat map are plotted against a color axis. The Highmaps color axis is a special case of an axis that is drawn inside the legend, displaying a gradient or single items depending on whether the axis is scalar or has data classes. See detailed reference and live examples in the <a href="http://api.highcharts.com/highmaps/colorAxis">API</a>.</p> 
+   <h2>SCALAR AXIS</h2> 
+   <p>A scalar color axis is represented by a gradient. The colors either range between the <a href="http://api.highcharts.com/highmaps/colorAxis.minColor">minColor</a> and the <a href="http://api.highcharts.com/highmaps/colorAxis.maxColor">maxColor</a>, or for more fine grained control the colors can be defined in <a href="http://api.highcharts.com/highmaps/colorAxis.stops">stops</a>. Often times, the color axis needs to be adjusted to get the right color spread for the data. In addition to stops, consider using a logarithmic <a href="http://api.highcharts.com/highmaps/colorAxis.type">axis type</a>, or setting <a href="http://api.highcharts.com/highmaps#colorAxis.min">min</a> and <a href="http://api.highcharts.com/highmaps/colorAxis.max">max</a> to avoid the colors being determined by outliers.</p> 
+   <h2>DATA CLASSES</h2> 
+   <p>When <a href="http://api.highcharts.com/highmaps/colorAxis.dataClasses">dataClasses</a> are used, the ranges are subdivided into separate classes like categories based on their values. This can be used for ranges between two values, but also for a true category. However, when your data is categorized, it may be as convenient to add each category to a separate series.</p> 
+   <p></p> 
+   <p><br></p> 
+   <p>https://www.highcharts.com/docs/maps/map-collection</p> 
+   <h1>Map collection</h1> 
+   <p>For your convenience, Highmaps offers a free <a href="http://code.highcharts.com/mapdata/">collection of maps</a>, optimized for use with Highmaps. For common maps, it saves you the trouble of finding or drawing suitable SVG or GeoJSON maps. Instead, you can choose between hundres of pre-generated maps of countries, regions and other administration levels.</p> 
+   <h2>LICENSE</h2> 
+   <p>The Highmaps Map Collection comes with the license of the source data. For Admin0 (countries) and Admin1 (US states, German Bundesländer, Dutch regions etc), the source data is <a href="http://www.naturalearthdata.com/">Natural Earth</a>, which is <a href="http://en.wikipedia.org/wiki/Public_domain">Public Domain</a>. For Admin2, we have only compiled selected countries, and these maps are created from national files with their own license which is specified on the SVG map and in the other format files as meta data. If your country is missing from the list, please contact us and we'll try to find a suitable shapefile and generate more maps. </p> 
+   <p>For maps loaded using the default GeoJSON input into the mapData option, a short version of the copyright will be printed in the chart's credits label.</p> 
+   <h2>USING THE MAP COLLECTION</h2> 
+   <h3>INSTALL FROM OUR CDN</h3> 
+   <p>In the <a href="http://code.highcharts.com/mapdata/">map collection reference</a>, each map name is followed by a link to an example. View the source of this example to get started. In short, the GeoJSON version of the map is loaded in a script tag in the page. This GeoJSON object is then registered to the Highcharts.maps object, and applied to the mapData option in the chart setup.</p> 
+   <p>1. Add the map as a JavaScript element:</p> 
+   <pre>&lt;script src="<a href="http://code.highcharts.com/mapdata/custom/world.js" target="_blank">http://code.highcharts.com/mapdata/custom/world.js</a>"&gt;&lt;/script&gt;</pre> 
+   <h2>You can alternatively link to a specific version or subversion of the map at http://code.highcharts.com/mapdata/1.1/custom/world.js. </h2> 
+   <p>2. Load it in <code>series.mapData</code>:</p> 
+   <pre>mapData: Highcharts.maps['custom/world'],</pre> 
+   <p>Alternatively, you can set the default map for all series with the <a href="http://api.highcharts.com/highmaps/chart.map"><code>chart.map</code></a> option:</p> 
+   <pre>map: 'custom/world'</pre> 
+   <p>3. Join your data with the map. By default Highmaps is set up to map your data against the <code>hc-key</code> property of the map collection, allowing you to define your data like this:</p> 
+   <pre>data: [['us-ny', 0], ['us-mi', 5], ['us-tx', 3], ['us-ak', 5]]</pre> 
+   <p>For other data joining options, see the <a href="http://api.highcharts.com/highmaps/plotOptions.series.joinBy"><code>series.joinBy</code></a> and <a href="http://api.highcharts.com/highcharts/plotOptions.series.keys"><code>series.keys</code></a> options.</p> 
+   <h3>INSTALL FROM NPM</h3> 
+   <p>Our map collection is available on npm as <a href="https://www.npmjs.com/package/@highcharts/map-collection">@highcharts/map-collection</a> and can be installed as following:</p> 
+   <pre>npm i @highcharts/map-collection</pre> 
+   <p>To load a map in Node.js and use it in Highmaps you can do the following:</p> 
+   <pre>var Highcharts = require('highcharts/highmaps.js'),
+    map = require('@highcharts/map-collection/custom/world.geo.json');
+ 
+Highcharts.mapChart('container', {
+  chart: {
+    map: geojson
+  },
+  // ...
+});
+</pre> 
+   <h2>MAP PROPERTIES</h2> 
+   <p>The following table outlines the properties available in the Highmaps Map Collection maps, and their meaning. The properties are accessible from the point.properties object (<a href="http://jsfiddle.net/oysteinmoseng/52rgg5zq/" target="_blank">example</a>).</p> 
+   <table> 
+    <thead> 
+     <tr> 
+      <th>Property</th> 
+      <th>Example values</th> 
+      <th>Description</th> 
+      <th>Availability</th> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>hc-group</td> 
+      <td>admin1, admin2, special</td> 
+      <td>The administrative group the area belongs to. Admin0 is countries, admin1 is first level administrative division (USA States, German Bundesländer, Canada Provinces). Admin2 is second level adm.div. (USA counties, German Kreise, Norwegian Kommuner). "Special" is used to denote an area where this grouping does not make sense (e.g. congressional districts, historical maps).</td> 
+      <td>All maps</td> 
+     </tr> 
+     <tr> 
+      <td>hc-middle-x</td> 
+      <td>0.65</td> 
+      <td>Data label X position. Defined as fraction of map bounding box width. 0 is left aligned, 1 is right aligned.</td> 
+      <td>All maps</td> 
+     </tr> 
+     <tr> 
+      <td>hc-middle-y</td> 
+      <td>0.65</td> 
+      <td>Data label Y position. Defined as fraction of map bounding box height. 0 is top aligned, 1 is bottom aligned.</td> 
+      <td>All maps</td> 
+     </tr> 
+     <tr> 
+      <td>hc-key</td> 
+      <td>us, us-ma-027, gb-hi</td> 
+      <td>Unique hierarchical identifier for the area. Consistent across maps, and reflected in the naming convention of the maps. More detailed description below.</td> 
+      <td>All maps</td> 
+     </tr> 
+     <tr> 
+      <td>hc-a2</td> 
+      <td>KV, PA, BB</td> 
+      <td>Two letter abbreviation of area name. Usually same as postal code/ISO code, but not always. Not guaranteed to be unique within map.</td> 
+      <td>All maps</td> 
+     </tr> 
+     <tr> 
+      <td>name</td> 
+      <td>Fremont, Brandenburg, Saipan</td> 
+      <td>Name of the area</td> 
+      <td>All maps</td> 
+     </tr> 
+     <tr> 
+      <td>iso-a2</td> 
+      <td>US, MC, LV</td> 
+      <td>ISO 2 letter country code</td> 
+      <td>Most admin0 areas</td> 
+     </tr> 
+     <tr> 
+      <td>iso-a3</td> 
+      <td>USA, MCO, LVA</td> 
+      <td>ISO 3 letter country code</td> 
+      <td>Most admin0 areas</td> 
+     </tr> 
+     <tr> 
+      <td>continent</td> 
+      <td>Asia, North America</td> 
+      <td>Continent the area lies within</td> 
+      <td>Most admin0 areas</td> 
+     </tr> 
+     <tr> 
+      <td>country-abbrev</td> 
+      <td>Pan., C.R.</td> 
+      <td>Abbreviated country name</td> 
+      <td>Most admin0 areas</td> 
+     </tr> 
+     <tr> 
+      <td>region</td> 
+      <td>Midwest, South, Highlands and Islands</td> 
+      <td>The region the area lies within</td> 
+      <td>Most admin1 areas within country maps</td> 
+     </tr> 
+     <tr> 
+      <td>subregion</td> 
+      <td>Southern Europe, Highland</td> 
+      <td>The subregion the area lies within</td> 
+      <td>Most admin0 and admin1 areas</td> 
+     </tr> 
+     <tr> 
+      <td>fips</td> 
+      <td>120, GM10, US05, 56031</td> 
+      <td>FIPS code for the area. Format may vary between maps as to whether the country code is included.</td> 
+      <td>Most admin1 areas within country maps, as well as USA admin2 maps</td> 
+     </tr> 
+     <tr> 
+      <td>hasc</td> 
+      <td>DE.BB, US.AR</td> 
+      <td>HASC code for the area</td> 
+      <td>Most admin1 areas within country maps</td> 
+     </tr> 
+     <tr> 
+      <td>postal-code</td> 
+      <td>AK, NY, TI</td> 
+      <td>Postal code for the area, usually two letters wide</td> 
+      <td>Most admin1 areas within country maps</td> 
+     </tr> 
+     <tr> 
+      <td>type</td> 
+      <td>State, Emirate, Fylke, Land</td> 
+      <td>Description of the area type</td> 
+      <td>Most admin1 areas within country maps</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <p>The hc-key property reflects the naming convention of the maps, and can be used for dynamic drilldown purposes. This is illustrated in the <a href="https://www.highcharts.com/maps/demo/map-drilldown" target="_blank">Map drilldown demo</a>. The property follows the following format:</p> 
+   <pre>&lt;unique admin0 id&gt;-&lt;unique admin1 id&gt;-&lt;unique admin2 id&gt;-...</pre> 
+   <p>Attempts are made to use commonly known codes for each level, to increase readability. As an example, most countries are identified by their two letter ISO-3166 code. Most admin1 areas are identified by their postal codes. For United States, admin2 (county) areas are identified by their FIPS codes.</p> 
+   <p>In addition to the above mentioned properties, all points have an id property that is stored on the point itself, rather than in the properties object. The id property is an unique ID for the point within the map. It follows a hierarchical system identical to that of the hc-key property, but uses capital letters and periods as delimiters.</p> 
+   <p>Some maps may provide additional properties that are not mentioned in the above table. Open the GeoJSON/Javascript source of the map in a text editor to find all available properties.</p> 
+   <h2>USING PARTS OF A MAP</h2> 
+   <p>If you can't find the exact map that you want in the collection, it is easy to use only selected parts of a larger area. Say you want a comparative map of Canada, USA and Mexico. Since we don't have that exact combination in the collection (as of now), you can use the map called "North America without Central". This map also contains Greenland as well as Caribbean islands. So we apply a data set only for the three countries we want, and set the <a href="http://api.highcharts.com/highmaps/plotOptions.map.allAreas">allAreas</a> option to false. This option makes sure all null points (the countries that don't have data), are hidden. See <a href="http://jsfiddle.net/gh/get/jquery/1.7.2/highslide-software/highcharts.com/tree/master/samples/maps/plotoptions/series-allareas-false/">demo on jsFiddle</a>.</p> 
+   <h2>MODIFY OUR MAPS</h2> 
+   <p>Our maps are also a good starting points for your own modified maps. Borders can be moved, areas joined, and labels modified by loading the SVG map in Inkscape, the free SVG editor. Our article on <a href="https://www.highcharts.com/docs/maps/custom-maps">Custom maps</a> explains in detail how to draw your maps from scratch. Modifying existing maps is easier - instead of drawing shapes use the existing ones (SVG files can be downloaded from <a href="http://code.highcharts.com/mapdata">here</a>) and perform the same operations as described in the article. Alternatively, follow the article on <a href="https://www.highcharts.com/docs/maps/custom-geojson-maps">Custom GeoJSON maps</a> to edit the map with a GIS editor for even more control and advanced mapping features.</p> 
+   <h2>DISCLAIMER</h2> 
+   <p>We offer the map collection for free to use with Highmaps, for your convenience. We will not be held responsible for errors in the maps, although we will strive to respond to bug reports and keep the maps correct.</p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p></p> 
+   <p>https://www.highcharts.com/docs/maps/custom-maps</p> 
+   <h1>Create custom maps for Highmaps</h1> 
+   <p>Highmaps can be used for more than geographic data, and more than the featured maps provided in the demos. This article goes through the process of drawing your own map in Inkscape, and using our online map converter tool to construct an interactive map with data values. We use a map of Australia for demo purposes. (Do not use that in production, we have a better one in our mapdata collection).</p> 
+   <p>1. The first step is to install <a href="http://www.inkscape.org/en/">Inkscape</a> on your system. This is the only tool you need to install, and it's free. Open up Inkscape, it opens a new document by default.</p> 
+   <p>2. We will use a PNG image in the background and draw actual SVG shapes on top of it. Open the PNG image in Inkscape. Inkscape ask if you want to link or embed the image, choose either of the two.</p> 
+   <p>3. In the left toolbar, select the tool called "Draw bezier curves and straight lines (Shift + F6)".</p> 
+   <p>4. Start drawing around a territory by clicking repeatedly around the perimeter. Nodes can be moved and added if you do mistakes. To start over again with a shape, select it using the "Select and transform objects (F1)" tool, and hit Delete. In the image below we have drawn the shape for Western Australia.</p> 
+   <p><img src="https://www.highcharts.com/images/stories/custom-maps/map-from-svg-3.png"></p> 
+   <p> </p> 
+   <p>5. The Highmaps converter tool expects fills for areas in order to distinguish it from separators and other lines. In the lower left corner of Inkscape, it says Fill: None. Click the text None to bring up the Fill and Stroke dialog. Next to the cross depicting no fill, select the solid fill button. Pick a color.</p> 
+   <p><img src="https://www.highcharts.com/images/stories/custom-maps/map-from-svg-4.png"></p> 
+   <p> </p> 
+   <p>6. Next, we want to give the territory a name that Highmaps can use for labels and identification. In the Object menu, select Object Properties (Shift + Ctrl + O). Set an id and a label. The label is used by Highmaps. Remember to click the Set button, otherwise Inkscape won't apply the information.</p> 
+   <p><img src="https://www.highcharts.com/images/stories/custom-maps/map-from-svg-5.png"></p> 
+   <p> </p> 
+   <p>7. For the second territory we want to do exactly the same, but there is also another thing to consider. We want the border between the two shapes to align, so that when we zoom in we don't see borders lying close but not on top of each other. We ensure this by selecting the Snap to path button in the right toolbar. Now when we're drawing the second shape, we will get a small cross and a label saying Handle to path when we're getting close to the first shape.</p> 
+   <p><img src="https://www.highcharts.com/images/stories/custom-maps/map-from-svg-6.png"></p> 
+   <p> </p> 
+   <p>8. Continue like this for the other simple shapes. The next items, #10-#12, will be about special cases; islands, enclaves and separator lines. If you don't have those, jump to #13.</p> 
+   <p>9. Islands. Start by drawing one of the islands or associated mainland like any other shape. Give it a fill. Then draw the island and give it a fill. Now select both (or all) shapes by using the Select tool and holding down the Shift key while clicking. In the Object menu, select Group (Ctrl + G). Now you can give the new group an id and a label like in #7.</p> 
+   <p><img src="https://www.highcharts.com/images/stories/custom-maps/map-from-svg-7.png"></p> 
+   <p> </p> 
+   <p>10. Enclaves are territories within another territory. Start by drawing the outer territory like any other shape. Give it a fill and label. Now in the fill and stroke dialog, set the opacity to 50% so that you can see the underlying enclave. Now you are able to draw the enclave on top.</p> 
+   <p>11. Separator lines are typically used when an offshore territory is drawn close to the mainland, and the distance is not to scale. In our sample we will move Tasmania to the west and draw a separator. Use the Bezier tool again, and draw the separator where you want it. Double click to close it. That's it. As long as you don't add a fill, the map parser will treat it as a line object.</p> 
+   <p><img src="https://www.highcharts.com/images/stories/custom-maps/map-from-svg-8.png"></p> 
+   <p> </p> 
+   <p>12. After you're finished drawing, save the file. Inkscape saves as SVG by default. Open the file in a text editor so that you see the SVG/XML markup. Select all and copy. </p> 
+   <p>13. Using a modern browser (tested with Chrome), go to <a href="https://www.highcharts.com/studies/map-from-svg.htm">www.highcharts.com/studies/map-from-svg.htm</a>. In the textarea labeled "Online SVG URL or SVG markup", paste your SVG markup. Hit the Load button. Now an interactive map should display on the right.</p> 
+   <p><img src="https://www.highcharts.com/images/stories/custom-maps/map-from-svg-9.png"></p> 
+   <p> </p> 
+   <p>14. The actual map shape data is available under the "View data" link. Click it and copy the whole contents of the text area to the right. This is a JSON object containing the template for the entire <a href="http://api.highcharts.com/highmaps/series">series</a> options of a new map chart, combining real area data and separator lines.</p> 
+   <p><img src="https://www.highcharts.com/images/stories/custom-maps/map-from-svg-10.png"></p> 
+   <p> </p> 
+   <p>15. Go to <a href="http://jsfiddle.net/highcharts/TUy7x/">jsfiddle.net/highcharts/TUy7x/</a>, an empty boilerplate for Highmaps. Add a series configuration object and paste your data. It should now look like <a href="http://jsfiddle.net/highcharts/TUy7x/1/">jsfiddle.net/highcharts/TUy7x/1/</a>.</p> 
+   <pre>$(function () {
+    // Initiate the chart
+    $('#container').highcharts('Map', {
+        series: /* paste your content here */
+    });
+});</pre> 
+   <p> </p> 
+   <p>16. Now all you have to do is add values to the points to make a useful chart. Alternatively, use the paths in the <a href="http://api.highcharts.com/highmaps/series%3Cmap%3E.mapData">mapData</a> option and add data separately. </p> 
+   <p> </p> 
+   <p>Good luck, and don't hesitate to contact us via our <a href="https://www.highcharts.com/support">Support Page</a> if you have any problems or corrections to this article.</p> 
+   <p></p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p>https://www.highcharts.com/docs/maps/custom-geojson-maps</p> 
+   <h1>Custom GeoJSON maps</h1> 
+   <p>This article contains information on creating maps from data in common mapping formats, as well as modifying the <a href="http://code.highcharts.com/mapdata" target="_blank" title="Highmaps Map Collection">Highmaps Map Collection</a>. For information on drawing your own maps and creating maps from SVG, see <a href="https://www.highcharts.com/docs/maps/custom-maps" target="_blank" title="Custom maps">this article</a>.</p> 
+   <p>We see that many users have map data in ESRI Shapefile format or other common mapping formats. These can easily be converted for use with Highmaps using an editor with GeoJSON exporting capabilities, as Highmaps supports the GeoJSON format natively. Most full-featured GIS editors will be able to perform this conversion. <a href="http://qgis.org/" target="_blank" title="QGIS">QGIS</a> is a free alternative that supports both Shapefile, KML, and a number of other formats. See <a href="https://www.highcharts.com/maps/demo/geojson" target="_blank" title="GeoJSON demo">this demo</a> for an example of how to load polygonal data from a GeoJSON file, and <a href="https://www.highcharts.com/maps/demo/geojson-multiple-types" target="_blank" title="GeoJSON multiple types demo">this demo</a> for a more complex example with line and point data.</p> 
+   <p>The Highmaps map collection is supplied in both SVG and GeoJSON formats, and can be edited using any compatible editor. Simple changes can be made using a text editor. <a href="http://inkscape.org/" target="_blank" title="InkScape">InkScape</a> is a free visual editor for SVG files. Please note that different coordinate systems are used in the SVG and GeoJSON files, mainly for optimization reasons. The map collection is also supplied as executable Javascript files. These Javascript files are identical to the GeoJSON files, except for a small amount of wrapping code.</p> 
+   <h2>CREATING MAPS FOR HIGHMAPS</h2> 
+   <p>We will now go through the process of importing a Shapefile in QGIS and converting it for use with Highmaps. The process is the same when editing the GeoJSON files from our map collection. Note that there are many ways of accomplishing this with QGIS, and that details might vary depending on program version and platform. If you have issues using QGIS, check out their extensive <a href="http://qgis.org/en/docs/index.html" target="_blank" title="QGIS Documentation">documentation</a>.</p> 
+   <p>1. Once QGIS is installed, the first step is to import your data. To do this, select the "Add Vector Layer" option from the Layer menu. For demonstration purposes, we will use a dataset with USA Zip Code Tabulation Areas available from the <a href="http://www.census.gov/cgi-bin/geo/shapefiles2012/main" target="_blank" title="Zip Code Tabulation Areas">US Census Bureau</a>. Our goal is to create a map of the Alaskan Zip codes for use with Highmaps.</p> 
+   <p><img src="https://www.highcharts.com/images/stories/custom-maps/custom-geojson-maps-0.jpg"></p> 
+   <p><img src="https://www.highcharts.com/images/stories/custom-maps/custom-geojson-maps-1.jpg"></p> 
+   <p>2. To extract Alaska from the dataset, choose the box-selection tool in the toolbar, and draw a rectangle around the area you want to select. Then, click "Save Selection as Vector File" in the Layer menu, and save the selected area to a new file.</p> 
+   <p> <img src="https://www.highcharts.com/images/stories/custom-maps/custom-geojson-maps-2.jpg"></p> 
+   <p><img src="https://www.highcharts.com/images/stories/custom-maps/custom-geojson-maps-3.jpg"></p> 
+   <p> 3. Now, start a new project and import the file you saved, following the same procedure as in step 1. The result should look something like this:</p> 
+   <p> <img src="https://www.highcharts.com/images/stories/custom-maps/custom-geojson-maps-4.jpg"></p> 
+   <p>4. While this looks okay, we would like to modify the data before exporting it. To get access to the more advanced features of QGIS, open the Processing Toolbox (View-&gt;Panels-&gt;Toolbox).</p> 
+   <p> <img src="https://www.highcharts.com/images/stories/custom-maps/custom-geojson-maps-5.jpg"></p> 
+   <p>5. We want to reproject our data to a projection more suitable for Alaska. To do this, open the "Reproject layer" tool in the Toolbox, found under Geoalgorithms-&gt;Vector-&gt;General tools. As target CRS (Coordinate Reference System), select "NAD27 / Alaska zone 2", EPSG code 26732. Save the result to a temporary file, and make sure to tick the "Open output file after running algorithm" box. After running the tool, you should get a new layer, somewhere out of view. To zoom in on the new layer, right click it in the table of contents, and select "Zoom to Layer Extent". If the process failed somehow, you might need to tweak your projection settings. Refer to the <a href="http://docs.qgis.org/2.2/en/docs/user_manual/working_with_projections/working_with_projections.html" target="_blank" title="Working with projections">QGIS documentation</a> for details. </p> 
+   <p> <img src="https://www.highcharts.com/images/stories/custom-maps/custom-geojson-maps-6.jpg"></p> 
+   <p><img src="https://www.highcharts.com/images/stories/custom-maps/custom-geojson-maps-7.jpg"></p> 
+   <p>6. Now, we would like to simplify the geometry. The less detail we include in our map, the faster Highmaps will work, and the faster your page will load. QGIS has several tools for this, but the simplest can be found in the Vector menu, under Geometry Tools. Set a tolerance of around 1000, and select a new file to save the result to. Also tick the "Add result to canvas" box. Once the process has finished, you should have a new layer with the simplified geometry.</p> 
+   <p><img src="https://www.highcharts.com/images/stories/custom-maps/custom-geojson-maps-8.jpg"></p> 
+   <p>7. Before exporting, we might want to inspect and modify the properties of our map. To do this, right click the layer in the table of contents and select "Open Attribute Table". These attributes will be included in the GeoJSON when we export our map. Highmaps was designed to be used with user defined maps, and is very flexible in the way that it handles map data. There are therefore no special requirements for metadata in the maps. </p> 
+   <p><img src="https://www.highcharts.com/images/stories/custom-maps/custom-geojson-maps-9.jpg"></p> 
+   <p>8. When you are satisfied with your map, you need to export it to GeoJSON format in order to use it with Highmaps. To export your map, right click the layer you want to export in the table of contents, and select "Save As". Make sure to select to save in GeoJSON format. The resulting file can be used directly with Highmaps. You will notice that QGIS by default includes a large amount of decimals in the GeoJSON coordinates. These can be stripped using a Regex or similar, for optimization. Try using <a href="http://jsfiddle.net/highcharts/92oymdb7/" target="_blank" title="jsFiddle tool">this jsFiddle tool</a> on the resulting file contents.</p> 
+   <p><img src="https://www.highcharts.com/images/stories/custom-maps/custom-geojson-maps-10.jpg"></p> 
+   <p>9. To quickly test your map, paste your GeoJSON into <a href="http://jsfiddle.net/highcharts/xbzxfx2L" target="_blank" title="GeoJSON maps boilerplate">this boilerplate jsFiddle</a>. The result should look something like this:</p> 
+   <p><img src="https://www.highcharts.com/images/stories/custom-maps/custom-geojson-maps-11.jpg"></p> 
+   <p>You now have your map ready for use with Highmaps.</p> 
+   <p></p> 
+   <p><br></p> 
+   <p>https://www.highcharts.com/docs/maps/adding-points-and-lines</p> 
+   <h1>Adding points and lines</h1> 
+   <p>Map points and lines are added to the map by coordinates. The coordinate system used in most of our maps is a custom one, where both the X and Y axis ranges from 0 to some thousands. The rationale for not using latitude and longitude coordinates is partly to save downloading weight, partly to not have to deal with projection on the client side, and partly because many of the maps are composite. For example Alaska is moved into the Pacific next to the US mainland on most US maps, thus Alaska would need its own projection within the same map. </p> 
+   <p>Points are added as x, y pairs on the same coordinate system as the map. Maplines however are given as paths. In order to ease the process of placing your own points on the map, we have created <a href="http://jsfiddle.net/gh/get/jquery/1.7.2/highslide-software/highcharts.com/tree/master/samples/maps/chart/events-click-getcoordinates/">a utility script</a> that allows you to click around in the map, then view and copy-paste the coordinates into your own map setup.</p> 
+   <p></p> 
+   <p><br></p> 
+   <p>https://www.highcharts.com/docs/maps/latlon</p> 
+   <h1>Latitude/longitude</h1> 
+   <p></p> 
+   <p>Highmaps from version 1.1.0 comes with support for latitude/longitude. This feature requires that the <a href="http://proj4js.org/" target="_blank">proj4js</a> library has been loaded before Highmaps. The latest version of the proj4js library can be loaded from <a href="https://cdnjs.com/libraries/proj4js" target="_blank">cdnjs</a>.</p> 
+   <pre>&lt;!-- Example of loading from CDNJS: --&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.6/proj4.js"&gt;&lt;/script&gt;</pre> 
+   <p>With this feature you can specify the coordinates of map points and bubbles using latitude/longitude directly:</p> 
+   <pre>series: [{
+    type: 'mappoint',
+    name: 'Cities',
+    data: [{
+        name: 'London',
+        lat: 51.507222,
+        lon: -0.1275
+    }, {
+        name: 'Birmingham',
+        lat: 52.483056,
+        lon: -1.893611
+    }, {
+        name: 'Leeds',
+        lat: 53.799722,
+        lon: -1.549167
+    }]	
+}]</pre> 
+   <p>You can also use the <a href="https://api.highcharts.com/class-reference/Highcharts.Chart#fromLatLonToPoint" target="_blank">Chart.fromLatLonToPoint</a> and <a href="https://api.highcharts.com/class-reference/Highcharts.Chart#fromPointToLatLon" target="_blank">Chart.fromPointToLatLon</a> functions to convert between map values and latitude/longitude manually.</p> 
+   <h2>ADD LAT/LON SUPPORT TO CUSTOM MAPS</h2> 
+   <p>For custom maps to support latitude/longitude they must have a <code>hc-transform</code> object defined on them in the following format:</p> 
+   <pre>"hc-transform": {
+    "default": {
+        "crs": "Your map projection in proj4 string format, as supported by pro4js"
+    }
+}</pre> 
+   <p>This object contains information necessary to transform the coordinates used in the map to latitude/longitude, and vice versa. Adding this information to your map is easily done with a text editor, assuming your map is stored in <a href="https://www.highcharts.com/docs/maps/custom-geojson-maps">GeoJSON</a> format.</p> 
+   <p>It is possible to expand on the definition above for more complex maps. The following is an example where the map is split into multiple zones, where each zone has its own transform object. This is useful if you have combined multiple maps together, as is often seen with overseas areas:</p> 
+   <pre>"hc-transform": {
+    "default": {
+        "crs": "+proj=lcc +lat_1=33 +lat_2=45 +lat_0=39 +lon_0=-96 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs"
+    },
+    "zone2": {
+        "crs": "+proj=aea +lat_1=8 +lat_2=18 +lat_0=13 +lon_0=-157 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs",
+        "hitZone": {
+            "type": "Polygon",
+            "coordinates": [[[1747,3900],[3651,2950],[3651,-999],[1747,-999],[1747,3900]]]
+        },
+        "xpan": 190,
+        "ypan": 417,
+        "scale": 0.000123090941806
+    },
+    "zone3": {
+        "crs": "+proj=tmerc +lat_0=54 +lon_0=-142 +k=0.9999 +x_0=500000 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs",
+        "hitZone": {
+            "type": "Polygon",
+            "coordinates": [[[-999,5188],[-707,5188],[1747,3900],[1747,-999],[-999,-999],[-999,5188]]]
+        },
+        "xpan": 5,
+        "ypan": 357,
+        "scale": 5.84397059179e-05,
+        "rotation": 0.2618
+    }
+}</pre> 
+   <p>The <code>hitZone</code> property is a GeoJSON geometry object, specifying the extent of the zone in the map. The <code>scale</code> property specifies a scaling factor applied to the projected coordinates. The <code>xpan</code> and <code>ypan</code> properties specify offsets applied to the projected coordinates after scaling. Using these parameters it is possible to move and resize areas in the projected map coordinate system while retaining lat/lon support. The <code>rotation</code> property specifies the clockwise rotation of the coordinates before scaling and panning, in radians. The rotation is relative to the coordinate system origin.</p> 
+   <p>Highmaps will automatically detect which transform object to use when transforming to and from lat/lon on a map. If you want to manually perform a conversion using a specific transform object, use the <a href="https://api.highcharts.com/class-reference/Highcharts.Chart#transformToLatLon" target="_blank">Chart.transformToLatLon</a> and <a href="https://api.highcharts.com/class-reference/Highcharts.Chart#transformFromLatLon" target="_blank">Chart.transformFromLatLon</a> functions.</p> 
+   <p></p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p>https://code.highcharts.com/mapdata/</p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

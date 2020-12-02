@@ -1,0 +1,57 @@
+.teaser {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 1em;
+  max-width: 300px;
+  overflow: hidden;
+  position: relative;
+}
+.teaser:before, .teaser:after {
+  content: '';
+  border-radius: 50%;
+  display: block;
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  right: -150px;
+  bottom: -150px;
+  transition: all 300ms ease-out;
+}
+.teaser:before {
+  z-index: 1;
+  pointer-events: none;
+}
+@supports (mix-blend-mode: difference) {
+  .teaser:before {
+    background-color: white;
+    mix-blend-mode: difference;
+  }
+}
+.teaser:after {
+  background-color: #e20074;
+  z-index: -1;
+}
+@supports (mix-blend-mode: difference) {
+  .teaser:after {
+    background-color: #00e26e;
+  }
+}
+@supports not (mix-blend-mode: difference) {
+  .teaser:hover {
+    color: white;
+  }
+}
+.teaser:hover:before, .teaser:hover:after {
+  -webkit-transform: scale(3);
+          transform: scale(3);
+}
+
+*, *:after, *:before {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 1em;
+}

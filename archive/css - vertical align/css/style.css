@@ -1,0 +1,51 @@
+body { padding: 20px; background-color: #eee; width: 800px; margin: 0 auto; }
+/*p { display: inline-block; margin: 0; width: 150px; text-align: right; font: bold 20px Sans-Serif; }*/
+div { margin: 0 0 30px 0; background: white; }
+
+.vertical-align-middle > * { vertical-align: middle; }
+.vertical-align-top > * { vertical-align: top; }
+.vertical-align-bottom > * { vertical-align: bottom; }
+.vertical-align-baseline > * { vertical-align: baseline; }
+
+.line-height-1 { height: 90px; line-height: 90px; text-align: center; border: 2px dashed #f69c55; }
+
+.line-height-2 { height: 200px; line-height: 200px; text-align: center; border: 2px dashed #f69c55; }
+.line-height-2 span { display: inline-block; vertical-align: middle; line-height: normal; }
+
+.line-height-3 .child-3 { line-height: 200px; }
+
+.table-1 { display: table; height: 100px; width: 100%; text-align: center; border: 2px dashed #f69c55; }
+.table-1 span { display: table-cell; vertical-align: middle; }
+
+
+
+.table-container { display: table; }
+.table-item { background: #16a548; color: #fff; display: table-cell; padding: 10px; vertical-align: middle; width: 40%; }
+.table-item.first { background: #437153; font-size: 20px; text-align: center; width: 20%; }
+.table-item.last { border-left: 1px solid #5fc583; }
+
+.box-content { background: #333; color: #fff; padding: 20px; }
+
+.relative { position: relative; }
+.absolute1 { background: #333; height: 100px; left: 50%; line-height: 100px; margin: -50px 0 0 -100px; position: absolute; text-align: center; top: 50%; width: 200px; }
+.absolute2 { background: #333; color: red; text-align: center; position: absolute; padding: 20px; left: 50%; top: 50%; transform: translateX(-50%) translateY(-50%); }
+
+.flex-1 {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 100%;
+    -webkit-box-align: center;
+       -ms-flex-align: center;
+          align-items: center;
+    -webkit-box-pack: center;
+       -ms-flex-pack: center;
+     justify-content: center;
+}
+
+.Aligner { display: flex; align-items: center; min-height: 24em; justify-content: center; }
+.Aligner-item { flex: 1; }
+.Aligner-item--top { align-self: flex-start; }
+.Aligner-item--bottom { align-self: flex-end; }
+.Aligner-item--fixed { flex: none; max-width: 50%; }
+

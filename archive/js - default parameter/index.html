@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Default parameter</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Default parameter">
+ </head> 
+ <body> 
+  <article> 
+   <h2>ES6 Default Parameter</h2> 
+   <h3>Tham số mặc định</h3> 
+   <p>Trong nhiều trường hợp, khi định nghĩa một hàm chúng ta muốn gán giá trị mặc định cho tham số trong hàm để khi hàm được gọi nếu không có giá trị nào truyền vào cho các tham số này thì giá trị mặc định của chúng sẽ được sử dụng.</p> 
+   <p>Với các phiên bản trước của ECMAScript không cung cấp sẵn tính năng gán giá trị mặc định cho tham số của hàm mà thông thường cần phải thực hiện thông qua một số bước gián tiếp khác để đạt được mục đính tương tự. Trong ECMAScript 6, tính năng gán giá trị mặc định cho tham số đã được hỗ trợ:</p> 
+   <pre><code>function sayHi(name = 'there') {
+    console.log("Hi " + name + '!');
+}</code></pre> 
+   <p>Tham số <code>name</code> trong <code>sayHi()</code> ở đoạn code trên sẽ được gán giá trị đối số mặc định với giá trị là <code>there</code>. Khi gọi hàm <code>sayHi()</code> được định nghĩa như ở ví dụ trên, nếu như chúng ta không truyền vào giá trị (hay đối số) nào cho tham số <code>name</code> trong hàm này thì giá trị mặc định <code>there</code> sẽ được sử dụng:</p> 
+   <pre><code>sayHi('John');
+// Hi John!
+
+sayHi();
+// Hi there!</code></pre> 
+   <p>Lưu ý: Một số ngôn ngữ lập trình khác sử dụng thuật ngữ đối số mặc định (default argument) thay vì tham số mặc định (default parameter). Mặc dù hai thuật ngữ parameter và argument (không có default phía trước) có ý nghĩa khác nhau, default argument và default parameter trong ngữ cảnh này có ý nghĩa như nhau.</p> 
+   <h2>Đối số undefined</h2> 
+   <p>Trong khi gọi hàm, với các tham số được khai báo với giá trị đối số mặc định thì việc sử dụng đối số với giá trị là <code>undefined</code> tương đương với việc không truyền vào đối số (hay sử dụng đối số mặc định).</p> 
+   <pre><code>function sayHi(name = 'there') {
+    console.log("Hi " + name + '!');
+    console.log(typeof name);
+}
+
+sayHi();
+// Hi there!
+// string
+
+sayHi(undefined);
+// Hi there!
+// string</code></pre> 
+   <p>Ngoài <code>undefined</code> ra thì tất cả các giá trị khác sử dụng cho tham số vẫn được sử dụng thông thường thay vì sử dụng đối số mặc định:</p> 
+   <pre><code>sayHi(null);
+
+// Hi null!
+// object
+
+sayHi(false);
+// Hi false!
+// boolean</code></pre> 
+   <p>--------------------------</p> 
+   <p><a href="default-parameter.js">default-parameter.js</a></p> 
+   <p></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

@@ -1,0 +1,64 @@
+.pedigreePosition {
+  font-size: 14px;
+}
+.pedigreePosition .generation {
+  position: relative;
+  float: left;
+  width: 200px;
+  height: 100%;
+}
+.pedigreePosition .generation .siblings {
+  margin-bottom: 50px;
+}
+.pedigreePosition .generation .siblings .couple {
+  position: absolute;
+}
+.pedigreePosition .generation .siblings .couple .personWrapper {
+  margin-bottom: 20px;
+  position: relative;
+}
+.pedigreePosition .generation .siblings .couple .personWrapper .person {
+  margin-left: 50px;
+  padding: 8px 10px;
+  border: 1px solid blue;
+  cursor: pointer;
+  width: 100px;
+  height: 40px;
+}
+.pedigreePosition .generation .siblings .couple .personWrapper .person:hover {
+  background-color: #AAA;
+}
+.pedigreePosition .generation .siblings .couple .personWrapper .isDirect {
+  position: absolute;
+  top: 19px;
+  left: 0;
+  width: 50px;
+  height: 2px;
+  border: 1px solid red;
+}
+.pedigreePosition .generation .siblings .couple .coupleConnector {
+  position: absolute;
+  top: 40px;
+  left: 100px;
+  height: 20px;
+  width: 2px;
+  border: 1px solid red;
+}
+.pedigreePosition .generation .siblings .siblingsConnector {
+  position: absolute;
+  left: 0;
+  width: 2px;
+  border: 1px solid red;
+}
+.pedigreePosition .generation .siblings .toParentConnector {
+  position: absolute;
+  left: 0;
+  width: 100px;
+  transform: translate(-100px, -1px);
+  border: 1px solid red;
+}
+.pedigreePosition::after {
+  display: table;
+  content: "";
+  clear: both;
+}

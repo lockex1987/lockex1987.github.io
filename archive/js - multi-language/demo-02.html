@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>jQuery Lang Demo</title>
+	
+	<style>
+		div {
+			padding: 25px;
+		}
+	</style>
+	
+	<script src="lib/jquery/js/jquery.min.js"></script>
+	<script src="lib/js-cookie/js/js.cookie.js"></script>
+	<script src="lib/jquery-lang/js/jquery-lang.js"></script>
+	
+	<script>
+		var lang = new Lang();
+		
+		function loadDynamicContent() {
+			$('#dyn-target').append('<div lang="en">Some dynamic content</div>');
+		}
+		
+		function changLanguage(langCode) {
+			lang.change(langCode);
+			toogleLangSwitch();
+		}
+		
+		function toogleLangSwitch() {
+			
+			console.log(lang.currentLang);
+			
+			$("#lang-switch a").show();
+			$("#" + lang.currentLang + "-switch").hide();
+		}
+		
+		$(function() {
+			
+			var currentLang = 'vi';
+			
+			lang.dynamic('vi', 'lib/jquery-lang/langpack/vi.json');
+			lang.init({ defaultLang: 'en' });
+			// Dung ham nay de co the goi
+			lang.change(currentLang, null, toogleLangSwitch);
+		
+			// Van nhan la en
+			//toogleLangSwitch();
+		});
+	</script>
+</head>
+
+<body>
+	<div lang="en">Translate me</div>
+	<div><input type="text" placeholder="Please enter username" lang="en"/></div>
+	<div><button type="button" onclick="alert(window.lang.translate('Translate me'));">JavaScript</button></div>
+	<div lang="en" data-lang-token="lt">This is a long text</div>
+	<div id="lang-switch">
+		<a href="#" onclick="changLanguage('en'); return false;" lang="en" id="en-switch">Switch to English</a>
+		<a href="#" onclick="changLanguage('vi'); return false;" lang="en" id="vi-switch">Switch to Vietnamese</a>
+	</div>
+	<div>
+		<button type="button" lang="en"
+				onclick="loadDynamicContent()">
+			Load dynamic content
+		</button>
+		
+		<div id="dyn-target"></div>
+	</div>
+	
+	<div>
+		A HREF <a lang="en" href="http://www.google.com/">http://www.google.com/</a>
+	</div>
+	
+	<div>
+		IMG SRC <img lang="en" src="images/lang-flag-en.png"/>
+	</div>
+</body>
+</html>

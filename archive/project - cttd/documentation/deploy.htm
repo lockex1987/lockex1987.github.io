@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <title>Hướng dẫn triển khai</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <link href="theme.css" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+        <div id="main">
+            <h2 id="div8">8. Hướng dẫn build</h2>
+			<div>
+                Điều kiện tiên quyết:
+                <ul>
+                    <li>Lấy code từ SVN</li>
+                    <li>New project từ Netbeans (chú ý sửa context path, bỏ "Deploy on save", bỏ share,...)</li>
+					<li>Riêng VPM phải thêm project viettelLibrary</li>
+                </ul>
+            </div>
+            <div>
+                Hướng dẫn build:
+                <ul>
+                    <li>Lấy hết code mới từ SVN</li>
+                    <li>Clean &amp; Build ở Netbeans để ra file war</li>
+                    <li>Dùng WinSCP, putty để đăng nhập</li>
+                    <li>Di chuyển đến thư mục bin của Tomcat</li>
+                    <li>Tắt Tomcat<br/>
+                        ./shutdown.sh (tắt bình thường)<br/>
+                        ps -ef | grep `pwd` (kiểm tra xem còn tiến trình hay không)<br/>
+						kill -9 &lt;PID&gt; (kill tiến trình nếu tắt bình thường không được)</li>
+						
+					<li>Xóa thư mục triển khai, log cũ, cache<br/>
+                        rm -rdf ../webapps/*<br/>
+						rm -rdf ../logs/*<br/>
+                        rm -rdf ../work/*</li>
+						
+                    <li>Đẩy file war lên, đổi lại tên cho đúng (nếu cần)</li>
+                    <li>Start Tomcat<br/>
+                        ./startup.sh</li>
+                    <li>Chỉnh file cấu hình<br/>
+                        File vpsclient, cas, config, hibernate,... (tùy dự án)</li>
+                    <li>Shutdown và startup lại Tomcat<br/>
+                        ./shutdown.sh<br/>
+                        ./startup.sh</li>
+                    <li>Đăng nhập kiểm tra</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

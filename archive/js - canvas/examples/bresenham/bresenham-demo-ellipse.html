@@ -1,0 +1,31 @@
+<html>
+	<head>
+	<title>Bresenham algorithm demo - ellipse drawing ((L) Wojciech Mula)</title>
+	<style type="text/css">
+	body {
+		margin: 10px;
+		padding: 0;
+	}
+	canvas {
+		border: 1px solid black;
+	}
+	</style>
+</head>
+<body>
+
+<canvas id="draw3" width="400" height="400"></canvas>
+
+<script src="bresenham.js"></script>
+<script src="bresenham-demo.js"></script>
+
+<script>
+var canvas3 = document.getElementById('draw3');
+var ctx3 = canvas3.getContext('2d');
+canvas3.onclick = function(e) {
+	ellipse_edit(e, ctx3);
+}
+update_ellipse_view(ctx3);
+</script>
+</body>
+</html>
+

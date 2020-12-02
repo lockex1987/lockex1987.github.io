@@ -1,0 +1,54 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:vue/essential",
+        "standard"
+    ],
+    "globals": {
+        "Vue": "readonly",
+        "Vuex": "readonly",
+        "VueRouter": "readonly",
+        "axios": "readonly",
+        "Highcharts": "readonly",
+        "$": "readonly",
+        "ExcelJS": "readonly",
+        "moment": "readonly",
+        "FB": "readonly",
+        "YT": "readonly",
+
+        "CV": "readonly",
+        "noti": "readonly",
+        "Datatable": "readonly",
+        "Pagi": "readonly",
+        "CommonUtils": "readonly",
+        "Inputmask": "readonly",
+        "Carousel": "readonly",
+
+        "chrome": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "vue"
+    ],
+
+    "rules": {
+        "semi": ["error", "always"],
+        "indent": ["error", 4],
+        "space-before-function-paren": ["error", {
+            "anonymous": "always",
+            "named": "never",
+            "asyncArrow": "always"
+        }],
+        "eqeqeq": "off",
+        "no-new": "off",
+        "no-multiple-empty-lines": "off",
+        "vue/require-v-for-key": "off",
+        "vue/require-valid-default-prop": "off"
+    }
+}

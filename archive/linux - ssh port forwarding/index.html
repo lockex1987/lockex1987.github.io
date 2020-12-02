@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ssh tunnel">
+    <title>SSH port forward</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>SSH port forward</h2>
+      <p>Sử dụng câu lệnh:</p>
+      <pre>ssh -N -L 33066:10.30.153.48:3306 huyennv9@192.168.101.20</pre>
+      <p>Chú thích:</p>
+      <p>-N: mở SSH nhưng không chạy lệnh ở chế độ login</p>
+      <p>-L: Local</p>
+      <p>-R: Remote</p>
+      <p>Có 3 loại SSH port forwarding là:</p>
+      <ul>
+        <li>Local port forwarding: là dạng kết nối từ phía SSH client được
+          chuyển tiếp qua SSH server, rồi đi đến host/server đích.</li>
+        <li>Remote port forwarding: kết nối từ phía SSH server được chuyển tiếp
+          qua SSH client, rồi đi đến host/server đích.</li>
+        <li>Dynamic port forwarding: tương tự “local port forwarding”, kết nối
+          từ phía SSH client được chuyển tiếp qua SSH server, rồi đến đích tuỳ ý
+          không định trước.</li>
+      </ul>
+      <h3>Local port forwarding</h3>
+      <p>Mở kết nối ssh tới ssh server với tuỳ chọn <code>-L port:host:hostport</code>
+        trong đó:</p>
+      <ul>
+        <li>port là cổng ở phía ssh client được chỉ định để mở socket.</li>
+        <li>host:hostport là socket đích muốn tới (nhìn từ phía ssh server).</li>
+      </ul>
+      <p>Chúng ta sẽ làm rõ hơn vấn đề thông qua ví dụ giả định:</p>
+      <ul>
+        <li>Desktop của bạn A (phía ssh client) có IP 192.168.1.101</li>
+        <li>Server trung gian B (phía ssh server) có IP 172.16.0.111</li>
+        <li>Đích muốn đến là web server X, có IP 1.1.1.1, có mở cổng 22/SSH và
+          chỉ chấp nhận kết nối từ Server B.</li>
+      </ul>
+      <p>Thay cho việc phải ssh từ A lên B, rồi tiếp tục ssh lên đích là server
+        X, chúng ta có thể mở một “cánh cửa thần kỳ” là một socket ở phía A để
+        lên X như sau:</p>
+      <pre>ssh -L 2222:1.1.1.1:22 username@172.16.0.111</pre>
+      <p>Bây giờ đứng từ A chúng ta có thể kết nối ssh lên server X thông qua
+        socket này như sau:</p>
+      <pre>ssh username@127.0.0.1 -p 2222</pre>
+      <p>Trên thực tế, một trường hợp rất thường xuyên áp dụng “local port
+        forwarding” đó là MySQL tunnelling. Ví dụ từ Desktop A, bạn có thể ssh
+        lên Server B, trên B chạy Mysql ở cổng 3306 và chỉ chấp nhận kết nối từ
+        local. Vậy một cách đơn giản, để kết nối Mysql trên B từ A, đó là dùng
+        port forwarding</p>
+      <pre>ssh -L 3307:localhost:3306 username@172.168.0.111</pre>
+      <p>Sau khi có kết nối ssh, tiếp theo là dùng lệnh mysql trên A để kết nối
+        đến dịch vụ Mysql trên server B</p>
+      <pre>mysql -h 127.0.0.1 -P 3307 -uroot -p</pre>
+      <p>Giả sử bạn đồng thời muốn mở socket trên A để các máy khác trong cùng
+        mạng LAN có thể kết nối được đến Mysql trên B. Chỉ cần thêm tuỳ “-g”
+        trong lệnh ssh, như sau:</p>
+      <pre>ssh -L 3307:localhost:3306 -g username@172.168.0.111</pre>
+      <p>Bây giờ trên máy A2 trong mạng LAN, có IP 192.168.1.102, bạn kết nối
+        đến Mysql trên B thông qua A như sau:</p>
+      <pre>mysql -h 192.168.1.101 -P 3307 -uroot -p</pre>
+      <h3>Remote port forwarding</h3>
+      <p>Sử dụng để cho trang web của bạn ra ngoài Internet bằng một server
+        remote.</p>
+      <p>Mở kết nối ssh tới ssh server với tuỳ chọn <code>-R
+          remote_port:host:local_port</code> trong đó:</p>
+      <ul>
+        <li>remote_port là cổng ở phía ssh server được chỉ định để mở socket.</li>
+        <li>host:local_port là socket đích muốn tới (nhìn từ phía ssh client).</li>
+      </ul>
+      <p>Về mặt logic “remote port forwarding” hoàn toàn tương tự với “local
+        port forwarding” chỉ thay việc kết nối đi từ ssh client bằng đi từ phía
+        ssh server, thông qua ssh client để đến server/host đích.</p>
+      <p>Trên thực tế “remote port forwarding” ít được dùng hơn “local port
+        forwarding” cũng như “dynamic port forwarding”, một trong những trường
+        hợp ứng dụng của “remote port forwarding” là “SSH ngược”.</p>
+      <p>Giả định:</p>
+      <ul>
+        <li>Desktop của bạn A có IP 192.168.1.101. Từ bên ngoài Internet không
+          thể kết nối tới A.</li>
+        <li>Server trung gian B có IP 172.16.0.111. Từ A có thể ssh tới B. Từ
+          bên ngoài Internet có thể kết nối đến B.</li>
+        <li>Server B2 cùng dải mạng với ssh server B có IP 172.16.0.112.</li>
+      </ul>
+      <p>Mục đích:</p>
+      <ul>
+        <li>cho phép B ssh ngược về A. Có thể mở rộng thêm bằng việc cho phép B2
+          ssh ngược về A thông qua B.</li>
+        <li>Cho phép người từ ngoài Internet kết nối đến A.</li>
+      </ul>
+      <p>Thực hiện điều này đơn giản bằng các mở một kết nối ssh từ A lên B với
+        tuỳ chọn <code>-R</code>, như sau (thực hiện trên máy A):</p>
+      <pre>ssh -R 2222:localhost:22 username@172.16.0.111</pre>
+      <p>Thông qua socket này, từ B chúng ta có thể ssh ngược về A, như sau:</p>
+      <pre>ssh root@localhost -p 2222</pre>
+      <p>Để B2 cũng có thể kết nối ssh tới A thông qua B, thì trên cấu hình <code>/etc/ssh/sshd_config</code>
+        của B phải thêm</p>
+      <pre>GatewayPorts yes</pre>
+      <p>Sau khi thay đổi cấu hình ssh, chúng ta cần khởi động lại dịch vụ ssh
+        và khởi tạo lại kết nối.</p>
+      <pre>systemctl reload ssh</pre>
+      <p>Bây giờ trên B2 chúng ta có thể kết nối tới A, như sau:</p>
+      <pre>[root@B2:~]# ssh root@172.16.0.111 -p 2222</pre>
+      <h3>Dynamic port forwarding</h3>
+      <p>Mở kết nối ssh tới ssh server với tuỳ chọn “-D port” với port ở đây là
+        cổng ở phía ssh client được bật lên như socket của SOCKS server. Thông
+        qua SOCKS này chúng ta có thể đi tới bất kỳ đâu mà ở phía ứng dụng đích
+        đó chỉ biết chúng ta đi ra từ server B, chứ không hề biết thực sự kết
+        nối được khởi tạo từ A. Đây cũng là một dạng proxy.</p>
+      <pre>ssh -D 2222 username@172.16.0.111</pre>
+      <p>Sau khi tạo xong kết nối, chúng ta có thể sử dụng SOCKS này để ra
+        Internet an toàn, ví dụ có thể cấu hình vào Firefox như hình bên dưới.</p>
+      <div class="mb-3"> <img src="https://viblo.asia/uploads/6052f488-9286-4f1f-9bab-ead5aa69ab77.png"
+
+          alt=""> </div>
+      <p>Sử dụng proxy với lệnh <code>curl</code>:</p>
+      <pre>curl --socks5 localhost:2222 https://example.com</pre>
+      <p>Socks proxy ít được hỗ trợ. Hãy dùng HTTP proxy cho đơn giản, có thể cài bằng Squid.</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://viblo.asia/p/ssh-port-forwarding-157G5nalvAje" target="_blank">SSH
+          Port Forwarding - Viblo</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

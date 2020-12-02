@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Datatable demo">
+    <title>Datatable demo</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">    
+</head>
+
+<body>
+    <article class="container py-3">
+        <h2>Datatable demo: expandable</h2>
+        <p>Bảng có thêm class <code>table-expandable</code>. Nên bỏ class <code>table-striped</code>.</p>
+        <p>Tạo mũi tên bằng một thẻ span với class là <code>table-expandable-arrow</code>.</p>
+        
+        <table id="myTable" class="table table-bordered table-hover table-expandable">
+            <thead>
+                <tr>
+                    <th class="text-right"> Stt </th>
+                    <th class="" data-sort-column="country"> Quốc gia </th>
+                    <th class="text-right" data-sort-column="population"> Dân số </th>
+                    <th class=""> </th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </article>
+
+    <link rel="stylesheet" href="css/datatable.css">
+    <script src="libs/libs.js"></script>
+    <script src="src/datatable.js"></script>
+
+    <script src="js/mock_data.js"></script>
+    
+    <script src="js/script_7_expandable.js"></script>
+</body>
+</html>

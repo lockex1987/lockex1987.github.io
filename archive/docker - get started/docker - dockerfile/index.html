@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Build image từ Dockerfile">
+    <meta name="keywords" content="docker, dockerfile, build image">
+    <meta name="author" content="lockex1987">
+    <title>Build image từ Dockerfile</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Build image từ Dockerfile</h2>
+      <p> Dockerfile đơn giản là một file (dạng text nhưng không có đuôi mở
+        rộng, chữ D ở đầu tiên viết hoa) chứa một tập hợp các dòng lệnh dùng để
+        khởi tạo một Docker image. Nó quy định image sẽ được khởi tạo như thế
+        nào, gồm các ứng dụng gì trong đó. </p>
+      <p> Trong Dockerfile có các câu lệnh chính sau: </p>
+      <pre>FROM
+RUN
+CMD
+....
+</pre>
+      <h3>Lệnh trong Dockerfile</h3>
+      <p> Các lệnh thường dùng trong Dockerfile là:</p>
+      <ul>
+        <li> FROM: Thiết lập image khởi điểm, chúng ra sẽ build một image mới từ
+          image này </li>
+        <li> MAINTAINER: Khai báo thông tin của người tiến hành xây dựng lên
+          images </li>
+        <li> RUN: Thực hiện lệnh trong quá trình build image </li>
+        <li> COPY: Copy file từ host đến docker image </li>
+        <li> WORKDIR: Định nghĩa directory cho CMD </li>
+        <li> ENV: Định nghĩa các biến môi trường </li>
+        <li> CMD: Chạy command trong quá trình build một container mới từ docker
+          image </li>
+        <li> ENTRYPOINT: Định nghĩa những command mặc định, cái mà sẽ được chạy
+          khi container running </li>
+        <li> EXPOSE: Listen port </li>
+        <li> USER: Đặt user hoặc UID cho container được tạo bởi image </li>
+        <li> VOLUME: Gán thư mục của host và container </li>
+      </ul>
+      <h4> Lệnh FROM</h4>
+      <p> Dùng để chỉ ra image được build từ đâu (từ image gốc nào).</p>
+      <pre>FROM ubuntu</pre>
+      <p> Có thể chỉ rõ tag của image gốc.</p>
+      <pre>FROM ubuntu14.04:lastest</pre>
+      <h4> Lệnh RUN</h4>
+      <p> Dùng để chạy một lệnh nào đó khi build image, ví dụ:</p>
+      <pre>FROM ubuntu
+RUN apt-get update -y
+RUN apt-get install curl -y
+</pre>
+      <h4> Lệnh CMD</h4>
+      <p> Lệnh CMD dùng để truyền một lệnh của Linux mỗi khi thực hiện khởi tạo
+        một container từ image (image này được build từ Dockerfile). Có các cách
+        khác nhau sử dụng lệnh CMD.</p>
+      <p> Cách 1 dạng exec:</p>
+      <pre>CMD ["curl", "ipinfo.io"]
+</pre>
+      <p> Cách 2 dạng shell:</p>
+      <pre>CMD curl ifconfig.io
+</pre>
+      <h3> Build image từ Dockerfile đã tạo</h3>
+      <p> Dockerfile tác dụng ngoài dùng để build một image, các bạn còn có thể
+        đem chia sẻ nó cho người khác dùng. Thay vì phải pull một image vài trăm
+        Mb, bạn chỉ cần 1 file vài trăm Kb, đơn giản quá phải không.</p>
+      <p>Với Dockerfile đã tạo ở trên, chúng ta có thể tiến hành build một
+        image. Các bạn trỏ đường dẫn đến thư mục lưu Dockerfile nhé. Gõ lệnh: </p>
+      <pre>docker build -t &lt;tên_phiên_bản&gt; &lt;thư_mục_chứa_tập_tin_Dockerfile&gt;</pre>
+      <p>Ví dụ:</p>
+      <pre>docker build -t testimage:1.0 .
+</pre>
+      <p> Lưu ý là có dấu <code> . </code> cuối dòng lệnh nhé! Dấu đó có ý
+        nghĩa là Dockerfile ở thư mục hiện tại.</p>
+      <p> Sau khi chạy xong thì các bạn có thể dùng lệnh để kiểm tra image mới
+        tạo.</p>
+      <pre>docker images
+</pre>
+      <h3> Demo</h3>
+      <p> Dockerfile cơ bản. <a href="demo-1/Dockerfile">Demo 1</a>.</p>
+      <p> Dockerfile cài MySQL trên CentOS. <a href="demo-2/Dockerfile">Demo 2</a>.</p>
+      <p> Dockerfile cài sẵn git trên Ubuntu 16.04. <a href="demo-3/Dockerfile">Demo
+          3</a>.</p>
+      <p> Dockerfile cài đặt nginx và php-fpm 7 trên Ubuntu 16.04. Ngoài ra,
+        thêm Supervisord cho phép khởi động Nginx và Php-fpm mỗi khi chúng ta
+        start container trong cùng một command. Linh hướng dẫn chi tiết <a href="create-nginx-image.html">ở
+          đây</a>. <a href="demo-4/Dockerfile">Demo 4</a>.</p>
+      <p> Dockerfile cho một ứng dụng Node JS. <a href="demo-5/Dockerfile">Demo
+          5</a>.</p>
+      <h3> Tham khảo</h3>
+      <p> https://docs.docker.com/engine/reference/builder/</p>
+      <p> https://hub.docker.com/r/camw/centos-nginx-php/~/dockerfile/</p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

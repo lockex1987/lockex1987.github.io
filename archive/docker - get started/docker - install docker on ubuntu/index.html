@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Install Docker on Ubuntu">
+    <meta name="keywords" content="docker, ubuntu, linux mint">
+    <meta name="author" content="lockex1987">
+    <title>Install Docker on Ubuntu</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Install Docker on Ubuntu</h2>
+      <p> Xin chào các bạn, bài viết tiếp theo mình sẽ hướng dẫn các bạn cài đặt
+        Docker trên Ubuntu. Phiên bản Ubuntu mình sử dụng là 16.04 (LTS). </p>
+      <p> Để cài đặt Docker trên Ubuntu 16.04 các bạn thực hiện các bước sau
+        trên Terminal nha. Và chắc chắn là có quyền Root đó. Không có thôi nghỉ
+        khỏe luôn. </p>
+      <h3> Thiết lập Repository </h3>
+      <p> Bước đầu tiên không phải là tải và cài như ở Windows, các bạn phải
+        update, thêm repositories của Docker vào hệ thống. Thực hiện nào: </p>
+      <p> Bước 1: Update Ubuntu </p>
+      <pre>sudo apt-get update</pre>
+      <p> Bước 2: Cài một số gói cần thiết cho APT &amp; Repositories </p>
+      <pre>sudo apt-get install apt-transport-https ca-certificates curl software-properties-common</pre>
+      <p> Bước 3: Thêm key của Docker </p>
+      <pre>curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</pre>
+      <p> Bước 4: Thêm Repositories stable </p>
+      <pre>sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"</pre>
+      <p> Lệnh trên bị lỗi khi sử dụng trên Linux Mint 18.3, base on Ubuntu
+        16.04 ở chỗ câu lệnh <code> lsb_release -cs </code> ra <code> sylvia
+        </code> chứ không phải <code> xenial</code>, do đó tôi sử dụng lệnh
+        sau: </p>
+      <pre>sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"</pre>
+      <p> </p>
+      <h3> Cài đặt Docker </h3>
+      <p> Bước 1: Update một lần </p>
+      <pre>sudo apt-get update</pre>
+      <p> Bước 2: Cài đặt Docker </p>
+      <pre>sudo apt-get install docker-ce</pre>
+      <p> Bước 3: Test thử xem đã cài đặt thành công chưa </p>
+      <pre>sudo docker run hello-world</pre>
+      <p> Chúc các bạn thành công.</p>
+      <h3>Tham khảo</h3>
+      <p>https://docs.docker.com/install/linux/docker-ce/ubuntu/</p>
+      <p>https://docs.docker.com/install/linux/linux-postinstall/</p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>git-chain</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="git-chain">
+ </head> 
+ <body> 
+  <article> 
+   <p>Bạn phải đánh đi đánh lại các lệnh <code>git add/commit/push</code>.</p> 
+   <p>Đầu tiên tôi định sử dụng alias, nhưng alias không hỗ trợ tham số, mà lệnh git commit lại cần có tham số.</p> 
+   <p>Thêm đoạn sau vào file <code>~/.bashrc</code> để bạn có thể sử dụng hàm ở các chỗ khác:</p> 
+   <pre>git-chain() {
+    git add .
+    git status
+    git commit -m "$1"
+    git push
+    # sh deploy.sh
+}</pre> 
+   <p>Sử dụng lệnh sau:</p> 
+   <pre>$ git-chain "Test 7"</pre> 
+   <p><br> </p> 
+  </article> 
+    
+ </body>
+</html>

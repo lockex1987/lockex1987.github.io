@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>This example uses the addEventListener() method to attach a "cut" event to an input element.</p>
+
+<input type="text" id="myInput" value="Try to cut this text">
+
+<script>
+document.getElementById("myInput").addEventListener("cut", myFunction);
+
+function myFunction(evt) {
+    
+    
+  //alert("You cut text!");
+  console.log(evt.clipboardData);
+  console.log(evt.clipboardData.getData('text/plain'));
+
+evt.preventDefault();
+  evt.clipboardData.setData('text/plain', 'Nguyễn Anh Tuấn');
+}
+</script>
+
+</body>
+</html>

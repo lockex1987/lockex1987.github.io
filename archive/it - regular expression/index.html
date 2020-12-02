@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="regex nói chung, không phân biệt ngôn ngữ lập trình">
+    <title>Biểu thức chính quy</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Biểu thức chính quy</h2>
+      <p>Một biểu thức chính quy (regular expression) định nghĩa một khuôn mẫu
+        (pattern) tìm kiếm chuỗi.</p>
+      <p>Biểu thức chính quy thường được sử dụng để:</p>
+      <ul>
+        <li>Kiểm tra</li>
+        <li>Tìm kiếm</li>
+        <li>Biến đổi xâu (replace, split)</li>
+        <li>Trích xuất, bóc tách thông tin</li>
+      </ul>
+      <p>Biểu thức chính quy khó viết, khó đọc, khó maintain. Nhưng nó cũng rất
+        mạnh mẽ. Nhiều khi đó là cách duy nhất để chúng ta giải quyết vấn đề.</p>
+      <h3>Quy tắc viết biểu thức chính quy</h3>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Biểu thức</th>
+              <th>Mô tả</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>.</code></td>
+              <td>Khớp với bất kỳ ký tự nào, trừ ký tự xuống dòng và newline.</td>
+            </tr>
+            <tr>
+              <td><code>^regex</code></td>
+              <td>Biểu thức chính quy phải khớp tại điểm bắt đầu.</td>
+            </tr>
+            <tr>
+              <td><code>regex$</code></td>
+              <td>Biểu thức chính quy phải khớp ở cuối dòng.<strong></strong></td>
+            </tr>
+            <tr>
+              <td><code>[abc]</code></td>
+              <td>Thiết lập định nghĩa, có thể khớp với <code>a</code> hoặc <code>b</code>
+                hoặc <code>c</code>.</td>
+            </tr>
+            <tr>
+              <td><code>[abc][vz]</code></td>
+              <td>Thiết lập định nghĩa, có thể khớp với <code>a</code> hoặc <code>b</code>
+                hoặc <code>c</code>, theo sau là <code>v</code> hoặc <code>z</code>.</td>
+            </tr>
+            <tr>
+              <td><code>[^abc]</code></td>
+              <td>Khi dấu <code>^</code> xuất hiện như là ký tự đầu tiên trong
+                dấu ngoặc vuông, nó phủ nhận mô hình. Điều này có thể khớp với
+                bất kỳ ký tự nào ngoại trừ <code>a</code> hoặc <code>b</code>
+                hoặc <code>c</code>.</td>
+            </tr>
+            <tr>
+              <td><code>[a-d1-7]</code></td>
+              <td>Phạm vi: phù hợp với một chuỗi giữa ký tự <code>a</code> và
+                ký tự <code>d</code> và giữa số từ <code>1</code> đến <code>7</code>.</td>
+            </tr>
+            <tr>
+              <td><code>(X|Z)</code></td>
+              <td>Tìm <code>X</code> hoặc <code>Z</code>.</td>
+            </tr>
+            <tr>
+              <td><code>XZ</code></td>
+              <td>Tìm <code>X</code> và theo sau là <code>Z</code>.</td>
+            </tr>
+            <tr>
+              <td><code>$</code></td>
+              <td>Kiểm tra kết thúc dòng.</td>
+            </tr>
+            <tr>
+              <td colspan="2"><strong>Các ký tự meta</strong></td>
+            </tr>
+            <tr>
+              <td><code>\d</code></td>
+              <td>Số bất kỳ, viết ngắn gọn cho <code>[0-9]</code></td>
+            </tr>
+            <tr>
+              <td><code>\D</code></td>
+              <td>Ký tự không phải là số, viết ngắn gon cho <code>[^0-9]</code></td>
+            </tr>
+            <tr>
+              <td><code>\s</code></td>
+              <td>Ký tự khoảng trắng, viết ngắn gọn cho <code>[ \t\n\x0b\r\f]</code></td>
+            </tr>
+            <tr>
+              <td><code>\S</code></td>
+              <td>Ký tự không phải khoảng trắng, viết ngắn gọn cho <code>[^\s]</code></td>
+            </tr>
+            <tr>
+              <td><code>\w</code></td>
+              <td>Ký tự chữ, viết ngắn gọn cho <code>[a-zA-Z_0-9]</code></td>
+            </tr>
+            <tr>
+              <td><code>\W</code></td>
+              <td>Ký tự không phải chữ, viết ngắn gọn cho <code>[^\w]</code></td>
+            </tr>
+            <tr>
+              <td><code>\S+</code></td>
+              <td>Một số ký tự không phải khoảng trắng (một hoặc nhiều)</td>
+            </tr>
+            <tr>
+              <td><code>\b</code></td>
+              <td>Word boundary (khoảng trắng, dấu câu)</td>
+            </tr>
+            <tr>
+              <td><code>\b</code></td>
+              <td>Find a match at the beginning/end of a word</td>
+            </tr>
+            <tr>
+              <td><code>\B</code></td>
+              <td>Find a match not at the beginning/end of a word</td>
+            </tr>
+            <tr>
+              <td><code>\0</code></td>
+              <td>Find a NUL character</td>
+            </tr>
+            <tr>
+              <td><code>\n</code></td>
+              <td>Find a new line character</td>
+            </tr>
+            <tr>
+              <td><code>\f</code></td>
+              <td>Find a form feed character</td>
+            </tr>
+            <tr>
+              <td><code>\r</code></td>
+              <td>Find a carriage return character</td>
+            </tr>
+            <tr>
+              <td><code>\t</code></td>
+              <td>Find a tab character</td>
+            </tr>
+            <tr>
+              <td><code>\v</code></td>
+              <td>Find a vertical tab character</td>
+            </tr>
+            <tr>
+              <td><code>\xxx</code></td>
+              <td>Find the character specified by an octal number <code>xxx</code></td>
+            </tr>
+            <tr>
+              <td><code>\xdd</code></td>
+              <td>Find the character specified by a hexadecimal number <code>dd</code></td>
+            </tr>
+            <tr>
+              <td><code>\uxxxx</code></td>
+              <td>Find the Unicode character specified by a hexadecimal number <code>xxxx</code></td>
+            </tr>
+            <tr>
+              <td colspan="2"><strong>Số lượng</strong></td>
+            </tr>
+            <tr>
+              <td><code>*</code></td>
+              <td>Xuất hiện 0 hoặc nhiều lần, viết ngắn gọn cho <code>{0,}</code></td>
+            </tr>
+            <tr>
+              <td><code>+</code></td>
+              <td>Xuất hiện 1 hoặc nhiều lần, viết ngắn gọn cho <code>{1,}</code></td>
+            </tr>
+            <tr>
+              <td><code>?</code></td>
+              <td>Xuất hiện 0 hoặc 1 lần, viết ngắn gọn cho <code>{0,1}</code>.</td>
+            </tr>
+            <tr>
+              <td><code>{X}</code></td>
+              <td>Xuất hiện chính xác <code>X</code> lần<code></code></td>
+            </tr>
+            <tr>
+              <td><code>{X,Y}</code></td>
+              <td>Xuất hiện trong khoảng <code>X</code> tới <code>Y</code> lần</td>
+            </tr>
+            <tr>
+              <td>n{X,}</td>
+              <td>Matches any string that contains a sequence of at least X <i>n</i>'s</td>
+            </tr>
+            <tr>
+              <td>n$</td>
+              <td>Matches any string with n at the end of it</td>
+            </tr>
+            <tr>
+              <td>^n</td>
+              <td>Matches any string with n at the beginning of it</td>
+            </tr>
+            <tr>
+              <td>?=n</td>
+              <td>Matches any string that is followed by a specific string n</td>
+            </tr>
+            <tr>
+              <td>?!n</td>
+              <td>Matches any string that is not followed by a specific string n</td>
+            </tr>
+            <tr>
+              <td><code>*?</code></td>
+              <td><code>*</code> có nghĩa là xuất hiện 0 hoặc nhiều lần, thêm <code>?</code>
+                phía sau nghĩa là tìm kiếm khớp nhỏ nhất</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Các ký tự đặc biệt</h3>
+      <p>Một số ký tự đặc biệt trong biểu thức chính quy là: <code>\.[{(*+?^$|</code></p>
+      <p>Những ký tự liệt kê ở trên là các ký tự đặc biệt. Trong regex bạn muốn
+        nó hiểu các ký tự đó theo cách thông thường bạn cần thêm dấu <code>\</code>
+        ở phía trước. Chẳng hạn ký tự chấm <code>.</code> regex đang hiểu là
+        một ký tự bất kỳ, nếu bạn muốn nó hiểu là một ký tự chấm thông thường,
+        cần phải có dấu <code>\</code> phía trước.</p>
+      <pre>// Mẫu regex mô tả một ký tự bất kỳ
+String regex = ".";
+// Mẫu regex mô tả  ký tự dấu chấm
+String regex = "\\.";</pre>
+      <h3>Kiến thức nâng cao</h3>
+      <p>(x) - Capturing Parenthesis</p>
+      <p>Matches x and remembers it so we can use it later.</p>
+      <p>(?:x) - Non-capturing Parenthesis</p>
+      <p>Matches x and does not remembers it.</p>
+      <p>x(?=y) - Lookahead</p>
+      <p>Matches x only if it is followed by y.</p>
+      <p>x(?=y)- positive lookahead</p>
+      <p>Matches 'x' when it's followed by 'y'</p>
+      <p>x(?!y) - negative lookahead</p>
+      <p>Matches 'x' when it's not followed by 'y'</p>
+      <p>Back-reference:</p>
+      <ul>
+        <li> <span class="text-muted mr-2">regular-expressions.info</span> <a
+
+            href="https://www.regular-expressions.info/backref.html" target="_blank">Regex
+            Tutorial - Backreferences To Match The Same Text Again</a> </li>
+        <li> <span class="text-muted mr-2">regular-expressions.info</span> <a
+
+            href="https://www.regular-expressions.info/tutorial.html" target="_blank">Regular
+            Expression Tutorial - Learn How to Use Regular Expressions</a> </li>
+      </ul>
+      <h3>Theo từng ngôn ngữ lập trình</h3>
+      <ul>
+        <li><a href="../js%20-%20regular%20expression/" target="_blank">Biểu
+            thức chính quy trong JS</a></li>
+        <li><a href="../java%20-%20regular%20expression/" target="_blank">Biểu
+            thức chính quy trong Java</a></li>
+        <li><a href="../php%20-%20regular%20expression/" target="_blank">Biểu
+            thức chính quy trong PHP</a></li>
+      </ul>
+      <h3>Tham khảo</h3>
+      <ul>
+        <li><a target="_blank" href="https://flaviocopes.com/javascript-regular-expressions/">https://flaviocopes.com/javascript-regular-expressions/</a></li>
+        <li><a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions</a></li>
+        <li>Tool phân tích online <a target="_blank" href="%20https://regexr.com/">
+            https://regexr.com/</a></li>
+      </ul>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

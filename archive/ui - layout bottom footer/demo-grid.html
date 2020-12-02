@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Sử dụng Grid</title>
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+		html, body {
+			height: 100%;
+		}
+
+		article {
+			min-height: 100%;
+			display: grid;
+			grid-template-rows: auto 1fr auto;
+			grid-template-columns: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<article>
+		<header>
+			Header
+		</header>
+		<main>
+			<p>Nội dung của trang vẫn đang còn ít.</p>
+			<p><button id="add">Thêm nội dung</button></p>
+		</main>
+		<footer>
+			Footer
+		</footer>
+	</article>
+
+	<script src="js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Click to inline edit forms</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css'>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <div class="container pt-4">
+    <h2>Click link to edit content (different input types)</h2>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <a href="#" class="editable" data-type="text" data-name="text">text</a>
+      </li>
+      <li class="list-group-item">
+        <a href="#" class="editable" data-type="date">2017-12-12</a>
+      </li>
+      <li class="list-group-item">
+        <a href="#" class="editable" data-type="time">12:30</a>
+      </li>
+      <li class="list-group-item">
+        <a href="#" class="editable" data-type="select" data-options="select,one,two,three">select</a>
+      </li>
+      <li class="list-group-item">
+        <a href="#" class="editable" data-type="textarea">textarea</a>
+      </li>
+    </ul>
+  </div>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+  <script src="js/index.js"></script>
+</body>
+</html>

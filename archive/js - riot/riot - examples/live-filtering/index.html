@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Live filtering</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/normalize/3.0.3/normalize.css">
+</head>
+
+<body>
+  <app></app>
+
+  <!-- riot tags -->
+  <script type="riot/tag" src="app.tag"></script>
+  <script type="riot/tag" src="currency.tag"></script>
+
+  <!-- scripts we need -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/riot/riot/riot%2Bcompiler.min.js"></script>
+
+  <!-- mount this app -->
+  <script>
+    riot.mount('app')
+  </script>
+</body>
+
+</html>

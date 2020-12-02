@@ -1,0 +1,79 @@
+// The modal
+.modal {
+    display: none; // Hidden by default
+    position: fixed; // Stay in place
+    z-index: 199999; // Sit on top
+    padding-top: 100px; // Location of the box
+    padding-bottom: 10px;
+    left: 0;
+    top: 0;
+    width: 100%; // Full width
+    height: 100%; // Full height
+    overflow: auto; // Enable scroll if needed
+    background-color: rgba(0, 0, 0, 0.4); // Black opacity
+
+    // Modal content
+    .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 900px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+        animation-name: animatetop;
+        animation-duration: 0.4s;
+
+        // The close button
+        .close {
+            color: #999;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+
+            &:hover, &:focus {
+                color: #000;
+                text-decoration: none;              
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #EFEFEF;
+
+            h1, h2, h3, h4, h5, h6 {
+                background-color: transparent;
+            }
+        }
+
+        .modal-body {
+            padding: 15px;
+        }
+
+        .modal-footer {
+            padding: 15px;
+            text-align: right;
+            border-top: 1px solid #e5e5e5;
+        }
+    }
+}
+
+// Add animation
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+body.modal-open {
+    overflow: hidden;
+}

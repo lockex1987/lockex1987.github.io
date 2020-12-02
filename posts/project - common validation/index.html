@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="date" content="2020-02-24 22:07:00">
+    <meta name="description" content="Validate thời gian thực">
+    <title>Common validation</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+	
+  </head>
+  <body>
+    <article>
+      <h2>Common validation</h2>
+      <p>Thư viện dùng chung, giúp cho việc validate đỡ nhàn chán.</p>
+      <p>Lấy cảm hứng từ Laravel validation.</p>
+      <h3>Cách sử dụng</h3>
+      <p>Thêm CSS:</p>
+      <pre>&lt;link rel="stylesheet" href="css/common-validation.css"&gt;</pre>
+      <p>Thêm file JS:</p>
+      <pre>&lt;script src="js/common-validation.js"&gt;&lt;/script&gt;</pre>
+      <p><a target="_blank" href="css/common-validation.css">File CSS</a></p>
+      <p><a target="_blank" href="js/common-validation.js">File JS</a></p>
+      <p>Thẻ nhập dữ liệu phải được bao trong một thẻ khác mà có class <code>validate-container</code>.
+        Ví dụ:</p>
+      <pre>&lt;div class="form-group validate-container"&gt;
+    &lt;label class="control-label"&gt;
+        Bắt buộc nhập
+    &lt;/label&gt;<br>
+    &lt;input class="form-control"<br>            type="text"<br>            data-validation="required"&gt;
+&lt;/div&gt;</pre>
+    <h3>Các validation</h3>
+
+<div class="out-of-box">
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <th>Validation</th>
+          <th>Mô tả</th>
+        </tr>
+      </tbody>
+      <thead>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>required</code></td>
+          <td>Bắt buộc nhập</td>
+        </tr>
+        <tr>
+          <td><code>minLength:<em>length</em></code></td>
+          <td>Độ dài tối thiểu</td>
+        </tr>
+        <tr>
+          <td><code>maxLength:<em>length</em></code></td>
+          <td>Độ dài tối đa</td>
+        </tr><tr><td><code>email</code></td><td>Phải là địa chỉ email hợp lệ</td></tr><tr><td><code>phone</code></td><td>Phải là số điện thoại hợp lệ</td></tr><tr><td><code>integer</code></td><td>Phải là số nguyên hợp lệ</td></tr><tr><td><code>numeric</code></td><td>Phải là số (nguyên hoặc thực) hợp lệ</td></tr><tr><td><code>date</code></td><td>Phải là ngày hợp lệ</td></tr>
+        
+        <tr><td><code>idNumber</code></td><td>Phải là số chứng minh thư hợp lệ</td></tr>
+        <tr><td><code>domainName</code></td><td>Phải là tên miền hợp lệ</td></tr>
+        <tr><td><code>url</code></td><td>Phải là URL hợp lệ</td></tr>
+        
+        <tr><td><code>password</code></td><td>Phải là mật khẩu với độ mạnh phù hợp chính sách</td></tr><tr><td><code>min:<em>value</em></code></td><td>Giá trị số nhỏ nhất</td></tr><tr><td><code>max:<em>value</em></code></td><td>Giá trị số lớn nhất</td></tr><tr><td><code>lessThan:<em>value</em></code></td><td>Giá trị số phải nhỏ hơn</td></tr><tr><td><code>greaterThan:<em>value</em></code></td><td>Giá trị số phải lớn hơn</td></tr><tr><td><code>before</code></td><td>Giá trị ngày phải trước ngày nào đó</td></tr><tr><td><code>after</code></td><td>Giá trị ngày phải sau ngày nào đó</td></tr><tr><td><code>regex:<em>pattern</em>:<em>message</em></code></td><td>Validate theo biểu thức chính quy</td></tr><tr><td><code>same:<em>cssSelector</em>:<em>message</em></code></td><td>Phải nhập giống với trường nào đó</td></tr><tr><td><code>maxFileSize:<em>size</em></code></td><td>Dung lượng file upload lớn nhất có thể</td></tr><tr><td><code>fileTypes:<em>types</em></code></td><td>Định dạng file upload</td></tr>
+
+        <tr>
+          <td><code>in:<em>value1,value2,...</em></code></td>
+          <td>Nhập giá trị trong tập cho trước</td>
+        </tr>
+      </tbody>
+    </table>
+	</div>
+
+    <h3>Các hàm sử dụng</h3>
+	<div class="out-of-box">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Hàm</th>
+          <th>Mô tả</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr>
+          <td><code>clearErrorMessages(form)</code></td>
+          <td>Xóa tất cả các thông báo lỗi<br> Thường xóa tất cả các thông báo cũ trước khi validate lại hoặc là bật form mới</td>
+        </tr>
+        <tr>
+          <td><code>showError(el, errorMessage)</code><br>
+          </td>
+          <td>Chúng ta có một validate đặc biệt nào đó, sử dụng hàm validate riêng,<br> nhưng mà vẫn muốn hiển thị thông báo
+            lỗi đồng nhất.<br>Hoặc hiển thị thông báo lỗi với những validate từ server.<br>
+          </td>
+        </tr>
+        <tr>
+          <td><code>invalidForm(form)</code><br>
+          </td>
+          <td>Kiểm tra một form có hợp lệ hay không.<br> Trả về true nếu không hợp lệ.<br> Gọi trước khi submit.<br>
+          </td>
+        </tr>
+        
+        
+      </tbody>
+    </table>
+	</div>
+    <h3>Demo</h3>
+
+    <p><a target="_blank" href="demo.html">Demo</a></p>
+	
+	<h3>Tham khảo</h3>
+		<p>
+			<span class="text-muted mr-2 d-block">lockex1987.github.io</span>
+			<a href="https://lockex1987.github.io/archive/laravel%20-%20validation/" target="_blank">
+				Validation trong Laravel
+			</a>
+		</p>
+		<p>
+			<span class="text-muted mr-2 d-block">vuelidate.js.org</span>
+			<a href="https://vuelidate.js.org/" target="_blank">
+				Vuelidate | A Vue.js model validation library
+			</a>
+		</p>
+		<p>
+			<span class="text-muted mr-2 d-block">vuejs.org</span>
+			<a href="https://vuejs.org/v2/cookbook/form-validation.html" target="_blank">
+				Form Validation — Vue.js
+			</a>
+		</p>
+  </article>
+
+  <script src="../../js/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Git">
+    <title>Loại bỏ các file đã thay đổi</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Revert modified files</h2>
+      <p># Revert changes to modified files. </p>
+      <p>git reset --hard </p>
+      <p># Remove all untracked files and directories. (`-f` is `force`, `-d` is
+        `remove directories`) </p>
+      <p>git clean -fd </p>
+      <p><br>
+      </p>
+      <p>This will unstage all files you might have staged with git add: </p>
+      <p>git reset </p>
+      <p>This will revert all local uncommitted changes (should be executed in
+        repo root): </p>
+      <p>git checkout . </p>
+      <p>You can also revert uncommitted changes only to particular file or
+        directory: </p>
+      <p>git checkout [some_dir|file.txt] </p>
+      <p>Yet another way to revert all uncommitted changes (longer to type, but
+        works from any subdirectory): </p>
+      <p>git reset --hard HEAD </p>
+      <p>This will remove all local untracked files, so only git tracked files
+        remain: </p>
+      <p>git clean -fdx </p>
+      <p>WARNING: -x will also remove all ignored files! </p>
+      <p>To sum it up: executing commands below is basically equivalent to fresh
+        git clone from original source (but it does not re-download anything, so
+        is much faster): </p>
+      <p>git reset </p>
+      <p>git checkout . </p>
+      <p>git clean -fdx</p>
+      <p></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+
+    
+  </body>
+</html>

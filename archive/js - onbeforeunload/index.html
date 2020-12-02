@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="">
+ </head> 
+ <body> 
+  <article> 
+   <p>Giả sử bạn đang soạn thảo online một văn bản rất dài và chưa kịp lưu lại. Chẳng may bạn nhấn F5, hoặc chuyển trang, tất cả những công sức thay đổi của bạn sẽ bị mất.</p> 
+   <p>This example uses the addEventListener() method to attach a "beforeunload" event to the window object.</p> 
+   <p>Close this window, press F5 or click on the link below to invoke the beforeunload event.</p> 
+   <a href="https://www.w3schools.com">Click here to go to w3schools.com</a> 
+   <script>
+/*
+This demo illustrates how to create an event handler for the client-side onbeforeuload event. Notice that the string returned by the event handler is displayed in the dialog box the user is shown when the page is being unloaded. If the user clicks Cancel, they'll remain on the page; if they click OK, they'll exit the page as they specified (either jumping to another Web page or closing the browser).
+
+http://www.4guysfromrolla.com/webtech/100604-1.shtml
+
+When this event returns (or sets the returnValue property to) a value other than null or undefined, the user is prompted to confirm the page unload. In some browsers, the return value of the event is displayed in this dialog. Starting with Firefox 44, Chrome 51, Opera 38 and Safari 9.1, a generic string not under the control of the webpage will be shown instead of the returned string. For example, Firefox displays the string "This page is asking you to confirm that you want to leave - data you have entered may not be saved." (See bug 588292), and Chrome displays the string "Do you want to leave this site? Changes you made may not be saved" (see Chrome Platform Status).
+*/
+
+var isEditing = true;
+
+window.addEventListener("beforeunload", function(event) {
+	//return 'Alert editing';
+
+	//event.returnValue = "Write something clever here..";
+	
+	if (isEditing) {
+		event.returnValue = "Write something clever here..";
+	}
+});
+</script> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

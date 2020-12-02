@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="m3u8, ts, ffmpeg, nginx, rtmp, rtsp, camera">
+    <title>Video streaming</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Video streaming</h2>
+      <p>Chia nhỏ các file ra thành nhiều phần con. Định dạng là <code>ts</code>.</p>
+      <p>Có một file text list các phần <code>ts</code> này lại, là file <code>m3u8</code>.</p>
+      <p>Những trang web xem phim mà có streaming thường sử dụng thư viện, chưa
+        hỗ trợ native. File âm thanh bị chia nhỏ thành từng phần nhưng mà vẫn
+        chạy liên tục được.</p>
+      <h3>Thuật ngữ</h3>
+      <p>HLS: HTTP Live Streaming</p>
+      <p>RTSP: Real Time Streaming Protocol</p>
+      <p>RTMP: Real Time Messaging Protocol</p>
+      <h3>Download, join, convert</h3>
+      <p>Từ trình duyệt, mở "Developer tools", tab Network. Tìm kiếm file có
+        đuôi <code>m3u8</code> và download về.</p>
+      <p>Dùng <a href="m3u8_parser.php">m3u8_parser.php</a> để lấy ra danh sách
+        các file nhỏ.</p>
+      <p>Dùng web extension <a href="https://lockex1987.github.io/archive/webext%20-%20batch%20downloader/"
+          target="_blank">Batch downloader</a> để download các file.</p>
+      <p>Dùng <a href="ts-joiner.sh">ts-joiner.sh</a> để nối các file <code>ts</code>
+        thành một file to.</p>
+<p>Hoặc dùng lệnh:</p>
+<pre>for (( i = 13; i <= 3627; i++ )) do echo $i; cat "seg_720_$i.ts" >> all.ts; done</pre>
+      <p>Dùng <a href="ts-to-mp4.sh">ts-to-mp4.sh</a> để convert file <code>ts</code>
+        thành file <code>mp4</code>.</p>
+<p>Hoặc dùng lệnh:</p>
+<pre>ffmpeg -i all.ts -map 0 -c copy output.mp4</pre>
+<p>Hoặc:</p>
+<pre>ffmpeg -i all.ts -strict -2 -bsf:a aac_adtstoasc -vcodec copy output.mp4</pre>
+
+      <p>Các trang web xem trực tuyến thường chia stream video và audio riêng,
+        có hai file <code>m3u8</code>. Bạn cần xử lý riêng video và audio (các
+        bước vẫn giống nhau). Sau đó nối hai file <code>mp4</code> lại như sau:</p>
+      <pre class="text-wrap">ffmpeg -i video.mp4 -i audio.mp4 -c copy merge.mp4</pre>
+      <h3>IP camera</h3>
+      <p>Nhà tôi có một cái IP camera. Bạn có thể thao tác thông qua app Yoosee
+        trên điện thoại. </p>
+      <p>Trên máy tính, bạn có thể xem IP camera bằng ứng dụng VLC. Mở Media /
+        Open Network Stream, sau đó nhập đường dẫn:</p>
+      <pre>rtsp://admin:abc123456@192.168.1.83:554/onvif1</pre>
+      <p>Để lưu thành file video trên máy, bạn có thể sử dụng lệnh <code>ffmpeg</code>.</p>
+      <h3>Thực hành với nginx</h3>
+      <p>Bình thường nginx chưa được build với module rtmp, bạn phải dùng nginx
+        plus (có tính phí) hoặc build từ source.</p>
+      <p>Để xem các module của nginx hiện tại, bạn dùng lệnh:</p>
+      <pre>nginx -V 2&gt;&amp;1 | tr -- - '\n' | grep module</pre>
+      <p>Kết quả mẫu:</p>
+      <pre>http_ssl_module
+http_stub_status_module
+http_realip_module
+http_auth_request_module
+http_addition_module
+http_dav_module
+http_geoip_module
+http_gunzip_module
+http_gzip_static_module
+http_image_filter_module
+http_v2_module
+http_sub_module
+http_xslt_module
+stream_ssl_module
+mail_ssl_module</pre>
+      <p>We recommend using&nbsp;<a href="https://github.com/sergey-dryabzhinsky/nginx-rtmp-module">this</a>
+        forked module. It's being actively worked on and contains more fixes and
+        improvements over the <a href="https://github.com/arut/nginx-rtmp-module">original
+          one</a>.</p>
+      <h3>ffmpeg</h3>
+<p>Xem camera trên máy tính:</p>
+      <ul>
+        <li>Bật tính năng NVR trên camera</li>
+        <li>Bật VLC, mở network stream:</li>
+        <ul>
+          <li>rtsp://admin:abc123456@192.168.1.83:554/onvif1</li>
+        </ul>
+      </ul>
+
+      <p>Một số lệnh:</p>
+      <p>RTSP thành m3u8:</p>
+      <pre>ffmpeg \
+    -i "rtsp://admin:abc123456@192.168.1.83:554/onvif1" \
+    -hls_time 3 \
+    -hls_wrap 10 \
+    -strict -2 \
+    "streaming.m3u8"</pre>
+      <p>RTSP thành stream:</p>
+      <pre>ffmpeg \
+    -i "rtsp://admin:abc123456@192.168.1.83:554/onvif1" \
+    -vcodec libx264 \
+    -vprofile baseline \
+    -acodec aac \
+    -strict -2 \
+    -f flv \
+    rtmp://localhost/show/stream</pre>
+      <p>RTMP thành stream:</p>
+      <pre>ffmpeg \
+    -i rtmp://example.com/appname/streamname \
+    -vcodec libx264 \
+    -vprofile baseline \
+    -acodec aac \
+    -strict -2 \
+    -f flv \
+    rtmp://localhost/show/stream</pre>
+      <p>File thành stream:</p>
+      <pre>ffmpeg \
+    -re \
+    -i funny.mp4 \
+    -vcodec libx264 \
+    -vprofile baseline \
+    -g 30 \
+    -acodec aac \
+    -strict -2 \
+    -f flv \
+    rtmp://localhost/show/stream</pre>
+      <h3>Tham khảo</h3>
+      <p><a href="https://en.wikipedia.org/wiki/M3U" target="_blank">M3U -
+          Wikipedia</a></p>
+      <p><a href="https://medium.com/canal-tech/how-video-streaming-works-on-the-web-an-introduction-7919739f7e1"
+          target="_blank">How video streaming works on the web: An introduction
+          | by Paul Berberian | CANAL+ TECH | Medium</a></p>
+      <p><a href="https://videojs.com/" target="_blank">Video.js - Make your
+          player yours | Video.js</a></p>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <a href="https://viblo.asia/p/streaming-videos-server-su-dung-nginx-rtmp-va-hls-maGK7q4Llj2"
+          target="_blank">Streaming videos server sử dụng NGINX RTMP và HLS -
+          Viblo</a></p>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <a href="https://github.com/keepwalking86/streaming" target="_blank">keepwalking86/streaming:
+          Deploying Media Streaming Server</a></p>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <a href="https://github.com/hoangdh/ghichep-StreamingVideo/blob/master/Script/convert-ts.sh"
+          target="_blank">ghichep-StreamingVideo/convert-ts.sh at master ·
+          hoangdh/ghichep-StreamingVideo</a></p>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <a href="https://docs.peer5.com/guides/setting-up-hls-live-streaming-server-using-nginx/"
+          target="_blank">Setting up HLS live streaming server using NGINX -
+          Peer5 P2P Docs</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

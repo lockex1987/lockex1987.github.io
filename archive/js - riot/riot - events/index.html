@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Riot Events</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Riot Events">
+ </head> 
+ <body> 
+  <article> 
+   <p>Event handlers</p> 
+   <p>A function that deals with DOM events is called an “event handler”. Event handlers are defined as follows:</p> 
+   <pre>&lt;login&gt;
+  &lt;form onsubmit={ submit }&gt;
+
+  &lt;/form&gt;
+
+  // this method is called when above form is submitted
+  submit(e) {
+
+  }
+&lt;/login&gt;</pre> 
+   <p>Attributes beginning with “on” (onclick, onsubmit, oninput etc…) accept a function value which is called when the event occurs. This function can also be defined dynamically with an expression. For example:</p> 
+   <pre>&lt;form onsubmit={ condition ? method_a : method_b }&gt;</pre> 
+   <p>In the function this refers to the current tag instance. After the handler is called this.update() is automatically called reflecting all the possible changes to the UI (unless you set event.preventUpdate in the handler).</p> 
+   <p>Event object</p> 
+   <p>The event handler receives the standard event object as the first argument. The following properties are normalized to work across browsers:</p> 
+   <ul> 
+    <li>e.currentTarget points to the element where the event handler is specified.</li> 
+    <li>e.target is the originating element. This is not necessarily the same as currentTarget.</li> 
+    <li>e.which is the key code in a keyboard event (keypress, keyup, etc…).</li> 
+    <li>e.item is the current element in a loop. See loops for more details.</li> 
+   </ul> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p><br> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

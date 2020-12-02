@@ -1,0 +1,14 @@
+// Font weight
+$font-weights: 100, 200, 300, 400, 500, 600, 700, 800, 900;
+
+@each $weight in $font-weights {
+	@each $breakpoint in map-keys($grid-breakpoints) {
+        @include media-breakpoint-up($breakpoint) {
+            $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+			.font-weight#{$infix}-#{$weight} {
+				font-weight: $weight;
+			}
+		}
+	}
+}

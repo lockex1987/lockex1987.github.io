@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Config CKEditor - Static config</title>
+    <script src="../lib/ckeditor/ckeditor.js"></script>
+  
+     
+    <script>  
+        // Cấu hình lại toolbar, hiển thị một vài Button.
+        CKEDITOR.config.toolbar = [  ['Font','FontSize'], ['Bold','Italic']  ];
+     
+        // Cấu hình lại màu nền giao diện.
+        CKEDITOR.config.uiColor = '#9AB8F3';
+        CKEDITOR.config.resize_enabled = false;
+        CKEDITOR.config.width = '500px';
+        CKEDITOR.config.height = '70px';
+    </script>
+</head>
+<body>
+    <h2>CKEditor Static config</h2>
+    <p>Cấu hình tĩnh sẽ có tác dụng cho mọi CKEditor, những cái không chỉ định rõ cấu hình.</p>
+  
+    <h3>CKEditor 1</h3>
+    <textarea class="ckeditor" name="editor1" >
+         <p>This is CKEditor 1</p>
+    </textarea>
+  
+    <h3>CKEditor 2</h3>
+    <textarea class="ckeditor" name="editor2" >
+         <p>This is CKEditor 2</p>
+    </textarea>
+</body>
+</html>

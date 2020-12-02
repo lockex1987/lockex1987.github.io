@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Full-height swipe with Owl Carousel">
+    <title>Full-height swipe with Owl Carousel</title>
+
+    <link rel="icon" href="../../images/favicon.png">
+
+    <!--link rel="stylesheet" href="/lib/owlcarousel/css/owl.carousel.min.css">-->
+    <!--link rel="stylesheet" href="/lib/owlcarousel/css/owl.theme.default.min.css">-->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .fix-height {
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .screen {
+            background: #4DC7A0;
+            padding: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="owl-carousel">
+        <div class="fix-height">
+            <div class="screen" style="height: 1350px">
+                <h4>1</h4>
+            </div>
+        </div>
+        <div class="fix-height">
+            <div class="screen" style="height: 100px">
+                <h4>2</h4>
+            </div>
+        </div>
+        <div class="fix-height">
+            <div class="screen" style="height: 1500px">
+                <h4>3</h4>
+            </div>
+        </div>
+        <div class="fix-height">
+            <div class="screen" style="height: 1250px">
+                <h4>4</h4>
+            </div>
+        </div>
+        <div class="fix-height">
+            <div class="screen" style="height: 1400px">
+                <h4>5</h4>
+            </div>
+        </div>
+        <div class="fix-height">
+            <div class="screen" style="height: 1500px">
+                <h4>6</h4>
+            </div>
+        </div>
+        <div class="fix-height">
+            <div class="screen" style="height: 1600px">
+                <h4>7</h4>
+            </div>
+        </div>
+        <div class="fix-height">
+            <div class="screen" style="height: 1400px">
+                <h4>8</h4>
+            </div>
+        </div>
+        <div class="fix-height">
+            <div class="screen" style="height: 1300px">
+                <h4>9</h4>
+            </div>
+        </div>
+    </div>
+
+
+    <!--script src="/lib/jquery/js/jquery.min.js"></script>-->
+    <!--script src="/lib/owlcarousel/js/owl.carousel.min.js"></script>-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+    <script>
+        $('.owl-carousel').owlCarousel({
+            items: 1,
+            dots: false
+        });
+    </script>
+</body>
+</html>

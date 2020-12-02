@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery UI Selectable</title>
+	<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
+
+<style>
+/* Table */
+.scheduler {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+}
+.scheduler th, .scheduler td {
+	border-left: 1px solid #DDD;
+	border-right: 1px solid #DDD;
+	border: 1px solid #DDD;
+}
+.scheduler .header {
+	background: #F7F7F7;
+	white-space: nowrap;
+	padding: 5px;
+	width: 40px;
+}
+.scheduler .item {	
+	padding: 5px;
+	height: 20px;
+}
+
+/* JQuery UI Selectable */
+.scheduler .ui-selecting {
+	background: #97B58F;
+}
+.scheduler .ui-selected {
+	background: #4C6840;
+	color: white;
+}
+.ui-selectable-helper {
+	border:1px solid #747474;
+}
+</style>
+</head>
+
+<body>
+<input type="text" id="textVarId" name="textVarId"/>
+<p id="feedback">
+<span>You've selected:</span> <span id="select-result">none</span>.
+</p>
+
+<script>
+function createTable(startHour, endHour) {
+	var thead = "";
+	var tbody = "";
+	var trow = "";
+	var noOfColumns = 7;
+	var r, c;
+	for (c = 1; c <= noOfColumns; c++) {
+		thead += '<th class="header">' + c + '</th>';
+		trow += '<td class="item"></td>';
+	}
+	for (r = startHour; r <= endHour; r++) {
+		tbody += '<tr><td>' + r + '</td>' + trow + '</tr>'; // rowspan="4"
+		tbody += '<tr><td></td>' + trow + '</tr>'; //
+		//tbody += '<tr>' + trow + '</tr>';
+		//tbody += '<tr>' + trow + '</tr>';
+	}
+	return '<table class="scheduler"><thead><th class="header">Time</th>' + thead + '</thead><tbody>' + tbody + '</tbody></table>';
+}
+
+$('body').append( createTable(8, 17) );
+
+var currentCol;
+var items = $(".scheduler tbody .item");
+
+//alert(items.length);
+
+$(".scheduler").selectable({
+	filter: ".item",
+	start: function(event, ui) {
+		$(".item").removeClass("ui-selected");
+	},
+	stop: function(event, ui) {
+		// Reset selector
+		currentCol = undefined;
+		
+		var result = $( "#select-result" ).empty();
+		$( ".ui-selected", this ).each(function() {
+			var index = $( ".scheduler .item" ).index( this );
+			result.append( " #" + ( index + 1 ) );
+		});
+	},
+	selecting: function(event, ui) {
+		if (currentCol === undefined) {
+			currentCol = $(ui.selecting).index();
+			//console.info('currentCol: ' + currentCol);
+		}
+		var nthChild = parseInt(currentCol) + 1; // add one as nthChild is not zero index
+
+		/*
+		for (var i = 1; i <= items.length; i++) {
+			if (i != nthChild) {
+				$(".item.ui-selecting:nth-child(" + i + ")").each(function() {
+					$(this).removeClass("ui-selecting");
+				});
+			}
+		}
+		*/
+	}
+});
+
+function processKeyPress(event) {
+	var charCode = (event.which) ? event.which : event.keyCode;
+	console.info(charCode);
+	if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57))
+		return false;
+	return true;
+}
+
+$("#textVarId").on("keypress" , function (event) { return processKeyPress(event); });
+</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Git">
+    <title>Cách tạo repository trong Git và Github</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Cách tạo một repository</h2>
+      <p><strong>Repository</strong> (kho chứa) nghĩa là nơi mà bạn sẽ lưu trữ
+        mã nguồn và một người khác có thể sao chép (clone) lại mã nguồn đó nhằm
+        làm việc. Repository có hai loại là <em>local repository</em> (kho chứa
+        trên máy cá nhân) và <em>remote repository</em> (kho chứa trên một máy
+        chủ từ xa).</p>
+      <p>Trong bài này, mình sẽ hướng dẫn bạn cách tạo local repository và
+        remote&nbsp;repository (sử dụng GitHub) và làm việc với nó.</p>
+      <h3 id="Tạo_local_repository">Tạo local repository</h3>
+      <p>Trước hết, để tạo một&nbsp;repository&nbsp;thì bạn cần truy cập vào thư
+        mục của mã nguồn với lệnh <code>cd</code>, sau đó sử dụng lệnh <code>git
+          init</code>&nbsp;để khởi tạo repository trong thư mục đó. Ở ví dụ này,
+        mình sẽ tạo tạo ra một thư mục mới để chứa code sau này và khởi tạo
+        repository cho nó, mình sẽ dùng lệnh <code>git init &lt;tên_folder&gt;</code>
+        để nó tự khởi tạo thư mục.</p>
+      <pre>$ git init git_example
+Initialized empty Git repository in /home/thachpham/git_example/.git/</pre>
+      <p>Ở đoạn trên, nó hiển thị dòng thông báo mình đã khởi tạo một kho git
+        trống tại đường dẫn&nbsp;như trên. Lưu ý rằng thư mục ẩn <code>.git/</code>&nbsp;là
+        nơi nó sẽ chứa các thiết lập về git cũng như lưu lại toàn bộ thông tin
+        về kho chứa, bạn <strong>không cần đụng chạm gì vào thư mục <code>.git/</code></strong>&nbsp;này.</p>
+      <p>Nếu kho chứa của bạn đã có sẵn mã nguồn thì bạn cần <strong>phải đưa
+          các tập tin về trạng thái Tracked</strong> nhằm có thể làm việc được
+        với git. Để làm việc này, bạn sẽ cần sử dụng lệnh <code>git add
+          tên_file</code>, có thể sử dụng dấu <code>*</code>&nbsp;để gom toàn
+        bộ. Sau đó có thể sử dụng lệnh <code>git status</code>&nbsp;để xem danh
+        sách các tập tin đã được tracked.</p>
+      <pre>$ git add readme.txt
+$ git status
+On branch master</pre>
+      <pre>Initial commit</pre>
+      <pre>Changes to be committed:
+ (use "git rm --cached &lt;file&gt;..." to unstage)</pre>
+      <pre>new file: readme.txt</pre>
+      <p>Và sau khi tập tin đã được đưa vào trạng thái tracked và nếu một tập
+        tin đã tracked thì nó phải được đưa vào lại Staging Area (giải thích ở
+        bài sau) cũng bằng lệnh <code>git add</code> thì bạn mới có thể tiến
+        hành ủy thác (<strong>commit</strong>) nhằm lưu lại bản chụp các thay
+        đổi. Lệnh commit sẽ có cấu trúc <code>git commit -m "Lời nhắn"</code>,
+        lúc này tất cả các tập&nbsp;đang trong trạng thái tracked (file mới)
+        hoặc một tập tin đã được tracked nhưng có một sự thay đổi mới thì sẽ
+        được commit.</p>
+      <pre>$ git commit -m "First commit"
+[master (root-commit) 799db56] First Commit
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 readme.txt</pre>
+      <p>Bây giờ thì bạn đã hoàn thành việc commit lần đầu tiên các tập tin mà
+        bạn đã đưa vào kho, mình sẽ nói kỹ hơn về việc commit ở các bài sau. Tóm
+        lại là tới đây bạn đã có một kho chứa mã nguồn Git trên máy của bạn.</p>
+      <h3 id="Tạo_repository_trên_Github_và_làm_việc">Tạo repository trên GitHub
+        và làm việc</h3>
+      <p>Trước tiên bạn cần đăng nhập vào <a href="https://github.com" target="_blank">Github</a>, sau đó ấn
+        vào dấu + trên menu và chọn <em>New&nbsp;repository</em>.</p>
+      <p><img src="images/4-github-create-repository.png"
+
+            alt="github-create-repository"></p>
+      <p>Bạn sẽ cần&nbsp;đặt tên cho kho chứa của bạn. Bạn có thể chọn loại kho
+        chứa là <strong>Public</strong> (ai cũng có thể clone) và <strong>Private</strong>
+        (chỉ có những người được cấp quyền mới có thể clone).</p>
+      <figure> <img src="images/4-github-create-repository-02.png" alt="github-create-repository-02">
+        <figcaption> Điền thông tin khi tạo Repository trên GitHub</figcaption></figure>
+      <p>Khi tạo xong nó sẽ dẫn bạn tới trang hướng dẫn làm việc với kho chứa
+        vừa tạo. Và kho chứa của bạn bây giờ sẽ có địa chỉ là <code>https://github.com/$user-name/$repository</code>,
+        ví dụ <code>https://github.com/thachphamblog/hoc-git</code>.</p>
+      <p>Việc của bạn bây giờ là hãy clone cái kho chứa này về máy của mình bằng
+        lệnh <code>git clone địa_chỉ</code>.</p>
+      <pre>$ git clone https://github.com/thachphamblog/hoc-git
+Cloning into 'hoc-git'...
+warning: You appear to have cloned an empty repository.
+Checking connectivity... done</pre>
+      <p>Bây giờ hãy truy cập vào thư mục working tree (thư mục vừa clone
+        repository về) và thử tạo ra một file tên là <em>README.md</em>, sau đó
+        dùng lệnh <code>git add</code>&nbsp;để đưa file này vào Staging Area.</p>
+      <pre>$ cd hoc-git
+$ echo "# Huong dan Git co ban" &gt; README.md
+$ git add README.md
+$ git commit -m "First commit on GitHub"
+[master (root-commit) 6e729a4] First commit on Github
+ 1 file changed, 1 insertion(+)
+ create mode 100644 README.md</pre>
+      <p>Tuy nhiên sau khi commit xong, tập tin đã được commit sẽ vẫn không thể
+        xuất hiện trong kho chứa trên GitHub mà bạn phải làm thêm một việc nữa
+        đó là dùng lệnh <code>git push</code>&nbsp;để đẩy các tập tin đã được
+        commit lên GitHub. Lưu ý rằng <strong>bạn sẽ cần nhập tài khoản và mật
+          khẩu GitHub</strong>.</p>
+      <pre>$ git push origin master
+Counting objects: 3, done.
+Writing objects: 100% (3/3), 244 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://github.com/thachphamblog/hoc-git
+ * [new branch] master -&gt; master</pre>
+      <p><code>origin </code>nghĩa là tên remote (xem ở bài sau) và <code>master</code>&nbsp;là
+        tên branch, hai cái này mình sẽ giải thích kỹ hơn ở bài riêng của nó.
+        Bây giờ bạn có thể kiểm tra kho chứa của bạn trên GitHub rồi đó.</p>
+      <figure> <img src="images/4-github-create-repository-03.png" alt="github-create-repository-03">
+        <figcaption> Kết quả sau khi push mã nguồn đã được commit lên GitHub </figcaption>
+      </figure>
+      <p>Có thể bạn sẽ thấy mỗi khi push lên GitHub thì nó hiển thị ra thông báo
+        quá dài dòng, bạn có thể cho ẩn các thông báo đi mà chỉ hiển thị dòng
+        khai báo username và password trên Github thì có thể thiết lập với lệnh
+        này.</p>
+      <pre>git config --global push.default simple</pre>
+      <p>Tuy nhiên nếu bạn không thích bị hỏi mật khẩu nữa thì có thể sử dụng
+        SSH với GitHub, mình sẽ nói cái này sau.</p>
+      <h3 id="Lời_kết">Lời kết</h3>
+      <p>Bây giờ bạn đã biết cách tạo một repository cho git rồi chứ? Thật đơn
+        giản phải không nào, bây giờ để tiếp tục các bài sau dễ dàng hơn, hãy
+        thực hành tạo một reposity trên máy tính và tập commit, hoặc bạn có thể
+        sử dụng GitHub để tập đưa mã nguồn của mình vào kho chứa cho thuần thục
+        nhé.</p>
+      <p>Init</p>
+      <pre>echo "# lockex1987.github.io" &gt;&gt; README.md<br>git init<br>git add README.md<br>git commit -m "First commit"<br>git remote add origin https://github.com/lockex1987/cttd-bean.git<br>git push -u origin master</pre><p>Những lần sau chỉ cần <code>git push</code>, không cần <code>-u</code>.</p>
+    </article>
+  
+    
+</body></html>

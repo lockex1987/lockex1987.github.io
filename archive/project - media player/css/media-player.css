@@ -1,0 +1,96 @@
+.media-container {
+  position: relative;
+}
+.media-container video,
+.media-container audio {
+  width: 100%;
+  height: auto;
+}
+.media-container .media-player {
+  background-color: transparent;
+}
+.media-container .media-player .subtitle-wrapper {
+  padding: 2px 10px;
+  height: 40px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+.media-container .media-player .subtitle-wrapper .subtitle {
+  position: relative;
+  color: #FFF;
+  max-width: 40%;
+  display: inline-block;
+  font-size: 24px;
+  text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
+}
+.media-container .media-player .subtitle-wrapper .subtitle .base {
+  vertical-align: text-top;
+}
+.media-container .media-player .subtitle-wrapper .subtitle .karaoke {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: yellow;
+  /* #d269ff; #2E9AFE*/
+  overflow: hidden;
+  width: 0%;
+  /*text-shadow: 0 0 3px rgba(255, 255, 255, 1);*/
+}
+.media-container .media-player .player-controls {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: transparent;
+}
+.media-container .media-player .player-controls:fullscreen {
+  position: absolute;
+  bottom: 0;
+}
+.media-container .media-player .player-controls button {
+  border: none;
+  outline: none;
+  width: 16px;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  color: #555;
+  min-width: unset;
+  box-shadow: none;
+}
+.media-container .media-player .player-controls button:hover,
+.media-container .media-player .player-controls button:focus {
+  box-shadow: none;
+}
+.media-container .media-player .player-controls .time-info {
+  padding: 0 5px;
+  width: 100px;
+  font-size: 13px;
+}
+.media-container .media-player .player-controls .timeline {
+  flex: 1;
+  cursor: pointer;
+  background: #e6e6e6;
+  border-radius: 4px;
+  position: relative;
+}
+.media-container .media-player .player-controls .timeline .bar-process {
+  background-color: #007aff;
+  height: 4px;
+  border-radius: 4px 0 0 4px;
+}
+.media-container .media-player .player-controls .timeline .play-head {
+  position: absolute;
+  top: -7px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #02c38a;
+  box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15), 0 0 0 1px rgba(34, 36, 38, 0.15) inset;
+}
+.media-container:fullscreen .player-controls {
+  position: absolute;
+  bottom: 0;
+}

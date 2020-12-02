@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Transfer a file">
+  <title>Truyền file</title>
+  <link rel="icon" href="../../images/favicon.png">
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+  <article>
+    <h2>Truyền file</h2>
+
+    <h3>Demo</h3>
+    <section>
+
+      <form id="fileInfo">
+        <div class="mb-3">
+          <input id="fileInput" name="files" type="file">
+        </div>
+
+        <div class="mb-3">
+          <button disabled="disabled" id="sendFile" class="btn btn-primary">
+            Send
+          </button>
+
+          <button disabled="disabled" id="abortButton" class="btn btn-secondary">
+            Abort
+          </button>
+        </div>
+      </form>
+
+      <div>
+        <div class="label">
+          Send progress:
+        </div>
+
+        <div>
+          <progress id="sendProgress" max="0" value="0" class="w-100"></progress>
+        </div>
+      </div>
+
+      <div>
+        <div class="label">
+          Receive progress:
+        </div>
+
+        <div>
+          <progress id="receiveProgress" max="0" value="0" class="w-100"></progress>
+        </div>
+      </div>
+
+      <div id="bitrate" class="my-3"></div>
+      <a id="download" class="mb-3"></a>
+      <span id="status" class="mb-3"></span>
+    </section>
+
+    <h3>Tham khảo</h3>
+    <p>
+      <a href="https://www.sharedrop.io/" target="_blank">
+        ShareDrop
+      </a>
+    </p>
+    <p>
+      <a href="https://webrtc.github.io/samples/src/content/datachannel/filetransfer/" target="_blank">
+        Transfer a file
+      </a>
+    </p>
+  </article>
+
+  <script src="js/script.js"></script>
+  <script src="../../js/docs.js"></script>
+</body>
+
+</html>

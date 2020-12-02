@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Quản lý session trong Laravel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta name="description" content="Laravel session">
+  </head>
+  <body>
+    <article>
+      <h2>Quản lý session trong Laravel</h2>
+      <p>Khi hệ thống HTTP không có chỗ lưu trữ, session cung cấp một cách để
+        lưu thông tin từ các yêu cầu của người dùng. Laravel cung cấp đầy đủ
+        session backend thông qua API để hỗ trợ việc này. Hỗ trợ các backend như
+        Memcached, Redis, và cơ sở dữ liệu đã có sẵn.</p>
+      <h3>Cấu hình</h3>
+      <p>File cấu hình session lưu ở <code>config/session.php</code>. Hãy chắc
+        rằng bạn nắm rõ tất cả các thông tin cấu hình của session trước khi tùy
+        chỉnh lại tệp tin này. Mặc định, Laravel sẽ cấu hình sử dụng <code>file
+        </code>session driver, nó sẽ hoạt động tốt cho nhiều ứng dụng. Đối với
+        production, bạn có thể cân nhắc sử dụng <code>memcached</code> hoặc <code>redis</code>
+        driver để cho hiệu năng của session tốt hơn.</p>
+      <p>Các session <code>driver</code> được định nghĩa là nơi lưu trữ dữ liệu
+        session qua các request. Laravel đã tích hợp sẵn một số session driver
+        sau:</p>
+      <div>
+        <ul>
+          <li><code>file</code> - session sẽ lưu tại <code>storage/framework/sessions</code>.</li>
+          <li><code>cookie</code> - session sẽ lưu có bảo mật, mã hóa cookies.</li>
+          <li><code>database</code> - session sẽ lưu trong cơ sở dữ liệu được
+            dùng trong ứng dụng của bạn.</li>
+          <li><code>memcached</code> / <code>redis</code> - session sẽ lưu và
+            truy suất nhanh hơn, dựa trên cache.</li>
+          <li><code>array</code> - session sẽ được lưu trong mảng PHP và sẽ tồn
+            tại lâu.</li>
+        </ul>
+      </div>
+      <p> Với array driver chỉ nên sử dụng khi chạy testing để có các dữ liệu
+        tồn tại trong thời gian dài.</p>
+      <h3>Yêu cầu của các driver</h3>
+      <h4>Cơ sở dữ liệu</h4>
+      <p>Khi sử dụng <code>database</code> session driver, bạn cần phải tạo
+        bảng chứa dữ liệu session trong cơ sở dữ liệu. Bên dưới là một ví dụ <code>Schema</code>
+        dùng tạo bảng:</p>
+      <pre class="out-of-box">Schema::create('sessions', function ($table) {
+    $table-&gt;string('id')-&gt;unique();
+    $table-&gt;integer('user_id')-&gt;nullable();
+    $table-&gt;string('ip_address', 45)-&gt;nullable();
+    $table-&gt;text('user_agent')-&gt;nullable();
+    $table-&gt;text('payload');
+    $table-&gt;integer('last_activity');
+});</pre>
+      <p>Bạn có thể sử dụng <code>session:table</code> trong Artisan command để
+        tự động tạo migration:</p>
+      <pre>php artisan session:table
+php artisan migrate</pre>
+      <h4>Redis</h4>
+      <p>Trước khi sử dụng Redis sessions với Laravel, bạn cần cài đặt gói <code>predis/predis</code>
+        package (~1.0) qua Composer. Bạn cấu hình Redis của bạn kết nối trong
+        file cấu hình <code>database</code>. Trong file cấu hình <code>session</code>,
+        thuộc tính <code>connection</code> có thể được sử dụng để xác định kết
+        nối với Redis là sử dụng session.</p>
+      <h3>Nhận dữ liệu</h3>
+      <p>Có hai cách chính để làm việc với dữ liệu session data trong Laravel:
+        phương thức global <code>session</code> và qua thể hiện <code>Request</code>.
+        Đầu tiên, chúng ta nhìn cách truy cập session qua thể hiện <code>Request</code>,
+        có thể được type-hinted trong phương thức controller. Nhớ rằng, phương
+        thức controller dependencies tự động injected qua Laravel service
+        container:</p>
+      <pre class="out-of-box">&lt;?php
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+class UserController extends Controller
+{
+    /**
+     * Show the profile for the given user.
+     *
+     * @param    Request  $request
+     * @param    int  $id
+     * @return  Response
+     */
+    public function show(Request $request, $id)
+    {
+        $value = $request-&gt;session()-&gt;get('key');
+
+        //
+    }
+}</pre>
+      <p>Khi bạn nhận giá trị từ session, bạn cũng có thể truyền giá trị mặc
+        định qua tham số thứ hai của phương thức <code>get</code>. Giá trị mặc
+        định sẽ được trả về nếu key không tồn tại trong session. Nếu bạn truyền
+        vào một <code>Closure</code> là giá trị mặc định của phương thức <code>get</code>
+        và requested key không tồn tại, thì <code>Closure</code> sẽ được thực
+        thi và trả về giá trị return:</p>
+      <pre class="out-of-box">$value = $request-&gt;session()-&gt;get('key', 'default');
+
+$value = $request-&gt;session()-&gt;get('key', function () {
+    return 'default';
+});</pre>
+      <h4>Phương thức global session</h4>
+      <p>Bạn cũng có thể sử dụng hàm global <code>session</code> của PHP và lưu
+        dữ liệu trong session. Khi hàm <code>session</code> được gọi, chuỗi
+        tham số, nó sẽ trả về giá trị của key session. Khi hàm được gọi với một
+        cặp giá trị key / value, giá trị sẽ lưu trong session:</p>
+      <pre class="out-of-box">Route::get('home', function () {
+    // Retrieve a piece of data from the session...
+    $value = session('key');
+
+    // Specifying a default value...
+    $value = session('key', 'default');
+
+    // Store a piece of data in the session...
+    session(['key' =&gt; 'value']);
+});</pre>
+      <p> Có rất ít sự khác biệt giữa sử dụng session qua HTTP request và sử
+        dụng hàm global <code>session</code>. Cả hai phương thức là testable
+        qua phương thức <code>assertSessionHas</code> nó tồn tại trong tất cả
+        các test cases của bạn.</p>
+      <h4>Nhận tất cả dữ liệu session</h4>
+      <p>Nếu bạn muốn nhận tất cả dữ liệu của session, bạn có thể sử dụng phương
+        thức <code>all</code>:</p>
+      <pre>$data = $request-&gt;session()-&gt;all();</pre>
+      <h4>Kiểm tra sự tồn tại của session</h4>
+      <p>Để xác sự tồn tại session, bạn có thể sử dụng phương thức <code>has</code>.
+        Phương thức sẽ trả về&nbsp;<code>true</code>, nếu giá trị của session
+        không bằng <code>null</code>:</p>
+      <pre>if ($request-&gt;session()-&gt;has('users')) {
+    //
+}</pre>
+      <p>Để xác sự tồn tại session, ngay cả giá trị của nó bằng <code>null</code>,
+        bạn có thể sử dụng phương thức <code>exists</code>. Phương thức <code>exists</code>
+        trả về <code>true</code> nếu giá trị tồn tại:</p>
+      <pre>if ($request-&gt;session()-&gt;exists('users')) {
+    //
+}</pre>
+      <h3>Lưu dữ liệu</h3>
+      <p>Để lưu dữ liệu trong session, bạn sẽ thường sử dụng phương thức <code>put</code>
+        hoặc hàm<code> session</code>:</p>
+      <pre>// Via a request instance...
+$request-&gt;session()-&gt;put('key', 'value');
+
+// Via the global helper...
+session(['key' =&gt; 'value']);</pre>
+      <h4>Đẩy giá trị vào mảng session</h4>
+      <p>Phương thức <code>push</code> có thể sử dụng để đẩy một giá trị vào
+        một biến mảng session. Ví dụ, nếu trong <code>user.teams</code> là một
+        mảng chứa tên nhóm, bạn có thể đẩy tên nhóm mới vào mảng theo cách sau:</p>
+      <pre class="out-of-box">$request-&gt;session()-&gt;push('user.teams', 'developers');</pre>
+      <h4>Nhận &amp; xóa một item</h4>
+      <p>Phương thức <code>pull</code> sẽ nhận và xóa một item từ session trong
+        một lệnh:</p>
+      <pre class="out-of-box">$value = $request-&gt;session()-&gt;pull('key', 'default');</pre>
+      <h3>Flash data</h3>
+      <p>Thỉnh thoảng bạn có một vài dữ liệu mà chỉ muốn nó lưu tại lần truy
+        xuất tiếp theo. Bạn có thể dùng phương thức <code>flash</code>. Dữ liệu
+        lưu trong session sử dụng phương thức trên chỉ tồn tại duy nhất trong
+        lần HTTP request tiếp theo, sau đó sẽ tự động được xóa. Flash data
+        thường dùng để biểu thị các trạng thái, thông báo, tin nhắn:</p>
+      <pre class="out-of-box">$request-&gt;session()-&gt;flash('status', 'Task was successful!');</pre>
+      <p>Nếu bạn muốn giữa dữ liệu trong nhiều lần request, bạn có thể sử dụng
+        phương thức <code>reflash</code>, nó sẽ dữ lại tất cả các dữ liệu flash
+        thêm vào request. Nếu bạn muốn dữ nội dung flash cụ thể, bạn có thể dung
+        phương thức <code>keep</code>:</p>
+      <pre class="out-of-box">$request-&gt;session()-&gt;reflash();
+
+$request-&gt;session()-&gt;keep(['username', 'email']);</pre>
+      <p><a></a></p>
+      <h3>Xóa data</h3>
+      <p>Phương thức <code>forget</code> sẽ xóa từng phần dữ liệu từ session.
+        Nếu bạn muốn xóa tất cả dữ liệu session, bạn có thể sử dụng phương thức
+        <code>flush</code>:</p>
+      <pre>$request-&gt;session()-&gt;forget('key');
+
+$request-&gt;session()-&gt;flush();</pre>
+      <p><a></a></p>
+      <h3>Sinh lại session ID</h3>
+      <p>Chúng ta cần sinh lại session ID, thường gặp khi ngăn một mã độc từ
+        người dùng khai thác một session fixation tấn công ứng dụng của bạn.</p>
+      <p>Laravel tự động sinh lại session ID khi xác thực nếu bạn sử dụng
+        built-in <code>LoginController</code>. Tuy nhiên, nếu bạn cần tự tay
+        sinh lại session ID, bạn có thể sử dụng phương thức <code>regenerate</code>.</p>
+      <pre>$request-&gt;session()-&gt;regenerate();</pre>
+      <h3>Thời gian hiệu lực của session</h3>
+      <p>Mặc định, thời gian hiệu lực của session là 120 phút. Bạn có thể xem
+        các cấu hình ở các file <code>config/session.php</code> và <code>.env</code>.</p>
+      <pre>'lifetime' =&gt; env('SESSION_LIFETIME', 120),
+
+SESSION_LIFETIME=120</pre>
+      <p>Khi session hết hiệu lực, Laravel sẽ tự động chuyển về trang <code>/</code>.
+        Nếu chúng ta gọi AJAX một phương thức mà có phân quyền thì sẽ trả về
+        status 401.</p>
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://laravel.com/docs/master/session">laravel.com/docs/master/session</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Output pretty JSON</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Output pretty JSON">
+ </head> 
+ <body> 
+  <article> 
+   <style>
+pre { outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+.string { color: green; }
+.number { color: darkorange; }
+.boolean { color: blue; }
+.null { color: magenta; }
+.key { color: red; }
+    </style> 
+   <p>Pretty-printing is implemented natively in JSON.stringify(). The third argument enables pretty printing and sets the spacing to use:</p> 
+   <pre>var str = JSON.stringify(obj, null, 2); // spacing level = 2</pre> 
+   <p>If you need syntax highlighting, you might use some regex magic like so:</p> 
+   <script>
+function output(content) {
+    document.body.appendChild(document.createElement('pre')).innerHTML = content;
+}
+
+function prettyJson(obj) {
+  return JSON.stringify(obj, undefined, 4);
+}
+
+function highlightJson1(json) {
+  if (typeof json != 'string') {
+    json = prettyJson(json);
+  }
+  
+  json = json.replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+
+  return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
+    //console.log(match);
+    var cls = 'number';
+    if (/^"/.test(match)) {
+      if (/:$/.test(match)) {
+        cls = 'key';
+      } else {
+        cls = 'string';
+      }
+    } else if (/true|false/.test(match)) {
+      cls = 'boolean';
+    } else if (/null/.test(match)) {
+      cls = 'null';
+    }
+    return '<span class="' + cls + '">' + match + '</span>';
+  });
+}
+
+// https://regexr.com/
+function highlightJson2(obj) {
+  var replacer = function(key, value) {
+    var type = typeof value;
+    if ('string' == type) {
+      return '<span class=' + type + '>DOUBLE_QUOTE' + value + 'DOUBLE_QUOTE</span>';
+    }
+    if (['number', 'boolean'].includes(type)) {
+      return '<span class=' + type + '>' + value + '</span>';
+    }
+    if (value == null) {
+      return '<span class=null>' + value + '</span>';
+    }
+    return value;
+  };
+
+  var temp = JSON.stringify(obj, replacer, 4);
+  temp = temp
+          .replace(/"<span/g, '<span')
+          .replace(/span>"/g, 'span>')
+          .replace(/DOUBLE_QUOTE/g, '"')
+          .replace(/"(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*":/g, function(match) {
+            return '<span class=key>' + match + '</span>';
+          });
+  return temp;
+}
+
+function demo() {
+  var obj = { a:1, 'b':'foo:"', c:[false, 'false', null, 'null', {d:{e:1.3e5, f:'1.3e5'}}]};
+
+  output(prettyJson(obj));
+  output(highlightJson1(obj));
+  output(highlightJson2(obj));
+}
+
+demo();
+    </script> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

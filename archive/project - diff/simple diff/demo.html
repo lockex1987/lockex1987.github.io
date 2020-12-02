@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <style>
+.diff del {
+    background-color: #FFE6E6;
+}
+.diff ins {
+    background-color: #E6FFE6;
+}
+    </style>
+  </head>
+
+  <body>
+      <div id="outputDiv" class="diff"></div>
+
+  <script src="simplediff.js"></script>
+  <script>
+      document.getElementById('outputDiv').innerHTML = htmlDiff(
+   "The red brown fox jumped over the rolling log.",
+   "The brown spotted fox leaped over the rolling log"
+);
+  </script>
+  </body>
+</html>

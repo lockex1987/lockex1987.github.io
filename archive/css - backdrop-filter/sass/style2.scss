@@ -1,0 +1,126 @@
+
+
+.no-support {
+  text-align: center;
+  padding: 10px;
+  width: 300px;
+  position: absolute;
+  z-index: 100;
+  top: 5px;
+  left: 5px;
+  background: #ee6620;
+  color: #fff;
+  font-size: 12px;
+}
+
+@supports(backdrop-filter: opacity( 1.0 )) {
+  .no-support {
+    display: none;
+    display: block;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html,
+body {
+  width: 100%;
+  margin: 0;
+}
+
+body {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.container {
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/14179/0236.jpg');
+  background-size: cover;
+  height: 100vh;
+  padding: 10px;
+  width: 100%;
+  position: relative;
+  iframe {
+    position: absolute;
+    top:0; right: 0; left: 0; bottom:0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.boxes {
+  display: flex;
+  margin-right: 10px;
+  overflow: scroll;
+  min-height: 90vh;
+  width: 100%;
+  align-items: center;
+  
+  p {
+    display: block;
+    font-weight: 600;
+    min-width: 200px;
+    color: white;
+    font-size: 40px;
+    @media (min-width:767px) {
+      font-size: 60px;
+      min-width: 300px;
+    }
+  }
+}
+
+.box {
+  border: 1px solid rgba(255,255,255,.7);
+  min-width: 400px;
+  min-height: 95vh;
+  line-height: 1; 
+  padding: 15px 15px;
+  transition: all .3s ease;
+  
+  &:nth-child(1n + 1) {
+    border-right: none;
+  }
+  
+  h1 {
+    font-weight: 400;
+    font-size: 18px;
+  }
+}
+
+.none {
+  backdrop-filter: none;
+}
+
+.grayscale {
+  backdrop-filter: grayscale(1);  
+}
+.brightness {
+  backdrop-filter: brightness(1.5);  
+}
+.blur {
+  backdrop-filter: blur(5px);  
+}
+.contrast {
+  backdrop-filter: contrast(.8);  
+}
+.drop-shadow {
+  backdrop-filter: drop-shadow(4px 4px 10px blue);  
+}
+.invert {
+  backdrop-filter: invert(.7);
+}
+.opacity {
+  backdrop-filter: opacity(.4);
+}
+.sepia {
+  backdrop-filter: sepia(.4);
+}
+.saturate {
+  backdrop-filter: saturate(1.8);
+}
+.hue-rotate {
+  backdrop-filter: hue-rotate(120deg);
+}

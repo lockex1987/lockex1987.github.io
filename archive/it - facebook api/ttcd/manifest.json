@@ -1,0 +1,39 @@
+{
+    "background": {
+        "scripts": [
+            "js/background.js"
+        ],
+        "persistent": true
+    },
+    "browser_action": {
+        "default_icon": "images/icon.png",
+        "default_popup": "popup.html",
+        "default_title": "Truyền thông chủ động"
+    },
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "description": "Extension tương tác với Facebook của hệ thống Truyền thông chủ động.",
+    "icons": {
+        "16": "images/icon.png",
+        "48": "images/icon_48.png",
+        "128": "images/icon_128.png"
+    },
+    "manifest_version": 2,
+    "name": "TTCĐ",
+    "permissions": [
+        "activeTab",
+        "debugger",
+        "cookies",
+        "tabs",
+        "storage",
+        "unlimitedStorage",
+        "<all_urls>",
+        "webRequest",
+        "https://*/",
+        "webRequestBlocking",
+        "webNavigation",
+        "notifications",
+        "identity",
+        "gcm"
+    ],
+    "version": "1.0"
+}

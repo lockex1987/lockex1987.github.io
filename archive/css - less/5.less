@@ -1,0 +1,39 @@
+@lightBlue: #ddf;
+@lightGreen: #dfd;
+@lightRed: #fdd;
+@defaultColor: @lightBlue;
+@defaultRadius: 30px;
+@defaultWidth: 200px;
+@borderSize: @defaultWidth * 0.1;
+@borderColor: @defaultColor - #222; 
+ 
+.shape {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    background: @defaultColor;
+    margin: 20px;
+    border: @borderSize solid @borderColor;
+    
+    &:hover {
+        background: @lightRed;
+    }
+}
+
+.Round(@radius: @defaultRadius) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+}
+#shape1 {
+    .Round(9999px);
+}
+#shape2 {
+    .Round(@defaultRadius);
+}
+#shape3 {
+    .Round(60px);
+}
+
+
+/*@import "4.less";*/

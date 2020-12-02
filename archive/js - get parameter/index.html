@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lấy giá trị tham số từ URL bằng JS">
+    <title>Lấy giá trị tham số từ URL bằng JS</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Lấy giá trị tham số từ URL bằng JS</h2>
+      <p>Sử dụng cắt xâu bình thường:</p>
+      <pre>function getParameter(param) {
+&nbsp; &nbsp; var arr = window.location.search.substring(1).split('&amp;');
+  &nbsp; for (var i = 0; i &lt; arr.length; i++) {
+&nbsp; &nbsp; &nbsp; &nbsp; var pair = arr[i].split('=');
+ &nbsp; &nbsp; &nbsp; &nbsp;if (pair[0] == param) {
+      &nbsp; &nbsp; &nbsp; return decodeURIComponent(pair[1]);
+&nbsp; &nbsp; &nbsp; &nbsp; }
+&nbsp; &nbsp; }
+&nbsp; &nbsp; return null;
+}</pre>
+      <p>Sử dụng API mới <code>URLSearchParams</code>:</p>
+      <pre>function getParameter(param) {
+&nbsp; &nbsp; var urlParams = new URLSearchParams(window.location.search);
+&nbsp; &nbsp; return urlParams.get(param);
+}</pre>
+      <p>Kết quả chạy test:</p>
+      <pre id="result"></pre>
+    </article>
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Masked Input">
+    <title>Masked Input</title>
+
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <article>
+        <h2>Masked Input</h2>
+        <p>Nhập ngày tháng đúng định dạng, đúng giá trị.</p>
+        <p>Nhập số có ngăn cách phần nghìn cho dễ đọc. Số lớn (tiền) thì dùng cái này tiện.</p>
+        <p>Chú ý sự kiện paste hoặc thiết lập giá trị bằng JS 1234567890.</p>
+
+        <div class="out-of-box d-none">
+            <table class="table table-bordered" id="formatNumberDemo">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            Số
+                        </th>
+                        <th class="text-center">
+                            Cách 1
+                        </th>
+                        <th class="text-center">
+                            Cách 2
+                        </th>
+                        <th class="text-center">
+                            Cách 3
+                        </th>
+                        <th class="text-center">
+                            Cách 4
+                        </th>
+                        <th class="text-center">
+                            Cách 5
+                        </th>
+                    </tr>
+                </thead>
+    
+                <tbody>
+    
+                </tbody>
+            </table>
+        </div>
+
+        <form id="form" method="post" action="" class="mb-3">
+            <label for="amount">
+                Enter amount
+            </label>
+
+            <input id="amount" name="amount" type="text" class="form-control" />
+        </form>
+
+        <div class="mb-3 validate-container">
+            <!-- Phải để kiểu là text, không phải number -->
+            <input id="numberInput"
+                    type="text"
+                    class="form-control numeral"
+                    data-validation="min:10|max:1000000">
+        </div>
+
+        <div class="mb-3">
+            <button class="btn btn-primary" onclick="getNumberValue()">
+                Get
+            </button>
+
+            <button class="btn btn-secondary" onclick="setNumberValue()">
+                Set
+            </button>
+        </div>
+
+
+        <p>Không phải sửa gì nữa, value vẫn không chứa dấu chấm bằng cách thiết lập 'autoUnmask': true, "removeMaskOnSubmit": true,</p>
+
+        <div class="mb-3">
+            <span>IP address:</span>
+            <input id="ip" data-inputmask="'alias': 'ip'" />
+        </div>
+
+        <div class="mb-3">
+            <span>Date:</span>
+            <input data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" />
+        </div>
+		
+		<p>Ngày tháng vẫn dùng DatePicker, vì còn validate ngày lớn nhất - ngày nhỏ nhất, không cho phép nhập dở dang.
+		DatePicker vẫn chọn nhanh được bằng cách dùng dropdown.</p>
+
+        <p>
+            Tham khảo
+            <a href="https://github.com/RobinHerbots/inputmask" target="_blank">Inputmask by RobinHerbots</a>
+        </p>
+		
+		<input type="text" id="field-money" />
+    </article>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/number-formatter.js"></script>
+    <script src="libs/inputmask.min.js"></script>
+    <script src="libs/bindings/inputmask.binding.js"></script>
+
+    <link rel="stylesheet" href="https://lockex1987.github.io/posts/project%20-%20common%20validation/css/common-validation.css">
+    <script src="https://lockex1987.github.io/posts/project%20-%20common%20validation/js/common-validation.js"></script>
+
+    <script src="js/index.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

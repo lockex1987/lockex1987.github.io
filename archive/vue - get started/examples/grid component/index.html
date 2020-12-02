@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid component</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <h2>Grid component</h2>
+    <p>This is an example of creating a reusable grid component and using it with external data.</p>
+
+    <!-- component template -->
+    <script type="text/x-template" id="grid-template">
+        <table>
+            <thead>
+                <tr>
+                    <th v-for="key in columns" @click="sortBy(key)" :class="{ active: sortKey == key }">
+                        {{ key | capitalize }}
+                        <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span>
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr v-for="entry in filteredHeroes">
+                    <td v-for="key in columns">
+                        {{ entry[key] }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </script>
+
+    <!-- demo root element -->
+    <div id="demo">
+        <p>
+            Search <input name="query" v-model="searchQuery">
+        </p>
+
+        <demo-grid
+                :heroes="gridData"
+                :columns="gridColumns"
+                :filter-key="searchQuery">
+        </demo-grid>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Laravel Service Provider</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Laravel Service Provider">
+ </head> 
+ <body> 
+  <article> 
+   <h1>Service Providers</h1> 
+   <p>Service providers là trung tâm của việc khởi tạo tất cả các ứng dụng Laravel. Ứng dụng của bạn, cũng như các thành phần core của Laravel được khởi tạo từ service providers.</p> 
+   <p>Nhưng, "bootstrapped" nghĩa là sao? Đơn giản, ý là <strong>đăng ký</strong>, bao gồm đăng kí các liên kết tới service container, event listeners, middleware, và thậm chí các route. Service providers là trung tâp để cấu hình ứng dụng của bạn.</p> 
+   <p>Nếu bạn mở file <code>config/app.php</code> nằm trong Laravel, bạn sẽ thấy một mảng <code>providers</code>. Tất cả những service provider class này sẽ được load vào trong ứng dụng. Tất nhiên, nhiều trong số đó được gọi là "deferred" providers, nghĩa là chúng không phải được load trong mọi request, chỉ khi có service nào yêu cầu thì mới thực hiện cung cấp.</p> 
+   <p>Trong phần tổng quát này, bạn sẽ học cách viết service providers riêng của bạn và đăng kí chúng với Laravel.</p> 
+   <h2>Viết Service Providers</h2> 
+   <p>Tất cả các service providers đều kế thừa từ class <code>Illuminate\Support\ServiceProvider</code>. Hầu hết service providers chứa một phương thức <code>register</code> và <code>boot</code>. Trong phương thức <code>register</code>, bạn nên <strong>chỉ đăng ký vào trong <a href="https://giaphiep.com/docs/5.3/container">service container</a></strong>. Bạn đừng bao giờ cố gắng đăng kí bất kì các event listeners, routes hay bất kì chắc năng nào khác vào trong hàm <code>register</code>.</p> 
+   <p>Artisan CLI có thể dễ dàng sinh ra một provider mới thông qua lệnh <code>make:provider</code>:</p> 
+   <pre><code>php artisan make:provider RiakServiceProvider</code></pre> 
+   <h3>Phương thức register</h3> 
+   <p>Như đã đề cập ở trước, bên trong hàm <code>register</code>, bạn chỉ nên thực hiện đăng kí vào trong service container. Bạn không nên bao giờ cố gắng đăng kí bất kì event listeners, routes hay bất kì các chức năng nào khác vào trong hàm <code>register</code>. Nếu không, bạn có thể vô tình sử dụng một service được cung cấp bởi một service provider mà chưa được tải.</p> 
+   <p>Hãy xem một ví dụ service provider cơ bản bên dưới. Trong bất kỳ phương thức service provider, bạn có thể truy cập thuộc tính <code>$app</code> nó cung cấp để truy cập vào service container:</p> 
+   <pre><code>&lt;?php
+
+namespace App\Providers;
+
+use Riak\Connection;
+use Illuminate\Support\ServiceProvider;
+
+class RiakServiceProvider extends ServiceProvider
+{
+    /**
+     * Register bindings in the container.
+     *
+     * @return  void
+     */
+    public function register()
+    {
+        $this-&gt;app-&gt;singleton(Connection::class, function ($app) {
+            return new Connection(config('riak'));
+        });
+    }
+}</code></pre> 
+   <p>Service provider này chỉ khai báo đúng một hàm <code>register</code>, và sử dụng nó để implementation <code>Riak\Connection</code> trong service container. Nếu bạn không hiểu cách hoạt động của service container, xem tại <a href="https://giaphiep.com/docs/5.3/container">Service Container</a>.</p> 
+   <h3>Phương thức Boot</h3> 
+   <p>Vậy nếu như chúng ta muốn đăng kí một view composer vào trong service provider thì sao? Điều này có thể thực hiện bên trong hàm <code>boot</code>. <strong>Hàm này được gọi sau khi tất cả các service providers đã được đăng kí</strong>, nghĩa là bạn có thể truy cập vào trong tất cả các services đã được đăng kí vào trong framework:</p> 
+   <pre><code>&lt;?php
+
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+
+class ComposerServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return  void
+     */
+    public function boot()
+    {
+        view()-&gt;composer('view', function () {
+            //
+        });
+    }
+}</code></pre> 
+   <h4>Boot Method Dependency Injection</h4> 
+   <p>Bạn có thể type-hint dependencies cho service provider của bạn ở hàm <code>boot</code>. service container sẽ tự động inject bất cứ dependencies nào bạn cần:</p> 
+   <pre><code>use Illuminate\Contracts\Routing\ResponseFactory;
+
+public function boot(ResponseFactory $response)
+{
+    $response-&gt;macro('caps', function ($value) {
+        //
+    });
+}</code></pre> 
+   <h2>Đăng ký Providers</h2> 
+   <p>Tất cả các service provider được đăng kí bên trong file cấu hình <code>config/app.php</code>. File này chứa một mảng các <code>providers</code> danh sách tên của các service providers. Mặc định, một tập hợp các core service provider của Laravel nằm trong mảng này. Những provider này làm nhiệm vụ khởi tạo các thành phần core của Laravel, ví dụ như mailer, queue, cache, và các thành phần khác.</p> 
+   <p>To register your provider, simply add it to the array:</p> 
+   <pre><code>'providers' =&gt; [
+    // Other Service Providers
+
+    App\Providers\ComposerServiceProvider::class,
+],</code></pre> 
+   <h2>Deferred Providers</h2> 
+   <p>Nếu bạn muốn provider <strong>chỉ</strong> đăng ký bindings trong service container, bạn có thể chọn trì hoãn việc đăng kí cho tới khi nào cần thiết. Việc trì hoãn quá trình tải một provider sẽ cải thiện performance của ứng dụng, vì nó không load từ filesystem trong mọi yêu cầu.</p> 
+   <p>Laravel biên dịch và lưu một danh sách tất cả các services cung cấp bởi service providers trì hoãn, cùng với tên class service provider. Khi đó, chỉ khi nào bạn cần resolve một trong những service này thì Laravel mới thực hiện load service provider.</p> 
+   <p>Để trì hoàn việc load một provider, set thuộc tính <code>defer</code> thành <code>true</code> avà định nghĩa một phương thức <code>provides</code>. Phương thức <code>provides</code> sẽ trả về bind service container mà provider này đăng kí:</p> 
+   <pre><code>&lt;?php
+
+namespace App\Providers;
+
+use Riak\Connection;
+use Illuminate\Support\ServiceProvider;
+
+class RiakServiceProvider extends ServiceProvider
+{
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var  bool
+     */
+    protected $defer = true;
+
+    /**
+     * Register the service provider.
+     *
+     * @return  void
+     */
+    public function register()
+    {
+        $this-&gt;app-&gt;singleton(Connection::class, function ($app) {
+            return new Connection($app['config']['riak']);
+        });
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return  array
+     */
+    public function provides()
+    {
+        return [Connection::class];
+    }
+}</code></pre> 
+   <p>Nguồn: <a href="https://laravel.com/docs/5.3/providers">https://laravel.com/docs/5.3/providers</a></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

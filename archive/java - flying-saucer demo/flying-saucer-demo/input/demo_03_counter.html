@@ -1,0 +1,64 @@
+<html>
+<head>
+<style>
+@page:right{
+  @bottom-right {
+    content: counter(page);
+  }
+}
+
+@page:left{
+  @bottom-left {
+    content: "Page " counter(page) " of " counter(pages);
+  }
+}
+
+p {
+  page-break-after: always;
+}
+
+body {
+  counter-reset: chapternum figurenum;
+}
+
+h2 {
+  counter-reset: figurenum;
+}
+
+h2:before {
+  counter-increment: chapternum;
+  content: counter(chapternum) ". ";
+}
+
+figcaption:before {
+  counter-increment: figurenum;
+  content: counter(chapternum) "-" counter(figurenum) ". ";
+}
+
+h2 {
+  string-set: doctitle content(); 
+}
+
+@page {
+  @top-center {
+    /*content: string(doctitle);*/
+    content: "Title";
+    margin: 30pt 0 10pt 0;
+    font-size: 8pt;
+  }
+}
+
+</style>
+</head>
+
+<body>
+	<h2>Chapter 1</h2>
+	<p>First Page.</p>
+	<p>Second Page.</p>
+	<p>Content 3</p>
+	<p>Content 4</p>
+	<h2>Chapter 2</h2>
+	<p>Content 5</p>
+	<p>Content 6</p>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="Simulate signature animation" />
+
+	<title>Vara.js</title>
+
+	<link rel="icon" href="../../images/favicon.png" />
+	<link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+	<article>
+		<h2>Vara.js</h2>
+		<div id="container" class="out-of-box"></div>
+	</article>
+
+	<script src="./js/vara.js"></script>
+
+	<script>
+		let lines = [{
+			text: 'Vara.js - Huyên Dương Tuấn',
+			textAlign: 'center',
+			strokeWidth: 2.5,
+			y: 80,
+			duration: 1500
+		}, {
+			text: 'A red flare silhouetted the jagged edge of a wing.',
+			width: 500,
+			strokeWidth: 2.5,
+			y: 40,
+			x: 80,
+			duration: 4000
+		}, {
+			text: 'Sphinx of black quartz, judge my vow.',
+			strokeWidth: 2,
+			color: 'blue',
+			id: 'sphinx',
+			autoAnimation: false,
+			x: 80,
+			duration: 4500
+		}];
+
+		let vara = new Vara('#container', './fonts/Satisfy/SatisfySL.json', lines, {
+			fontSize: 46
+		});
+
+		vara.ready(function () {
+			vara.draw('sphinx');
+		})
+	</script>
+
+	<script src="../../js/docs.js"></script>
+</body>
+</html>

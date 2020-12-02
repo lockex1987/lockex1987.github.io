@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <mytag8>
+        <yield to="one">
+            <p>Show this first</p>
+        </yield>
+        <yield to="two">
+            Show this second
+        </yield>
+    </mytag8>
+
+    <script src="riot/riot+compiler.js"></script>
+    <script src="mytag8.tag" type="riot/tag"></script>
+    <script>
+        riot.mount("mytag8");
+    </script>
+</body>
+</html>

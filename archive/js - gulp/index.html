@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bắt đầu với Gulp">
+    <title>Bắt đầu với Gulp</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Bắt đầu với Gulp</h2>
+      <p>Gulp là một build system, có nghĩa là bạn có thể sử dụng nó để tự động
+        hóa các công việc thông thường trong quá trình phát triển website.</p>
+      <p>Ví dụ bạn có thể tự động các công việc sau:</p>
+      <ul>
+        <li>Compile LESS, SASS ra file CSS</li>
+        <li>Minify</li>
+        <li>Concat</li>
+        <li>JShint</li>
+        <li>Image compressed</li>
+        <li>Unit test</li>
+        <li>Tự động refresh trình duyệt khi có thay đổi</li>
+      </ul>
+      <h3>Bắt đầu</h3>
+      <p>Cài đặt gulp toàn cục:</p>
+      <pre>npm install --global gulp</pre>
+      <p>Nếu bạn đã cài đặt một phiên bản của gulp toàn cục, bạn có thể xóa nó
+        như sau bằng lệnh:</p>
+      <pre> npm rm --global gulp</pre>
+      <p>Cài đặt Gulp cho từng dự án:</p>
+      <pre>npm install --save-dev gulp</pre>
+      <p>Chúng ta phải cài đặt cả toàn cục và cho cả từng dự án.</p>
+      <p>Tạo một file <code>gulpfile.js</code> ở thư mục gốc của dự án:</p>
+      <pre>var gulp = require('gulp');<br>
+gulp.task('default', async function () {
+    console.log('Hello Gulp');
+});</pre>
+      <p>Chạy gulp:</p>
+      <pre>gulp</pre>
+      <h3>Cơ chế hoạt động</h3>
+      <p>Gulp hoạt động theo cơ chế pipe line (kiểu đường
+        ống).</p>
+      <img alt="" src="gulp_pipe.png">
+      <p>Nhìn hình bạn có thể hiểu:</p>
+      <ul>
+        <li>Đầu tiên sẽ của đầu vào gọi là source tương ứng với <code>gulp.src</code></li>
+        <li>Sau đó qua các bộ xử lý (ví dụ như <code>coffee()</code>, <code>uglify()</code> như trong
+          hình)</li>
+        <li>Cuối cùng ta được đầu ra gọi là destination tương ứng với <code>gulp.dest</code></li>
+      </ul>
+      <p>Ngoài ra thì nó còn có thể tạo ra đường ống nhưng với nhiều đầu ra bằng
+        các tạo ra nhiều <code>gulp.dest()</code>.</p>
+      <p><code></code> </p>
+      <h3>Định nghĩa task</h3>
+      <p>Để định nghĩa 1 task, sử dụng function <code>gulp.task()</code>. Khi
+        định nghĩa một task đơn giản, function này cần 2 thuộc tính: tên của
+        task và một function dùng để chạy.</p>
+      <pre>gulp.task('greet', function () {
+    console.log('Hello world!');
+});</pre>
+      <p>Khi chạy <code>gulp greet</code> sẽ nhận được kết quả là <code>Hello
+          world!</code> được in ra trong console.</p>
+      <p>Một task cũng có thể gồm nhiều task khác. Khi muốn định nghĩa một task
+        nhằm chạy 3 task khác css, js, imgs, chúng ta có thể quy định một mảng
+        các tasks:</p>
+      <pre>gulp.task('build', ['css', 'js', 'imgs']);</pre>
+      <p>Chú ý là các task trên sẽ chạy không đồng bộ, có nghĩa là bạn không thể
+        chắc chắn rằng task <code>css</code> sẽ chạy xong khi task <code>js</code>
+        bắt đầu được. Để đảm bảo rằng một task được chạy sau khi một task khác
+        chạy xong chúng ta có thể làm như sau:</p>
+      <pre>gulp.task('css', ['greet'], function () {
+    // Deal with CSS here
+});</pre>
+      <p>Task <code>css</code> sẽ được chạy ngay sau khi task <code>greet</code>
+        hoàn thành.</p>
+      <h3>Task mặc định</h3>
+      <p>Bạn có thể định nghĩa một task mặc định khi chạy gulp với task name là
+        <strong>default</strong>:</p>
+      <pre>gulp.task('default', function () {
+    // Your default task
+});</pre>
+      <p>Sau đó ta chạy lệnh:</p>
+      <pre>gulp task_name</pre>
+      <p>Để chạy task theo ý muốn hoặc chỉ cần gọi lệnh gulp để chạy task mặc
+        định default. Chúng ta cũng có thể chạy nhiều task cùng lúc bằng cách gõ
+        thêm tên các task phía sau:</p>
+      <pre>gulp task_a task_b other_task</pre>
+      <h3>gulp.src</h3>
+      <p>Gulp sử dụng Node-glob để lấy file từ glob hoặc globs đã được chỉ định.
+        Cách sử dụng rất dễ dàng:</p>
+      <table>
+        <tbody>
+          <tr>
+            <td><code>js/app.js</code></td>
+            <td>Tìm chính xác file</td>
+          </tr>
+          <tr>
+            <td><code>js/*.js</code></td>
+            <td>Tìm kiếm tất các file kết thúc bằng <code>.js</code> và nằm trong thư mục <code>js</code></td>
+          </tr>
+          <tr>
+            <td><code>js/**/*.js</code></td>
+            <td>Tìm kiếm tất cả các file kết thúc bằng <code>.js</code> ở trong thư mục <code>js</code>
+              và tất cả thư mục con của nó</td>
+          </tr>
+          <tr>
+            <td><code>!js/app.js</code></td>
+            <td>Tìm kiếm tất cả các file trong thư mục ngoại trừ file <code>app.js</code></td>
+          </tr>
+          <tr>
+            <td><code>*.+(js|css)</code></td>
+            <td>Tìm kiếm tất cả các file trong thư mục root có đuôi là <code>.js</code> và
+              <code>.css</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Những ví dụ trên là những ví dụ thông thường nhất được sử dụng trong
+        Gulp. Nếu bạn muốn sử dụng nhiều hơn, tham khảo Minimatch. Nếu muốn thêm
+        điều kiện để lấy files, chỉ cần kết hợp các điều kiện bên trong một
+        mảng:</p>
+      <pre>gulp.src(['js/**/*.js', '!js/**/*.min.js'])</pre>
+      <h3>Danh sách plugin</h3>
+      <p>Có nhiều plugin để bạn khám phá.</p>
+      <p><a href="https://gulpjs.com/plugins/" target="_blank">https://gulpjs.com/plugins/</a></p>
+      <p><a target="_blank" href="https://techtalk.vn/gulp-cho-nguoi-moi-bat-dau.html">https://techtalk.vn/gulp-cho-nguoi-moi-bat-dau.html</a></p>
+      
+    </article>
+    <script src="../../js/docs.js"></script>
+  
+
+</body></html>

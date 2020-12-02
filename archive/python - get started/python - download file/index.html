@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Download file trong Python">
+    <meta name="keywords" content="python, download, ipv6">
+    <meta name="author" content="lockex1987">
+    <title>Download file trong Python</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Download file trong Python</h2>
+      <p>Chúng ta có thể download file trong Python bằng các cách sau:</p>
+      <ul>
+        <li>Sử dụng hàm <code>urlretrieve</code> của <code>urllib</code>
+          (Python 2) hoặc <code>urllib.request</code> (Python 3)</li>
+        <li>Sử dụng hàm <code>urllib2.urlopen(url).read()</code> để đọc dữ liệu
+          binary, sau đó ghi ra file</li>
+        <li>Tạo request bằng hàm <code>requests.get(url)</code>, sau đó ghi <code>content</code>
+          ra file</li>
+      </ul>
+      <p>Source </p>
+      <ul>
+        <li> <a href="download_file.py">download_file.py</a> </li>
+        <li> <a href="batch_download.py">batch_download.py</a></li>
+      </ul>
+      <p> </p>
+      <p>Chú ý, chúng ta có thể gặp trường hợp download rất là chậm. Đó không
+        phải là lỗi của Python (không phải là nguyên nhân gốc). Đó là do máy
+        tính của chúng ta nhận cả IPV6 nên sẽ xử lý IPV6. Lúc xử lý IPV6 thì
+        không được, bị lỗi timed out.</p>
+      <p>Chúng ta có thể kiểm tra bằng lệnh wget. Đây là ảnh khi có IPV6:</p>
+      <p>
+        <img src="images/wget.png" alt="">
+      </p>
+      <p>Chúng ta hãy thử disable IPV6:</p>
+      <pre>$ sudo sh -c 'echo 1 &gt; /proc/sys/net/ipv6/conf/all/disable_ipv6'</pre>
+      <p>Thử lại lệnh wget thì thấy download nhanh:</p>
+      <p>
+        <img src="images/disable ipv6.png" alt="">
+      </p>
+      <p>Tham khảo</p>
+      <ul>
+        <li><a href="https://unix.stackexchange.com/questions/370750/wget-uses-ipv6-address-and-takes-too-long-to-complete"
+            target="_blank">curl - wget uses ipv6 address and takes too long to
+            complete - Unix &amp; Linux Stack Exchange</a> </li>
+        <li><a href="http://ask.xmodulo.com/disable-ipv6-linux.html" target="_blank">How
+            to disable IPv6 on Linux - Ask Xmodulo</a></li>
+        <li><a href="http://stackabuse.com/download-files-with-python/" target="_blank">Download
+            Files with Python - Stack Abuse</a></li>
+      </ul>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

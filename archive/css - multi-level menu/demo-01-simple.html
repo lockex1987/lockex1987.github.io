@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Multi-Level Drop Down Menu with Pure CSS</title>
+</head>
+
+<body>
+  
+  <style>
+    ul { list-style: none; padding: 0; margin: 0; background: #1bc2a2; }
+    ul li { display: block; position: relative; float: left; background: #1bc2a2; }
+    
+    /* This hides the dropdowns */
+    li ul { display: none; }
+    
+    ul li a { display: block; padding: 1em; text-decoration: none; white-space: nowrap; color: #fff; }
+    ul li a:hover { background: #2c3e50; }
+
+    /* Display the dropdown */
+    
+    li:hover>ul { display: block; position: absolute; }
+    
+    li:hover li { float: none; }
+    
+    li:hover a { background: #1bc2a2; }
+    
+    li:hover li a:hover { background: #2c3e50; }
+    
+    .main-navigation li ul li { border-top: 0; }
+
+    /* Displays second level dropdowns to the right of the first level dropdown */
+    ul ul ul { left: 100%; top: 0; }
+
+    /* Simple clearfix */
+    ul:before, ul:after { content: " "; display: table; }
+    ul:after { clear: both; }
+  </style>
+
+  <ul class="main-navigation">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Front End Design</a>
+      <ul>
+        <li><a href="#">HTML</a></li>
+        <li><a href="#">CSS</a>
+          <ul>
+            <li><a href="#">Resets</a></li>
+            <li><a href="#">Grids</a></li>
+            <li><a href="#">Frameworks</a></li>
+          </ul>
+        </li>
+        <li><a href="#">JavaScript</a>
+          <ul>
+            <li><a href="#">Ajax</a></li>
+            <li><a href="#">jQuery</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#">WordPress Development</a>
+      <ul>
+        <li><a href="#">Themes</a></li>
+        <li><a href="#">Plugins</a></li>
+        <li><a href="#">Custom Post Types</a>
+          <ul>
+            <li><a href="#">Portfolios</a></li>
+            <li><a href="#">Testimonials</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Options</a></li>
+      </ul>
+    </li>
+    <li><a href="#">About Us</a></li>
+  </ul>
+
+  <h1>Multi-Level Drop Down Menu with Pure CSS</h1>
+</body>
+
+</html>

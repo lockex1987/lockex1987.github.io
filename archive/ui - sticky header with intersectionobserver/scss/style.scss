@@ -1,0 +1,116 @@
+body {
+  background: #e8e8e8;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+* { box-sizing: border-box; }
+
+header.site-header {
+  position: relative;
+  border-left: 1px solid #484848;
+  border-right: 1px solid #484848;
+  width: 960px;
+  margin: 0 auto;
+ 
+  background: #0066cc;
+  color: white;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+
+  #logo {
+    font-weight: 100;
+  }
+
+  #search-form {
+    flex: 1;
+    margin-left: 100px;
+    display: flex;
+
+    input, button {
+      border: 1px solid rgba(black, 0.2);
+      margin: 0;
+      padding: 0;
+      height: 35px;
+    }
+    input[type=text] {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      border-right: none;
+      box-sizing: border-box;
+      padding-left: 5px;
+      background: #f2f2f2;
+      flex: 1;
+    }
+    button {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      border-left: none;
+      background: lighten(#0066cc, 30%);
+      width: 150px;
+    }
+  }
+}
+  
+nav.navigation-menu {
+  max-width: 960px;
+  margin: 0 auto;
+  background: white;
+  position: sticky;
+  top: 0;
+  border-left: 1px solid #484848;
+  border-right: 1px solid #484848;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+    border-top: 1px solid mix(#0066cc, #c8c8c8);
+    border-bottom: 1px solid #c8c8c8;
+    font-size: 0;
+
+    li {
+      font-size: initial;
+      display: inline-block;
+      vertical-align: top;
+      margin-left: 0;
+      padding-left: 0;
+    }
+
+    a {
+      color: black;
+      text-decoration: none;
+      padding: 8px 15px;
+      display: block;
+
+      &:hover { background: rgba(#0066cc, 0.1); }
+    }
+
+    li.title {
+      overflow: hidden;
+      max-width: 0;
+      font-weight: bold;
+      a { color: #0066cc; }
+      a:hover { background: none; }
+    }
+  }
+  
+  &.title-visible li.title {
+     max-width: 100%;
+  }
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 15px;
+  border-left: 1px solid #484848;
+  border-right: 1px solid #484848;
+  background: white;
+  
+  h1 {
+    margin-top: 0;
+    padding-top: 0.6em;
+  }
+}

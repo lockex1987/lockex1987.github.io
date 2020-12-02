@@ -1,0 +1,36 @@
+h1, ul {
+  margin: .3em 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0 .5em;
+}
+
+.diffs {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+.diffs header * {
+  display: inline-block;
+  vertical-align: middle;
+}
+.diffs .compare-wrapper {
+  flex: 1 1 auto;
+  position: relative;
+}
+.diffs .compare-wrapper #compare {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Auto-height fix */
+.mergely-column .CodeMirror {
+  height: 100%;
+}

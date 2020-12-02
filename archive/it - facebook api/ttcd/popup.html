@@ -1,0 +1,43 @@
+﻿<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/icon.png">
+    <title>TTCĐ extension</title>
+    <link rel="stylesheet" href="libs/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <div id="app" class="container-fluid py-2">
+        <login-form
+                v-show="screen == 'login'"
+                @get-login-info="getLoginInfo($event)">
+        </login-form>
+
+        <main-page
+                v-show="screen == 'main'"
+                :user="user"
+                :token="token"
+                ref="mainPage">
+        </main-page>
+    </div>
+
+    
+    <script src="libs/axios/axios.min.js"></script>
+    <script src="libs/vue/vue.js"></script>
+
+    <link rel="stylesheet" href="libs/noti/noti.css" />
+    <script src="libs/noti/noti.js"></script>
+
+    <script src="libs/common.js"></script>
+
+    <script src="js/config.js"></script>
+    <script src="js/components/LoginForm.js"></script>
+    <script src="js/components/MainPage.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

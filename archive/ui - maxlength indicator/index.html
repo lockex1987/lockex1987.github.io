@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+ <head> 
+  <meta charset="utf-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Bootstrap Maxlength</title> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Bootstrap Maxlength">
+ </head> 
+ <body> 
+  <article> 
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
+   <div style="margin-top: 20px;" class="container"> 
+    <p> <a href="https://github.com/mimo84/bootstrap-maxlength/">Link GitHub</a> </p> 
+    <p> Bootstrap Maxlength hiển thị xem người dùng đã nhập được bao nhiêu ký tự trên tổng số ký tự cho phép của trường input hoặc textarea. Tổng số ký tự được định nghĩa bằng thuộc tính <code>maxlength</code>. </p> 
+    <h1>Demo</h1> 
+    <h2>Mặc định</h2> 
+    <p>Badge sẽ hiển thị khi còn không quá 10 ký tự:</p> 
+    <input type="text" class="form-control" maxlength="25" name="defaultconfig" id="defaultconfig"> 
+    <h2>Chỉnh giá trị threshold</h2> 
+    <p>Bạn muốn hiển thị badge khi còn không quá 20 ký tự. Sử dụng tùy chọn <code>threshold</code>:</p> 
+    <input type="text" maxlength="25" name="thresholdconfig" class="form-control" id="thresholdconfig"> 
+    <h2>Một số tùy chọn khác</h2> 
+    <input type="text" class="form-control" maxlength="25" name="moreoptions" id="moreoptions"> 
+    <h2>Tất cả tùy chọn</h2> 
+    <input type="text" class="form-control" maxlength="25" name="alloptions" id="alloptions"> 
+    <h2>Textareas</h2> 
+    <textarea id="textarea" class="form-control" maxlength="225" rows="2" placeholder="This textarea has a limit of 225 chars."></textarea> 
+    <h2>Vị trí badge</h2> 
+    <p>The field counter can be positioned at the top, bottom, left or right. You can also place the maxlength indicator on the corners: bottom-right, top-right, top-left, bottom-left and centered-right. <br>All you need to do is specify the <code>placement</code> option, with one of those strings. If none is specified, the positioning will be defauted to 'bottom'.</p> 
+    <input type="text" class="form-control" maxlength="25" name="placement" id="placement"> 
+   </div> 
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+   <script src="js/bootstrap-maxlength.js"></script> 
+   <script>
+        $(document).ready(function () {
+            $('input#defaultconfig').maxlength();
+
+            $('input#thresholdconfig').maxlength({
+                threshold: 20
+            });
+
+            $('input#moreoptions').maxlength({
+                alwaysShow: true,
+                warningClass: "label label-success",
+                limitReachedClass: "label label-danger"
+            });
+
+            $('input#alloptions').maxlength({
+                alwaysShow: true,
+                warningClass: "label label-success",
+                limitReachedClass: "label label-danger",
+                separator: ' out of ',
+                preText: 'You typed ',
+                postText: ' chars available.',
+                validate: true
+            });
+
+            $('textarea#textarea').maxlength({
+                alwaysShow: true
+            });
+
+            $('input#placement').maxlength({
+                alwaysShow: true,
+                placement: 'top-left'
+            });
+        });
+    </script> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

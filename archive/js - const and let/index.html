@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Khai báo với const và let</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Khai báo với const và let">
+ </head> 
+ <body> 
+  <article> 
+   <h2>ES6 const và let</h2> 
+   <p>Trong ES5 chúng ta chỉ có một cách duy nhất để để khai báo biến đó là <code>var</code>, trong ES6 chúng ta có hai cách khách nhau đó là sử dụng <code>const</code> và <code>let</code> để khai báo biến.</p> 
+   <h3>const và let là gì</h3> 
+   <p>Trong phiên bản ES5 và trước đó để khai báo một biến chúng ta sử dụng từ khoá <code>var</code>:</p> 
+   <pre><code>var student_name = "Super Man";
+var student_age = 200;</code></pre> 
+   <p>Trong ES6 chúng ta thường sẽ không sử dụng <code>var</code> mà thay vào đó sẽ sử dụng <code>const</code> và <code>let</code>. Sự khác biệt ở đây đó là <code>const</code> dùng để khai báo các biến mà giá trị không thay đổi (hay hằng số) còn <code>let</code> sử dụng khai báo biến mà giá trị có thể thay đổi (tương tự như <code>var</code> trước đây):</p> 
+   <p>Với ví dụ phía trên nếu sử dụng ES6 chúng ta có thể sẽ viết lại như sau:</p> 
+   <pre><code>const student_name = "Super Man";
+let student_age = 200;</code></pre> 
+   <h3>Tại sao nên dùng const và let</h3> 
+   <p>Trong các ứng dụng JavaScript phức tạp thì việc tách riêng hằng và biết sẽ giúp lập trình viên có thể dễ dàng kiểm soát được mã lệnh chương trình cũng như những thay đổi diễn ra trong đó. Ví dụ với các hằng số được khai báo với từ khoá <code>const</code> thì việc thay đổi giá trị của chúng sẽ sinh ra lỗi:</p> 
+   <pre>const student_name = "Super Man";
+let student_age = 200;
+
+// thay đổi sau sẽ dẫn tới phát sinh lỗi khi chạy chương trình
+student_name ="Spider Man";</pre> 
+   <p>Hoặc ví dụ như bạn có một danh sách các môn thi đầu vào cho một ngành học của trường và bạn không muốn danh sách này bị thay đổi sau đó:</p> 
+   <pre><code>const subjects = ["Toán", "Văn", "Anh"];</code></pre> 
+   <p>Sử dụng <code>let</code> và <code>const</code> sẽ đặc biệt hữu dụng cho những dự án mà có nhiều lập trình viên tham gia hay cũng như việc một biến (hay hằng) được sử dụng ở nhiều tập tin khác nhau.</p> 
+   <p><a href="constant.js">constant.js</a></p> 
+   <p><a href="scoped-variable.js">scoped-variable.js</a></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tournament Bracket</title>
+</head>
+<body>
+	<div id="bracket"></div>
+
+	<script src="js/bracket.js"></script>
+	<script>
+(function() {
+	var inptId = "bracket";
+	var rounds = [
+		[
+			{
+				firstTeam: { name: "Paris Saint-Germain", country: "france", isWinner: true },
+				secondTeam: { name: "Chelsea", country: "england" } },
+			{
+				firstTeam: { name: "Dynamo Kyiv", country: "ukraine" },
+				secondTeam: { name: "Manchester City", country: "england", isWinner: true }
+			},
+			{
+				firstTeam: { name: "Gent", country: "belgium" },
+				secondTeam: { name: "Wolfsburg", country: "germany", isWinner: true }
+			},
+			{
+				firstTeam: { name: "Roma", country: "italy" },
+				secondTeam: { name: "Real Madrid", country: "spain", isWinner: true }
+			},
+			{
+				firstTeam: { name: "Arsenal", country: "england" },
+				secondTeam: { name: "Barcelona", country: "spain", isWinner: true }
+			},
+			{
+				firstTeam: { name: "PSV Eindhoven", country: "the netherlands" },
+				secondTeam: { name: "Atlético Madrid", country: "spain", isWinner: true }
+			},
+			{
+				firstTeam: { name: "Juventus", country: "italy" },
+				secondTeam: { name: "Bayern Munich", country: "germany", isWinner: true }
+			},
+			{
+				firstTeam: { name: "Benfica", country: "portugal", isWinner: true },
+				secondTeam: { name: "Zenit Saint Petersburg", country: "russia" }
+			}
+		],
+		[
+			{
+				firstTeam: { name: "Paris Saint-Germain", country: "france" },
+				secondTeam: { name: "Manchester City", country: "england", isWinner: true }
+			},
+			{
+				firstTeam: { name: "Wolfsburg", country: "germany" },
+				secondTeam: { name: "Real Madrid", country: "spain", isWinner: true }
+			},
+			{
+				firstTeam: { name: "Barcelona",  country: "spain" },
+				secondTeam: { name: "Atlético Madrid", country: "spain", isWinner: true }
+			},
+			{
+				firstTeam: { name: "Bayern Munich", country: "germany", isWinner: true },
+				secondTeam: { name: "Benfica", country: "portugal" }
+			}
+		],
+		[
+			{
+				firstTeam: { name: "Manchester City", country: "england" },
+				secondTeam: { name: "Real Madrid", country: "spain", isWinner: true }
+			},
+			{
+				firstTeam: { name: "Atlético Madrid", country: "spain", isWinner: true },
+				secondTeam: { name: "Bayern Munich", country: "germany" }
+			}
+		],
+		[
+			{
+				firstTeam: { name: "Real Madrid", country: "spain", isWinner: true },
+				secondTeam: { name: "Atlético Madrid", country: "spain" }
+			}
+		]
+	];
+
+	bracket.build("bracket", rounds);
+})();
+	</script>
+</body>
+</html>

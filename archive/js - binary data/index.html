@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Binary Data</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Binary Data">
+ </head> 
+ <body> 
+  <article> 
+   <h1 itemprop="name">Binary data processing in JavaScript</h1> 
+   <p></p> 
+   <p>Few days ago, I came across an interesting post about <a href="http://syntensity.com/static/espeak.html" target="_blank">Speaker.js</a> on Hacker News. Speaker.js is a client side library which enables text-to-speech using only JavaScript and HTML. The library doesn’t do any server side calls to do the conversion. This made me thinking about the techniques used in JavaScript to process large amount of binary data. Old school JavaScript doesn’t provide any support for storing binary data. Traditionally normal arrays were used to simulate the behavior of binary arrays by storing a number in the range of 0 to 255 for each element. Obviously, the above technique will not be suitable for applications that require processing of large amount of data. Then, with the introduction of HTML <a href="http://en.wikipedia.org/wiki/Canvas_element" target="_blank">canvas element</a>, developers started using <a href="http://www.html5canvastutorials.com/advanced/html5-canvas-get-image-data-tutorial/" target="_blank">Canvas’ ‘ImageData’</a> to hold any binary data needed for their applications. Canvas ImageData is still one of the most widely used techniques to deal with binary data. If you are following the developments on HTML5 standardization and web browsers, you must be aware of “Typed Arrays”. JavaScript “Typed Arrays” provides a mechanism for accessing raw binary data much more efficiently. Rest of this post will focus on “Typed Arrays” and performance metrics of all these three techniques.</p> 
+   <p align="justify">Typed Arrays</p> 
+   <p align="justify">JavaScript “Typed Arrays” provide a mechanism for accessing raw binary data much more efficiently. The <a href="http://www.khronos.org/registry/typedarray/specs/latest/" target="_blank">specification</a> defines two types: buffer – a generic fixed length buffer type, view - accessor types that allow access to the data stored within the buffer.</p> 
+   <ul> 
+    <li> <p align="justify">Buffer (implemented by ArrayBuffer). The <a href="https://developer.mozilla.org/en/JavaScript_typed_arrays/ArrayBuffer" target="_blank">ArrayBuffer</a> is a data type that is used to represent a generic, fixed-length binary data buffer. You can't directly manipulate the contents of an ArrayBuffer; instead, you can create an ArrayBufferView object which represents the buffer in a specific format, and use that to read and write the contents of the buffer. The following line of code will create a chunk of memory with 16 bytes pre-initialized to 0. Note: You will not be able to access data using the variable buffer.</p> </li> 
+   </ul> 
+   <blockquote> 
+    <pre>var buffer = new ArrayBuffer(16);</pre> 
+   </blockquote> 
+   <ul> 
+    <li> <p align="justify">View (implemented by ArrayBufferView and its subclasses). A view provides a context — that is, a data type, starting offset, and number of elements — that turns the data into an actual typed array. Views are implemented by the <a href="https://developer.mozilla.org/en/JavaScript_typed_arrays/ArrayBufferView" target="_blank">ArrayBufferView</a> class and its subclasses. Float32Array, Float64Array, Int8Array, Int16Array, Int32Array, Uint8Array, Uint16Array, Uint32Array are some of the available view classes. There is also a generic view DataView available to read and write data to ArrayBuffer. In the following lines of code, we create a view that treats the data in the buffer as an array of 32-bit signed integers. We can access the data in the buffer just like a normal array. It is possible to create multiple views on the same buffer. By combining a single buffer with multiple views of different types, starting at different offsets into the buffer, we can interact with complex data structures (like data read from a structured file, WebGL, etc).</p> </li> 
+   </ul> 
+   <blockquote> 
+    <pre>var int32View = new Int32Array(buffer);<br>for (var i = 0; i &lt; int32View.length; i++) {<br>  int32View[i] = i * 2;<br>}</pre> 
+    <pre>// 16-bit singed integer view on the same buffer. This is allowed.<br>var int16View = new Int16Array(buffer);<br>for (var i = 0; i &lt; int16View.length; i++) {<br>  console.log("Entry " + i + ": " + int16View[i]);<br>}</pre> 
+   </blockquote> 
+   <p></p> 
+   <p></p> 
+   <p>http://qnimate.com/javascript-arraybuffers-and-typed-arrays/</p> 
+   <p>https://www.html5rocks.com/en/tutorials/webgl/typed_arrays/</p> 
+   <p>https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays</p> 
+   <p>https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray</p> 
+   <p>https://blog.logrocket.com/binary-data-in-the-browser-untangling-an-encoding-mess-with-javascript-typed-arrays-119673c0f1fe</p> 
+   <ul> 
+    <li>ArrayBuffer</li> 
+    <li>View</li> 
+    <ul> 
+     <li>DataView</li> 
+     <li>Uint8ClampedArray (Canvas ImageData)</li> 
+     <li>TypedArray</li> 
+     <ul> 
+      <li>Int8Array</li> 
+      <li>Uint8Array</li> 
+      <li>Int16Array</li> 
+      <li>Uint16Array</li> 
+      <li>Int32Array</li> 
+      <li>Uint32Array</li> 
+      <li>Float32Array</li> 
+      <li>Float64Array</li> 
+     </ul> 
+    </ul> 
+   </ul> 
+   <p>Blob</p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p><br></p> 
+   <p><br></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

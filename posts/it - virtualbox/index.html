@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="date" content="2020-02-19 22:40:00">
+    <meta name="description" content="Tạo máy ảo">
+    <title>Phần mềm VirtualBox</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Phần mềm VirtualBox</h2>
+      <p>Dùng VirtualBox để tạo môi trường lab.</p>
+      <h3>Cài đặt VirtualBox</h3>
+      <p>Cài bằng lệnh <code>apt-get</code>.</p>
+      <p>Cài bản mới nhất từ file <code>.deb</code> trên trang chủ.</p>
+      <h3>Một số lệnh quản lý</h3>
+      <p>Liệt kê danh sách toàn bộ máy ảo:</p>
+      <pre>VBoxManage list vms</pre>
+      <p>Liệt kê danh sách máy ảo đang chạy:</p>
+      <pre>VBoxManage list runningvms</pre>
+      <p>Khởi động máy ảo:</p>
+      <pre>VBoxManage startvm &lt;vm_name&gt;</pre>
+      <p>Khởi động máy ảo ở chế độ headless:</p>
+      <pre>VBoxManage startvm &lt;vm_name&gt; --type headless</pre>
+      <p>Tắt máy ảo:</p>
+      <pre>VBoxManage controlvm &lt;mv_name&gt; poweroff</pre>
+      <p>Ngoài ra còn rất nhiều lệnh khác để quản lý máy ảo với
+        VBoxManage, sử dụng VBoxManage với tham số –help để biết thêm chi tiết:</p>
+      <pre>VBoxManage --help</pre>
+      <h3>Tham khảo</h3>
+      <p><a href="https://www.virtualbox.org/manual/" target="_blank">Oracle® VM
+          VirtualBox®</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

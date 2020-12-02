@@ -1,0 +1,100 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+   <title>Computer Graphics II</title>
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="index.css" media="all">
+</head>
+<body>
+<p> 
+  <table border="0" width="100%"><tbody><tr><td id="Nav" class="lecturenoteNav" rowspan="4" background="praguewall_block.png" valign="top" width="200"><h3>Contents:</h3><p><b>*</b> <a href="https://www.cs.drexel.edu/~introcs/Fa11/notes/08.3_MoreGraphics/titleslide.html?CurrentSlide=0"><font color="#000066">Objectives</font></a></p><p><b>*</b> <a href="https://www.cs.drexel.edu/~introcs/Fa11/notes/08.3_MoreGraphics/turkey.html?CurrentSlide=1"><font color="#000066">Thanksgiving 1: Butterball</font></a></p><p><b>*</b> <a href="https://www.cs.drexel.edu/~introcs/Fa11/notes/08.3_MoreGraphics/DressedTurkey.html?CurrentSlide=2"><font color="#000066">Thanksgiving 2: Dressed Turkey</font></a></p><p><b>*</b> <a href="https://www.cs.drexel.edu/~introcs/Fa11/notes/08.3_MoreGraphics/ASCII_art.html?CurrentSlide=3"><font color="#000066">ASCII Art</font></a></p><p><b>*</b> <a href="https://www.cs.drexel.edu/~introcs/Fa11/notes/08.3_MoreGraphics/Bresenham.html?CurrentSlide=4"><font color="#000066">Demo: Bresenham's Line Drawing Algorithm</font></a></p><p><b>*</b> <a href="https://www.cs.drexel.edu/~introcs/Fa11/notes/08.3_MoreGraphics/animation.html?CurrentSlide=5"><font color="#000066">Animation in JavaScript</font></a></p><p><b>*</b> <a href="https://www.cs.drexel.edu/~introcs/Fa11/notes/08.3_MoreGraphics/snowclosing.html?CurrentSlide=6"><font color="#000066">Snowflake Demo</font></a></p><p><b>*</b> <a href="https://www.cs.drexel.edu/~introcs/Fa11/notes/08.3_MoreGraphics/bouncing-ball_IE.html?CurrentSlide=7"><font color="#000066">Bouncing Ball Demo</font></a></p><p><b>*</b> <a href="https://www.cs.drexel.edu/~introcs/Fa11/notes/08.3_MoreGraphics/bobble_IE.html?CurrentSlide=8"><font color="#000066">Virtual Bobbleheads</font></a></p><p><b>*</b> <a href="https://www.cs.drexel.edu/~introcs/Fa11/notes/08.3_MoreGraphics/bobblehead_IE.html?CurrentSlide=9"><font color="#000066">Bobble Head Demo</font></a></p><p><b>*</b> <a href="https://www.cs.drexel.edu/~introcs/Fa11/notes/08.3_MoreGraphics/ASCII_animation.html?CurrentSlide=10"><font color="#000066">ASCII Animation</font></a></p><p></p><hr><font face="Arial" size="-2">Facebook <a href="http://www.facebook.com/sharer.php?u=https://www.cs.drexel.edu/~introcs/Fa11/notes/08.3_MoreGraphics/Bresenham.html?CurrentSlide=4&amp;t=Computer%20Graphics%20II" target="_book"><img src="facebook-icon.gif" border="0" height="16" width="16"></a> &nbsp;del.icio.us <a href="http://delicious.com/save?url=https://www.cs.drexel.edu/~introcs/Fa11/notes/08.3_MoreGraphics/Bresenham.html?CurrentSlide=4&amp;title=Computer%20Graphics%20II" target="_book"><img src="delicious_icon.gif" border="0" height="16" width="16"></a> </font></td><td><div align="left"><a href="https://www.cs.drexel.edu/~introcs/Fa11/notes/08.3_MoreGraphics/ASCII_art.html?CurrentSlide=3"><font color="#000000" size="-1">Previous Slide</font></a></div></td><td><font color="#000066" size="-1"><div align="center"><a href="javascript:ReverseContentDisplay('Nav')">Printer Friendly</a></div></font></td><td><font color="#000066" size="-1"><div align="right"><a href="https://www.cs.drexel.edu/~introcs/Fa11/notes/08.3_MoreGraphics/animation.html?CurrentSlide=5"><font color="#000000" size="-1">Next Slide</font></a></div></font></td></tr><tr><td colspan="3" background="praguewall_block.png"><div align="center"><font color="#000066" size="+2"><b>CS 164: Fall 2011 - Introduction to Computer Science<br>Computer Graphics II: Demo: Bresenham's Line Drawing Algorithm</b></font></div></td></tr><tr><td class="lectureNote" id="courseNote" colspan="3">
+  <br>
+  Bresenham developed an algorithm for drawing straight lines 
+  on a raster device. This algorithm uses integer arithmetic only and is faster 
+  and more accurate than the more obvious algorithms that use floating-point arithmetic. 
+  Most raster devices contain embedded variants of Bresenham's algorithm.<p></p>
+<p></p>
+
+<hr>
+  
+<p>To connect P<sub>1</sub> = (x<sub>1</sub>,y<sub>1</sub>) with 
+  P<sub>2</sub> = (x<sub>2</sub>,y<sub>2</sub>) on a raster device: </p>
+<p>&nbsp; </p>
+<table bgcolor="#FFFF99" border="1" bordercolor="#CC0000" cellpadding="10" cellspacing="4">
+  <tbody><tr>
+    <td>The Algorithm:
+	<p></p>
+	<pre class="code">    var dy = y2-y1
+    var dx = x2-x1
+    var d = 2*dy - dx
+    var x = x1
+    var y = y1
+    while (x &lt;= x2)
+    {
+<i>      Draw pixel at (x,y)
+</i>      x++
+      if( d&lt;0 )
+        d += dy + dy
+      else
+      {
+        d += 2*(dy-dx)
+        y++
+      }
+    }</pre></td>
+    <td bgcolor="#FFFFFF" valign="TOP">
+<form action="https://www.cs.drexel.edu/~introcs/Fa11/notes/08.3_MoreGraphics/Bresenham.html?CurrentSlide=4" method="POST">
+        <p>Enter endpoint coordinates for a straight line with 
+          slope <tt>m</tt>, <tt>0 &lt; m &lt; 1</tt>. 
+        </p><p><sub> 
+        <table border="1">
+          <tbody><tr> 
+            <td width="30"> <p></p></td>
+            <td align="center" bgcolor="#FF9966"> <p>x</p></td>
+            <td align="center" bgcolor="#FF9966"> <p>y</p></td>
+          </tr>
+          <tr> 
+            <td bgcolor="#FFCC66" width="30"> <p>P<sub>1</sub></p></td>
+            <td align="center"> <p align="left"> 
+                <input name="x1" value="10" size="20" type="text">
+              </p></td>
+            <td align="center"> <p align="left"> 
+                <input name="y1" value="10" size="20" type="text">
+              </p></td>
+          </tr>
+          <tr> 
+            <td bgcolor="#FFCC66" width="30"> <p>P<sub>2</sub></p></td>
+            <td align="center"> <p align="left"> 
+                <input name="x2" value="100" size="20" type="text">
+              </p></td>
+            <td align="center"> <p align="left"> 
+                <input name="y2" value="200" size="20" type="text">
+              </p></td>
+          </tr>
+        </tbody></table>
+        </sub>
+        </p><p><sub><br>
+          <input name="ConnectEm" value="Connect" onclick="Connect(this.form)" type="button">
+          </sub></p>
+        <p><sub><br>
+          </sub> </p>
+      </form></td>
+  </tr>
+</tbody></table>
+
+<p> 
+  </p><p></p><hr></td></tr><tr><td><div align="left"><a href="https://www.cs.drexel.edu/~introcs/Fa11/notes/08.3_MoreGraphics/ASCII_art.html?CurrentSlide=3"><font color="#000000" size="-1">Previous Slide</font></a></div></td><td><div align="center"><font size="-1">Last Revision: <a href="mailto:%20&quot;Jeffrey%20L.%20Popyack&quot;%20<JPopyack@CS.Drexel.edu>?Subject=CS%20164%20Course%20Notes:%20Computer%20Graphics%20II/Demo:%20Bresenham" s="" line="" drawing="" algorithm="" (bresenham.html)'=""><i>Jeffrey L. Popyack</i></a>: <i>2011</i>; Previous Authors: <i>Paul Zoski</i>, <i>Jeff Salvage</i></font></div></td><td><font color="#000066" size="-1"><div align="right"><a href="https://www.cs.drexel.edu/~introcs/Fa11/notes/08.3_MoreGraphics/animation.html?CurrentSlide=5"><font color="#000000" size="-1">Next Slide</font></a></div></font></td></tr></tbody></table>
+
+
+
+</p></body>
+</html>

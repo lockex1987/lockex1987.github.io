@@ -1,0 +1,34 @@
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <meta name="description" content="Calculating week numbers in JS">
+  <title>Calculating week numbers in JS</title> 
+
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+
+ </head> 
+ <body> 
+  <article> 
+   <h2>Calculating week numbers in JS</h2> 
+   <p>My customers require we create a date picker that they can choose a week and navigate back and forth. The week is identified by date range (start date - end date) and week number. We have to calculate the week number from a date.</p> 
+   <h3>First week</h3> 
+   <p>The ISO 8601 definition for week 1 is the week with the year's fist Thursday in it. The following definitions based on properties of this week are mutually equivalent, since the ISO week starts with Monday:</p> 
+   <ul> 
+    <li>It is the first week with a majority (4 or more) of its day in January</li> 
+    <li>Its first day is the Monday nearest to 1 January</li> 
+    <li>It has 4 January in it</li> 
+    <li>It has the year's first working day in it, if Saturdays, Sundays and 1 January are not working days</li> 
+   </ul> 
+   <h3>How to get the week number from a date</h3> 
+   <p>The code below add two new functions to the Date object. To get the ISO week number (1-53) of a Date object, e.g <code>myDate</code>, use <code>myDate.getWeek()</code>. To get the corresponding four-digit year, use <code>myDate.getWeekYear()</code>.</p> 
+   <h3>References</h3> 
+   <p>https://weeknumber.net/how-to/javascript</p> 
+   <p>http://www.w3schools.com/jsref/jsref_obj_date.asp</p> 
+   <p>https://en.wikipedia.org/wiki/ISO_week_date</p> 
+   <p>http://www.onlineconversion.com/day_week_number.htm</p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

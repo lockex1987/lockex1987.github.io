@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mảng trong JS">
+    <title>Mảng trong JS</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h1>Mảng trong JS</h1>
+      <h3>Mảng là kiểu object</h3>
+      <p>Có lần khi tôi tìm hiểu hàm <code>exec</code> của biểu thức chính quy
+        trong JS. Kết quả của hàm là một mảng, đặc biệt trong mảng đó còn có hai
+        thuộc tính là index và input. Khi in mảng đó ra console chúng ta được
+        dạng như sau:</p>
+      <pre>[ 'see Chapter 3.4.5.1',
+  'Chapter 3.4.5.1',
+  '.1',
+  index: 22,
+  input: 'For more information, see Chapter 3.4.5.1' ]</pre>
+      <p>Trông thật là lạ.</p>
+      <p>Đầu tiên phải khẳng định lại một điều, mảng trong JS đã là đối tượng
+        rồi. Nó có thuộc tính <code>length</code> mà chúng ta sử dụng rất
+        nhiều. Ngoài ra nó còn có các phương thức như <code>push</code>, <code>pop</code>,...
+        Nó chỉ có thêm các đặc tính riêng và một cú pháp đặc biệt. The
+        difference is: arrays use <strong>numbered</strong> indexes while
+        objects use <strong>named</strong> indexes. Toán tử <code>typeof</code>
+        trả về "object" với mảng.</p>
+      <p>Bạn có thể thêm thuộc tính mới vào mảng.</p>
+      <pre>var arr = [1, 2, 3, 4, 5];<br>arr.prop = 'value';</pre> 
+            
+      <h3>Các phương thức của mảng</h3>
+      <table>
+        <tbody>
+          <tr>
+            <th>Phương thức</th>
+            <th>Mô tả</th>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_concat_array.asp">concat()</a></td>
+            <td>Joins two or more arrays, and returns a copy of the joined
+              arrays</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_copywithin.asp">copyWithin()</a></td>
+            <td>Copies array elements within the array, to and from specified
+              positions</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_every.asp">every()</a></td>
+            <td>Checks if every element in an array pass a test</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_fill.asp">fill()</a></td>
+            <td>Fill the elements in an array with a static value</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_filter.asp">filter()</a></td>
+            <td>Tạo một mảng mới với những phần tử trong một mảng mà thỏa mãn điều kiện nào đó</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_find.asp">find()</a></td>
+            <td>Trả về phần tử đầu tiên trong một mảng mà thỏa mãn điều kiện nào đó</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_findindex.asp">findIndex()</a></td>
+            <td>Returns the index of the first element in an array that pass a
+              test</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_forEach.asp">forEach()</a></td>
+            <td>Calls a function for each array element</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_indexof_array.asp">indexOf()</a></td>
+            <td>Search the array for an element and returns its position</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_isarray.asp">isArray()</a></td>
+            <td>Checks whether an object is an array</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_join.asp">join()</a></td>
+            <td>Joins all elements of an array into a string</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_lastindexof_array.asp">lastIndexOf()</a></td>
+            <td>Search the array for an element, starting at the end, and
+              returns its position</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_map.asp">map()</a></td>
+            <td>Tạo một mảng mới là kết quả của việc gọi một hàm trên từng phần tử của mảng cũ</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_pop.asp">pop()</a></td>
+            <td>Removes the last element of an array, and returns that element</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_push.asp">push()</a></td>
+            <td>Adds new elements to the end of an array, and returns the new
+              length</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_reduce.asp">reduce()</a></td>
+            <td>Xử lý các phần tử trong một mảng để trả về một giá trị (thứ tự xử lý từ trái qua phải)</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_reduceright.asp">reduceRight()</a></td>
+            <td>Reduce the values of an array to a single value (going
+              right-to-left)</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_reverse.asp">reverse()</a></td>
+            <td>Reverses the order of the elements in an array</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_shift.asp">shift()</a></td>
+            <td>Removes the first element of an array, and returns that element</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_slice_array.asp">slice()</a></td>
+            <td>Selects a part of an array, and returns the new array</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_some.asp">some()</a></td>
+            <td>Checks if any of the elements in an array pass a test</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_sort.asp">sort()</a></td>
+            <td>Sorts the elements of an array</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_splice.asp">splice()</a></td>
+            <td>Adds/Removes elements from an array</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_tostring_array.asp">toString()</a></td>
+            <td>Converts an array to a string, and returns the result</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_unshift.asp">unshift()</a></td>
+            <td>Adds new elements to the beginning of an array, and returns the
+              new length</td>
+          </tr>
+          <tr>
+            <td><a href="http://www.w3schools.com/jsref/jsref_valueof_array.asp">valueOf()</a></td>
+            <td>Returns the primitive value of an array</td>
+          </tr>
+        </tbody>
+      </table>
+            
+             
+   <h3>Phương thức reduce</h3> 
+   <p>Phương thức <code>reduce()</code> sẽ thực thi một callback function (thường gọi là hàm <code>reducer</code>) do chúng ta cung cấp đối với mỗi phần tử của mảng.</p> 
+   <p>Cú pháp của phương thức&nbsp;<code>reduce()</code>:</p> 
+   <pre><code>array.reduce(callback [, initialValue])
+</code></pre> 
+   <p>Hàm <code>reducer</code> sẽ nhận vào bốn tham số sau:</p> 
+   <ul> 
+    <li>accumulator (acc): đây là tham số được gán giá trị từ giá trị trả về của <code>reducer</code>. Nếu chúng ta cung cấp <code>initialValue</code> thì <code>accumulator</code> sẽ được gán giá trị của <code>initialValue</code>, ngược lại <code>accumulator</code> sẽ được gán giá trị của phần tử đầu tiên của mảng. Để rõ hơn chúng ta sẽ xem xét ví dụ ở phần sau nhé.</li> 
+    <li>currentValue (cur): giá trị phần tử hiện tại.</li> 
+    <li>currentIndex (idx): chỉ mục của phần tử hiện tại.</li> 
+    <li>sourceArray (src): mảng chúng ta đang thực hiện <code>reduce()</code>.</li> 
+   </ul> 
+   <p>Hàm <code>reducer</code> trả về một giá trị để gán cho <code>accumulator</code> ở phần tử kế tiếp.</p><h4>Tính tổng các phần tử của mảng</h4> 
+   <p>Chúng ta sẽ xem xét ví dụ tính tổng của một mảng như sau:</p> 
+   <pre>[0, 1, 2, 3, 4].reduce(function(accumulator, currentValue, currentIndex, sourceArray) {
+    return accumulator + currentValue;
+});
+</pre> 
+    
+    
+   <p>Để hiểu rõ hoạt động của ví dụ trên, chúng ta sẽ liệt kê từng lần gọi của <code>reduce()</code>:</p> 
+   <table> 
+    <thead> 
+     <tr> 
+      <th>Thứ tự lần gọi</th> 
+      <th>accumulator</th> 
+      <th>currentValue</th> 
+      <th>currentIndex</th> 
+      <th>sourceArray</th> 
+      <th>returnValue</th> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>Lần 1</td> 
+      <td>0</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>[0, 1, 2, 3, 4]</td> 
+      <td>1</td> 
+     </tr> 
+     <tr> 
+      <td>Lần 2</td> 
+      <td>1</td> 
+      <td>2</td> 
+      <td>2</td> 
+      <td>[0, 1, 2, 3, 4]</td> 
+      <td>3</td> 
+     </tr> 
+     <tr> 
+      <td>Lần 3</td> 
+      <td>3</td> 
+      <td>3</td> 
+      <td>3</td> 
+      <td>[0, 1, 2, 3, 4]</td> 
+      <td>6</td> 
+     </tr> 
+     <tr> 
+      <td>Lần 4</td> 
+      <td>6</td> 
+      <td>4</td> 
+      <td>4</td> 
+      <td>[0, 1, 2, 3, 4]</td> 
+      <td>10</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <p>Qua cái bảng này các bạn đã hiểu rõ hơn về hoạt động của <code>reduce()</code> chưa?</p> 
+   <p>Chúng ta sẽ tiếp tục với trường hơp có giá trị ban đầu <code>initialValue</code>:</p> 
+   <pre>[0, 1, 2, 3, 4].reduce((accumulator, currentValue, currentIndex, sourceArray) =&gt; accumulator + currentValue, 1);</pre> 
+            <p>Giá trị từng bước:</p>
+   <table> 
+    <thead> 
+     <tr> 
+      <th>Thứ tự lần gọi</th> 
+      <th>accumulator</th> 
+      <th>currentValue</th> 
+      <th>currentIndex</th> 
+      <th>soureArray</th> 
+      <th>returnValue</th> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>Lần 1</td> 
+      <td>1</td> 
+      <td>0</td> 
+      <td>0</td> 
+      <td>[0, 1, 2, 3, 4]</td> 
+      <td>1</td> 
+     </tr> 
+     <tr> 
+      <td>Lần 2</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>1</td> 
+      <td>[0, 1, 2, 3, 4]</td> 
+      <td>2</td> 
+     </tr> 
+     <tr> 
+      <td>Lần 3</td> 
+      <td>2</td> 
+      <td>2</td> 
+      <td>2</td> 
+      <td>[0, 1, 2, 3, 4]</td> 
+      <td>4</td> 
+     </tr> 
+     <tr> 
+      <td>Lần 4</td> 
+      <td>4</td> 
+      <td>3</td> 
+      <td>3</td> 
+      <td>[0, 1, 2, 3, 4]</td> 
+      <td>7</td> 
+     </tr> 
+     <tr> 
+      <td>Lần 5</td> 
+      <td>7</td> 
+      <td>4</td> 
+      <td>4</td> 
+      <td>[0, 1, 2, 3, 4]</td> 
+      <td>11</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <p>Qua ví dụ trên, chúng ta thấy <code>reduce()</code> hoạt động rất đơn giản phải không nào.</p> 
+    
+   <p>Trong phần này chúng ta sẽ xem xét một số ví dụ về <code>reduce()</code> để hiểu rõ hơn về method này cũng như thấy được lợi ích mà nó mang lại khi lập trình.</p> 
+   <h4>Đưa một mảng các mảng về một mảng duy nhất</h4><p>Yêu cầu:</p><ul> 
+    <li>Input là mảng các mảng</li> 
+    <li>Output là một mảng phẳng</li> 
+   </ul> 
+   <p>Cách làm:</p> 
+   <pre>const result = [[0, 1], [2, 3], [4, 5]].reduce((acc, curr) =&gt; acc.concat(curr), [])
+console.log(result) // [0, 1, 2, 3, 4, 5]
+</pre> 
+   <h4>Đếm số lượng trùng nhau của các item trong một mảng</h4><p>Yêu cầu:</p><ul> 
+    <li>Input là mảng có các phần tử trùng nhau</li> 
+    <li>Output là map mỗi phần tử xuất hiện mấy lần</li> 
+   </ul><p>Cách làm:</p><pre>const result = ['Alice', 'Bob', 'Tiff', 'Bruce', 'Alice'].reduce((allNames, name) =&gt; { 
+    if (name in allNames) {
+        allNames[name]++;
+    } else {
+        allNames[name] = 1;
+    }
+    return allNames;
+}, {});<br>
+console.log(result) // { 'Alice': 2, 'Bob': 1, 'Tiff': 1, 'Bruce': 1 }
+</pre> 
+   <h4>Nhóm các đối tượng trong một mảng theo thuộc tính nào đó của đối tượng</h4><p>Yêu cầu:</p><ul> 
+    <li>Input là mảng các đối tượng gồm tên và tuổi</li> 
+    <li>Output là với mỗi tuổi thì gồm các tên nào</li> 
+   </ul><p>Cách làm:</p><pre>const people = [
+    { name: 'Alice', age: 21 },
+    { name: 'Max', age: 20 },
+    { name: 'Jane', age: 20 }
+];
+
+const groupBy = (objectArray, property) =&gt; objectArray.reduce((acc, obj) =&gt; {
+    const key = obj[property];
+    if (!acc[key]) {
+        acc[key] = [];
+    }
+    acc[key].push(obj);
+    return acc;
+  }, {})
+};
+
+const result = groupBy(people, 'age');
+
+console.log(result);
+//  { 20: [ { name: 'Max', age: 20 }, { name: 'Jane', age: 20 } ], 21: [{ name: 'Alice', age: 21 }] }
+</pre> 
+   <h4>Xóa các phần tử trùng nhau của một mảng</h4><p>Yêu cầu:</p><ul> 
+    <li>Input là mảng chứa các phần tử trùng nhau</li> 
+    <li>Output là mảng mà các phần tử không trùng nhau</li> 
+   </ul><p>Cách làm 1:</p><pre>const arr = [1, 2, 1, 2, 3, 5, 4, 5, 3, 4, 4, 4, 4];
+const result = arr.sort().reduce((accumulator, current) =&gt; {
+    const length = accumulator.length;
+    if (length === 0 || accumulator[length - 1] !== current) {
+        accumulator.push(current)
+    }
+    return accumulator;
+}, []);
+
+console.log(result); // [1, 2, 3, 4, 5]
+</pre><p>Cách làm 2:</p><pre>const arr = [1, 2, 1, 2, 3, 5, 4, 5, 3, 4, 4, 4, 4];
+const result = arr.sort().reduce((accumulator, current) =&gt; {<br>    return accumulator.indexOf(current) !== -1 ? accumulator : [...accumulator, current];<br>}, []);
+console.log(result); // [1, 2, 3, 4, 5]
+</pre> 
+            <h3>Các thao tác hay gặp</h3><h4>Loại bỏ phần tử trùng lặp trong array</h4><p>Đây
+      là một câu hỏi rất phổ biến khi phỏng vấn, làm như thế nào để trích xuất      các giá trị duy nhất trong mảng. Có một cách nhanh chóng và dễ dàng cho
+      vấn đề này là bạn có thể sử dụng Set() để giải quyết. Và trong      ví dụ này tôi muốn chỉ cho bạn 2 cách đó là sử
+      dụng <code>Array.from()</code> và spread operator. Hãy viết lại những đoạn      code này để xem kết quả nhé:</p><pre>var fruits = ['banana', 'apple', 'orange', 'watermelon', 'apple', 'orange', 'grape', 'apple'];
+
+var uniqueFruits = Array.from(new Set(fruits));
+console.log(uniqueFruits); 
+
+var uniqueFruits2 = [...new Set(fruits)];
+console.log(uniqueFruits2);
+</pre><h4>Thay thế một giá trị cụ thể trong array</h4><p>Đôi
+      khi, vì yêu cầu của một bài toán mà bạn cần phải thay thế một giá trị nào      đó trong array và tôi có một phương pháp hay để làm điều đó mà bạn có thể
+      chưa biết. Đó là sử dụng phương thức <code>splice()</code>. Đây là một hàm nhận vào 3 tham số      từ trái qua phải, vị trí đầu tiên bạn muốn thay thế, vị trí cuối cùng và
+      giá trị bạn muốn thêm vào.</p><pre>var fruits = ['banana', 'apple', 'orange', 'watermelon', 'apple', 'orange', 'grape', 'apple'];
+fruits.splice(0, 2, 'potato', 'tomato');
+console.log(fruits);
+</pre><h4>Map một array mà không sử dụng phương thức map()</h4><p>Có
+      lẽ mọi người đều biết phương thức <code>map()</code> của array, nhưng có một      giải pháp khác có thể được sử dụng để có được hiệu ứng tương tự và code
+      trông rất sạch. Chúng ta có thể sử dụng phương thức <code>Array.from()</code> cho      mục đích này.</p><pre>var friends = [
+    { name: 'John', age: 22 },
+    { name: 'Peter', age: 23 },
+    { name: 'Mark', age: 24 },
+    { name: 'Maria', age: 22 },
+    { name: 'Monica', age: 21 },
+    { name: 'Martha', age: 19 },
+]
+
+var friendsNames = Array.from(friends, ({name}) =&gt; name);
+console.log(friendsNames);
+</pre><h4>Làm trống một array</h4><p>Bạn
+      có một array với hàng tá element và bạn lại muốn xoá tất cả không còn một      phần tử nào nhưng lại không muốn phải xoá từng phần tử một cách vất cả thì
+      phải như thế nào ? Hãy sử dụng thuộc tính <code>length</code>.</p><pre>var fruits = ['banana', 'apple', 'orange', 'watermelon', 'apple', 'orange', 'grape', 'apple'];
+
+fruits.length = 0;
+console.log(fruits);
+</pre><h4>Convert một array sang một object</h4><p>Vì
+      một mục đích nào đó, bạn muốn chuyển một array sang một object một cách      nhanh nhất, spread operator (…) sẽ giúp bạn, kết quả trả về sẽ
+      là array like object.</p><pre>var fruits = ['banana', 'apple', 'orange', 'watermelon'];
+var fruitsObj = { ...fruits };
+console.log(fruitsObj);
+</pre><h4>Tạo một array với nhiều phần tử giống nhau</h4><p>Có
+      một số tình huống khi chúng ta tạo một mảng và tôi muốn điền nó với một số      dữ liệu hoặc tôi cần một mảng có cùng các giá trị và trong trường hợp này,
+      phương thức .fill() đi kèm là một giải pháp dễ dàng và sạch sẽ.</p><pre>var newArray = new Array(10).fill('1');
+console.log(newArray);
+</pre><h4>Merge nhiều array với nhau</h4><p>Một
+      lần nữa spread operator (...) lại hoàn thành xuất sắc nhiệm vụ      mà không cần sử dụng đến .concat().</p><pre>var fruits = ['apple', 'banana', 'orange'];
+var meat = ['poultry', 'beef', 'fish'];
+var vegetables = ['potato', 'tomato', 'cucumber'];
+var food = [...fruits, ...meat, ...vegetables];
+console.log(food);
+</pre><h4>Tìm những element giống nhau của 2 arrray</h4><p>Đây
+      cũng là một yêu cầu phổ biến mà bạn có thể gặp bất cứ lúc nào trong các      cuộc phỏng vấn về JS vì nó cho thấy bạn có thể sử dụng các phương
+      thức của mảng và logic của bạn là gì. Để tìm những element giống nhau, tôi      sẽ dùng đến các phương thức đã có sẵn bên trên, để đảm bảo các giá trị
+      không trùng lặp tôi sẽ dùng 2 phương      thức <code>filter()</code> và <code>includes()</code>.</p><pre>var numOne = [0, 2, 4, 6, 8, 8];
+var numTwo = [1, 2, 3, 4, 5, 6];
+var duplicatedValues = [...new Set(numOne)].filter(item =&gt; numTwo.includes(item));
+console.log(duplicatedValues);
+</pre><h4>Loại bỏ các giá trị falsy trong array</h4><p>Đầu
+      tiên, hãy để xác định giá trị falsy. Trong JS, các giá trị falsy      là false, 0, "", null, NaN, undefined. Bây giờ chúng ta có thể tìm
+      hiểu làm thế nào để loại bỏ loại giá trị này khỏi mảng của chúng ta. Để      đạt được điều này, chúng ta sẽ sử dụng phương thức <code>filter()</code>.</p><pre>var mixedArr = [0, 'blue', '', NaN, 9, true, undefined, 'white', false];
+var trueArr = mixedArr.filter(Boolean);
+console.log(trueArr);
+</pre><h4>Lấy ngẫu nhiên một element từ array</h4><p>Đôi
+      khi chúng ta cần chọn một giá trị từ mảng một cách ngẫu nhiên. Để tạo nó      một cách dễ dàng, nhanh chóng và ngắn gọn và giữ cho code của tôi sạch sẽ,
+      tôi có thể lấy một số chỉ mục ngẫu nhiên theo độ dài mảng. Hãy để xem đoạn      code này:</p><pre>var colors = ['blue', 'white', 'green', 'navy', 'pink', 'purple', 'orange', 'yellow', 'black', 'brown'];
+var randomColor = colors[(Math.floor(Math.random() * (colors.length)))];</pre><h4>Đảo ngược một array</h4><p>Khi
+      chúng ta cần lật mảng của chúng ta, không cần phải tạo nó thông qua các      vòng lặp và hàm phức tạp, có một phương thức mảng dễ dàng thực hiện tất cả
+      cho chúng ta, và với một dòng code, chúng ta có thể đảo ngược mảng của      chúng ta. Hãy thử chạy đoạn code này đi:</p><pre>var colors = ['blue', 'white', 'green', 'navy', 'pink', 'purple', 'orange', 'yellow', 'black', 'brown'];
+var reversedColors = colors.reverse();
+console.log(reversedColors);
+</pre><h4>Phương thức lastIndexOf()</h4><p>Trong
+      JS, có một phương thức thú vị cho phép tìm index của lần      xuất hiện cuối cùng của phần tử đã cho. Ví dụ: nếu mảng của chúng ta có
+      các giá trị trùng lặp, chúng ta có thể tìm thấy vị trí xuất hiện cuối cùng      của nó. Hãy để xem ví dụ bên dưới:</p><pre>var nums = [1, 5, 2, 6, 3, 5, 2, 3, 6, 5, 2, 7];
+var lastIndex = nums.lastIndexOf(5);
+console.log(lastIndex);
+</pre><h4>Tính tổng tất cả các giá trị bên trong array</h4><p>Một
+      yêu cầu khác xảy ra rất thường xuyên trong các cuộc phỏng vấn JS.      Không có gì đáng sợ đến đây, nó có thể được giải quyết bằng phương
+      thức <code>reduce()</code> trong một dòng lệnh.</p><pre>var nums = [1, 5, 2, 6];
+var sum = nums.reduce((x, y) =&gt; x + y);
+console.log(sum);
+</pre>
+            
+            <h3>Demo</h3>
+            <p><a href="demo.js">demo.js</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+</body></html>

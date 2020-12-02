@@ -1,0 +1,192 @@
+* {
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform-style: preserve-3d;
+  font-kerning: auto;
+  outline: none;
+}
+::-moz-selection {
+  color: white;
+  background-color: #fc0;
+  text-shadow: #f70 1px 1px 0;
+}
+::-webkit-selection {
+  color: white;
+  background-color: #fc0;
+  text-shadow: #f70 1px 1px 0;
+}
+::selection {
+  color: white;
+  background-color: #fc0;
+  text-shadow: #07f 1px 1px 0;
+}
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  color: white;
+  background: black;
+  line-height: 1;
+  font-size: 10pt;
+  font-weight: 400;
+  font-family: sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+[type=button], [type=color], [type=number] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: auto;
+  color: currentColor;
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: .2em;
+  padding: .25em .5em;
+  font-size: 12pt;
+  cursor: pointer;
+  transition: color .2s ease-in-out,
+              border-color .2s ease-in-out;
+}
+[type=button] + [type=button] {
+  margin-left: .5em;
+}
+[type=button]:hover, [type=color]:hover, [type=number]:hover {
+  color: #0cf;
+}
+[type=button]:active, [type=color]:focus, [type=number]:focus {
+  color: #fc0;
+}
+[type=color] {
+  width: 100%;
+}
+header, aside, [for=toggle], #toggle, aside div label span, aside #texture ~ label span {
+  position: absolute;
+  z-index: 50;
+  top: 0;
+}
+header {
+  left: 0;
+  width: 100%;
+  padding: 0 2.5em .5em .5em;
+  background: rgba(0,0,0,.7);
+  transition: width .2s ease-in-out;
+}
+header input {
+  margin-top: .5em;
+}
+header label {
+  display: block;
+  padding: .5em;
+}
+header span {
+  font-size: 12pt;
+}
+[type=range] {
+  margin-left: .5em;
+}
+aside, [for=toggle] {
+  transition: right .2s ease-in-out;
+}
+aside {
+  right: -300px;
+  width: 300px;
+  height: 100%;
+  padding: 0 1em;
+  background: rgba(0,0,0,.7);
+}
+aside {
+  overflow-y: scroll;
+}
+aside label, aside div {
+  display: block;
+  margin: 1.5em .5em;
+  position: relative;
+}
+aside div label {
+  margin: 0;
+  position: relative;
+}
+aside label, aside #texture ~ div {
+  padding-left: 75px;
+}
+aside span {
+  display: block;
+  margin: 0 0 1em 0;
+  font-weight: 600;
+  font-size: 12pt;
+  left: 0;
+}
+aside div label {
+  margin-bottom: .5em;
+}
+aside #texture ~ label span {
+  top: .25em;
+}
+aside div label span {
+  top: .25em;
+  font-weight: 400;
+}
+#texture ~ label span {
+  top: 1em;
+}
+[type=color], [type=number] {
+  max-width: 100%;
+}
+[for=toggle] {
+  top: 0;
+  right: .25em;
+  font-size: 28pt;
+  color: currentColor;
+  cursor: pointer;
+  z-index: 75;
+}
+[for=toggle]:hover {
+  color: #0cf;
+}
+#toggle {
+  display: none;
+}
+#toggle:checked ~ header {
+  width: calc(100% - 300px);
+}
+#toggle:checked ~ [for=toggle] {
+  right: calc(300px + .25em);
+}
+#toggle:checked ~ aside {
+  right: 0;
+}
+main {
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #333;
+  position: absolute;
+  vertical-align: top;
+  perspective: 900px;
+  overflow: hidden;
+  cursor: move;
+}
+#center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+#grid {
+  width: 803px;
+  height: 803px;
+  position: absolute;
+  transform-origin: center center;
+  background-size:100px 100px, 100px 100px;
+  transform: translateX(-50%) translateY(-50%) rotateX(60deg); 
+  background-image: linear-gradient(#ccc 3px, transparent 3px),
+    linear-gradient(90deg, #ccc 3px, transparent 3px);
+}
+@media (min-width: 600px) {
+  header label {
+    display: inline-block;
+  }
+}

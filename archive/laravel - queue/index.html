@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Xử lý công việc kiểu background, hàng đợi với Laravel">
+    <title>Hàng đợi trong Laravel</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Hàng đợi trong Laravel</h2>
+      <p>Trong Laravel có các khái niệm na ná nhau:</p>
+      <ul>
+        <li>Event, Scheduler, Queue</li>
+        <li>Job, Command</li>
+        <li>Broadcasting, Notification</li>
+      </ul>
+      <p>Hàng đợi cho phép bạn trì hoãn một công việc mất nhiều thời gian đến
+        một thời điểm nào nó mới xử lý. Laravel cung cấp một API thống nhất cho
+        rất nhiều các hàng đợi ở backend khác nhau. Để hiểu nhanh các khái niệm
+        mới chúng ta hãy bắt đầu bằng ví dụ: Bạn hãy tưởng tượng website của bạn
+        có nhiều người vào xem và có thể đăng ký tài khoản, người đó đang ở
+        trang đăng ký và nhập các thông tin vào form đăng ký. Khi đó chúng ta
+        muốn thực hiện các công việc sau:</p>
+      <ul>
+        <li>Kiểm tra thông tin nhập và lưu vào CSDL.</li>
+        <li>Gửi một email "Chào mừng" đến thành viên mới này.</li>
+        <li>Trả về trang "Cảm ơn".</li>
+      </ul>
+      <p>Sau khi kiểm tra và lưu thông tin vào CSDL, tiếp tục đến phần việc gửi
+        email do mã PHP thực hiện tuần tự từ trên xuống. Người dùng sẽ thấy
+        trang "Cảm ơn" nếu email đã được gửi đi, quá trình gửi email có thể
+        nhanh nhưng cũng có thể mất thời gian, vậy tại sao phải bắt người dùng
+        chờ? Laravel Queue sẽ là cứu cánh cho tình huống này.</p>
+      <h3>Laravel queue là gì?</h3>
+      <p>Một hàng đợi (queue) là một danh sách những việc cần làm (job) được
+        quản lý theo thứ tự. Khi chúng ta muốn thêm một công việc (job) vào hàng
+        đợi, job phải implement interface <code>Illuminate\Contracts\Queue\ShouldQueue</code>.
+        Laravel queue driver được sử dụng để quản lý các job như thêm job vào
+        hàng đợi, lấy job ra khỏi hàng đợi. Laravel có thể làm việc với nhiều
+        các driver khác nhau như database, Redis, Amazon SQS... và bạn có thể tự
+        tạo riêng một driver nếu muốn. Trong bài viết này, chúng ta sẽ lưu trữ
+        các job trong database, để thực hiện việc này, thực hiện các câu lệnh
+        artisan để tạo ra các bảng lưu trữ trong database như sau:</p>
+      <pre>php artisan queue:table
+php artisan queue:failed-table
+php artisan migrate</pre>
+      <p>Các câu lệnh này sẽ tạo ra bảng jobs và failed_jobs trong cơ sở dữ
+        liệu. Ngoài ra, cần phải thiết lập</p>
+      <pre>QUEUE_DRIVER=database</pre>
+      <p>trong file cấu hình biến môi trường <code>.env</code> ở thư mục gốc
+        project.</p>
+      <h3>Tạo và thêm job vào queue</h3>
+      <p>Mặc định, các job được lưu trong <code>app\Jobs</code>, nếu thư mục <code>app\Jobs</code>
+        không có trong project bạn cũng đừng lo, câu lệnh tạo job sẽ tự động tạo
+        ra thư mục này nếu chưa có. Thực hiện tạo một job mới bằng câu lệnh:</p>
+      <pre>php artisan make:job SendWelcomeEmail</pre>
+      <p>Nó sẽ tự động sinh ra job <code>SendWelcomeEmail</code> được implement
+        interface <code>Illuminate\Contracts\Queue\ShouldQueue</code>. Class
+        này chứa phương thức <code> handle()</code> sẽ được gọi đến khi job
+        được xử lý trong hàng đợi. Chúng ta hãy xem khung của một job:</p>
+      <pre>&lt;?php
+
+namespace App\Jobs;
+
+use App\User;
+use App\AudioProcessor;
+use Illuminate\Bus\Queueable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+
+class SendWelcome Email implements ShouldQueue
+{
+    use InteractsWithQueue, Queueable, SerializesModels;
+
+    protected $user;
+
+    /**
+     * Create a new job instance.
+     *
+     * @param  User  $user
+     * @return void
+     */
+    public function __construct(User $user)
+    {
+        $this-&gt;user = $user;
+    }
+
+    /**
+     * Execute the job.
+     *
+     * @param  AudioProcessor  $processor
+     * @return void
+     */
+    public function handle(AudioProcessor $processor)
+    {
+        // Process uploaded user...
+    }
+}</pre>
+      <p>Trong ví dụ trên chúng ta truyền một Eloquent model User vào phương
+        thức contruct của job. Để thêm job vào một queue, sử dụng phương thức <code>dispatch()</code>:</p>
+      <pre>&lt;?php
+namespace App\Http\Controllers\Auth;
+use App\User;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Jobs\SendWelcomeEmail;
+
+
+class RegisterController extends Controller
+{
+    // ...
+
+    protected function create(array $data)
+    {
+        $user = User::create([
+            'name' =&gt; $data['name'],
+            'email' =&gt; $data['email'],
+            'password' =&gt; bcrypt($data['password']),
+        ]);
+        $job = (new SendWelcomeEmail($user))-&gt;delay(Carbon::now()-&gt;addMinutes(10));
+        dispatch($job);
+        return $user;
+    }
+}</pre>
+      <p>Phương thức <code>delay()</code> sẽ dừng lại trước khi thực hiện job
+        trong queue.</p>
+      <h3>Thực thi các job trong queue</h3>
+      <h4>Số lần thử thực hiện job</h4>
+      <p>Mặc định job sẽ được thực hiện 1 lần, nếu lỗi sẽ được bỏ qua, để thiết
+        lập số lần thử thực hiện lại một job chúng ta có hai cách: hoặc sử dụng
+        câu lệnh artisan cho tất cả các job</p>
+      <pre>php artisan queue:work --tries=3</pre>
+      <p>hoặc đưa vào thuộc tính <code>$tries</code> của từng job</p>
+      <pre>&lt;?php
+namespace App\Jobs;
+
+class SendWelcome implements ShouldQueue
+{
+    /**
+     * Số lần job sẽ thử thực hiện lại
+     *
+     * @var int
+     */
+    public $tries = 3;
+}</pre>
+      <h4>Thiết lập thời gian timeout của job trong queue</h4>
+      <p>Bạn có thể thiết lập thời gian timeout của các job bằng cách sử dụng
+        câu lệnh artisan</p>
+      <pre>php artisan queue:work --timeout=60</pre>
+      <p>hoặc thiết lập trong thuộc tính $timeout của từng job</p>
+      <pre>&lt;?php
+namespace App\Jobs;
+
+class SendWelcome implements ShouldQueue
+{
+    /**
+     * Số giây job có thể chạy trước khi timeout
+     *
+     * @var int
+     */
+    public $timeout = 60;
+}</pre>
+      <h4>Queue worker, thực thi các job trong queue</h4>
+      <p>Laravel có một queue worker để thực thi các job đang có trong hàng đợi,
+        bạn có thể chạy worker này bằng câu lệnh artisan:</p>
+      <pre>php artisan queue:work</pre>
+      <p>Chú ý, câu lệnh này khi đã thực hiện sẽ chạy cho đến khi đóng cửa sổ
+        dòng lệnh hoặc dừng nó bằng một câu lệnh. Queue worker là các tiến trình
+        có thời gian sống dài do đó nó sẽ không cập nhật code khi có thay đổi,
+        khi bạn thay đổi code chương trình, bạn cần khởi động lại queue worker
+        bằng câu lệnh</p>
+      <pre>php artisan queue:restart</pre>
+      <h4>Thiết lập thời gian nghỉ giữa các lần xử lý job</h4>
+      <p>Các job trong hàng đợi được xử lý liên tục mà không có sự dừng lại nào,
+        tùy chọn sleep sẽ xác định worker dừng lại sau bao lâu trước khi tiếp
+        tục xử lý job tiếp theo:</p>
+      <pre>php artisan queue:work --sleep=3</pre>
+      <h3>Sử dụng Supervisor giám sát xử lý hàng đợi trên Linux</h3>
+      <p>Supervisor là một chương trình giám sát các xử lý trong hệ điều hành
+        Linux, nó sẽ tự động khởi động lại xử lý queue:work nếu bị lỗi. Để cài
+        đặt supervisor trên CentOS trước hết phải cài đặt Python.</p>
+      <pre>yum install python-setuptools
+easy_install supervisor</pre>
+      <p>Cài đặt supervisor trên Ubuntu:</p>
+      <pre>sudo apt-get install supervisor</pre>
+      <p>Supervisor có file cấu hình nằm trong thư mục <code>/etc/supervisor/conf.d</code>,
+        trong này bạn có thể tạo nhiều file để bắt supervisor giám sát các xử
+        lý. Ví dụ tạo file <code>laravel-worker.conf</code> để giám sát cho <code>queue:work</code>
+        với nội dung:</p>
+      <pre>[program:laravel-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /home/forge/app.com/artisan queue:work sqs --sleep=3 --tries=3
+autostart=true
+autorestart=true
+user=forge
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/home/forge/app.com/worker.log</pre>
+      <p>numprocs = 8 tức là Supervisor sẽ chạy 8 xử lý queue:work cùng lúc và
+        tự động khởi động lại queue:work khi gặp lỗi. Sau khi thiết lập cấu hình
+        Supervisor xong, bạn phải cập nhật cấu hình và chạy các xử lý bằng các
+        câu lệnh như sau:</p>
+      <pre>supervisorctl reread
+supervisorctl update
+supervisorctl start laravel-worker:*</pre>
+      <h3>Giám sát xử lý hàng đợi trên Windows</h3>
+      <p>Công cụ supervisor chỉ hoạt động trong môi trường Linux, vậy trên
+        Windows chúng ta sẽ xử lý như thế nào. Chúng ta sẽ sử dụng <a href="https://www.npmjs.com/package/forever">gói
+          Forever</a>, cài đặt Forever bằng npm. npm được tích hợp sẵn trong <a
+          href="https://nodejs.org/dist/v6.10.1/node-v6.10.1-x64.msi">bộ cài
+          Node.js</a>, bạn tải về và cài đặt. Sau đó cài đặt Forever:</p>
+      <pre>npm install -g forever</pre>
+      <p>Sau khi cài đặt Forever, chúng ta có thể dùng nó để giám sát các xử lý</p>
+      <pre>forever -c php artisan --queue:work --tries=3 --timeout=60 --sleep=5</pre>
+      <h3>Laravel queue trong bài toán xử lý song song</h3>
+      <p>Trong lập trình, hàng đợi giúp cho việc thiết kế các ứng dụng tốt hơn
+        trong hiệu năng xử lý. Chúng ta đến với ví dụ thực tế sau, trong hệ
+        thống corebanking của ngân hàng, cuối ngày sẽ thực hiện chạy khóa ngày
+        COB (Close Of Bussiness), quá trình này là một tập hợp (các batch) rất
+        nhiều các tác vụ khác nhau như cập nhật thông tin hệ thống, tính toán
+        lãi tiền gửi, tiền vay, chuyển trạng thái các hợp đồng, gửi tin nhắn đến
+        khách hàng và cập nhật thông tin các bảng cần thiết cho ngày mới như
+        bảng lãi suất, tỉ giá... Nếu tất cả các công việc này được thực hiện
+        tuần tự, quá trình COB sẽ mất rất nhiều thời gian mà hệ thống
+        corebanking chỉ được phép chạy trong khoảng 3-5 tiếng do cần phải có
+        thời gian dự phòng.</p>
+      <p>Vậy giải pháp nào cho những vấn đề tương tự như vậy? Sử dụng hàng đợi
+        sẽ giúp xử lý những vấn đề như trên. Chúng ta sẽ chia các công việc ra
+        thành các Batch, trong mỗi Batch chứa các job khác nhau liên quan đến
+        một bussiness logic nào đó. Khi đó, chúng ta thực hiện chạy nhiều
+        queue:work sẽ giúp tăng tốc độ lên đáng kể. Trong ví dụ về sử dụng
+        Supervisor, giả sử cấu hình máy chủ có thể chạy được 30 session một lúc,
+        nếu chúng ta để</p>
+      <pre>numprocs=30</pre>
+      <p>tốc độ xử lý sẽ nhanh hơn rất nhiều lần. Laravel Queue rất thích hợp
+        cho các bài toán xử lý nhiều việc song song. Do khuôn khổ bài viết,
+        chúng tôi không đi sâu vào một ví dụ cụ thể, tuy nhiên sẽ có một bài
+        viết riêng ở đó chúng ta sẽ quay lại việc kiểm tra xem giữa single queue
+        và multiple queues khác biệt như thế nào nếu chúng ta thiết kế ứng dụng
+        tốt.</p>
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://allaravel.com/blog/laravel-queue-xu-ly-cong-viec-kieu-hang-doi">https://allaravel.com/blog/laravel-queue-xu-ly-cong-viec-kieu-hang-doi</a></p>
+      <p><a target="_blank" href="https://laravel.com/docs/master/queues">https://laravel.com/docs/master/queues</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

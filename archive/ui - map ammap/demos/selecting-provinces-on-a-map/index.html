@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Selecting provinces on a map</title>
+</head>
+
+<body>
+  <style>
+body { max-width:1100px; margin:10px auto; }
+#chartdiv {  height:400px; border:1px solid #ddd; }
+#info { border:1px solid #ddd; padding:5px 8px; }
+  </style>
+
+  <h1>Click provinces to select</h1>
+  <div id="chartdiv"></div>
+  <div id="info">Seletced provinces: <span id="selected">-</span></div>
+
+  <script src="https://www.amcharts.com/lib/3/ammap.js"></script>
+  <script src="https://www.amcharts.com/lib/3/maps/js/vietnamHigh.js"></script>
+  <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+  <script src='https://code.jquery.com/jquery-1.11.2.min.js'></script>
+  <script>
+    var map = AmCharts.makeChart("chartdiv", {
+      "type": "map",
+      "theme": "light",
+      "projection": "eckert3",
+      "dataProvider": {
+        "map": "vietnamHigh",
+        "getAreasFromMap": true
+      },
+      "areasSettings": {
+        "selectedColor": "#CC0000",
+        "selectable": true
+      },
+      /**
+       * Add click event to track country selection/unselection
+       */
+      "listeners": [{
+        "event": "clickMapObject",
+        "method": function(e) {
+          // Ignore any click not on area
+          if (e.mapObject.objectType !== "MapArea")
+            return;
+
+          var area = e.mapObject;
+
+          // Toggle showAsSelected
+          area.showAsSelected = !area.showAsSelected;
+          e.chart.returnInitialColor(area);
+
+          // Update the list
+          document.getElementById("selected").innerHTML = JSON.stringify(getSelectedProvinces());
+        }
+      }]
+    });
+
+    function getSelectedProvinces() {
+      var selected = [];
+      map.dataProvider.areas.forEach(function(p) {
+        // JSON.stringify(p)
+        console.log(p.id, p.title);
+        if (p.showAsSelected) {
+          selected.push(p.title);
+        }
+      });
+      return selected;
+    }
+  </script>
+</body>
+
+</html>

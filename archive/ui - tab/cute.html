@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/tab.css" />
+    <title>Cute Tab</title>
+
+    <style>
+        body {
+            background-color: #FFC7C7;
+            max-width: 700px;
+            margin: 100px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tab-wrapper cute">
+        <div class="tab">
+            <button class="tab-link active" onclick="openTab(event, 'London')">
+                <img src="images/rabbit.svg"/>
+            </button>
+            <button class="tab-link" onclick="openTab(event, 'Paris')">
+                <img src="images/rabbit.svg"/>
+            </button>
+            <button class="tab-link" onclick="openTab(event, 'Tokyo')">
+                <img src="images/rabbit.svg"/>
+            </button>
+        </div>
+
+        <!-- Tab content -->
+        <div class="tab-content-wrapper">
+            <div id="London" class="tab-content active">
+                C1
+            </div>
+
+            <div id="Paris" class="tab-content">
+                C2
+            </div>
+
+            <div id="Tokyo" class="tab-content">
+                C3
+            </div>
+        </div>
+    </div>
+
+    <script src="js/tab.js"></script>
+</body>
+</html>

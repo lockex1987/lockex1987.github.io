@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Reflection jQuery</title>
+	<style>
+		img {
+			max-width: 300px;
+		}
+		
+		#demo div {
+			float: left;
+			margin: 16px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="demo">
+		<img src="reflect.jpg" class="reflect" />
+		<img src="reflect.jpg" id="myImage" />
+	</div>
+
+	<script src="file:///data/cdn/js/jquery.js"></script>
+	<script src="js/reflection.js"></script>
+	<script>
+		$("#myImage").reflect();
+	</script>
+</body>
+</html>

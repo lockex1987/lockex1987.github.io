@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content=""/>
+    
+    <title>Drop file</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+
+    <link rel="stylesheet" href="css/drop-zone.css">
+</head>
+<body>
+    <article>
+        <h2>Drop file</h2>
+        
+        <div id="filesZone"
+                class="bg-light hover:bg-warning px-2 py-5 cursor-pointer drop-zone text-center">
+            Chọn file hoặc kéo thả file vào đây
+
+            <input type="file" class="d-none" />
+        </div>
+
+        <p class="mt-3">Danh sách file:</p>
+        <ol id="fileList"></ol>
+    </article>
+
+    <script src="js/drop-zone.js"></script>
+    <script src="js/drop-file.js"></script>
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

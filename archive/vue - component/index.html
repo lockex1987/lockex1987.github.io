@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="description" content="v-model">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component trong Vue</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Component trong Vue</h2>
+      <h3>Cơ bản về component</h3>
+      <h4>Ví dụ cơ bản</h4>
+      <p>Đây là ví dụ về một component trong Vue:</p>
+      <pre>// Định nghĩa một component với tên là "button-counter"<br>Vue.component('button-counter', {<br>    template: `<br>        &lt;button v-on:click="count++"&gt;<br>            Bạn đã bấm {{ count }} lần.<br>        &lt;/button&gt;`,<br><br>    data() {<br>        return {<br>            count: 0<br>        };<br>    }<br>});</pre>
+      <p>Component là các đối tượng Vue có thể sử dụng lại được với một cái tên,
+        trong trường hợp này là <code>&lt;button-counter&gt;</code>. Chúng ta
+        có thể dùng component này như là một phần tử bên trong đối tượng Vue gốc
+        được tạo bởi <code>new Vue</code>:</p>
+      <pre>&lt;div id="components-demo"&gt;<br>    &lt;button-counter&gt;&lt;/button-counter&gt;<br>&lt;/div&gt;</pre>
+      <pre>new Vue({<br>    el: '#components-demo'<br>});</pre>
+      <p>Vì là những đối tượng Vue tái sử dụng được, các component cùng nhận các
+        tùy chọn như <code>new Vue</code>, ví dụ <code>data</code>, <code>computed</code>,
+        <code>watch</code>, <code>methods</code>, và các hook vòng đời. Các
+        ngoại lệ duy nhất là một số ít tùy chọn đặc biệt cho root như <code>el</code>.</p>
+      <h4>Tái sử dụng component</h4>
+      <p>Bạn có thể tái sử dụng component bao nhiêu lần tùy ý:</p>
+      <pre>&lt;div id="components-demo"&gt;<br>    &lt;button-counter&gt;&lt;/button-counter&gt;<br>    &lt;button-counter&gt;&lt;/button-counter&gt;<br>    &lt;button-counter&gt;&lt;/button-counter&gt;<br>&lt;/div&gt;</pre>
+      <p>Để ý là khi bấm các nút trên đây, mỗi nút giữ một giá trị <code>count</code>
+        riêng hoàn toàn tách biệt. Điều này là vì mỗi khi bạn dùng một
+        component, một đối tượng của component đó được tạo mới.</p>
+      <h4><code>data</code> phải là một hàm</h4>
+      <p>Bạn có thể cũng đã để ý thấy rằng khi định nghĩa component <code>&lt;button-counter&gt;</code>,
+        chúng ta không truyền thẳng một object vào <code>data</code> như thế
+        này:</p>
+      <pre>data: {<br>    count: 0<br>}</pre>
+      <p>Thay vào đó, tùy chọn <code>data</code> của component phải là một hàm.
+        Bằng cách này, mỗi đối tượng của component có thể duy trì một bản sao
+        riêng biệt của đối tượng data được trả về:</p>
+      <pre>data() {<br>    return {<br>        count: 0<br>    };<br>}</pre>
+      <h4>Tổ chức component</h4>
+      <p>Một ứng dụng thường được tổ chức dưới dạng một cây component lồng nhau:</p>
+      <p><img src="https://vi.vuejs.org/images/components.png"></p>
+      <p>Ví dụ, bạn có thể có các component cho header, sidebar, khu vực nội
+        dung, mỗi component này lại chứa các component dành cho trình đơn, blog
+        post, vân vân.</p>
+      <p>Để có thể được sử dụng trong các template, component phải được đăng kí.
+        Có hai cách đăng kí component: toàn cục và cục bộ. Trên đây chúng ta chỉ
+        mới đăng kí component ở cấp toàn cục với <code>Vue.component</code>: </p>
+      <pre>Vue.component('my-component-name', {<br>    // ... tùy chọn ...<br>});</pre>
+      <p>Component đăng kí ở cấp toàn cục có thể được dùng trong template của
+        bất kì đối tượng Vue gốc (<code>new Vue</code>) nào được tạo ra sau đó –
+        và trong tất cả các component con trên cây component của đối tượng đó.</p>
+      <h3>Đăng ký component</h3>
+      <h4>Đăng ký toàn cục</h4>
+      <p>Khi bạn đăng ký component bằng phương thức <code>Vue.component()</code>
+        thì các component này được đăng ký toàn cục, nghĩa là chúng có thể được
+        sử dụng ở bất kỳ đầu trong Vue instance gốc được tạo ra bằng câu lệnh <code>new
+          Vue</code>. Ví dụ:</p>
+      <pre>Vue.component('component-a', { /* ... */ });
+Vue.component('component-b', { /* ... */ });
+Vue.component('component-c', { /* ... */ });
+
+new Vue({<br>    el: '#app'<br>});<br><br>&lt;div id="app"&gt;
+    &lt;component-a&gt;&lt;/component-a&gt;
+    &lt;component-b&gt;&lt;/component-b&gt;
+    &lt;component-c&gt;&lt;/component-c&gt;
+&lt;/div&gt;</pre>
+      <p>Khi đăng ký bằng <code>Vue.component()</code>, các <code> component-a</code>,&nbsp;<code>component-b</code>,&nbsp;<code>component-c</code>
+        có thể sử dụng ở bất kỳ đâu mà Vue instance mount vào, thậm chí 1 trong
+        3 component này có thể đưa vào bên trong các component khác.</p>
+      <h4>Đăng ký cục bộ</h4>
+      <p>Đăng ký toàn cục gặp phải một vấn đề khi sử dụng với các hệ thống build
+        code như<span>&nbsp;</span>Webpack, các component toàn cục vẫn được đóng
+        gói vào phiên bản cuối cùng mặc dù có thể nó không được gọi đến, việc
+        này làm cho dung lượng ứng dụng không được tối ưu do có dư thừa code JS.
+        Trong trường hợp này, chúng ta cần định nghĩa các component ở dạng các
+        đối tượng đơn thuần trong JS:</p>
+      <pre>const ComponentA = { /* ... */ };
+const ComponentB = { /* ... */ };
+const ComponentC = { /* ... */ };</pre>
+      <p>Sau đó định nghĩa các component trong tùy chọn components của Vue
+        instance:</p>
+      <pre>new Vue({
+    el: '#app',<br>
+    components: {
+        ComponentA,
+        ComponentB
+    }
+});</pre>
+      <p>Với cách đăng ký cục bộ các component không thể lồng vào nhau như ở
+        đăng ký toàn cục. Do vậy nếu muốn sử dụng component A trong component B
+        chúng ta buộc phải code như sau:</p>
+      <pre>const ComponentA = { /* ... */ };
+
+const ComponentB = {
+    components: {
+        ComponentA
+    },<br>
+    // ...
+};</pre>
+      <p>Vue component thật sự là quá hay, giờ đây với các ứng dụng thay vì bắt
+        tay code chúng ta cần xem những thành phần nào có thể “component hóa”
+        giúp cho code cực kỳ ngắn gọn súc tích. Mỗi khi cần thay đổi các thành
+        phần theo yêu cầu, chúng ta chỉ đơn giản thay đổi ở một nơi và tất cả
+        những nơi sử dụng lại component sẽ được áp dụng ngay.</p>
+      <h3>Truyền dữ liệu xuống component con bằng prop</h3>
+      <p>Trên đây chúng ta có nhắc đến việc tạo component cho các bài viết trên
+        blog. Vấn đề là, component không có ích gì nếu không có dữ liệu truyền
+        vào, ví dụ tựa đề và nội dung của bài đăng. Đó là lúc chúng ta cần đến
+        prop.</p>
+      <p>Prop là các thuộc tính tùy chỉnh mà bạn có thể đăng kí trên một
+        component. Khi một giá trị được truyền vào một prop, nó trở thành một
+        “property” của đối tượng component đó. Để truyền tựa đề (<code>title</code>)
+        vào component bài viết (<code>blog-post</code>), chúng ta sử dụng tùy
+        chọn <code>props</code>:</p>
+      <pre>Vue.component('blog-post', {<br>    template: '&lt;h3&gt;{{ title }}&lt;/h3&gt;',<br><br>    props: ['title']<br>});</pre>
+      <p>Một component có thể có bao nhiêu prop tùy ý, và prop có thể nhận bất
+        kì giá trị gì. Trong template trên đây, bạn có thể thấy là chúng ta có
+        thể truy xuất giá trị này trên đối tượng component, giống như với <code>data</code>.</p>
+      <p>Một khi prop đã được đăng kí, bạn có thể truyền dữ liệu vào như một
+        thuộc tính tùy chỉnh, ví dụ:</p>
+      <pre>&lt;blog-post title="Giới thiệu về Vue"&gt;&lt;/blog-post&gt;<br>&lt;blog-post title="Các khái niệm trong Vue"&gt;&lt;/blog-post&gt;<br>&lt;blog-post title="Vue căn bản và nâng cao"&gt;&lt;/blog-post&gt;</pre>
+      <p>Tuy nhiên, trong một ứng dụng điển hình, bạn có lẽ sẽ có một mảng các
+        bài viết trong <code>data</code>:</p>
+      <pre>new Vue({<br>    el: '#blog-post-demo',<br><br>    data() {<br>        return {<br>            posts: [<br>                { id: 1, title: 'Giới thiệu về Vue' },<br>                { id: 2, title: 'Các khái niệm trong Vue' },<br>                { id: 3, title: 'Vue căn bản và nâng cao' }<br>            ]<br>        };<br>    }<br>});</pre>
+      <p>Sau đó render một component cho mỗi bài viết:</p>
+      <pre>&lt;blog-post<br>        v-for="post in posts"<br>        :key="post.id"<br>        :title="post.title"&gt;<br>&lt;/blog-post&gt;</pre>
+      <p>Trên đây, bạn có thể thấy là chúng ta dùng <code>v-bind</code> để
+        truyền động prop. Cách làm này đặc biệt hữu ích khi bạn không biết trước
+        được chính xác nội dung bạn sẽ render, như khi lấy bài viết từ một API.</p>
+      <h3>Một phần tử gốc đơn lập</h3>
+      <p>Khi xây dựng component <code>&lt;blog-post&gt;</code> cho bài viết,
+        thế nào rồi template của bạn cũng sẽ chứa nhiều thứ hơn là mỗi <code>title</code>.
+        Ít nhất bạn cũng sẽ có thêm nội dung bài viết:</p>
+      <pre>&lt;h3&gt;{{post.title}}&lt;/h3&gt;<br>&lt;div v-html="post.content"&gt;&lt;/div&gt;</pre>
+      <p>Nhưng nếu bạn sử dụng template này, Vue sẽ thông báo lỗi <code>"every
+          component must have a single root element"</code> (mỗi component phải
+        có một phần tử gốc đơn lập). Bạn có thể sửa lỗi này bằng cách bọc
+        template trong một phần tử cha, ví dụ:</p>
+      <pre>&lt;div class="blog-post"&gt;<br>    &lt;h3&gt;{{post.title}}&lt;/h3&gt;<br>    &lt;div v-html="post.content"&gt;&lt;/div&gt;<br>&lt;/div&gt;</pre>
+      <h3>Gửi thông tin đến đối tượng cha bằng sự kiện</h3>
+      <p>Khi xây dựng component <code>&lt;blog-post&gt;</code>, một số tính
+        năng có thể cần giao tiếp ngược lên đối tượng cha. Ví dụ, chúng ta muốn
+        thêm tính năng phóng to font chữ của bài viết mà vẫn giữ nguyên các
+        thành phần khác trên trang.</p>
+      <p>Chúng ta có thể hỗ trợ tính năng này bằng cách thêm thuộc tính <code>postFontSize</code>
+        trong <code>data</code> của đối tượng cha:</p>
+      <pre>new Vue({<br>    el: '#blog-posts-events-demo',<br><br>    data() {<br>        return {<br>            posts: [/* ... */],<br>            postFontSize: 1<br>        };<br>    }<br>});</pre>
+      <p>Thuộc tính này có thể được dùng trong template để quản lí cỡ chữ của
+        tất cả các bài viết:</p>
+      <pre>&lt;div id="blog-posts-events-demo"&gt;<br>    &lt;div :style="{ fontSize: postFontSize + 'em' }"&gt;<br>        &lt;blog-post-2<br>                v-for="post in posts"<br>                :key="post.id"<br>                :post="post"&gt;<br>        &lt;/blog-post-2&gt;<br>    &lt;/div&gt;<br>&lt;/div&gt;</pre>
+      <p>Bây giờ hãy thêm một nút để tăng cỡ chữ ngay trước nội dung của mỗi bài
+        viết:</p>
+      <pre>Vue.component('blog-post-2', {<br>    template: `<br>        &lt;div&gt;<br>            &lt;h3&gt;{{post.title}}&lt;/h3&gt;<br>            &lt;button&gt;<br>                Phóng to<br>            &lt;/button&gt;<br>            &lt;div v-html="post.content"&gt;&lt;/div&gt;<br>        &lt;/div&gt;`,<br><br>    props: [<br>        'post'<br>    ]<br>})</pre>
+      <p>Ví dụ trên đây và một số ví dụ tiếp theo sử dụng template literal để
+        giúp template nhiều dòng dễ đọc hơn.</p>
+      <p>Tuy nhiên, nút này hiện không làm gì cả:</p>
+      <pre>&lt;button&gt;<br>    Phóng to<br>&lt;/button&gt;</pre>
+      <p>Khi nút "Phóng to"" được bấm, chúng ta muốn yêu cầu đối tượng cha phóng
+        to cỡ chữ của tất cả các bài viết. May thay, các đối tượng Vue cung cấp
+        một hệ thống sự kiện tùy biến để giải quyết vấn đề này. Để phát ra
+        (emit) một sự kiện, chúng ta có thể gọi phương thức <a href="https://vi.vuejs.org/v2/api/#Cac-phuong-thuc-su-kien-cua-doi-tuong"><code>$emit</code></a>
+        cho sẵn và truyền vào tên của sự kiện:</p>
+      <pre>&lt;button @click="$emit('enlarge-text')"&gt;<br>    Phóng to<br>&lt;/button&gt;</pre>
+      <p>Sau đó trong component <code>&lt;blog-post-2&gt;</code>, chúng ta có
+        thể lắng nghe sự kiện này bằng <code>v-on</code> giống như với các sự
+        kiện DOM:</p>
+      <pre>&lt;blog-post-2<br>        ...<br>        @enlarge-text="postFontSize += 0.1"&gt;<br>&lt;/blog-post-2&gt;</pre>
+      <h4>Gửi giá trị khi phát ra sự kiện</h4>
+      <p>Đôi khi bạn cần gửi một giá trị cụ thể nào đó kèm với một sự kiện. Ví
+        dụ, chúng ta có thể cho <code>&lt;blog-post&gt;</code> quyền quyết định
+        mức độ phóng đại của cỡ chũ. Trong những trường hợp này, ta có thể dùng
+        tham số thứ hai của <code>$emit</code>:</p>
+      <pre>&lt;button @click="$emit('enlarge-text', 0.1)"&gt;<br>    Phóng to<br>&lt;/button&gt;</pre>
+      <p>Sau đó, khi lắng nghe sự kiện này ở đối tượng cha, chúng ta có thể truy
+        xuất đến giá trị của sự kiện được phát ra với <code>$event</code>:</p>
+      <pre>&lt;blog-post<br>        ...<br>        @enlarge-text="postFontSize += $event"&gt;<br>&lt;/blog-post&gt;</pre>
+      <p>Hoặc, nếu đó là một phương thức xử lí sự kiện:</p>
+      <pre>&lt;blog-post<br>        ...<br>        @enlarge-text="onEnlargeText"&gt;<br>&lt;/blog-post&gt;</pre>
+      <p>thì giá trị sẽ được truyền vào dưới dạng tham số đầu tiên của phương
+        thức đó:</p>
+      <pre>methods: {<br>    onEnlargeText(enlargeAmount) {<br>        this.postFontSize += enlargeAmount;<br>    }<br>}</pre>
+      <h4>Sử dụng <code>v-model</code> với component</h4>
+      <p>Các sự kiện tùy biến có thể được sử dụng để tạo ra các <code>&lt;input&gt;</code>
+        tùy biến hoạt động với <code>v-model</code>. Nhớ rằng:</p>
+      <pre>&lt;input v-model="searchText"&gt;</pre>
+      <p>là hoàn toàn tương đồng với:</p>
+      <pre>&lt;input<br>        :value="searchText"<br>        @input="searchText = $event.target.value"&gt;</pre>
+      <p>Khi sử dụng trên một component, <code>v-model</code> là tương đồng
+        với:</p>
+      <pre>&lt;custom-input<br>        :value="searchText"<br>        @input="searchText = $event"&gt;<br>&lt;/custom-input&gt;</pre>
+      <p>Tuy nhiên để hoạt động được, phần tử <code>&lt;input&gt;</code> trong
+        component phải:</p>
+      <ul>
+        <li>Ràng buộc thuộc tính <code>value</code> với một prop <code>value</code></li>
+        <li>Trong sự kiện <code>input</code>, phát ra sự kiện <code>input</code>
+          tùy biến với giá trị mới</li>
+      </ul>
+      <p>Một đoạn code hoàn chỉnh nhìn tương tự như thế này:</p>
+      <pre>Vue.component('custom-input', {<br>    template: `<br>        &lt;input :value="value"<br>                @input="$emit('input', $event.target.value)&gt;`,<br><br>    props: [<br>        'value'<br>    ]<br>});</pre>
+      <p>Giờ thì <code>v-model</code> sẽ hoạt động ổn thỏa:</p>
+      <pre>&lt;custom-input<br>        v-model="searchText"&gt;<br>&lt;/custom-input&gt;</pre>
+      <h3>Phân phối nội dung với slot</h3>
+      <p>Cũng như đối với các phần tử HTML, việc có thể truyền nội dung vào một
+        component thường là rất hữu ích, ví dụ:</p>
+      <pre>&lt;alert-box&gt;<br>    Đã xảy ra cái gì gì đó.<br>&lt;/alert-box&gt;</pre>
+      <p>Có thể render thành:</p>
+      <div class="border p-3 mb-3"> <strong>Lỗi!</strong> Đã xảy ra cái gì gì
+        đó. </div>
+      <p>Việc này là rất đơn giản với phần tử tùy biến <code>&lt;slot&gt;</code>
+        của Vue:</p>
+      <pre>Vue.component('alert-box', {<br>    template: `<br>        &lt;div&gt;<br>            &lt;strong&gt;Lỗi!&lt;/strong&gt;<br>            &lt;slot&gt;&lt;/slot&gt;<br>        &lt;/div&gt;`<br>});</pre>
+      <p>Như bạn đã thấy trên đây, chúng ta chỉ cần thêm <code>&lt;slot&gt;</code>
+        vào nơi cần thể hiện nội dung, và thế là xong!</p>
+      <h3>Component động</h3>
+      <p>Đôi khi bạn muốn chuyển qua lại giữa các component, ví dụ như trên một
+        giao diện tab:</p>
+      <p>Ví dụ trên hoạt động nhờ thuộc tính đặc biệt <code>is</code> của một
+        component trong Vue:</p>
+      <pre>&lt;!-- Component thay đổi khi currentTabComponent thay đổi --&gt;<br>&lt;component :is="currentTabComponent"&gt;&lt;/component&gt;</pre>
+      <p>Trong ví dụ trên, <code>currentTabComponent</code> có thể chứa:</p>
+      <ul>
+        <li>tên của một component đã được đăng kí</li>
+        <li>hoặc object chứa các tùy chọn của một component</li>
+      </ul>
+      <h3>Lưu ý về việc parse DOM template</h3>
+      <p>Bên trong các phần tử như <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>,
+        <code>&lt;table&gt;</code> và <code>&lt;select&gt;</code> chúng ta chỉ
+        có thể chứa một số phần tử nhất định (chẳng hạn <code>&lt;ul&gt;</code>
+        chỉ chấp nhận <code>&lt;li&gt;</code>), trong khi đó các phần tử như <code>&lt;option&gt;</code>
+        lại chỉ có thể được đặt trong một số phần tử nhất định khác như <code>&lt;select&gt;</code>,
+        <code>&lt;optgroup&gt;</code>, hay <code>&lt;datalist&gt;</code>.</p>
+      <p>Điều này sẽ dẫn đến một số vấn đề khi dùng component với các phần tử có
+        những hạn chế vừa nêu, ví dụ:</p>
+      <pre>&lt;table&gt;<br>    &lt;blog-post-row&gt;&lt;/blog-post-row&gt;<br>&lt;/table&gt;</pre>
+      <p>Ở đây component <code>&lt;blog-post-row&gt;</code> sẽ bị xem là một
+        phần tử không hợp lệ bên trong <code>&lt;table&gt;</code> và bị đẩy ra
+        ngoài (hoisted out), dẫn đến lỗi khi render. Để giải quyết vấn đề này,
+        ta có thể dùng thuộc tính đặc biệt <code>is</code>:</p>
+      <pre>&lt;table&gt;<br>    &lt;tr is="blog-post-row"&gt;&lt;/tr&gt;<br>&lt;/table&gt;</pre>
+      <p>Cũng nên lưu ý rằng hạn chế này không tồn tại nếu bạn sử dụng template
+        dạng chuỗi từ một trong các nguồn sau: </p>
+      <ul>
+        <li>Template dạng chuỗi, ví dụ <code>template: '...'</code></li>
+        <li>Single file component</li>
+        <li><code>&lt;script type="text/x-template"&gt;</code></li>
+      </ul>
+      <h3>Khai báo template trong mã HTML</h3>
+      <p>Với cách tạo một component bằng <code>Vue.component()</code> ở trên,
+        chúng ta khai báo template trong tùy chọn template. Đây là một chuỗi,
+        vậy nếu template này tương đối phức tạp thì sao chẳng lẽ cũng lại tống
+        hết vào một chuỗi duy nhất, chưa kể là code không được định dạng thò ra
+        thụt vào sẽ rất khó đọc cũng như debug lỗi sau này. Vue cho phép khai
+        báo template này với một thẻ đặc biệt là thẻ <code>&lt;template&gt;</code>,
+        ví dụ đầu tiên có thể viết lại như sau:</p>
+      <pre>&lt;template id="button-template"&gt;
+    &lt;div&gt;
+        &lt;button class="btn btn-success"<br>                @click="count++"&gt;<br>            Bạn đã nhấn {{count}} lần.<br>        &lt;/button&gt;
+    &lt;/div&gt;
+&lt;/template&gt;<br><br><br>Vue.component('button-counter-x', {<br>    template: '#button-template',<br>
+    data() {
+        return {
+            count: 0
+        };
+    }
+})</pre>
+      <p>Kết quả thì vẫn như vậy thôi nhưng bạn thấy đấy code HTML của template
+        đã được viết trong phần mã HTML body và có thể thò ra thụt vào rất dễ
+        đọc, đặc biệt với các component phức tạp.</p>
+      <h3>Demo</h3>
+      <p><a href="demo.html">Demo</a> cho các kiến thức ở trên.</p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

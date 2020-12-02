@@ -1,0 +1,502 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="vi-vn" dir="ltr" slick-uniqueid="3" class="firefox firefox51" lang="vi-vn">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+   
+  
+  <meta name="keywords" content="thiet ke web, lap trinh web, lam seo, hoc seo,  online marketing">
+  <meta name="author" content="Mai Thị Mỹ Tuyên">
+  <meta name="description" content="Cẩm nang Dân Web - Làm Web, làm SEO và triển khai chiến dịch Online Marketing.">
+  <meta name="generator" content="Joomla! - Open Source Content Management">
+  <title>[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 8</title>
+  <link href="favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+  <link href="http://danweb.vn/component/search/?Itemid=516&amp;catid=93&amp;id=222&amp;format=opensearch" rel="search" title="Tìm kiếm Dân web" type="application/opensearchdescription+xml">
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+ 
+ 
+ 
+ <!--[if IE 6]><link rel="stylesheet" href="/templates/danweb/css/template.ie6.css" type="text/css" media="screen" /><![endif]-->
+ <!--[if IE 7]><link rel="stylesheet" href="/templates/danweb/css/template.ie7.css" type="text/css" media="screen" /><![endif]-->
+ 
+ 
+ 
+ 
+ 
+  
+
+<link media="all" href="index.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<!--
+ <div id="Basement" style="">
+  
+    <div id="Slideshow">
+      <div id="slice1"><img src="/templates/danweb/images/danweb1.png" alt="keke" />
+      </div>
+      <div id="slice2"><img src="/templates/danweb/images/danweb2.png" alt="keke" />
+      </div>
+     
+    </div>
+ </div>
+   --->
+
+<div id="top_all">
+
+  <div class="menu_chinh">
+	<ul id="login-form">
+		<li>
+			<a href="http://danweb.vn/dang-ky.html">
+			Tạo tài khoản</a>
+		</li>
+		<a href="http://danweb.vn/">|</a>
+		<li>
+			<a href="http://danweb.vn/dang-nhap.html">
+			Đăng nhập</a>
+		</li>
+	</ul>
+<ul class="menu"><li class="item-497"><a href="http://danweb.vn/lien-he.html">Liên hệ</a></li><li class="item-524"><a href="http://danweb.vn/vui-cuoi-it.html">Vui cười IT</a></li><li class="item-496"><a href="http://danweb.vn/faqs.html">FAQs</a></li><li class="item-495"><a href="http://forum.webchuyennghiep.net/" target="_top">Diễn đàn</a></li><li class="item-494"><a href="http://danweb.vn/su-kien.html">Sự kiện</a></li><li class="item-492"><a href="#">Bài viết</a></li><li class="item-491"><a href="#">Tin tức</a></li><li class="item-490"><a href="http://danweb.vn/">Dân web</a></li></ul></div>
+    </div>
+
+
+  <div class="cleared reset-box"></div>
+<div id="art-main">
+    <div class="cleared reset-box"></div>
+  
+<div id="art-header-bg" class="art-header">
+</div>
+<div class="cleared reset-box"></div>
+<div id="art-hmenu-bg" class="art-bar art-nav">
+</div>
+<div class="cleared reset-box"></div>
+<div class="art-box art-sheet">
+    <div class="art-box-body art-sheet-body">
+  <!--st fir-->
+    <div id="mblfireworks2">
+<div class="art-header">
+<div class="art-headerobject">
+<div class="art-nostyle">
+
+
+<div class="custom">
+	<p><a href="http://danweb.vn/"><img src="header-object.png" alt="header-object" width="258" height="130"></a></p></div>
+</div>
+</div>
+<div class="art-logo">
+    <div class="p_search"><form action="http://danweb.vn/lap-trinh-di-dong.html" method="post">
+	<div class="search">
+		<input name="searchword" id="mod-search-searchword" maxlength="20" class="inputbox" size="20" value="Tìm kiếm..." onblur="if (this.value=='') this.value='Tìm kiếm...';" onfocus="if (this.value=='Tìm kiếm...') this.value='';" type="text">	<input name="task" value="search" type="hidden">
+	<input name="option" value="com_search" type="hidden">
+	<input name="Itemid" value="" type="hidden">
+	</div>
+</form>
+</div>
+   
+</div>
+
+</div>
+<!--end head-->
+</div>
+<!--end fir-->
+<div class="cleared reset-box"></div>
+<div class="art-bar art-nav">
+<div class="art-nav-outer">
+      <ul class="art-hmenu"><li class="item-518 deeper parent"><a href="http://danweb.vn/thiet-ke-website.html">Thiết kế website</a><ul><li class="item-482"><a href="http://danweb.vn/thiet-ke-website/html-css.html">HTML &amp; CSS / CSS3</a></li><li class="item-514"><a href="http://danweb.vn/thiet-ke-website/my-thuat-website.html">Mỹ thuật website</a></li><li class="item-481"><a href="http://danweb.vn/thiet-ke-website/giao-dien-web.html">Giao diện web</a></li><li class="item-483"><a href="http://danweb.vn/thiet-ke-website/template-dep.html">Template đẹp</a></li><li class="item-525"><a href="http://danweb.vn/thiet-ke-website/ky-nang-web.html">Kỹ năng web</a></li><li class="item-547"><a href="http://danweb.vn/thiet-ke-website/template-danweb.html">Template Dân web</a></li><li class="item-559"><a href="http://danweb.vn/thiet-ke-website/thiet-ke-flash.html">Thiết kế Flash</a></li></ul></li><li class="item-517 deeper parent"><a href="http://danweb.vn/lap-trinh-website.html">Lập trình website</a><ul><li class="item-485"><a href="http://danweb.vn/lap-trinh-website/php-mysql.html">PHP &amp; MYSQL</a></li><li class="item-486"><a href="http://danweb.vn/lap-trinh-website/lap-trinh-joomla.html">Lập trình Joomla</a></li><li class="item-519"><a href="http://danweb.vn/lap-trinh-website/zend-framework.html">Zend Framework</a></li><li class="item-522"><a href="http://danweb.vn/lap-trinh-website/javascript-jquery.html">Javascript &amp; Jquery</a></li><li class="item-551"><a href="http://danweb.vn/lap-trinh-website/asp-asp-net.html">ASP &amp; ASP.NET</a></li><li class="item-558"><a href="http://danweb.vn/lap-trinh-website/lap-trinh-action-script.html">Lập trình Action Script</a></li></ul></li><li class="item-516 current active deeper parent"><a class=" active" href="http://danweb.vn/lap-trinh-di-dong.html">Lập trình di động</a><ul><li class="item-488"><a href="http://danweb.vn/lap-trinh-di-dong/lap-trinh-android.html">Lập trình Android</a></li><li class="item-521"><a href="http://danweb.vn/lap-trinh-di-dong/lap-trinh-iphone.html">Lập trình Iphone</a></li></ul></li><li class="item-515 deeper parent"><a href="http://danweb.vn/internet-marketing.html">Internet Marketing </a><ul><li class="item-489"><a href="http://danweb.vn/internet-marketing/seo-search-engine-optimization.html">SEO - Search Engine Optimization</a></li><li class="item-520"><a href="http://danweb.vn/internet-marketing/google-adwords.html">Google Adwords</a></li></ul></li><li class="item-523"><a href="http://danweb.vn/hosting-domain.html">Hosting - Domain</a></li><li class="item-533 deeper parent"><a href="http://danweb.vn/video.html">Video</a><ul><li class="item-534"><a title="Hoc Lập trình JQuery Online" href="http://danweb.vn/video/hoc-lap-trinh-jquery-online.html">Học Lập trình JQuery Online</a></li></ul></li><li class="item-531 deeper parent"><a href="http://danweb.vn/su-kien.html">Sự kiện</a><ul><li class="item-613"><a href="http://danweb.vn/su-kien/tim-kiem-tai-nang-thiet-ke-website-viet.html">Tìm kiếm tài năng thiết kế website Việt</a></li><li class="item-527"><a href="http://danweb.vn/su-kien/seoer-hoi-ngo-dinh-cao.html">SEOer - Hội ngộ đỉnh cao 2012</a></li><li class="item-550"><a href="http://danweb.vn/su-kien/viet-slogan-hoang-nguyen.html">Viết Slogan Hoàng Nguyễn</a></li><li class="item-555"><a href="http://danweb.vn/su-kien/lich-su-kien.html">Lịch sự kiện</a></li><li class="item-572"><a href="http://danweb.vn/su-kien/gio-vang.html">Giờ vàng</a></li></ul></li></ul></div>
+</div>
+<div class="cleared reset-box"></div>
+<div class="spcontent"></div>
+<div class="art-layout-wrapper">
+    <div class="art-content-layout">
+        <div class="art-content-layout-row">
+<div class="art-layout-cell art-content">
+
+<div class="bre"><div class="art-box art-post">
+    <div class="art-box-body art-post-body">
+<div class="art-post-inner">
+<div class="art-postcontent">
+
+<div class="breadcrumbs">
+<a href="http://danweb.vn/" class="pathway">Trang chủ</a> <img src="arrow.png" alt=""> <a href="http://danweb.vn/lap-trinh-di-dong.html" class="pathway">Lập trình di động</a></div>
+
+</div>
+<div class="cleared"></div>
+</div>
+
+		<div class="cleared"></div>
+    </div>
+</div>
+</div><div class="item-page"><div class="art-box art-post">
+    <div class="art-box-body art-post-body">
+<div class="art-post-inner">
+<h2 class="art-postheader"><a href="http://danweb.vn/lap-trinh-di-dong/222-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-8.html" class="PostHeader">[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 8</a></h2>
+<div class="art-postcontent">
+<div class="art-article">
+<h1 style="text-align: justify;">&nbsp;</h1>
+<h1 style="text-align: justify;">&nbsp;</h1>
+<h1 style="text-align: justify;">8. Tích hợp vào Android-App</h1>
+<p style="text-align: justify;">Trong phần này chúng ta không đề cập đến vấn đề cài đặt môi trường để phát triển ứng dụng Android. Về cơ bản việc này gồm 4 bước sau.</p>
+<ol style="text-align: justify;">
+<li>Cài Java Platform (JDK)</li>
+<li>Tải về Eclipse</li>
+<li>Tải về Android SDK và cài đặt</li>
+<li>Mở Android SDK Manager và tải Tools và Source</li>
+</ol>
+<h2 style="text-align: justify;">&nbsp;</h2>
+<h2 style="text-align: justify;">8.1 Tạo Project dùng Eclipse</h2>
+<p>Các bước hướng dẫn tiếp sau thực hiện trên Eclipse 4.2 (Junio) được tích hợp Android SDK Tools phiên bản 21.<br> Mở Eclipse, Chọn File à New à Android Project… sẽ hiện ra hộp thoại tạo Project Android, nhập các nội dung như trong hình minh họa sau:<br><img src="h16.jpg" alt="h16" style="display: block; margin-left: auto; margin-right: auto;" width="500" height="354"> Các bạn cũng lưu ý rằng để có thể tạo ứng dụng Android cho phiên bản nào của hệ điều hành Android thì chúng ta cần phải tải API Level tương ứng của phiên bản đấy trong Android SDK Manager trước.<br> Nhấn Next để qua bước tiếp sau như hình minh họa:<br><img src="h17.jpg" alt="h17" style="display: block; margin-left: auto; margin-right: auto;" width="500" height="328"> Như các bạn thấy trong phần Location là nơi chứa toàn bộ mã nguồn của ứng dụng chúng ta sẽ tạo ra. Hãy nhớ đường dẫn này.<br> Ở bước này nhớ check 2 tùy chọn Create custom launcher icon và Create activity. Sau đó nhấn Next để qua bước tiếp sau:<br><img src="h18.jpg" alt="h18" style="display: block; margin-left: auto; margin-right: auto;" width="500" height="412"> Ở bước này cho phép bạn chọn một hình bất kì làm biểu tượng đại diện cho ứng dụng. Bạn browse chọn một hình bất kì rồi cứ thử các chức năng tùy ý để xem các hiển thị khác nhau của biểu tượng sẽ tạo ra. Sau khi có một biểu tượng ưng ý thì nhấn Next để qua bước kế tiếp.<br><img src="h19.jpg" alt="h19" style="display: block; margin-left: auto; margin-right: auto;" width="500" height="498"></p>
+<p>Bước này cho chúng ta chọn kiểu trình bày của màn hình chính của ứng dụng. Chọn loại BlankActivity và nhấn Finish. Perspective Java cho phép chúng ta viết mã cho ứng dụng sẽ hiển thị như sau:<br><img src="h20.jpg" alt="h20" style="display: block; margin-left: auto; margin-right: auto;" width="100%"> Vùng bên trái như trong hình là Panel Package Explorer, cho phép chúng ta quan sát các Project đang thực hiện và cấu trúc tập tin, thư mục của từng Project<br> Vùng bên phải như trong hình là Editor cho phép chúng ta thiết kế layout cho ứng dụng. Như các bạn đang thấy hiện tại nó đang mở tập tin res/layout/activity_main.xml trong ứng dụng của chúng ta. Các bạn lưu ý một điều là Editor này cho phép hiển thị ở chế độ Design (Graphical Layout – Như trong hình trên) và chế độ Code (activity_main.xml).</p>
+<h2 style="text-align: justify;">&nbsp;</h2>
+<h2 style="text-align: justify;">8.2 Tích hợp các tập tin vào resouce của ứng dụng</h2>
+<p style="text-align: justify;">Việc các bạn cần làm tiếp sau là chép toàn bộ các tập tin (HTML + Javascript + CSS) chúng ta đã tạo ở các phần trước vào trong thư mục assets của ứng dụng mới tạo. Xem hình minh họa:</p>
+<table cellspacing="0" cellpadding="0" border="1" align="center">
+<tbody>
+<tr>
+<td width="319" valign="top"><br><img src="h21.jpg" alt="h21" width="300" height="474"></td>
+<td width="319" valign="top">
+<p><img src="h22.jpg" alt="h22" width="300" height="409"></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style="text-align: justify;">HÌnh bên trái minh hoạc cấu trúc của Project khi chúng ta mới tạo ra, thư mục assets hiện đang trống. Hình bên phải là sau khi chúng ta đã chép các tập tin Html, Javascript, Css vào thư mục assets (Chú ý là phải right-click vào thư mục này rồi nhấn Refresh).<br> Một điều các bạn tìm hiểu lập trình Android cũng cần phải nắm được là sau khi Build Project sẽ được đóng gói thành một tập tin .apk (tập tin nhị phân thực thi ứng dụng). Có nghĩa các thành phần sẽ được mã hóa thành mã nhị phân, duy chỉ có các thành phần nằm trong thư mục assets sẽ không bị mã hóa.</p>
+<h2 style="text-align: justify;">&nbsp;</h2>
+<h2 style="text-align: justify;">8.3 Tạo màn hình chính của ứng dụng chứa Webview</h2>
+<h3 style="text-align: justify;">8.3.1 Tạo giao diện bằng xml</h3>
+<p>Hiện tại, trong thư mục res/layout chúng ta có một tập tin xml có tên activity_main.xml, đây là tập tin tạo ra giao diện cho màn hình ứng dụng của chúng ta. Double-click vào nó để mở nó, Chọn chế độ code bằng cách bấm vào tab activity_main.xml (Ngay phía dưới Panel có tên Palette có 2 tab chọn chế độ Design hay Code như hình minh họa sau)<br><img src="h24.jpg" alt="h24" style="display: block; margin-left: auto; margin-right: auto;" width="400" height="195"> Nhập nội dung xml đơn giản như sau:</p>
+<pre class="brush:xml"><webview xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:id="@+id/webView" android:soundeffectsenabled="true" android:overscrollmode="never" android:layout_width="match_parent" android:layout_height="match_parent">
+</webview></pre>
+<p style="text-align: justify;">Như bạn nhận thấy ở đây chúng ta đã đặt một thẻ WebView, thẻ này có thuộc tính android:id mang giá trị là “@+id/webView” hãy nhớ điều này vì chúng ta sẽ cần làm việc với nó ở phần sau.</p>
+<h3 style="text-align: justify;">&nbsp;</h3>
+<h3 style="text-align: justify;">8.3.2 Cơ bản về Activity trong android</h3>
+<p style="text-align: justify;">Việc tiếp sau chúng ta sẽ làm là viết một vài dòng lệnh đơn giản. Mở tập tin MainActivity.java (nằm trong package src/com.hn.danwebdrawing). Mã nguồn hiện tại như sau:</p>
+<pre class="brush:java">package com.hn.danwebdrawing;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+public class MainActivity extends Activity {
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_main, menu);
+		return true;
+	}
+}
+</pre>
+<p style="text-align: justify;">Ở đây các bạn thấy đang cài đặt lớp MainActivity kế thừa từ lớp Activity có sẵn của Android. Đối với Android thì mỗi màn hình hiển thị sẽ được tạo nên từ một đối tượng Activity. Có nghĩa nếu ứng dụng của các bạn có 3 màn hình khác nhau thì chúng ta sẽ phải tạo ra 3 lớp đối tượng khác nhau kế thừa từ lớp đối tượng Activity của Android.</p>
+<h3 style="text-align: justify;">&nbsp;</h3>
+<h3 style="text-align: justify;">8.3.3 Nhúng tập tin dwdrawing.html lên Webview</h3>
+<p style="text-align: justify;">Việc tiếp sau chúng ta sẽ làm bao gồm các bước:</p>
+<ul style="text-align: justify;">
+<li>Lấy về đối tượng WebView tương ứng với thẻ WebView chúng ta đã đặt trong tập tin xml</li>
+<li>Thiết lập để WebView này tải và hiển thị (load) nội dung tập tin dwdrawing.html</li>
+<li>Thiết lập bật tính năng javascript của WebView</li>
+</ul>
+<p style="text-align: justify;">Đoạn mã thực hiện sẽ làm thay đổi phương thức onCreate thành như sau:</p>
+<pre class="brush:java">@Override
+public void onCreate(Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	setContentView(R.layout.activity_main);
+	
+	WebView webView = (WebView) findViewById(R.id.webView);
+	webView.getSettings().setJavaScriptEnabled(true);
+	webView.loadUrl("file:///android_asset/dwdrawing.html");
+}
+</pre>
+<h2 style="text-align: justify;">&nbsp;</h2>
+<h2 style="text-align: justify;">8.4 Đóng gói và cài đặt</h2>
+<p>Để đóng gói ứng dụng chọn Project à Build Project hoặc nhấn F11 đều được. Sau đó mở thư mục con có tên bin nằm trong thư mục project, nếu đã đóng gói thành công chúng ta sẽ thấy xuất hiện tập tin có tên DanwebDrawing.apk. Đây chính là tập tin ứng dụng cuối cùng dùng để cài đặt lên thiết bị Android.<br> Đây là kết quả khi ứng dụng thực thi trên máy tính bảng Samsung Galaxy Tab (Android 3.0).<br><img src="h25.jpg" alt="h25" style="display: block; margin-left: auto; margin-right: auto;" width="600" height="401"><br> Bạn có thể tải tập tin cài đặt tại đây:&nbsp;<a class="doclink" href="http://danweb.vn/component/docman/doc_download/23-danwebdrawing-zip.html?Itemid=">DanwebDrawing.zip</a><br> Bạn có thể tải toàn bộ mã nguồn của Project DanwebDrawing tại đây:&nbsp;<a class="doclink" href="http://danweb.vn/component/docman/doc_download/22-danwebdrawing-project-zip.html?Itemid=">DanwebDrawing-Project.zip</a></p>
+<p style="text-align: right;"><strong><em>&nbsp;</em></strong></p>
+<p style="text-align: right;"><strong><em>Đào Ngọc Giang</em></strong></p><div class="extranews_separator"></div><div class="extranews_box"><h3><strong>Tin mới</strong></h3><div class="extranews_newer"><ul class="newer"><li><a href="http://danweb.vn/lap-trinh-di-dong/246-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-cuoi.html" title="[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài cuối">[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài cuối - <span class="extranews_date">17/12/2012 09:43</span></a></li></ul></div></div><div class="extranews_box"><h3><strong>Các tin khác</strong></h3><div class="extranews_older"><ul class="older"><li><a href="http://danweb.vn/lap-trinh-di-dong/208-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-7.html" title="[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 7">[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 7 - <span class="extranews_date">27/11/2012 09:43</span></a></li><li><a href="http://danweb.vn/lap-trinh-di-dong/207-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-6.html" title="[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 6">[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 6 - <span class="extranews_date">27/11/2012 09:17</span></a></li><li><a href="http://danweb.vn/lap-trinh-di-dong/200-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-5.html" title="[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 5">[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 5 - <span class="extranews_date">23/11/2012 16:57</span></a></li><li><a href="http://danweb.vn/lap-trinh-di-dong/198-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-4.html" title="[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 4">[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 4 - <span class="extranews_date">23/11/2012 15:48</span></a></li><li><a href="http://danweb.vn/lap-trinh-di-dong/190-webapp-tutorial-html5-xay-dung-ung-dung-di-dong-part3.html" title="[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 3">[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 3 - <span class="extranews_date">20/11/2012 16:40</span></a></li></ul></div></div></div>
+<div class="line_jc"></div>
+<div id="jc">
+<div id="comments"><h4>Bình luận <a class="refresh" href="#" title="Làm mới bình luận" onclick="jcomments.showPage(222,'com_content',0);return false;">&nbsp;</a></h4>
+<div id="comments-list" class="comments-list">
+	<div class="even" id="comment-item-177"><div class="rbox"><div class="rbox_tr"><div class="rbox_tl"><div class="rbox_t">&nbsp;</div></div></div><div class="rbox_m">
+<div class="comment-box">
+<span class="comments-vote">
+	<span id="comment-vote-holder-177">
+<a href="#" class="vote-good" title="Bình luận hay!" onclick="jcomments.voteComment(177, 1);return false;"></a><a href="#" class="vote-poor" title="Bình luận dở!" onclick="jcomments.voteComment(177, -1);return false;"></a>
+<span class="vote-none">0</span>
+	</span>
+</span>
+<a class="comment-anchor" href="http://danweb.vn/lap-trinh-di-dong/222-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-8.html#comment-177" id="comment-177">#3</a>
+<span class="comment-author">Trần Hòa</span>
+<span class="comment-date">Thứ 2-09-15 11:15</span>
+<div class="comment-body" id="comment-body-177">Em chào anh!<br>[fv]Em chào anh! Em có thắc mắc về thẻ canvas nếu như ta sét kích thước cho nó là 600x400 rồi thì khi mình add vào trong webview android làm thế nào để nó có thể fix theo size màn hình? hay ta phải sét witdh height cho div canvas theo kích thước màn hình? và giải quết vấn đề này như thế nào vs mutil-screen?[/<span style="font-size: 0px; padding: 0px; margin: 0px;"> </span>fv]</div>
+<span class="comments-buttons">
+<a href="#" onclick="jcomments.quoteComment(177); return false;">Trích dẫn</a>
+</span>
+</div><div class="clear"></div>
+</div><div class="rbox_br"><div class="rbox_bl"><div class="rbox_b">&nbsp;</div></div></div></div>
+</div>
+	<div class="odd" id="comment-item-80"><div class="rbox"><div class="rbox_tr"><div class="rbox_tl"><div class="rbox_t">&nbsp;</div></div></div><div class="rbox_m">
+<div class="comment-box">
+<span class="comments-vote">
+	<span id="comment-vote-holder-80">
+<a href="#" class="vote-good" title="Bình luận hay!" onclick="jcomments.voteComment(80, 1);return false;"></a><a href="#" class="vote-poor" title="Bình luận dở!" onclick="jcomments.voteComment(80, -1);return false;"></a>
+<span class="vote-good">+1</span>
+	</span>
+</span>
+<a class="comment-anchor" href="http://danweb.vn/lap-trinh-di-dong/222-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-8.html#comment-80" id="comment-80">#2</a>
+<span class="comment-author">nta2388</span>
+<span class="comment-date">Thứ 4-04-13 08:25</span>
+<div class="comment-body" id="comment-body-80">Rất cảm ơn vì bài viết rất hay và chi tiết</div>
+<span class="comments-buttons">
+<a href="#" onclick="jcomments.quoteComment(80); return false;">Trích dẫn</a>
+</span>
+</div><div class="clear"></div>
+</div><div class="rbox_br"><div class="rbox_bl"><div class="rbox_b">&nbsp;</div></div></div></div>
+</div>
+	<div class="even" id="comment-item-44"><div class="rbox"><div class="rbox_tr"><div class="rbox_tl"><div class="rbox_t">&nbsp;</div></div></div><div class="rbox_m">
+<div class="comment-box">
+<span class="comments-vote">
+	<span id="comment-vote-holder-44">
+<a href="#" class="vote-good" title="Bình luận hay!" onclick="jcomments.voteComment(44, 1);return false;"></a><a href="#" class="vote-poor" title="Bình luận dở!" onclick="jcomments.voteComment(44, -1);return false;"></a>
+<span class="vote-none">0</span>
+	</span>
+</span>
+<a class="comment-anchor" href="http://danweb.vn/lap-trinh-di-dong/222-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-8.html#comment-44" id="comment-44">#1</a>
+<span class="comment-author">AndyThang</span>
+<span class="comment-date">Thứ 6-02-13 15:13</span>
+<div class="comment-body" id="comment-body-44">Bạn có thể hướng dẫn mình cách add clear canvas button trong trường hợp này không? Mình đã thử nhiều cách nhưng function của button không hoạt động.<br>Thanks</div>
+<span class="comments-buttons">
+<a href="#" onclick="jcomments.quoteComment(44); return false;">Trích dẫn</a>
+</span>
+</div><div class="clear"></div>
+</div><div class="rbox_br"><div class="rbox_bl"><div class="rbox_b">&nbsp;</div></div></div></div>
+</div>
+</div>
+<div id="comments-list-footer"><a class="refresh" href="#" title="Làm mới bình luận" onclick="jcomments.showPage(222,'com_content',0);return false;">Làm mới bình luận</a></div>
+</div>
+<h4>Thêm ý kiến</h4>
+<a id="addcomments" href="#addcomments"></a>
+<form id="comments-form" name="comments-form" action="javascript:void(null);">
+<p>
+	<span>
+		<input id="comments-form-name" name="name" value="" maxlength="20" size="22" tabindex="1" type="text">
+		<label for="comments-form-name">Tên (bắt buộc)</label>
+	</span>
+</p>
+<p>
+	<span>
+		<input id="comments-form-email" name="email" value="" size="22" tabindex="2" type="text">
+		<label for="comments-form-email">E-mail (bắt buộc, nhưng sẽ không hiển thị)</label>
+	</span>
+</p>
+<p>
+	<span>
+		<textarea id="comments-form-comment" name="comment" cols="65" rows="8" tabindex="5"></textarea>
+	</span>
+</p>
+<p>
+	<span>
+		<input class="checkbox" id="comments-form-subscribe" name="subscribe" value="1" tabindex="5" type="checkbox">
+		<label for="comments-form-subscribe">Thông báo cho tôi khi có thảo luận</label><br>
+	</span>
+</p>
+<p>
+	<span>
+		<img class="captcha" onclick="jcomments.clear('captcha');" id="comments-form-captcha-image" src="68733.html" alt="Security code" width="121" height="60"><br>
+		<span class="captcha" onclick="jcomments.clear('captcha');">Làm mới</span><br>
+		<input class="captcha" id="comments-form-captcha" name="captcha_refid" value="" size="5" tabindex="6" type="text"><br>
+	</span>
+</p>
+<div id="comments-form-buttons">
+	<div class="btn" id="comments-form-send"><div><a href="#" tabindex="7" onclick="jcomments.saveComment();return false;" title="Gửi (Ctrl+Enter)">Gửi</a></div></div>
+	<div class="btn" id="comments-form-cancel" style="display: none;"><div><a href="#" tabindex="8" onclick="return false;" title="Hủy bỏ">Hủy bỏ</a></div></div>
+	<div style="clear: both;"></div>
+</div>
+<div>
+	<input name="object_id" value="222" type="hidden">
+	<input name="object_group" value="com_content" type="hidden">
+</div>
+</form>
+
+
+ 
+</div>
+</div>
+<div class="cleared"></div>
+</div>
+
+		<div class="cleared"></div>
+    </div>
+</div>
+</div>
+  <div class="cleared"></div>
+</div>
+<div class="art-layout-cell art-sidebar2">
+        <div class="art-box art-block">
+            <div class="art-box-body art-block-body">
+        
+                        <div class="art-box art-blockcontent">
+            <div class="art-box-body art-blockcontent-body">
+        
+        
+
+<div class="customdk">
+	<p style="margin: 0px;"><a href="http://danweb.vn/bao-gia-seo.html" title="Báo giá Dịch vụ SEO"><br><img src="2.gif" alt="2" width="240" height="150"></a></p></div>
+
+        
+        		<div class="cleared"></div>
+            </div>
+        </div>
+        
+        
+        		<div class="cleared"></div>
+            </div>
+        </div>
+        
+        <div class="art-box art-block">
+            <div class="art-box-body art-block-body">
+        
+                <div class="art-bar art-blockheader">
+            <h3 class="t">
+        Công cụ SEO</h3>
+        </div>
+                <div class="art-box art-blockcontent">
+            <div class="art-box-body art-blockcontent-body">
+        
+        <ul class="menu"><li class="item-584"><a href="http://danweb.vn/bao-gia-seo.html">Báo giá SEO</a></li><li class="item-557"><a href="http://danweb.vn/them-moi-website.html">iSPIN - Đảo nội dung bài viết</a></li><li class="item-571"><a href="http://danweb.vn/internet-marketing/seo-search-engine-optimization/256-huong-dan-su-dung-plugin-ispin.html">Hướng dẫn sử dụng Plugin iSPIN</a></li></ul>
+        
+        		<div class="cleared"></div>
+            </div>
+        </div>
+        
+        
+        		<div class="cleared"></div>
+            </div>
+        </div>
+        
+        <div class="art-box art-block">
+            <div class="art-box-body art-block-body">
+        
+                <div class="art-bar art-blockheader">
+            <h3 class="t">
+        Học SEO tại Hoàng Nguyễn</h3>
+        </div>
+                <div class="art-box art-blockcontent">
+            <div class="art-box-body art-blockcontent-body">
+        
+        
+
+<div class="custom">
+	<p><a href="http://hoangnguyen.edu.vn/khoa-hoc/khoa-hoc-seo-dao-tao-seo-day-seo-web-top-10-google.html" target="_top"><img src="khoa-hoc-seo-hcm.jpg" width="100%"></a><a href="http://tinhocdoanhnghiep.edu.vn/tin-hoc-van-phong-ung-dung-doanh-nghiep.html">Dạy học Tin học Văn phòng Thư ký nâng cao</a></p></div>
+
+        
+        		<div class="cleared"></div>
+            </div>
+        </div>
+        
+        
+        		<div class="cleared"></div>
+            </div>
+        </div>
+        
+        <div class="art-box art-block">
+            <div class="art-box-body art-block-body">
+        
+                <div class="art-bar art-blockheader">
+            <h3 class="t">
+        Thảo luận</h3>
+        </div>
+                <div class="art-box art-blockcontent">
+            <div class="art-box-body art-blockcontent-body">
+        
+        <ul class="jcomments-latest-commented">
+		<li>
+		<a href="http://danweb.vn/thiet-ke-website/html-css/255-mo-hinh-cau-truc-html5.html#comments">
+							Mô hình cấu trúc HTML5&nbsp;(23)
+					</a>
+	</li>
+		<li>
+		<a href="http://danweb.vn/lap-trinh-di-dong/lap-trinh-android/98-su-kien-tren-giao-dien.html#comments">
+							Sự kiện trên giao diện&nbsp;(20)
+					</a>
+	</li>
+		<li>
+		<a href="http://danweb.vn/thiet-ke-website/template-dep/91-12-template-thu-dong.html#comments">
+							12 Template mùa Thu, Đông&nbsp;(4)
+					</a>
+	</li>
+		<li>
+		<a href="http://danweb.vn/lap-trinh-di-dong/190-webapp-tutorial-html5-xay-dung-ung-dung-di-dong-part3.html#comments">
+							[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài 3&nbsp;(6)
+					</a>
+	</li>
+		<li>
+		<a href="http://danweb.vn/lap-trinh-website/php-mysql/278-hieu-sau-ve-bien-trong-php.html#comments">
+							Bạn chẳng biết chút gì về biến trong PHP&nbsp;(5)
+					</a>
+	</li>
+		<li>
+		<a href="http://danweb.vn/lap-trinh-website/javascript-jquery/169-plugin-fancy-box-cua-jquery.html#comments">
+							Plugin Fancy Box của JQuery&nbsp;(4)
+					</a>
+	</li>
+		<li>
+		<a href="http://danweb.vn/thiet-ke-website/template-dep/283-10-trang-web-dep-ky-6.html#comments">
+							10 trang web đẹp - Kỳ 6&nbsp;(11)
+					</a>
+	</li>
+		<li>
+		<a href="http://danweb.vn/thiet-ke-website/giao-dien-web/232-mot-vai-dieu-ban-chua-biet-tu-cong-cu-crop-trong-photoshop.html#comments">
+							Một vài điều bạn chưa biết từ công cụ crop trong photoshop&nbsp;(1)
+					</a>
+	</li>
+		<li>
+		<a href="http://danweb.vn/lap-trinh-website/lap-trinh-joomla/106-template-trong-joomla-1.html#comments">
+							Template trong Joomla (1)&nbsp;(1)
+					</a>
+	</li>
+		<li>
+		<a href="http://danweb.vn/lap-trinh-di-dong/246-webapp-tutorial-xay-dung-ung-dung-di-dong-dung-html5-bai-cuoi.html#comments">
+							[Webapp Tutorial] Xây dựng ứng dụng di động dùng HTML5 - Bài cuối&nbsp;(4)
+					</a>
+	</li>
+	</ul>
+
+        
+        		<div class="cleared"></div>
+            </div>
+        </div>
+        
+        
+        		<div class="cleared"></div>
+            </div>
+        </div>
+        
+        <div class="art-box art-block">
+            <div class="art-box-body art-block-body">
+        
+                <div class="art-bar art-blockheader">
+            <h3 class="t">
+        Facebook</h3>
+        </div>
+                <div class="art-box art-blockcontent">
+            <div class="art-box-body art-blockcontent-body">
+        
+        </div></div></div></div></div></div></div></div></div></div></div></body>
+</html>

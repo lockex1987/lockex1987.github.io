@@ -1,0 +1,118 @@
+@font-face {
+  font-family: 'Dimbo';
+  /*src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/323909/Dimbo_Regular.ttf');*/
+}
+body {
+  text-align: center;
+  font-family: 'Dimbo';
+  /*background: #000;*/
+}
+.wrapper {
+  /*overflow: hidden;*/
+}
+.scrollDown {
+  font-size: 60px;
+  /*min-height: 100vh;*/
+  -webkit-animation: colorCycle 7s infinite ease-in-out;
+  animation: colorCycle 7s infinite ease-in-out;
+}
+.scrollDown:before,
+.scrollDown:after {
+  content: "\2193 \2193";
+  -webkit-animation: flash 1.5s 6;
+  animation: flash 1.5s 6;
+}
+.word {
+  min-height: 80vh;
+}
+.word .letter {
+  display: inline-block;
+  margin: 0 0.2vw;
+  font-size: 8vw;
+}
+.word .letter.color0 {
+  color: #F94816;
+  text-shadow: 0.2vw 0.2vw 0 #731c03;
+}
+.word .letter.color1 {
+  color: #E9D443;
+  text-shadow: 0.2vw 0.2vw 0 #84750f;
+}
+.word .letter.color2 {
+  color: #FD91F7;
+  text-shadow: 0.2vw 0.2vw 0 #f104e3;
+}
+.word .letter.color3 {
+  color: #28963F;
+  text-shadow: 0.2vw 0.2vw 0 #081d0c;
+}
+.word .letter.color4 {
+  color: #E43485;
+  text-shadow: 0.2vw 0.2vw 0 #700f3c;
+}
+.word .letter.color5 {
+  color: #A2E4F2;
+  text-shadow: 0.2vw 0.2vw 0 #1fbbdc;
+}
+.word .letter.color6 {
+  color: #FA476E;
+  text-shadow: 0.2vw 0.2vw 0 #a40427;
+}
+.wow {
+  /*visibility: hidden;*/
+  min-height: 10vh;
+  display: block;
+  margin: 0 auto;
+}
+@-webkit-keyframes colorCycle {
+  0% {
+    color: #F94816;
+  }
+  14.286% {
+    color: #E9D443;
+  }
+  28.572% {
+    color: #FD91F7;
+  }
+  42.858% {
+    color: #28963F;
+  }
+  57.144% {
+    color: #E43485;
+  }
+  71.43% {
+    color: #A2E4F2;
+  }
+  85.716% {
+    color: #FA476E;
+  }
+  100% {
+    color: #F94816;
+  }
+}
+@keyframes colorCycle {
+  0% {
+    color: #F94816;
+  }
+  14.286% {
+    color: #E9D443;
+  }
+  28.572% {
+    color: #FD91F7;
+  }
+  42.858% {
+    color: #28963F;
+  }
+  57.144% {
+    color: #E43485;
+  }
+  71.43% {
+    color: #A2E4F2;
+  }
+  85.716% {
+    color: #FA476E;
+  }
+  100% {
+    color: #F94816;
+  }
+}

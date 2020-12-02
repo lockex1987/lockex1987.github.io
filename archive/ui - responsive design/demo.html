@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Responsive Demo</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<style>
+		div, header, nav, section, aside, footer { border: 1px solid #AAA; margin: 5px; padding: 5px; }
+		#pagewrap { max-width: 960px; margin: 5px auto; }
+		#header { height: 180px; background: rgb(222, 11, 126); }
+		#nav { background: rgb(0, 147, 33); }
+		#content { max-width: 600px; float: left; background: rgb(1, 164, 207); }
+		#sidebar { max-width: 300px; float: right; background: rgb(54, 53, 58); color: #FFF; }
+		#footer { clear: both; background: rgb(255, 241, 0); }
+		
+		/* 980px hoặc nhỏ hơn */
+		@media screen and (max-width: 980px) {
+			#pagewrap { width: 94%; }
+			#content { width: 65%; }
+			#sidebar { width: 30%; }
+		}
+		
+		/* 700px hoặc nhỏ hơn */
+		@media screen and (max-width: 700px) {
+			#content { width: auto; float: none; }
+			#sidebar { width: auto; float: none; }
+		}
+		
+		/*  480px hoặc nhỏ hơn */
+		@media screen and (max-width: 480px) {
+			#header { height: auto; }
+			h1 { font-size: 24px; }
+			#sidebar { display: none; }
+		}
+	</style>
+</head>
+<body>
+	<div id="pagewrap">
+		<header id="header">
+			<h1>Header</h1>
+			<p>Welcome to a responsive website</p>
+		</header>
+		<nav id="nav">
+			Menu navigator
+		</nav>
+		<section id="content">
+			<h2>Content</h2>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis perspiciatis qui ad quaerat ratione. Temporibus possimus, velit dicta fugit, soluta optio, vero accusamus doloribus illo autem tenetur! Recusandae, mollitia quis.</p>
+		</section>
+		<aside id="sidebar">
+			<h3>Sidebar</h3>
+			<p>Lorem ipsum dolor.</p>
+		</aside>
+		<footer id="footer">
+			<h4>Footer</h4>
+		</footer>
+	</div>
+</body>
+</html>

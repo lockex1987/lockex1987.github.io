@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="description" content="Lấy tham số từ dòng lệnh trong Python"/>
+	<meta name="keywords" content="python, command line, argument"/>
+	<meta name="author" content="lockex1987"/>
+	
+	<title>Lấy tham số từ dòng lệnh trong Python</title>
+
+	<link rel="icon" href="../../images/favicon.png"/>
+	<link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body>
+	<article>
+    <h2>Lấy tham số từ dòng lệnh trong Python</h2>
+    <p>Để chạy được chương trình Python, bạn phải thực hiện từ cửa sổ dòng lệnh
+      với cú pháp kiểu như sau:</p>
+    <pre>$ python my_file.py var1 var2 var3</pre>
+    <p>Để lấy được các tham số var1, var2, var3,... chúng ta sử dụng danh sách <code>sys.argv</code>.</p>
+    <div style="color: #d4d4d4;background-color: #1e1e1e;font-family: Consolas, 'Courier New', monospace;font-weight: normal;font-size: 14px;line-height: 19px;white-space: pre;"><div><span
+
+style="color: #c586c0;">import</span><span style="color: #d4d4d4;"> sys</span></div><br><div><span
+
+style="color: #dcdcaa;">print</span><span style="color: #d4d4d4;">(</span><span
+
+style="color: #ce9178;">'Type:'</span><span style="color: #d4d4d4;">, </span><span
+
+style="color: #4ec9b0;">type</span><span style="color: #d4d4d4;">(sys.argv))</span></div><div><span
+
+style="color: #dcdcaa;">print</span><span style="color: #d4d4d4;">(sys.argv)</span><code
+
+class="python"></code><br><code class="python"></code></div></div><p>Ví dụ chúng ta chạy lệnh sau:</p><pre>$ python my_file.py one two "has spaces"</pre><p>Thì kết quả sẽ là:</p><pre>Type: &lt;class 'list'&gt;
+['my_file.py', 'one', 'two', 'has spaces']</pre><p>Chú ý phần tử đầu tiên của danh sách <code>sys.argv</code> là tên file. Do đó để lấy các tham số thì chúng ta bắt đầu lấy từ phần tử thứ hai.</p><p><a
+
+href="my_file.py">Source</a>.</p>
+	</article>
+
+	<script src="../../js/docs.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,57 @@
+.demo-box {
+    background-color: #fff;
+    margin: 2em 0;
+    border: 1px solid #246756;
+    padding: 2em;
+    width: 200px;
+    color: green;
+}
+
+.text-overflow-ellipsis {
+    white-space: nowrap;            
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+  
+.line-clamp-ellipsis {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}
+
+/* mixin for multiline */
+@mixin multiLineEllipsis($lineHeight: 1.2em, $lineCount: 1, $bgColor: white) {
+  overflow: hidden;
+  position: relative;
+  line-height: $lineHeight;
+  max-height: $lineHeight * $lineCount; 
+  text-align: justify;
+  margin-right: -1em;
+  padding-right: 1em;
+  padding-top: 0;
+  padding-bottom: 0;
+
+  // Dấu 3 chấm
+  &:before {
+    content: '...';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+  
+  // Che dấu 3 chấm đi
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+    background: $bgColor;
+  }
+}
+
+.block-with-text {
+  @include multiLineEllipsis($lineHeight: 1.2em, $lineCount: 3, $bgColor: white);  
+}

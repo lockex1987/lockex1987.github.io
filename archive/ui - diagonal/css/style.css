@@ -1,0 +1,31 @@
+h3 { font-size: 18px; font-weight: 500; line-height: 30px; height: 30px; padding: 0px 20px 0px 20px; margin-bottom: 0; color: #FFF; }
+
+.diagonal-by-skew { overflow: hidden; }
+.diagonal-by-skew .diagonal-outer { transform: skewX(30deg) translateX(-12px); display: inline-block; background-color: #0980d7; }
+.diagonal-by-skew .diagonal-outer .diagonal-inner { transform: skewX(-30deg); }
+
+.diagonal-by-gradient-background { background-image: -webkit-linear-gradient(30deg, #0980d7 50%, transparent 50%); }
+
+.diagonal-by-border { display: flex; align-items: flex-end; position: relative; }
+.diagonal-by-border h3 { border-radius: 5px 0px 0px 0px; background-color: #0980d7; }
+.diagonal-by-border::after { content: ' '; 		/* width: 0px; height: 0px; border-right: 18px solid transparent; border-bottom: 29px solid $headingBg;
+		*/ height: 30px; width: 30px; background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M0 0C15 0 15 30 30 30H0Z' fill='rgb(9,128,215)'/%3e%3c/svg%3e"); background-size: cover; }
+
+.heading-bottom { position: relative; /*
+border-bottom: 1px solid $headingBg;
+*/ }
+.heading-bottom::before { content: ' '; position: absolute; top: calc(100% - 1px); width: 100%; height: 1px; background: linear-gradient(90deg, #0980d7 -0.87%, rgba(9, 128, 215, 0) 101.86%); }
+
+.heading-margin { margin-bottom: 1rem; }
+
+.custom-section { position: relative; height: 20rem; overflow: hidden; }
+.custom-section .block { position: absolute; width: 60%; height: 100%; overflow: hidden; }
+.custom-section .block .background { position: absolute; height: 100%; width: 100%; object-fit: cover; }
+.custom-section .block .link { position: absolute; top: 50%; width: 60%; transform: skew(15deg) translateY(-50%); background: rgba(255, 255, 255, 0.9); transition: all 180ms cubic-bezier(0.5, 0, 0.5, 1); }
+.custom-section .block .link:hover, .custom-section .block .link:focus { background: rgba(0, 0, 0, 0.8); color: #FFFFFF; }
+.custom-section .block.-left { left: 0; transform: skew(-15deg) translate(-15%); }
+.custom-section .block.-left .background { transform: skew(15deg) translateX(15%); }
+.custom-section .block.-left .link { right: 0; }
+.custom-section .block.-right { border-left: 3px solid #FFFAFF; right: 0; transform: skew(-15deg) translate(17%); }
+.custom-section .block.-right .background { transform: skew(15deg) translateX(-15%); }
+.custom-section .block.-right .link { left: 0; }

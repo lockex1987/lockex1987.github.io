@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html ng-app="app" class="ng-scope">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+    <!-- Standard Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+      <meta name="description" content="Dạo gần đây nhà mình hay mất mạng, mà ai cũng biết rồi dân IT, Design, Gaming, XXX, mà không có internet thì hỡi ơi cứ như là sống ở thời kì đồ đá....">
+  <meta property="og:title" content="Giá như tạo loading Facebook bằng CSS thật đơn giản!">
+  <meta property="og:site_name" content="kipalog.com">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="http://kipalog.com/posts/Gia-nhu-tao-loading-Facebook-bang-CSS-that-don-gian">
+  <meta property="og:description" content="Dạo gần đây nhà mình hay mất mạng, mà ai cũng biết rồi dân IT, Design, Gaming, XXX, mà không có internet thì hỡi ơi cứ như là sống ở thời kì đồ đá....">
+    <meta property="og:image" content="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/4i0dnfi0me_Screen%20Shot%202017-03-02%20at%2010.31.06%20AM.png">
+
+    <!-- Site Properities -->
+    <title>
+        Giá như tạo loading Facebook bằng CSS thật đơn giản!
+
+    </title>
+    
+      
+  
+  
+  
+  
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+  
+
+    <link href="favicon-70fe7f7a773df88ce80fc2506239715f.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+
+    <!-- GA -->
+    
+    <!-- GA -->
+  
+<link media="all" href="index.css" type="text/css" rel="stylesheet">
+</head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+
+    <header class="master-header ng-scope" ng-controller="HeaderController">
+  <div class="ui transparent inverted main menu page grid">
+    <div class="middle aligned column header-container">
+      <!-- Left -->
+      <!-- Logo -->
+      <p class="logo item">
+        <a href="https://kipalog.com/">
+          <img class="ui image" src="logo-089ee7649acd5dd69ceb7c9dddece3bf.png">
+</a>      </p>
+      <!-- Search filed -->
+      <form id="search-form" class="ui search item ng-pristine ng-valid" method="GET" action="https://kipalog.com/search">
+        <div class="ui icon input">
+          <input id="search-field" name="q" class="focus-popup" placeholder="Tìm kiếm" autocomplete="off" data-content="<span>Nhập từ và </span><div class='enter-button'><span>enter </span><i class='clockwise rotated level down icon'></i></div><span> để bắt đầu tìm kiếm</span>" data-position="bottom center" data-offset="7" value="" type="text">
+        </div>
+      </form>
+
+      <!-- JS variable of logged-in or guest -->
+      <input ng-init="userLoggedIn=true" type="hidden">
+
+      <!-- Logged in header -->
+        <div class="right menu">
+
+          <!-- New post -->
+          <div class="ui simple dropdown item newpost">
+            <a class="main" href="https://kipalog.com/posts/new">
+              <i class="small edit icon"></i>
+              <strong>Viết bài</strong>
+            </a>
+            <i class="triangle down icon">
+            </i>
+            <div class="menu">
+              <div class="head item">
+                Dùng mẫu
+              </div>
+                <a href="https://kipalog.com/posts/new?template_id=1" class="child item">
+                  <i class="file outline icon"></i>
+                  #TIL
+                </a>
+              <div class="head item">
+                Bản nháp
+              </div>
+                <a href="https://kipalog.com/posts/Your-TIL-title-b5d81800-c2ee-45c0-89d8-fe93197e6e87/edit" class="child item">
+                  <i class="text file outline icon"></i>
+                  Your TIL title
+                </a>
+              <a href="https://kipalog.com/posts/drafts" class="all drafts child item">
+                Xem tất cả nháp
+              </a>
+            </div>
+          </div>
+
+          <!-- Search -->
+          <a class="item scale-item search" href="https://kipalog.com/search">
+            <i class="small search icon"></i>
+          </a>
+
+          <!-- Home -->
+          <a class="item home scale-item" href="https://kipalog.com/posts">
+            <i class="small home icon"></i>
+            <strong>Trang chủ</strong>
+</a>
+          <!-- Store -->
+          <a class="item store scale-item" href="https://kipalog.com/posts/store">
+            <i class="small bookmark icon"></i>
+            <strong>Kho log</strong>
+</a>
+          <!-- Profile -->
+          <div class="ui profile right top pointing dropdown item">
+            <div class="ui avatar image">
+              <img class="lazy" src="15070428">
+            </div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              <a class="item" href="https://kipalog.com/users/lockex1987/mypage">
+                <i class="user icon"></i>
+                Trang cá nhân
+</a>              <a class="item" href="https://kipalog.com/users/YRewERx8CVCx155Qt8LzLw">
+                <i class="setting icon"></i>
+                Cài đặt
+</a>              <a class="item signout-able" href="#" url="/users/sign_out">
+                <i class="sign out icon"></i>
+                Đăng xuất
+</a>            </div>
+          </div>
+          <!-- Notification -->
+          <div class="ui notification right top pointing fluid floating dropdown item" ng-click="seeAllNotifications();">
+            <i class="bell icon"></i>
+            <!-- ngIf: unchecked_events_count > 0 -->
+            <div class="menu">
+              <p class="ui dividing header">
+                <span class="clear-all-notify" ng-click="clearAllNotification();">
+                  <i class="checkmark icon"></i>
+                  Đánh dấu đã xem
+                </span>
+                <span class="title">
+                  Thông báo
+                </span>
+              </p>
+              <!-- Notifications -->
+              <!-- ngIf: events.length > 0 --><div ng-if="events.length > 0" class="ui feed segment ng-scope">
+                <!-- Events -->
+                <!-- ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/165460/clear" class="event ng-scope active" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="/assets/common/male_avatar-f0133698a204bbc1684476efffe76f51.png" src="male_avatar-f0133698a204bbc1684476efffe76f51.png">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">hoangduy.nguyen</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã follow bạn.</span>&nbsp;<strong class="ng-binding"></strong>
+                    </div>
+                    <div class="extra ng-binding">1 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/149558/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://avatars.githubusercontent.com/u/18503083?v=3" src="18503083">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Bui Tuan Kiet</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">cũng đã bình luận vào bài viết</span>&nbsp;<strong class="ng-binding">Hướng dẫn sử dụng Markdown trên Kipalog</strong>
+                    </div>
+                    <div class="extra ng-binding">3 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/143044/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/2/000/1d7/22f/343f79f.jpg" src="343f79f.jpg">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">MeoMunm</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">Thực hiện nhiều hàm đồng thời trong Java</strong>
+                    </div>
+                    <div class="extra ng-binding">4 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/140572/clear" class="event ng-scope active" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="/assets/common/male_avatar-f0133698a204bbc1684476efffe76f51.png" src="male_avatar-f0133698a204bbc1684476efffe76f51.png">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Vĩnh Cao</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">Thực hiện nhiều hàm đồng thời trong Java</strong>
+                    </div>
+                    <div class="extra ng-binding">4 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/128387/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://graph.facebook.com/1668941313424046/picture" src="picture">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Lưu Thành Nhựt</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã bình luận bài viết của bạn</span>&nbsp;<strong class="ng-binding">Thực hiện nhiều hàm đồng thời trong Java</strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/128380/clear" class="event ng-scope active" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="/assets/common/male_avatar-f0133698a204bbc1684476efffe76f51.png" src="male_avatar-f0133698a204bbc1684476efffe76f51.png">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">doanhcongnguyen</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">Thực hiện nhiều hàm đồng thời trong Java</strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/125861/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="/assets/common/male_avatar-f0133698a204bbc1684476efffe76f51.png" src="male_avatar-f0133698a204bbc1684476efffe76f51.png">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">trungk18</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã bình luận bài viết của bạn</span>&nbsp;<strong class="ng-binding">CSS Precedence</strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/125386/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://i.imgur.com/98LghYz.png" src="98lghyz.png">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Le Lam</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">Thực hiện nhiều hàm đồng thời trong Java</strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/125007/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://avatars.githubusercontent.com/u/5716943?v=3" src="5716943">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">psucoder</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">Thực hiện nhiều hàm đồng thời trong Java</strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/124612/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://avatars.githubusercontent.com/u/3777785?v=3" src="3777785">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">leviet</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã follow bạn.</span>&nbsp;<strong class="ng-binding"></strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/124611/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://avatars.githubusercontent.com/u/3777785?v=3" src="3777785">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">leviet</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã bình luận bài viết của bạn</span>&nbsp;<strong class="ng-binding">CSS Precedence</strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/124428/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://graph.facebook.com/10211051043174911/picture" src="picture_001.dat">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Nguyen TuanAnh</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã follow bạn.</span>&nbsp;<strong class="ng-binding"></strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/123275/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://avatars.githubusercontent.com/u/5485589?v=3" src="5485589">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Amidamaru Rookie</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã follow bạn.</span>&nbsp;<strong class="ng-binding"></strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/123265/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://avatars.githubusercontent.com/u/1875666?v=3" src="1875666">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Huy Nguyen Quang</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">CSS Precedence</strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/123057/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://graph.facebook.com/904915212908682/picture" src="picture_002.dat">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Shjn Vo</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">CSS Precedence</strong>
+                    </div>
+                    <div class="extra ng-binding">7 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/123036/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://graph.facebook.com/918834964818272/picture?type=large" src="picture_003.dat">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">TranThanh</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">CSS Precedence</strong>
+                    </div>
+                    <div class="extra ng-binding">7 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/122546/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://avatars.githubusercontent.com/u/3525214?v=3" src="3525214">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">linhnv</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">CSS Precedence</strong>
+                    </div>
+                    <div class="extra ng-binding">7 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/122517/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://avatars.githubusercontent.com/u/5460915?v=3" src="5460915">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Zzbaivong</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">CSS Precedence</strong>
+                    </div>
+                    <div class="extra ng-binding">7 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/102913/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/dtkycrfm2t_hrlxd8Jh.png" src="dtkycrfm2t_hrlxd8jh.png">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Vu Nhat Minh</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã viết bài viết mới</span>&nbsp;<strong class="ng-binding">Domain-Driven Design và Microservices Architecture</strong>
+                    </div>
+                    <div class="extra ng-binding">8 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/102433/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/dtkycrfm2t_hrlxd8Jh.png" src="dtkycrfm2t_hrlxd8jh.png">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Vu Nhat Minh</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã viết bài viết mới</span>&nbsp;<strong class="ng-binding">Functor, Applicative, Monad bằng tranh vẽ</strong>
+                    </div>
+                    <div class="extra ng-binding">8 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events -->
+              </div><!-- end ngIf: events.length > 0 -->
+              <!-- No notification -->
+              <!-- ngIf: events.length==0 -->
+              <!-- Tail -->
+              <div class="ui tail segment">
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</header>
+
+    <div class="ui small confirm modal" id="semanticAlert">
+  <i class="close icon"></i>
+  <div class="header">
+    Chú ý
+  </div>
+  <div class="content">
+    <div class="left">
+      <i class="orange warning icon"></i>
+    </div>
+    <div class="right">
+      <p class="message">
+      </p>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui circular orange button">
+      Ok
+    </div>
+  </div>
+</div>
+
+    <main class="master-body" scrollable-to-top="" data-target=".scroll-top">
+      <!-- Facebook SDK -->
+
+
+
+
+
+<!--post delete modal confirmation-->
+<div class="ui small confirm modal" id="postDelete">
+  <i class="close icon"></i>
+  <div class="header">
+    Xóa bài viết
+  </div>
+  <div class="content">
+    <div class="left">
+      <i class="trash icon"></i>
+    </div>
+    <div class="right">
+      <p>
+        Bạn có chắc chắn muốn xóa bài viết này không ?
+      </p>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui circular black button">
+      Không
+    </div>
+    <div class="ui circular positive button">
+      Có
+    </div>
+  </div>
+</div>
+
+<div class="ui small confirm modal" id="commentDelete">
+  <i class="close icon"></i>
+  <div class="header">
+    Xóa bình luận
+  </div>
+  <div class="content">
+    <div class="left">
+      <i class="trash icon"></i>
+    </div>
+    <div class="right">
+      <p>
+        Bạn có chắc chắn muốn xóa bình luận này không ?
+      </p>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui circular black button">
+      Không
+    </div>
+    <div class="ui circular positive button">
+      Có
+    </div>
+  </div>
+</div>
+
+<!-- Join Modal-->
+<div class="ui signin modal join-modal" id="login-modal">
+  <i class="close icon"></i>
+  <div class="ui center aligned teal header pc">
+    Chào bạn! Hãy đăng ký hoặc đăng nhập để tiếp tục nhé!
+  </div>
+  <span class="ui center aligned teal header smartphone">
+    Kipalog
+  </span>
+
+  <div class="content">
+
+    <div class="ui two column middle aligned grid basic segment">
+      <div class="equal height row">
+        <!-- Login column -->
+        <div class="column">
+          <!-- SignIn form - place Sign In URL here -->
+          <form accept-charset="UTF-8" action="https://kipalog.com/users/sign_in" class="ui form segment ng-pristine ng-valid" id="new_user" method="post"><div style="display: none;"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="x609t9CmFUDvLkF17R2RNiNuQ8wo0ZkT7uwJqDvXLmw=" type="hidden"></div>
+            <input id="from" name="from" value="home" type="hidden">
+            <div class="field">
+              <!-- Place Sign Up URL here -->
+              <input id="signUpURL" value="/users" type="hidden">
+            </div>
+            <div class="field">
+              <div class="ui left labeled icon input">
+                <input autofocus="autofocus" id="user_email" name="user[email]" placeholder="Email" value="" type="email">
+                <i class="mail icon"></i>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui left labeled icon input">
+                <input autocomplete="off" id="user_password" name="user[password]" placeholder="Password" type="password">
+                <i class="lock icon"></i>
+              </div>
+            </div>
+            <div class="two fluid ui buttons">
+              <input class="ui teal submit button" id="signin" value="Đăng nhập" type="submit">
+              <div class="or"></div>
+              <input class="ui orange button signup-kick" id="signup" value="Đăng ký" data-target=".ui.form" data-endpoint="#signUpURL" type="submit">
+            </div>
+</form>        <!-- Divider -->
+        <div class="ui horizontal divider">
+          or
+        </div>
+        </div>
+        <!-- Divider -->
+        <div class="ui vertical divider">
+          or
+        </div>
+        <!-- Social column -->
+        <div class="center aligned column">
+          <!-- facebook -->
+          <a class="ui facebook button" href="https://kipalog.com/users/auth/facebook">
+            <i class="facebook icon"></i>
+            facebook
+</a>          <!-- twitter -->
+          <a class="ui twitter button" href="https://kipalog.com/users/auth/twitter">
+            <i class="twitter icon"></i>
+            twitter
+</a>          <!-- github-->
+          <a class="ui black button" href="https://kipalog.com/users/auth/github">
+            <i class="github icon"></i>
+            github
+</a>        </div>
+      </div>
+    </div>
+    <br>
+    <!-- Info message -->
+    <div class="ui message">
+      <p>
+        <i class="info icon"></i>
+        Bạn luôn có thể lựa chọn email hoặc các tài khoản mạng xã hội để đăng nhập hoặc đăng ký.
+      </p>
+    </div>
+    <br>
+  </div>
+</div>
+
+
+<div class="ui divided page grid ng-scope" ng-controller="PostController">
+  <div class="twelve wide column md-col">
+    <!-- Markdown header here -->
+    <h1 class="ui teal block fluid header">
+      <strong>Giá như tạo loading Facebook bằng CSS thật đơn giản!</strong>
+      <div class="tag">
+            <a class="ui label" href="https://kipalog.com/tags/tuds?count=22">
+              tuds
+              <div class="detail">22</div>
+</a>            <a class="ui label" href="https://kipalog.com/tags/clgt?count=1">
+              clgt
+              <div class="detail">1</div>
+</a>            <a class="ui label" href="https://kipalog.com/tags/facebook?count=13">
+              facebook
+              <div class="detail">13</div>
+</a>            <a class="ui label" href="https://kipalog.com/tags/loading?count=1">
+              loading
+              <div class="detail">1</div>
+</a>            <a class="ui label" href="https://kipalog.com/tags/nodeepshit?count=12">
+              nodeepshit
+              <div class="detail">12</div>
+</a>        <!-- Published date -->
+        <div class="published">
+          <a class="ui small avatar image" href="https://kipalog.com/users/tuds/mypage">
+            <img class="lazy" src="avata-smile.jpg">
+</a>          <p class="date">
+            tuds viết ngày 03/03/2017
+          </p>
+        </div>
+      </div>
+    </h1>
+
+    <!-- Markdown content here -->
+    <section id="content" class="ui pilled segment md" ng-non-bindable="">
+      <p>Dạo gần đây nhà mình hay mất mạng, mà ai cũng biết rồi dân IT, Design, Gaming, XXX, mà không có internet thì hỡi ơi cứ như là sống ở thời kì đồ đá.</p>
+
+<p>Nhưng cũng nhờ thế mà tình cờ phát hiện được cái loading hay hay của facebook, twitter, bitbucket ... nếu mạng bạn quá chậm nó sẽ show ra tương tự giống này.</p>
+
+<p><a class="fluidbox fluidbox__instance-1 fluidbox--initialized fluidbox--closed fluidbox--ready" href="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/4i0dnfi0me_Screen%20Shot%202017-03-02%20at%2010.31.06%20AM.png"><div class="fluidbox__wrap" style="z-index: 990;"><img src="4i0dnfi0me_screen@20shot@202017-03-02@20at@2010.31.06@20am.png" alt="alt text" style="opacity: 1;" class="fluidbox__thumb"><div class="fluidbox__ghost" style="width: 616px; height: 358px; top: 0px; left: 0px;"></div></div></a><a></a></p>
+
+<p><a class="fluidbox fluidbox__instance-2 fluidbox--initialized fluidbox--closed fluidbox--ready" href="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/jpoxotnryg_Screen%20Shot%202017-03-02%20at%204.13.50%20PM.png"><div class="fluidbox__wrap" style="z-index: 990;"><img src="jpoxotnryg_screen@20shot@202017-03-02@20at@204.13.50@20pm.png" alt="alt text" style="opacity: 1;" class="fluidbox__thumb"><div class="fluidbox__ghost" style="width: 616px; height: 358px; top: 0px; left: 0px;"></div></div></a><a></a><br>
+Sau đây là chút tò mò và mô phỏng để có được sự nhấp nháy kì lạ đó.</p>
+
+<p>            </p><div class="iframe-wrapper youtube">
+              <iframe allowfullscreen="" src="index_1.html" frameborder="0"></iframe>
+            </div>
+<p></p>
+
+<span id="toc-v-photoshop-c-i-khung"></span><h3 class="ui dividing header">Vẽ Photoshop cái khung</h3>
+
+<p>Bước này chỉ để chảnh chó là biết Photoshop thôi nha, chớ ai dùng gì vẽ cũng được, hoặc đếch cần vẽ cũng chẳng sao :D!</p>
+
+<p><a class="fluidbox fluidbox__instance-3 fluidbox--initialized fluidbox--closed fluidbox--ready" href="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/vfjbxy99p5_Screen%20Shot%202017-03-03%20at%2011.06.34%20AM.png"><div class="fluidbox__wrap" style="z-index: 990;"><img src="vfjbxy99p5_screen@20shot@202017-03-03@20at@2011.06.34@20am.png" alt="alt text" style="opacity: 1;" class="fluidbox__thumb"><div class="fluidbox__ghost" style="width: 616px; height: 457px; top: 0px; left: 0px;"></div></div></a><a></a></p>
+
+<p>Mình chụp cái hình nó lại, mở cái gì đó lên check lại được mấy cái mã màu của nó.<br>
+Cụ thể là:</p>
+
+<ul class="ui list">
+<li>Thumnail: <strong>#f6f7f9</strong>;</li>
+<li>background: <strong>#e9ebee</strong>;</li>
+<li>background line: <strong>#ebedf0</strong>;</li>
+<li>box-shadow: <strong>#d0d1d5</strong>;</li>
+</ul>
+
+<p>còn thiếu màu trắng tinh của <strong>trung tình</strong> cho các box bự.<br>
+Các bác có thắc mắc vụ lấy mã màu gì không? Nói chung các bác lấy mã nào cũng được tại đang chém nên vẽ bậy đó thôi.</p>
+
+<p>Okay, xong vụ lấy mã màu, giờ thì xác định vị trí cũng như kích thước của từng thành phần trong của cái box này.<br>
+<a class="fluidbox fluidbox__instance-4 fluidbox--initialized fluidbox--closed fluidbox--ready" href="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/b816itugz9_Screen%20Shot%202017-03-03%20at%2011.11.55%20AM.png"><div class="fluidbox__wrap" style="z-index: 990;"><img src="b816itugz9_screen@20shot@202017-03-03@20at@2011.11.55@20am.png" alt="alt text" style="opacity: 1;" class="fluidbox__thumb"><div class="fluidbox__ghost" style="width: 616px; height: 428px; top: 0px; left: 0px;"></div></div></a><a></a></p>
+
+<p>Cụ thể là:</p>
+
+<ul class="ui list">
+<li>Thumbnail: 40x40</li>
+<li>Line: height 6px còn width thì tuỳ chỉnh thấy đụp đụp là ổn nhé các bác</li>
+<li>Khoản cách của line: 13px, số hơi xui tí.</li>
+<li>Cái box bự: 520x325.</li>
+</ul>
+
+<p>            </p><div class="iframe-wrapper youtube">
+              <iframe allowfullscreen="" src="index_2.html" frameborder="0"></iframe>
+            </div>
+<p></p>
+
+<p>Thế là có dữ liệu thô rồi, nhào vào phần lên cúc trúc html nào.</p>
+
+<span id="toc-l-n-c-u-tr-c-html"></span><h3 class="ui dividing header">Lên cấu trúc HTML</h3>
+
+<p>Rồi bây giờ chúng ta tạo 1 thưc mục, tạo 1 file tên là <strong>index.html</strong> mở nó lên bằng editor nào mà bạn thích, rồi chiến:<br>
+<a class="fluidbox fluidbox__instance-5 fluidbox--initialized fluidbox--closed fluidbox--ready" href="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/bicnul27yb_Screen%20Shot%202017-03-03%20at%2011.33.20%20AM.png"><div class="fluidbox__wrap" style="z-index: 990;"><img src="bicnul27yb_screen@20shot@202017-03-03@20at@2011.33.20@20am.png" alt="alt text" style="opacity: 1;" class="fluidbox__thumb"><div class="fluidbox__ghost" style="width: 616px; height: 298px; top: 0px; left: 0px;"></div></div></a><a></a></p>
+
+<p>Nghía qua cái box bằng đôi mắt không được <strong>lé</strong> của chúng ta thì các thành phần chính như sao:</p>
+
+<ul class="ui list">
+<li>Cái box to <strong>class="box-loading"</strong>
+</li>
+<li>Cái thumbnail <strong>class="box-thumbnail"</strong>
+</li>
+<li>Có khoản 5 cái line với các kích thước khác nhau nên chúng ta có thể đặt tên là "box-line-xs, -sm, -df, -lg, -lgx"</li>
+</ul>
+
+<pre><code class="ui segment hljs xml"><span class="hljs-doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">html</span> <span class="hljs-attribute">lang</span>=<span class="hljs-value">"en"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">meta</span> <span class="hljs-attribute">charset</span>=<span class="hljs-value">"UTF-8"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">title</span>&gt;</span>Loading-facebook<span class="hljs-tag">&lt;/<span class="hljs-title">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">rel</span>=<span class="hljs-value">"stylesheet"</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"style.css"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"box-loading"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"box-thumbnail"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"box-line-sm"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"box-line-xs"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"box-line-df"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"box-line-lgx"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"box-line-lg"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-title">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">html</span>&gt;</span>
+</code></pre>
+
+<p>            </p><div class="iframe-wrapper youtube">
+              <iframe allowfullscreen="" src="index_3.html" frameborder="0"></iframe>
+            </div>
+<p></p>
+
+<p>Okay vậy là xong rồi cái phần html nhé, quá nhanh và quá huy hiểm.</p>
+
+<span id="toc-l-n-c-u-tr-c-css"></span><h3 class="ui dividing header">Lên cấu trúc CSS</h3>
+
+<p>Đã done html rồi thì bây giờ ta tạo 1 file <strong>style.css</strong> nhé. Để tô màu chơi cho vui thôi.<br>
+Nhớ link vào file html nhé</p>
+
+<pre><code class="ui segment hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">link</span> <span class="hljs-attribute">href</span>=<span class="hljs-value">"style.css"</span>&gt;</span>
+</code></pre>
+
+<p>Sau đó ta mở file style.css và viết vào giống thế lầy.</p>
+
+<pre><code class="ui segment hljs css"><span class="hljs-tag">body</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#e9ebee</span></span></span>;
+<span class="hljs-rule">}</span></span>
+<span class="hljs-class">.box-loading</span> <span class="hljs-rules">{
+    <span class="hljs-rule"><span class="hljs-attribute">background</span>:<span class="hljs-value"> <span class="hljs-hexcolor">#fff</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">height</span>:<span class="hljs-value"> <span class="hljs-number">325px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">width</span>:<span class="hljs-value"> <span class="hljs-number">520px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">display</span>:<span class="hljs-value"> block</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">box-shadow</span>:<span class="hljs-value"> <span class="hljs-number">0</span> <span class="hljs-number">1px</span> <span class="hljs-number">1px</span> <span class="hljs-function">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0.1</span>)</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">-o-box-shadow</span>:<span class="hljs-value"> <span class="hljs-number">0</span> <span class="hljs-number">1px</span> <span class="hljs-number">1px</span> <span class="hljs-function">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0.1</span>)</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">-moz-box-shadow</span>:<span class="hljs-value"> <span class="hljs-number">0</span> <span class="hljs-number">1px</span> <span class="hljs-number">1px</span> <span class="hljs-function">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0.1</span>)</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">-webkit-box-shadow</span>:<span class="hljs-value"> <span class="hljs-number">0</span> <span class="hljs-number">1px</span> <span class="hljs-number">1px</span> <span class="hljs-function">rgba</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0.1</span>)</span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">border-radius</span>:<span class="hljs-value"> <span class="hljs-number">3px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">-o-border-radius</span>:<span class="hljs-value"> <span class="hljs-number">3px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">-moz-border-radius</span>:<span class="hljs-value"> <span class="hljs-number">3px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">-webkit-border-radius</span>:<span class="hljs-value"> <span class="hljs-number">3px</span></span></span>;
+    <span class="hljs-rule"><span class="hljs-attribute">margin</span>:<span class="hljs-value"> <span class="hljs-number">0</span> auto</span></span>;
+<span class="hljs-rule">}</span></span>
+</code></pre>
+
+<p>Để có được kết quả là cái box:<br>
+<a class="fluidbox fluidbox__instance-6 fluidbox--initialized fluidbox--closed fluidbox--ready" href="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/adbekb29q8_Screen%20Shot%202017-03-03%20at%2012.07.33%20PM.png"><div class="fluidbox__wrap" style="z-index: 990;"><img src="adbekb29q8_screen@20shot@202017-03-03@20at@2012.07.33@20pm.png" alt="alt text" style="opacity: 1;" class="fluidbox__thumb"><div class="fluidbox__ghost" style="width: 616px; height: 387px; top: 0px; left: 0px;"></div></div></a><a></a></p>
+
+<blockquote>
+<p>Canh chỉnh box content</p>
+</blockquote>
+
+<p>            </p><div class="iframe-wrapper youtube">
+              <iframe allowfullscreen="" src="index_4.html" frameborder="0"></iframe>
+            </div>
+<p></p>
+
+<p>Phần box-shadow mình viết như thế để nó gần giống với mã màu của cái line trên facebook và cũng như là all device, để vào phần Sass các bạn sẽ thấy thú vị hơn ở chổ này nhé.</p>
+
+<p>Tiếp đến là mấy cái line:</p>
+
+<pre><code class="ui segment hljs groovy">body {
+<span class="hljs-label">    background:</span> #e9ebee;
+}
+<span class="hljs-comment">// cái nào có class là box- thì nó sẽ nhận css</span>
+[<span class="hljs-class"><span class="hljs-keyword">class</span>*="<span class="hljs-title">box</span>-"] {</span>
+<span class="hljs-label">    height:</span> <span class="hljs-number">6</span>px;
+<span class="hljs-label">    width:</span> <span class="hljs-number">400</span>px;
+<span class="hljs-label">    background:</span> #f6f7f9;
+    margin-<span class="hljs-string">bottom:</span> <span class="hljs-number">13</span>px;
+    margin-<span class="hljs-string">right:</span> <span class="hljs-number">5</span>px;
+}
+
+.box-loading {
+<span class="hljs-label">    background:</span> #fff;
+<span class="hljs-label">    height:</span> <span class="hljs-number">305</span>px;
+<span class="hljs-label">    width:</span> <span class="hljs-number">500</span>px;
+<span class="hljs-label">    padding:</span> <span class="hljs-number">10</span>px;
+<span class="hljs-label">    display:</span> block;
+    box-<span class="hljs-string">shadow:</span> <span class="hljs-number">0</span> <span class="hljs-number">1</span>px <span class="hljs-number">1</span>px rgba(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0.1</span>);
+    -o-box-<span class="hljs-string">shadow:</span> <span class="hljs-number">0</span> <span class="hljs-number">1</span>px <span class="hljs-number">1</span>px rgba(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0.1</span>);
+    -moz-box-<span class="hljs-string">shadow:</span> <span class="hljs-number">0</span> <span class="hljs-number">1</span>px <span class="hljs-number">1</span>px rgba(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0.1</span>);
+    -webkit-box-<span class="hljs-string">shadow:</span> <span class="hljs-number">0</span> <span class="hljs-number">1</span>px <span class="hljs-number">1</span>px rgba(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0.1</span>);
+    border-<span class="hljs-string">radius:</span> <span class="hljs-number">3</span>px;
+    -o-border-<span class="hljs-string">radius:</span> <span class="hljs-number">3</span>px;
+    -moz-border-<span class="hljs-string">radius:</span> <span class="hljs-number">3</span>px;
+    -webkit-border-<span class="hljs-string">radius:</span> <span class="hljs-number">3</span>px;
+<span class="hljs-label">    margin:</span> <span class="hljs-number">0</span> auto;
+}
+
+
+.box-thumbnail {
+<span class="hljs-label">    height:</span> <span class="hljs-number">40</span>px;
+<span class="hljs-label">    width:</span> <span class="hljs-number">40</span>px;
+<span class="hljs-label">    float:</span> left;
+    margin-<span class="hljs-string">right:</span> <span class="hljs-number">20</span>px;
+<span class="hljs-label">    display:</span> inline-block;
+}
+<span class="hljs-comment">// chịu khó viết style cho từng line nhé</span>
+.box-line-sm {
+<span class="hljs-label">    width:</span> <span class="hljs-number">120</span>px;
+    margin-<span class="hljs-string">top:</span> <span class="hljs-number">10</span>px;
+    margin-<span class="hljs-string">left:</span> <span class="hljs-number">50</span>px;
+}
+.box-line-xs {
+<span class="hljs-label">    width:</span> <span class="hljs-number">80</span>px;
+    margin-<span class="hljs-string">left:</span> <span class="hljs-number">50</span>px;
+}
+.box-line-df {
+    margin-<span class="hljs-string">top:</span> <span class="hljs-number">30</span>px;
+<span class="hljs-label">    width:</span> <span class="hljs-number">380</span>px;
+}
+.box-line-lg {
+<span class="hljs-label">    width:</span> <span class="hljs-number">200</span>px;
+}
+.box-line-lgx {
+<span class="hljs-label">    width:</span> <span class="hljs-number">450</span>px;
+}
+</code></pre>
+
+<p><a class="fluidbox fluidbox__instance-7 fluidbox--initialized fluidbox--closed fluidbox--ready" href="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/2e5amwtrb6_Screen%20Shot%202017-03-03%20at%204.01.05%20PM.png"><div class="fluidbox__wrap" style="z-index: 990;"><img src="2e5amwtrb6_screen@20shot@202017-03-03@20at@204.01.05@20pm.png" alt="alt text" style="opacity: 1;" class="fluidbox__thumb"><div class="fluidbox__ghost" style="width: 616px; height: 364px; top: 0px; left: 0px;"></div></div></a><a></a></p>
+
+<p>            </p><div class="iframe-wrapper youtube">
+              <iframe allowfullscreen="" src="index_5.html" frameborder="0"></iframe>
+            </div>
+<p></p>
+
+<span id="toc-animation-css-loading"></span><h3 class="ui dividing header">Animation CSS loading</h3>
+
+<p>Các bạn thấy nãy giờ toàn là trò mèo đúng không? Giờ chúng ta mới vào phần trọng tâm của cái loading facebooking</p>
+
+<p>            </p><div class="iframe-wrapper youtube">
+              <iframe allowfullscreen="" src="index_6.html" frameborder="0"></iframe>
+            </div>
+<p></p>
+
+<pre><code class="ui segment hljs actionscript">[<span class="hljs-class"><span class="hljs-keyword">class</span>*="<span class="hljs-title">box</span>-<span class="hljs-title">line</span>"],
+.<span class="hljs-title">box</span>-<span class="hljs-title">thumbnail</span> </span>{
+    animation: timeline; <span class="hljs-comment">// tên của animation để truyền action</span>
+    animation-duration: <span class="hljs-number">1</span>s; <span class="hljs-comment">// thời gian thực thi action</span>
+    animation-timing-<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-type">: linear</span></span>; <span class="hljs-comment">// hiệu ứng cho action, có nhiều lắm thực chất nó là cubic-bezier, ai muốn custom thì xem link này http://cubic-bezier.com</span>
+    animation-iteration-count: infinite; <span class="hljs-comment">// số lần chạy action, mình cho nó vô tận luôn</span>
+    background: linear-gradient(to right, #eeeeee <span class="hljs-number">8</span>%, #dddddd <span class="hljs-number">18</span>%, #eeeeee <span class="hljs-number">33</span>%); <span class="hljs-comment">// gradient cho từng cái line</span>
+    background-size: <span class="hljs-number">800</span>px auto; <span class="hljs-comment">// kích thước của cái bóng mờ mờ (gradient)</span>
+}
+<span class="hljs-comment">// hành động của animation cho nó chạy từ trái sang phải</span>
+@keyframes timeline {
+  <span class="hljs-number">0</span>% {
+    background-position: -<span class="hljs-number">350</span>px <span class="hljs-number">0</span>;
+}
+  <span class="hljs-number">100</span>% {
+    background-position: <span class="hljs-number">400</span>px <span class="hljs-number">0</span>; }
+}
+</code></pre>
+
+<span id="toc-recode-css-th-nh-sass"></span><h3 class="ui dividing header">Recode CSS thành SASS</h3>
+
+<p>Cái này cũng chẳng có gì hấp dẫn lắm, nhưng viết luôn cho bác nào thích chơi với thằng thứ ba thì chơi:<br>
+            </p><div class="iframe-wrapper youtube">
+              <iframe allowfullscreen="" src="index_7.html" frameborder="0"></iframe>
+            </div>
+<p></p>
+
+<pre><code class="ui segment hljs groovy">body {
+<span class="hljs-label">    background:</span> #e9ebee;
+}
+
+[<span class="hljs-class"><span class="hljs-keyword">class</span>*="<span class="hljs-title">box</span>-"] {</span>
+<span class="hljs-label">    height:</span> <span class="hljs-number">6</span>px;
+<span class="hljs-label">    width:</span> <span class="hljs-number">400</span>px;
+<span class="hljs-label">    background:</span> #f6f7f9;
+    margin-<span class="hljs-string">bottom:</span> <span class="hljs-number">13</span>px;
+    margin-<span class="hljs-string">right:</span> <span class="hljs-number">5</span>px;
+}
+<span class="hljs-annotation">@mixin</span> box-shadow($box_shadow) {
+    box-<span class="hljs-string">shadow:</span> $box_shadow;
+    -o-box-<span class="hljs-string">shadow:</span> $box_shadow;
+    -moz-box-<span class="hljs-string">shadow:</span> $box_shadow;
+    -webkit-box-<span class="hljs-string">shadow:</span> $box_shadow;
+}
+<span class="hljs-annotation">@mixin</span> border-radius($border_radius) {
+    border-<span class="hljs-string">radius:</span> $border_radius;
+    -o-border-<span class="hljs-string">radius:</span> $border_radius;
+    -moz-border-<span class="hljs-string">radius:</span> $border_radius;
+    -webkit-border-<span class="hljs-string">radius:</span> $border_radius;
+}
+.box {
+    &amp;-loading {
+<span class="hljs-label">        background:</span> #fff;
+<span class="hljs-label">        height:</span> <span class="hljs-number">305</span>px;
+<span class="hljs-label">        width:</span> <span class="hljs-number">500</span>px;
+<span class="hljs-label">        padding:</span> <span class="hljs-number">10</span>px;
+<span class="hljs-label">        display:</span> block;
+<span class="hljs-label">        margin:</span> <span class="hljs-number">0</span> auto;
+        <span class="hljs-annotation">@include</span> box-shadow(<span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> rgba(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0.1</span>));
+        <span class="hljs-annotation">@include</span> border-radius(<span class="hljs-number">3</span>px);
+    }
+    &amp;-thumbnail {
+<span class="hljs-label">        height:</span> <span class="hljs-number">40</span>px;
+<span class="hljs-label">        width:</span> <span class="hljs-number">40</span>px;
+<span class="hljs-label">        float:</span> left;
+        margin-<span class="hljs-string">right:</span> <span class="hljs-number">20</span>px;
+<span class="hljs-label">        display:</span> inline-block;
+    }
+}
+.box-line {
+    &amp;-sm {
+<span class="hljs-label">        width:</span> <span class="hljs-number">120</span>px;
+        margin-<span class="hljs-string">top:</span> <span class="hljs-number">10</span>px;
+        margin-<span class="hljs-string">left:</span> <span class="hljs-number">50</span>px;
+    }
+    &amp;-xs {
+<span class="hljs-label">        width:</span> <span class="hljs-number">80</span>px;
+        margin-<span class="hljs-string">left:</span> <span class="hljs-number">50</span>px;
+    }
+    &amp;-df {
+        margin-<span class="hljs-string">top:</span> <span class="hljs-number">30</span>px;
+<span class="hljs-label">        width:</span> <span class="hljs-number">380</span>px;
+    }
+    &amp;-lg {
+<span class="hljs-label">        width:</span> <span class="hljs-number">200</span>px;
+    }
+    &amp;-lgx {
+<span class="hljs-label">        width:</span> <span class="hljs-number">450</span>px;
+    }
+}
+
+[<span class="hljs-class"><span class="hljs-keyword">class</span>*="<span class="hljs-title">box</span>-<span class="hljs-title">line</span>"],
+.<span class="hljs-title">box</span>-<span class="hljs-title">thumbnail</span> {</span>
+<span class="hljs-label">    animation:</span> timeline;
+    animation-<span class="hljs-string">duration:</span> <span class="hljs-number">1</span>s;
+    animation-timing-<span class="hljs-string">function:</span> linear;
+    animation-iteration-<span class="hljs-string">count:</span> infinite;
+<span class="hljs-label">    background:</span> linear-gradient(to right, #eeeeee <span class="hljs-number">8</span>%, #dddddd <span class="hljs-number">18</span>%, #eeeeee <span class="hljs-number">33</span>%);
+    background-<span class="hljs-string">size:</span> <span class="hljs-number">800</span>px auto;
+    background-<span class="hljs-string">position:</span> <span class="hljs-number">100</span>px <span class="hljs-number">0</span>;
+}
+<span class="hljs-annotation">@keyframes</span> timeline {
+  <span class="hljs-number">0</span>% {
+    background-<span class="hljs-string">position:</span> -<span class="hljs-number">350</span>px <span class="hljs-number">0</span>;
+}
+  <span class="hljs-number">100</span>% {
+    background-<span class="hljs-string">position:</span> <span class="hljs-number">400</span>px <span class="hljs-number">0</span>; }
+}
+</code></pre>
+
+<p>Các bác có thể xem trên này luôn cho tiện nhá.<br>
+            </p><div class="iframe-wrapper codepen">
+              <iframe src="index_8.html" allowtransparency="true" allowfullscreen="true" frameborder="no"></iframe>
+            </div>
+<p></p>
+
+<span id="toc-l-i-k-t"></span><h3 class="ui dividing header">Lời kết</h3>
+
+<p>Okay thế là có cái loading của facebook rồi, mặt dù là hàng face nhưng hi vọng cũng có thế giúp ít cho bác nào muốn dùng.</p>
+
+<p>Lưu ý:</p>
+
+<p>Bạn nên đọc lại kỹ một chút về các thuộc tính <br>
+<strong>background: linear-gradient, background-size, background-position và các thuộc tính animation, trước khi làm</strong><br>
+Nên tự gõ, đừng copy rồi paste, vì như thế bạn chẳng nhớ gì đâu.</p>
+
+    </section>
+    <!-- Markdown end here -->
+
+    <!-- Social share -->
+    <div class="meta-social-share ng-scope" ng-controller="SocialController">
+      <div class="hidden-meta">
+        <input id="share-url" value="http://kipalog.com/posts/Gia-nhu-tao-loading-Facebook-bang-CSS-that-don-gian" type="hidden">
+        <input id="share-content" value="Giá như tạo loading Facebook bằng CSS thật đơn giản!" type="hidden">
+      </div>
+      <div class="suggest-title">
+        <i class="small forward mail icon"></i>
+        Chia sẻ bài viết với bạn bè nữa nhé!
+      </div>
+      <a class="ui icon small facebook button" ng-click="shareFacebook()">
+        <i class="facebook icon"></i>
+        <span>
+          facebook
+        </span>
+      </a>
+      <a class="ui icon small google plus button" ng-click="share('gg')">
+        <i class="google plus icon"></i>
+        <span>
+          google plus
+        </span>
+      </a>
+      <a class="ui icon small twitter button" ng-click="share('tw')">
+        <i class="twitter icon"></i>
+        <span>
+          twitter
+        </span>
+      </a>
+    </div>
+
+    <!-- Meta -->
+    <div class="hidden-meta">
+      <input ng-init="like_endpoint='/likes'" type="hidden">
+      <input ng-init="unlike_endpoint='/likes/xYdQoMp3gJ4SMwvwI878Aw'" type="hidden">
+      <input ng-init="follow_endpoint='/users/follow'" type="hidden">
+      <input ng-init="unfollow_endpoint='/users/unfollow'" type="hidden">
+      <input ng-init="postId='xYdQoMp3gJ4SMwvwI878Aw'" type="hidden">
+      <input ng-init="other_id='8EQfLtpXq9o2iLK0yW_iLQ'" type="hidden">
+      <input ng-init="like_count=0" type="hidden">
+      <input ng-init="liked=false" type="hidden">
+      <input ng-init="followerCount=55" type="hidden">
+      <input ng-init="userFollowed=false" type="hidden">
+      <input ng-init="userLoggedIn=true" type="hidden">
+      <input ng-init="mentionable_path='/users/mentionable'" type="hidden">
+    </div>
+
+    <!-- Comments -->
+    <div id="cmts" class="ui threaded comments segment ng-scope" ng-controller="CommentController">
+      <div class="ui huge ribbon label">
+        Bình luận
+      </div>
+      <br><br>
+      <!-- ngRepeat: comment in comments -->
+
+      <!-- My comment -->
+      <div class="comment" id="my-comment">
+        <div class="hidden-meta">
+          <input ng-init="isCmtsPreviewing=false" type="hidden">
+          <input ng-init="isCmtsAreaFocused=false" type="hidden">
+        </div>
+        <a class="avatar">
+          <img class="lazy" src="15070428">
+        </a>
+        <form accept-charset="UTF-8" action="https://kipalog.com/posts/Gia-nhu-tao-loading-Facebook-bang-CSS-that-don-gian/comments" class="content ng-pristine ng-valid" id="new_comment" method="post" ng-submit="send_comment($event)"><div style="display: none;"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="x609t9CmFUDvLkF17R2RNiNuQ8wo0ZkT7uwJqDvXLmw=" type="hidden"></div>
+          <!-- ngIf: comment_error -->
+          <i class="large smile icon cmts-emoji"></i>
+          <textarea class="cmts-area ng-pristine ng-untouched ng-valid" id="my-cmts" name="comment[content]" ng-model="content" ng-show="!isCmtsPreviewing" placeholder="Ý kiến (markdown)" spellcheck="false" style="overflow: hidden; overflow-wrap: break-word; height: 67px;"></textarea>
+          <div class="ui raised segment cmts-show ng-hide" ng-show="isCmtsPreviewing"></div>
+          <div class="equal height row cmts-action ng-hide" ng-show="isCmtsAreaFocused">
+            <input value="Gửi" class="ui mini button green submit cmts-reset" data-area=".cmts-area" type="submit">
+            <div class="ui mini button cmts-reset" data-area=".cmts-area">Hủy</div>
+            &nbsp;&nbsp;&nbsp;
+            <div class="ui text shape cmts-pv">
+              <div class="sides">
+                <p class="side pv show-preview active" ng-class="{'active':!isCmtsPreviewing}" data-shape=".ui.text.shape" data-area=".cmts-area" data-show=".cmts-show">Hiển thị thử</p>
+                <p class="side pv hide-pv" ng-class="{'active':isCmtsPreviewing}" data-shape=".ui.text.shape" data-area=".cmts-area" data-show=".cmts-show">Chỉnh sửa</p>
+              </div>
+            </div>
+          </div>
+</form>      </div>
+    </div>
+
+    <!-- Smartphone area -->
+    <div class="ui center aligned basic segment smartphone-area">
+      <a class="ui bigger avatar image" href="https://kipalog.com/users/tuds/mypage">
+        <img class="lazy" src="avata-smile.jpg">
+</a>      <a class="author-name" href="https://kipalog.com/users/tuds/mypage">
+        <h3 class="ui header caption">
+          tuds
+        </h3>
+</a>      <div class="ui two column grid segment">
+        <!-- Info -->
+        <div class="equal height row">
+          <div class="right aligned column">
+            <a href="https://kipalog.com/users/tuds/mypage">31</a>
+            bài viết.
+          </div>
+          <div class="left aligned column">
+            <a href="https://kipalog.com/users/tuds/mypage">55</a>
+            người follow
+          </div>
+        </div>
+        <!-- Button -->
+        <div class="equal height row action-btn">
+          <div class="right aligned column">
+            <div class="ui circular toggle basic button" id="smart-like-button" ng-class="{'active':liked}" ng-click="like()">
+              <i class="icon empty bookmark" ng-class="liked ? 'checkmark' : 'empty bookmark' "></i>
+              <span>Kipalog</span>
+            </div>
+          </div>
+          <div class="left aligned column ng-scope" ng-controller="UserFollowController">
+            <div class="ui circular toggle basic button" ng-class="{'active':userFollowed}" id="smart-follow-button" ng-click="followUser();">
+              <i class="rss icon teal outline" ng-class="{'teal outline':!userFollowed}"></i>
+              <span class="ng-binding">Follow</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Suggest posts list -->
+    <div class="suggest posts list">
+
+      <!-- Same author posts -->
+      <div class="ui huge ribbon label">
+        Cùng một tác giả
+      </div>
+      <div class="ui massive list feed-list">
+        <div class="item">
+          <img class="ui avatar image lazy" src="avata-smile.jpg">
+          <div class="right floated feed-date">
+            25
+            <i class="bookmark icon"></i>
+            5
+            <i class="comment icon"></i>
+          </div>
+          <div class="content">
+            <div class="header">
+              <a href="https://kipalog.com/posts/PSD-sang-HTML-tu-A-den-Z">PSD sang HTML từ A đến Z</a>
+              <div class="tag">
+                <a href="https://kipalog.com/tags/HTML" class="ui label">
+                  HTML
+                </a>
+                <a href="https://kipalog.com/tags/html%2Fcss" class="ui label">
+                  html/css
+                </a>
+                <a href="https://kipalog.com/tags/photoshop" class="ui label">
+                  photoshop
+                </a>
+                <a href="https://kipalog.com/tags/github" class="ui label">
+                  github
+                </a>
+                <a href="https://kipalog.com/tags/nodejs" class="ui label">
+                  nodejs
+                </a>
+              </div>
+            </div>
+            <div class="detail">
+              0.1 Intro  Trong series này các bạn sẽ được tiếp cận từ đầu đến đích việc của một webiste tĩnh được làm như thế lào. Hứa hẹn nhiều điều thầm kính t...
+            </div>
+            <div class="meta">
+              <a href="https://kipalog.com/users/tuds/mypage">
+                tuds
+              </a>
+              viết
+              8 tháng
+              trước
+            </div>
+            <div class="smart-meta">
+              25
+              <i class="bookmark icon"></i>
+              5
+              <i class="comment icon"></i>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="ui avatar image lazy" src="avata-smile.jpg">
+          <div class="right floated feed-date">
+            13
+            <i class="bookmark icon"></i>
+            2
+            <i class="comment icon"></i>
+          </div>
+          <div class="content">
+            <div class="header">
+              <a href="https://kipalog.com/posts/Gia-nhu-toi-biet--vh-----vw--la-vo-chong">Giá như tôi biết "vh" &amp; "vw" là vợ chồng!</a>
+              <div class="tag">
+                <a href="https://kipalog.com/tags/CSS3" class="ui label">
+                  CSS3
+                </a>
+                <a href="https://kipalog.com/tags/tuds" class="ui label">
+                  tuds
+                </a>
+              </div>
+            </div>
+            <div class="detail">
+              Tiêu đề viết cho vui vậy chứ 2 chúng nó ly dị lâu rồi, đứa thì đi theo anh chiều cao vh height, đứa thì cưới chị chiều ngang vw width.  1 vw = 1% c...
+            </div>
+            <div class="meta">
+              <a href="https://kipalog.com/users/tuds/mypage">
+                tuds
+              </a>
+              viết
+              11 tháng
+              trước
+            </div>
+            <div class="smart-meta">
+              13
+              <i class="bookmark icon"></i>
+              2
+              <i class="comment icon"></i>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="ui avatar image lazy" src="avata-smile.jpg">
+          <div class="right floated feed-date">
+            11
+            <i class="bookmark icon"></i>
+            2
+            <i class="comment icon"></i>
+          </div>
+          <div class="content">
+            <div class="header">
+              <a href="https://kipalog.com/posts/Biet-gulp-la-mot-loi-the">Biết gulp là một lợi thế!</a>
+              <div class="tag">
+                <a href="https://kipalog.com/tags/gulp" class="ui label">
+                  gulp
+                </a>
+                <a href="https://kipalog.com/tags/tuds" class="ui label">
+                  tuds
+                </a>
+              </div>
+            </div>
+            <div class="detail">
+              Nhiều khi đọc mấy cái bài tuyển dụng họ viết, biết gulp, biết bootstrap, biết js biết biết ... là một lợi thế.  Nhiều lúc tôi cũng không hiểu nghĩa...
+            </div>
+            <div class="meta">
+              <a href="https://kipalog.com/users/tuds/mypage">
+                tuds
+              </a>
+              viết
+              11 tháng
+              trước
+            </div>
+            <div class="smart-meta">
+              11
+              <i class="bookmark icon"></i>
+              2
+              <i class="comment icon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related posts -->
+      <div class="ui huge ribbon label">
+        Bài viết liên quan
+      </div>
+      <div class="ui massive list feed-list">
+        <div class="item">
+          <img class="ui avatar image lazy" src="picture_004.dat">
+          <div class="right floated feed-date">
+            15
+            <i class="bookmark icon"></i>
+            1
+            <i class="comment icon"></i>
+          </div>
+          <div class="content">
+            <div class="header">
+              <a href="https://kipalog.com/posts/Facebook-Messenger-da-de-lo-du-lieu-ca-nhan-nguoi-dung-nhu-the-nao">Facebook Messenger đã để lộ dữ liệu cá nhân người dùng như thế nào?</a>
+              <div class="tag">
+                <a href="https://kipalog.com/tags/facebook" class="ui label">
+                  facebook
+                </a>
+                <a href="https://kipalog.com/tags/originull" class="ui label">
+                  originull
+                </a>
+                <a href="https://kipalog.com/tags/hacking" class="ui label">
+                  hacking
+                </a>
+              </div>
+            </div>
+            <div class="detail">
+              Một lỗ hổng bảo mật cực kỳ nghiêm trọng, có ảnh hưởng trực tiếp đến quyền riêng tư của khoảng 1 tỷ tài khoản Facebook và có khả năng ảnh hưởng tới ...
+            </div>
+            <div class="meta">
+              <a href="https://kipalog.com/users/HungPV/mypage">
+                Hùng PV
+              </a>
+              viết
+              3 tháng
+              trước
+            </div>
+            <div class="smart-meta">
+              15
+              <i class="bookmark icon"></i>
+              1
+              <i class="comment icon"></i>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="ui avatar image lazy" src="5250117">
+          <div class="right floated feed-date">
+            26
+            <i class="bookmark icon"></i>
+            4
+            <i class="comment icon"></i>
+          </div>
+          <div class="content">
+            <div class="header">
+              <a href="https://kipalog.com/posts/Phan-tich-ma-doc-lay-lan-qua-tin-nhan-tren-Facebook--11-2016">Phân tích mã độc lây lan qua tin nhắn trên Facebook (11/2016)</a>
+              <div class="tag">
+                <a href="https://kipalog.com/tags/facebook" class="ui label">
+                  facebook
+                </a>
+                <a href="https://kipalog.com/tags/malware" class="ui label">
+                  malware
+                </a>
+                <a href="https://kipalog.com/tags/Security" class="ui label">
+                  Security
+                </a>
+                <a href="https://kipalog.com/tags/juno_okyo" class="ui label">
+                  juno_okyo
+                </a>
+              </div>
+            </div>
+            <div class="detail">
+              (Ảnh)  Phân tích mã độc Facebook lây lan qua tin nhắn và hướng dẫn cách ngăn chặn mã độc Facebook tự động gửi tin nhắn cho toàn bộ bạn bè.   Phân t...
+            </div>
+            <div class="meta">
+              <a href="https://kipalog.com/users/juno_okyo/mypage">
+                Juno_okyo
+              </a>
+              viết
+              3 tháng
+              trước
+            </div>
+            <div class="smart-meta">
+              26
+              <i class="bookmark icon"></i>
+              4
+              <i class="comment icon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- From here is right column -->
+  <div class="four wide column meta-col">
+    <div class="sticky" ng-class="{stick:pinStick}">
+      <!-- Info -->
+      <div class="row meta-info">
+        <div class="ui two column middle aligned grid celled segment meta-info">
+          <div class="center aligned column">
+            <span>
+              <a href="https://kipalog.com/posts/Gia-nhu-tao-loading-Facebook-bang-CSS-that-don-gian" class="ng-binding">0</a>
+            </span>
+            <p>kipalog</p>
+          </div>
+          <div class="center aligned column">
+            <span>
+              <a class="go-to-comments ng-binding" data-target="#cmts" href="#">0</a>
+            </span>
+            <p>bình luận</p>
+          </div>
+        </div>
+      </div>
+      <!-- Like -->
+      <div class="row ui circular toggle teal basic fluid button" id="pc-like-button" ng-class="{'active':liked}" ng-click="like()">
+        <i class="left aligned icon bookmark" ng-class="liked ? 'checkmark' : 'bookmark' "></i>
+        <span class="ng-binding">Kipalog</span>
+      </div>
+      <br><br>
+      <!-- Profile -->
+      <div class="row meta-profile item">
+        <a class="left floated ui bigger avatar image" href="https://kipalog.com/users/tuds/mypage">
+          <img class="lazy" src="avata-smile.jpg">
+</a>        <div ng-controller="UserFollowController" class="ng-scope">
+          <div class="right floated ui mini circular toggle basic button" ng-class="{'active':userFollowed}" id="pc-follow-button" ng-click="followUser();">
+            <i class="rss icon teal outline" ng-class="{'teal outline':!userFollowed}"></i>
+            <span class="ng-binding">Follow</span>
+          </div>
+        </div>
+        <div class="info">
+          <div class="name">
+            <a href="https://kipalog.com/users/tuds/mypage">
+              <h3 class="ui header caption">
+              tuds
+              </h3>
+</a>          </div>
+          <div class="extra">
+            <a href="https://kipalog.com/users/tuds/mypage">31</a>
+            bài viết.
+            <br>
+            <a href="https://kipalog.com/users/tuds/mypage">55</a>
+            người follow
+          </div>
+        </div>
+      </div>
+      <!-- Table of content -->
+      <div class="row meta-toc">
+        <p class="toc-title">
+          <i class="green hand right icon"></i>
+          &nbsp;Đầu mục bài viết
+        </p>
+        <div id="toc" class="toc-fly"><ul class="ui link list"><li class="toc-h3 toc-active"><a href="#toc-v-photoshop-c-i-khung">Vẽ Photoshop cái khung</a></li><li class="toc-h3"><a href="#toc-l-n-c-u-tr-c-html">Lên cấu trúc HTML</a></li><li class="toc-h3"><a href="#toc-l-n-c-u-tr-c-css">Lên cấu trúc CSS</a></li><li class="toc-h3"><a href="#toc-animation-css-loading">Animation CSS loading</a></li><li class="toc-h3"><a href="#toc-recode-css-th-nh-sass">Recode CSS thành SASS</a></li><li class="toc-h3"><a href="#toc-l-i-k-t">Lời kết</a></li></ul></div>
+      </div>
+    </div>
+    <!-- Remind popup -->
+    <div class="anonymous-remind-block ng-hide" ng-show="!userLoggedIn">
+      <div class="ui basic segment anonymous remind">
+        <p class="ui dividing header">
+        Vẫn còn nữa!
+          <span id="remind_dismiss" class="dismiss">x</span>
+        </p>
+        <p class="description">
+          Kipalog vẫn còn rất nhiều bài viết hay và chủ đề thú vị chờ bạn khám phá!
+        </p>
+        <a href="https://kipalog.com/" class="ui signup circular green button">
+          Khám phá
+        </a>
+        <a href="https://kipalog.com/users/sign_in" class="signin">
+          Đăng nhập
+        </a>
+      </div>
+    </div>
+    <!-- Remind popup -->
+    <div class="follow-author-remind-block" ng-show="!userFollowed">
+      <div class="ui basic segment follow remind ng-scope" ng-controller="UserFollowController" ng-class="{'dismissed':userFollowed}">
+        <p class="ui dividing header">
+          Follow tác giả
+          <span id="remind_dismiss" class="dismiss">x</span>
+        </p>
+        <p class="description">
+          Nhận thông báo khi có bài viết mới cùng tác giả.
+        </p>
+        <div class="follow author row">
+          <a class="ui avatar image" href="https://kipalog.com/users/tuds/mypage">
+            <img class="lazy" src="avata-smile.jpg">
+</a>          <span class="name">
+            tuds
+          </span>
+          <a class="ui follow circular button" ng-class="{'active':userFollowed}" id="pc-follow-button" ng-click="followUser();">
+            <span class="ng-binding">Follow</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    </main>
+      <!-- Footer -->
+<footer class="master-footer ui page grid">
+  <div class="row">
+    <div class="column">
+      <div class="ui horizontal divider">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve wide main column">
+      <div class="links">
+        <a target="_top" href="http://kipalog.com/tos">
+          Điều khoản
+        </a>
+        <a target="_top" href="https://www.facebook.com/groups/1466126020344500/">
+          Phản hồi
+        </a>
+        <a target="_top" href="https://github.com/Kipalog/Issue-tracker">
+          Yêu cầu
+        </a>
+        <a target="_top" href="https://www.facebook.com/pages/Kipalog/486208978117754">
+          Fanpage
+        </a>
+      </div>
+    </div>
+    <div class="four wide right column">
+      <div class="copyright">
+        <span>
+          Copyright © 2017 Kipalog
+        </span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+
+<textarea tabindex="-1" style="position: absolute; top: -999px; left: 0px; right: auto; bottom: auto; border: 0px none; padding: 0px; box-sizing: content-box; overflow-wrap: break-word; height: 0px ! important; min-height: 0px ! important; overflow: hidden; transition: none 0s ease 0s ; font-family: monospace; font-size: 14.4px; font-weight: 400; font-style: normal; letter-spacing: 0px; text-transform: none; word-spacing: 0px; text-indent: 0px; white-space: pre-wrap; line-height: 18px; width: 491.583px;" class="autosizejs" id="autosizejs"></textarea><div class="atwho-container"><div id="atwho-ground-my-cmts"><div class="atwho-view" id="at-view-58"><ul class="atwho-view-ul"></ul></div><div class="atwho-view" id="at-view-64"><ul class="atwho-view-ul"></ul></div></div></div><div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="fb_xdm_frame_https" allowtransparency="true" allowfullscreen="true" scrolling="no" id="fb_xdm_frame_https" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" style="border: medium none;" src="index_10.html" frameborder="0"></iframe></div></div></div></body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Tọa độ bị lặp</title>
+</head>
+
+<body>
+    <h2>Tọa độ bị lặp</h2>
+    <p>The labels repeat themselves because Highcharts falls on a smaller
+        scales (days, not months), and your date format hides this from you.</p>
+
+    <div id="container-repeatingdates-days" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+    <p>This one stumped me a lot longer than issue #1. I tried various
+        possible solutions, including defining the axis as a ‘category’ axis
+        (don’t go there, you may not come back), but I finally found the
+        solution, again in the <a href="http://api.highcharts.com/highcharts#xAxis.minTickInterval">Highcharts
+            documentation</a>:</p>
+
+    <pre>    // ...
+            xAxis: {
+              // ...
+              minTickInterval: moment.duration(1, 'month').asMiliseconds()
+              // ^^^^^ or whatever your interval is
+            },
+            // ...</pre>
+    
+    <p>And voilà, the beautiful charts you’ve always wanted:</p>
+    <div id="container-repeatingdates-fixed" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script>
+        new Highcharts.Chart('container-repeatingdates-days', {
+            title: {
+                text: 'Issue',
+            },
+            xAxis: {
+                type: 'datetime',
+                minTickInterval: moment.duration(1, 'day').asMilliseconds(),
+                labels: {
+                    formatter: function () {
+                        return moment(this.value).format("YYYY-MM");
+                    }
+                }
+            },
+            series: [{
+                name: 'Those are not months',
+                data: [
+                    [moment('2014-01-01').valueOf(), 7.0],
+                    [moment('2014-02-01').valueOf(), 6.9],
+                    [moment('2014-03-01').valueOf(), 9.5]
+                ]
+            }]
+        });
+
+        new Highcharts.Chart('container-repeatingdates-fixed', {
+            title: {
+                text: 'Fixed',
+            },
+            xAxis: {
+                type: 'datetime',
+                minTickInterval: moment.duration(1, 'month').asMilliseconds(),
+                labels: {
+                    formatter: function () {
+                        return moment(this.value).format("YYYY-MM");
+                    }
+                }
+            },
+            series: [{
+                name: 'Those ARE months',
+                data: [
+                    [moment('2014-01-01').valueOf(), 7.0],
+                    [moment('2014-02-01').valueOf(), 6.9],
+                    [moment('2014-03-01').valueOf(), 9.5]
+                ]
+            }]
+        });
+    </script>
+</body>
+
+</html>

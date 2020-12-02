@@ -1,0 +1,37 @@
+{
+   "background": {
+      "scripts": [
+         "background.js"
+      ]
+   },
+   "browser_action": {
+      "default_icon": {
+         "16": "images/16.png",
+         "19": "images/19.png",
+         "32": "images/32.png",
+         "38": "images/38.png",
+         "48": "images/48.png",
+         "64": "images/64.png"
+      }
+   },
+   "description": "No more CORS error by appending 'Access-Control-Allow-Origin: *' header to local and remote web requests when enabled",
+   "icons": {
+      "128": "images/128.png",
+      "16": "images/16.png",
+      "19": "images/19.png",
+      "32": "images/32.png",
+      "38": "images/38.png",
+      "48": "images/48.png",
+      "64": "images/64.png"
+   },
+   "manifest_version": 2,
+   "name": "CORS Unblock",
+   "permissions": [
+      "storage",
+      "<all_urls>",
+      "webRequest",
+      "webRequestBlocking",
+      "contextMenus"
+   ],
+   "version": "1.0.0"
+}

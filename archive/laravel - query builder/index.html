@@ -1,0 +1,410 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Laravel Query Builder</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Laravel Query Builder">
+ </head> 
+ <body> 
+  <article> 
+   <h2>Database: Query Builder</h2> 
+   <p>Query builder cung cấp một giao thức thuận tiện, linh hoạt cho việc tạo và thực thi các truy vấn dữ liệu. Nó có thể sử dụng để thực hiện hầu hết các tính toán dữ liệu trong ứng dụng của bạn, và làm việc trên tất các các hệ cơ sở dữ liệu được hỗ trợ.</p> 
+   <p>Laravel query builder sử dụng PDO parameter binding để bảo vệ ứng dụng của bạn khỏi SQL injection. Vì vậy không cần phải xử lí các chuỗi khi truyền vào.</p> 
+   <p><a></a></p> 
+   <h2>Retrieving Results</h2> 
+   <h4>Trả về toàn bộ dòng từ một table</h4> 
+   <p>Bạn có thể sử dụng phương thức <code>table</code> trong <code>DB</code> facade để bắt đầu một query. Hàm <code>table</code> trả về một fluent query builder instance với bảng đã cho, cho phép bạn thêm nhiều ràng buộc vào truy vấn và cuối cùng là lấy kết quả bằng hàm <code>get</code>:</p> 
+   <pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+
+class UserController extends Controller
+{
+    /**
+     * Show a list of all of the application's users.
+     *
+     * @return  Response
+     */
+    public function index()
+    {
+        $users = DB::table('users')-&gt;get();
+        return view('user.index', ['users' =&gt; $users]);
+    }
+}</code></pre> 
+   <p>Phương thức <code>get</code> trả về một <code>Illuminate\Support\Collection</code> chứa các kết quả mà mỗi kết quả là một instance của đối tượng PHP <code>StdClass</code>. Bạn có thể truy cập mỗi cột giá trị bằng cách coi cột như là thuộc tính của một object:</p> 
+   <pre><code>foreach ($users as $user) {
+    echo $user-&gt;name;
+}</code></pre> 
+   <h4>Trả về một dòng / cột từ một bảng</h4> 
+   <p>Nếu bạn chỉ cần lấy một dòng từ bảng dữ liệu, bạn có thể sử dụng phương thức <code>first</code>. Phương thức này sẽ trả về một đối tượng <code>StdClass</code>:</p> 
+   <pre><code>$user = DB::table('users')-&gt;where('name', 'John')-&gt;first();
+
+echo $user-&gt;name;</code></pre> 
+   <p>Nếu bạn không cần lấy toàn bộ dòng, bạn có thể lấy ra một giá trị từ một bản ghi sử dụng phương thức <code>value</code>. Phương thức này sẽ trả về giá trị của cột:</p> 
+   <pre><code>$email = DB::table('users')-&gt;where('name', 'John')-&gt;value('email');</code></pre> 
+   <h4>Trả về danh sách giá trị của một cột</h4> 
+   <p>Nếu bạn thích lấy một mảng gồm các giá trị của một cột, bạn có thể sử dụng phương thức <code>pluck</code>. Trong ví dụ này, chúng ta sẽ lấy một mảng gồm các role titles:</p> 
+   <pre><code>$titles = DB::table('roles')-&gt;pluck('title');
+
+foreach ($titles as $title) {
+    echo $title;
+}</code></pre> 
+   <p>Bạn cũng có thể chỉ định một cột key cho mảng trả về:</p> 
+   <pre><code>$roles = DB::table('roles')-&gt;pluck('title', 'name');
+
+foreach ($roles as $name =&gt; $title) {
+    echo $title;
+}</code></pre> 
+   <p><a></a></p> 
+   <h3>Chia nhỏ kết quả một bảng</h3> 
+   <p>Nếu bạn phải làm việc với hàng nghìn bản ghi dữ liệu, hãy xem xét việc sử dụng phương thức <code>chunk</code>. Phương thức này sẽ lấy một "chunk" các kết quả tại một thời điểm, và đưa mỗi chunk vào một <code>Closure</code> để xử lí. Phương thức này vô cùng hữu ích cho việc viết Artisan commands để xử lí hàng nghìn bản ghi. Ví dụ hãy làm việc với toàn bộ bảng <code>users</code> với các chunks 100 bản ghi một lúc:</p> 
+   <pre><code>DB::table('users')-&gt;orderBy('id')-&gt;chunk(100, function($users) {
+    foreach ($users as $user) {
+        //
+    }
+});</code></pre> 
+   <p>Bạn có thể dừng các chunk khác khỏi việc xử lí bằng cách trả về <code>false</code> từ <code>Closure</code>:</p> 
+   <pre><code>DB::table('users')-&gt;orderBy('id')-&gt;chunk(100, function($users) {
+    // Process the records...
+
+    return false;
+});</code></pre> 
+   <p><a></a></p> 
+   <h3>Aggregates</h3> 
+   <p>Query builder cũng cung cấp một tập hợp các phương thức khác nhau, như là <code>count</code>, <code>max</code>, <code>min</code>, <code>avg</code>, và <code>sum</code>. Bạn có thể gọi bất kì phương thức nào sau cấu trúc truy vấn:</p> 
+   <pre><code>$users = DB::table('users')-&gt;count();
+
+$price = DB::table('orders')-&gt;max('price');</code></pre> 
+   <p>Tất nhiên, bạn có thể gộp những phương thức này với các mệnh đề khác để tạo truy vấn:</p> 
+   <pre><code>$price = DB::table('orders')
+                -&gt;where('finalized', 1)
+                -&gt;avg('price');</code></pre> 
+   <p><a></a></p> 
+   <h2>Selects</h2> 
+   <h4>Chỉ định một mệnh đề select</h4> 
+   <p>Tất nhiên, bạn có thể không phải lúc nào cũng muốn lấy toàn bộ các cột từ một bảng. Sử dụng phương thức <code>select</code> bạn có thể chỉ định tùy chọn một mệnh đề <code>select</code> cho truy vấn:</p> 
+   <pre><code>$users = DB::table('users')-&gt;select('name', 'email as user_email')-&gt;get();</code></pre> 
+   <p>Phương thức <code>distinct</code> cho phép bạn bắt buộc truy vấn trả về các kết quả phân biệt:</p> 
+   <pre><code>$users = DB::table('users')-&gt;distinct()-&gt;get();</code></pre> 
+   <p>Nếu bạn đã có sẵn một query builder instance và bạn muốn thêm một cột vào mệnh đề select, bạn có thể sử dụng phương thức <code>addSelect</code>:</p> 
+   <pre><code>$query = DB::table('users')-&gt;select('name');
+
+$users = $query-&gt;addSelect('age')-&gt;get();</code></pre> 
+   <p><a></a></p> 
+   <h2>Raw Expressions</h2> 
+   <p>Đôi khi bạn có thể cần sử dụng một biểu thức trong truy vấn. Những expression này sẽ được đưa vào truy vấn như các chuỗi, vì vậy hãy cẩn thận đừng tạo bất kì lỗi SQL injection nào. Để tạo một raw expression, bạn có thể sử dụng phương thức <code>DB::raw</code>:</p> 
+   <pre><code>$users = DB::table('users')
+                     -&gt;select(DB::raw('count(*) as user_count, status'))
+                     -&gt;where('status', '&lt;&gt;', 1)
+                     -&gt;groupBy('status')
+                     -&gt;get();</code></pre> 
+   <p><a></a></p> 
+   <h2>Joins</h2> 
+   <h4>Inner Join Clause</h4> 
+   <p>Query builder cũng có thể được sử dụng để viết các cú pháp join. Để thực hiện một "inner join" SQL đơn giản, bạn có thể sử dụng phương thức <code>join</code> cho một query builder instance. Tham số được truyền vào đầu tiên trong phương thức <code>join</code> là tên của bảng bạn join đến, trong khi tham số còn lại chỉ định các cột ràng buộc cho việc join. Tất nhiên như bạn có thể thấy, bạn có thể join nhiều bảng trong một truy vấn:</p> 
+   <pre><code>$users = DB::table('users')
+            -&gt;join('contacts', 'users.id', '=', 'contacts.user_id')
+            -&gt;join('orders', 'users.id', '=', 'orders.user_id')
+            -&gt;select('users.*', 'contacts.phone', 'orders.price')
+            -&gt;get();</code></pre> 
+   <h4>Left Join Clause</h4> 
+   <p>Nếu bạn thích thực hiện một "left join" thay vì "inner join", sử dụng phương thức <code>leftJoin</code>. Phương thức <code>leftJoin</code> này có cú pháp giống phương thức <code>join</code>:</p> 
+   <pre><code>$users = DB::table('users')
+            -&gt;leftJoin('posts', 'users.id', '=', 'posts.user_id')
+            -&gt;get();</code></pre> 
+   <h4>Cross Join Clause</h4> 
+   <p>Để thực hiện một "cross join", sử dụng phương thức <code>crossJoin</code> với tên của bảng bạn muốn cross join đến. Cross join sinh ra một cartesion product giữa bảng đầu tiên và bảng bị join.</p> 
+   <pre><code>$users = DB::table('sizes')
+            -&gt;crossJoin('colours')
+            -&gt;get();</code></pre> 
+   <h4>Advanced Join Clauses</h4> 
+   <p>Bạn cũng có thể chỉ định nhiều mệnh đề join nâng cao. Để bắt đầu, truyền một <code>Closure</code> như là tham số thứ 2 vào phương thức <code>join</code>. <code>Closure</code> sẽ nhận một đối tượng <code>JoinClause</code> cái mà cho phép bạn chỉ định các ràng buộc trong mệnh đề <code>join</code>:</p> 
+   <pre><code>DB::table('users')
+        -&gt;join('contacts', function ($join) {
+            $join-&gt;on('users.id', '=', 'contacts.user_id')-&gt;orOn(...);
+        })
+        -&gt;get();</code></pre> 
+   <p>Nếu bạn thích sử dụng mệnh đề "where" trong join, bạn có thể sử dụng phương thức <code>where</code> và <code>orWhere</code> trong join. Thay vì so sánh 2 cột, các phương thức này sẽ so sánh cột với giá trị:</p> 
+   <pre><code>DB::table('users')
+        -&gt;join('contacts', function ($join) {
+            $join-&gt;on('users.id', '=', 'contacts.user_id')
+                 -&gt;where('contacts.user_id', '&gt;', 5);
+        })
+        -&gt;get();</code></pre> 
+   <p><a></a></p> 
+   <h2>Unions</h2> 
+   <p>Query builder cũng cung cấp một cách nhanh chóng để "union" 2 truy vấn với nhau. Ví dụ, bạn có thể tạo một truy vấn khởi tạo, và sau đó sử dụng phương thức <code>union</code> để nối nó vào truy vấn thứ 2:</p> 
+   <pre><code>$first = DB::table('users')
+            -&gt;whereNull('first_name');
+
+$users = DB::table('users')
+            -&gt;whereNull('last_name')
+            -&gt;union($first)
+            -&gt;get();</code></pre> 
+   <p> </p> 
+   <p> </p> 
+   <p> Phương thức <code>unionAll</code> cũng có và có cách sử dụng như <code>union</code>.</p> 
+   <p> </p> 
+   <p><a></a></p> 
+   <h2>Where Clauses</h2> 
+   <h4>Các mệnh đề Wherer đơn giản</h4> 
+   <p>Bạn có thể sử dụng <code>where</code> trong query builder instance để thêm <code>where</code> mệnh đề truy vấn. Hầu hết cách gọi cơ bản <code>where</code> yêu cầu ba tham số. Tham số đầu tiên là tên của cột. Tham số thứ 2 là một toán tử, cái mà có thể là bất kì toán tử nào mà được hỗ trợ bởi cơ sở dữ liệu. Tham số thứ 3 là giá trị để so sánh với cột.</p> 
+   <p>Ví dụ, đây là một truy vấn mà kiểm tra giá trị của cột "votes" bằng 100:</p> 
+   <pre><code>$users = DB::table('users')-&gt;where('votes', '=', 100)-&gt;get();</code></pre> 
+   <p>Để thuận tiện, bạn có thể đơn giản chỉ muốn lấy một cột có giá trị bằng giá trị đã cho, bạn chỉ cần truyền giá trị trực tiếp vào như là tham số thứ 2 vào phương thức <code>where</code>:</p> 
+   <pre><code>$users = DB::table('users')-&gt;where('votes', 100)-&gt;get();</code></pre> 
+   <p>Tất nhiên, bạn có thể sử dụng nhiều toán tử khác khi viết mệnh đề <code>where</code>:</p> 
+   <pre><code>$users = DB::table('users')
+                -&gt;where('votes', '&gt;=', 100)
+                -&gt;get();
+
+$users = DB::table('users')
+                -&gt;where('votes', '&lt;&gt;', 100)
+                -&gt;get();
+
+$users = DB::table('users')
+                -&gt;where('name', 'like', 'T%')
+                -&gt;get();</code></pre> 
+   <p>Bạn có thể truyền vào một mảng điều kiện vào hàm <code>where</code>:</p> 
+   <pre><code>$users = DB::table('users')-&gt;where([
+    ['status', '=', '1'],
+    ['subscribed', '&lt;&gt;', '1'],
+])-&gt;get();</code></pre> 
+   <h4>Cú pháp Or</h4> 
+   <p>Bạn có thể nối tiếp các ràng buộc where cùng nhau, cũng như thêm mệnh đề <code>or</code> vào truy vấn. Phương thức <code>orWhere</code> chấp nhận các đối số giống như <code>where</code>:</p> 
+   <pre><code>$users = DB::table('users')
+                    -&gt;where('votes', '&gt;', 100)
+                    -&gt;orWhere('name', 'John')
+                    -&gt;get();</code></pre> 
+   <h4>Các mệnh đề Where khác</h4> 
+   <p><strong>whereBetween</strong></p> 
+   <p>Phương thức <code>whereBetween</code> kiểm tra giá trị một cột có ở giữa 2 giá trị:</p> 
+   <pre><code>$users = DB::table('users')
+                    -&gt;whereBetween('votes', [1, 100])-&gt;get();</code></pre> 
+   <p><strong>whereNotBetween</strong></p> 
+   <p>Phương thức <code>whereNotBetween</code> kiểm tra giá trị của cột có nằm bên ngoài hai giá trị:</p> 
+   <pre><code>$users = DB::table('users')
+                    -&gt;whereNotBetween('votes', [1, 100])
+                    -&gt;get();</code></pre> 
+   <p><strong>whereIn / whereNotIn</strong></p> 
+   <p>Phương thức <code>whereIn</code> kiểm tra giá trị của cột đã có có thuộc về mảng:</p> 
+   <pre><code>$users = DB::table('users')
+                    -&gt;whereIn('id', [1, 2, 3])
+                    -&gt;get();</code></pre> 
+   <p>Phương thức <code>whereNotIn</code> kiểm tra giá trị của cột có <strong>không</strong> thuộc về mảng:</p> 
+   <pre><code>$users = DB::table('users')
+                    -&gt;whereNotIn('id', [1, 2, 3])
+                    -&gt;get();</code></pre> 
+   <p><strong>whereNull / whereNotNull</strong></p> 
+   <p>Phương thức <code>whereNull</code> kiểm tra giá trị của cột đã có là <code>NULL</code>:</p> 
+   <pre><code>$users = DB::table('users')
+                    -&gt;whereNull('updated_at')
+                    -&gt;get();</code></pre> 
+   <p>Phương thức <code>whereNotNull</code> kiểm tra giá trị của cột có là không <code>NULL</code>:</p> 
+   <pre><code>$users = DB::table('users')
+                    -&gt;whereNotNull('updated_at')
+                    -&gt;get();</code></pre> 
+   <p><strong>whereDate / whereMonth / whereDay / whereYear</strong></p> 
+   <p>Phương thức <code>whereDate</code> sử dụng để kiểm tra giá trị cột giống ngày date:</p> 
+   <pre><code>$users = DB::table('users')
+                -&gt;whereDate('created_at', '2016-10-10')
+                -&gt;get();</code></pre> 
+   <p>Phương thức <code>whereMonth</code> sử dụng để kiểm tra giá trị cột giống ngày date đặc biệt của tháng trong năm:</p> 
+   <pre><code>$users = DB::table('users')
+                -&gt;whereMonth('created_at', '10')
+                -&gt;get();</code></pre> 
+   <p>Phương thức <code>whereDay</code> sử dụng để kiểm tra giá trị cột giống ngày của tháng được truyền vào:</p> 
+   <pre><code>$users = DB::table('users')
+                -&gt;whereDay('created_at', '10')
+                -&gt;get();</code></pre> 
+   <p>Phương thức <code>whereYear</code> sử dụng để kiểm tra giá trị cột giống năm được truyền vào:</p> 
+   <pre><code>$users = DB::table('users')
+                -&gt;whereYear('created_at', '2016')
+                -&gt;get();</code></pre> 
+   <p><strong>whereColumn</strong></p> 
+   <p>Phương thức <code>whereColumn</code> kiểm tra giá trị hai cột bằng nhau:</p> 
+   <pre><code>$users = DB::table('users')
+                -&gt;whereColumn('first_name', 'last_name')
+                -&gt;get();</code></pre> 
+   <p>Bạn cũng có thể truyền một toán tử so sánh vào phương thức:</p> 
+   <pre><code>$users = DB::table('users')
+                -&gt;whereColumn('updated_at', '&gt;', 'created_at')
+                -&gt;get();</code></pre> 
+   <p>Phương thức <code>whereColumn</code> có thể được truyền vào một mảng các điều kiện. Những điều kiện này sẽ được nối với nhau sử dụng toán tử <code>and</code> operator:</p> 
+   <pre><code>$users = DB::table('users')
+                -&gt;whereColumn([
+                    ['first_name', '=', 'last_name'],
+                    ['updated_at', '&gt;', 'created_at']
+                ])-&gt;get();</code></pre> 
+   <p><a></a></p> 
+   <h3>Nhóm tham số</h3> 
+   <p>Đôi khi bạn có thể cần tạo nhiều mệnh đề where nâng cao như "where exists" hoặc nhóm các tham số lồng nhau. Laravel query builder có thể xử lí việc này ok. Để bắt đầu, hãy xem ví dụ sau về việc nhóm các ràng buộc trong ngoặc:</p> 
+   <pre><code>DB::table('users')
+            -&gt;where('name', '=', 'John')
+            -&gt;orWhere(function ($query) {
+                $query-&gt;where('votes', '&gt;', 100)
+                      -&gt;where('title', '&lt;&gt;', 'Admin');
+            })
+            -&gt;get();</code></pre> 
+   <p>Như bạn có thể thấy, truyền một <code>Closure</code> vào trong phương thức <code>orWhere</code> chỉ cho query builder bắt đầu một nhóm ràng buộc. <code>Closure</code> sẽ nhận một query builder instance cái mà bạn có thể sử dụng để thiết lập các ràng buộc mà sẽ được đặt trong trong ngoặc. Ví dụ trên sẽ tạo ra một câu lệnh SQL như sau:</p> 
+   <pre><code>select * from users where name = 'John' or (votes &gt; 100 and title &lt;&gt; 'Admin')</code></pre> 
+   <p><a></a></p> 
+   <h3>Mệnh đề where exists</h3> 
+   <p>Phương thức <code>whereExists</code> cho phép bạn viết các mệnh đề <code>where exists</code>. Phương thức <code>whereExists</code>chấp nhận tham số là một <code>Closure</code> cái mà sẽ nhận một query builder instance cho phép bạn định nghĩa truy vấn mà sẽ được đặt trong mệnh đề:</p> 
+   <pre><code>DB::table('users')
+            -&gt;whereExists(function ($query) {
+                $query-&gt;select(DB::raw(1))
+                      -&gt;from('orders')
+                      -&gt;whereRaw('orders.user_id = users.id');
+            })
+            -&gt;get();</code></pre> 
+   <p>Truy vấn trên sẽ sinh ra đoạn SQL sau:</p> 
+   <pre><code>select * from users
+where exists (
+    select 1 from orders where orders.user_id = users.id
+)</code></pre> 
+   <p><a></a></p> 
+   <h3>Mệnh đề JSON Where</h3> 
+   <p>Laravel hỗ trợ truy vấn với cột kiểu JSON trên database hỗ trợ JSON. Hiện tại, các hỗ trợ này có trong MySQL 5.7 và Postgres. Để truy vấn một cột JSON, sử dụng toán tử <code>-&gt;</code> operator:</p> 
+   <pre><code>$users = DB::table('users')
+                -&gt;where('options-&gt;language', 'en')
+                -&gt;get();
+
+$users = DB::table('users')
+                -&gt;where('preferences-&gt;dining-&gt;meal', 'salad')
+                -&gt;get();</code></pre> 
+   <p><a></a></p> 
+   <h2>Ordering, Grouping, Limit, &amp; Offset</h2> 
+   <h4>orderBy</h4> 
+   <p>Phương thức <code>orderBy</code> cho phép bạn sắp xếp kết quả của truy vấn bởi một cột cho trước. Tham số đầu tiên của phương thức <code>orderBy</code> nên là cột bạn muốn sắp xếp, trong khi tham số thứ 2 là chiểu của sắp xếp và có thể là <code>asc</code> hoặc <code>desc</code>:</p> 
+   <pre><code>$users = DB::table('users')
+                -&gt;orderBy('name', 'desc')
+                -&gt;get();</code></pre> 
+   <h4>inRandomOrder</h4> 
+   <p>Phương thức <code>inRandomOrder</code> có thể được sử dụng để sắp xếp kết quả truy vấn một cách ngẫu nhiên. Ví dụ bạn có thể sử dụng phương thức này để lấy một user ngẫu nhiên:</p> 
+   <pre><code>$randomUser = DB::table('users')
+                -&gt;inRandomOrder()
+                -&gt;first();</code></pre> 
+   <h4>groupBy / having / havingRaw</h4> 
+   <p>Phương thức <code>groupBy</code> và <code>having</code> có thể được sử dụng để nhóm kết quả truy vấn. Phương thức <code>having</code> có cách sử dụng tương tự phương thức <code>where</code>:</p> 
+   <pre><code>$users = DB::table('users')
+                -&gt;groupBy('account_id')
+                -&gt;having('account_id', '&gt;', 100)
+                -&gt;get();</code></pre> 
+   <p>Phương thức <code>havingRaw</code> có thể được sử dụng thiết lập các chuỗi vào mệnh đề <code>having</code>. Ví dụ chúng ta có thể tìm toàn bộ các department mà có sale lớn hơn $2,500:</p> 
+   <pre><code>$users = DB::table('orders')
+                -&gt;select('department', DB::raw('SUM(price) as total_sales'))
+                -&gt;groupBy('department')
+                -&gt;havingRaw('SUM(price) &gt; 2500')
+                -&gt;get();</code></pre> 
+   <h4>skip / take</h4> 
+   <p>Để giới hạn số kết quả trả về từ truy vấn, hoặc bỏ qua một số cho trước các kết quả trong truy vấn <code>skip</code> và <code>take</code>:</p> 
+   <pre><code>$users = DB::table('users')-&gt;skip(10)-&gt;take(5)-&gt;get();</code></pre> 
+   <p>Ngoài ra, bạn có thể sử dụng phương thức <code>limit</code> và <code>offset</code>:</p> 
+   <pre><code>$users = DB::table('users')
+                -&gt;offset(10)
+                -&gt;limit(5)
+                -&gt;get();</code></pre> 
+   <p><a></a></p> 
+   <h2>Conditional Clauses</h2> 
+   <p>Thỉnh thoảng bạn có thể muốnáp dụng cho một truy vấn chỉ khi một cái gì đó đúng. Ví dụ bạn chỉ muốn áp dụng mệnh đề <code>where</code> khi có giá trị nhập vào ở trong trong request đến. Bạn có thể thực hiện điều này bằng cách sử dụng phương thức <code>when</code>:</p> 
+   <pre><code>$role = $request-&gt;input('role');
+
+$users = DB::table('users')
+                -&gt;when($role, function ($query) use ($role) {
+                    return $query-&gt;where('role_id', $role);
+                })
+                -&gt;get();</code></pre> 
+   <p>Phương thức <code>when</code> chỉ thực hiện Closure khi tham số đầu tiên là <code>true</code>. Nếu tham số đầu tiên là <code>false</code>, Closure sẽ không được thực thi.</p> 
+   <p>Bạn có thể truyền một Closure khác như là tham số thứ ba của phương thức <code>when</code>. Closure này sẽ thực thi nếu tham số thứ nhất là <code>false</code>. Để minh họa cách sử dụng tính năng này, chúng ta sẽ cấu hình mặc định sắp xếp một truy vấn:</p> 
+   <pre><code>$sortBy = null;
+
+$users = DB::table('users')
+                -&gt;when($sortBy, function ($query) use ($sortBy) {
+                    return $query-&gt;orderBy($sortBy);
+                }, function ($query) {
+                    return $query-&gt;orderBy('name');
+                })
+                -&gt;get();</code></pre> 
+   <p><a></a></p> 
+   <h2>Inserts</h2> 
+   <p>TQuery builder cũng cung cấp phương thức <code>insert</code> cho việc chèn các bản ghi vào trong bảng. Phương thức <code>insert</code> chấp nhận một mảng tên các cột và giá trị để thêm vào:</p> 
+   <pre><code>DB::table('users')-&gt;insert(
+    ['email' =&gt; 'john@example.com', 'votes' =&gt; 0]
+);</code></pre> 
+   <p>Bạn có thể chèn các bản ghi riêng biệt vào bảng với một lần gọi <code>insert</code> bằng cách truyền vào một mảng các mảng. Mỗi mảng con đại diện cho một dòng sẽ được chèn vào bảng:</p> 
+   <pre><code>DB::table('users')-&gt;insert([
+    ['email' =&gt; 'taylor@example.com', 'votes' =&gt; 0],
+    ['email' =&gt; 'dayle@example.com', 'votes' =&gt; 0]
+]);</code></pre> 
+   <h4>Auto-Incrementing IDs</h4> 
+   <p>Nếu bảng có một id auto-incrementing, sử dụng phương thức <code>insertGetId</code> để thêm vào một bản ghi vào sau đó lấy ID:</p> 
+   <pre><code>$id = DB::table('users')-&gt;insertGetId(
+    ['email' =&gt; 'john@example.com', 'votes' =&gt; 0]
+);</code></pre> 
+   <p></p> Khi sử dụng PostgreSQL phương thức insertGetId coi như cột auto-incrementing sẽ được đặt tên là 
+   <code>id</code>. Nếu bạn thích lấy giá trị ID từ một "sequence" khác, bạn có thể truyền vào the sequence name như là tham số thứ 2 trong phương thức 
+   <code>insertGetId</code>. 
+   <p></p> 
+   <p><a></a></p> 
+   <h2>Updates</h2> 
+   <p>Tất nhiên, ngoài việc chèn thêm bản ghi vào database, query builder cũng có thể cập nhật bản ghi có sẵn bằng cách sử dụng phương thức <code>update</code>. Phương thức <code>update</code> giống như <code>insert</code>, chấp nhận một mảng các cặp cột và giá trị có trong cột để cập nhật. Bạn có thể ràng buộc truy vấn <code>update</code> sử dụng mệnh đề <code>where</code>:</p> 
+   <pre><code>DB::table('users')
+            -&gt;where('id', 1)
+            -&gt;update(['votes' =&gt; 1]);</code></pre> 
+   <p><a></a></p> 
+   <h3>Cập nhật cột JSON</h3> 
+   <p>Khi cập nhật cột JSON, bạn nên sử dụng cú pháp <code>-&gt;</code> để truy cập đến key của đối tượng JSON. Thao tác này chỉ được hỗ trợ trên cơ sở dữ liệu hỗ trợ kiểu JSON:</p> 
+   <pre><code>DB::table('users')
+            -&gt;where('id', 1)
+            -&gt;update(['options-&gt;enabled' =&gt; true]);</code></pre> 
+   <p><a></a></p> 
+   <h3>Increment &amp; Decrement</h3> 
+   <p>Query builder cũng cung cấp các phương thức thuận tiện cho việc tăng hay giảm giá trị của một cột. Đây chỉ đơn giản là một short-cut, cung cấp một interface nhanh chóng và ngắn gọn so với việc viết cú pháp <code>update</code>.</p> 
+   <p>Cả hai phương thức trên đều chấp nhận ít nhất 1 tham số: cột để thay đổi. Một tham số thứ 2 có thể tùy chọn được truyền vào để điều khiển giá trị tăng hay giảm cho cột:</p> 
+   <pre><code>DB::table('users')-&gt;increment('votes');
+
+DB::table('users')-&gt;increment('votes', 5);
+
+DB::table('users')-&gt;decrement('votes');
+
+DB::table('users')-&gt;decrement('votes', 5);</code></pre> 
+   <p>Bạn cũng có thể chỉ định thêm các cột để cập nhật trong khi thực hiện:</p> 
+   <pre><code>DB::table('users')-&gt;increment('votes', 1, ['name' =&gt; 'John']);</code></pre> 
+   <p><a></a></p> 
+   <h2>Deletes</h2> 
+   <p>Tất nhiên, query builder cũng có thể được sử dụng để xóa các bản ghi từ bảng thông qua phương thức <code>delete</code>. Bạn có thể ràng buộc cú pháp <code>delete</code> bằng cách thêm mệnh đề <code>where</code> trước khi gọi phương thức <code>delete</code>:</p> 
+   <pre><code>DB::table('users')-&gt;delete();
+
+DB::table('users')-&gt;where('votes', '&gt;', 100)-&gt;delete();</code></pre> 
+   <p>Nếu bạn muốn truncate toàn bộ bảng, cái mà sẽ xóa toàn bộ các dòng và reset lại auto-incrementing ID về 0, bạn có thể sử dụng phương thức <code>truncate</code>:</p> 
+   <pre><code>DB::table('users')-&gt;truncate();</code></pre> 
+   <p><a></a></p> 
+   <h2>Pessimistic Locking</h2> 
+   <p>Query builder cũng bao gồm các hàm nhỏ để giúp bạn thực hiện "pessimistic locking" trong truy vấn <code>select</code>. Để chạy cú pháp với một "shared lock", bạn có thể sử dụng phương thức <code>sharedLock</code> trong truy vấn. Một shared lock bảo về các dòng được chọn khỏi việc bị thay đổi tới khi transaction của bạn được ủy thác:</p> 
+   <pre><code>DB::table('users')-&gt;where('votes', '&gt;', 100)-&gt;sharedLock()-&gt;get();</code></pre> 
+   <p>Ngoài ra, bạn có thể sử dụng phương thức <code>lockForUpdate</code>. Một "for update" lock bảo về các dòng khỏi việc thay đổi hoặc bị selected bởi các shared lock khác:</p> 
+   <pre><code>DB::table('users')-&gt;where('votes', '&gt;', 100)-&gt;lockForUpdate()-&gt;get();</code></pre> 
+   <div>
+     Nguồn: 
+    <a href="https://laravel.com/docs/5.3/queries">https://laravel.com/docs/5.3/queries</a> 
+   </div> 
+   <div> 
+    <div data-href="https://giaphiep.com/docs/5.3/queries" data-numposts="5" data-order-by="reverse_time"> 
+     <br> 
+    </div> 
+   </div> 
+   <p></p> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p><br> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

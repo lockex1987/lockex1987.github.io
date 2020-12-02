@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery Slim Scroll</title>
+
+    <style>
+        #wrapper {
+            width: 200px;
+        }
+
+        .content {
+            /*max-height: 300px;*/
+            overflow: auto;
+            margin: 26px;
+            /*float: left;*/
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="div1" class="content">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet repellendus illo delectus sit ullam nulla
+            odit. Repudiandae ipsam voluptas, quo ducimus molestiae vero quod explicabo recusandae aut, natus sed vitae?
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet repellendus illo delectus sit ullam nulla
+            odit. Repudiandae ipsam voluptas, quo ducimus molestiae vero quod explicabo recusandae aut, natus sed vitae?
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet repellendus illo delectus sit ullam nulla
+            odit. Repudiandae ipsam voluptas, quo ducimus molestiae vero quod explicabo recusandae aut, natus sed vitae?
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet repellendus illo delectus sit ullam nulla
+            odit. Repudiandae ipsam voluptas, quo ducimus molestiae vero quod explicabo recusandae aut, natus sed vitae?
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet repellendus illo delectus sit ullam nulla
+            odit. Repudiandae ipsam voluptas, quo ducimus molestiae vero quod explicabo recusandae aut, natus sed vitae?
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet repellendus illo delectus sit ullam nulla
+            odit. Repudiandae ipsam voluptas, quo ducimus molestiae vero quod explicabo recusandae aut, natus sed vitae?
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet repellendus illo delectus sit ullam nulla
+            odit. Repudiandae ipsam voluptas, quo ducimus molestiae vero quod explicabo recusandae aut, natus sed vitae?
+        </div>
+
+        <br />
+        <br />
+
+        <div id="div2" class="content">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet repellendus illo delectus sit ullam nulla
+            odit. Repudiandae ipsam voluptas, quo ducimus molestiae vero quod explicabo recusandae aut, natus sed vitae?
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet repellendus illo delectus sit ullam nulla
+            odit. Repudiandae ipsam voluptas, quo ducimus molestiae vero quod explicabo recusandae aut, natus sed vitae?
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet repellendus illo delectus sit ullam nulla
+            odit. Repudiandae ipsam voluptas, quo ducimus molestiae vero quod explicabo recusandae aut, natus sed vitae?
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet repellendus illo delectus sit ullam nulla
+            odit. Repudiandae ipsam voluptas, quo ducimus molestiae vero quod explicabo recusandae aut, natus sed vitae?
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet repellendus illo delectus sit ullam nulla
+            odit. Repudiandae ipsam voluptas, quo ducimus molestiae vero quod explicabo recusandae aut, natus sed vitae?
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet repellendus illo delectus sit ullam nulla
+            odit. Repudiandae ipsam voluptas, quo ducimus molestiae vero quod explicabo recusandae aut, natus sed vitae?
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet repellendus illo delectus sit ullam nulla
+            odit. Repudiandae ipsam voluptas, quo ducimus molestiae vero quod explicabo recusandae aut, natus sed vitae?
+        </div>
+    </div>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.slimscroll.js"></script>
+    <script>
+        // http://rocha.la/jQuery-slimScroll
+        $(function () {
+            $('#div1').slimScroll({
+                height: '250px'
+            });
+
+            $('#div2').slimScroll({
+                position: 'left',
+                height: '150px',
+                railVisible: true,
+                alwaysVisible: true
+            });
+        });
+    </script>
+</body>
+
+</html>

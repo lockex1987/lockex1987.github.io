@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="floor, blueprint">
+    <title>Thiết kế nhà 2 tầng</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,600">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="css/design.css">
+  </head>
+  <body class="no-float-button">
+    <article class="mw-none ">
+      <h2>Thiết kế nhà 2 tầng</h2>
+      <p>Tiêu chí:</p>
+      <ul>
+        <li>Đơn giản, tiện dụng</li>
+        <li>Đầy đủ chức năng</li>
+      </ul>
+      <h3>Công năng</h3>
+      <ul>
+        <li>1 phòng khách kết hợp phòng thờ</li>
+        <li>3 phòng ngủ</li>
+        <li>1 bếp</li>
+        <li>1 nhà tắm + nhà vệ sinh</li>
+        <li>1 phòng học (phòng ngủ dự trữ)</li>
+        <li>1 gác xép chống nóng và chứa đồ</li>
+        <ul>
+          <li>gác xép trên nhà tắm</li>
+          <li>tủ sách (tủ đồ) dưới gầm cầu thang</li>
+        </ul>
+      </ul>
+      <h3>Tổng quan</h3>
+      <div class="position-relative mb-3 border" style="width: 1100px; height: 400px;">
+        <div class="position-absolute bg-info" style="top: 0px; left: 25px; width: 400px; height: 300px;">
+          <div class="label" style="top: 30px; left: 30px;">Nhà</div>
+        </div>
+        <div class="position-absolute bg-warning" style="top: 0px; left: 425px; width: 250px; height: 150px;">
+          <div class="label" style="top: 30px; left: 30px;">Vườn 1</div>
+        </div>
+        <div class="position-absolute bg-danger" style="top: 0px; left: 675px; width: 100px; height: 150px;">
+          <div class="label text-white" style="top: 30px; left: 30px;">Lán</div>
+        </div>
+        <div class="position-absolute bg-warning" style="top: 0px; left: 775px; width: 325px; height: 400px;">
+          <div class="label" style="top: 30px; left: 30px;">Vườn 2</div>
+        </div>
+        <div class="position-absolute bg-white border-bottom" style="top: 300px; left: 25px; width: 400px; height: 100px;">
+          <div class="label" style="top: 30px; left: 30px;">Cổng</div>
+        </div>
+        <div class="position-absolute bg-white border-bottom" style="top: 150px; left: 425px; width: 350px; height: 250px;">
+          <div class="label" style="top: 30px; left: 30px;">Sân</div>
+        </div>
+        <div class="position-absolute bg-primary border-bottom" style="bottom: 0px; left: 695px; width: 80px; height: 50px;">
+          <div class="label text-white" style="top: 20px; left: 30px;">Rửa</div>
+        </div>
+      </div>
+      <h3>Tầng 1</h3>
+      <div class="position-relative mb-3" style="width: 1100px; height: 800px;">
+        <!-- Tường bao quanh cả nhà -->
+        <div class="wall-hor" style="top: 0; left: 0; width: 1100px;"></div>
+        <div class="wall-ver" style="top: 0; left: 0; height: 800px;"></div>
+        <div class="wall-ver" style="top: 0; right: 0; height: 800px;"></div>
+        <div class="wall-hor" style="bottom: 0; left: 0; width: 1100px;"></div>
+        <!-- Phòng ngủ 1 -->
+        <div class="position-absolute" style="top: 25px; left: 25px; width: 400px; height: 300px;">
+          <!-- Tường bao quanh phòng -->
+          <div class="wall-hor" style="bottom: -25px; left: 0; width: 425px;"></div>
+          <div class="wall-ver" style="top: 0; right: -25px; height: 325px;"></div>
+          <!-- Cửa -->
+          <div class="door" style="right: 0px; bottom: -25px; transform: rotate(-90deg);"></div>
+          <!-- Cửa sổ -->
+          <div class="window-ver" style="left: -25px; height: 160px; top: 70px;"></div>
+          <!-- Nhãn -->
+          <div class="label" style="top: 30px; left: 30px;" data-toggle="tooltip"
+
+            title="Phòng ngủ của ông">Bedroom #1</div>
+          <!-- Ổ cắm điện -->
+          <div class="outlet" style="top: -16px; left: 50px;"></div>
+          <div class="outlet" style="bottom: -16px; right: 120px;"></div>
+          <div class="outlet" style="top: 175px; right: -16px;"></div>
+          <div class="outlet" style="bottom: 75px; left: -16px;"></div>
+          <!-- Giường -->
+          <div class="bed furniture" style="right: 0px; top: 0px;">
+            <div class="pillow" style="right: 5px; top: 50%; transform: translateY(-50%);"></div>
+          </div>
+          <div class="computer-table furniture" style="left: 0; bottom: 0px;" data-toggle="tooltip"
+
+            title="Bàn máy tính"></div>
+          <div class="wardrobe-1 furniture" style="left: 100px; bottom: 0px;" data-toggle="tooltip"
+
+            title="Tủ quần áo gỗ"></div>
+        </div>
+        <!-- Cầu thang -->
+        <div class="position-absolute bg-info" style="top: 25px; left: 450px; width: 200px; height: 300px;">
+          <!-- Cửa sổ -->
+          <div class="window-hor" style="top: -25px; width: 160px; left: 25px;"></div>
+          <!-- Nhãn -->
+          <div class="label" style="top: 30px; left: 85px;" data-toggle="tooltip"
+
+            title="Cầu thang">Stair</div>
+        </div>
+        <!-- Phòng ngủ 2 -->
+        <div class="position-absolute" style="top: 25px; right: 25px; width: 400px; height: 300px;">
+          <!-- Tường bao quanh phòng -->
+          <div class="wall-hor" style="bottom: -25px; left: 0; width: 425px;"></div>
+          <div class="wall-ver" style="top: 0; left: -25px; height: 325px;"></div>
+          <!-- Cửa -->
+          <div class="door" style="left: 0px; bottom: -25px; transform: rotate(90deg);"></div>
+          <!-- Cửa sổ -->
+          <div class="window-ver" style="right: -25px; height: 160px; top: 70px;"></div>
+          <!-- Nhãn -->
+          <div class="label" style="top: 30px; right: 30px;" data-toggle="tooltip"
+
+            title="Phòng ngủ của bà">Bedroom #2</div>
+          <!-- Ổ cắm điện -->
+          <div class="outlet" style="top: -16px; right: 50px;"></div>
+          <div class="outlet" style="bottom: -16px; left: 120px;"></div>
+          <div class="outlet" style="top: 175px; left: -16px;"></div>
+          <div class="outlet" style="bottom: 75px; right: -16px;"></div>
+          <!-- Giường -->
+          <div class="bed furniture" style="left: 0; top: 0;">
+            <div class="pillow" style="left: 5px; top: 50%; transform: translateY(-50%);"></div>
+          </div>
+          <div class="safe furniture" style="right: 0px; bottom: 0px;" data-toggle="tooltip"
+
+            title="Két sắt"></div>
+          <div class="closet-1 furniture" style="right: 50px; bottom: 0px;" data-toggle="tooltip"
+
+            title="Tủ đứng"></div>
+        </div>
+
+        <!-- Nhà tắm -->
+        <div class="position-absolute" style="top: 350px; left: 25px; width: 250px; height: 150px">
+          <!-- Tường bao quanh phòng -->
+          <div class="wall-hor" style="bottom: -25px; left: 0; width: 275px;"></div>
+          <div class="wall-ver" style="top: 0; right: -25px; height: 150px;"></div>
+
+          <!-- Cửa -->
+          <div class="door" style="right: 0px; bottom: -25px; transform: rotate(-90deg);"></div>
+
+          <!-- Cửa sổ -->
+          <div class="window-ver" style="top: 20px; height: 90px; left: -25px;"></div>
+
+          <!-- Nhãn -->
+          <div class="label" style="top: 70px; left: 90px;">Toilet + Bathroom</div>
+
+          <div class="toilet" data-toggle="tooltip" title="Bồn cầu" style="top: 30px; left: 0px;"></div>
+          <div class="vanity" data-toggle="tooltip" title="Rửa mặt" style="top: 0px; right: 20px;"></div>
+        </div>
+
+        <!-- Phòng khách -->
+        <div class="position-absolute" style="bottom: 25px; right: 25px; width: 625px; height: 425px;">
+          <!-- Tường bao quanh phòng -->
+          <div class="wall-ver" style="bottom: 0; left: -25px; height: 250px;"></div>
+          <!-- Cửa chính -->
+          <div class="main-door position-absolute bg-white" style="right: -25px; bottom: 60px;"
+
+            data-toggle="tooltip" title="Cửa chính"></div>
+          <!-- Cửa sổ -->
+          <div class="window-ver" style="right: -25px; height: 90px; top: 45px;"></div>
+          <div class="window-hor" style="bottom: -25px; width: 90px; left: 225px;"></div>
+          <!-- Nhãn -->
+          <div class="label" style="bottom: 130px; right: 130px;">Living room +
+            Altar</div>
+          <!-- Ổ cắm điện -->
+          <div class="outlet" style="left: 360px; top: -16px;"></div>
+          <div class="outlet" style="right: 80px; bottom: -16px;"></div>
+          <div class="outlet" style="left: 80px; bottom: -16px;"></div>
+          <div class="tv furniture" style="bottom: 0; right: 100px;" data-toggle="tooltip"
+
+            title="TV"></div>
+          <div class="altar furniture" style="left: 0px; bottom: 5px;" data-toggle="tooltip"
+
+            title="Bàn thờ"></div>
+          <div class="closet-3 furniture" style="left: 45px; bottom: 20px;" data-toggle="tooltip"
+
+            title="Tủ bích phê"></div>
+          <div class="sofa furniture" style="top: 0; right: 0;" data-toggle="tooltip"
+
+            title="Trường kỷ"></div>
+          <div class="living-table furniture" style="top: 70px; right: 80px;" data-toggle="tooltip"
+
+            title="Bàn uống nước + bàn ăn"></div>
+          <div class="chair furniture" style="top: 0px; right: 170px;"></div>
+          <div class="chair furniture" style="top: 50px; right: 0px;"></div>
+        </div>
+
+        <!-- Bếp -->
+        <div class="position-absolute" style="bottom: 25px; left: 25px; width: 400px; height: 250px;">
+          <!-- Cửa phụ ra sân -->
+          <div class="sub-door position-absolute bg-white" style="bottom: -25px; right: 0px;"
+
+            data-toggle="tooltip" title="Cửa phụ ra sân"></div>
+          <!-- Cửa sổ -->
+          <div class="window-hor" style="bottom: -25px; width: 110px; left: 80px;"></div>
+
+          <!-- Nhãn -->
+          <div class="label" style="top: 30px; left: 85px;">Kitchen</div>
+          <!-- Ổ cắm điện -->
+          <div class="outlet" style="left: -16px; top: 25px;"></div>
+          <div class="outlet" style="right: -16px; top: 25px;"></div>
+          <div class="outlet" style="right: 100px; bottom: -16px;"></div>
+          <div class="outlet" style="left: 100px; top: -16px;"></div>
+		  
+          <div class="cabinets" style="left: 0; bottom: 0;" data-toggle="tooltip" title="Bếp">
+            <div class="stove furniture"></div>
+          </div>
+          <div class="sink" style="left: 0; bottom: 40px;" data-toggle="tooltip"
+
+            title="Bồn rửa">
+            <div class="sink-tap-1"></div>
+            <div class="sink-tap-2"></div>
+          </div>
+          <div class="water-purifier furniture" style="left: 0; bottom: 140px;" data-toggle="tooltip" title="Máy lọc nước"></div>
+		  <div class="refrigerator furniture" style="left: 200px; bottom: 0px;" data-toggle="tooltip" title="Tủ lạnh"></div>
+		  <div class="washing-machine furniture" style="left: 0px; top: 0px;" data-toggle="tooltip" title="Máy giặt"></div>
+          <div class="dish-washer furniture" style="left: 38px; bottom: 90px;" data-toggle="tooltip" title="Máy rửa bát (để ở dưới kệ)"></div>
+        </div>
+        
+		<!-- Không gian trống -->
+        <div class="position-absolute bg-info" style="top: 350px; left: 300px; width: 125px; height: 175px">
+          <!-- Nhãn -->
+          <div class="label" style="top: 30px; left: 30px;">Empty<br />space</div>
+        </div>
+      </div>
+      <h3>Tầng 2</h3>
+      <div class="position-relative mb-3" style="width: 1100px; height: 800px;">
+        <!-- Tường bao quanh cả nhà -->
+        <div class="wall-hor" style="top: 0; left: 0; width: 1100px;"></div>
+        <div class="wall-ver" style="top: 0; left: 0; height: 800px;"></div>
+        <div class="wall-ver" style="top: 0; right: 0; height: 800px;"></div>
+        <div class="wall-hor" style="bottom: 0; left: 0; width: 1100px;"></div>
+        <!-- Phòng ngủ 3 -->
+        <!-- Diện tích ở là 4 x 5 = 20 m2 -->
+        <div class="position-absolute" style="top: 25px; left: 25px; width: 400px; height: 450px;">
+          <!-- Tường bao quanh phòng -->
+          <div class="wall-hor" style="bottom: -25px; left: 0; width: 425px;"></div>
+          <div class="wall-ver" style="top: 0; right: -25px; height: 475px;"></div>
+          <!-- Cửa -->
+          <div class="door" style="right: -25px; bottom: 0px;"></div>
+          <!-- Cửa sổ -->
+          <div class="window-hor" style="bottom: -25px; width: 160px; left: 125px;"></div>
+          <div class="window-ver" style="right: -25px; height: 160px; top: 70px;"></div>
+          <!-- Nhãn -->
+          <div class="label" style="bottom: 50px; left: 150px;" data-toggle="tooltip"
+
+            title="Phòng ngủ của Huyên Dương Tuấn">Bedroom #3</div>
+          <!-- Ổ cắm điện -->
+          <div class="outlet" style="left: 150px; top: -16px;"></div>
+          <div class="outlet" style="top: 250px; right: -16px;"></div>
+          <div class="outlet" style="left: 80px; bottom: -16px;"></div>
+          <div class="bed furniture" style="right: 0px; top: 65px;">
+            <div class="pillow" style="right: 5px; top: 25%; transform: translateY(-50%);"></div>
+            <div class="pillow" style="right: 5px; top: 75%; transform: translateY(-50%);"></div>
+          </div>
+          <div class="closet-2 furniture" style="left: 0; top: 0;" data-toggle="tooltip"
+
+            title="Tủ đứng"></div>
+          <div class="wardrobe-2 furniture" style="left: 0; top: 202px;" data-toggle="tooltip"
+
+            title="Tủ quần áo nhựa"></div>
+        </div>
+        <!-- Cầu thang -->
+        <div class="position-absolute bg-info" style="top: 25px; left: 450px; width: 200px; height: 350px;">
+          <!-- Cửa sổ -->
+          <div class="window-hor" style="top: -25px; width: 160px; left: 25px;"></div>
+          <!-- Nhãn -->
+          <div class="label" style="top: 30px; left: 85px;" data-toggle="tooltip"
+
+            title="Cầu thang">Stair</div>
+        </div>
+        <!-- Phòng học -->
+        <div class="position-absolute" style="top: 25px; right: 25px; width: 400px; height: 450px;">
+          <!-- Tường bao quanh phòng -->
+          <div class="wall-hor" style="bottom: -25px; left: 0; width: 425px;"></div>
+          <div class="wall-ver" style="top: 0; left: -25px; height: 475px;"></div>
+          <!-- Cửa -->
+          <div class="door" style="left: -25px; bottom: 0px;"></div>
+          <!-- Cửa sổ -->
+          <div class="window-hor" style="bottom: -25px; width: 160px; left: 125px;"></div>
+          <div class="window-ver" style="right: -25px; height: 160px; top: 70px;"></div>
+          <!-- Nhãn -->
+          <div class="label" style="bottom: 50px; left: 170px;" data-toggle="tooltip"
+
+            title="Phòng dạy học">Study</div>
+          <!-- Ổ cắm điện -->
+          <div class="outlet" style="left: 150px; top: -16px;"></div>
+          <div class="outlet" style="top: 250px; right: -16px;"></div>
+          <div class="outlet" style="left: 80px; bottom: -16px;"></div>
+        </div>
+        <!-- Logia, sinh hoạt chung -->
+        <div class="position-absolute" style="bottom: 25px; left: 25px; width: 1050px; height: 275px;">
+          <!-- Tường -->
+          <div class="wall-hor" style="top: -25px; left: 425px; width: 200px;"></div>
+          <!-- Cửa -->
+          <div class="door" style="top: -25px; left: 435px; transform: rotate(90deg);"></div>
+          <!-- Nhãn -->
+          <div class="label" style="bottom: 50px; left: 450px;" data-toggle="tooltip"
+
+            title="Logia, sinh hoạt chung">Logia</div>
+        </div>
+      </div>
+      <h3>Hành động</h3>
+      <div class="mb-3 pl-3"> <label class="custom-control custom-checkbox custom-control-animated custom-control-highlighted custom-control-outlined mt-3 mb-3">
+          <input class="custom-control-input" onclick="toggleFurnitures(this)" checked="checked"
+
+            type="checkbox"> <span class="custom-control-label pt-1 pl-2"> Hiển
+            thị đồ đạc </span> </label> </div>
+      <h3>Kích thước:</h3>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th> Không gian </th>
+            <th class="text-center"> Có kể tường </th>
+            <th> Dài (m) </th>
+            <th> Rộng (m) </th>
+            <th> Diện tích (m<sup>2</sup>) </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td> Tầng một </td>
+            <td class="text-center"> <span class="text-success">✓</span> </td>
+            <td> 11 </td>
+            <td> 8 </td>
+            <td> 88 </td>
+          </tr>
+          <tr>
+            <td> Tầng hai </td>
+            <td class="text-center"> <span class="text-success">✓</span> </td>
+            <td> 11 </td>
+            <td> 5 </td>
+            <td> 55 </td>
+          </tr>
+          <tr>
+            <td> Tổng </td>
+            <td class="text-center"> <span class="text-success">✓</span> </td>
+            <td> 11 </td>
+            <td> 8 + 5 = 13 </td>
+            <td> 143 </td>
+          </tr>
+          <tr>
+            <td> Phòng ngủ số 1 </td>
+            <td> <br>
+            </td>
+            <td> 4 </td>
+            <td> 3 </td>
+            <td> 12 </td>
+          </tr>
+          <tr>
+            <td> Phòng ngủ số 2 </td>
+            <td> <br>
+            </td>
+            <td> 4 </td>
+            <td> 3 </td>
+            <td> 12 </td>
+          </tr>
+          <tr>
+            <td> Phòng khách </td>
+            <td> <br>
+            </td>
+            <td> 6.25 </td>
+            <td> 4.25 </td>
+            <td> 26.5625 </td>
+          </tr>
+          <tr>
+            <td> Nhà tắm </td>
+            <td> <br>
+            </td>
+            <td> 1.5 </td>
+            <td> 2.5 </td>
+            <td> 3.75 </td>
+          </tr>
+          <tr>
+            <td> Bếp </td>
+            <td> <br>
+            </td>
+            <td> 4 </td>
+            <td> 2.5 </td>
+            <td> 10 </td>
+          </tr>
+          <tr>
+            <td> Không gian trống </td>
+            <td> <br>
+            </td>
+            <td> 1.25 </td>
+            <td> 1.75 </td>
+            <td> 2.1875 </td>
+          </tr>
+          <tr>
+            <td> Phòng ngủ số 3 </td>
+            <td> <br>
+            </td>
+            <td> 4 </td>
+            <td> 4.5 </td>
+            <td> 18 </td>
+          </tr>
+          <tr>
+            <td> Phòng học </td>
+            <td> <br>
+            </td>
+            <td> 4 </td>
+            <td> 4.5 </td>
+            <td> 18 </td>
+          </tr>
+          <tr>
+            <td> Logia </td>
+            <td> <br>
+            </td>
+            <td> 10.5 </td>
+            <td> 2.75 </td>
+            <td> 28.875 </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Chiều thẳng đứng</h3>
+      <div class="position-relative mb-3 border" style="width: 800px; height: 900px;">
+        <!-- Tầng 1, mé trái (phòng khách) -->
+        <div class="position-absolute" style="bottom: 25px; left: 25px; width: 425px; height: 325px;">
+          <!-- Tường -->
+          <div class="wall-hor" style="bottom: -25px; left: -25px; width: 475px;"></div>
+          <div class="wall-hor" style="top: 0px; left: -25px; width: 475px;"></div>
+          <div class="wall-ver" style="top: 0; left: -25px; height: 325px;"></div>
+          <div class="wall-ver" style="top: 0; right: -25px; height: 325px;"></div>
+
+          <!-- Cửa chính -->
+          <div class="position-absolute border" style="bottom: 0; left: 60px; width: 200px; height: 200px;"></div>
+
+          <!-- Cửa sổ -->
+          <div class="position-absolute border" style="bottom: 100px; right: 45px; width: 90px; height: 100px;"></div>
+      </div>
+
+        <!-- Tầng 1, mé phải (phòng ngủ) -->
+            <div class="position-absolute" style="bottom: 25px; right: 25px; width: 300px; height: 325px;">
+                <!-- Tường -->
+                <div class="wall-hor" style="bottom: -25px; left: -25px; width: 350px;"></div>
+                <div class="wall-hor" style="top: 0px; left: -25px; width: 350px;"></div>
+                <div class="wall-ver" style="top: 0; left: -25px; height: 325px;"></div>
+                <div class="wall-ver" style="top: 0; right: -25px; height: 325px;"></div>
+
+                <!-- Cửa sổ -->
+                <div class="position-absolute border" style="bottom: 100px; right: 70px; width: 160px; height: 100px;"></div>
+            </div>
+
+        <!-- Tầng 2, mé trái (logia) -->
+            <div class="position-absolute" style="bottom: 350px; left: 25px; width: 225px; height: 325px;">
+                <!-- Tường -->
+                <div class="wall-hor" style="bottom: -25px; left: -25px; width: 275px;"></div>
+                <div class="wall-hor" style="top: 0px; left: -25px; width: 275px;"></div>
+                <div class="wall-ver" style="top: 0; left: -25px; height: 325px;"></div>
+                <div class="wall-ver" style="top: 0; right: -25px; height: 325px;"></div>
+            </div>
+
+        <!-- Tầng 2, mé phải (phòng ngủ) -->
+        <div class="position-absolute" style="bottom: 350px; right: 25px; width: 500px; height: 325px;">
+          <!-- Tường -->
+          <div class="wall-hor" style="bottom: -25px; left: -25px; width: 550px;"></div>
+          <div class="wall-hor" style="top: 0px; left: -25px; width: 550px;"></div>
+          <div class="wall-ver" style="top: 0; left: -25px; height: 325px;"></div>
+          <div class="wall-ver" style="top: 0; right: -25px; height: 325px;"></div>
+
+          <!-- Cửa sổ -->
+          <div class="position-absolute border" style="bottom: 100px; right: 70px; width: 160px; height: 100px;"></div>
+      </div>
+      
+        <!-- Gác xét -->
+        <div class="position-absolute" style="bottom: 675px; right: 0px; width: 800px; height: 120px;">
+          <!-- Mái nhà -->
+          <div class="position-absolute bg-danger" style="left: 0; bottom: 0; width: 360px; height: 10px; transform: rotate(-30deg); transform-origin: 0% 0%;"></div>
+          <div class="position-absolute bg-danger" style="right: 0; bottom: 0; width: 520px; height: 10px; transform: rotate(20deg); transform-origin: 100% 0%;"></div>
+          <!-- Lối ra lên trên mái -->
+          <!-- Để lệch ra, không thì ngã xuống bên dưới logia -->
+          <!-- Giả ống khói -->
+          <div class="position-absolute bg-primary" style="left: 400px; bottom: 0; width: 25px; height: 180px;"></div>
+          <div class="position-absolute bg-primary" style="left: 480px; bottom: 0; width: 25px; height: 180px;"></div>
+          <div class="position-absolute bg-primary" style="left: 400px; bottom: 160px; width: 105px; height: 25px;"></div>
+          <!-- Trụ, độ cao -->
+          <div class="position-absolute bg-secondary" style="left: 300px; bottom: 0; width: 25px; height: 180px;"></div>
+        </div>
+      </div>
+      <h3>Chú ý</h3>
+      <ul>
+        <li>Thoát nước ra ngoài đường</li>
+        <li>Cửa sổ hướng nam cho mát</li>
+		<li>Cửa chính hướng đông cho hợp phong thủy</li>
+        <li>Khép kín để có thể lắp điều hòa</li>
+        <li>Có mái tôn chống nóng</li>
+        <li>Trồng tre, trúc cho mát</li>
+        <li>Kín để chống chuột</li>
+		<li>Cần chừa cổng tối thiểu 3 m để ô tô vào được</li>
+        <li>Nếu thiết kế cửa sổ ở giữa thì khó xếp đồ</li>
+		<li>Phải tính cả kích thước của tường vào kích thước tổng</li>
+        <li>Sơn màu trắng cho sáng, tạo cảm giác rộng</li>
+        <li>Giữa cầu thang có cửa sổ lấy sáng, lấy gió</li>
+        <li>Thiết kế điện, nước, mạng, điều hòa luôn; sau không phải đục, khoan tường</li>
+        <li>Thiết kế xây bệ đặt điều hòa, đục sẵn lỗ ống điều hòa</li>
+        <li>Cầu thang dùng kính cường lực cho thoáng</li>
+        <li>Logia dùng kính cường lực?</li>
+        <li>Tham khảo các mẫu chung cư hiện đại</li>
+        <li>Làm giếng trời chỗ cầu thang? Cửa sổ kính to thôi</li>
+        <li>Chú ý chống nóng cho phòng ngủ 3 (đổi chỗ phòng ngủ 3 và phòng học?)</li>
+        <li>Thêm sảnh, có mái che để bảo vệ cửa chính</li>
+        <li>Tạo tủ đựng đồ gầm cầu thang</li>
+        <li>Nóc nhà vệ sinh đựng đồ</li>
+        <li>Bồn nước để ở ở logia tầng 2, có gì dễ sửa và kiểm tra</li>
+        <li>Mái tôn chống nóng cho rẻ</li>
+        <li>Gác xét áp mái (attic) để chứa đồ</li>
+        <li>Có lối lên trên hẳn mái để sửa mái (cửa thăm mái)</li>
+        <li>Thiết kế thoát nước, hạn chế dùng tôn, dễ bị gỉ</li>
+        <li>Trên mái giặt xây kệ đựng bột giặt, có giá treo quần áo</li>
+        <li>Lên gác xét tầng 2 bằng thang</li>
+        <li>Để mái tôn lệch sang trái, để lối vào rộng rãi</li>
+      </ul>
+
+      <p>Các câu hỏi cho kiến trúc sư thiết kế:</p>
+      <ul>
+        <li>Sửa điều hòa thế nào nếu đặt cục nóng lơ lửng trên cao?</li>
+        <li>Sửa bồn nước thế nào?</li>
+        <li>Sửa mái thế nào?</li>
+        <li>Sửa điện thế nào?</li>
+      </ul>
+
+      <h3>Bỏ qua</h3>
+      <p>Các ý tưởng hay nhưng không khả thi do điều kiện đất đai, chi phí:</p>
+      <ul>
+        <li>Tầng hầm</li>
+        <li>Sân thượng</li>
+        <li>Sân chơi, tập thể thao</li>
+        <li>Tranh 3D</li>
+        <li>Tranh tường (tranh dán 3D cho tiện)</li>
+        <li>Poster trang trí, tranh, giấy dán tường</li>
+        <li>Vòi phun nước</li>
+        <li>Lò sưởi</li>
+        <li>Hobbit hole</li>
+        <li>Hang động</li>
+        <li>Thủy cung</li>
+        <li>Ban công</li>
+        <li>Bể nước mưa</li>
+        <li>Đa chức năng (tủ tường, ghế giường, rải chăn ngủ trên sàn, giường tầng), vì không tiện</li>
+        <li>Smart furniture (giường tầng bunk bed, đa chức năng, ẩn đi nếu không dùng)</li>
+      </ul>
+	  
+	  <h3>Tham khảo</h3>
+	  <p><a href="https://nhadepsang.com.vn/kien-truc/2020/08/tu-gam-cau-thang/" target="_blank">30 Mẫu thiết kế tủ gầm cầu thang HOT TREND năm 2020</a></p>
+	  <p><a href="https://www.youtube.com/watch?v=nVJmOtVS_xQ" target="_blank">Cửa lùa lên thăm mái bằng sắt kính | Cửa thăm mái mở trượt - Kho Tư liệu Xây dựng</a></p>
+    </article>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="js/design.js"></script>
+    <!--script src="../../js/docs.js"></script-->
+  </body>
+</html>

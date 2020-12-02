@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dropdown menu</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link rel="stylesheet" href="css/dropdown-menu.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #3c8dbc;">
+        <!-- Brand -->
+        <a class="navbar-brand" href="#">Navbar</a>
+
+        <!-- Toggle ở màn hình nhỏ -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <!-- Phải để margin-right là auto (mr-auto) để đẩy những phần tử tiếp theo sang bên phải -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link 1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link 2</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                        Dropdown
+                    </a>
+
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="navbar-custom-menu">
+                <div class="nav navbar-nav">
+                    <!-- Notifications -->
+                    <div class="dropdown pl-3">
+                        <a href="#" class="dropdown-toggle text-white no-caret-right-down" data-toggle="dropdown">
+                            <i class="fa fa-bell"></i>
+                            <span class="badge-label bg-warning">10</span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right p-0" style="width: 320px; margin-right: -35px">
+                            <span class="caret-up" style="right: 37px;"></span>
+
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between border-bottom"
+                                    style="height: 40px; padding: 0 10px;">
+                                    <span class="title">Thông báo</span>
+                                    <span class="text-info" id="markAsReadButton" style="cursor: pointer">
+                                        Đánh dấu đã xem
+                                    </span>
+                                </div>
+
+                                <div class="overflow-auto" style="max-height: 400px;" id="userNotifications">
+
+                                    <div class="d-flex p-3 unread bg-light">
+                                        <img class="d-block rounded-circle mr-3 p-2"
+                                            src="images/user2-160x160.jpg"
+                                            style="width: 64px; height: 64px; object-fit: cover;">
+
+                                        <div>
+                                            <div class="">
+                                                Sự kiện Hỏi khó Chuyên gia
+                                                <span class="font-weight-bold">Le Ngoc Lam Dien</span>
+                                                đã bắt đầu, đặt câu hỏi ngay.
+                                            </div>
+
+                                            <div class="text-secondary small">
+                                                một ngày trước
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex p-3">
+                                        <img class="d-block rounded-circle mr-3 p-2"
+                                            src="images/user2-160x160.jpg"
+                                            style="width: 64px; height: 64px; object-fit: cover;">
+
+                                        <div class="content">
+                                            <div class="">
+                                                <span class="font-weight-bold">VTCC Đoàn Kết - VTCC Chiến Thắng</span>:
+                                                <span class="font-weight-bold">Ngày 15/6/2019</span>
+                                                đã được mở!
+                                            </div>
+                                            <div class="text-secondary small">
+                                                13 ngày trước
+                                            </div>
+
+                                            <div class="text-right">
+                                                <a href="https://ereka.vn/contest/vtcc-doan-ket-vtcc-chien-thang-84769235874768713" target="_blank">
+                                                    Xem chi tiết
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User Account -->
+                    <div class="dropdown ml-5">
+                        <a href="#" class="dropdown-toggle text-white text-decoration-none no-caret-right-down"
+                            data-toggle="dropdown">
+                            <img src="images/user2-160x160.jpg" class="user-image rounded-circle"
+                                style="width: 25px; height: 25px; margin-right: 10px; margin-top: -2px;"
+                                alt="User Image">
+                            Alexander Pierce
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" style="width: 230px">
+                            <span class="caret-up" style="right: 17px;"></span>
+
+                            <div>
+                                <div>
+                                    <img src="images/user2-160x160.jpg" class="w-100" alt="User Image">
+                                </div>
+
+                                <div class="text-center py-3 px-1">
+                                    Alexander Pierce - Web Developer
+                                    <br />
+                                    <small>Member since Nov. 2012</small>
+                                </div>
+
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-4 px-0 text-center">
+                                            <a href="#">Followers</a>
+                                        </div>
+                                        <div class="col-4 px-0 text-center">
+                                            <a href="#">Sales</a>
+                                        </div>
+                                        <div class="col-4 px-0 text-center">
+                                            <a href="#">Friends</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <a href="#" class="btn">Profile</a>
+                                    <a href="#" class="btn">Sign out</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="text-center p-5">
+        <h1>Dropdown Menu</h1>
+        <p class="text-danger text-uppercase font-weight-bold">
+            Chú ý responsive trên màn hình nhỏ nữa
+        </p>
+        <p>Tham khảo <a href="https://ereka.vn/" target="_blank">Ereka</a>, <a href="https://kipalog.com/posts"
+                target="_blank">Kipalog</a></p>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

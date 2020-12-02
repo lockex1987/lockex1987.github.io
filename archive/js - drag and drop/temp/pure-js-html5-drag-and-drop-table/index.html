@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CodePen - Pure JS &amp; HTML5 Drag and Drop Table</title>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <h2>People</h2>
+        <p>Drag any row to reorder this table</p>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr draggable="true">
+                    <td>John</td>
+                    <td>Doe</td>
+                    <td>john@website.com</td>
+                </tr>
+
+                <tr draggable="true">
+                    <td>Jane</td>
+                    <td>Roe</td>
+                    <td>jane@website.com</td>
+                </tr>
+
+                <tr draggable="true">
+                    <td>Bobby</td>
+                    <td>Tables</td>
+                    <td>bobby@example.com</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>

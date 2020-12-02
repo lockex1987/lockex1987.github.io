@@ -1,0 +1,97 @@
+html, body { height: 100%; }
+.p5 { padding: 5px; }
+
+
+
+/* Ghi đè Bootstrap */
+.form-control {
+	box-shadow: none;
+	border: none;
+	border-bottom: 1px solid #DDD;
+	outline: 0 none;
+	border-radius: 0;
+	padding-left: 4px;
+}
+
+.form-control:focus {
+	border-bottom: 1px solid #4990E2;
+	box-shadow: none;
+}
+
+#listTable a { text-decoration: none; }
+#listTable a:hover { text-decoration: underline; }
+
+.name { font-weight: bold; }
+.time { font-size: smaller; }
+
+
+.info {
+	color: green;
+	margin-left: 5px;
+}
+
+#map {
+	width: 100%;
+	height: 100%;
+}
+
+#map-container {
+	width: 100%;
+	height: 500px;
+	position: relative;
+}
+
+#resize-button {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	width: 30px;
+	height: 100px;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 100;
+	text-align: center;
+	padding: 5px;
+}
+
+#resize-button a {
+	color: #FFF;
+}
+
+#map-container:-webkit-full-screen {
+	width: 100%;
+	height: 100%;
+}
+#map-container:-moz-full-screen{
+	width: 100%;
+	height: 100%;
+}
+#map-container:-ms-full-screen{
+	width: 100%;
+	height: 100%;
+}
+#map-container:full-screen {
+	width: 100%;
+	height: 100%;
+}
+
+.coordinate {
+	display: block;
+	color: blue;
+}
+@media screen and (min-width: 768px) {
+	#map-container {
+		height: 100%;
+		width: 60%;
+		float: left;
+	}
+	#list {
+		width: 40%;
+		float: right;
+	}
+}
+
+
+.delete-link {
+	margin-left: 10px;
+	color: red;
+}

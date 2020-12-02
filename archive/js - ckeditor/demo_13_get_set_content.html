@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Get and Set Content</title>
+
+	<style>
+		div {
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<h3>New value</h3>
+	<div>
+		<input type="text" id="val" value="I'm using jQuery val()!"/>
+	</div>
+	
+	<h3>With jQuery</h3>
+	<textarea id="editor1" name="editor1" cols="80" rows="10">
+		<p>Hello <strong>CKEditor</strong></p>
+	</textarea>
+	<div>
+		<button type="button" onclick="getValue()">
+			Get value
+		</button>
+		<button type="button" onclick="setValue()">
+			Set value
+		</button>
+	</div>
+	
+	<h3>Pure JavaScript</h3>
+	<textarea id="editor2" name="editor2" cols="80" rows="10">
+		<p>I'm using pure <strong>JavaScript</strong></p>
+	</textarea>
+	<div>
+		<button type="button" onclick="getValue1()">
+			Get value by reference
+		</button>
+		<button type="button" onclick="setValue1()">
+			Set value by reference
+		</button>
+		<button type="button" onclick="getValue2()">
+			Get value by instances
+		</button>
+		<button type="button" onclick="setValue2()">
+			Set value by instances
+		</button>
+	</div>
+	
+	<!-- Them jQuery và cả jQuery Adapter -->
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="../lib/ckeditor/ckeditor.js"></script>
+	<script src="../lib/ckeditor/adapters/jquery.js"></script>
+
+	<script>
+		$(document).ready(function() {
+			$('#editor1').ckeditor();
+		});
+		
+		function getValue() {
+			alert($('#editor1').val());
+		}
+		
+		function setValue() {
+			$('#editor1').val( $('#val').val() );
+		}
+	</script>
+	
+	<script>
+		var editorOptions = {
+			entities: false
+		};
+		var myEditor = CKEDITOR.replace('editor2', editorOptions);
+		
+		// Giờ chúng ta có thể sử dụng myEdtior hoặc CKEDITOR.instances.editor2
+		
+		function getValue1() {
+			alert(myEditor.getData());
+		}
+		
+		function setValue1() {
+			myEditor.setData( $('#val').val() );
+		}
+		
+		function getValue2() {
+			alert(CKEDITOR.instances.editor2.getData());
+		}
+		
+		function setValue2() {
+			CKEDITOR.instances.editor2.setData( $('#val').val() );
+		}
+	</script>
+</body>
+</html>

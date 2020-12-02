@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="description" content="Bootstrap Media tutorial"/>
+	<meta name="keywords" content="web, css, bootstrap, media"/>
+	<meta name="author" content="lockex1987"/>
+	
+	<title>Bootstrap Media</title>
+
+	<link rel="icon" href="../../images/favicon.png"/>
+	<link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body>
+	<article>
+		<h2>Bootstrap Media</h2>
+    <p>Bootstrap provides an easy way to align media objects (like images and
+      videos) to the left or right of some content. This can be used to display
+      blog comments, tweets and so on.</p>
+    <p>Usage:</p>
+    <ul>
+      <li>Use a <code>&lt;div&gt;</code> element with the .media class to
+        create a container for media objects</li>
+      <li>Use the <code>.media-left</code> class to align the media object
+        (image, video) to the left, or the <code>.media-right</code> class to
+        align to the right</li>
+      <li>The media object has <code>.media-object</code> class</li>
+      <li>Text that should appear next to the media is placed inside a container
+        with <code>.media-body</code> class</li>
+      <li>Additionally, you can use <code>.media-heading</code> for headings</li>
+      <li>The media object can also be top, middle or bottom aligned with <code>.media-top</code>,
+        <code>.media-middle</code>, <code>.media-bottom</code> class</li>
+    </ul>
+    <p>Layout:</p>
+    <pre><code class="html">&lt;div class="media"&gt;
+    &lt;div class="media-left"&gt;
+        &lt;img class="media-object" src="..." alt="..."&gt;
+    &lt;/div&gt;
+    &lt;div class="media-body"&gt;
+        &lt;h4 class="media-heading"&gt;Media heading&lt;/h4&gt;
+        &lt;p&gt;lorem...&lt;/p&gt;
+    &lt;/div&gt;<br>&lt;/div&gt;</code></pre><p>Notes:</p><ul><li>Media objects can also be nested</li><li>You must specify the width of media object</li><li><code>.media-body</code>, <code>.media-left</code>, <code>.media-right</code> have <code>display: table-cell</code></li></ul>
+	
+	<p><a href="demo.html" target="_blank">Demo</a></p>
+	</article>
+
+	<script src="../../js/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta charset="utf-8"> 
+  <title>Responsive Canvas</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Responsive Canvas">
+ </head> 
+ <body> 
+  <article> 
+   <style>
+		/** { box-sizing: border-box; margin: 0px; padding: 0px; }*/
+		#main { margin: 50px 10%; height: 300px; }
+	</style> 
+   <p>Canvas bắt buộc sử dụng 2 thuộc tính width và height, giá trị theo pixel. Không dùng CSS được.</p> 
+   <div id="main"> 
+    <canvas id="responsiveCanvas" width="100" height="100"></canvas> 
+   </div> 
+   <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script--> 
+   <script>
+			// Run function when browser resizes
+			window.addEventListener('resize', checkCanvasSize);
+
+			function checkCanvasSize() {
+				var c = document.querySelector('#responsiveCanvas');
+
+				/*
+				var container = $(c).parent();
+				c.width = container.width();
+				c.height = container.height();*/
+
+				var container = c.parentNode;
+				c.width = container.clientWidth;
+				c.height = container.clientHeight;
+
+				draw(c);
+			}
+
+			function draw(c) {
+				var x = c.width;
+				var y = c.height;
+				var ct = c.getContext('2d');
+				ct.font = "20px Calibri";
+				ct.fillStyle = "#DDDDDD";
+				ct.fillRect(0, 0, x, y);
+				ct.textAlign = "center";
+				ct.fillStyle = "#333333";
+				ct.fillText("Canvas width: " + x + "px", (x / 2), (y / 2));
+			}
+
+			// Initial call
+			checkCanvasSize();
+	</script> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

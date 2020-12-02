@@ -1,0 +1,42 @@
+.item {
+	
+}
+
+@media (min-width: 560px) {
+	.item {
+		display: grid;
+		grid-template-areas:
+			'no chapters'
+			'cover chapters';
+		grid-template-columns: 140px auto;
+		grid-template-rows: 50px auto;
+	}
+}
+
+.no {
+	font-weight: bold;
+	color: red;
+	grid-area: no;
+	padding: 20px 0px 0px 10px;
+}
+
+.no::before {
+	content: '#';
+	color: #555;
+	font-size: smaller;
+}
+
+.cover {
+	grid-area: cover;
+}
+
+.cover img {
+	max-width: 100%;
+    height: auto;
+}
+
+.chapters {
+	color: green;
+	grid-row: 1 / 3;
+	grid-area: chapters;
+}

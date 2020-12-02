@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Cryptography</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta name="description" content="Cryptography">
+  </head>
+  <body>
+    <article>
+      <h2>Cryptography</h2>
+      <p>Encryption (mã hóa) chỉ là một phần của Cryptography (mật mã học).</p>
+      <p>Các khái niệm cần phân biệt:</p>
+      <ul>
+        <li>Mã hóa một chiếu, hàm băm, hash function:</li>
+        <ul>
+          <li><a href="cryptography%20-%20md5/index.html">MD5</a></li>
+          <li><a href="cryptography%20-%20sha/index.html">SHA</a></li>
+          <li><a href="cryptography%20-%20bcrypt/index.html">bcrypt</a></li>
+          <li>HMAC</li>
+        </ul>
+        <li>Khóa đối xứng, Symmetric</li>
+        <ul>
+          <li><a href="cryptography%20-%20des/index.html">DES</a></li>
+          <li><a href="cryptography%20-%20aes/index.html">AES</a></li>
+        </ul>
+        <li>Khóa công khai, Asymmetric Cryptography, Public Key Cryptography:</li>
+        <ul>
+          <li><a href="cryptography%20-%20rsa/index.html">RSA</a></li>
+        </ul>
+      </ul>
+      <p>Ứng dụng:</p>
+      <ul>
+        <li>Mã hóa, che giấu thông tin</li>
+        <li>Ký điện tử</li>
+      </ul>
+      
+      <h3>Code mẫu Java</h3>
+      <p>Luồng là:</p>
+      <ul>
+        <li>Có xâu đầu vào kiểu String plainText</li>
+        <li>Chuyển plainText thành mảng byte inputBytes</li>
+        <li>Khởi tạo đối tượng MessageDigest với thuật toán cụ thể (MD5, SHA)</li>
+        <li>Sử dụng phương thức update của đối tượng MessageDigest với mảng byte
+          đầu vào</li>
+        <li>Sử dụng phương thức digest của đối tượng MessageDigest để ra mảng
+          byte đầu ra</li>
+        <li>Chuyển mảng byte đầu ra thành String</li>
+      </ul>
+      <p>Trong đó:</p>
+      <ul>
+        <li>MessageDigest : là một class ,MessageDigest này cung cấp các ứng
+          dụng các chức năng của một thông điệp tiêu hóa thuật toán, chẳng hạn
+          như SHA-1 hoặc SHA-256 hay MD5.Khi chúng ta mã hóa thì nó sẽ mã hóa
+          một chiều,không thể mã hóa ngược lại, đây là lý do bảo mật cho người
+          sử dụng.</li>
+        <li>getInstance : đây là method để truyền vào chuỗi muốn mã hóa,ví dụ
+          md5.</li>
+        <li>update : update là một method của lớp MessageDigest giúp cập nhật
+          lại chuỗi cần mã hóa.</li>
+        <li>BigInteger :&nbsp; BigInteger là một class cung cấp tương tự cho tất
+          cả các nhà khai thác nguyên nguyên thủy của Java, và tất cả các phương
+          pháp có liên quan từ java.lang.Math. BigInteger lớp phân bổ bộ nhớ
+          nhiều như nó cần cho tất cả các bit của dữ liệu và đặc biệt là nó
+          không giới hạn toString(16) : giúp đồng bộ chuỗ i mã hóa md5
+          trong&nbsp; mysql.</li>
+      </ul>
+      <p>Sử dụng thư viện common-codec chúng ta có thể gọi MD5 dễ dàng như sau:</p>
+      <p>String md5Hex = DigestUtils.md5Hex(password).toUpperCase();</p>
+      <p>Source code: cttd-encryption.zip (EncryptUtil, EncryptUtilTests)</p>
+<h3>Tham khảo:</h3>
+      <p><a href="https://github.com/lt/php-cryptopals" target="_blank">GitHub - lt/php-cryptopals: The Matasano crypto challenges completed using PHP</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

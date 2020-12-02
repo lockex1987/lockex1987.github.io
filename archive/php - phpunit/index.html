@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PHP Unit Test">
+    <title>PHP Unit Test</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>PHP Unit Test</h2>
+      <p>Bắt đầu</p>
+      <h2>Bắt đầu</h2>
+      <h3>Cài đặt composer</h3>
+      <p>Cấu hình composer theo từng dự án:</p>
+      <pre>composer require --dev phpunit/phpunit ^8<br>./vendor/bin/phpunit --version</pre>
+      <p>File <code>composer.json</code> của bạn trông như sau:</p>
+      <pre>{
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    }
+}</pre>
+      <h3>Source code</h3>
+      <p>File <code>src/Email.php</code>.</p>
+      <pre>&lt;?php
+declare(strict_types=1);
+
+final class Email
+{
+    private $email;
+
+    private function __construct(string $email)
+    {
+        $this-&gt;ensureIsValidEmail($email);
+        $this-&gt;email = $email;
+    }
+
+    public static function fromString(string $email): self
+    {
+        return new self($email);
+    }
+
+    public function __toString(): string
+    {
+        return $this-&gt;email;
+    }
+
+    private function ensureIsValidEmail(string $email): void
+    {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    '"%s" is not a valid email address',
+                    $email
+                )
+            );
+        }
+    }
+}</pre>
+      <h3>Test Code</h3>
+      <p>File <code>tests/EmailTest.php</code>.</p>
+      <pre>&lt;?php
+declare(strict_types=1);
+
+use PHPUnit\Framework\TestCase;
+
+final class EmailTest extends TestCase
+{
+    public function testCanBeCreatedFromValidEmailAddress(): void
+    {
+        $this-&gt;assertInstanceOf(
+            Email::class,
+            Email::fromString('user@example.com')
+        );
+    }
+
+    public function testCannotBeCreatedFromInvalidEmailAddress(): void
+    {
+        $this-&gt;expectException(InvalidArgumentException::class);
+        Email::fromString('invalid');
+    }
+
+    public function testCanBeUsedAsString(): void
+    {
+        $this-&gt;assertEquals(
+            'user@example.com',
+            Email::fromString('user@example.com')
+        );
+    }
+}
+</pre>
+      <h3>Thực thi test</h3>
+      <pre>./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/EmailTest</pre>
+      <p><code>--bootstrap vendor/autoload.php</code> instructs the PHPUnit
+        command-line test runner to include <code>vendor/autoload.php</code>before
+        the tests are run.</p>
+      <p><code>tests/EmailTest</code> instructs the PHPUnit command-line test
+        runner to execute the tests of the <code>EmailTest</code> class that is
+        declared in <code>tests/EmailTest.php</code>.</p>
+      <p>Using <code>tests</code> instead of <code>tests/EmailTest</code>
+        would instruct the PHPUnit command-line test runner to execute all tests
+        found declared in <code>*Test.php</code> sourcecode files in the <code>tests</code>directory.</p>
+      <h3>TestDox</h3>
+      <p> Below you see an alternative output which is based on the idea that
+        the name of a test can be used to document the behavior that is verified
+        by the test:</p>
+      <pre>./vendor/bin/phpunit --bootstrap vendor/autoload.php --testdox tests</pre>
+      <h1>PHP Unit Test 101: Giới thiệu về PHPUnit</h1>
+      <h3>Cài đặt PHPUNIT</h3>
+      <code></code>
+      <p>Tính năng tạo báo cáo Code Coverage yêu cầu Xdebug (<a href="https://xdebug.org/wizard.php"
+          target="_blank">hướng dẫn cài đặt</a>, <a href="https://jtreminio.com/2012/07/xdebug-and-you-why-you-should-be-using-a-real-debugger"
+          target="_blank">bài viết giới thiệu của tác giả</a>) (phiên bản 2.5.0
+        hoặc mới hơn) và thư viện <a href="http://php.net/manual/en/book.tokenizer.php"
+          target="_blank"><code>tokenizer</code></a> (đã có sẵn khi cài PHP).</p>
+      <br>
+      <h2><br>
+      </h2>
+      <h3>Cấu trúc project</h3>
+      <p>Do chúng ta đang sử dụng Composer nên sẽ cần cấu trúc project một chút
+        để nó hoạt động với autoloader. Các file mã nguồn sẽ được viết vào thư
+        mục <code>src</code> với namespace là <code>App</code> và unit tests
+        sẽ được viết vào thư mục <code>tests</code> với namespace là <code>Tests</code>.</p>
+      <p>Update file <code>composer.json</code> của bạn như sau:</p>
+      <pre>{
+    "require-dev": {
+        "phpunit/phpunit": "^6.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    }
+}
+</pre>
+      <p>Sau đó chạy lệnh để update autoloader:</p>
+      <pre>composer dump-autoload
+</pre>
+      <p>Như vậy cấu trúc project của chúng ta như sau:</p>
+      <pre>phpunit-tut/
+|-- composer.json
+|-- composer.lock
+|-- phpunit.xml
+|-- src
+|-- tests
+|-- vendor
+</pre>
+      <h3>Cấu hình file phpunit.xml</h3>
+      <p>Bạn có thể sử dụng các tùy chọn trong dòng lệnh để cấu hình cho phpunit
+        tuy nhiên có 1 cách đơn giản hơn đó là sử dụng file cấu hình <code>phpunit.xml</code>.</p>
+      <p>Trong folder root <code>phpunit-tut</code> tạo file <code>phpunit.xml</code>:</p>
+      <pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;phpunit colors="true"&gt;
+    &lt;testsuites&gt;
+        &lt;testsuite name="Application Test Suite"&gt;
+            &lt;directory&gt;./tests/&lt;/directory&gt;
+        &lt;/testsuite&gt;
+    &lt;/testsuites&gt;
+&lt;/phpunit&gt;
+</pre>
+      <p>Đây là file cấu hình đơn giản nhất, tuy nhiên có 2 điểm quan trọng:</p>
+      <ul>
+        <li><code>colors="true"</code> làm cho kết quả test được bôi màu</li>
+        <li><code>&lt;directory&gt;./tests/&lt;/directory&gt;</code> cho PHPUnit
+          biết nơi lưu các file tests</li>
+      </ul>
+      <h3>CONVENTIONS</h3>
+      <p>Trong loạt bài viết này sẽ có một số conventions giúp cho bạn sử dụng
+        PHPUnit dễ dàng hơn, mặc dù có một số convention là không bắt buộc.</p>
+      <h4>Cấu trúc và tên file</h4>
+      <p>Convention đầu tiên là về cấu trúc file và tên file. Các file tests nên
+        ánh xạ với các file mã nguồn tương ứng trong từng thư mục và tên file
+        nên được đặt giống với file mã nguồn cộng thêm từ <code>Test</code> ở
+        sau. Ví dụ, nếu chúng ta có các file mã nguồn như sau:</p>
+      <pre>./src/Foo.php
+./src/Bar.php
+./src/Controller/Baz.php
+</pre>
+      <p>Thì các file tests nên được tổ chức như sau:</p>
+      <pre>./tests/FooTest.php
+./tests/BarTest.php
+./tests/Controller/BazTest.php
+</pre>
+      <h4>Tên lớp</h4>
+      <p>Tên lớp phải khớp hoàn toàn với tên file, điều này cũng nên áp dụng với
+        các file mã nguồn khác.</p>
+      <h4>Tên các method (test)</h4>
+      <p>Các phương thức trong các lớp test nên được bắt đầu với từ <code>test</code>
+        (mặc dù bạn có thể sử dụng annotation <code>@test</code> nhưng nên
+        thống nhất viết theo 1 loại cho đồng bộ). Tên phương thức nên có tính mô
+        tả cái gì sẽ được test trong phương thức đó và cũng nên bao gồm tên
+        phương thức đang được test. Tên method không cần phải ngắn hoặc viết
+        tắt.</p>
+      <p>Ví dụ, bạn đang test phương thức có tên là <code>verifyAccount()</code>
+        và bạn muốn test trường hợp mật khẩu khớp với account, bạn nên đặt tên
+        method trong file test là <code>testVerifyAccountMatchesPasswordGiven()</code>.</p>
+      <p>Sự dài dòng là một lợi ích khi test, bởi vì khi bạn có 1 trường hợp
+        test failed và bạn sẽ có rất nhiều trường hợp test failed, bạn sẽ thấy
+        được tên method là gì và biết chính xác trường hợp nào đang bị failed.</p>
+      <h4>Public methods</h4>
+      <p>PHPUnit không thể chạy các method test ở dạng <code>private</code> hay
+        <code>protected</code>, chúng phải là <code>public</code>. Do đó, đối
+        với các method test hay các method helpers (chẳng hạn <a href="https://phpunit.de/manual/6.2/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.data-providers"
+          target="_blank">data provider method</a> phải ở dạng <code>public</code>.
+        Mục đích của chúng ta là viết test thôi nên không cần phải lo lắng về
+        tính đóng gói.</p>
+      <h4>Extends PHPUnit</h4>
+      <p>Các class test phải là lớp con cháu của lớp <code>PHPUnit\Framework\TestCase</code>.</p>
+      <br>
+      <h3>Dat Green bar</h3>
+      <p>Từ thư mục root của project, chạy PHPUnit: <code>$
+          ./vendor/bin/phpunit</code></p>
+      <p>Vâng, bạn sẽ thấy được cái thanh màu xanh ấy, nó biểu thị tất cả các
+        test case đã được pass. Tuy nhiên cũng đừng chăm chăm làm sao cho ra
+        được cái màu xanh ấy, không phải viết code chỉ để pass test, mà mục đích
+        ở đây là <code>make your code readable, testable and maintainable</code></p>
+      <p><img src="https://viblo.asia/uploads/209d570b-25ba-47a8-ad82-50b21822c4b5.png"></p>
+      <p>Bạn đã chạy 1 file test, 1 test case trong đó có 1 assertion.</p>
+      <h3>Kết luận</h3>
+      <p>Qua bài này, bạn đã cài được PHPUnit, thiết lập một số cấu hình và chạy
+        unit (super stupid) test đầu tiên.</p>
+      <p>Xin chúc mừng, bạn đã đi qua bước đầu tiên để đến gần hơn với thiên
+        đường tester!</p>
+      <p>Trong bài tiếp theo, tôi sẽ giải thích về assertions, giới thiệu một số
+        annotation của PHPUnit trong đó có <code>@dataProvider</code> và giúp
+        bạn viết những unit test thực thụ đầu tiên. </p>
+      <h2>PHP Unit Test 201: Làm quen với Test case, Assertions và data provider</h2>
+      <p>Trong bài đầu tiên của series này, chúng ta đã đi qua cách cài đặt và
+        cấu hình PHPUnit cho 1 project PHP, một số conventions khi thực hiện
+        Unit test trong PHP và trải nghiệm với unit test đầu tiên. Trong bài
+        này, chúng ta sẽ tìm hiểu một số khái niệm quan trọng trong unit test và
+        đi vào thực hành nhiều hơn.</p>
+      <h3>ASSERTIONS</h3>
+      <p>Assertion chỉ đơn giản là 1 câu lệnh nhằm mục đích xác nhận một khẳng
+        định là luôn đúng tại đoạn code đó. Hiểu theo cách khác, Assertion định
+        nghĩa điều bạn muốn nó xảy ra (VD: Tôi muốn hàm này trả về false =&gt;
+        tôi assert return value là false, tôi muốn hàm kia trả về mảng có chứa 5
+        phần tử =&gt; tôi assert array size = 5, tôi muốn kết quả thu được lơn
+        hơn 100,...)</p>
+      <p>Assertion trả về true thì sẽ pass unit test, ngược lại sẽ fail.</p>
+      <p>Trong ví dụ đầu tiên:</p>
+      <pre>public function testTrueIsTrue()
+{
+    $foo = true;
+    $this-&gt;assertTrue($foo);
+}
+</pre>
+      <p>Chúng ta đã assert rằng true là true ( if (true == true) ). Không có gì
+        đặc biệt ở đây, điều bạn thấy là điều bạn nhận được với assertions.</p>
+      <p>Nếu chúng ta assert rằng false là true, chúng ta sẽ nhận được 1 test
+        fail:</p>
+      <pre>public function testTrueIsTrue()
+{
+    $foo = false;
+    $this-&gt;assertTrue($foo);
+}
+</pre>
+      <p>Nhưng nếu chúng ta muốn assert rằng false là false ( if (false ==
+        false) ) thì sao?</p>
+      <pre>public function testFalseIsFalse()
+{
+    $foo = false;
+    $this-&gt;assertFalse($foo);
+}
+</pre>
+      <p>Unit test này được pass vì câu lệnh assertion của chúng ta trả về true,
+        mặc dù cho phương thức được gọi là <code>assertFalse()</code>.</p>
+      <p>PHPUnit cung cấp rất nhiều assertions được liệt kê tại <a href="https://phpunit.de/manual/current/en/appendixes.assertions.html"
+          target="_blank">đây</a>. Bạn không phải sử dụng tất cả. Phần lớn bạn
+        sẽ sử dụng các assertions <code>assertArrayHasKey()</code>, <code>assertEquals()</code>,
+        <code>assertFalse()</code>, <code>assertSame()</code> và <code>assertTrue()</code>,
+        chúng ta sẽ tập trung vào các assertion này trước. Các hàm PHPUnit
+        Assertions cũng giống như 1 hàm bình thường và giá trị trả về là true
+        hoặc false, bạn hoàn toàn có thể tự viết các assertion, tôi sẽ đề cập
+        phần này sau.</p>
+      <h3>Unit test (có ích) đầu tiên</h3>
+      <p>Unit test <em>có ích</em> đầu tiên của chúng ta sẽ là unit test cho
+        một hàm chuyển đổi từ string thông thường sang dạng url slug, ví dụ hàm
+        này sẽ biến đổi chuỗi: "<em>This string will be sluggified</em>" sang "<em>this-string-will-be-sluggified</em>".</p>
+      <p>Tạo file <code>src/URL.php</code>:</p>
+      <pre>&lt;?php
+namespace App;
+
+class URL
+{
+    public function sluggify($string, $separator = '-', $maxLength = 96)
+    {
+        $title = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $string);
+        $title = preg_replace('%[^-/+|\w ]%', '', $title);
+        $title = strtolower(trim(substr($title, 0, $maxLength), '-'));
+        $title = preg_replace('/[\/_|+ -]+/', $separator, $title);
+
+        return $title;
+    }
+}
+</pre>
+      <p>Tôi thấy đoạn code này là ví dụ rất tốt để thực hành unit test đầu tiên
+        vì nó dễ hiểu và có rất nhiều trường hợp có thể gây ra lỗi.</p>
+      <p>Chúng ta bắt đầu viết test với file <code>tests/URLTest.php</code>:</p>
+      <pre>&lt;?php
+namespace Tests;
+
+use PHPUnit\Framework\TestCase;
+
+class URLTest extends TestCase
+{
+    //
+}
+</pre>
+      <p>Class <code>URLTest</code> chưa có method test nào cả nên khi chạy
+        phpunit sẽ báo warning:</p>
+      <p> <img src="https://viblo.asia/uploads/55406c61-4eef-4822-80a0-31f816244250.png"></p>
+      <p>Chúng ta chạy phpunit ngay sau khi tạo file test và bộ khung của nó để
+        chắc chắn rằng chúng ta không bị lẫn lộn trong tên file hay tên test
+        class. Điều này sẽ giúp tránh các trường hợp không mong đợi trong tương
+        lai khi bộ test tất cả đều pass nhưng bạn nhận ra PHPUnit đã không thực
+        sự chạy file test của bạn có thể do sai sót cách đặt tên.</p>
+      <p>Bước tiếp theo, chúng ta sẽ test trường hợp đầu tiên: chúng ta muốn xác
+        nhận rằng <code>App\URL::sluggify()</code> sẽ trả về 1 string đã được
+        biến đổi sang dạn slug, method test sẽ được viết như sau:</p>
+      <pre>&lt;?php
+namespace Tests;
+
+use PHPUnit\Framework\TestCase;
+
+class URLTest extends TestCase
+{
+    public function testSluggifyReturnsSluggifiedString()
+    {
+
+    }
+}
+</pre>
+      <p>Với phiên bản PHPUnit 6.2 đang dùng, PHPUnit sẽ báo warning nếu method
+        của bạn không chưa bất cứ assertion nào:</p>
+      <p><img src="https://viblo.asia/uploads/7da7b4a9-a918-4140-9d5b-e0c3cad985c2.png"></p>
+      <p>Tiếp theo, chúng ta sẽ bắt đầu viết phần thân cho test method. Mong
+        muốn của chúng ta trong test case này là:</p>
+      <blockquote>
+        <p>"This string will be sluggified" sẽ được chuyển thành
+          "this-string-will-be-sluggified".</p>
+      </blockquote>
+      <pre>&lt;?php
+namespace Tests;
+
+use PHPUnit\Framework\TestCase;
+
+class URLTest extends TestCase
+{
+    public function testSluggifyReturnsSluggifiedString()
+    {
+        $originalString = 'This string will be sluggified';
+        $expectedResult = 'this-string-will-be-sluggified';
+    }
+}
+</pre>
+      <p>Để test method <code>App\URL::sluggify()</code>, chúng ta cần khởi tạo
+        1 đối tượng của class URL:</p>
+      <pre>&lt;?php
+namespace Tests;
+
+use PHPUnit\Framework\TestCase;
+use App\URL;
+
+class URLTest extends TestCase
+{
+    public function testSluggifyReturnsSluggifiedString()
+    {
+        $originalString = 'This string will be sluggified';
+        $expectedResult = 'this-string-will-be-sluggified';
+        
+        $url = new URL();
+    }
+}
+</pre>
+      <p>Bây giờ, chúng ta sẽ lấy ra kết quả từ phương thức <code>::sluggify()</code>:</p>
+      <pre>&lt;?php
+namespace Tests;
+
+use PHPUnit\Framework\TestCase;
+use App\URL;
+
+class URLTest extends TestCase
+{
+    public function testSluggifyReturnsSluggifiedString()
+    {
+        $originalString = 'This string will be sluggified';
+        $expectedResult = 'this-string-will-be-sluggified';
+        
+        $url = new URL();
+        $result = $url-&gt;sluggify($originalString);
+    }
+}
+</pre>
+      <p>Bước cuối cùng đó là assert rằng <code>$result</code> đúng như mong
+        muốn của chúng ta đã được khai báo trong biến <code>$expectedResult</code>.
+        Assertion phù hợp nhất ở đây là <code>assertEquals()</code>:</p>
+      <pre>&lt;?php
+namespace Tests;
+
+use PHPUnit\Framework\TestCase;
+use App\URL;
+
+class URLTest extends TestCase
+{
+    public function testSluggifyReturnsSluggifiedString()
+    {
+        $originalString = 'This string will be sluggified';
+        $expectedResult = 'this-string-will-be-sluggified';
+        
+        $url = new URL();
+        $result = $url-&gt;sluggify($originalString);
+        
+        $this-&gt;assertEquals($expectedResult, $result);
+    }
+}
+</pre>
+      <p>Chạy lại PHPUnit và xem kết quả:</p>
+      <p><img src="https://viblo.asia/uploads/e37a638b-b352-4fee-9368-551b3e5faf5b.png"></p>
+      <h3>Các kịch bản test khác</h3>
+      <p>Unit test khởi đầu của chúng ta đã pass, thật tuyệt. Tuy nhiên, có 1
+        vấn đề là chúng ta mới chỉ test 1 string chỉ chứa các ký tự A-Z và dấu
+        cách. Điều gì sẽ xảy ra nếu string có chứa số hay các ký tự đặc biệt (
+        (~!@#$%^&amp;*()_+))? Và với các ký tự không phải English thì sao?
+        Trường hợp string rỗng thì như thế nào? Có quá nhiều trường hợp cần phải
+        test. Một bộ test suite chuẩn khi nó bao phủ được tất cả các khả năng có
+        thể xảy ra, vì vậy chúng ta sẽ viết test cho một số kịch bản khác:</p>
+      <pre>&lt;?php
+namespace Tests;
+
+use PHPUnit\Framework\TestCase;
+use App\URL;
+
+class URLTest extends TestCase
+{
+    public function testSluggifyReturnsSluggifiedString()
+    {
+        $originalString = 'This string will be sluggified';
+        $expectedResult = 'this-string-will-be-sluggified';
+
+        $url = new URL();
+        $result = $url-&gt;sluggify($originalString);
+
+        $this-&gt;assertEquals($expectedResult, $result);
+    }
+
+    public function testSluggifyReturnsExpectedForStringsContainingNumbers()
+    {
+        $originalString = 'This1 string2 will3 be 44 sluggified10';
+        $expectedResult = 'this1-string2-will3-be-44-sluggified10';
+
+        $url = new URL();
+
+        $result = $url-&gt;sluggify($originalString);
+
+        $this-&gt;assertEquals($expectedResult, $result);
+    }
+
+    public function testSluggifyReturnsExpectedForStringsContainingSpecialCharacters()
+    {
+        $originalString = 'This! @string#$ %$will ()be "sluggified';
+        $expectedResult = 'this-string-will-be-sluggified';
+
+        $url = new URL();
+
+        $result = $url-&gt;sluggify($originalString);
+
+        $this-&gt;assertEquals($expectedResult, $result);
+    }
+
+    public function testSluggifyReturnsExpectedForStringsContainingNonEnglishCharacters()
+    {
+        $originalString = "Tänk efter nu – förr'n vi föser dig bort";
+        $expectedResult = 'tank-efter-nu-forrn-vi-foser-dig-bort';
+
+        $url = new URL();
+
+        $result = $url-&gt;sluggify($originalString);
+
+        $this-&gt;assertEquals($expectedResult, $result);
+    }
+
+    public function testSluggifyReturnsExpectedForEmptyStrings()
+    {
+        $originalString = '';
+        $expectedResult = '';
+
+        $url = new URL();
+
+        $result = $url-&gt;sluggify($originalString);
+
+        $this-&gt;assertEquals($expectedResult, $result);
+    }
+}
+</pre>
+      <p><strong>Ghi chú</strong>: do hàm <code>App\URL::sluggify()</code> sử
+        dụng hàm <code>iconv</code> của PHP nên nó phụ thuộc vào locale CTYPE
+        của hệ thống (<a href="https://secure.php.net/manual/en/function.iconv.php#86077"
+          target="_blank">issue</a>), nếu unit test bị fail bạn nên kiểm tra
+        locale của hệ thống có hỗ trợ UTF-8 hay không. VD đối với Linux
+        (Debian/Ubuntu): Kiểm tra locale CTYPE hiện tại:</p>
+      <pre>→ $ echo $LC_CTYPE
+C
+</pre>
+      <p>Chạy PHPUnit với CTYPE là C =&gt; Fail</p>
+      <p><img src="https://viblo.asia/uploads/4098dca6-006c-4162-b149-9f5f2c030bc5.png"></p>
+      <p>Danh sách các locale hệ thống hỗ trợ</p>
+      <pre>→ $ locale -a 
+C
+C.UTF-8
+POSIX
+</pre>
+      <p>Thay đổi locale =&gt; Pass</p>
+      <p><img src="https://viblo.asia/uploads/0ebc370f-eb24-4c6d-b647-467aeb5d4208.png"></p>
+      <h3>Vấn đề trùng lặp code</h3>
+      <p>Bạn có thể dễ dàng nhận thấy code test của chúng ta đang có vấn để lớn
+        là trùng lặp code.</p>
+      <p>May mắn là PHPUnit đã có hỗ trợ công cụ để chúng ta khắc phục điều này.</p>
+      <h3>Annotations trong PHPUnit</h3>
+      <p>Annotations là các flag đặc biệt được khai báo trong docblocks của
+        method:</p>
+      <pre>&lt;?php
+/**
+ * @annotationName Annotation value
+ */
+public function testFoo()
+{
+    //
+}
+</pre>
+      <p><a href="https://phpunit.de/manual/current/en/appendixes.annotations.html"
+          target="_blank">PHPUnit cung cấp rất nhiều annotations hữu ích</a>,
+        nhưng trước hết chúng ta đề hãy cập đến <code>@dataProvider</code>.</p>
+      <h3><a href="https://viblo.asia/u/dataProvider" target="_blank">@dataProvider</a></h3>
+      <p>PHPUnit định nghĩa data providers như sau:</p>
+      <blockquote>
+        <p>A test method can accept arbitrary arguments. These arguments are to
+          be provided by a data provider method.</p>
+      </blockquote>
+      <p>Tạm dịch là: 1 test method có thể chấp nhận nhiều input khác nhau. Các
+        tham số này được cung cấp bởi method data provider.</p>
+      <p>Hiểu đơn giản, 1 method data provider có thể được sử dụng để tạo ra
+        nhiều tập input để truyền vào 1 test method, khắc phục vấn đề phải tạo
+        nhiều method test như chúng ta đã thực hiện ở trên.</p>
+      <p>Thay vì tạo ra nhiều phương thức test, bạn chỉ cần tạo ra một phương
+        thức duy nhất với các tham số tương ứng với dữ liệu biến đổi giữa các
+        phép thử, và tạo một phương thức cung cấp dữ liệu để test. VD:</p>
+      <pre>/**
+ * @dataProvider providerTestFoo
+ */
+public function testFoo($variableOne, $variableTwo)
+{
+    //
+}
+
+public function providerTestFoo()
+{
+    return [
+        ['test 1, variable one', 'test 1, variable two'],
+        ['test 2, variable one', 'test 2, variable two'],
+        ['test 3, variable one', 'test 3, variable two'],
+        ['test 4, variable one', 'test 4, variable two'],
+        ['test 5, variable one', 'test 5, variable two'],
+    );
+}
+</pre>
+      <p>Một method data provider trả về 1 mảng các tập input. Trong ví dụ trên,
+        chúng ta có 5 tập input đầu vào để test. Mỗi tập là 1 mảng các các giá
+        trị được truyền vào test method theo thứ tự trong mảng. Ví dụ với tập
+        input đầu:</p>
+      <pre>['test 1, variable one', 'test 1, variable two']
+</pre>
+      <p>Nó sẽ được truyền vào method <code>testFoo($variableOne, $variableTwo)</code>
+        với <code>$variableOne</code>là <code>test 1, variable one</code> và <code>$variableTwo</code>
+        là <code>test 1, variable two</code>.</p>
+      <p>Bây giờ, chúng ta sẽ áp dụng vào unit test lần trước. Sửa lại file <code>tests/URLTest.php</code>:</p>
+      <pre>&lt;?php
+namespace Tests;
+
+use PHPUnit\Framework\TestCase;
+use App\URL;
+
+class URLTest extends TestCase
+{
+    /**
+     * @param string $originalString String to be sluggified
+     * @param string $expectedResult What we expect our slug result to be
+     *
+     * @dataProvider providerTestSluggifyReturnsSluggifiedString
+     */
+    public function testSluggifyReturnsSluggifiedString($originalString, $expectedResult)
+    {
+        $url = new URL();
+
+        $result = $url-&gt;sluggify($originalString);
+
+        $this-&gt;assertEquals($expectedResult, $result);
+    }
+
+    public function providerTestSluggifyReturnsSluggifiedString()
+    {
+        return [
+            ['This string will be sluggified', 'this-string-will-be-sluggified'],
+            ['THIS STRING WILL BE SLUGGIFIED', 'this-string-will-be-sluggified'],
+            ['This1 string2 will3 be 44 sluggified10', 'this1-string2-will3-be-44-sluggified10'],
+            ['This! @string#$ %$will ()be "sluggified', 'this-string-will-be-sluggified'],
+            ["Tänk efter nu – förr'n vi föser dig bort", 'tank-efter-nu-forrn-vi-foser-dig-bort'],
+            ['', ''],
+        ];
+    }
+}
+</pre>
+      <p>Chạy lại PHPUnit:</p>
+      <p><img src="https://viblo.asia/uploads/ecb78b9c-60f2-45e6-a3b0-a0e83efa3a43.png"></p>
+      <p>Huzzah!</p>
+      <h3>Kết luận</h3>
+      <p>Trong bài này, chúng ta đã tìm hiểu về assertions, thực hành các unit
+        test thực sự và tìm hiểu về <code>@dataProvider</code> annotation.</p>
+      <p>Vẫn còn khá nhiều thứ cần phải học, nhưng trước hết bạn nên thực hành
+        test các code đơn giản (không có phụ thuộc bên ngoài method).</p>
+      <p>Trong bài tiếp theo, chúng ta sẽ học cách test các method có các
+        dependency bên ngoài, tìm hiểu các khái niệm mocks, stubs và sự khác
+        nhau của chúng, tìm hiểu tại sao nên hạn chế sử dụng static method và sự
+        hữu ích của dependency injection.</p>
+      <p>Hẹn gặp lại các bạn trong bài tiếp theo.</p>
+      <h2>PHP Unit Test 301: Test các phương thức Private / Protected</h2>
+      <p>Trong bài trước, chúng ta đã thực hành nhiều hơn các unit test và tìm
+        hiểu về khái niệm <code>data provider</code> trong việc sử dụng bộ
+        input cho 1 unit test. Đến bài này, chúng ta sẽ tìm hiểu phương pháp
+        test các method private hoặc protected.</p>
+      <h3>Giới thiệu</h3>
+      <p>Nếu bạn đã đọc phần thứ hai của loạt bài này, bạn sẽ nhận thấy rằng
+        chúng ta tạo đối tượng thuộc lớp cần test thông qua toán tử <code>new</code>
+        thông thường. Bạn có thể tự hỏi là làm thế nào để test các phương thức
+        private hay protected nếu bạn không thể gọi các method đó trực tiếp
+        thông qua đối tượng đã tạo ra <code>$url-&gt;someProtectedMethod()</code>.</p>
+      <p>Thường thì câu trả lời sẽ là: "Bạn không trực tiếp test các phương thức
+        private hay protected". Vì bất cứ điều gì ngoài các phương thức, thuộc
+        tính public, chỉ có thể truy cập được trong phạm vi của lớp, chúng ta
+        giả định rằng các phương thức public của lớp sẽ tương tác với phương
+        thức private / proteced, do đó, cuối cùng bạn đã gián tiếp test các
+        phương thức này.</p>
+      <p>Tất nhiên, luôn luôn có những ngoại lệ: Điều gì sẽ xảy ra nếu bạn đang
+        test một lớp trừu tượng có các phương thức protect nhưng nó không được
+        trực tiếp sử dụng trong lớp đó?</p>
+      <p>Điều gì sẽ xảy ra nếu bạn muốn test các kịch bản khác nhau cho một
+        phương thức cụ thể trong khi bạn không thể áp dụng các kịch bản đó thông
+        qua các public method?</p>
+      <p>Sau đây chúng ta sẽ tìm hiểu quá trình.</p>
+      <h3>Stupid User class</h3>
+      <p>Tạo một tệp mới tại <code>./phpunit-tut/src/User.php</code> có nội
+        dung sau:</p>
+      <blockquote>
+        <p>Ghi chú: Code của lớp User này không tốt. Việc sử dụng <code>md5()</code>
+          để hash mật khẩu là điều nên tránh bằng mọi giá! Trong thực tế, nó là
+          một class được implement khá tồi. Nhưng nó cung cấp một ví dụ rất đơn
+          giản cho việc testing.</p>
+      </blockquote>
+      <pre>&lt;?php
+
+namespace App;
+
+class User
+{
+    const MIN_PASS_LENGTH = 4;
+
+    private $user = [];
+
+    public function __construct(array $user)
+    {
+        $this-&gt;user = $user;
+    }
+
+    public function getUser()
+    {
+        return $this-&gt;user;
+    }
+
+    public function setPassword($password)
+    {
+        if (strlen($password) &lt; self::MIN_PASS_LENGTH) {
+            return false;
+        }
+
+        $this-&gt;user['password'] = $this-&gt;cryptPassword($password);
+
+        return true;
+    }
+
+    private function cryptPassword($password)
+    {
+        return md5($password);
+    }
+}
+</pre>
+      <p>Unit test của chúng ta sẽ khởi tạo một đối tượng User mới <code>user =
+          new User($details);</code></p>
+      <p>Bạn có thể gọi phương thức <code>::setPassword()</code>, nhưng không
+        thể gọi <code>::cryptPassword()</code>, nhưng trong trường hợp này bạn
+        không cần phải làm điều đó. Thực tế là việc method public gọi đến method
+        private đã đủ để nói rằng "Method này đã được test", ít nhất là với đoạn
+        code cụ thể này.</p>
+      <p>Như vậy thì bạn sẽ tạo unit test cho method này như thế nào? Bạn có thể
+        thấy method khởi tạo và <code>::setPassword()</code> đều yêu cầu 1 tham
+        số được truyền vào. PHPUnit không đòi hỏi phép thuật nào đặc biệt để làm
+        việc với các tham số của method, như bạn sẽ sớm thấy.</p>
+      <h3>Tạo unit test cho class User</h3>
+      <p>Tạo file test <code>./phpunit-tut/tests/UserTest.php</code></p>
+      <pre>&lt;?php
+namespace Tests;
+
+use PHPUnit\Framework\TestCase;
+use App\User;
+
+class UserTest extends TestCase
+{
+    //
+}
+</pre>
+      <p>Chúng ta cần xác định xem sẽ test cái gì trước khi đi xa hơn. Class <code>src/User.php</code>
+        là rất đơn giản, nên chúng ta có thể có 2 kịch bản đơn giản:</p>
+      <ul>
+        <li><code>::setPassword()</code> returns true khi password được thiết
+          lập,</li>
+        <li><code>::getUser()</code> trả về array chứa password mới và password
+          này sẽ được so sánh với kết quả mong đợi.</li>
+      </ul>
+      <p>Chúng ta sẽ bắt đầu với <code>::setPassword()</code> trả về true:</p>
+      <pre>&lt;?php
+namespace Tests;
+
+use PHPUnit\Framework\TestCase;
+use App\User;
+
+class UserTest extends TestCase
+{
+    public function testSetPasswordReturnsTrueWhenPasswordSuccessfullySet()
+    {
+        $details = [];
+
+        $user = new User($details);
+    }
+}
+</pre>
+      <p>Bây giờ chúng ta sẽ định nghĩa ra tham số bắt buộc cho <code>::setPassword()</code>
+        method và gọi nó:</p>
+      <pre>public function testSetPasswordReturnsTrueWhenPasswordSuccessfullySet()
+{
+    $details = [];
+
+    $user = new User($details);
+
+    $password = 'fubar';
+
+    $result = $user-&gt;setPassword($password);
+}
+</pre>
+      <p>Chúng ta mong muốn <code>$result</code> sẽ bằng true:</p>
+      <pre>public function testSetPasswordReturnsTrueWhenPasswordSuccessfullySet()
+{
+    $details = [];
+
+    $user = new User($details);
+
+    $password = 'fubar';
+
+    $result = $user-&gt;setPassword($password);
+
+    $this-&gt;assertTrue($result);
+}
+</pre>
+      <p>Nếu bạn chạy phpunit bây giờ, bạn sẽ nhận được 1 green bar rất đẹp.</p>
+      <p>Bây giờ chúng ta có thể tập trung vào test <code>::getUser</code>,
+        phương thức chỉ có 1 hàm, do đó nó rất dễ dàng để test đúng không? Thực
+        sự thì... không đúng lắm. Bạn thấy đấy, tất cả lý do để test <code>::getUser()</code>
+        là để cho chúng ta truy cập vào các method private và lấy ra thuộc tính
+        <code>$user</code>. Chúng ta muốn xác nhận rằng <code>$user</code> có
+        giá trị như mong muốn. Điều này có nghĩa là bằng việc test <code>::getUser()</code>
+        chúng ta cũng đang test <code>::__construct()</code>, <code>::setPassword()</code>
+        và <code>cryptPassword()</code>.</p>
+      <p>Đây là test method của chúng ta:</p>
+      <pre>public function testGetUserReturnsUserWithExpectedValues()
+{
+    $details = [];
+
+    $user = new User($details);
+
+    $password = 'fubar';
+
+    $user-&gt;setPassword($password);
+}
+</pre>
+      <p>Điều duy nhất chúng ta có thể thực sự test trong kịch bản này đó là
+        password được tạo bởi <code>::cryptPassword()</code> khớp với giá trị
+        mong đợi. Chúng ta không bắt giá trị của <code>::setPassword()</code>
+        bởi vì ta đang giả sử rằng nó đã passed test. Nếu không giả sử như thế
+        chúng ta sẽ không biết được chắc chắn được bước tiết theo.</p>
+      <p>Chúng ta biết rằng mật khẩu raw ban đầu là <code>fubar</code>, nó được
+        hash bên trong <code>::setPassword()</code> sử dụng <code>md5()</code>.
+        Do đó chúng ta có thể xác định giá trị mong muốn đó là:</p>
+      <pre>$expectedPasswordResult = '5185e8b8fd8a71fc80545e144f91faf2';`
+</pre>
+      <p>Sau đó, chúng ta gọi hàm <code>::getUser()</code> để lấy user trong
+        trạng thái hiện tại</p>
+      <pre>$currentUser = $user-&gt;getUser();
+</pre>
+      <p>Và chúng ta đang mong đợi <code>::getUser()</code> trả về 1 mảng, và
+        muốn so sánh giá trị của phần tử password trong mảng với giá trị mong
+        muốn. Sử dụng <code>assertEquals()</code> chúng ta có method test hoàn
+        chỉnh như sau:</p>
+      <pre>public function testGetUserReturnsUserWithExpectedValues()
+{
+    $details = [];
+
+    $user = new User($details);
+
+    $password = 'fubar';
+
+    $user-&gt;setPassword($password);
+
+    $expectedPasswordResult = '5185e8b8fd8a71fc80545e144f91faf2';
+
+    $currentUser = $user-&gt;getUser();
+
+    $this-&gt;assertEquals($expectedPasswordResult, $currentUser['password']);
+}
+</pre>
+      <p>Done <code>OK (9 tests, 9 assertions)</code></p>
+      <h3>Test trực tiếp các method private/protected</h3>
+      <p>Điều gì xảy ra nếu chúng ta muốn test thêm nhiều kịch bản cho phương
+        thức protected mà không phải gián tiếp thông qua public API?</p>
+      <p>Điều này có thể thực hiện khá dễ dàng bằng cách sử dụng <a href="https://secure.php.net/manual/en/class.reflectionclass.php"
+          target="_blank"><code>ReflectionClass</code></a>:</p>
+      <pre>/**
+ * Call protected/private method of a class.
+ *
+ * @param object &amp;$object    Instantiated object that we will run method on.
+ * @param string $methodName Method name to call
+ * @param array  $parameters Array of parameters to pass into method.
+ *
+ * @return mixed Method return.
+ */
+public function invokeMethod(&amp;$object, $methodName, array $parameters = array())
+{
+    $reflection = new \ReflectionClass(get_class($object));
+    $method = $reflection-&gt;getMethod($methodName);
+    $method-&gt;setAccessible(true);
+
+    return $method-&gt;invokeArgs($object, $parameters);
+}
+</pre>
+      <p>Sử dụng <code>invokeMethod()</code> bạn có thể dễ dàng gọi các hàm
+        private hay protected một cách trực tiếp. Để sử dụng nó, chỉ đơn giản
+        gọi:</p>
+      <pre>$this-&gt;invokeMethod($user, 'cryptPassword', ['passwordToCrypt']);</pre>
+      <h2>PHP Unit Test 401: Tạo báo cáo Coverage Reports và chỉ số CRAP</h2>
+      <p>Một câu hỏi rất hay gặp đó là: "Chúng ta cần test bao nhiêu là đủ?". Và
+        câu trả lời thường gặp: "Cho đến khi bạn cover được 100% code.". Trong
+        bài này, tôi sẽ giải thích code coverage là gì và tại sao con số 100%
+        đôi khi không phải cái đích của unit test.</p>
+      <h3>Coverage Report</h3>
+      <p>Thử tưởng tượng, project bạn có một lượng lớn code, cũng như vài trăm
+        unit tests. Bạn tự tin rằng phần lớn code của bạn đã được test cẩn thận,
+        nhưng bạn cần phải làm điều gì đó để chắc chắn điều này. Bạn có thể đi
+        qua từng unit test và tự xác nhận rằng mọi trường hợp của code của bạn
+        đã được bao hàm trong unit test, nhưng nghe có vẻ thật nhàm chán và tốn
+        thời gian? Programmers thường rất thích "lười" và may mắn thay một công
+        cụ vô cùng hữu ích đã tích hợp trong PHPUnit cho phép chúng ta tiếp tục
+        "lười". Công cụ <em>Coverage Report</em> có chức năng generate các file
+        HTML tĩnh giúp bạn có thể xem thống kê về việc testing code của bạn một
+        cách dễ dàng, bao gồm các thống kê bao nhiêu % code được test và độ phức
+        tạp của đoạn code. Nó thậm chí còn cho bạn biết liệu unit test của bạn
+        có bỏ qua trường hợp nào không, ví dụ điều kiện <code>if</code> chưa
+        được test hết các nhánh chẳng hạn.</p>
+      <h4>Tạo coverage report</h4>
+      <p>Đối với phiên bản PHPUnit gần đây, bạn cần update file <code>phpunit.xml</code>,
+        thêm thẻ <code>filter</code>:</p>
+      <pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;phpunit colors="true"&gt;
+    &lt;testsuites&gt;
+        &lt;testsuite name="Application Test Suite"&gt;
+            &lt;directory&gt;./tests/&lt;/directory&gt;
+        &lt;/testsuite&gt;
+    &lt;/testsuites&gt;
+    &lt;filter&gt;
+        &lt;whitelist processUncoveredFilesFromWhitelist="true"&gt;
+            &lt;directory suffix=".php"&gt;./src&lt;/directory&gt;
+        &lt;/whitelist&gt;
+    &lt;/filter&gt;
+&lt;/phpunit&gt;
+</pre>
+      <p>Sau đó chạy lệnh <code>phpunit</code> với tham số <code>--coverage-html
+          &lt;thư-mục-output-file-html&gt;</code> để generate report:</p>
+      <pre>./vendor/bin/phpunit --coverage-html coverage
+</pre>
+      <p>Bạn sẽ thấy 1 folder mới <code>coverage</code> được tạo và chứa các
+        file html. Mở file <code>index.html</code>xem thử:</p>
+      <p> <img src="https://viblo.asia/uploads/b8f3cf56-783c-4561-8ce3-46fcced9c310.png"></p>
+      <p>Chúng ta có 2 kết quả tương ứng với 2 file được test. Mặc dù, chúng ta
+        đang có 3 file test, nhưng <code>StupidTest.php</code> không liên quan
+        đến bất cứ file mã nguồn nào nên nó không được thêm vào kết quả report.</p>
+      <h4>Coverage cho URL.php</h4>
+      <p>Click vào link <code>URL.php</code> trên trang kết quả và bạn sẽ thấy:</p>
+      <p><img src="https://viblo.asia/uploads/ce48515f-631e-44ff-8a6d-dc185ed7d078.png"></p>
+      <p>Để ý tới <em>Legend</em> ở cuối trang, nó chú thích những dòng code
+        được bôi mà xanh là đã được thực thi khi chạy test, màu đỏ biểu thị code
+        chưa được thực thi (ví dụ đoạn code trong nhánh <code>else</code> chưa
+        được test,...) và mà vàng biểu thị <em>dead code</em> (là những đoạn
+        code thừa, có thể được thực thi nhưng không gây ảnh hưởng gì đến kết quả
+        của hàm/phương thức, ngoài ra, như bạn thấy PHPUnit xem dấu <code>}</code>
+        kết thúc function cũng là dead code, điều này là do cơ chế của Xdebug,
+        tham khảo thêm =&gt; <a href="https://github.com/sebastianbergmann/php-code-coverage/issues/305"
+          target="_blank">https://github.com/sebastianbergmann/php-code-coverage/issues/305</a>).</p>
+      <p>Nếu bạn hover chuột qua từng dòng code, một popup sẽ hiện ra thông tin
+        test unit nào đã cover dòng code đó:</p>
+      <p><img src="https://viblo.asia/uploads/0aebdbe2-0c39-4be7-82a6-c332938378d7.png"></p>
+      <h4>Coverage cho User.php</h4>
+      <p>Back lại trang trước và click vào link <code>User.php</code>:</p>
+      <p><img src="https://viblo.asia/uploads/d25cc1d4-1b09-4644-b883-ca9133e32c7c.png"></p>
+      <p>Omg!! Đã xuất hiện một dòng màu đỏ. Cụ thể, ở dòng điều kiện <code>if</code>,
+        chưa có test case nào làm thỏa mãn điều kiện <code>strlen($password)
+          &lt; self::MIN_PASS_LENGTH</code> trong <code>::setPassword()</code>,
+        do đó, dòng code <code>return false</code> trong block <code>if</code>
+        chưa bao giờ được thực thi.</p>
+      <p>Chúng ta sẽ thêm 1 test case nữa vào <code>./phpunit-tut/tests/URLTest.php</code>.
+        Chúng ta đang mong muốn thực thi code trong block <code>if</code>, do
+        đó ta sẽ truyền vào password có độ dài 3 và assert kết quả trả về là <code>false</code>:</p>
+      <pre>public function testSetPasswordReturnsFalseWhenPasswordLengthIsTooShort()
+{
+    $details = [];
+
+    $user = new User($details);
+
+    $password = 'fub';
+
+    $result = $user-&gt;setPassword($password);
+
+    $this-&gt;assertFalse($result);
+}
+</pre>
+      <p>Chạy lại <code>phpunit</code> để generate coverage và reload trang và
+        bạn sẽ thấy dòng màu đỏ lúc đầu giờ đã chuyển sang màu xanh.</p>
+      <p><img src="https://viblo.asia/uploads/78f5d60d-2bf5-4988-a2c3-6227fefe9889.png"></p>
+      <h3>CRAP</h3>
+      <p>Nếu bạn nhìn vào bảng report, bạn sẽ thấy 1 column tên là <code>CRAP</code>,
+        nó là từ viết tắt của <code>Change Risk Analysis and Predictions</code>
+        hay <code>Change Risk Anti-Patterns</code>, nghe có vẻ khó hiểu, nhưng
+        tôi thích cách hiểu nôm na là: độ khó để bạn đọc lại đoạn 1 code trong
+        tương lai và hiểu được nó đã và đang làm cái quái quỷ gì ở đó.</p>
+      <p>Một bài chi tiết về CRAP index bạn có thể tham khảo tại <a href="http://www.artima.com/weblogs/viewpost.jsp?thread=210575"
+          target="_blank">đây</a>.</p>
+      <p>Tôi sẽ không trách bạn tại sao đóng cái link đó nhanh như vậy, nó khá
+        khô cứng và nhạt nhẽo nếu bạn không thực sự quan tâm đến chỉ số <code>CRAP</code>...</p>
+      <p>Một cách đơn giản, chỉ số CRAP của method càng cao thì nó càng khó để
+        hiểu hơn.</p>
+      <p>Nếu method của bạn rất đơn giản, chẳng hạn 1 method getter thông
+        thường, thì CRAP sẽ gần bằng 1 (giá trị nhỏ nhất của CRAP). Nếu code trở
+        nên phức tạp hơn, ví dụ thêm vài đoạn <code>if</code> vào, thì CRAP sẽ
+        bắt đầu tăng lên. Với <code>foreach</code> và các đoạn code lồng nhau,
+        CRAP sẽ tăng lên đáng kể.</p>
+      <p>Khi bạn viết unit test để xác định các trường hợp thực thi khác nhau
+        của 1 method, chỉ số CRAP sẽ bắt đầu giảm xuống. Một khi method đã được
+        test cover hoàn toàn các trường hợp thì CRAP sẽ nhỏ hơn rất nhiều so với
+        khi chưa có test case nào.</p>
+      <p>Cho đến bây giờ, các đoạn code mẫu của chúng ta là khá đơn giản. Không
+        có quá nhiều trường hợp thực thi xảy ra, giữ cho chỉ số CRAP hiện tại
+        khá thấp. Đây là cách mà tôi mong muốn: chia nhỏ method để thực hiện các
+        task cụ thể. Nó không chỉ giúp code dễ đọc hơn mà còn cho phép
+        refactoring code trong khi vẫn giữ nguyên unit test.</p>
+      <h3>100% code coverage</h3>
+      <p>Có cần thiết phải đạt được 100% code coverage? Nhiều lập trình viên tán
+        thành với ý kiến viết unit test cho đến khi bạn đạt được 100% coverage.
+        Tuy nhiên, đối với tác giả điều đó là không cần thiết, theo tác giả: nếu
+        1 method có CRAP &lt; 5 thì nó không phải là phức tạp và không cần thiết
+        để viết test.</p>
+      <p>Còn theo mình, viết test cho 1 method còn để đảm bảo method đó không bị
+        thay đổi input / output, do đó hãy cố gắng đạt được con số 100%.</p>
+      <h2>PHP Unit Test 501: Sử dụng Mock Objects, Stub Methods và Dependency
+        Injection</h2>
+      <p>Trong các bài trước, chúng ta đã biết viết một số unit test cơ bản,
+        biết cách sử dụng annotation <code>@dataProvider</code>, tạo báo cáo và
+        sử dụng một số assertions.</p>
+      <p>Các unit test cho đến bây giờ vẫn còn rất đơn giản, chỉ là test các
+        điều kiện <code>if/else</code> hay các method trong cùng class. Cách
+        tiếp cận này giúp chúng ta dễ hiểu hơn khi mới bắt đầu, tuy nhiên trong
+        thực tế ít khi ta bắt gặp các trường hợp đơn giản như vậy, điều bạn sẽ
+        thường gặp đó là các method của đối tượng này gọi đến method của đối
+        tượng khác, các method static, hoặc các đối tượng được truyền qua
+        parameter (dependency injection).</p>
+      <p>Trong bài viết này, tôi sẽ đề cập nhiều hơn về một số khái niệm nâng
+        cao trong unit test, với ví dụ code mà có lẽ đã khá quen thuộc với chúng
+        ta đó là: sử dụng API từ bên thứ ba, cụ thể ở đây là API của <a href="http://authorize.net/"
+          target="_blank">Authorize.net</a>.</p>
+      <h3>Vấn đề</h3>
+      <p>Đầu tiên, chúng ta sẽ tiến hành cài đặt thư việc của <a href="http://authorize.net/"
+          target="_blank">Authorize.net</a>:</p>
+      <pre>composer require ajbdev/authorizenet-php-api
+</pre>
+      <p>Tiếp theo, bạn hãy tạo file <code>src/Payment.php</code> và paste đoạn
+        code sau:</p>
+      <pre>&lt;?php
+
+namespace App;
+
+use AuthorizeNetAIM;
+use Exception;
+
+class Payment
+{
+    const API_ID = 123456;
+    const TRANS_KEY = 'TRANSACTION KEY';
+
+    public function processPayment(array $paymentDetails)
+    {
+        $transaction = new AuthorizeNetAIM(self::API_ID, self::TRANS_KEY);
+        $transaction-&gt;amount = $paymentDetails['amount'];
+        $transaction-&gt;card_num = $paymentDetails['card_num'];
+        $transaction-&gt;exp_date = $paymentDetails['exp_date'];
+
+        $response = $transaction-&gt;authorizeAndCapture();
+
+        if ($response-&gt;approved) {
+            return $this-&gt;savePayment($response-&gt;transaction_id);
+        } else {
+            throw new Exception($response-&gt;error_message);
+        }
+    }
+
+    public function savePayment($transactionId)
+    {
+        // Logic for saving transaction ID to database or anywhere else would go in here
+        return true;
+    }
+}
+</pre>
+      <p>Đoạn code này trông có vẻ khá đơn giản, nhưng nó không thể test được.
+        Bạn sẽ sớm biết được lý do tại sao.</p>
+      <p>Tiếp theo, sẽ là file test case <code>tests/PaymentTest.php</code>:</p>
+      <pre>&lt;?php
+
+namespace Tests;
+
+use App\Payment;
+use TestCase;
+
+class PaymentTest extends TestCase
+{
+    //
+}
+</pre>
+      <p>Trước khi viết test case đầu tiên, hãy nghĩ xem chúng ta cần test những
+        gì từ đoạn code đã cho.</p>
+      <p>Hai trường hợp rõ ràng đó là:</p>
+      <ul>
+        <li>Trường hợp <code>$response-&gt;approved</code> trả về <code>true</code>,
+          sẽ dẫn đến lời gọi hàm <code>::savePayment()</code> (hiện đang trả về
+          <code>true</code>)</li>
+        <li>Trường hợp <code>$response-&gt;approved</code> trả về <code>false</code>,
+          sẽ ném ra 1 Exception.</li>
+      </ul>
+      <p>Theo cách làm từ trước đến nay, chúng ta có 1 test case như sau: truyền
+        vào parameter cho method và expected method return <code>true</code></p>
+      <pre>public function testProcessPaymentReturnsTrueOnSuccessfulPayment()
+{
+    $paymentDetails = array(
+        'amount'   =&gt; 123.99,
+        'card_num' =&gt; '4111-1111-1111-1111',
+        'exp_date' =&gt; '03/2013',
+    );
+
+    $payment = new Payment();
+    $result = $payment-&gt;processPayment($paymentDetails);
+
+    $this-&gt;assertTrue($result);
+}
+</pre>
+      <p>Thử chạy phpunit và fail, tất nhiên rồi, nhưng vấn đề gì đã xảy ra?</p>
+      <p><img src="https://viblo.asia/uploads/ef68cfe3-2f70-40cd-ab0c-69a48887d6ab.png"></p>
+      <p><a href="http://authorize.net/" target="_blank">Authorize.net</a> trả
+        về message lỗi: "The merchant login ID or password is invalid or the
+        account is inactive."!</p>
+      <p>Vậy thì ta có thể đăng ký 1 tài khoản hợp lệ trên <a href="http://authorize.net/"
+          target="_blank">Authorize.net</a> và sửa lại input trong test case?</p>
+      <p>Ok, điều này có thể giải quyết vấn đề, nhưng vấn đề khác lại sinh ra:
+        Nếu bạn xem chi tiết bên trong class <code>AuthorizeNetAIM</code>, bạn
+        sẽ để ý thấy độ phức tạp sẽ tăng lên nhanh chóng - method này gọi method
+        kia, method kia lại gọi thêm nhiều method khác nữa. Thậm chí có cả 1
+        đoạn dùng <code>cURL</code> để connect đến server <a href="http://authorize.net/"
+          target="_blank">Authorize.net</a>. Điều gì sẽ xảy ra nến server <a href="http://authorize.net/"
+          target="_blank">Authorize.net</a> không hoạt động hoặc mạng Internet
+        bị sập khi ta đang chạy unit test?</p>
+      <p>Tại sao chúng ta lại lo lắng quá nhiều về điều gì sẽ xảy ra trong class
+        bên ngoài? Vì chúng ta không muốn phụ thuộc vào một mã nguồn bên ngoài
+        mà không thuộc phạm vi điều khiển của chúng ta. Nhưng chắc phải có cách
+        nào đó tốt hơn chứ...?</p>
+      <h3>Mock object</h3>
+      <p>PHPUnit cung cấp tính năng hỗ trợ chúng ta xử lý các denpendency bên
+        ngoài. Về cơ bản đó là thay thế đối tượng thật bằng một đối tượng giả
+        (gọi là <code>fake</code> hoặc <code>mock object</code>) mà chúng ta
+        có toàn quyền kiểm soát, loại bỏ mọi phụ thuộc vào hệ thống hoặc code
+        bên ngoài mà chúng ta không cần phải test.</p>
+      <p>Chúng ta đã biết method <code>::authorizeAndCapture()</code> trong lớp
+        <code>AuthorizeNetAIM</code> gây ra cho code unit test của chúng ta một
+        vấn đề lớn đó là nó gọi đến 1 hệ thống server bên ngoài.</p>
+      <p>Nhưng, vẫn còn một vấn đề đó là làm thế nào để truyền vào mock object
+        vào method đang test, khi mà đối tượng <code>AuthorizeNetAIM</code>
+        đang được khởi tạo bên trong method:</p>
+      <pre>public function processPayment(array $paymentDetails)
+{
+    $transaction = new AuthorizeNetAIM(self::API_ID, self::TRANS_KEY);
+    // ...
+}
+</pre>
+      <h4>Dependency Injection</h4>
+      <p>Có một kỹ thuật gọi là <code>Dependency Injection</code>, nghe tên có
+        vẻ hơi lạ nhưng thực ra nó là một kỹ thuật vô cùng đơn giản.</p>
+      <p>Thay vì sử dụng <code>new</code> để khởi tạo đối tượng bên trong
+        method của bạn, chúng ta sẽ truyền đối tượng đó vào method thông qua
+        tham số của method: Ví dụ, từ đoạn code:</p>
+      <pre>public function processPayment(array $paymentDetails)
+{
+    $transaction = new AuthorizeNetAIM(self::API_ID, self::TRANS_KEY);
+    $transaction-&gt;amount = $paymentDetails['amount'];
+    $transaction-&gt;card_num = $paymentDetails['card_num'];
+    $transaction-&gt;exp_date = $paymentDetails['exp_date'];
+
+    $response = $transaction-&gt;authorizeAndCapture();
+
+    if ($response-&gt;approved) {
+        return $this-&gt;savePayment($response-&gt;transaction_id);
+    }
+
+    throw new Exception($response-&gt;error_message);
+}
+</pre>
+      <p>sẽ được chuyển thành:</p>
+      <pre>public function processPayment(AuthorizeNetAIM $transaction, array $paymentDetails)
+{
+    $transaction-&gt;amount = $paymentDetails['amount'];
+    $transaction-&gt;card_num = $paymentDetails['card_num'];
+    $transaction-&gt;exp_date = $paymentDetails['exp_date'];
+
+    $response = $transaction-&gt;authorizeAndCapture();
+
+    if ($response-&gt;approved) {
+        return $this-&gt;savePayment($response-&gt;transaction_id);
+    }
+
+    throw new Exception($response-&gt;error_message);
+}
+</pre>
+      <p>Có nghĩa là bạn đang <em>đẩy trách nhiệm</em> khởi tạo đối tượng <code>AuthorizeNetAIM</code>
+        ra bên ngoài class <code>Payment</code>. Bạn có thể tìm hiểu thêm về
+        Dependency Injection ở blog của tác giả <a href="http://fabien.potencier.org/what-is-dependency-injection.html"
+          target="_blank">Fabien Potencier</a>.</p>
+      <p>Kỹ thuật đơn giản nhưng mang lại rất nhiều lợi ích.</p>
+      <h4>Nhưng tại sao sử dụng dependency injection</h4>
+      <p>Chúng ta đang muốn thay thế object thật với một mock object mà đúng
+        không? Thế thì bạn sẽ làm thế nào khi mà code của bạn đang tự tạo ra
+        object đó:</p>
+      <pre>$transaction = new \AuthorizeNetAIM(self::API_ID, self::TRANS_KEY);
+</pre>
+      <p>Câu trả lời ngắn gọn đó là: <em>Không thể làm được</em>.</p>
+      <p>Dài dòng hơn thì: bạn có thể, "giải pháp" ở đây là <a href="http://php.net/manual/en/book.runkit.php"
+          target="_blank">runkit</a>, tuy nhiên đó là một ý tưởng tồi và nên
+        tránh trong mọi trường hợp.</p>
+      <p>Runkit cho phép bạn thay thế code trong lúc thự thi, nghe có vẻ đúng
+        thứ chúng ta cần đúng không? Thay thế object thật bằng mock object?
+        Runkit sử dụng một kỹ thuật gọi là <a href="http://en.wikipedia.org/wiki/Monkey_patch"
+          target="_blank">monkey patching</a> và để xem tại sao nó lại là ý
+        tưởng tồi, bạn hãy xem bài viết này ==&gt; <a href="https://www.littlehart.net/atthekeyboard/2012/07/13/monkey-patching-is-for-closers/"
+          target="_blank">link</a>.</p>
+      <p>Một lần nữa, chúng ta quay lại với câu trả lời "<em>Không thể làm được</em>".</p>
+      <p>Vì vậy, cách giải quyết ở đây là truyền object vào parameter của
+        method: <code>public function processPayment(AuthorizeNetAIM
+          $transaction, array $paymentDetails)</code>. Với <a href="http://php.net/manual/en/functions.arguments.php#functions.arguments.type-declaration"
+          target="_blank">type hint</a> là <code>AuthorizeNetAIM $transaction</code>
+        có nghĩa chúng ta có cần truyền vào object thoả mãn quan hệ <code>is_a</code>:
+        object thuộc class này hoặc có class này là class cha ông.</p>
+      <p>Các class kế thừa class <code>AuthorizeNetAIM</code> sẽ thoả mãn điều
+        này. Vậy thì đơn giản, chúng ta chỉ cần tạo 1 class mới <code>AuthorizeNetAIMFake</code>
+        extends <code>AuthorizeNetAIM</code> và override tất cả method để
+        return về các giá trị chúng ta mong muốn. Điều này thực sự không phải là
+        một ý tưởng tồi và thực tế nó áp dụng tốt cho các bộ mã nguồn nhỏ. Nhưng
+        điều gì sẽ xảy ra khi bạn có 5 rồi 10 hay 50 hoặc hàng trăm... class cần
+        phải override. Bạn có thực sự muốn tạo ra và maintain hàng trăm file
+        chẳng có chức năng gì ngoài việc extends 1 lớp khác và override tất cả
+        method. Phải có cách nào đó tốt hơn.</p>
+      <h4>PHPUnit Mock helper</h4>
+      <p>Với việc thay đổi source code theo dependency injection, unit test của
+        chúng ta bây giờ sẽ trông như thế này:</p>
+      <pre>&lt;?php
+
+namespace Tests;
+
+use App\Payment;
+use AuthorizeNetAIM;
+use PHPUnit\Framework\TestCase;
+
+class PaymentTest extends TestCase
+{
+    public function testProcessPaymentReturnsTrueOnSuccessfulPayment()
+    {
+        $paymentDetails = array(
+            'amount'   =&gt; 123.99,
+            'card_num' =&gt; '4111-1111-1111-1111',
+            'exp_date' =&gt; '03/2013',
+        );
+
+        $payment = new Payment();
+
+        $authorizeNet = new AuthorizeNetAIM(Payment::API_ID, Payment::TRANS_KEY);
+
+        $result = $payment-&gt;processPayment($authorizeNet, $paymentDetails);
+
+        $this-&gt;assertTrue($result);
+    }
+}
+</pre>
+      <p>Vấn đề với code này là nó vẫn phụ thuộc vào class <code>AuthorizeNetAIM</code>,
+        nhưng chúng ta không muốn tạo 1 class trống <code>AuthorizeNetAIMFake</code>
+        để giải quyết vấn đề này. Vậy làm gì bây giờ?</p>
+      <p>PHPUnit cung cấp một phương thức hữu ích đó là <code>getMockBuilder</code>,
+        nó cho phép bạn tạo 1 class mới thoả mãn điều kiện trên ngay khi đang
+        chạy test mà không phải tạo file mới cho mỗi class.</p>
+      <pre>$authorizeNet = $this-&gt;getMockBuilder(AuthorizeNetAIM::class)
+    -&gt;setConstructorArgs([Payment::API_ID, Payment::TRANS_KEY])
+    -&gt;getMock();
+</pre>
+      <p>Thử kiểm tra xem bên trong đối tượng mới này có gì với <code>var_dump($authorizeNet);</code>,
+        ta thấy nó rất giống với class ban đầu:</p>
+      <pre>class Mock_AuthorizeNetAIM_084f7b20#17 (12) {
+    private $__phpunit_invocationMocker =&gt; NULL
+    protected $_x_post_fields           =&gt; array(5) {
+        'version'        =&gt; string(3) "3.1"
+        'delim_char'     =&gt; string(1) ","
+        'delim_data'     =&gt; string(4) "TRUE"
+        'relay_response' =&gt; string(5) "FALSE"
+        'encap_char'     =&gt; string(1) "|"
+    }
+    private $_additional_line_items =&gt; array(0) {}
+    protected $_custom_fields       =&gt; array(0) {}
+    public $verify_x_fields         =&gt; bool(true)
+    private $_all_aim_fields        =&gt; array(61) {
+        [0]  =&gt; string(7) "address"
+        [1]  =&gt; string(18) "allow_partial_auth"
+        [2]  =&gt; string(6) "amount"
+        [3]  =&gt; string(9) "auth_code"
+        [4]  =&gt; string(24) "authentication_indicator"
+        [5]  =&gt; string(13) "bank_aba_code"
+        [6]  =&gt; string(14) "bank_acct_name"
+        [7]  =&gt; string(13) "bank_acct_num"
+        [8]  =&gt; string(14) "bank_acct_type"
+        [9]  =&gt; string(17) "bank_check_number"
+        [10] =&gt; string(9) "bank_name"
+        [11] =&gt; string(9) "card_code"
+        [12] =&gt; string(8) "card_num"
+        [13] =&gt; string(31) "cardholder_authentication_value"
+        [14] =&gt; string(4) "city"
+        [15] =&gt; string(7) "company"
+        [16] =&gt; string(7) "country"
+        [17] =&gt; string(7) "cust_id"
+        [18] =&gt; string(11) "customer_ip"
+        [19] =&gt; string(10) "delim_char"
+        [20] =&gt; string(10) "delim_data"
+        [21] =&gt; string(11) "description"
+        [22] =&gt; string(16) "duplicate_window"
+        [23] =&gt; string(4) "duty"
+        [24] =&gt; string(11) "echeck_type"
+        [25] =&gt; string(5) "email"
+        [26] =&gt; string(14) "email_customer"
+        [27] =&gt; string(10) "encap_char"
+        [28] =&gt; string(8) "exp_date"
+        [29] =&gt; string(3) "fax"
+        [30] =&gt; string(10) "first_name"
+        [31] =&gt; string(20) "footer_email_receipt"
+        [32] =&gt; string(7) "freight"
+        [33] =&gt; string(20) "header_email_receipt"
+        [34] =&gt; string(11) "invoice_num"
+        [35] =&gt; string(9) "last_name"
+        [36] =&gt; string(9) "line_item"
+        [37] =&gt; string(5) "login"
+        [38] =&gt; string(6) "method"
+        [39] =&gt; string(5) "phone"
+        [40] =&gt; string(6) "po_num"
+        [41] =&gt; string(17) "recurring_billing"
+        [42] =&gt; string(14) "relay_response"
+        [43] =&gt; string(15) "ship_to_address"
+        [44] =&gt; string(12) "ship_to_city"
+        [45] =&gt; string(15) "ship_to_company"
+        [46] =&gt; string(15) "ship_to_country"
+        [47] =&gt; string(18) "ship_to_first_name"
+        [48] =&gt; string(17) "ship_to_last_name"
+        [49] =&gt; string(13) "ship_to_state"
+        [50] =&gt; string(11) "ship_to_zip"
+        [51] =&gt; string(15) "split_tender_id"
+        [52] =&gt; string(5) "state"
+        [53] =&gt; string(3) "tax"
+        [54] =&gt; string(10) "tax_exempt"
+        [55] =&gt; string(12) "test_request"
+        [56] =&gt; string(8) "tran_key"
+        [57] =&gt; string(8) "trans_id"
+        [58] =&gt; string(4) "type"
+        [59] =&gt; string(7) "version"
+        [60] =&gt; string(3) "zip"
+    }
+    protected $_api_login       =&gt; int(123456)
+    protected $_transaction_key =&gt; string(15) "TRANSACTION KEY"
+    protected $_post_string     =&gt; NULL
+    public $VERIFY_PEER         =&gt; bool(true)
+    protected $_sandbox         =&gt; bool(true)
+    protected $_log_file        =&gt; bool(false)
+}
+</pre>
+      <p>Các method của nó cũng có tương ứng với class ban đầu, <code>print_r(get_class_methods($authorizeNet));</code>:</p>
+      <pre>[0] =&gt; __clone
+[1] =&gt; authorizeAndCapture
+[2] =&gt; priorAuthCapture
+[3] =&gt; authorizeOnly
+[4] =&gt; void
+[5] =&gt; captureOnly
+[6] =&gt; credit
+[7] =&gt; __set
+[8] =&gt; setFields
+[9] =&gt; setCustomFields
+[10] =&gt; addLineItem
+[11] =&gt; setECheck
+[12] =&gt; setField
+[13] =&gt; setCustomField
+[14] =&gt; unsetField
+[15] =&gt; setSandbox
+[16] =&gt; setLogFile
+[17] =&gt; getPostString
+[18] =&gt; expects
+[19] =&gt; staticExpects
+[20] =&gt; __phpunit_getInvocationMocker
+[21] =&gt; __phpunit_getStaticInvocationMocker
+[22] =&gt; __phpunit_hasMatchers
+[23] =&gt; __phpunit_verify
+[24] =&gt; __phpunit_cleanup
+[25] =&gt; __construct
+</pre>
+      <p>Tuy nhiên, có 1 ngoại lệ đó là tất cả method của mock object đều trả về
+        <code>null</code>. Những method này được gọi là <code>stubs</code>!</p>
+      <h3>Stub method</h3>
+      <p>Stub method là một method bắt chước hành vi của method ban đầu theo 2
+        tiêu chí: cùng tên và cùng parameters. Điểm khác biệt của stub method là
+        tất cả code logic bên trong sẽ bị loại bỏ.</p>
+      <p>Ví dụ, đây là method ban đầu từ class <code>AuthorizeNetAIM</code>:</p>
+      <pre>public function authorizeAndCapture($amount = false, $card_num = false, $exp_date = false)
+{
+    ($amount ? $this-&gt;amount = $amount : null);
+    ($card_num ? $this-&gt;card_num = $card_num : null);
+    ($exp_date ? $this-&gt;exp_date = $exp_date : null);
+    $this-&gt;type = "AUTH_CAPTURE";
+    return $this-&gt;_sendRequest();
+}
+</pre>
+      <p>Một stub method có thể như sau:</p>
+      <pre>public function authorizeAndCapture($amount = false, $card_num = false, $exp_date = false)
+{
+    return null;
+}
+</pre>
+      <p>Tất cả method trong mock object là stub method và tất cả đều return
+        null.</p>
+      <p>Lợi ích của stub method ở đây là method <code>authorizeAndCapture()</code>
+        không còn gửi request đến server <code>Authorize.net</code> nữa. Thay
+        vào đó nó luôn return giá trị null mỗi khi được gọi đến.</p>
+      <p>Thêm một bước tiến: <strong>Bây giờ bạn đã có thể overridden giá trị
+          trả về của 1 method bằng stub method bên trong unit test</strong>.</p>
+      <p>Giá trị trả về có thể là bất kỳ - null, string, array, integers, các
+        object khác hoặc thậm chí là mock object. Tuy nhiên, chúng ta sẽ đi chi
+        tiết hơn về stub method trong bài tiếp theo.</p>
+      <p>Bây giờ, code unit test của chúng ta sẽ như sau:</p>
+      <pre>&lt;?php
+
+namespace Tests;
+
+use App\Payment;
+use AuthorizeNetAIM;
+use PHPUnit\Framework\TestCase;
+
+class PaymentTest extends TestCase
+{
+    public function testProcessPaymentReturnsTrueOnSuccessfulPayment()
+    {
+        $paymentDetails = [
+            'amount'   =&gt; 123.99,
+            'card_num' =&gt; '4111-1111-1111-1111',
+            'exp_date' =&gt; '03/2013',
+        ];
+
+        $payment = new Payment();
+
+        $authorizeNet = $this-&gt;getMockBuilder(AuthorizeNetAIM::class)
+            -&gt;setConstructorArgs([Payment::API_ID, Payment::TRANS_KEY])
+            -&gt;getMock();
+
+        $result = $payment-&gt;processPayment($authorizeNet, $paymentDetails);
+
+        $this-&gt;assertTrue($result);
+    }
+}
+</pre>
+      <p>Chạy lại test, và kết quả là:</p>
+      <pre>There was 1 error:
+
+1) Tests\PaymentTest::testProcessPaymentReturnsTrueOnSuccessfulPayment
+Trying to get property of non-object
+
+/phpunit-tut/src/Payment.php:18
+/phpunit-tut/tests/PaymentTest.php:23
+
+FAILURES!
+Tests: 11, Assertions: 10, Errors: 1.
+</pre>
+      <p><code>Payment.php:18</code> tương ứng với code <code>if
+          ($response-&gt;approved) {</code>. <code>$response</code> được khởi
+        tạo với <code>$response = $transaction-&gt;authorizeAndCapture();</code>.
+        Như bạn vừa biết thì mặc định tất cả stub method đều trả về null, do đó
+        lỗi này là hiển nhiên rồi.</p>
+      <p>Do đó chúng ta biết rằng, chúng ta cần phải overridden giá trị trả về
+        của <code>authorizeAndCapture()</code>, và may mắn thay nó khá là đơn
+        giản.</p>
+      <h4>Override stub method return values</h4>
+      <p>Để thay đổi giá trị trả về của stub method, chúng ta có thêm 5 method
+        mới của PHPUnit:</p>
+      <pre>$authorizeNet-&gt;expects($this-&gt;once())
+    -&gt;method('authorizeAndCapture')
+    -&gt;will($this-&gt;returnValue('RETURN VALUE HERE!'));
+</pre>
+      <p>Đoạn code trên có ý nghĩa là chúng ta đang định nghĩa rằng đối tượng <code>$authorizeNet</code>sẽ
+        gọi method <code>authorizeAndCapture()</code> một lần và nó sẽ trả về
+        giá trị là <code>RETURN VALUE HERE</code>.</p>
+      <p>Bắt đầu quá trình là <code>expects()</code>, method này có 1
+        parameter, đó là số lần chúng ta mong muốn method được gọi trong code.
+        Có nhiều tuỳ chọn ở đây, bao gồm <code>once()</code>, <code>any()</code>,
+        <code>never()</code> và một vài tuỳ chọn khác. Nếu chúng ta định nghĩa 1
+        method được gọi 1 lần (once) nhưng khi chạy qua unit test nó không được
+        gọi lần nào hoặc gọi nhiều hơn 1 lần, unit test của chúng ta sẽ fail.
+        Nếu chúng ta định nghĩa nó không bao giờ được gọi (never), nhưng điều
+        ngược lại xảy ra thì unit test sẽ fail. <code>any()</code> có nghĩa là:
+        Tôi không quan tâm nó được gọi bao nhiêu lần, nhưng khi được gọi thì đây
+        là giá trị trả về.</p>
+      <p><code>method()</code> có tham số là tên method cần override. Trong
+        trường hợp này là method <code>$response =
+          $transaction-&gt;authorizeAndCapture();</code>.</p>
+      <p>Và chúng ta có method <code>will()</code> chỉ đơn giản là wrap method
+        <code>returnValue()</code> nơi mà bạn định nghĩa giá trị trả về của
+        method, trong trường hợp này đó là <code>RETURN VALUE HERE!</code>.</p>
+      <p>Nếu chạy lại unit test bây giờ, nó vẫn tiếp tục bị fail, bởi vì stub
+        method <code>authorizeAndCapture()</code> đang trả về string, trong khi
+        đó, code của chúng ta đang cần 1 object với các thuộc tính <code>approved</code>
+        và <code>transaction_id</code>. Một biện pháp đơn giản cho các kiểu đối
+        tượng này là sử dụng <code>\stdClass</code>:</p>
+      <pre>$response = new \stdClass();
+$response-&gt;approved = true;
+$response-&gt;transaction_id = 123;
+</pre>
+      <p>Và bây giờ là unit test hoàn chỉnh:</p>
+      <pre>&lt;?php
+
+namespace Tests;
+
+use stdClass;
+use App\Payment;
+use AuthorizeNetAIM;
+use PHPUnit\Framework\TestCase;
+
+class PaymentTest extends TestCase
+{
+    public function testProcessPaymentReturnsTrueOnSuccessfulPayment()
+    {
+        $paymentDetails = [
+            'amount'   =&gt; 123.99,
+            'card_num' =&gt; '4111-1111-1111-1111',
+            'exp_date' =&gt; '03/2013',
+        ];
+
+        $payment = new Payment();
+
+        $response = new stdClass();
+        $response-&gt;approved = true;
+        $response-&gt;transaction_id = 123;
+
+        $authorizeNet = $this-&gt;getMockBuilder(AuthorizeNetAIM::class)
+            -&gt;setConstructorArgs([Payment::API_ID, Payment::TRANS_KEY])
+            -&gt;getMock();
+
+        $authorizeNet-&gt;expects($this-&gt;once())
+            -&gt;method('authorizeAndCapture')
+            -&gt;will($this-&gt;returnValue($response));
+
+        $result = $payment-&gt;processPayment($authorizeNet, $paymentDetails);
+
+        $this-&gt;assertTrue($result);
+    }
+}
+</pre>
+      <h3>Kết luận</h3>
+      <p>Vẫn còn khá nhiều việc cần phải làm. Nhìn vào code chúng ta có thể xác
+        định chúng ta cần phải cover nhiều kịch bản nữa khi <code>$response-&gt;approved</code>
+        trả về <code>false</code>, và làm thế nào để ném ra exception <code>throw
+          new Exception($response-&gt;error_message);</code>...</p>
+      <p>Tuy nhiên, cho đến đây bạn đã học được khái niệm cơ bản của <code>mock
+          object</code>, <code>stub method</code> và lý do tại sao dependency
+        injection là 1 kỹ thuật hữu ích cho testing.</p>
+      <p>Trong bài tới, chúng ta sẽ tìm hiều về <code>mock method</code> (hơi
+        khác một chút so với <code>mock object</code> và <code>stub method</code>),
+        bắt exception và viết test cho các code phức tạp hơn nữa.</p>
+      <p>Tham khảo</p>
+      <p><a href="https://phpunit.de/getting-started/phpunit-8.html">https://phpunit.de/getting-started/phpunit-8.html</a></p>
+      <p><a href="https://viblo.asia/p/php-unit-test-101-gioi-thieu-ve-phpunit-63vKjJEyK2R">https://viblo.asia/p/php-unit-test-101-gioi-thieu-ve-phpunit-63vKjJEyK2R</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

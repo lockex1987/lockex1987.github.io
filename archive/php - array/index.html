@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mảng trong PHP">
+    <title>Mảng trong PHP</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Mảng trong PHP</h2>
+      <p>Cũng như bao ngôn ngữ lập trình khác, PHP cũng tồn tại một loại dữ liệu
+        được gọi là mảng. Cụ thể hơn mảng là một biến danh sách. Nghĩa là, một
+        biến vốn chứa nhiều phần tử được tạo bởi các số hoặc chuỗi. Nó cho phép
+        chúng ta lưu trữ, sắp xếp thứ tự và truy cập nhiều giá trị với một tên.
+        Và cần lưu ý rằng một phần tử mảng luôn bắt đầu với giá trị là 0.</p>
+      <h3>Định nghĩa mảng trong PHP</h3>
+      <p>Chúng ta có cách khai báo mảng như sau:</p>
+      <pre>$people = ['Kenny', 'Maria', 'Julia', 'Kenvin'];</pre>
+      <p>Như vậy khi gọi giá trị trong mảng ta có:</p>
+      <pre>echo $people[2]; // giá trị sẽ cho là Julia</pre>
+      <p>Ngoài cách khai báo ở trên chúng ta cũng có thể khai báo bằng cách khác
+        như sau:</p>
+      <pre>$people[] = 'Kenny';
+$people[] = 'Gillian';<br>$people[] = 'Charlene';<br>$people[] = 'Calvin';</pre>
+      <p>Chúng ta không cần thêm ký tự vào vì PHP đã tự xử lý cho chúng ta phần
+        đó.</p>
+      <p>Để thêm một phần tử vào mảng chúng ta cũng có thể sử dụng như sau:</p>
+      <pre>$tên_biến[] = 'Jiro';</pre>
+      <p>Như vậy nếu chúng ta gọi giá trị <code>echo $people[4]</code> thì giá
+        trị sẽ là Jiro. Vì nó được PHP thêm vào sau cùng và ngầm hiểu là giá trị
+        tiếp theo.</p>
+      <h3>Khái niệm mảng liên kết trong PHP</h3>
+      <p>Là các mảng được tạo index bằng các chuỗi, chúng được gọi là các mảng
+        liên kết.</p>
+      <p>Ví dụ:</p>
+      <pre>$person = [<br>    'name' =&gt; 'Kenny',<br>    'job' =&gt; 'Teacher',<br>    'age' =&gt; 45,<br>    'email' =&gt; 'kenny@gmail.com'<br>);</pre>
+      <p>Như vậy để truy cập giá trị của mảng trên chúng ta không thể sử dụng
+        cách cũ được. Ví dụ, để lấy giá trị của tuổi tôi không thể sử dụng cách
+        <code>$person[2]</code>.</p>
+      <p>Vì chúng ta đã gán giá trị của index cho một tên gọi khác. Do vậy để
+        lấy giá trị của tuổi ta sử dụng như sau: <code>$person['age']</code>.
+        Kết quả sẽ cho ra 45.</p>
+      <h3>Phép lặp trong mảng</h3>
+      <p>Chúng ta sử dụng hàm <code>count()</code> để lấy về số phần tử của
+        mảng.</p>
+      <p>Chúng ta có thể lặp các phần tử trong mảng bằng cú pháp <code>for</code>
+        bình thường như sau:</p>
+      <pre>$cars = ['Volvo', 'BMW', 'Toyota'];
+$arrLength = count($cars);
+
+for ($x = 0; $x &lt; $arrLength; $x++) {
+    echo $cars[$x];
+    echo "\n";
+}</pre>
+      <p>Chúng ta cũng có thể lặp bằng cú pháp <code>foreach</code> như sau:</p>
+      <pre>foreach ($array as $e) {<br>    // Hành động<br>}</pre>
+      <p>Trong đó <code>$array</code> là mảng mà ta muốn thực thi việc lặp dữ
+        liệu, và <code>$e</code> là một biến trong đó ta sẽ tạm thời lưu trữ
+        mỗi phần tử.</p>
+      <p>Lặp lại qua một mảng kết hợp bằng cú pháp <code>foreach</code> như
+        sau:</p>
+      <pre>foreach ($array as $key =&gt; $value) {<br>    // Hành động<br>}</pre>
+      <p>Trong đó <code>$array</code> là mảng mà ta muốn thực thi việc lặp dữ
+        liệu, <code>$key</code> là một biến vốn tạm thời chứa mỗi khóa, và <code>$value</code>
+        là một biến vốn tạm thời chữa mỗi giá trị.</p>
+      <h3>Các hàm hỗ trợ</h3>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th style="width: 240px">Hàm</th>
+              <th>Mô tả</th>
+            </tr>
+            <tr>
+              <td><code>array()</code></td>
+              <td>Tạo một mảng</td>
+            </tr>
+            <tr>
+              <td><code>array_change_key_case()</code></td>
+              <td>Đổi tất cả các key trong mảng thành chữ hoa hoặc chữ thường</td>
+            </tr>
+            <tr>
+              <td><code>array_chunk()</code></td>
+              <td>Tách mảng thành các mảng con</td>
+            </tr>
+            <tr>
+              <td><code>array_column()</code></td>
+              <td>Returns the values from a single column in the input array</td>
+            </tr>
+            <tr>
+              <td><code>array_combine()</code></td>
+              <td>Creates an array by using the elements from one "keys" array
+                and one "values" array</td>
+            </tr>
+            <tr>
+              <td><code>array_count_values()</code></td>
+              <td>Counts all the values of an array</td>
+            </tr>
+            <tr>
+              <td><code>array_diff()</code></td>
+              <td>So sánh các mảng, và trả về các giá trị khác nhau (chỉ so sánh
+                giá trị)</td>
+            </tr>
+            <tr>
+              <td><code>array_diff_assoc()</code></td>
+              <td>So sánh các mảng, và trả về các giá trị khác nhau (so sánh key
+                và giá trị)</td>
+            </tr>
+            <tr>
+              <td><code>array_diff_key()</code></td>
+              <td>Compare arrays, and returns the differences (compare keys
+                only)</td>
+            </tr>
+            <tr>
+              <td><code>array_diff_uassoc()</code></td>
+              <td>Compare arrays, and returns the differences (compare keys and
+                values, using a user-defined key comparison function)</td>
+            </tr>
+            <tr>
+              <td><code>array_diff_ukey()</code></td>
+              <td>Compare arrays, and returns the differences (compare keys
+                only, using a user-defined key comparison function)</td>
+            </tr>
+            <tr>
+              <td><code>array_fill()</code></td>
+              <td>Fills an array with values</td>
+            </tr>
+            <tr>
+              <td><code>array_fill_keys()</code></td>
+              <td>Fills an array with values, specifying keys</td>
+            </tr>
+            <tr>
+              <td><code>array_filter()</code></td>
+              <td>Filters the values of an array using a callback function</td>
+            </tr>
+            <tr>
+              <td><code>array_flip()</code></td>
+              <td>Flips/Exchanges all keys with their associated values in an
+                array</td>
+            </tr>
+            <tr>
+              <td><code>array_intersect()</code></td>
+              <td>Compare arrays, and returns the matches (compare values only)</td>
+            </tr>
+            <tr>
+              <td><code>array_intersect_assoc()</code></td>
+              <td>Compare arrays and returns the matches (compare keys and
+                values)</td>
+            </tr>
+            <tr>
+              <td><code>array_intersect_key()</code></td>
+              <td>Compare arrays, and returns the matches (compare keys only)</td>
+            </tr>
+            <tr>
+              <td><code>array_intersect_uassoc()</code></td>
+              <td>Compare arrays, and returns the matches (compare keys and
+                values, using a user-defined key comparison function)</td>
+            </tr>
+            <tr>
+              <td><code>array_intersect_ukey()</code></td>
+              <td>Compare arrays, and returns the matches (compare keys only,
+                using a user-defined key comparison function)</td>
+            </tr>
+            <tr>
+              <td><code>array_key_exists()</code></td>
+              <td>Checks if the specified key exists in the array</td>
+            </tr>
+            <tr>
+              <td><code>array_keys()</code></td>
+              <td>Returns all the keys of an array</td>
+            </tr>
+            <tr>
+              <td><code>array_map()</code></td>
+              <td>Sends each value of an array to a user-made function, which
+                returns new values</td>
+            </tr>
+            <tr>
+              <td><code>array_merge()</code></td>
+              <td>Merges one or more arrays into one array</td>
+            </tr>
+            <tr>
+              <td><code>array_merge_recursive()</code></td>
+              <td>Merges one or more arrays into one array recursively</td>
+            </tr>
+            <tr>
+              <td><code>array_multisort()</code></td>
+              <td>Sorts multiple or multi-dimensional arrays</td>
+            </tr>
+            <tr>
+              <td><code>array_pad()</code></td>
+              <td>Inserts a specified number of items, with a specified value,
+                to an array</td>
+            </tr>
+            <tr>
+              <td><code>array_pop()</code></td>
+              <td>Deletes the last element of an array</td>
+            </tr>
+            <tr>
+              <td><code>array_product()</code></td>
+              <td>Calculates the product of the values in an array</td>
+            </tr>
+            <tr>
+              <td><code>array_push()</code></td>
+              <td>Inserts one or more elements to the end of an array</td>
+            </tr>
+            <tr>
+              <td><code>array_rand()</code></td>
+              <td>Returns one or more random keys from an array</td>
+            </tr>
+            <tr>
+              <td><code>array_reduce()</code></td>
+              <td>Returns an array as a string, using a user-defined function</td>
+            </tr>
+            <tr>
+              <td><code>array_replace()</code></td>
+              <td>Replaces the values of the first array with the values from
+                following arrays</td>
+            </tr>
+            <tr>
+              <td><code>array_replace_recursive()</code></td>
+              <td>Replaces the values of the first array with the values from
+                following arrays recursively</td>
+            </tr>
+            <tr>
+              <td><code>array_reverse()</code></td>
+              <td>Returns an array in the reverse order</td>
+            </tr>
+            <tr>
+              <td><code>array_search()</code></td>
+              <td>Searches an array for a given value and returns the key</td>
+            </tr>
+            <tr>
+              <td><code>array_shift()</code></td>
+              <td>Removes the first element from an array, and returns the value
+                of the removed element</td>
+            </tr>
+            <tr>
+              <td><code>array_slice()</code></td>
+              <td>Returns selected parts of an array</td>
+            </tr>
+            <tr>
+              <td><code>array_splice()</code></td>
+              <td>Removes and replaces specified elements of an array</td>
+            </tr>
+            <tr>
+              <td><code>array_sum()</code></td>
+              <td>Returns the sum of the values in an array</td>
+            </tr>
+            <tr>
+              <td><code>array_udiff()</code></td>
+              <td>Compare arrays, and returns the differences (compare values
+                only, using a user-defined key comparison function)</td>
+            </tr>
+            <tr>
+              <td><code>array_udiff_assoc()</code></td>
+              <td>Compare arrays, and returns the differences (compare keys and
+                values, using a built-in function to compare the keys and a
+                user-defined function to compare the values)</td>
+            </tr>
+            <tr>
+              <td><code>array_udiff_uassoc()</code></td>
+              <td>Compare arrays, and returns the differences (compare keys and
+                values, using two user-defined key comparison functions)</td>
+            </tr>
+            <tr>
+              <td><code>array_uintersect()</code></td>
+              <td>Compare arrays, and returns the matches (compare values only,
+                using a user-defined key comparison function)</td>
+            </tr>
+            <tr>
+              <td><code>array_uintersect_assoc()</code></td>
+              <td>Compare arrays, and returns the matches (compare keys and
+                values, using a built-in function to compare the keys and a
+                user-defined function to compare the values)</td>
+            </tr>
+            <tr>
+              <td><code>array_uintersect_uassoc()</code></td>
+              <td>Compare arrays, and returns the matches (compare keys and
+                values, using two user-defined key comparison functions)</td>
+            </tr>
+            <tr>
+              <td><code>array_unique()</code></td>
+              <td>Removes duplicate values from an array</td>
+            </tr>
+            <tr>
+              <td><code>array_unshift()</code></td>
+              <td>Adds one or more elements to the beginning of an array</td>
+            </tr>
+            <tr>
+              <td><code>array_values()</code></td>
+              <td>Returns all the values of an array</td>
+            </tr>
+            <tr>
+              <td><code>array_walk()</code></td>
+              <td>Applies a user function to every member of an array</td>
+            </tr>
+            <tr>
+              <td><code>array_walk_recursive()</code></td>
+              <td>Applies a user function recursively to every member of an
+                array</td>
+            </tr>
+            <tr>
+              <td><code>arsort()</code></td>
+              <td>Sắp xếp mảng liên kết theo thứ tự giảm dần của giá trị</td>
+            </tr>
+            <tr>
+              <td><code>asort()</code></td>
+              <td>Sắp xếp mảng liên kết theo thứ tự tăng dần của giá trị</td>
+            </tr>
+            <tr>
+              <td><code>compact()</code></td>
+              <td>Tạo một mảng gồm các biến và giá trị của chúng</td>
+            </tr>
+            <tr>
+              <td><code>count()</code></td>
+              <td>Trả về số phần tử trong mảng</td>
+            </tr>
+            <tr>
+              <td><code>current()</code></td>
+              <td>Returns the current element in an array</td>
+            </tr>
+            <tr>
+              <td><code>each()</code></td>
+              <td>Deprecated from PHP 7.2.&nbsp;Returns the current key and
+                value pair from an array</td>
+            </tr>
+            <tr>
+              <td><code>end()</code></td>
+              <td>Sets the internal pointer of an array to its last element</td>
+            </tr>
+            <tr>
+              <td><code>extract()</code></td>
+              <td>Imports variables into the current symbol table from an array</td>
+            </tr>
+            <tr>
+              <td><code>in_array()</code></td>
+              <td>Kiểm tra nếu một giá trị tồn tại trong một mảng</td>
+            </tr>
+            <tr>
+              <td><code>key()</code></td>
+              <td>Fetches a key from an array</td>
+            </tr>
+            <tr>
+              <td><code>krsort()</code></td>
+              <td>Sắp xếp mảng liên kết theo thứ tự giảm dần của key</td>
+            </tr>
+            <tr>
+              <td><code>ksort()</code></td>
+              <td>Sắp xếp mảng liên kết theo thứ tự tăng dần của key</td>
+            </tr>
+            <tr>
+              <td><code>list()</code></td>
+              <td>Gán giá trị các biến nếu chúng là một mảng</td>
+            </tr>
+            <tr>
+              <td><code>natcasesort()</code></td>
+              <td>Sắp xếp một mảng sử dụng thuật toán "thứ tự tự nhiên", không
+                phân biệt chữ hoa chữ thường<br>
+                Tương tự hàm <code>strnatcasecmp</code></td>
+            </tr>
+            <tr>
+              <td><code>natsort()</code></td>
+              <td>Sắp xếp một mảng sử dụng thuật toán "thứ tự tự nhiên"<br>
+                Tương tự hàm <code>strnatcmp</code></td>
+            </tr>
+            <tr>
+              <td><code>next()</code></td>
+              <td>Advance the internal array pointer of an array</td>
+            </tr>
+            <tr>
+              <td><code>pos()</code></td>
+              <td>Alias of&nbsp;current()</td>
+            </tr>
+            <tr>
+              <td><code>prev()</code></td>
+              <td>Rewinds the internal array pointer</td>
+            </tr>
+            <tr>
+              <td><code>range()</code></td>
+              <td>Creates an array containing a range of elements</td>
+            </tr>
+            <tr>
+              <td><code>reset()</code></td>
+              <td>Sets the internal pointer of an array to its first element</td>
+            </tr>
+            <tr>
+              <td><code>rsort()</code></td>
+              <td>Sắp xếp mảng chỉ số theo thứ tự giảm dần</td>
+            </tr>
+            <tr>
+              <td><code>shuffle()</code></td>
+              <td>Trộn thứ tự một mảng</td>
+            </tr>
+            <tr>
+              <td><code>sizeof()</code></td>
+              <td>Alias của hàm <code>count()</code></td>
+            </tr>
+            <tr>
+              <td><code>sort()</code></td>
+              <td>Sắp xếp mảng chỉ số theo thứ tự tăng dần</td>
+            </tr>
+            <tr>
+              <td><code>uasort()</code></td>
+              <td>Sắp xếp một mảng theo giá trị sử dụng hàm so sánh do người
+                dùng định nghĩa</td>
+            </tr>
+            <tr>
+              <td><code>uksort()</code></td>
+              <td>Sắp xếp một mảng theo key sử dụng hàm so sánh do người dùng
+                định nghĩa</td>
+            </tr>
+            <tr>
+              <td><code>usort()</code></td>
+              <td>Sắp xếp mảng sử dụng một hàm so sánh do người dùng định nghĩa</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h4>Hàm gộp mảng</h4>
+      <p>Cú pháp:</p>
+      <pre>array_merge($mang1, $mang2);</pre>
+      <h4>Hàm tách mảng</h4>
+      <p>Cú pháp:</p>
+      <pre>array_slice($mang, $vi_tri_tach, $so_luong_tach);</pre>
+      <h4>Hàm sắp xếp mảng</h4>
+      <p>Cú pháp:</p>
+      <pre>sort($mang);</pre>
+      <h4>Hàm sắp xếp mảng theo chỉ mục</h4>
+      <p>Cú pháp:</p>
+      <pre>ksort($mang);</pre>
+      <h4>Hàm tìm phần tử có tồn tại trong mảng hay không</h4>
+      <p>Cú pháp:</p>
+      <pre>in_array($gia_tri_tim, $mang);</pre>
+      <h3>Chuyển đổi qua lại giữa mảng và xâu</h3>
+      <p>Sử dụng hai hàm sau:</p>
+      <ul>
+        <li>implode($separator, $array)</li>
+        <li>explode($separator, $string, $limit)</li>
+      </ul>
+      <h3>Demo</h3>
+      <p><a target="_blank" href="demo.php">demo.php</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

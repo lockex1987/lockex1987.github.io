@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="drag and drop, jquery ui sortable">
+    <title>Kéo thả trên web</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Kéo thả trên web</h2>
+      <h3>Xử lý phần tử drag</h3>
+      <p>Để một phần tử có thể kéo được, bạn chỉ cần thêm thuộc tính <code>draggable</code>
+        bằng <code>true</code> vào phần tử đó.</p>
+      <p>Sự kiện khi bạn bắt đầu kéo một phần tử là <code>dragstart</code>. Bạn
+        có thể thiết lập dữ liệu truyền đi với <code>evt.dataTransfer.setData()</code>
+        hoặc thực hiện tác vụ khác.</p>
+      <p>Ngoài ra còn có các sự kiện <code>drag</code> và <code>dragend</code>.</p>
+      <h3>Xử lý vùng để thả</h3>
+      <p>Bạn có thể thả một phần tử ở bất kỳ vị trí nào và thiết lập cho vùng
+        thả các sự kiện:</p>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th style="width: 115px">Sự kiện</th>
+              <th>Mô tả</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>dragenter</code></td>
+              <td>Được kích hoạt khi phần tử được kéo vào một vùng thả hợp lệ.</td>
+            </tr>
+            <tr>
+              <td><code>dragleave</code></td>
+              <td>Được kích hoạt khi phần tử được kéo ra một vùng thả hợp lệ.</td>
+            </tr>
+            <tr>
+              <td><code>dragover</code></td>
+              <td>Được kích hoạt khi phần tử được kéo ra qua vùng thả hợp lệ.<br>
+                Lưu ý: bạn cần đặt <code>evt.preventDefault()</code> vào hàm
+                của sự kiện <code>dragover</code> để sự kiện <code>drop</code>
+                có thể thực hiện được.</td>
+            </tr>
+            <tr>
+              <td><code>drop</code></td>
+              <td>Được kích hoạt khi phần tử được thả.<br>
+                Bạn cũng nên gọi <code>evt.preventDefault()</code> cho chắc.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Drop file</h3>
+      <p><a href="drop-file.html">Demo</a></p>
+      <h3>Task manager</h3>
+      <p><a href="task.html">Demo</a></p>
+      <h3>Drag và sắp xếp</h3>
+      <p><a href="drag-sort.html">Demo</a></p>
+      <h3>Thư viện jQuery UI</h3>
+      <p><a href="jquery-ui-sortable.html">Demo</a></p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://api.jqueryui.com/sortable/" target="_blank">Sortable |
+          jQuery UI</a></p>
+      <p><a href="https://api.jqueryui.com/sortable/" target="_blank">Sortable
+          Widget | jQuery UI API Documentation</a></p>
+      <p><a href="https://sortablejs.github.io/sortablejs/" target="_blank">SortableJS</a></p>
+      <p><a href="https://github.com/sindu12jun/table-dragger" target="_blank">sindu12jun/table-dragger:
+          Turn your old table to drag-and-drop table with columns and rows
+          sorting like magic!</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

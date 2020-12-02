@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Chọn từ danh bạ" />
+    <meta name="date" content="2020-02-11 21:30:00">
+
+    <title>Contact Picker API</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+    <article>
+        <h2>Contact Picker API</h2>
+
+        <p>Contact Picker API bắt đầu có từ Chrome phiên bản 80.</p>
+
+        <div class="mb-3">
+            <img src="images/contact-picker-api.jpg" class="border"/>
+        </div>
+
+        <h3>Demo</h3>
+
+        <div id="supportDiv" style="display: none">
+            <p>
+                Chọn từ danh bạ.
+            </p>
+    
+            <p>
+                <button id="butRequest" type="button" disabled class="btn btn-primary">
+                    Open contact picker
+                </button>
+            </p>
+    
+            <p>
+                <b>Kết quả</b>
+            </p>
+            <ul id="results">
+                <li>Kết quả sẽ hiển thị ở đây</li>
+            </ul>
+        </div>
+
+        <div id="notSupportDiv" style="display: none">
+            <p class="text-danger">
+                Trình duyệt không hỗ trợ
+            </p>
+        </div>
+        
+
+        <h3>Tham khảo</h3>
+
+        <p>
+            <a href="https://developers.google.com/web/updates/2019/08/contact-picker" target="_blank">A Contact Picker for the Web</a>
+        </p>
+    </article>
+
+    <script src="js/demo.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

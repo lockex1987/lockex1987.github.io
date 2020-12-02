@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hướng dẫn sử dụng lệnh apt">
+    <title>Hướng dẫn sử dụng lệnh apt</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Hướng dẫn sử dụng lệnh apt</h2>
+      <h3>Giới thiệu về lệnh apt</h3>
+      <p>Ubuntu là 1 hệ điều hành thuộc nhánh Debian Linux. Nó sử dụng các dpkg
+        package để đóng gói các chương trình, ứng dụng, dành để cài đặt vào hệ
+        thống.</p>
+      <p>Lệnh <code>apt</code> (Advanced Package Tool) là một công cụ dòng lệnh
+        được sử dụng để quản lý các dpkg package trên hệ thống của Ubuntu.</p>
+      <h3>Update thông tin package từ server</h3>
+      <p>Chúng ta sử dụng lệnh <code>apt update</code> để cập nhật các thông
+        tin mới nhất của các package về máy.</p>
+      <pre>sudo apt update</pre>
+      <p>From the terminal image above, you should notice three different types
+        of lines:</p>
+      <ul>
+        <li>Hit: This signifies that there is no package change since the last
+          check. Simply put, it means that there is no newer version of the
+          package.</li>
+        <li>Get: This means there is a package update(new version) available and
+          it will download the details for this update, but not the update
+          itself.</li>
+        <li>Ign: This means that the package has been ignored. This happens
+          either because of an error or because the package is recent and there
+          is no need to check it for updates.</li>
+      </ul>
+      <h3>Hiển thị danh sách các package có thể update</h3>
+      <p>Sử dụng lệnh <code>apt list</code>:</p>
+      <pre>sudo apt list --upgradable</pre>
+      <h3>Nâng cấp package</h3>
+      <p>Nâng cấp toàn bộ package:</p>
+      <pre>sudo apt upgrade</pre>
+      <p>Nâng cấp chỉ một package:</p>
+      <pre>sudo apt install --only-upgrade &lt;package_name&gt;</pre>
+      <p>Chúng ta có thể kết hợp cả hai lệnh <code>apt update</code> và <code>upgrade</code>
+        để nâng cấp toàn bộ package trên hệ thống:</p>
+      <pre>sudo apt update &amp;&amp; sudo apt upgrade -y</pre>
+      <p>Chú ý: Tham số <code>-y</code> để tự động đồng ý nâng cấp.</p>
+      <h3>Cài đặt mới package</h3>
+      <p>Để cài đặt mới một package chúng ta sử dụng lệnh <code>apt install</code>:</p>
+      <pre>sudo apt install &lt;package_name&gt;</pre>
+      <p>Mặc định lệnh trên sẽ cài đặt với version mới nhất, còn nếu muốn cài
+        đặt một package với một version cụ thể thì chúng ta làm như sau:</p>
+      <pre>sudo apt install &lt;package_name&gt;=&lt;version_number&gt;</pre>
+      <p>Cài đăt nhiều package cho một lần:</p>
+      <pre>sudo apt install &lt;package_1&gt; &lt;package_2&gt;</pre>
+      <h3>Gỡ bỏ package</h3>
+      <p>Để gỡ bỏ một package trên Ubuntu, sử dụng lệnh <code>apt remove</code>:</p>
+      <p>sudo apt remove &lt;package_name&gt;</p>
+      <p>Với lệnh <code>apt remove</code> thì hệ thống chỉ gỡ bỏ binary
+        package, chứ ko xóa bỏ các file cấu hình.</p>
+      <p>Vì vậy muốn gỡ bỏ hoàn toàn sạch sẽ một package, chúng ta sử dụng lệnh
+        <code>apt purge</code>:</p>
+      <pre>sudo apt purge &lt;package_name&gt;</pre>
+      <h3>Tìm kiếm package</h3>
+      <p>Sử dụng lệnh <code>apt search</code>:</p>
+      <p>sudo apt search &lt;package_name&gt;</p>
+      <h3>Hiển thị chi tiết thông tin một package</h3>
+      <p>Sử dụng lệnh <code>apt show</code>:</p>
+      <pre>sudo apt show &lt;package_name&gt;</pre>
+      <h3>Liệt kê danh sách các pakage đã cài đặt</h3>
+      <p>Sử dụng lệnh <code>apt list</code>:</p>
+      <pre>apt list --installed</pre>
+      <h3>Dọn dẹp các package của hệ thống</h3>
+      <p>Sử dụng lệnh <code>apt autoremove</code>:</p>
+      <pre>sudo apt autoremove</pre>
+      <h3>Tham khảo</h3>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <a href="https://vinasupport.com/huong-dan-su-dung-lenh-apt-tren-ubuntu-linux/"
+          target="_blank">Hướng dẫn sử dụng lệnh apt trên Ubuntu Linux -
+          VinaSupport</a> </p>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <a href="https://codeburst.io/a-beginners-guide-to-using-apt-get-commands-in-linux-ubuntu-d5f102a56fc4"
+          target="_blank">A Beginners Guide to using apt-get commands in
+          Linux(Ubuntu)</a> </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

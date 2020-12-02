@@ -1,0 +1,99 @@
+/*
+  See "Stuff for <head>" for the Material Design Lite and Hammer inclusion.
+*/
+
+const swipeActions = ["swipeLeft", "swipeRight"];
+
+function findRealTarget(target) {
+  for (let rule of swipeActions) {
+    if (target.classList.contains(rule)) {
+      return target;
+    }
+  }
+  if (target.parentElement) {
+    return findRealTarget(target.parentElement);
+  }
+  return target;
+}
+
+function remove(target, direction) {
+  let offset = 0;
+  
+  if (direction === Hammer.DIRECTION_LEFT) {
+    offset = 0 - document.body.offsetWidth - target.offsetWidth;
+  } else {
+    offset = document.body.offsetWidth + target.offsetWidth;
+  }
+  
+  target.classList.add("removing");
+  target.style.transform = `translateX(${offset}px)`;
+}
+
+function onSwipe(ev) {
+  let target = findRealTarget(ev.target);
+  let isRemoving = target.classList.contains("removing");
+  
+  let types = {};
+  let offset = 0;
+  let opacity = 1;
+  
+  for (let action of swipeActions) {
+    types[action] = target.classList.contains(action);
+  }
+  
+  // disable browser scrolling
+  ev.preventDefault();
+
+  if (!isRemoving) {
+    switch(ev.type) {
+      case 'panright':
+      case 'panleft':
+        offset = ev.distance;
+        target.classList.remove("returning");
+
+        if (types.swipeLeft && ev.offsetDirection === Hammer.DIRECTION_LEFT) {
+          opacity = 1 - offset / target.offsetWidth + .25;
+          offset = 0 - offset;
+          target.style.transform = `translateX(${offset}px)`;
+          target.style.opacity = opacity;
+        } else if (types.swipeRight && ev.offsetDirection === Hammer.DIRECTION_RIGHT) {
+          opacity = 1 - offset / target.offsetWidth + .25;
+          target.style.transform = `translateX(${offset}px)`;
+          target.style.opacity = opacity;
+        } else {
+          target.style.transform = "translateX(0px)";
+          target.style.opacity = 1;
+        }
+        break;
+
+      case 'swipeleft':
+        if (types.swipeLeft) {
+          remove(target, ev.offsetDirection);
+        }
+        break;
+      case 'swiperight':
+        if (types.swipeRight) {
+          remove(target, ev.offsetDirection);
+        }
+        break;
+
+      case 'pancancel':
+      case 'panend':
+        if (ev.distance > target.offsetWidth * .75) {
+          remove(target, ev.offsetDirection);
+        } else {
+          target.classList.add("returning");
+          target.style.transform = "translateX(0px)";
+          target.style.opacity = 1;
+        }
+        break;
+    }
+  }
+}
+
+for (let action of swipeActions) {
+  document.querySelectorAll(`.${action}`).forEach(function(element) {
+    let swipeHandler = new Hammer(element, {});
+    swipeHandler.on('panend pancancel panleft panright swipeleft swiperight', onSwipe);
+  });
+}

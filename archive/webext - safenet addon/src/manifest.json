@@ -1,0 +1,61 @@
+{
+	"manifest_version": 2,
+	"name": "safenet",
+	"description": "The add-on of safenet.vn service.",
+	"version": "1.4.0",
+	"homepage_url": "https://safenet.vn",
+	"icons": {
+		"16": "images/16x16.png",
+		"48": "images/48x48.png",
+		"128": "images/128x128.png"
+	},
+	"background": {
+		"scripts": [
+			"js/config.js",
+			"js/common.js",
+			"js/blocked_https.js",
+			"js/blocked_sites.js",
+			"js/safe_search.js",
+			"js/background.js"
+		]
+	},
+	"browser_action": {
+		"default_popup": "browser.html",
+		"default_icon": "images/48x48.png"
+	},
+	"options_ui": {
+		"page": "options.html",
+		"chrome_style": true
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"http://*/*",
+                "https://*/*"
+			],
+			"js": [
+				"js/config.js",
+				"js/common.js",
+				"js/filter_profanity.js",
+				"js/filter_blocked.js",
+				"js/content.js"
+			],
+			"run_at": "document_start"
+		}
+	],
+	"web_accessible_resources": [
+		"images/*",
+		"css/*"
+	],
+	"permissions": [
+		"<all_urls>",
+		"activeTab",
+		"tabs",
+		"webRequest",
+		"webRequestBlocking",
+		"webNavigation",
+		"storage",
+		"cookies",
+		"contextMenus"
+	]
+}

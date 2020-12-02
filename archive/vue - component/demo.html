@@ -1,0 +1,350 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo component</title>
+
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+
+    <style>
+        .dynamic-component-demo-tab-button {
+            padding: 6px 10px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            background: #f0f0f0;
+            margin-bottom: -1px;
+            margin-right: -1px;
+            outline: none;
+            box-shadow: none;
+            border-radius: 0;
+            color: #000;
+            height: auto;
+        }
+
+        .dynamic-component-demo-tab-button:hover {
+            box-shadow: none;
+            background: #e0e0e0;
+        }
+
+        .dynamic-component-demo-tab-button-active {
+            background: #e0e0e0;
+        }
+
+        .dynamic-component-demo-tab {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
+
+    <style>
+        .my-table tr td {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <article>
+        <h2>Demo component</h2>
+
+        <h3>Component đơn giản</h3>
+        <p id="components-demo-1">
+            <button-counter></button-counter>
+        </p>
+
+        <h3>Sử dụng lại component</h3>
+        <p id="components-demo-2">
+            <button-counter></button-counter>
+            <button-counter></button-counter>
+            <button-counter></button-counter>
+        </p>
+
+        <h3>Truyền dữ liệu tĩnh xuống component</h3>
+        <ul id="components-demo-3">
+            <blog-post
+			    title="Giới thiệu về Vue">
+			</blog-post>
+
+            <blog-post
+			    title="Các khái niệm trong Vue">
+			</blog-post>
+
+            <blog-post
+			    title="Vue căn bản và nâng cao">
+			</blog-post>
+        </ul>
+
+        <h3>Truyền dữ liệu động xuống component</h3>
+        <ul id="components-demo-4">
+            <blog-post
+			    v-for="post in posts"
+			    :key="post.id"
+				:title="post.title">
+            </blog-post>
+        </ul>
+
+        <h3>Gửi thông tin đến đối tượng cha bằng sự kiện</h3>
+        <div id="blog-posts-events-demo"
+				class="border p-2 mb-3">
+            <div :style="{ fontSize: postFontSize + 'em' }">
+                <blog-post-2
+						v-for="post in posts"
+						:key="post.id"
+						:post="post"
+						@enlarge-text="postFontSize += 0.1">
+                </blog-post-2>
+            </div>
+        </div>
+
+        <h3>Slot</h3>
+        <div id="demo-slot"
+				class="border p-2 mb-3">
+            <alert-box>
+                Đã xảy ra cái gì gì đó.
+            </alert-box>
+        </div>
+
+        <h3>Component động</h3>
+
+        <div id="dynamic-component-demo"
+				class="demo mb-3">
+            <button v-for="tab in tabs"
+					:key="tab.key"
+					class="dynamic-component-demo-tab-button"
+					:class="{
+						'dynamic-component-demo-tab-button-active': tab.key === currentTabKey
+					}"
+					@click="currentTabKey = tab.key">
+				{{tab.label}}
+			</button>
+
+            <component
+					:is="currentTabComponent"
+					class="dynamic-component-demo-tab">
+            </component>
+        </div>
+
+        <h3>Lưu ý về việc parse DOM template</h3>
+        <div id="app-1"
+				class="border p-2 mb-3">
+            <table class="my-table">
+                <tdc-component></tdc-component>
+            </table>
+        </div>
+
+        <p>Ở demo trên, dòng chữ không có màu đỏ vì được render như sau:</p>
+        <pre>&lt;tr&gt;Học Lập Trình Online Toidicode.com&lt;/tr&gt;<br>&lt;table&gt;&lt;/table&gt;</pre>
+
+        <p>Chúng ta sửa lại như sau:</p>
+        <div id="app-2">
+            <table class="my-table table table-bordered">
+                <tr is="tdc-component"></tr>
+            </table>
+        </div>
+
+        <h3>Khai báo template trong mã HTML</h3>
+
+        <template id="button-template">
+            <div>
+                <button class="btn btn-success"
+						@click="count++">
+					Bạn đã nhấn {{count}} lần
+				</button>
+            </div>
+        </template>
+
+        <p id="app-template">
+            <button-counter-x></button-counter-x>
+        </p>
+    </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
+<script>
+Vue.component('button-counter', {
+	template: `
+		<button v-on:click="count++"
+				class="btn btn-primary">
+			Bạn đã bấm {{count}} lần
+		</button>`,
+
+	data() {
+		return {
+			count: 0
+		};
+	}            
+});
+
+new Vue({
+	el: '#components-demo-1'
+});
+</script>
+
+<script>
+new Vue({
+	el: '#components-demo-2'
+});
+</script>
+
+<script>
+Vue.component('blog-post', {
+	template: '<li>{{ title }}</li>',
+
+	props: [
+		'title'
+	]
+});
+
+new Vue({
+	el: '#components-demo-3'
+});
+</script>
+
+<script>
+new Vue({
+	el: '#components-demo-4',
+
+	data() {
+		return {
+			posts: [
+				{ id: 1, title: 'Giới thiệu về Vue' },
+				{ id: 2, title: 'Các khái niệm trong Vue' },
+				{ id: 3, title: 'Vue căn bản và nâng cao' }
+			]
+		};
+	}
+});
+</script>
+
+<script>
+Vue.component('blog-post-2', {
+    template: `
+			<div>
+				<p><strong>{{post.title}}</strong></p>
+				<div v-html="post.content"
+						class="mb-3"></div>
+				<div class="mb-3">
+					<button @click="$emit('enlarge-text')"
+							class="btn btn-primary">
+						Phóng to
+					</button>
+				</div>
+			</div>`,
+			
+	props: [
+		'post'
+	]
+});
+
+new Vue({
+	el: '#blog-posts-events-demo',
+
+	data() {
+		return {
+			posts: [
+				{ id: 1, title: 'Giới thiệu về Vue', content: '... Content 1 ...' },
+				{ id: 2, title: 'Các khái niệm trong Vue', content: '... Content 2 ...' },
+				{ id: 3, title: 'Vue căn bản và nâng cao', content: '... Content 3 ...' }
+			],
+			postFontSize: 1
+		};
+	}
+});
+</script>
+
+<script>
+Vue.component('alert-box', {
+	template: `
+			<div >
+				<strong>Lỗi!</strong>
+				<slot></slot>
+			</div>`
+});
+
+new Vue({
+	el: '#demo-slot'
+});
+</script>
+
+<script>
+Vue.component('tab-home', {
+	template: '<div>Component Trang chủ</div>'
+});
+
+Vue.component('tab-posts', {
+	template: '<div>Component Bài viết</div>'
+});
+
+Vue.component('tab-archive', {
+	template: '<div>Component Lưu trữ</div>'
+});
+
+new Vue({
+	el: '#dynamic-component-demo',
+
+	data() {
+		return {
+			currentTabKey: 'home',
+			tabs: [
+				{ key: 'home', label: 'Trang chủ' },
+				{ key: 'posts', label: 'Bài viết' },
+				{ key: 'archive', label: 'Lưu trữ' }
+			]
+		};
+	},
+
+	computed: {
+		currentTabComponent() {
+			return 'tab-' + this.currentTabKey.toLowerCase();
+		}
+	}
+});
+</script>
+
+<script>
+const temp = {
+	template: '<tr><td>Học Lập Trình Online Toidicode.com</td></tr>'
+};
+
+new Vue({
+	el: '#app-1',
+
+	components: {
+		'tdc-component': temp
+	}
+});
+
+new Vue({
+	el: '#app-2',
+
+	components: {
+		'tdc-component': temp
+	}
+});
+</script>
+
+<script>
+Vue.component('button-counter-x', {
+	template: '#button-template',
+
+	data() {
+		return {
+			count: 0
+		}
+	}
+});
+
+new Vue({
+	el: '#app-template'
+});
+</script>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

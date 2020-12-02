@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Page Visibility API</title>
+  </head>
+  <body>
+    <h1>Page <wbr>Visibility API</h1>
+    <p><span class="seoSummary">The <strong>Page Visibility API</strong> lets
+        you know when a webpage is visible or in focus.</span> With tabbed
+      browsing, there is a reasonable chance that any given webpage is in the
+      background and thus not visible to the user. When the user minimizes the
+      webpage or moves to another tab, the API sends a <code><a href="https://developer.mozilla.org/en-US/docs/Web/Events/visibilitychange"
+          title="/en-US/docs/Web/Events/visibilitychange">visibilitychange</a></code>
+      event regarding the visibility of the page. You can detect the event and
+      perform some actions or behave differently. For example, if your web app
+      is playing a video, it would pause the moment the user looks at another
+      browser, and plays again when the user returns to the tab. The user does
+      not lose their place in the video and can continue watching.</p>
+    <p>Visibility states of an <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe"
+        title="The HTML Inline Frame Element (&lt;iframe&gt;) represents a nested browsing context, effectively embedding another HTML page into the current page. In HTML 4.01, a document may contain a head and a body or a head and a frameset, but not both a body and a frameset. However, an &lt;iframe&gt; can be used within a normal document body. Each browsing context has its own session history and active document. The browsing context that contains the embedded content is called the parent browsing context. The top-level browsing context (which has no parent) is typically the browser window."><code>&lt;iframe&gt;</code></a>
+      are the same as the parent document. Hiding the iframe with CSS properties
+      does not trigger visibility events nor change the state of the content
+      document.</p>
+    <h3 id="Benefits">Benefits</h3>
+    <p>The API is particularly useful for saving resources by giving developers
+      the opportunity to not perform unnecessary tasks when the webpage is not
+      visible.</p>
+    <h3 id="Use_cases">Use cases</h3>
+    <p>A few examples:</p>
+    <ul>
+      <li>A site has an image carousel that shouldn't advance to the next slide
+        unless the user is viewing the page.</li>
+      <li>An application showing a dashboard of information doesn't want to poll
+        the server for updates when the page isn't visible.</li>
+      <li>A page wants to detect when it is being prerendered so it can keep
+        accurate count of page views.</li>
+      <li>A site wants to switch off sounds when a device is in standby mode
+        (user pushes power button to turn screen off)</li>
+    </ul>
+    <p>Developers have historically used imperfect proxies to detect this. For
+      example, registering an onblur/onfocus handler on the window helps you
+      know when your page is not the active page, but it does not tell you that
+      your page is hidden to the user. The Page Visibility API addresses this.
+      (When compared with registering onblur/onfocus handlers on the window, a
+      key difference is that a page does <em>not</em> become hidden when
+      another window is made active and the browser window loses focus. A page
+      only becomes hidden when the user switches to a different tab or minimizes
+      the browser window.)</p>
+    <h2 id="Properties_overview">Properties overview</h2>
+    <h3 id="document.hidden_Read_only"><code>document.hidden</code> <span class="inlineIndicator readOnly readOnlyInline"
+        title="This value may not be changed.">Read only </span></h3>
+    <p>Returns&nbsp;<code>true</code> if the page is in a state considered to be
+      hidden to the user, and <code>false</code> otherwise.</p>
+    <h3 id="document.visibilityState_Read_only"><code>document.visibilityState</code>
+      <span class="inlineIndicator readOnly readOnlyInline" title="This value may not be changed.">Read
+        only </span></h3>
+    <p>Is a <code>string</code> denoting the visibility state of the document.
+      Possible values:</p>
+    <ul>
+      <li><code>visible</code> : the page content may be at least partially
+        visible. In practice this means that the page is the foreground tab of a
+        non-minimized window.</li>
+      <li><code>hidden</code> : the page content is not visible to the user. In
+        practice this means that the document is either a background tab or part
+        of a minimized window, or the OS screen lock is active.</li>
+      <li><code>prerender</code> : the page content is being prerendered and is
+        not visible to the user (considered hidden for purposes of <code>document.hidden</code>).
+        The document may start in this state, but will never transition to it
+        from another value. Note: browser support is optional.</li>
+      <li><code>unloaded</code> : the page is being unloaded from memory. Note:
+        browser support is optional.</li>
+    </ul>
+    <pre class="brush: js line-numbers  language-js"><code class=" language-js"><span
+class="token comment" spellcheck="true">//startSimulation and pauseSimulation defined elsewhere</span>
+<span class="token keyword">function</span> <span class="token function">handleVisibilityChange</span><span
+class="token punctuation">(</span><span class="token punctuation">)</span> <span
+class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>document<span
+class="token punctuation">.</span>hidden<span class="token punctuation">)</span> <span
+class="token punctuation">{</span>
+    <span class="token function">pauseSimulation</span><span class="token punctuation">(</span><span
+class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span>  <span
+class="token punctuation">{</span>
+    <span class="token function">startSimulation</span><span class="token punctuation">(</span><span
+class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+document<span class="token punctuation">.</span><span class="token function">addEventListener</span><span
+class="token punctuation">(</span><span class="token string">"visibilitychange"</span><span
+class="token punctuation">,</span> handleVisibilityChange<span class="token punctuation">,</span> <span
+class="token keyword">false</span><span class="token punctuation">)</span><span
+class="token punctuation">;</span></code></pre>
+    <p><br>
+    </p>
+    <p style="margin-bottom: 0px;"> The Page Visibility specification enables
+      developers to determine the current visibility<br>
+      of a document and be notified of visibility changes. It consists of two
+      properties<br>
+      and an event:</p>
+    <ul style="margin-top: 0px;">
+      <li><b>document.hidden</b>: A boolean that describes whether the page is
+        visible or not.</li>
+      <li><b>document.visibilityState</b>: An attribute that returns the
+        detailed page visibility<br>
+        state, e.g., PAGE_VISIBLE, PAGE_PREVIEW, etc.</li>
+      <li><b>visibilitychange</b>: An event that gets fired any time the
+        visibility state of the<br>
+        page changes.</li>
+    </ul>
+    <p>With this interface, Web applications may choose to alter behavior based
+      on whether<br>
+      they are visible to the user or not. For example, the following JavaScript
+      shows<br>
+      a theoretical Web based email client checking for new emails every second
+      without<br>
+      knowledge of the Page Visibility:</p>
+    <p>SOURCE CODE<br>
+    </p>
+  </body>
+</html>

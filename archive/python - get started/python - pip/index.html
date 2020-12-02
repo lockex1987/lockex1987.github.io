@@ -1,0 +1,50 @@
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Python pip</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Python pip">
+ </head> 
+ <body> 
+  <article> 
+   <h2>Python PIP</h2> 
+   <p>pip là một hệ thống quản trị package của Python. pip thường được cài đặt sẵn cùng Python.</p> 
+   <h3>Sử dụng</h3> 
+   <p>Kiểm tra version của pip và cả Python:</p> 
+   <p>pip --version</p> 
+   <p>IMAGE</p> 
+   <p>Tìm kiếm package nào đó, ví dụ Flask:</p> 
+   <p>pip search &lt;some package&gt;</p> 
+   <p>pip search Flask</p> 
+   <p>Cài đặt (và nâng cấp) package</p> 
+   <p>pip install some-package</p> 
+   <p>pip install --user requests</p> 
+   <p>pip install Flask</p> 
+   <p>The --user flag means pip has made Requests available to us, but not to other users.</p> 
+   <p>Cài đặt các gói được khai báo ở file requirements.txt:</p> 
+   <p>pip install -r requirements.txtCài đặt cho phiên bản cụ thể của Python, trong đó ${version} được thay thế bởi 2, 3, 3.4:</p> 
+   <p>pip${version} install some-package</p> 
+   <p>Upgrade pip</p> 
+   <p>sudo pip install --upgrade pip</p> 
+   <p>Upgrade một package nào đó:</p> 
+   <p>pip install --upgrade &lt;some-package&gt;</p> 
+   <p>Hiển thị thông tin của package đã cài đặt</p> 
+   <p>pip show Flask</p> 
+   <p>Hiển thị tất cả các package đã cài đặt</p> 
+   <p>pip freeze</p> 
+   <p>pip list</p> 
+   <p>Có thể dùng tùy chọn --outdated để liệt kê các package đã có phiên bản mới.</p> 
+   <p>Loại bỏ package</p> 
+   <p>pip uninstall some-package</p> 
+   <p>pip uninstall Flask</p> 
+   <p>Thêm tùy chọn proxy</p> 
+   <p>--proxy &lt;proxy&gt;</p> 
+   <p>Specify a proxy in the form [user:passwd@]proxy.server:port.</p> 
+   <h3>Tham khảo</h3> 
+   <p><a target="_blank" href="https://pip.pypa.io/en/stable/user_guide/">https://pip.pypa.io/en/stable/user_guide/</a></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

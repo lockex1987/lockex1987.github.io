@@ -1,0 +1,14 @@
+#config url web
+url.web = http://nvd.nist.gov/download.cfm
+url.file.web = http://static.nvd.nist.gov/feeds/xml/cve/nvdcve-2.0-modified.xml
+#config xpath
+xpath_cve = vuln:cve-id
+xpath_public_date = vuln:published-datetime
+xpath_description = vuln:summary
+xpath_reference = vuln:references/vuln:reference/@href
+xpath_modified_date = vuln:last-modified-datetime
+xpath_remote_local = vuln:cvss/cvss:base_metrics/cvss:access-vector
+xpath_name_vul = vuln:cve-id
+xpath_config_entry = /:nvd/:entry
+
+

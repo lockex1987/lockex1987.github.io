@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Streaming</title>
+    <!--link href="https://vjs.zencdn.net/5.8/video-js.min.css" rel="stylesheet">
+    <script src="https://vjs.zencdn.net/5.8/video.min.js"></script-->
+
+    <link href="https://vjs.zencdn.net/7.8.4/video-js.css" rel="stylesheet" />
+
+    <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+
+</head>
+<body>
+<!--video id="player" class="video-js vjs-default-skin" height="360" width="640" controls preload="none"-->
+    
+
+<video
+    id="my-video"
+    class="video-js"
+    controls
+    preload="auto"
+    width="640"
+    height="264"
+    data-setup="{}"
+  >
+<source src="http://localhost:8080/hls/stream.m3u8" type="application/x-mpegURL" />
+</video>
+
+<script src="https://vjs.zencdn.net/7.8.4/video.js"></script>
+
+
+<script>
+    var player = videojs('#my-video');
+</script>
+</body>
+</html>

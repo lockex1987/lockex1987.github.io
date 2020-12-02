@@ -1,0 +1,47 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Gradient bar</title>
+</head>
+
+<body>
+
+<h2>Gradient bar</h2>
+<h3>Problem</h3>
+<p>T&#7841;o m&#7897;t thanh có hi&#7879;u &#7913;ng Gradient.</p>
+<h3>Solution</h3>
+<p>Chúng ta c&#7847;n m&#7897;t style sheet có thu&#7897;c background-image tr&#7887; t&#7899;i &#7843;nh gradient, 
+và có thu&#7897;c tính background-image là repeat-x. Ví d&#7909;:</p>
+<pre>&lt;style&gt;
+.bar {
+position:relative;
+top:0;
+left:0;
+background-image:url(&quot;background.jpg&quot;);
+background-repeat:repeat-x;
+height:100%;
+width:100%;
+color:#EEEEEE;
+font-weight:bold;
+text-align:center;
+}
+&lt;/style&gt;</pre>
+<p>&#7842;nh càng h&#7865;p càng t&#7889;t, k&#7875; c&#7843; ch&#7881; r&#7897;ng 1 pixel. N&#7871;u chúng ta mu&#7889;n hi&#7879;u &#7913;ng 
+gradient theo chi&#7873;u d&#7885;c thì &#7843;nh càng d&#7865;p càng t&#7889;t (chi&#7873;u cao nên là 1 pixel) và 
+background-repeat là repeat-y.</p>
+<p>Chúng ta có th&#7875; v&#7869; &#7843;nh gradient ban &#273;&#7847;u b&#7857;ng MS Office Word (kích th&#432;&#7899;c c&#7913; to 
+ra). Sau &#273;ó ch&#7881;nh s&#7917;a kích th&#432;&#7899;c s&#417; b&#7897; b&#7857;ng MS Office Picture Manager, r&#7891;i cu&#7889;i 
+cùng cho kích th&#432;&#7899;c nó v&#7873; 1 pixel b&#7857;ng Paint.</p>
+<p>Khi nào c&#7847;n s&#7917; d&#7909;ng, chúng ta có th&#7875; ch&#7881; &#273;&#7883;nh th&#7867; &lt;div&gt;, 
+ho&#7863;c có th&#7875; th&#7867; b&#7845;t k&#7923;. Ví d&#7909;:</p>
+<pre>&lt;div class=&quot;bar&quot;&gt;Welcome to my site&lt;/div&gt;
+&lt;td class=&quot;vertical&quot;&gt;XXX&lt;/td&gt;</pre>
+<p>&#7842;nh s&#7869; kéo ra h&#7871;t chi&#7873;u ngang, n&#7871;u chúng ta không ch&#7881; &#273;&#7883;nh thu&#7897;c tính width.</p>
+<h3>Notes</h3>
+<p>Li&#7879;u có th&#7875; cho &#7843;nh gradient có kích th&#432;&#7899;c b&#7845;t k&#7923;?</p>
+
+</body>
+
+</html>

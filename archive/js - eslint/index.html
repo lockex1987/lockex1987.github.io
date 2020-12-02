@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="lint, vscode">
+    <title>Sử dụng ESLint</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Sử dụng ESLint</h2>
+      <p>ESLint giúp gợi ý code, gợi ý sửa code, giúp code của chúng ta sẽ cùng
+        một chuẩn, nhìn đẹp hơn.</p>
+      <p>Dùng ESLint để thống nhất style trong nhóm:</p>
+      <ul>
+        <li>Indent bằng 4 space</li>
+        <li>Indent khi break câu lệnh, thẻ là 8 space</li>
+        <li>Có dấu cách sau <code>{</code> và trước <code>}</code> nếu viết
+          trên một dòng</li>
+        <li>Mỗi file nhỏ hơn 500 dòng</li>
+      </ul>
+      <h3>Cài đặt</h3>
+      <p>Cài extension cho VSCode:</p>
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint"
+
+          target="_blank">Link</a></p>
+      <p>Cài Node package:</p>
+      <pre>npm install --save-dev eslint
+</pre>
+      <p>Khởi tạo trong một dự án cụ thể:</p>
+      <pre>npx eslint --init</pre>
+      <p>Nó sẽ hỏi một số câu như dự án chạy ở đâu, dùng Vue hay React,... giúp
+        tạo một file <code>.eslintrc.json</code> có các cấu hình căn bản ban
+        đầu, cũng như cài thêm các gói cần thiết.</p>
+      <p>Bạn nên chọn extend cấu hình từ "standard" ở package là <code>eslint-config-standard</code>.
+        Package <code>eslint-config-standard</code> lại phụ thuộc các package <code>eslint-plugin-promise</code>,
+        <code>eslint-plugin-import</code>, <code>eslint-plugin-node</code>.</p>
+      <p>Bạn cũng nên extend cấu hình "plugin:vue/essential" ở package <code>eslint-plugin-vue</code>.</p>
+      <p>Ví dụ:</p>
+      <pre class="out-of-box">D:\github\lockex1987.github.io&gt;npx eslint --init
+√ How would you like to use ESLint? · style
+√ What type of modules does your project use? · esm
+√ Which framework does your project use? · vue
+√ Does your project use TypeScript? · No / Yes
+√ Where does your code run? · browser
+√ How would you like to define a style for your project? · guide
+√ Which style guide do you want to follow? · standard
+√ What format do you want your config file to be in? · JSON
+Checking peerDependencies of eslint-config-standard@latest
+The config that you've selected requires the following dependencies:
+
+eslint-plugin-vue@latest eslint-config-standard@latest eslint@^7.12.1 eslint-plugin-import@^2.22.1 eslint-plugin-node@^11.1.0 eslint-plugin-promise@^4.2.1
+√ Would you like to install them now with npm? · No / Yes
+Installing eslint-plugin-vue@latest, eslint-config-standard@latest, eslint@^7.12.1, eslint-plugin-import@^2.22.1, eslint-plugin-node@^11.1.0, eslint-plugin-promise@^4.2.1
++ eslint-plugin-node@11.1.0
++ eslint-plugin-import@2.22.1
++ eslint-plugin-promise@4.2.1
++ eslint@7.14.0
++ eslint-config-standard@16.0.2
++ eslint-plugin-vue@7.1.0
+added 76 packages from 50 contributors, updated 1 package and audited 186 packages in 45.959s
+found 0 vulnerabilities
+
+Successfully created .eslintrc.json file in D:\github\lockex1987.github.io</pre>
+      <p>Thêm script vào <code>package.json</code>:</p>
+      <pre>"scripts": {
+    "lint": "eslint --fix --ext .js,.vue resources/js"
+}</pre>
+      <p>Để kiểm tra, chúng ta có thể chạy lệnh sau:</p>
+      <pre>npm run lint</pre>
+      <p>Hoặc:</p>
+      <pre>npx eslint --ext .js,.vue resources/js</pre>
+      <h3>Cấu hình</h3>
+      <p>File <code>.eslintrc.json</code> có các cấu hình sau:</p>
+      <h4>env</h4>
+      <p>Đây là nơi cấu hình môi trường mà code của chúng ta sẽ chạy. Môi trường
+        khác nhau thì sẽ có những biến toàn cục khác nhau. Ví dụ, môi trường
+        browser thì sẽ có các biến như window, document, môi trường ES6 sẽ có
+        một số loại dữ liệu mới như Set chẳng hạn. </p>
+      <pre>"env": {
+    "browser": true,
+    "es6": true
+}
+</pre>
+      <h4>extends</h4>
+      <p>Đây là những config có sẵn được sử dụng, chúng ta sẽ mở rộng chúng bằng
+        cách thêm vào những config của riêng mình.</p>
+      <pre>"extends": [
+    "plugin:vue/essential",
+    "standard"
+]</pre>
+      <h4>plugins</h4>
+      <p>Đây là những plugin được sử dụng để mở rộng hoạt động của ESLint. Ví dụ
+        để hỗ trợ Vue template: </p>
+      <pre>"plugins": [
+    "vue"
+]
+</pre>
+      <h4>globals</h4>
+      <p>Đây là nơi chúng ta đưa ra danh sách các biến global dùng trong dự án.
+        Nếu không, khi chúng ta truy cập vào một biến nào đó, ESLint sẽ báo lỗi
+        vì truy cập đến một biến chưa được định nghĩa.</p>
+      <pre>"globals": {
+    "Vue": "readonly",
+    "Vuex": "readonly",
+    "VueRouter": "readonly",
+    "axios": "readonly",
+    "Highcharts": "readonly",
+    "$": "readonly",
+    "ExcelJS": "readonly",
+    "moment": "readonly"
+}</pre>
+      <h4>rules</h4>
+      <p>Đây là chính là phần config những quy tắc mà code cần phải tuân theo.
+        Có nhiều rule đã được config sẵn khi chúng ta extends một cấu hình nào
+        đó thì không cần config lại nữa. Ở đây, chúng ta chỉ cần config thêm
+        những rule mà chúng ta cần tuỳ chỉnh mà thôi.</p>
+      <p>Rule ở đây có thể là rule do ESLint cung cấp sẵn hoặc rule của plugin.</p>
+      <p>Mỗi rule cần được config hai thông số: giá trị ứng với mức độ áp dụng
+        rules (<code>off</code>, <code>warn</code>, <code>error</code> hoặc <code>0</code>,
+        <code>1</code>, <code>2</code> cho ngắn gọn) và các tuỳ chọn.</p>
+      <p>Ví dụ, rule sau yêu cầu áp dụng single quote <code>'</code> cho các
+        xâu trong code:</p>
+      <pre>"rules": {
+    "quotes": ["error", "single"]
+}
+</pre>
+      <p>Lượng rule mà ESLint support là rất lớn, gần như toàn bộ các yếu tố của
+        code đều được support cả, chưa kể plugin còn mở rộng hơn nữa.</p>
+      <h4>parserOptions</h4>
+      <p>Mặc định, ESLint kiểm tra cú pháp của ES5. Nếu sử dụng ES6 hoặc các
+        phiên bản mới hơn, chúng ta phải cấu hình bằng <code>parserOptions</code>.
+        Cấu hình toàn bộ cho phần này như sau:</p>
+      <pre>"parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+}</pre>
+      <h3>Ví dụ</h3>
+      <p>Sau đây là toàn bộ cấu hình của ESLint mà tôi sử dụng trong dự án Vue.</p>
+      <pre>{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": [
+        "plugin:vue/essential",
+        "standard"
+    ],
+    "plugins": [
+        "vue"
+    ],
+
+    "globals": {
+        "Vue": "readonly",
+        "Vuex": "readonly",
+        "VueRouter": "readonly",
+        "axios": "readonly",
+        "Highcharts": "readonly",
+        "$": "readonly",
+        "ExcelJS": "readonly",
+        "moment": "readonly"
+    },
+    
+    "parser": "vue-eslint-parser",
+    "parserOptions": {
+        "parser": "babel-eslint",
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+
+    "rules": {
+        "semi": ["error", "always"],
+        "indent": ["error", 4],
+        "space-before-function-paren": ["error", {
+            "anonymous": "always",
+            "named": "never",
+            "asyncArrow": "always"
+        }],
+
+        "eqeqeq": "off",
+        "no-new": "off",
+        "no-multiple-empty-lines": "off",
+        "vue/require-valid-default-prop": "off",
+        "vue/require-v-for-key": "off"
+    }
+}</pre>
+      <h3>Đánh dấu không kiểm tra file</h3>
+      <p>Để không kiểm tra một file nào đó, thêm dòng sau vào đầu của file:</p>
+      <pre>/* eslint-disable */</pre>
+      <h3>Danh sách luật</h3>
+      <p><a href="https://eslint.org/docs/rules/" target="_blank">List of
+          available rules - ESLint</a></p>
+      <p>Không luật nào được enable mặc định. Cấu hình <code>"extends":
+          "eslint:recommended"</code> trong file cấu hình sẽ enable các luật
+        chung chung mà được đánh dấu icon check.</p>
+      <p>Tùy chọn <code>--fix</code> trong câu lệnh sẽ tự động fix các lỗi đơn
+        giản mà được đánh dấu icon là cái cờ lê.</p>
+      <h3>Escape dấu cách trong đường dẫn trên Windows</h3>
+      <p>Khi thực hiện lệnh eslint trên đường dẫn mà có dấu cách trên hệ điều
+        hành Windows có thể bị lỗi <code>No files matching the pattern</code>.
+        Ví dụ đánh lệnh sau sẽ lỗi:</p>
+      <pre>npx eslint --fix "posts/ui - carousel"</pre>
+      <p>Chúng ta cần escape như sau:</p>
+      <pre>npx eslint --fix \"posts/ui - carousel\"</pre>
+      <h3>Tham khảo</h3>
+      <p><a href="https://viblo.asia/p/hay-su-dung-eslint-cho-du-an-cua-ban-bJzKm07O59N"
+
+          target="_blank">Hãy sử dụng ESLint cho dự án của bạn! - Viblo</a></p>
+      <p><a href="https://eslint.org/docs/user-guide/getting-started" target="_blank">Getting
+          Started with ESLint - ESLint</a></p>
+      <p><a href="https://eslint.org/docs/user-guide/configuring" target="_blank">Configuring
+          ESLint - ESLint</a></p>
+      <p><a href="https://eslint.org/docs/user-guide/command-line-interface" target="_blank">Command
+          Line Interface - ESLint</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

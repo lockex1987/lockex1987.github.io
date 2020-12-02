@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Riot DOM access</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Riot DOM access">
+ </head> 
+ <body> 
+  <article> 
+   <p>Truy cập phần tử DOM </p> 
+   <p>Riot cho phép bạn truy cập các phần tử mà có thuộc tính ref thông qua đối tượng refs.</p> 
+   <p>Nếu bạn muốn truy cập DOM trong Riot, bạn cần hiểu vòng đời của tag. Chú ý rằng phần tử DOM sẽ không được khởi tạo cho đến khi sự kiện mount được diễn ra trước. Điều đó có nghĩa là nếu bạn có gắng select đối tượng trước đó (sự kiện mount) thì sẽ lỗi.</p> 
+   <pre style="border: 1px solid green; border-radius: 5px;"><code id="output" style="color: rgb(248, 248, 242); background-color: rgb(43, 43, 43); display: block; padding: 5px;"><span style="color: rgb(255, 160, 122);">&lt;<span style="color: rgb(255, 160, 122);">example-tag</span>&gt;</span>
+  <span style="color: rgb(255, 160, 122);">&lt;<span style="color: rgb(255, 160, 122);">p</span> <span style="color: rgb(255, 160, 122);">id</span>=<span style="color: rgb(171, 227, 56);">"findMe"</span>&gt;</span>Do I even Exist?<span style="color: rgb(255, 160, 122);">&lt;/<span style="color: rgb(255, 160, 122);">p</span>&gt;</span>
+
+  <span style="color: rgb(255, 160, 122);">&lt;<span style="color: rgb(255, 160, 122);">script</span>&gt;</span><span style="color: rgb(248, 248, 242);"> <span style="color: rgb(220, 198, 224);">var</span> test1 = <span style="color: rgb(245, 171, 53);">document</span>.getElementById(<span style="color: rgb(171, 227, 56);">'findMe'</span>) <span style="color: rgb(245, 171, 53);">console</span>.log(<span style="color: rgb(171, 227, 56);">'test1'</span>, test1) <span style="color: rgb(212, 208, 171);">// Fails</span> <span style="color: rgb(220, 198, 224);">this</span>.on(<span style="color: rgb(171, 227, 56);">'update'</span>, <span style="color: rgb(248, 248, 242);"><span style="color: rgb(220, 198, 224);">function</span>(<span style="color: rgb(245, 171, 53);"></span>)</span>{ <span style="color: rgb(220, 198, 224);">var</span> test2 = <span style="color: rgb(245, 171, 53);">document</span>.getElementById(<span style="color: rgb(171, 227, 56);">'findMe'</span>) <span style="color: rgb(245, 171, 53);">console</span>.log(<span style="color: rgb(171, 227, 56);">'test2'</span>, test2) <span style="color: rgb(212, 208, 171);">// Succeeds, fires on every update</span> }) <span style="color: rgb(220, 198, 224);">this</span>.on(<span style="color: rgb(171, 227, 56);">'mount'</span>, <span style="color: rgb(248, 248, 242);"><span style="color: rgb(220, 198, 224);">function</span>(<span style="color: rgb(245, 171, 53);"></span>)</span>{ <span style="color: rgb(220, 198, 224);">var</span> test3 = <span style="color: rgb(245, 171, 53);">document</span>.getElementById(<span style="color: rgb(171, 227, 56);">'findMe'</span>) <span style="color: rgb(245, 171, 53);">console</span>.log(<span style="color: rgb(171, 227, 56);">'test3'</span>, test3) <span style="color: rgb(212, 208, 171);">// Succeeds, fires once (per mount)</span> }) </span><span style="color: rgb(255, 160, 122);">&lt;/<span style="color: rgb(255, 160, 122);">script</span>&gt;</span>
+<span style="color: rgb(255, 160, 122);">&lt;/<span style="color: rgb(255, 160, 122);">example-tag</span>&gt;</span></code></pre> 
+   <p>Contexted DOM query</p> 
+   <p>Giờ chúng ta đã biết cách để lấy phần tử DOM bằng cách chờ các sự kiện update và mount. Chúng ta có thể hữu ích hơn bằng cách thêm ngữ cảnh vào câu query của chúng ta bằng phần tử root (Riot tag mà chúng ta tạo).</p> 
+   <pre style="border: 1px solid green; border-radius: 5px;"><code id="output" style="color: rgb(248, 248, 242); background-color: rgb(43, 43, 43); display: block; padding: 5px;"><span style="color: rgb(220, 198, 224);">this</span>.on(<span style="color: rgb(171, 227, 56);">'mount'</span>, <span style="color: rgb(248, 248, 242);"><span style="color: rgb(220, 198, 224);">function</span>(<span style="color: rgb(245, 171, 53);"></span>) </span>{
+  <span style="color: rgb(212, 208, 171);">// Contexted jQuery</span>
+  $(<span style="color: rgb(171, 227, 56);">'p'</span>, <span style="color: rgb(220, 198, 224);">this</span>.root)
+
+  <span style="color: rgb(212, 208, 171);">// Contexted Query Selector</span>
+  <span style="color: rgb(220, 198, 224);">this</span>.root.querySelectorAll(<span style="color: rgb(171, 227, 56);">'p'</span>)
+})</code></pre> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p>Named elements</p> 
+   <p>Elements with ref attribute are automatically linked to the context under this.refs so you’ll have an easy access to them with JavaScript:</p> 
+   <pre>&lt;login&gt;
+  &lt;form ref="login" onsubmit={ submit }&gt;
+    &lt;input ref="username"&gt;
+    &lt;input ref="password"&gt;
+    &lt;button ref="submit"&gt;
+  &lt;/form&gt;
+
+  // grab above HTML elements
+  submit(e) {
+    var form = this.refs.login,
+        username = this.refs.username.value,
+        password = this.refs.password.value,
+        button = this.refs.submit
+  }
+
+&lt;/login&gt;</pre> 
+   <p>The refs attribute will be set when the mount event gets fired, so you can access to the this.refs collection into ‘mount’ (this.on('mount', function() {...}) ) or other event handlers.</p> 
+   <p>&gt;=3.0</p> 
+   <p>If the ref attribute is applied to a Riot tag, it will reference a tag instance, and not the DOM element, as in the case above. For example:</p> 
+   <pre>&lt;my-tag&gt;
+  &lt;my-nested-tag data-ref="one"&gt;&lt;/my-nested-tag&gt;
+  &lt;div data-ref="two"&gt;&lt;/div&gt;  
+
+  this.on('mount', function() {
+    console.log(this.refs.one); // Riot tag object
+    console.log(this.refs.two); // HTML DOM element
+  });
+&lt;/my-tag&gt;</pre> 
+   <p><br> </p> 
+   <p>In cases where the same ref value is used on multiple elements, the refs property will return an array of the respective elements / tags. For example:</p> 
+   <pre>&lt;my-tag&gt;
+  &lt;div data-ref="items" id="alpha"&gt;&lt;/div&gt;
+  &lt;div data-ref="items" id="beta"&gt;&lt;/div&gt;
+
+  this.on('mount', function() {
+    console.log(this.refs.items); // [div#alpha, div#beta]
+  });
+&lt;/my-tag&gt;</pre> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p><br> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

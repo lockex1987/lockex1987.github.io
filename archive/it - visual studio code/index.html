@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VSCode">
+    <title>Công cụ soạn thảo Visual Studio Code</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Công cụ soạn thảo Visual Studio Code</h2>
+      <p>Visual Studio Code (VSCode) là một trong những công cụ soạn thảo văn
+        bản lập trình tốt nhất cho web (HTML, CSS, JavaScript), PHP. VSCode nhẹ,
+        không nặng nề như Eclipse, NetBeans,...</p>
+      <p>Dưới đây là một số mẹo về VSCode cần thiết mà bạn nên tìm hiểu nếu muốn
+        tăng năng suất và luồng công việc của mình.</p>
+      <h3>Tính năng sửa CONFLICT</h3>
+      <p><img src="https://images.viblo.asia/2b1e3f2f-4b80-4117-815b-d531c36c9b12.png"></p>
+      <p>Bạn chỉ cần tìm chọn tìm kiếm trên tất cả các file có dấu xương cá <code>&lt;&lt;&lt;&lt;&lt;</code>.
+        Lúc này VSCode sẽ hiện thị 2 phần, phía trên là code của nhánh chính
+        (thường là master), còn phía dưới là code của nhánh hiện tại. Sẽ có 4 sự
+        lựa chọn:</p>
+      <ul>
+        <li><strong>Accept Current Change</strong> sẽ lấy code phía trên</li>
+        <li><strong>Accept Incoming Change</strong> sẽ lấy phần code dưới</li>
+        <li><strong>Accept Both Changes</strong> sẽ chấp nhận cả 2</li>
+        <li><strong>Compare</strong> sẽ hiện ra 1 màn hình để so sánh</li>
+      </ul>
+      <p>Ngoài ra chúng ta có thể copy phần cần thiết từ phần dưới lên phần trên
+        là lấy sự thay đổi đó, cũng như làm ngược lại đưa phần nào ta cần của
+        phần trên xuống phần dưới và chọn lấy những code phần dưới. Quá tuyệt
+        đúng không ạ.</p>
+      <h3>Làm chủ bảng lệnh</h3>
+      <p>VSCode có bảng lệnh, cho phép người dùng truy cập vào các lệnh khác
+        nhau bằng cách gõ lệnh thay vì điều hướng đến menu sử dụng con chuột.</p>
+      <p><img src="https://images.viblo.asia/e7bee2e9-1caf-4f23-87f1-150868e61d63.png"></p>
+      <p>Bạn có thể hiển thị bảng lệnh này bằng cách sử dụng phím tắt <code>Ctrl
+          + Shift + P</code>, sau đó chỉ cần nhập những gì muốn tìm kiếm (ví dụ
+        như "close") và các tùy chọn sẽ cập nhật trong thời gian thực. Một số
+        lệnh được phân loại (ví dụ: "File", Git","Terminal",...), vì vậy bạn có
+        thể sử dụng lệnh đó để định vị các lệnh mà bạn không thể tìm thấy.</p>
+      <h3>Mở một dự án</h3>
+      <p><img src="https://images.viblo.asia/b3d3cd09-72b8-40d2-9b6d-785a9959b2f4.png"></p>
+      <p> <img src="https://images.viblo.asia/d2d1be6f-a7ab-415d-8e04-4e37180f2f96.png"></p>
+      <p>Nếu click vào Explorer trong thanh điều hướng bên trái, bạn sẽ thấy một
+        bảng con mới mở ra. Bảng con này được chia thành hai phần: Open Editors
+        (tức là các file và tài liệu hiện đang được mở) và No Folder Opened.</p>
+      <p>Click vào Open Folder hoặc điều hướng đến File &gt; Open Folder trên
+        thanh menu và chọn bất cứ thư mục nào trên hệ thống. Thao tác này sẽ tải
+        thư mục vào VSCode như là dự án hiện đang làm việc, cho phép bạn dễ dàng
+        truy cập vào tất cả các file và thư mục con, không cần tìm trong File
+        Explorer nữa.</p>
+      <h3>Xem nhiều file cùng một lúc</h3>
+      <p><img src="https://images.viblo.asia/e505678f-4ea0-4815-aaeb-19ce6dc6fde2.png"></p>
+      <p>Hầu hết các trình soạn thảo văn bản hiện đại đều có thể hỗ trợ nhiều
+        file cùng một lúc, cho phép bạn chuyển đổi giữa các file mở thông qua
+        một số loại giao diện dựa trên tab. Các trình soạn thảo văn bản nâng cao
+        hơn thậm chí có thể hỗ trợ chỉnh sửa văn bản song song và VSCode thực
+        hiện được việc đó, mặc dù theo chiều ngang.</p>
+      <p>Để làm được điều này chúng ta để ý button trên góc bên phải của tab
+        đang mở:</p>
+      <p><img src="https://images.viblo.asia/79ea137d-43a5-462d-a182-bd7d4a24ff34.png"></p>
+      <p>Tuy nhiên việc chỉnh sửa song song rất khó trên màn hình nhỏ như máy
+        tính xách tay hoặc màn hình cũ hơn, nhưng với VSCode điều đó đã được
+        giải quyết. Nó có tính năng Dynamic panel, giúp điều chỉnh các bảng tài
+        liệu nếu mở quá hẹp sẽ tự động mở rộng khi chỉ con trỏ vào nó. Nếu thích
+        sử dụng độ phân giải gần 720p, bạn sẽ thích tính năng này.</p>
+      <h3>Tính năng đa con trỏ</h3>
+      <p><img src="https://images.viblo.asia/ee6be8e5-0776-48cb-80dc-ccb3567c1359.png"></p>
+      <p>Nếu cần chèn hoặc xóa nhiều dòng văn bản trong toàn bộ tài liệu, bạn
+        cần tạo ra nhiều con trỏ bằng cách giữ phím Alt (hoặc Option trên Mac)
+        và click vào bất cứ đâu trong văn bản. Mỗi lần click sẽ tạo một con trỏ
+        mới. Tính năng này đặc biệt hữu ích với HTML vì bạn có thể thêm nhiều
+        instance trong cùng một class hoặc thay đổi định dạng cho nhiều siêu
+        liên kết.</p>
+      <h3>Chuyển đến định nghĩa</h3>
+      <p><img src="https://images.viblo.asia/c8c2098f-66fb-48e9-aa0d-913db4c0ec54.png"></p>
+      <p>Khi lập trình hoặc viết script, bạn thường tạo ra biến hoặc phương thức
+        bạn không nhận ra. Vậy bạn sẽ làm gì? Bạn có thể dành vài phút để tìm
+        kiếm các file đúng hoặc chọn biến/phương thức với con trỏ và nhấn <code>F12</code>
+        để chuyển đến định nghĩa của nó.</p>
+      <p>Hoặc bạn có thể sử dụng phím tắt <code>Alt + F12</code> để xem nhanh
+        định nghĩa, hiển thị cho bạn định nghĩa ngay trong dòng có con trỏ thay
+        vì mở file nguồn.</p>
+      <p><img src="https://images.viblo.asia/c7802a14-120b-43e0-86fd-21a9611d6198.png"></p>
+      <p>Để đi theo hướng ngược lại, bạn có thể chọn biến/phương thức đã định
+        nghĩa và sử dụng phím tắt <code>Shift + F12</code> để tìm tất cả các
+        tham chiếu đến nó. Thao tác này cũng hiển thị định nghĩa trong dòng tại
+        con trỏ. Để tính năng này hoạt động, bạn cần đảm bảo thư mục thích hợp
+        được mở như “dự án đang làm việc”</p>
+      <h3>Đổi tên tất cả các biến hoặc phương thức cụ thể</h3>
+      <p><img src="https://images.viblo.asia/d3ece467-4036-45a3-9b9d-2b871fa06186.png"></p>
+      <p>Tái cấu trúc là một việc cần thiết để viết và duy trì code sạch, nhưng
+        nó có thể khá đau đầu, đặc biệt khi bạn đang tái cấu trúc một module lớn
+        hoặc một đoạn code lớn. Vì vậy, thay vì tìm kiếm trong hàng chục file để
+        thay đổi tên biến hoặc phương thức, hãy để VSCode làm điều đó cho bạn.</p>
+      <p>Nếu chọn một biến/phương thức và nhấn <code>F2</code>, bạn có thể
+        chỉnh sửa tên và nó sẽ thay đổi trên toàn bộ dự án đang làm việc. Nếu
+        chỉ muốn thay đổi tên trong một file, sử dụng phím tắt <code>Ctrl + F2</code>
+        và VSCode sẽ hiển thị một con trỏ ở các instance trong file đó.</p>
+      <h3>Tìm kiếm trên nhiều file</h3>
+      <p><img src="https://images.viblo.asia/f9695357-a255-47b0-8a4e-35decf05d556.png"></p>
+      <p>Nếu đang làm việc với các file không phải là mã nguồn, các tính năng
+        tìm kiếm biểu tượng ở trên (trong mẹo số 6) sẽ không thể sử dụng được.
+        Vì vậy, khi muốn tìm một câu hoặc một từ mà không nhớ tên file, bạn có
+        thể sử dụng hàm find cơ bản.</p>
+      <p>Trên file hiện tại, nhấn <code>Ctrl + F</code>, nếu muốn tìm kiếm ở
+        tất cả các file trong dự án hiện tại, kể cả trong các thư mục phụ, bạn
+        có thể nhấn <code>Ctrl + Shift + F</code>.</p>
+      <h3>Sử dụng dòng lệnh</h3>
+      <p><img src="https://images.viblo.asia/8bb87104-9dea-4058-9cb6-4e42444bf780.png"></p>
+      <p>VSCode đi kèm với một terminal tích hợp. Trên Windows, terminal này
+        hiển thị dưới dạng Command Prompt. Trên Mac và Linux, nó là Bash. Trong
+        VSCode, terminal khởi động trong thư mục của dự án hiện tại (nếu dự án
+        được tải) hoặc trong thư mục gốc (nếu dự án không được tải).</p>
+      <p>Ngoài ra, nó cũng hỗ trợ khả năng sử dụng nhiều terminal riêng biệt.
+        Bạn chỉ cần click vào dấu + ở trên cùng bên phải để tạo nhiều phiên bản
+        terminal hoặc click vào Trash Can để đóng terminal hiện tại. Menu thả
+        xuống giúp bạn dễ dàng chuyển đổi giữa các terminal và không tốn nhiều
+        không gian màn hình như giao diện dựa trên tab.</p>
+      <h3>Cài đặt một theme mới</h3>
+      <p><img src="https://images.viblo.asia/a3189c8d-b719-4a53-a826-146f80a3caf4.png"></p>
+      <p>VSCode cho phép bạn cài đặt theme cho cú pháp giúp làm nổi bật văn bản
+        và mã nguồn. Tuy nhiên, nó không cho phép người dùng thay đổi theme giao
+        diện, nhưng làm nổi bật cú pháp cũng khá quan trọng. Bạn sẽ ngạc nhiên
+        khi biết rằng việc cài đặt theme này sẽ đẩy nhanh năng suất của bạn như
+        thế nào. Bạn có thể tìm theme mới trong Visual Studio Code Marketplace
+        (miễn phí) hoặc tìm kiếm trực tiếp trong VSCode. Đầu tiên sử dụng tổ hợp
+        phím <code>Ctrl + Shift + P</code> rồi gõ theme, sau đó chọn theme mong
+        muốn.</p>
+      <p><img src="https://images.viblo.asia/653085b1-fe74-40f3-be23-cf118182a48d.png"></p>
+      <h3>Cài đặt extension của bên thứ ba</h3>
+      <p><img src="https://images.viblo.asia/93f82be5-1fc2-42d8-94b3-af5215919b65.png"></p>
+      <p>Tính năng quan trọng cuối cùng để tăng năng suất trên VSCode là sử dụng
+        extension của bên thứ ba. Cũng như theme, bạn có thể tìm thấy chúng
+        trong Visual Studio Code Marketplace (chúng đều miễn phí) hoặc có thể
+        tìm kiếm trong VSCode. Để truy cập vào bảng Extension, bạn nhấn phím tắt
+        <code>Ctrl + Shift + X</code>. Extension chính là chìa khóa tối đa hóa
+        năng suất của bạn. Bạn sẽ tìm thấy tất cả các công cụ cần thiết ở đây.</p>
+      <p>Bạn có thể vào Marketplace, download các extension về để cài offline.</p>
+      <h3>Sử dụng tab để căn lề</h3>
+      <p>Use Tab, don't use space. 1 Tab = 2 Space. Tabs for indenting, spaces
+        for aligning.</p>
+      <p>Tabs are clearly superior:</p>
+      <ul>
+        <li>Tabs take up less space</li>
+        <li>Tabs can be personalized</li>
+      </ul>
+      <p>Configure VSCode, Netbeans, Notepad++, Gedit,...</p>
+      <p>By default, VSCode will try to guess your indentation options depending
+        on the file you open.</p>
+      <p>You can customize this easily in <code>File &gt; Preferences &gt; User
+          Settings</code> with:</p>
+      <pre>// Controls the rendering size of tabs in characters.
+// If set to auto, the value will be guessed based on the opened file.
+"editor.tabSize": 4,
+
+// Controls if the editor will insert spaces for tabs.
+// If set to auto, the value will be guessed based on the opened file.
+"editor.insertSpaces": false</pre>
+      <h3>Mở cửa sổ mới</h3>
+      <p><img alt="" src="images/open%20multiple%20windows.png"></p>
+      <h3>Mở nhanh file</h3>
+      <p>Keyboard Shortcut: <code>Ctrl+P</code>.</p>
+      <p><img alt="" src="images/quick%20open.gif"></p>
+      <h3>Phát triển ứng dụng Java</h3>
+      <p>https://www.youtube.com/watch?v=l96vUqfB3R4</p>
+      <p>https://code.visualstudio.com/docs/languages/java</p>
+      <p>Download bản mới nhất (1.21, 22/3/2018)</p>
+      <p>https://code.visualstudio.com/Download</p>
+      <p>Chọn bản .deb 32 bit.</p>
+      <p>Sử dụng bản deb để sau này dễ nâng cấp. Chỉ việc cài lại.</p>
+      <p>Cài đặt</p>
+      <p>sudo dpkg -i code_1.21.1-1521038898_i386.deb</p>
+      <p>Cài đặt Java Extension Pack. Nó sẽ tự cài:</p>
+      <p>Language Support for Java(TM) by Red Hat</p>
+      <p>Debugger for Java</p>
+      <p>Java Test Runner</p>
+      <p>Maven Project Explorer</p>
+      <p>Chờ một lúc, nhấn Reload.</p>
+      <p>Chọn Open Folder</p>
+      <p>Chuột phải vùng Maven Projects, thực hiện các thao tác Maven: clean,
+        compile, package, install.</p>
+      <p>Nhấn F5 để chạy, chọn Java,</p>
+      <h3>Các extension dùng trong PHP</h3>
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client"
+          target="_blank">PHP Intelephense</a></p>
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=kakumei.php-xdebug"
+          target="_blank">Xdebug</a></p>
+      <p><br>
+      </p>
+      <h3>Các extension dùng trong JS</h3>
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint"
+          target="_blank">ESLint</a></p>
+      <p><br>
+      </p>
+      <h3>Các extension dùng trong Vue</h3>
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=octref.vetur"
+          target="_blank">Vetur</a></p>
+      <p>Để từ một file <code>.vue</code> có thể goto definition một file <code>.vue</code>
+        khác, chúng ta cần ghi rõ đuôi <code>.vue</code> khi import.</p>
+      <p>Ví dụ:</p>
+      <pre>import TrendingChart from '~/pages/Backend/News/components/TrendingChart.vue';</pre>
+      <p>Từ file <code>.js</code> vẫn không thể goto definition đến file <code>.vue</code>
+        được.</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

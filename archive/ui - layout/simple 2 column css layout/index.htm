@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <title>Simple 2 column CSS layout</title>
+    <link rel="stylesheet" href="file:///data/program/static/highlight_css/arta.css">
+    <script src="file:///data/program/static/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+  <body>
+    <p> </p>
+    <h1>Simple 2 column CSS layout</h1>
+    <p>This is a tutorial on how to use CSS to create a simple two column
+      layout. If you want to create a three column layout, read on as this
+      tutorial explains a basic concept that can be used to create as many
+      columns as you need. When you’re done, take a look at <a href="http://www.456bereastreet.com/archive/201012/how_to_create_a_3-column_layout_with_css/">How
+        to create a 3-column layout with CSS</a>.</p>
+    <p>The layout consists of a header, a horizontal navigation bar, a main
+      content column, a sidebar, and a footer. It is also horizontally centered
+      in the browser window. A pretty basic layout, and not at all difficult to
+      create with CSS once you know how to deal with the inevitable Internet
+      Explorer bugs.</p>
+    <p>To see the full CSS used for each step, view source on the example
+      documents.</p>
+    <h2>1. Basic structure</h2>
+    <p>First of all, we create the basic HTML structure:</p>
+    <p> </p>
+    <pre><code class="html">&lt;div id="wrap"&gt;
+    &lt;div id="header"&gt;&lt;/div&gt;
+    &lt;div id="nav"&gt;&lt;/div&gt;
+    &lt;div id="main"&gt;&lt;/div&gt;
+    &lt;div id="sidebar"&gt;&lt;/div&gt;
+    &lt;div id="footer"&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>After that, we put some content in the different sections:<br>
+    <p> </p>
+    <pre><code class="html">&lt;div id="wrap"&gt;
+    &lt;div id="header"&gt;&lt;h1&gt;Document Heading&lt;/h1&gt;&lt;/div&gt;
+    &lt;div id="nav"&gt;
+    &lt;ul&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Option 1&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Option 2&lt;/a&gt;&lt;/li&gt;
+    ...
+    &lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div id="main"&gt;
+    &lt;h2&gt;Column 1&lt;/h2&gt;
+    &lt;p&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit...&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div id="sidebar"&gt;
+    &lt;h2&gt;Column 2&lt;/h2&gt;
+    &lt;p&gt;Lorem ipsum dolor sit amet, consectetuer adipiscing elit...&lt;/p&gt;
+    &lt;ul&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Link 1&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="#"&gt;Link 2&lt;/a&gt;&lt;/li&gt;
+    ...
+    &lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div id="footer"&gt;
+    &lt;p&gt;Footer&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    Now we have a completely unstyled HTML document which is structured in a way
+    that lets us use CSS to control its layout.
+    <p><a href="step01.html">View step 1</a>.</p>
+    <h2>2. Adjust the <code>body</code> and <code>html</code> elements</h2>
+    <p>To make the content reach the edges of the browser window, we set the <code>margin</code>
+      and <code>padding</code> of the <code>body</code> and <code>html</code>
+      elements to zero. We also specify colours for text and background.</p>
+    <pre><code class="css">body,
+html {
+    margin:0;
+    padding:0;
+    color:#000;
+    background:#a7a09a;
+}</code></pre>
+    <p><a href="step02.html">View step 2</a>.</p>
+    <h2>3. On to the main containers</h2>
+    <p>After that it’s time to give the content area a width and center it
+      horizontally. We do that by specifying the width and margins of the main
+      container, <code>#wrap</code>. We also give it a background colour to
+      make it show up on the page.</p>
+    <p>The method we use to center the content is based on the fact that when an
+      element’s left and right margins are set to <code>auto</code>, they will
+      share whatever is left when the element’s width has been subtracted from
+      that of its container. In this case the width of <code>#wrap</code> will
+      be subtracted from the width of the browser window.</p>
+    <p><strong>Note:</strong> for this method to work in Internet Explorer
+      (version 6 and later only), the document <strong>must</strong> use a
+      DOCTYPE that forces IE to use its standards mode. Please read <a href="http://www.alistapart.com/articles/doctype/">Fix
+        Your Site With the Right DOCTYPE!</a> for more info.</p>
+    <pre><code class="css">#wrap {
+    width:750px;
+    margin:0 auto;
+    background:#99c;
+}</code></pre>
+    <p>In case you’re wondering why we’re not using the <code>body</code>
+      element to control the width and centering of the layout, it is because
+      doing so can cause unwanted side-effects in some versions of Internet
+      Explorer.</p>
+    <p>After that, we give the different sections of the document different
+      background colors to make them show up.</p>
+    <pre><code class="css">#header {
+    background:#ddd;
+}
+#nav {
+    background:#c99;
+}
+#main {
+    background:#9c9;
+}
+#sidebar {
+    background:#c9c;
+}
+#footer {
+    background:#cc9;
+}</code></pre>
+    <p><a href="step03.html">View step 3</a>.</p>
+    <p> </p>
+    <h2>4. Place the columns side by side</h2>
+    <p>To make the two columns (<code>#main</code> and <code>#sidebar</code>)
+      display side by side we <code>float</code> them, one to the left and the
+      other to the right. We also specify the widths of the columns.</p>
+    <pre><code class="css">#main {
+    float:left;
+    width:500px;
+    background:#9c9;
+}
+#sidebar {
+    float:right;
+    width:250px;
+    background:#c9c;
+}</code></pre>
+    <p>Note that the sum of the widths should be equal to the width given to <code>#wrap</code>
+      in Step 3.</p>
+    <p>This will make <code>#sidebar</code> appear to the right of <code>#main</code>,
+      but the footer is not where it should be.</p>
+    <p><a href="step04.html">View step 4</a>.</p>
+    <h2>5. Push the footer down</h2>
+    <p>The footer doesn’t get pushed down to the bottom of the content because
+      of the way <code>float</code> works. When you <code>float</code> an
+      element, it is removed from the document flow and doesn’t push elements
+      that follow it down. In this case <code>#footer</code> will start right
+      below <code>#sidebar</code>.</p>
+    <p>To avoid this we use the <code>clear</code> property to tell the footer
+      that it can’t have any elements next to it.</p>
+    <p> </p>
+    <p> </p>
+    <pre><code class="css">#footer {
+    clear:both;
+    background:#cc9;
+}</code></pre>
+    <p><a href="step05.html">View step 5</a>. </p>
+    <h2>6. Fix the background color</h2>
+    <p>Now we can see that the shorter column doesn’t continue all the way down
+      to the footer. To make it look like it does, we use the same background
+      colour for <code>#sidebar</code> and <code>#wrap</code>.</p>
+    <p> </p>
+    <pre><code class="css">#sidebar {
+    float:right;
+    width:250px;
+    background:#99c;
+}</code></pre>
+    <p>Also, if you take a look at this step in Internet Explorer 6 you may
+      notice that the background colour of the footer is pushing up beside the
+      main content. That will be taken care of later.</p>
+    <p><a href="step06.html">View step 6</a>. </p>
+    <h2>7. Make the navigation bar horizontal</h2>
+    <p><code>#nav</code> contains a regular unordered list of links. Since we
+      don’t want it to look like an unordered list we restyle it.</p>
+    <pre><code class="css">#nav ul {
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+#nav li {
+    display:inline;
+    margin:0;
+    padding:0;
+}</code></pre>
+    <p><a href="step07.html">View step 7</a>.</p>
+    <p> </p>
+    <h2>8. Adjust margins and paddings, and make IE 6 cooperate</h2>
+    <p>Almost done. Time to adjust the <code>margin</code> and <code>padding</code>
+      of some elements to make the layout a little less cramped.</p>
+    <pre><code class="css">#header {
+    padding:5px 10px;
+    background:#ddd;
+}
+h1 {
+    margin:0;
+}
+#nav {
+    padding:5px 10px;
+    background:#c99;
+}
+#main {
+    float:left;
+    width:480px;
+    padding:10px;
+    background:#9c9;
+}
+h2 {
+    margin:0 0 1em;
+}
+#sidebar {
+    float:right;
+    width:230px;
+    padding:10px;
+    background:#99c;
+}
+#footer {
+    clear:both;
+    padding:5px 10px;
+    background:#cc9;
+}
+#footer p {
+    margin:0;
+}</code></pre>
+    <p>One thing to take note of here is that when we added padding to <code>#main</code>
+      and <code>#sidebar</code>, we subtracted the width of the left and right
+      paddings from each element’s <code>width</code>. This is how the CSS box
+      model works – for more details on that, see <a href="http://www.456bereastreet.com/archive/200612/internet_explorer_and_the_css_box_model/">Internet
+        Explorer and the CSS box model</a>.</p>
+    <p>And the final thing is to compensate for a float bug in Internet Explorer
+      6. If you look at <a href="http://www.456bereastreet.com/lab/developing_with_web_standards/csslayout/2-col/step06.html">step
+        6</a> in IE 6, you’ll notice that the footer is not always being pushed
+      completely below <code>#main</code>. Scroll up and down a couple of times
+      if you can’t see it immediately.</p>
+    <p>It is very noticeable in this demo because every major element has a
+      different background colour and everything is really tight. One way of
+      fixing this problem is making sure the footer has an Internet Explorer
+      concept called <a href="http://msdnx.microsoft.com/en-us/library/bb250481.aspx"
+        title="HasLayout Overview">Layout</a>. There are several ways of
+      achieving this, but we’ll do it by using the <a href="http://css-discuss.incutio.com/?page=StarHtmlHack">Star
+        HTML</a> CSS hack to give the footer a height only in IE 6:</p>
+    <pre><code class="css">* html #footer {
+    height:1px;
+}</code></pre>
+    <p>As strange as it may look, this does the job. Thanks to another bug in
+      IE, the footer will not be just one pixel tall, but as tall as its content
+      dictates.</p>
+    <p>And we’re done. We have created a simple layout that can be used as a
+      starter for more advanced layouts.</p>
+    <p><a href="finished.html">View the final layout</a>.</p>
+    <p>Please don’t hesitate to <a href="http://www.456bereastreet.com/contact/">contact
+        me</a> if you can suggest improvements to this method.</p>
+    <p><br>
+    </p>
+    <p> </p>
+    <p> </p>
+  </body>
+</html>

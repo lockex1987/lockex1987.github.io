@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width">
+
+  
+  <title>The State of CSS Reflections | CSS-Tricks</title>
+
+  <link rel="apple-touch-icon" href="https://cdn.css-tricks.com/apple-touch-icon.png">
+  <meta name="msapplication-TileColor" content="#00aba9">
+  <meta name="msapplication-TileImage" content="https://cdn.css-tricks.com/mstile-144x144.png">
+
+  <meta property="fb:pages" content="124436167285">
+
+  <link rel="search" type="application/opensearchdescription+xml" href="https://cdn.css-tricks.com/opensearch.xml" title="CSS-Tricks Search">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://feeds.feedburner.com/CssTricks">
+
+  <!--[if !IE]><!-->
+  
+  <!--<![endif]-->
+  <!--[if lt IE 9]>
+  <link rel="stylesheet" href="https://cdn.css-tricks.com/wp-content/themes/CSS-Tricks-15/css/oldie.css">
+  <![endif]-->
+  <!--[if IE 9]>
+  <link rel="stylesheet" href="https://cdn.css-tricks.com/wp-content/themes/CSS-Tricks-15/style.css?v=5.7>
+  <![endif]-->
+
+  
+    
+  
+<!-- This site is optimized with the Yoast SEO plugin v4.0.2 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="I recently saw this loader on CodePen, a pure CSS 3D rotating set of bars with a fading reflection. It's done by using an element for each bar, then duplic">
+<meta name="robots" content="noodp">
+<link rel="canonical" href="https://css-tricks.com/state-css-reflections/">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The State of CSS Reflections | CSS-Tricks">
+<meta property="og:description" content="I recently saw this loader on CodePen, a pure CSS 3D rotating set of bars with a fading reflection. It's done by using an element for each bar, then duplic">
+<meta property="og:url" content="https://css-tricks.com/state-css-reflections/">
+<meta property="og:site_name" content="CSS-Tricks">
+<meta property="article:publisher" content="https://www.facebook.com/CSSTricks">
+<meta property="article:tag" content="loader">
+<meta property="article:tag" content="reflection">
+<meta property="article:tag" content="SVG">
+<meta property="article:section" content="Article">
+<meta property="article:published_time" content="2016-07-29T10:24:25+00:00">
+<meta property="article:modified_time" content="2016-07-30T22:04:22+00:00">
+<meta property="og:updated_time" content="2016-07-30T22:04:22+00:00">
+<meta property="og:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/07/original.gif">
+<meta property="og:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_box_sh_vs_outline.png">
+<meta property="og:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_2.1.2.png">
+<meta property="og:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_2.1.3.png">
+<meta property="og:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_via_scale.gif">
+<meta property="og:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_2.2.2.png">
+<meta property="og:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_2.2.4.png">
+<meta property="og:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_3.1.gif">
+<meta property="og:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_3.2.1.gif">
+<meta property="og:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_3.2.2a.gif">
+<meta property="og:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_3.2.2b.gif">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:description" content="I recently saw this loader on CodePen, a pure CSS 3D rotating set of bars with a fading reflection. It's done by using an element for each bar, then duplic">
+<meta name="twitter:title" content="The State of CSS Reflections | CSS-Tricks">
+<meta name="twitter:site" content="@Real_CSS_Tricks">
+<meta name="twitter:image" content="https://cdn.css-tricks.com/wp-content/uploads/2016/07/original.gif">
+<meta name="twitter:creator" content="@Real_CSS_Tricks">
+<!-- / Yoast SEO plugin. -->
+
+<link rel="alternate" type="application/rss+xml" title="CSS-Tricks » The State of CSS&nbsp;Reflections Comments Feed" href="https://css-tricks.com/state-css-reflections/feed/">
+
+<link rel="https://api.w.org/" href="https://css-tricks.com/wp-json/">
+<link rel="shortlink" href="https://css-tricks.com/?p=244009">
+<link rel="alternate" type="application/json+oembed" href="https://css-tricks.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fcss-tricks.com%2Fstate-css-reflections%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://css-tricks.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fcss-tricks.com%2Fstate-css-reflections%2F&amp;format=xml">
+<!-- Better Art Direction Styles -->
+
+
+
+<link rel="dns-prefetch" href="https://v0.wordpress.com/">
+<link rel="dns-prefetch" href="https://jetpack.wordpress.com/">
+<link rel="dns-prefetch" href="https://s0.wp.com/">
+<link rel="dns-prefetch" href="https://s1.wp.com/">
+<link rel="dns-prefetch" href="https://s2.wp.com/">
+<link rel="dns-prefetch" href="https://public-api.wordpress.com/">
+<link rel="dns-prefetch" href="https://0.gravatar.com/">
+<link rel="dns-prefetch" href="https://1.gravatar.com/">
+<link rel="dns-prefetch" href="https://2.gravatar.com/">
+<link rel="amphtml" href="https://css-tricks.com/state-css-reflections/amp/">
+
+<link media="all" href="index.css" type="text/css" rel="stylesheet">
+</head>
+<body class="post-template-default single single-post postid-244009 single-format-standard">
+
+  
+
+  <nav class="main-nav" id="main-nav">
+
+  <ul>
+    <li class="home">
+      <a href="https://css-tricks.com/">
+        Home
+      </a>
+    </li>
+    <li class="videos">
+      <a href="https://css-tricks.com/video-screencasts/">
+        Videos
+      </a>
+    </li>
+    <li class="almanac">
+      <a href="https://css-tricks.com/almanac/">
+        Almanac
+      </a>
+    </li>
+    <li class="snippets">
+      <a href="https://css-tricks.com/snippets/">
+        Snippets
+      </a>
+    </li>
+    <li class="forums">
+      <a href="https://css-tricks.com/forums/">
+        Forums
+      </a>
+    </li>
+    <li class="shop">
+      <a href="https://css-tricks.com/shop/">
+        Shop
+      </a>
+    </li>
+    <li class="newsletter">
+      <a href="https://css-tricks.com/newsletters/">
+        Newsletter
+      </a>
+    </li>
+    <li class="jobs">
+      <a href="https://css-tricks.com/jobs/">
+        Jobs
+      </a>
+    </li>
+  </ul>
+
+  <div class="user-account-area">
+
+    <img alt="" src="untitled" srcset="https://secure.gravatar.com/avatar/?s=92&amp;d=mm&amp;r=pg 2x" class="avatar avatar-46 photo avatar-default" width="46" height="46">
+    <ul class="user-dropdown">
+
+      
+      <li>
+        <a href="https://css-tricks.com/wp-login.php">Log In</a>
+      </li>
+      <li>
+        <a href="https://css-tricks.com/wp-login.php?action=register">Sign Up</a>
+      </li>
+
+      
+    </ul>
+
+  </div>
+
+</nav>
+<header class="site-header">
+
+  <svg viewBox="0 0 1000 200" preserveAspectRatio="none" class="site-header-background">
+    <defs>
+      <linearGradient id="header-gradient" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#FBDA61"></stop>
+        <stop offset="100%" stop-color="#F76B1C"></stop>
+      </linearGradient>
+    </defs>
+    <path class="jagged-top" id="jagged-top" fill="url(#header-gradient)" d="M-4,-4 L1004,-4 L1004,90 L804,90 L604,90 L404,90 L204,90 L-4,90 L-4,90 L-4,-4 Z"></path>
+  </svg>
+
+  <div class="header-content">
+
+    <button id="mobile-menu-toggle" class="button button-header mobile-menu-toggle">
+      <svg class="icon-menu" width="26px" height="26px">
+        <use xlink:href="#icon-menu"></use>
+      </svg>
+    </button>
+
+    <button id="search-opener" class="button button-header search-opener-button">
+      <svg class="icon-search" width="26px" height="26px">
+        <use xlink:href="#icon-search"></use>
+      </svg>
+      <svg class="icon-close" width="26px" height="26px">
+        <use xlink:href="#icon-close"></use>
+      </svg>
+    </button>
+
+    <a href="https://css-tricks.com/" class="logo-link">
+      CSS-Tricks
+    </a>
+
+    <section class="search" role="search" id="search-area">
+
+      <form id="search-form" class="search-form" action="https://css-tricks.com/search-results/">
+
+        <div class="flexy-search">
+
+          <label for="q" id="search-label" class="screen-reader">
+            Search
+          </label>
+
+          <input aria-labelledby="search-label" id="q" required="" name="q" class="search-field" value="" type="search">
+
+          <button type="sumbit" class="button button-header search-button">
+            <svg class="icon-search" width="26px" height="26px">
+              <use xlink:href="#icon-search"></use>
+            </svg>
+          </button>
+
+        </div>
+
+      </form>
+
+    </section>
+
+  </div>
+
+</header>
+
+<header class="mega-header">
+
+  <h1 class="p-name">
+    The State of CSS&nbsp;Reflections  </h1>
+
+  <p class="author-byline">
+    <span class="author-byline-inside">
+      By
+      <a href="https://css-tricks.com/author/thebabydino/">
+                <span class="p-author">
+          Ana Tudor        </span>
+      </a>
+      <span class="slashes">On</span>
+      <time datetime="2016-07-29" class="dt-published">
+        July 29, 2016      </time>
+    </span>
+  </p>
+
+  <svg viewBox="0 0 1000 200" preserveAspectRatio="none" class="article-header-background">
+  <defs>
+    <linearGradient id="article-gradient" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF1BA"></stop>
+      <stop offset="100%" stop-color="white"></stop>
+    </linearGradient>
+  </defs>
+  <path class="jagged-top-of-article" id="jagged-top-of-article" fill="url(#article-gradient)" d="M1004,90 L800,90 L600,90 L400,90 L200,90 L100,90 L-4,90 L-4,200 L1004,200 L1004,100 Z"></path>
+</svg>
+</header>
+
+<div class="page-wrap page-wrap-article">
+
+  <div class="main-and-sidebar-wrap">
+
+    <main class="main-col">
+
+      <div class="module-main">
+
+        <article id="post-244009" role="main" class="instapaper_body h-entry e-content">
+
+          <p>I recently <a href="http://codepen.io/TheDutchCoder/pen/IKqpA/">saw this loader</a> on CodePen, a pure CSS 3D rotating set of bars with a fading reflection. It's done by using an element for each bar, then duplicating each and every one of these elements to create the reflection and finally adding a gradient cover to create the fading effect. Which sounds a bit like scratching behind your right ear with the toes of your left foot! Not to mention the gradient cover method for the fading effect doesn't work with non-flat-color backgrounds. Isn't there a better way to do this with CSS?</p>
+<figure id="post-244048" class="align-none media-244048"><img sizes="(max-width: 480px) 100vw, 480px" src="original.gif" alt=""></figure>
+<p>The answer is: "yes" and "no". <span id="more-244009"></span> "Yes", there are things that really could work and "no", they aren't really there yet. Sadly, while the code can be compacted a bit using a preprocessor (not much outside what can get generated in a loop though), the method of duplicating all bars for the reflection and using a gradient cover for the fading effect is still the best way of doing this if we don't want to use canvas and we want the result to work across the current versions of all main browsers.</p>
+<p>This article is going to explore the options we have today for creating the reflection, illustrate the "almost" solutions, how cross-browser issues cause pain and, finally, discuss my thoughts on what should be done.</p>
+<h3>Basic setup for the demo</h3>
+<p>Before we get to reflections, let's see how we create, position and shade the bars as this part is common for all browsers.</p>
+<h4>Creating the bars</h4>
+<p>First of all, we create a wrapper <code>.loader</code> element with 10 <code>.bar</code> elements in it.</p>
+<pre rel="HTML"><code class="language-markup">&lt;div class='loader'&gt;
+  &lt;div class='bar'&gt;&lt;/div&gt;
+  &lt;!-- repeat to create 9 more bars --&gt;
+&lt;/div&gt;</code></pre>
+<p>Writing the same thing multiple times is a pain, so it's easier to use a preprocessor in such situations. We're using Haml here, but any other one will do.</p>
+<pre rel="Haml"><code class="language-markup">.loader
+  - 10.times do
+  .bar</code></pre>
+<p>We position all these elements absolutely starting from the middle of the viewport. In most cases, we use <code>top: 50%</code>, but, in this case, it will be more convenient later if we use <code>bottom: 50%</code>:</p>
+<pre rel="CSS"><code class="language-css">div {
+  position: absolute;
+  bottom: 50%; left: 50%;
+}</code></pre>
+<p>We decide on a <code>width</code> and a <code>height</code> for the bars and we give them a <code>background</code> just so that we can see them:</p>
+<pre rel="SCSS" class="language-scss"><code class="language-scss">$bar-w: 1.25em;
+$bar-h: 5 * $bar-w;
+
+.bar {
+  width: $bar-w; height: $bar-h;
+  background: currentColor;
+}</code></pre>
+<p>We want the bottom edge of the bars to coincide with the middle line of the viewport (separating the viewport into two equal parts) and we already have that as we've used <code>bottom: 50%</code>.</p>
+<p>At this point, our bars are all stacked one on top of the other, their left edge being on the vertical line splitting the viewport into two equal halves (left and right) and their bottom edge being on the horizontal line splitting the viewport into two equal halves (top and bottom).</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_f056c003ebd630f2a79caada0b9d4cb5" src="index_1.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 29" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><h3>Positioning the bars</h3>
+<p>We need to position them such that the left edge of the first (leftmost) one and the right edge of the last (rightmost) one are at equal distance from the vertical line dividing the viewport into two equal halves. This distance is always half the number of bars (<code>$n</code>) times the bar <code>width</code> (<code>$bar-w</code>). The original demo uses vanilla CSS, but we're going with Sass now to reduce the amount of code.</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_712f670bd911acc9a96d53f519aa7748" src="index_2.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 28" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>This means that, <em>starting from the position that all the bars are in now</em>, we need to shift the first bar to the left by <code>.5 * $n * $bar-w</code>. The left is the negative direction of the <code>x</code> axis, which means we need a <code>-</code> (minus) in front of it. So the <code>margin-left</code> value for the first bar is <code>-.5 * $n * $bar-w</code>. </p>
+<p>The second bar (of <code>0</code>-based index <code>1</code>) is <code>1</code> bar width (<code>$bar-w</code>) to the right (in the positive direction of the <code>x</code> axis). So the <code>margin-left</code> value for this bar is <code>-.5 * $n * $bar-w + $bar-w</code>.</p>
+<p>The third bar (of <code>0</code>-based index <code>2</code>) is <code>2</code> bar widths to the right (in the positive direction of the <code>x</code> axis). So the <code>margin-left</code> value for this bar is <code>-.5 * $n * $bar-w + 2 * $bar-w</code>.</p>
+<p>The last bar (of <code>0</code>-based index <code>$n - 1</code>) is <code>$n - 1</code> bar widths to the right (in the positive direction of the <code>x</code> axis). So the <code>margin-left</code> value for this bar is <code>-.5 * $n * $bar-w + ($n - 1) * $bar-w</code>.</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_45074d661ff151ce03e6ede3bd440676" src="index_3.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 27" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>In general, if we consider <code>$i</code> to be the <code>0</code>-based index of the current bar, then the <code>margin-left</code> value for this <code>$i</code>-th bar is <code>-.5 * $n * $bar-w + $i * $bar-w</code>, which can be compacted as <code>($i - .5 * $n) * $bar-w</code>.</p>
+<p>This allows us to position the bars with a Sass loop:</p>
+<pre rel="SCSS" class="language-scss"><code class="language-scss">$n: 10;
+
+@for $i from 0 to $n {
+  .bar:nth-child(#{$i + 1}) {
+  margin-left: ($i - .5 * $n) * $bar-w;
+  }
+}</code></pre>
+<p>We also give them a <code>box-shadow</code> so we can see where a bar ends and the next one begins:</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_ce7cc9a75e13fc7683599e39138ab334" src="index_5.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 26" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><h4>Shading the bars</h4>
+<p>The backgrounds of the bars go from a dark blue (<code>#1e3f57</code>) for the leftmost bar to a light blue (<code>#63a6c1</code>) for the rightmost one. This sounds like a job for <a href="http://sass-lang.com/documentation/Sass/Script/Functions.html#mix-instance_method">the Sass <code>mix()</code> function</a>! The first argument would be the light blue, the second one the dark blue and the third one (called the relative weight) the amount (in <code>%</code>) of the light blue to be included in the resulting mix.</p>
+<p>For the first bar, this amount would be <code>0%</code> - <code>0%</code> of the light blue in the result, so this result would be just the dark blue.</p>
+<p>For the last bar, the amount would be <code>100%</code> - <code>100%</code> of the light blue in the final result (which also means <code>0%</code> of the darker shade), which would make the background light blue.</p>
+<p>For the rest of the bars, we need intermediate values distributed evenly. If we have <code>$n</code> bars, the first bar is at <code>0%</code> and the last one at <code>100%</code>, then we need to split the interval between them into <code>$n - 1</code> equal intervals.</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_qNKWay" src="index_7.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 25" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>In general, the relative weight for the bar of index <code>$i</code> is <code>$i * 100% / ($n - 1)</code>, which means we need to add the following code:</p>
+<pre rel="SCSS" class="language-scss"><code class="language-scss">$c: #63a6c1 #1e3f57; // 1st = light 2nd = dark
+
+@for $i from 0 to $n {
+  // list of mix() arguments for current bar
+  $args: append($c, $i * 100% / ($n - 1));
+
+  .bar:nth-child(#{$i + 1}) {
+  background: mix($args...);
+  }
+}</code></pre>
+<p>Now the bars look like in the original demo:</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_24ee9933e6f4dfff244d664fd2334655" src="index_9.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 24" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><h3>Exploring the options for the reflection</h3>
+<h4>WebKit browsers: <code>-webkit-box-reflect</code></h4>
+<p>Oh, no, a non-standard property! I don't know why it didn't become a standard. I hadn't even heard of CSS when this first landed in Safari. But, for WebKit browsers, it does the job and it does it well! A lot of work went into it. It's easy to use and it doesn't break anything in non-supporting browsers, it just doesn't display a reflection.</p>
+<p>Let's see how this works. The value it takes has three parts:</p>
+<ul>
+<li>a <strong>direction</strong>, which can be any of the <code>below</code>, <code>left</code>, <code>above</code>, <code>right</code> keywords</li>
+<li>an optional <strong>offset</strong>, which specifies how far from the edge of the element the reflection should start (this is a CSS length value)</li>
+<li>an optional image <strong>mask</strong> (which can be a CSS gradient)</li>
+</ul>
+<p>The following interactive demo illustrates this (click the direction, offset, gradient angle, stop alphas and offsets to change them):</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_BzWwrz" src="index_11.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 23" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p><em>Note that the <code>linear-gradient()</code> could have more stops or it could be replaced by a <code>radial-gradient()</code>.</em></p>
+<p>In our case, the first thing that springs to mind is to add this on the <code>.loader</code> element:</p>
+<pre rel="SCSS" class="language-scss"><code class="language-scss">.loader {
+  -webkit-box-reflect: below 0 linear-gradient(rgba(#fff), rgba(#fff, .7));
+}</code></pre>
+<p>However, if we test this in a WebKit browser, we don't see any reflection!</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_89d33cc4fa780182545300ee7988c58b" src="index_13.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 22" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>What is happening here? We have positioned all our elements absolutely and we haven't set any explicit dimensions on our <code>.loader</code> element which contains the bars. This makes it a <code>0x0</code> element - zero <code>width</code>, zero <code>height</code>.</p>
+<p>So let's give it some explicit dimensions, a <code>height</code> equal to that of the bars (<code>$bar-h</code>) and a <code>width</code> big enough to contain all the bars (<code>$n * $bar-w</code>). We also temporarily give it a <code>box-shadow</code> just so we can see its boundaries clearly:</p>
+<pre rel="SCSS" class="language-scss"><code class="language-scss">$loader-w: $n * $bar-w;
+
+.loader {
+  width: $loader-w; height: $bar-h;
+  box-shadow: 0 0 0 1px red;
+}</code></pre>
+<p>I prefer <code>box-shadow</code> over <code>outline</code> when highlighting the boundaries of an element as <a href="http://codepen.io/thebabydino/pen/yJzPog"><code>outline</code> is inconsistent across browsers when children overflow their parents</a>.</p>
+<figure id="post-244011" class="align-none media-244011"><img sizes="(max-width: 660px) 100vw, 660px" srcset="https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_box_sh_vs_outline.png 660w, https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_box_sh_vs_outline-300x250.png 300w" src="art_refl_box_sh_vs_outline.png" alt=""><p></p>
+<figcaption>How box-shadow and outline behave in WebKit browsers and Edge (top) vs. Firefox (bottom) - outline gives different results when children overflow</figcaption>
+</figure>
+<p>The result of adding the above code can be seen live in WebKit browsers in the following Pen:</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_a5962276e4faa6c91acdceaf48411aa2" src="index_15.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 21" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>If you're not on a WebKit browser, here's what it looks like:</p>
+<figure id="post-244012" class="align-none media-244012"><img sizes="(max-width: 450px) 100vw, 450px" srcset="https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_2.1.2.png 450w, https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_2.1.2-300x213.png 300w" src="art_refl_2.1.2.png" alt=""><p></p>
+<figcaption>screenshot of the result in Chrome after explicitly sizing the <code>.loader</code> element</figcaption>
+</figure>
+<p>We can see the loader boundaries and we can see some reflection now, but things aren't positioned correctly anymore. We want the loader to be dead in the middle horizontally, so we shift it to the left by half its <code>width</code>. We also want the bottom of the bars to coincide with the bottom of their parent, so we set <code>bottom: 0</code> on them:</p>
+<pre rel="SCSS" class="language-scss"><code class="language-scss">.loader { margin-left: -.5 * $loader-w; }
+
+.bar { bottom: 0; }</code></pre>
+<p>This fixes the positioning issue. Here's what it looks like now:</p>
+<figure id="post-244013" class="align-none media-244013"><img sizes="(max-width: 340px) 100vw, 340px" srcset="https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_2.1.3.png 340w, https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_2.1.3-300x282.png 300w" src="art_refl_2.1.3.png" alt=""></figure>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_8da384c6046b5548780e4a1a890e4bdd" src="index_17.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 20" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><h4>Firefox: <code>element()</code> + <code>mask</code></h4>
+<h5>Creating the reflection with <code>element()</code></h5>
+<p>The <code>element()</code> function (still <a href="https://drafts.csswg.org/css-images-4/#element-notation">in the works</a>, so far only implemented by Firefox with the <code>-moz-</code> prefix) gives us an image value that we should be able to use anywhere an actual image can be used (works for <code>background</code>, for <code>border-image</code>, but doesn't seem to work <a href="http://codepen.io/thebabydino/pen/KrXQqL?editors=1100#0">as a value for pseudo <code>content</code></a> - see bug <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1285811">1285811</a>). It takes one argument which is the <code>id</code> selector of the element we want to see displayed as a <code>background</code> or a <code>border-image</code>. This allows us to do evil things like using images of controls as backgrounds. But it can also come in handy if we want to get an element reflected in Firefox.</p>
+<p>One very important thing to know about the <code>element()</code> function is that it's not recursive - we cannot create fractals by using elements as their own backgrounds. This makes it safe to use on a loader pseudo for creating the reflection so we don't need to use an extra element.</p>
+<p>Alright, let's see how we do this. First of all, we give our loader element an <code>id</code> (let's say the obvious <code>loader</code>). Moving on to the styling, we start from the exact same CSS we have in the final demo for the WebKit case. Then we add an <code>::after</code> pseudo on the loader, absolutely positioned and covering it fully.</p>
+<pre rel="CSS"><code class="language-css">.loader::after {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  box-shadow: 0 0 0 2px currentColor;
+  color: crimson;
+  content: 'REFLECTION';
+}</code></pre>
+<p>We've also set a few more temporary styles just so we can have a clear idea of this pseudo's boundaries and orientation as in the final form, we want it to be upside down:</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_392fc3dd59fa1d57ea0ea0bc80965f39" src="index_19.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 19" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>Now we need to reflect our <code>::after</code> pseudo against its bottom edge. In order to do this, we use a <code>scaleY()</code> transform with a properly chosen <code>transform-origin</code>. The following interactive demo illustrates how directional scaling works for various scale factors and transform origins:</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_yJzkJA" src="index_21.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 18" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>Note that the values for the scale factors and the <code>transform-origin</code> can go beyond the limits imposed by this demo.</p>
+<p>In our case, we need a <code>scaleY(-1)</code> and a <code>transform-origin</code> on the line of the bottom edge of the <code>::after</code> pseudo:</p>
+<figure id="post-244014" class="align-none media-244014"><img sizes="(max-width: 400px) 100vw, 400px" src="art_refl_via_scale.gif" alt=""><p></p>
+<figcaption>reflect an element down using a <code>scaleY(-1)</code> transform with an appropriate <code>transform-origin</code></figcaption>
+</figure>
+<p>We add this to the code and we set the <code>#loader</code> as the background of its <code>::after</code> pseudo using the <code>element()</code> function (with a prefix because that's the only way it's supported for now).</p>
+<pre rel="CSS"><code class="language-css">.loader::after {
+  transform-origin: 0 100%;
+  transform: scaleY(-1);
+  background: -moz-element(#loader);
+}</code></pre>
+<p>Note that we use <code>.loader</code> for the selector for specificity reasons and <code>#loader</code> as the argument of the <code>element()</code> function as that needs to be an <code>id</code> selector.</p>
+<p>The result of adding the above code can be seen in the following Pen (Firefox-only):</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_cfd107a5b6cf0a1508d411e59dce8630" src="index_23.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 17" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>For everyone reading this on other browsers, here's a screenshot of what it looks like:</p>
+<figure id="post-244015" class="align-none media-244015"><img sizes="(max-width: 340px) 100vw, 340px" srcset="https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_2.2.2.png 340w, https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_2.2.2-300x282.png 300w" src="art_refl_2.2.2.png" alt=""><p></p>
+<figcaption>result of the reflection using the <code>element()</code> function in Firefox</figcaption>
+</figure>
+<h5>Fading the reflection with <code>mask</code></h5>
+<p>We fade the reflection the same way we did in the WebKit case: using a mask. In that case, the mask was a component of the <code>-webkit-box-reflect</code> value. In this case, we're talking about the CSS <code>mask</code> property which takes an SVG reference for a value:</p>
+<pre rel="CSS"><code class="language-css">mask: url(#fader);</code></pre>
+<p>Our <code>#fader</code> element is an SVG <code>mask</code> element containing a rectangle.</p>
+<pre rel="SVG"><code class="language-markup">&lt;svg&gt;
+  &lt;mask id='fader' maskContentUnits='objectBoundingBox'&gt;
+    &lt;rect width='1' height='1'/&gt;
+  &lt;/mask&gt;
+&lt;/svg&gt;</code></pre>
+<p>We can compact this a bit with Haml:</p>
+<pre rel="Haml"><code class="language-markup">%svg
+  %mask#fader(maskContentUnits='objectBoundingBox')
+    %rect(width='1' height='1')</code></pre>
+<p>However, if we actually add the above to our code, our reflection disappears - this can be tested by viewing the following demo in Firefox:</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_25248bfa431c5e56fb3e37fb506c0866" src="index_25.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 16" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>This is because, by default, SVG shapes have a solid black <code>fill</code>, completely opaque and, at the same time, our mask is <a href="http://tympanus.net/codrops/css_reference/mask-mode/">a luminance mask</a> by default. So what we need to do in order to make the reflection fade is give the rectangle a <code>fill</code> that's a reference to an SVG <code>linearGradient</code>.</p>
+<pre rel="Haml"><code class="language-markup">%rect(width='1' height='1' fill='url(#grad)')</code></pre>
+<p>An SVG <code>linearGradient</code> is defined between two points specified by the <code>x1</code>, <code>y1</code>, <code>x2</code> and <code>y2</code> attributes. <code>x1</code> and <code>y1</code> are the coordinates of the start point (<code>0%</code>) of the gradient line, while <code>x2</code> and <code>y2</code> are the coordinates of the end point (<code>100%</code>) of this line. If these are missing, they are taken to be <code>0%</code>, <code>0%</code>, <code>100%</code> and <code>0%</code> respectively. These values describe the line from the top left (<code>0% 0%</code>) to the top right (<code>100% 0%</code>) of the element on which is applied (since the default value for <code>gradientUnits</code> is <code>objectBoundingBox</code>), meaning that, by default, the gradient goes from left to right.</p>
+<p>But in our case, we want the gradient to go from <code>top</code> to <code>bottom</code>, so we change the value for <code>x2</code> from <code>100%</code> to <code>0%</code> and the value for <code>y2</code> from <code>0%</code> to <code>100%</code>. This makes the gradient vector go from the top left corner (<code>0% 0%</code>) to the bottom left (<code>0% 100%</code>) corner of the element on which it's applied.</p>
+<pre rel="Haml"><code class="language-markup">%linearGradient#grad(x2='0%' y2='100%')</code></pre>
+<p>Inside the <code>linearGradient</code> element, we have at least two <code>stop</code> elements. These have three specific attributes: <code>offset</code>, <code>stop-color</code> and <code>stop-opacity</code>.</p>
+<ol>
+<li><code>offset</code> can take a <code>%</code> value, usually between <code>0%</code> and <code>100%</code>, just like in the case of CSS gradients. It can also take a number value, usually between <code>0</code> and <code>1</code>.</li>
+<li><code>stop-color</code> can take a keyword, <code>hex</code>, <code>rgb()</code>, <code>rgba()</code>, <code>hsl()</code> or <code>hsla()</code> value. In theory. In practice, <a href="https://codepen.io/AmeliaBR/details/jrBOBv">Safari doesn't support semitransparent values</a>, so if we want semitransparency in our gradients, we should rely on the third attribute...</li>
+<li><code>stop-opacity</code>. This takes a value between <code>0</code> (fully transparent) and <code>1</code> (fully opaque).</li>
+</ol>
+<p>We need to keep in mind that the loader pseudo on which we're applying the gradient mask has been reflected down via a <code>scaleY(-1)</code> transform. This means that the bottom of our gradient mask is visually up. So our gradient needs to go from completely transparent at the top (visually down) to an alpha of <code>.7</code> at the bottom (visually up).</p>
+<p>Since our gradient goes from top to bottom, the first stop is the fully transparent one.</p>
+<pre rel="Haml"><code class="language-markup">%linearGradient#grad(x2='0%' y2='100%')
+  %stop(offset='0' stop-color='#fff' stop-opacity='0')
+  %stop(offset='1' stop-color='#fff' stop-opacity='.7')</code></pre>
+<p>Adding the linear gradient gives us the result we wanted in Firefox as well:</p>
+<figure id="post-244016" class="align-none media-244016"><img sizes="(max-width: 340px) 100vw, 340px" srcset="https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_2.2.4.png 340w, https://cdn.css-tricks.com/wp-content/uploads/2016/07/art_refl_2.2.4-300x282.png 300w" src="art_refl_2.2.4.png" alt=""></figure>
+<p>This Pen shows it live:</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_f3c942a122897f329f3846a2385e5948" src="index_27.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 15" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><h3>The SVG gradient problem</h3>
+<p>In our case, things are pretty simple because our masking gradient is vertical. But what about gradients that aren't vertical, or horizontal or don't go from one corner to the other? What if we want to have a gradient at a certain angle?</p>
+<p>Well, SVG gradients also have an attribute called <code>gradientTransform</code> that can rotate the gradient line defined by the <code>x1</code>, <code>y1</code>, <code>x2</code> and <code>y2</code> attributes. One might think that's an easy way to reproduce CSS gradients at an angle. But... it's not that simple!</p>
+<p>Let's consider the case of a gradient from gold to crimson. To make things clearer, we give it a sharp transition between the two at <code>50%</code>. Initially, we take the angle of the CSS version of this gradient to be <code>0deg</code>. This means that the gradient goes from <code>0%</code> at the bottom (gold) to <code>100%</code> at the top (crimson). The CSS to create this gradient would be:</p>
+<pre rel="CSS"><code class="language-css">background-image: 
+  linear-gradient(0deg, #e18728 50%, #d14730 0);</code></pre>
+<p>If there are things you don't understand about how CSS linear gradients work, you can check out <a href="https://medium.com/@patrickbrosset/do-you-really-understand-css-linear-gradients-631d9a895caf#.3d41n85zh">this excellent piece</a> by <a href="https://twitter.com/patrickbrosset">Patrick Brosset</a>.</p>
+<p>The result can be seen in the Pen below:</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_rLvdyQ" src="index_29.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 14" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>To reproduce this with SVG, we create a gradient where <code>y1</code> is <code>100%</code>, <code>y2</code> is <code>0%</code> and <code>x1</code> and <code>x2</code> have the same value (we take it 0 for simplicity). This means the gradient line goes up vertically from the bottom to the top. We also set both stop offsets at <code>50%</code>.</p>
+<pre rel="Jade"><code class="language-markup">linearGradient#g(y1='100%' x2='0%' y2='0%'
+                 gradientTransform='rotate(0 .5 .5)')
+  stop(offset='50%' stop-color='#e18728')
+  stop(offset='50%' stop-color='#d14730')</code></pre>
+<p class="explanation">Editor's note: I asked Ana why the switch to Jade here, and she says: I used Haml initially because I could avoid introducing a loop variable that I wasn't using anywhere anyway. Later used Jade because it allows variables and computations.</p>
+<p>This gradient is not yet rotated, so the value for its <code>gradientTransform</code> attribute is <code>rotate(0 .5 .5)</code> at this point. The second two values specify the coordinates of the point the gradient is rotated around, relative to the element that the gradient is applied on. <code>0 0</code> means the top left corner, <code>1 1</code> the bottom right corner and <code>.5 .5</code> is exactly in the middle. This can be seen live in the following Pen:</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_YWLaxG" src="index_31.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 13" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>If we want our gradient to go from left to right, then, in the case of the CSS gradient, we change the angle from <code>0deg</code> to <code>90deg</code>:</p>
+<pre rel="CSS"><code class="language-css">background-image: 
+  linear-gradient(90deg, #e18728 50%, #d14730 0);</code></pre>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_pbVLXm" src="index_33.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 12" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>To get the same result with the SVG gradient, we change the value of the <code>gradientTransform</code> to <code>rotate(90 .5 .5)</code>:</p>
+<pre rel="Jade"><code class="language-markup">linearGradient#g(y1='100%' x2='0%' y2='0%'
+                 gradientTransform='rotate(90 .5 .5)')
+  // same stops as before</code></pre>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_QEAmZY" src="index_35.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 11" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>So far, so good. It doesn't seem that much of a pain to replicate a CSS gradient with SVG. But let's try other angles as well. In the interactive demo below, we have a CSS gradient on the left and the SVG version on the right. The purple line is the gradient line and it should be perpendicular onto the sharp separation line between the gold and the crimson. Dragging the slider changes the gradient angle for both the CSS and the SVG case. And we can see that something's wrong for values that are not multiples of <code>90deg</code>.</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_pbVdPx" src="index_37.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 10" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>As the demo above shows, for values  are not multiples of <code>90deg</code>, we don't get the same result. We would get the same result if the elements we set the gradients on were square. This means that we can set the gradient on a larger square element, which we then clip to our actual element. But having to do all this makes the method of creating fading reflections with <code>element()</code> and <code>mask</code> more complicated.</p>
+<h4>Edge: going all SVG?</h4>
+<p>Sadly, neither of the methods presented above works in Edge. So our only solution that would also work in Edge and wouldn't involve manually duplicating each and every bar would be to just drop everything we have so far and recreate the loader with SVG. This has the advantage of being a crossbrowser method.</p>
+<p>Basically, what we do is we create an SVG element with a <code>viewBox</code> such that its <code>0 0</code> point is dead in the middle. We define a bar that has its bottom edge on the <code>x</code> axis and its left edge on the <code>y</code> axis. We then clone (via the SVG <code>use</code> element) this bar as many times as necessary inside a <code>#loader</code> group. We handle the positioning of these clones the same way we did before.</p>
+<pre rel="Jade"><code class="language-markup">- var bar_w = 125, bar_h = 5 * bar_w;
+- var n = 10;
+- var vb_w = n * bar_w;
+- var vb_h = 2 * bar_h;
+- var vb_x = -.5 * vb_w, vb_y = -.5 * vb_h;
+
+svg(viewBox=[vb_x, vb_y, vb_w, vb_h].join(' '))
+  defs
+    rect#bar(y=-bar_h width=bar_w height=bar_h)
+
+  g#loader
+    - for(var i = 0; i &lt; n; i++) {
+      - var x = (i - .5 * n) * bar_w;
+      use(xlink:href='#bar' x=x)
+    - }</code></pre>
+<p>The result of the above code can be seen in the following Pen:</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_661886afcd183c0acae6370c30cf6d7b" src="index_39.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 9" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>Now that we have created these bars, we want to position the <code>svg</code> element nicely and we do that using flexbox. We also want to shade the bars the same way we did before. We do all this from the SCSS:</p>
+<pre rel="SCSS" class="language-scss"><code class="language-scss">$n: 10;
+$c: #63a6c1 #1e3f57;
+$bar-w: 1.25em;
+$bar-h: 5 * $bar-w;
+$loader-w: $n * $bar-w;
+$loader-h: 2 * $bar-h;
+
+body {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  height: 100vh;
+}
+
+svg {
+  align-self: center;
+  width: $loader-w; height: $loader-h;
+}
+
+@for $i from 0 to $n {
+  $args: append($c, $i * 100%/($n - 1));
+
+  [id='loader'] use:nth-child(#{$i + 1}) {
+    fill: mix($args...);
+  }
+}</code></pre>
+<p>This Pen shows the result of adding the above code:</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_e28a7b9ca1c1919df389afb313073db2" src="index_41.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 8" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>We clone our <code>#loader</code> group (again, with a <code>use</code> element). We reflect this clone with a <code>scale(1 -1)</code> function and we apply a mask on it, the same way we did this earlier for the pseudo-element. By default, <a href="https://css-tricks.com/transforms-on-svg-elements/#article-header-id-3">SVG elements are scaled with respect to the <code>0, 0</code> point of the SVG canvas</a>, which in this case is located on the bottom edge of our loader which is perfect for reflecting the loader clone down, we don't need to set a <code>transform-origin</code>.</p>
+<pre rel="Jade / SVG"><code class="language-markup">use(xlink:href='#loader' transform='scale(1 -1)')</code></pre>
+<p>We're using the <code>transform</code> attribute instead of a CSS transform as CSS transforms aren't supported in Edge - if you want them, please <a href="https://wpdev.uservoice.com/forums/257854-microsoft-edge-developer/suggestions/6820655-add-css-transforms-on-svg-elements">vote for support</a>!</p>
+<p>We now have a reflection, as it can be seen in the following Pen:</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_ca7191a0180cbf97badebc73c7a1b2c0" src="index_43.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 7" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>The last step is to fade our reflection with a <code>mask</code>. It's exactly the same method and the same code as before so we're not going to go through it again. The full code is in the final Pen for this method, which you can check out below:</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_af56f2b5c1eda24bbe14cf1805545648" src="index_45.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 6" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><h3>Animation</h3>
+<p>The CSS animation in the original pen is a pretty straightforward one, rotating the bars in 3D:</p>
+<pre rel="CSS"><code class="language-css">@keyframes bar {
+  0% {
+  transform: rotate(-.5turn) rotateX(-1turn);
+  }
+  75%, 100% { transform: none; }
+}</code></pre>
+<p>It's the same animation for all the bars:</p>
+<pre rel="CSS"><code class="language-css">animation: bar 3s cubic-bezier(.81, .04, .4, .7) infinite;</code></pre>
+<p>We only add a different delay for each within the bar loop:</p>
+<pre rel="SCSS" class="language-scss"><code class="language-scss">animation-delay: $i*50ms;</code></pre>
+<p>And since we're rotating the bars in 3D, we also add a <code>perspective</code> on the loader element.</p>
+<p>But this only works as intended in WebKit browsers using the <code>-webkit-box-reflect</code> method.</p>
+<figure id="post-244037" class="align-none media-244037"><img sizes="(max-width: 300px) 100vw, 300px" src="art_refl_3.1.gif" alt=""><p></p>
+<figcaption>recording of the final result using <code>-webkit-box-reflect</code> in Chrome</figcaption>
+</figure>
+<p>We've also added an image background just to show how that would look. The finished demo in this WebKit-only case is:</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_1e1bf93b508f407b22975393affbaab0" src="index_47.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 5" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>We can try to get it to work in Firefox as well. However, if we add the animation code to the version that also works in Firefox, things don't look quite right:</p>
+<figure id="post-244039" class="align-none media-244039"><img sizes="(max-width: 340px) 100vw, 340px" src="art_refl_3.2.1.gif" alt=""><p></p>
+<figcaption>recording of the initial animated version using <code>element()</code> and <code>mask</code> in Firefox</figcaption>
+</figure>
+<p>We have a few problems here, as it can be tested live in Firefox:</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_190f49e8ba99f4b38b2325ff85d3e300" src="index_49.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 4" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>The first issue is that the reflection gets cut off beyond the boundaries of the pseudo. We can fix this by increasing the loader element dimensions (and therefore, those of the pseudo as well):</p>
+<pre rel="SCSS" class="language-scss"><code class="language-scss">$loader-w: ($n + 1) * $bar-w + $bar-h;</code></pre>
+<p>But there is nothing we can do about the other two problems - the reflection not being updated smoothly as the bars are rotating in 3D and the presence of the <code>perspective</code> property causing the bars to disappear (see bug <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1282312">1282312</a>).</p>
+<div class="double-figure">
+<figure id="post-244040" class="align-none media-244040"><img sizes="(max-width: 340px) 100vw, 340px" src="art_refl_3.2.2a.gif" alt=""><p></p>
+<figcaption>recording of the animated version using element() and mask in Firefox (with perspective)</figcaption>
+</figure>
+<figure id="post-244041" class="align-none media-244041"><img sizes="(max-width: 340px) 100vw, 340px" src="art_refl_3.2.2b.gif" alt=""><p></p>
+<figcaption>recording of the animated version using element() and mask in Firefox (no perspective)</figcaption>
+</figure>
+</div>
+<p>Live test for Firefox (you can toggle the <code>perspective</code> on and off to see the difference):</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_5d7f08fbb89b2551c77402c8e28d9a40" src="index_51.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 3" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>What about the all SVG solution? Well, unfortunately, in the above set of keyframes we're animating CSS 3D transforms. CSS transforms are not yet supported in Edge for SVG elements, which is why we have relied on the <code>transform</code> attribute to create the reflection earlier. But the values of the <code>transform</code> attribute are strictly 2D and we cannot animate them without JavaScript anyway (some might think SMIL, but that's markup vomit, it has never been supported in Edge/ IE and now it has been deprecated in Chrome).</p>
+<p>So there is currently absolutely no way to recreate this kind of bar loader demo in a manner that both works across all browsers and doesn't duplicate each and every bar. All we can do is have two loader elements, each with the same number of bars:</p>
+<pre rel="Haml"><code>- 2.times do
+  .loader
+    - 10.times do 
+      .bar</code></pre>
+<p>The bars are styled the same way as before and we reflect the second loader element down with a <code>scale(-1)</code> transform:</p>
+<pre rel="CSS"><code class="language-css">.loader:nth-child(2) {
+  transform: scaleY(-1);
+}</code></pre>
+<p>We add the bar animation and we get the following result:</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_6818cecfb6effe8157233aac8c384a9b" src="index_53.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 2" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><p>Now we need to fade the reflection. Sadly, we cannot apply a <code>mask</code> on the second loader element as masking is cross-browser only in the case of SVG elements. Edge doesn't yet support masking of HTML elements, but you can <a href="https://wpdev.uservoice.com/forums/257854-microsoft-edge-developer/suggestions/6261341-css-masking">vote for it to be implemented</a>.</p>
+<p>The only thing we can do is use a gradient cover for the second loader (the reflected one). Note that this also means we cannot have an image background. A solid background or, in very limited cases, a gradient background will have to do. We create this cover from the <code>::after</code> pseudo-element of the second loader and we make it big enough to cover the bars even as they get rotated.</p>
+<pre rel="SCSS" class="language-scss"><code class="language-scss">$bgc: #eee;
+$cover-h: $bar-w + $bar-h;
+$cover-w: $n * $bar-w + $cover-h;
+
+html { background: $bgc; }
+
+.loader:nth-child(2)::after {
+  margin-left: -.5 * $cover-w;
+  width: $cover-w; height: $cover-h;
+  background: linear-gradient($bgc $bar-w, rgba($bgc, .3));
+  content: '';
+}</code></pre>
+<p>The result can be seen in the following Pen:</p>
+<div class="drag-wrap ui-resizable"><iframe id="cp_embed_cafe2b99204ca039466c2906de72380d" src="index_55.html" scrolling="no" allowtransparency="true" allowfullscreen="true" name="CodePen Embed" title="CodePen Embed 1" class="cp_embed_iframe " style="width: 100%; overflow: hidden;" height="500" frameborder="0"></iframe><div class="ui-resizable-handle ui-resizable-e" style="z-index: 90;"></div></div><h3>Final thoughts</h3>
+<p>We need a better cross-browser solution for this. I believe that reflecting an element shouldn't involve duplicating all its descendants like we needed to do for this bar loader. That we shouldn't need to switch to an SVG solution (which also comes with its own problems) just so that we can make the reflection fade and have an image <code>background</code> behind.</p>
+<p>Which is the better solution? <code>-webkit-box-reflect</code> or <code>element()</code> + <code>mask</code>? I don't know. I'd personally like to have them both available cross-browser.</p>
+<p>I used to be certain I didn't want an extra element for the reflection, though <a href="https://hacks.mozilla.org/2010/08/mozelement/#comment-4791">a <code>:reflection</code> pseudo-element</a> sounded reasonable. But now there's something I'd like better than not having an extra element. It's the freedom to create multiple reflections in different directions and transform these reflections in various ways, like rotating them in 3D or skewing them. Using the <code>element()</code> method allows for all this stuff, which is why I like it. Not to mention that using SVG for masking means we can apply more complex masks to these reflections and get cooler effects.</p>
+<p>On the other hand, with great power comes great responsibility. Maybe you can't afford to take the time to get familiar with all the intricacies behind the more powerful method. Sometimes you just want a simple method to get a simple result.</p>
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-244009" class="share-twitter sd-button no-icon" href="https://css-tricks.com/state-css-reflections/?share=twitter" target="_top" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-244009" class="share-facebook sd-button no-icon" href="https://css-tricks.com/state-css-reflections/?share=facebook" target="_top" title="Click to share on Facebook"><span>Facebook</span></a></li><li class="share-pocket"><a rel="nofollow" data-shared="" class="share-pocket sd-button no-icon" href="https://css-tricks.com/state-css-reflections/?share=pocket" target="_top" title="Click to share on Pocket"><span>Pocket</span></a></li><li class="share-end"></li></ul></div></div></div>
+          
+        </article>
+
+      </div>
+
+    </main>
+
+          <aside class="entry-unrelated sidebar sidebar-article">
+
+    <div class="module module-ad module-padded">
+    <div id="bsap_1279518" class="bsarocks bsap_3469a2a501a9e18091036aa0c89f9dcb"></div>
+  </div>
+
+  <div class="module module-ad wufoo-ad-6">
+
+  <a href="https://ad.doubleclick.net/ddm/clk/303181152;128762502;s" id="wufoo-ad-6">
+
+    <svg viewBox="0 0 612 412" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <g class="wufoo-logo">
+        <path id="w" d="M106,177.61L61.82,78.31l29.92-5.82,13.52,37.39c4.19,11.67,8.74,25.19,12.51,35.5l0.31-.06c-0.74-12-1-24.93-1.16-38l-0.81-39.54L145.87,62l14.28,38.84c4.16,11.52,7.62,21.89,11.29,33.34l0.31-.06C171,122.2,170.49,109.51,170,97L168.7,57.51,196.92,52l-5.37,108.93-30.38,5.91L146.3,127.5c-3.31-8.8-6.59-18.25-10.38-30.31l-0.31.06c0.7,12.67,1.21,22.65,1.16,32.27l0,42.09Z" stroke="#231f20" style="stroke-dasharray: none;"></path>
+        <path id="u" d="M231.82,81.64l-8.34,59.42c-2.23,15.87,1.95,25.65,13,27.2,11.2,1.57,17.8-5.91,20.14-22.55l8.34-59.42,28.16,4L285,148.11c-4.54,32.36-23,46.42-52.41,42.29-28.78-4-41.66-21.87-36.92-55.63l8-57.09Z" stroke="#231f20"></path>
+        <path id="f" d="M286.14,65.84l67.77-5.65,1.92,23-39.44,3.29L318,106.05,355.11,103l1.9,22.85-37.09,3.09L323.26,169l-28.33,2.36Z" stroke="#231f20"></path>
+        <path id="o-1" d="M461,130.16c0,34.1-20.43,55.78-53.11,55.78-32.84,0-50.91-24.67-50.91-54.05,0-30.8,20.27-55.31,52.64-55.31C443.75,76.58,461,101.88,461,130.16Zm-74,1.26c0,19.8,8.64,32.06,22.31,32.06S431,150.12,431,131.1C431,112.88,422.85,99,409.18,99,395.67,99,387,111.93,387,131.42Z" stroke="#231f20"></path>
+        <path id="o-2" d="M550.18,104.47c0,34.1-20.43,55.78-53.11,55.78-32.84,0-50.91-24.67-50.91-54.05,0-30.8,20.27-55.31,52.64-55.31C532.9,50.89,550.18,76.19,550.18,104.47Zm-74,1.26c0,19.8,8.64,32.06,22.31,32.06s21.68-13.36,21.68-32.37c0-18.23-8.17-32.06-21.84-32.06C484.81,73.36,476.17,86.25,476.17,105.73Z" stroke="#231f20"></path>
+      </g>
+
+      <rect x="60" y="331" width="490" height="63" fill="#fff" stroke="#231f20"></rect>
+
+      <text transform="translate(59 315)" font-size="31" fill="#231f20" font-weight="700">Build custom web forms easily.</text>
+      <text transform="translate(77 371)" font-size="31" fill="#969696">Let's get started!</text>
+
+      <g id="dino">
+        <path fill="#E41E26" d="M533.6,232.7c-0.3-0.1-0.6-0.2-0.9-0.3C533,232.5,533.3,232.6,533.6,232.7z M535.1,233.1
+  		c-0.3,0-0.6-0.1-0.9-0.2C534.5,233,534.7,233,535.1,233.1z M536.6,233.2c-0.3,0-0.7,0-1-0.1C535.9,233.2,536.3,233.2,536.6,233.2z
+  		 M531.2,231.7c0.3,0.1,0.6,0.3,0.8,0.4C531.8,232,531.5,231.8,531.2,231.7z M538.6,233.2c-0.5,0.1-1,0.1-1.5,0.1
+  		C537.6,233.3,538.1,233.3,538.6,233.2z M528.4,229.9c0.3,0.2,0.6,0.4,0.8,0.6C528.9,230.3,528.7,230.1,528.4,229.9z M524.2,226.1
+  		c0.3,0.3,0.6,0.6,0.9,0.9C524.8,226.7,524.5,226.4,524.2,226.1z M527,228.8c0.3,0.2,0.6,0.5,0.8,0.7
+  		C527.5,229.2,527.3,229,527,228.8z M525.6,227.5c0.3,0.3,0.6,0.5,0.8,0.8C526.1,228,525.9,227.8,525.6,227.5z M518.7,219.4
+  		c0.3,0.5,0.7,0.9,1,1.4C519.4,220.3,519.1,219.9,518.7,219.4z M517.4,217.4c0.4,0.5,0.7,1.1,1.1,1.6
+  		C518.1,218.5,517.8,218,517.4,217.4z M520.1,221.2c0.3,0.4,0.6,0.8,0.9,1.2L520.1,221.2z M521.4,223c0.3,0.4,0.6,0.8,0.9,1.1
+  		C522,223.7,521.7,223.3,521.4,223z M522.8,224.6c0.3,0.3,0.6,0.7,0.9,1C523.4,225.2,523.1,224.9,522.8,224.6z M529.8,230.9
+  		c0.3,0.2,0.6,0.3,0.8,0.5C530.4,231.2,530.1,231,529.8,230.9z"></path>
+        <path fill="#8EC23F" d="M536.6,233.2c-0.3,0-0.7,0-1-0.1C535.9,233.2,536.3,233.2,536.6,233.2z M535.1,233.1
+  		c-0.3,0-0.6-0.1-0.9-0.2C534.5,233,534.7,233,535.1,233.1z M533.6,232.7c-0.3-0.1-0.6-0.2-0.9-0.3
+  		C533,232.5,533.3,232.6,533.6,232.7z M531.2,231.7c0.3,0.1,0.6,0.3,0.8,0.4C531.8,232,531.5,231.8,531.2,231.7z M538.6,233.2
+  		c-0.5,0.1-1,0.1-1.5,0.1C537.6,233.3,538.1,233.3,538.6,233.2z M525.6,227.5c0.3,0.3,0.6,0.5,0.8,0.8
+  		C526.1,228,525.9,227.8,525.6,227.5z M524.2,226.1c0.3,0.3,0.6,0.6,0.9,0.9C524.8,226.7,524.5,226.4,524.2,226.1z M528.4,229.9
+  		c0.3,0.2,0.6,0.4,0.8,0.6C528.9,230.3,528.7,230.1,528.4,229.9z M522.8,224.6c0.3,0.3,0.6,0.7,0.9,1
+  		C523.4,225.2,523.1,224.9,522.8,224.6z M521.4,223c0.3,0.4,0.6,0.8,0.9,1.1C522,223.7,521.7,223.3,521.4,223z M517.4,217.4
+  		c0.4,0.5,0.7,1.1,1.1,1.6C518.1,218.5,517.8,218,517.4,217.4z M518.7,219.4c0.3,0.5,0.7,0.9,1,1.4
+  		C519.4,220.3,519.1,219.9,518.7,219.4z M520.1,221.2c0.3,0.4,0.6,0.8,0.9,1.2L520.1,221.2z M527,228.8c0.3,0.2,0.6,0.5,0.8,0.7
+  		C527.5,229.2,527.3,229,527,228.8z M529.8,230.9c0.3,0.2,0.6,0.3,0.8,0.5C530.4,231.2,530.1,231,529.8,230.9z"></path>
+
+        <linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="643.465" y1="316.6403" x2="597.6864" y2="82.4081" gradientTransform="matrix(0.9533 -0.3021 0.3021 0.9533 -50.5851 215.0953)">
+          <stop offset="6.000000e-03" style="stop-color: rgb(30, 112, 134);"></stop>
+          <stop offset="0.176" style="stop-color: rgb(51, 131, 157);"></stop>
+          <stop offset="0.348" style="stop-color: rgb(65, 146, 177);"></stop>
+          <stop offset="0.473" style="stop-color: rgb(70, 153, 186);"></stop>
+          <stop offset="0.613" style="stop-color: rgb(66, 147, 178);"></stop>
+          <stop offset="0.792" style="stop-color: rgb(54, 133, 160);"></stop>
+          <stop offset="0.991" style="stop-color: rgb(32, 113, 135);"></stop>
+          <stop offset="1" style="stop-color: rgb(30, 112, 134);"></stop>
+        </linearGradient>
+        <path fill="url(#SVGID_2_)" d="M639.5,190.8c-3.4-36.5,17.6-118.2-108.5-109.7l0,0c0,0-23.1,1-21.9,23.3
+  		c1.2,22.4,6.2,36.9,9.6,50.4c0,0-21.8,20.1-16.1,33.8c5.7,13.7,20.7,46.7,35.9,44.6c15.3-2.1,48.4-15.3,61.4-23.1
+  		c0,0,7,72.4,9.4,99.9c0.7,7.9,2.1,22.4,5.2,41.2c18.6-9.2,37.3-18.3,56.1-27.2C654.3,275.8,641.9,216.3,639.5,190.8z"></path>
+
+        <ellipse transform="matrix(0.9533 -0.3021 0.3021 0.9533 -15.9028 180.912)" fill="#FFFFFF" cx="576.9" cy="141.9" rx="13" ry="22.9"></ellipse>
+
+        <ellipse transform="matrix(0.9533 -0.3021 0.3021 0.9533 -16.5344 179.6383)" fill="#231815" cx="572.5" cy="143.3" rx="8.3" ry="14.7"></ellipse>
+        <path fill="#85BFD2" d="M621.6,237.7c-1.1-8.9-9.4-42.7-11.6-46.2c-2.1-3.4-4.9-18.6-47.2,7.1c-31.2,18.9-42.9,18.3-46.8,16.7
+  		c6.5,10.3,14.5,18.9,22.5,17.8c15.2-2.1,48.4-15.3,61.4-23.1c0,0,7,72.4,9.4,99.9c0.7,7.9,2.1,22.4,5.2,41.2
+  		c8.1-4,16.2-8,24.3-11.9C627.4,287.8,622.2,242.4,621.6,237.7z"></path>
+        <g opacity="0.6">
+
+          <linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="506.196" y1="467.0849" x2="553.5162" y2="428.8841" gradientTransform="matrix(0.9533 -0.3021 -0.3021 -0.9533 134.293 798.5026)">
+            <stop offset="0" style="stop-color: rgb(122, 179, 196);"></stop>
+            <stop offset="0.87" style="stop-color: rgb(122, 179, 196);"></stop>
+            <stop offset="1" style="stop-color: rgb(122, 179, 196);"></stop>
+          </linearGradient>
+          <path fill="url(#SVGID_3_)" d="M517.3,217.2c-0.4-0.6-0.8-1.2-1.2-1.8c0,0,0,0,0,0C516.5,216,516.9,216.6,517.3,217.2z"></path>
+
+          <linearGradient id="SVGID_4_" gradientUnits="userSpaceOnUse" x1="553.1611" y1="525.1908" x2="600.4362" y2="487.0253" gradientTransform="matrix(0.9533 -0.3021 -0.3021 -0.9533 134.293 798.5026)">
+            <stop offset="0" style="stop-color: rgb(122, 179, 196);"></stop>
+            <stop offset="0.87" style="stop-color: rgb(122, 179, 196);"></stop>
+            <stop offset="1" style="stop-color: rgb(122, 179, 196);"></stop>
+          </linearGradient>
+          <path fill="url(#SVGID_4_)" d="M538.2,100c12.1-9.4,47.7-11.3,71-6c-16-9.9-40.5-15.4-78.2-12.9c0,0-23.1,1-21.9,23.3
+  			s6.2,36.9,9.6,50.4c0,0-21.8,20.1-16.1,33.8c2.7,6.5,7.5,17.4,13.5,26.7c3.5,1.4,13,2,36.6-10.9c-0.4-1.7-1.2-4-2.6-6.8
+  			c-6-11.7-16.1-20.8-6.2-35.3C553.8,147.8,524.3,110.8,538.2,100z"></path>
+        </g>
+        <path fill="#1E7086" d="M533.8,137.1c2.6,9.5,1.4,13-1,13.7c-2.4,0.7-5-1.8-7.6-11.3c-2.6-9.5-2.8-17.7-0.4-18.4
+  		C527.1,120.5,531.2,127.6,533.8,137.1z"></path>
+
+        <linearGradient id="SVGID_5_" gradientUnits="userSpaceOnUse" x1="681.5992" y1="201.3821" x2="624.5172" y2="323.9237" gradientTransform="matrix(0.9533 -0.3021 0.3021 0.9533 -50.5851 215.0953)">
+          <stop offset="0" style="stop-color: rgb(122, 179, 196);"></stop>
+          <stop offset="0.86" style="stop-color: rgb(122, 179, 196);"></stop>
+          <stop offset="1" style="stop-color: rgb(122, 179, 196);"></stop>
+        </linearGradient>
+        <path opacity="0.4" fill="url(#SVGID_5_)" enable-background="new    " d="M639.8,193.5c-3.4,3.6-9,11.7-7,23.6
+  		c0,0,7.2,57.4,25.2,112.9c4.2-2,8.3-4,12.5-6C654.9,277.5,642.7,220.3,639.8,193.5z"></path>
+
+        <linearGradient id="SVGID_6_" gradientUnits="userSpaceOnUse" x1="611.5856" y1="236.8385" x2="647.111" y2="236.8385" gradientTransform="matrix(0.9533 -0.3021 0.3021 0.9533 -50.5851 215.0953)">
+          <stop offset="0" style="stop-color: rgb(70, 153, 186);"></stop>
+          <stop offset="0.951" style="stop-color: rgb(70, 153, 186);"></stop>
+          <stop offset="1" style="stop-color: rgb(70, 153, 186);"></stop>
+        </linearGradient>
+        <path fill="url(#SVGID_6_)" d="M623.9,218.4c-3.2-25.8-11.1-40.6-11.1-40.6c3.7-7.1-2.9-17.7-2.9-17.7
+  		c5.7,13.7-27.3,27.3-27.3,27.3l-0.2,0.9c23.7-10.1,25.8,0.5,27.6,3.3c2.1,3.4,10.5,37.3,11.6,46.2c0.6,4.7,5.8,50.1,17.2,101.6
+  		c2.3-1.1,4.5-2.2,6.8-3.3C637.6,304.6,626.9,242.5,623.9,218.4z"></path>
+
+        <linearGradient id="SVGID_7_" gradientUnits="userSpaceOnUse" x1="540.0744" y1="428.1269" x2="622.0959" y2="428.1269" gradientTransform="matrix(0.9533 -0.3021 -0.3021 -0.9533 134.293 798.5026)">
+          <stop offset="0" style="stop-color: rgb(255, 255, 255);"></stop>
+          <stop offset="0.87" style="stop-color: rgb(255, 255, 255);"></stop>
+          <stop offset="1" style="stop-color: rgb(255, 255, 255);"></stop>
+        </linearGradient>
+        <path opacity="0.35" fill="url(#SVGID_7_)" enable-background="new    " d="M538.6,233.2c15.3-2.1,48.4-15.3,61.4-23.1
+  		c0.3-11.9-18.7,0-33,3.6c-9.6,2.4-14-3.9-15.8-8.4c-22.5,12-31.6,11.4-35.1,10C522.6,225.7,530.5,234.3,538.6,233.2z"></path>
+
+        <linearGradient id="SVGID_8_" gradientUnits="userSpaceOnUse" x1="592.8458" y1="312.0763" x2="606.6599" y2="312.0763" gradientTransform="matrix(0.9533 -0.3021 0.3021 0.9533 -50.5851 215.0953)">
+          <stop offset="0" style="stop-color: rgb(255, 255, 255);"></stop>
+          <stop offset="1" style="stop-color: rgb(255, 255, 255);"></stop>
+        </linearGradient>
+        <path opacity="0.35" fill="url(#SVGID_8_)" enable-background="new    " d="M617.7,315.7l-8.1-1.9c0.8,8.3,2.2,21.3,4.8,37.4
+  		c3.1-1.5,6.3-3.1,9.4-4.6C619.5,327.7,617.7,315.7,617.7,315.7z"></path>
+      </g>
+    </svg>
+
+    <div style="padding: 35px;">
+      <span class="button full-width-button">
+        Sign Up Now!
+      </span>
+    </div>
+
+  </a>
+
+  <img src="b7043538.128762502-sz=1x1-ord=1483624964-dc_lat=-dc_rdid=-tag_for_child_directed_treatment=" alt="" class="qtdewkoovufpqwoutcnr">
+
+</div>
+</aside>    
+          <aside class="entry-unrelated sidebar">
+
+  
+  
+  <div class="module module-padded module-jobs">
+
+  <h4 class="h2">Front-End Jobs</h4>
+
+  
+  <ul class="job-list">
+
+        <li>
+            <a href="http://codepen.io/url/job/nXWWyr">
+        <strong>
+          Hart        </strong>
+        is hiring a
+        Front End Engineer       </a>
+    </li>
+        <li>
+            <a href="http://codepen.io/url/job/nbddoZ">
+        <strong>
+          Close.io        </strong>
+        is hiring a
+        Senior JavaScript/UI Frontend Engineer      </a>
+    </li>
+        <li>
+            <a href="http://codepen.io/url/job/nwwwqn">
+        <strong>
+          Premier Agency        </strong>
+        is hiring a
+        Front End Web Developer      </a>
+    </li>
+    
+  </ul>
+
+  <div class="button-wrap">
+    <a href="https://css-tricks.com/jobs/" class="button">See More Jobs</a>
+    &nbsp;
+    <a href="http://codepen.io/jobs/post/" class="button button-bold">Post a Job</a>
+  </div>
+
+</div>
+  <div class="module module-padded module-media-temple">
+
+  <a href="http://bit.ly/1O3LAHG" target="_top" class="media-temple-ad-wrapper-link">
+
+    <svg id="media-temple-ad" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 250 250">
+    <g id="all-backgrounds">
+      <rect x="0.2" y="0.2" width="125" height="125"></rect>
+      <rect x="125" fill="#232323" width="125" height="125"></rect>
+      <rect y="125" fill="#232323" width="125" height="125"></rect>
+      <rect x="125" y="125.4" width="125" height="125"></rect>
+    </g>
+    <g id="all-text">
+      <g id="text-ssds">
+        <path fill="#FFFFFF" d="M45,104.8c-0.1-0.1-0.2-0.2-0.2-0.4c0-0.3,0.2-0.6,0.5-0.6c0.1,0,0.3,0.1,0.3,0.1c0.9,0.8,1.9,1.2,3.2,1.2
+          c1.3,0,2.2-0.7,2.2-1.7v0c0-0.9-0.5-1.5-2.6-1.9c-2.3-0.5-3.4-1.2-3.4-2.9v0c0-1.6,1.4-2.7,3.3-2.7c1.3,0,2.3,0.3,3.2,1
+          c0.1,0.1,0.2,0.2,0.2,0.5c0,0.3-0.2,0.5-0.5,0.5c-0.1,0-0.2,0-0.3-0.1c-0.8-0.6-1.7-0.9-2.6-0.9c-1.3,0-2.1,0.7-2.1,1.6v0
+          c0,0.9,0.5,1.5,2.7,1.9c2.2,0.5,3.3,1.3,3.3,2.8v0c0,1.7-1.4,2.8-3.4,2.8C47.3,106.1,46.1,105.7,45,104.8z"></path>
+        <path fill="#FFFFFF" d="M54,104.8c-0.1-0.1-0.2-0.2-0.2-0.4c0-0.3,0.2-0.6,0.5-0.6c0.1,0,0.3,0.1,0.3,0.1c0.9,0.8,1.9,1.2,3.2,1.2
+          c1.3,0,2.2-0.7,2.2-1.7v0c0-0.9-0.5-1.5-2.6-1.9c-2.3-0.5-3.4-1.2-3.4-2.9v0c0-1.6,1.4-2.7,3.3-2.7c1.3,0,2.3,0.3,3.2,1
+          c0.1,0.1,0.2,0.2,0.2,0.5c0,0.3-0.2,0.5-0.5,0.5c-0.1,0-0.2,0-0.3-0.1c-0.8-0.6-1.7-0.9-2.6-0.9c-1.3,0-2.1,0.7-2.1,1.6v0
+          c0,0.9,0.5,1.5,2.7,1.9c2.2,0.5,3.3,1.3,3.3,2.8v0c0,1.7-1.4,2.8-3.4,2.8C56.3,106.1,55.1,105.7,54,104.8z"></path>
+        <path fill="#FFFFFF" d="M63.5,96.5c0-0.3,0.3-0.6,0.6-0.6H67c3.1,0,5.3,2.2,5.3,5v0c0,2.8-2.2,5-5.3,5H64c-0.3,0-0.6-0.3-0.6-0.6
+          V96.5z M67,104.9c2.5,0,4.1-1.7,4.1-3.9v0c0-2.2-1.6-4-4.1-4h-2.3v7.9H67z"></path>
+        <path fill="#FFFFFF" d="M74.1,105.2c-0.1-0.1-0.2-0.2-0.2-0.4c0-0.3,0.2-0.5,0.5-0.5c0.1,0,0.2,0,0.3,0.1c0.8,0.5,1.5,0.8,2.3,0.8
+          c0.9,0,1.5-0.5,1.5-1.2v0c0-0.7-0.9-1-1.8-1.3c-1.2-0.3-2.4-0.7-2.4-2.1v0c0-1.3,1.1-2.1,2.5-2.1c0.8,0,1.6,0.2,2.4,0.6
+          c0.1,0.1,0.3,0.2,0.3,0.5c0,0.3-0.2,0.5-0.5,0.5c-0.1,0-0.2,0-0.2-0.1c-0.6-0.4-1.3-0.6-1.9-0.6c-0.9,0-1.4,0.5-1.4,1.1v0
+          c0,0.7,0.9,1,1.9,1.3c1.1,0.3,2.4,0.8,2.4,2.1v0c0,1.4-1.2,2.2-2.6,2.2C75.9,106.1,74.9,105.8,74.1,105.2z"></path>
+      </g>
+      <g id="text-cdn">
+        <path fill="#FFFFFF" d="M44.3,224.5L44.3,224.5c0-2.9,2.1-5.2,5.1-5.2c1.6,0,2.6,0.5,3.6,1.3c0.1,0.1,0.2,0.3,0.2,0.5
+          c0,0.3-0.3,0.6-0.6,0.6c-0.2,0-0.3-0.1-0.4-0.1c-0.8-0.7-1.6-1.1-2.9-1.1c-2.2,0-3.9,1.8-3.9,4.1v0c0,2.3,1.7,4.1,3.9,4.1
+          c1.2,0,2.1-0.4,3-1.2c0.1-0.1,0.2-0.2,0.4-0.2c0.3,0,0.5,0.3,0.5,0.5c0,0.2-0.1,0.3-0.2,0.4c-1,0.9-2.1,1.5-3.7,1.5
+          C46.5,229.7,44.3,227.4,44.3,224.5z"></path>
+        <path fill="#FFFFFF" d="M55.3,220.1c0-0.3,0.3-0.6,0.6-0.6h2.9c3.1,0,5.3,2.2,5.3,5v0c0,2.8-2.2,5-5.3,5h-2.9
+          c-0.3,0-0.6-0.3-0.6-0.6V220.1z M58.8,228.5c2.5,0,4.1-1.7,4.1-3.9v0c0-2.2-1.6-4-4.1-4h-2.3v7.9H58.8z"></path>
+        <path fill="#FFFFFF" d="M66.5,220c0-0.3,0.3-0.6,0.6-0.6h0.2c0.3,0,0.4,0.1,0.6,0.3l6.1,7.7V220c0-0.3,0.2-0.6,0.6-0.6
+          c0.3,0,0.5,0.3,0.5,0.6v9c0,0.3-0.2,0.5-0.5,0.5h-0.1c-0.2,0-0.4-0.1-0.6-0.3l-6.2-7.9v7.7c0,0.3-0.2,0.6-0.6,0.6
+          c-0.3,0-0.5-0.3-0.5-0.6V220z"></path>
+      </g>
+      <g id="text-autoscaling">
+        <path fill="#FFFFFF" d="M152.1,228.8l4.1-8.9c0.1-0.3,0.4-0.5,0.7-0.5h0.1c0.3,0,0.6,0.2,0.7,0.5l4.1,8.9c0,0.1,0.1,0.2,0.1,0.3
+          c0,0.3-0.2,0.5-0.5,0.5c-0.3,0-0.5-0.2-0.6-0.4l-1-2.3h-5.5l-1,2.3c-0.1,0.2-0.3,0.4-0.5,0.4c-0.3,0-0.5-0.2-0.5-0.5
+          C152,229,152,228.9,152.1,228.8z M159.2,225.8l-2.3-5.1l-2.3,5.1H159.2z"></path>
+        <path fill="#FFFFFF" d="M169.9,229c0,0.3-0.2,0.6-0.5,0.6c-0.3,0-0.5-0.2-0.5-0.6v-0.8c-0.5,0.8-1.3,1.4-2.5,1.4
+          c-1.8,0-2.8-1.2-2.8-3v-4.1c0-0.3,0.2-0.6,0.5-0.6c0.3,0,0.6,0.2,0.6,0.6v3.8c0,1.4,0.7,2.2,2,2.2c1.3,0,2.2-0.9,2.2-2.3v-3.7
+          c0-0.3,0.2-0.6,0.5-0.6c0.3,0,0.5,0.2,0.5,0.6V229z"></path>
+        <path fill="#FFFFFF" d="M172.8,227.6v-4.5h-0.6c-0.3,0-0.5-0.2-0.5-0.5c0-0.3,0.2-0.5,0.5-0.5h0.6v-1.7c0-0.3,0.2-0.6,0.5-0.6
+          c0.3,0,0.6,0.3,0.6,0.6v1.7h1.9c0.3,0,0.5,0.2,0.5,0.5c0,0.3-0.2,0.5-0.5,0.5h-1.9v4.3c0,0.9,0.5,1.2,1.2,1.2
+          c0.4,0,0.6-0.1,0.7-0.1c0.3,0,0.5,0.2,0.5,0.5c0,0.2-0.1,0.4-0.3,0.4c-0.3,0.1-0.7,0.2-1.1,0.2
+          C173.7,229.6,172.8,229.1,172.8,227.6z"></path>
+        <path fill="#FFFFFF" d="M177.5,225.9L177.5,225.9c0-2.1,1.6-3.9,3.9-3.9c2.2,0,3.8,1.7,3.8,3.8v0c0,2.1-1.6,3.9-3.9,3.9
+          C179.1,229.7,177.5,227.9,177.5,225.9z M184.1,225.9L184.1,225.9c0-1.6-1.2-2.9-2.7-2.9c-1.6,0-2.7,1.3-2.7,2.9v0
+          c0,1.6,1.2,2.9,2.7,2.9C183,228.7,184.1,227.4,184.1,225.9z"></path>
+        <path fill="#FFFFFF" d="M186.8,228.7c-0.1-0.1-0.2-0.2-0.2-0.4c0-0.3,0.2-0.5,0.5-0.5c0.1,0,0.2,0,0.3,0.1
+          c0.8,0.5,1.5,0.8,2.3,0.8c0.9,0,1.5-0.5,1.5-1.2v0c0-0.7-0.9-1-1.8-1.3c-1.2-0.3-2.4-0.7-2.4-2.1v0c0-1.3,1.1-2.1,2.5-2.1
+          c0.8,0,1.6,0.2,2.4,0.6c0.1,0.1,0.3,0.2,0.3,0.5c0,0.3-0.2,0.5-0.5,0.5c-0.1,0-0.2,0-0.2-0.1c-0.6-0.4-1.3-0.6-1.9-0.6
+          c-0.9,0-1.4,0.5-1.4,1.1v0c0,0.7,0.9,1,1.9,1.3c1.1,0.3,2.4,0.8,2.4,2.1v0c0,1.4-1.2,2.2-2.6,2.2
+          C188.7,229.7,187.6,229.3,186.8,228.7z"></path>
+        <path fill="#FFFFFF" d="M193.8,225.9L193.8,225.9c0-2.1,1.6-3.9,3.8-3.9c1.2,0,2.1,0.5,2.7,1.1c0.1,0.1,0.2,0.2,0.2,0.4
+          c0,0.3-0.2,0.5-0.5,0.5c-0.1,0-0.3-0.1-0.4-0.1c-0.5-0.5-1.1-0.9-2-0.9c-1.5,0-2.6,1.3-2.6,2.9v0c0,1.6,1.2,2.9,2.7,2.9
+          c0.8,0,1.5-0.4,2.1-0.9c0.1-0.1,0.2-0.1,0.3-0.1c0.3,0,0.5,0.2,0.5,0.5c0,0.1-0.1,0.3-0.1,0.3c-0.7,0.7-1.5,1.2-2.8,1.2
+          C195.5,229.7,193.8,227.9,193.8,225.9z"></path>
+        <path fill="#FFFFFF" d="M201.9,227.4L201.9,227.4c0-1.6,1.3-2.4,3.2-2.4c0.9,0,1.6,0.1,2.3,0.3V225c0-1.3-0.8-2-2.2-2
+          c-0.7,0-1.4,0.2-1.9,0.4c-0.1,0-0.1,0-0.2,0c-0.3,0-0.5-0.2-0.5-0.5c0-0.2,0.2-0.4,0.3-0.5c0.7-0.3,1.5-0.5,2.4-0.5
+          c1,0,1.8,0.3,2.4,0.8c0.5,0.5,0.8,1.2,0.8,2.2v4c0,0.3-0.2,0.5-0.5,0.5c-0.3,0-0.5-0.2-0.5-0.5v-0.7c-0.5,0.7-1.4,1.3-2.7,1.3
+          C203.3,229.7,201.9,228.9,201.9,227.4z M207.3,226.8v-0.7c-0.5-0.2-1.3-0.3-2.2-0.3c-1.4,0-2.2,0.6-2.2,1.5v0
+          c0,0.9,0.9,1.5,1.9,1.5C206.2,228.8,207.3,228,207.3,226.8z"></path>
+        <path fill="#FFFFFF" d="M210.8,219.6c0-0.3,0.2-0.6,0.5-0.6c0.3,0,0.6,0.3,0.6,0.6v9.5c0,0.3-0.2,0.6-0.5,0.6s-0.6-0.2-0.6-0.6
+          V219.6z"></path>
+        <path fill="#FFFFFF" d="M214.5,219.8c0-0.4,0.3-0.6,0.6-0.6c0.4,0,0.7,0.2,0.7,0.6v0.2c0,0.3-0.3,0.6-0.7,0.6
+          c-0.4,0-0.6-0.2-0.6-0.6V219.8z M214.6,222.6c0-0.3,0.2-0.6,0.5-0.6c0.3,0,0.6,0.2,0.6,0.6v6.4c0,0.3-0.2,0.6-0.5,0.6
+          c-0.3,0-0.6-0.2-0.6-0.6V222.6z"></path>
+        <path fill="#FFFFFF" d="M218.2,222.6c0-0.3,0.2-0.6,0.5-0.6c0.3,0,0.6,0.2,0.6,0.6v0.8c0.5-0.8,1.3-1.4,2.5-1.4
+          c1.8,0,2.8,1.2,2.8,3v4.1c0,0.3-0.2,0.6-0.5,0.6c-0.3,0-0.6-0.2-0.6-0.6v-3.8c0-1.4-0.7-2.2-2-2.2c-1.3,0-2.2,0.9-2.2,2.3v3.7
+          c0,0.3-0.2,0.6-0.5,0.6s-0.6-0.2-0.6-0.6V222.6z"></path>
+        <path fill="#FFFFFF" d="M227.2,231c-0.2-0.1-0.3-0.3-0.3-0.5c0-0.2,0.2-0.5,0.5-0.5c0.1,0,0.2,0,0.2,0.1c0.8,0.5,1.7,0.8,2.6,0.8
+          c1.6,0,2.7-0.9,2.7-2.6v-0.9c-0.6,0.9-1.5,1.6-2.9,1.6c-1.8,0-3.5-1.3-3.5-3.5v0c0-2.2,1.7-3.5,3.5-3.5c1.4,0,2.3,0.7,2.9,1.5
+          v-0.8c0-0.3,0.2-0.6,0.5-0.6c0.3,0,0.6,0.3,0.6,0.6v5.6c0,1.1-0.3,2-0.9,2.6c-0.7,0.7-1.6,1-2.8,1
+          C229.2,231.8,228.2,231.5,227.2,231z M233,225.5L233,225.5c0-1.5-1.3-2.5-2.7-2.5s-2.6,1-2.6,2.5v0c0,1.5,1.2,2.5,2.6,2.5
+          C231.7,228,233,227,233,225.5z"></path>
+      </g>
+      <g id="text-backups">
+        <path fill="#FFFFFF" d="M159.1,96.5c0-0.3,0.3-0.6,0.6-0.6h3.7c1.1,0,2,0.3,2.6,0.9c0.4,0.4,0.6,1,0.6,1.6v0c0,1.3-0.8,2-1.6,2.3
+          c1.2,0.4,2.1,1,2.1,2.4v0c0,1.7-1.4,2.7-3.6,2.7h-3.9c-0.3,0-0.6-0.3-0.6-0.6V96.5z M163.1,100.4c1.4,0,2.3-0.6,2.3-1.8v0
+          c0-1-0.8-1.6-2.2-1.6h-3v3.4H163.1z M163.5,105c1.5,0,2.5-0.7,2.5-1.8v0c0-1.1-0.9-1.7-2.7-1.7h-3.2v3.5H163.5z"></path>
+        <path fill="#FFFFFF" d="M168.6,103.8L168.6,103.8c0-1.6,1.3-2.4,3.2-2.4c0.9,0,1.6,0.1,2.3,0.3v-0.3c0-1.3-0.8-2-2.2-2
+          c-0.7,0-1.4,0.2-1.9,0.4c-0.1,0-0.1,0-0.2,0c-0.3,0-0.5-0.2-0.5-0.5c0-0.2,0.2-0.4,0.3-0.5c0.7-0.3,1.5-0.5,2.4-0.5
+          c1,0,1.8,0.3,2.4,0.8c0.5,0.5,0.8,1.2,0.8,2.2v4c0,0.3-0.2,0.5-0.5,0.5c-0.3,0-0.5-0.2-0.5-0.5v-0.7c-0.5,0.7-1.4,1.3-2.7,1.3
+          C170,106.1,168.6,105.3,168.6,103.8z M174.1,103.3v-0.7c-0.5-0.2-1.3-0.3-2.2-0.3c-1.4,0-2.2,0.6-2.2,1.5v0c0,0.9,0.9,1.5,1.9,1.5
+          C173,105.3,174.1,104.4,174.1,103.3z"></path>
+        <path fill="#FFFFFF" d="M177,102.3L177,102.3c0-2.1,1.6-3.9,3.8-3.9c1.2,0,2.1,0.5,2.7,1.1c0.1,0.1,0.2,0.2,0.2,0.4
+          c0,0.3-0.2,0.5-0.5,0.5c-0.1,0-0.3-0.1-0.4-0.1c-0.5-0.5-1.1-0.9-2-0.9c-1.5,0-2.6,1.3-2.6,2.9v0c0,1.6,1.2,2.9,2.7,2.9
+          c0.8,0,1.5-0.4,2.1-0.9c0.1-0.1,0.2-0.1,0.3-0.1c0.3,0,0.5,0.2,0.5,0.5c0,0.1-0.1,0.3-0.1,0.3c-0.7,0.7-1.5,1.2-2.8,1.2
+          C178.6,106.1,177,104.4,177,102.3z"></path>
+        <path fill="#FFFFFF" d="M185.6,96c0-0.3,0.2-0.6,0.5-0.6c0.3,0,0.6,0.3,0.6,0.6v6.8l4-4.1c0.1-0.1,0.3-0.2,0.4-0.2
+          c0.3,0,0.5,0.2,0.5,0.5c0,0.2-0.1,0.3-0.2,0.4l-2.4,2.4l2.6,3.3c0.1,0.1,0.1,0.2,0.1,0.4c0,0.3-0.2,0.5-0.5,0.5
+          c-0.2,0-0.3-0.1-0.5-0.3l-2.6-3.2l-1.5,1.5v1.4c0,0.3-0.2,0.6-0.5,0.6s-0.6-0.2-0.6-0.6V96z"></path>
+        <path fill="#FFFFFF" d="M199.9,105.5c0,0.3-0.2,0.6-0.5,0.6c-0.3,0-0.5-0.2-0.5-0.6v-0.8c-0.5,0.8-1.3,1.4-2.5,1.4
+          c-1.8,0-2.8-1.2-2.8-3v-4.1c0-0.3,0.2-0.6,0.5-0.6c0.3,0,0.6,0.2,0.6,0.6v3.8c0,1.4,0.7,2.2,2,2.2c1.3,0,2.2-0.9,2.2-2.3v-3.7
+          c0-0.3,0.2-0.6,0.5-0.6c0.3,0,0.5,0.2,0.5,0.6V105.5z"></path>
+        <path fill="#FFFFFF" d="M202.4,99.1c0-0.3,0.2-0.6,0.5-0.6c0.3,0,0.6,0.2,0.6,0.6v1c0.6-0.9,1.5-1.6,2.8-1.6
+          c1.8,0,3.5,1.4,3.5,3.8v0c0,2.4-1.7,3.8-3.5,3.8c-1.4,0-2.3-0.7-2.8-1.6v3.2c0,0.3-0.2,0.6-0.5,0.6c-0.3,0-0.6-0.2-0.6-0.6V99.1z
+           M208.7,102.3L208.7,102.3c0-1.8-1.2-2.9-2.6-2.9c-1.4,0-2.7,1.2-2.7,2.8v0c0,1.7,1.3,2.9,2.7,2.9
+          C207.6,105.1,208.7,104.1,208.7,102.3z"></path>
+        <path fill="#FFFFFF" d="M211.5,105.2c-0.1-0.1-0.2-0.2-0.2-0.4c0-0.3,0.2-0.5,0.5-0.5c0.1,0,0.2,0,0.3,0.1
+          c0.8,0.5,1.5,0.8,2.3,0.8c0.9,0,1.5-0.5,1.5-1.2v0c0-0.7-0.9-1-1.8-1.3c-1.2-0.3-2.4-0.7-2.4-2.1v0c0-1.3,1.1-2.1,2.5-2.1
+          c0.8,0,1.6,0.2,2.4,0.6c0.1,0.1,0.3,0.2,0.3,0.5c0,0.3-0.2,0.5-0.5,0.5c-0.1,0-0.2,0-0.2-0.1c-0.6-0.4-1.3-0.6-1.9-0.6
+          c-0.9,0-1.4,0.5-1.4,1.1v0c0,0.7,0.9,1,1.9,1.3c1.1,0.3,2.4,0.8,2.4,2.1v0c0,1.4-1.2,2.2-2.6,2.2
+          C213.4,106.1,212.3,105.8,211.5,105.2z"></path>
+      </g>
+    </g>
+    <g id="all-icons">
+      <path id="icon-autoscaling" fill="#FFFFFF" d="M173.9,206H160v-24.3h13.9V206z M163.5,185.2v17.3h6.9v-17.3H163.5z M194.7,206
+        h-13.9v-38.2h13.9V206z M184.3,171.3v31.2h6.9v-31.2H184.3z M215.5,206h-13.9v-55.5h13.9V206z M205.1,154v48.6h6.9V154H205.1z"></path>
+      <path id="icon-ssds" fill="#FFFFFF" d="M47.9,22.8h27.5c2.6,0,4.8,0.9,6.7,2.8c1.8,1.8,2.8,4.1,2.8,6.7l5.9,41.2
+        c0.3,1,0.4,1.9,0.4,2.8c0,2.6-0.9,4.8-2.8,6.7c-1.8,1.8-4.1,2.8-6.7,2.8h-40c-2.6,0-4.8-0.9-6.7-2.8c-1.8-1.8-2.8-4.1-2.8-6.7
+        c0-0.9,0.1-1.8,0.4-2.8l5.9-41.2c0-2.6,0.9-4.8,2.8-6.7C43,23.7,45.3,22.8,47.9,22.8z M81.6,69.9H41.6c-1.1,0-2.1,0.4-3.1,1.3
+        c-1,0.8-1.7,1.9-2.1,3.1l-0.3,2.1l0,0.2v0.3l0.1,0.3l0,0.2l0.6,1.5l0.3,0.5l0.3,0.4l0.2,0.2c1.2,1.2,2.5,1.7,4,1.7h40.1
+        c0.8,0,1.4-0.1,1.8-0.3c0.4-0.2,0.6-0.3,0.6-0.3c0,0,0.1-0.1,0.2-0.1c0.1-0.1,0.3-0.2,0.5-0.3c0.2-0.1,0.6-0.4,1-1
+        c0.4-0.5,0.8-1,1-1.4c0.2-0.4,0.3-0.7,0.3-1c0-0.3,0-0.4,0-0.5v-0.3l0-0.2l-0.3-2.2c-0.4-1.2-1.1-2.3-2.1-3.1
+        C83.7,70.3,82.7,69.9,81.6,69.9z M75.3,26.7H47.9c-1.5,0-2.8,0.5-3.9,1.6c-1.1,1.1-1.6,2.4-1.6,3.9v0.3l-4.9,34.6
+        c1.3-0.8,2.7-1.1,4.1-1.1h40.1c1.5,0,2.9,0.4,4.1,1.1l-4.9-34.4l0-0.3v-0.3c0-1.5-0.6-2.8-1.6-3.9C78.1,27.3,76.9,26.7,75.3,26.7z
+         M79.8,74.4c0.4-0.4,0.8-0.6,1.4-0.6c0.5,0,1,0.2,1.4,0.6c0.4,0.4,0.6,0.8,0.6,1.4c0,0.5-0.2,1-0.6,1.4c-0.4,0.4-0.8,0.6-1.4,0.6
+        c-0.5,0-1-0.2-1.4-0.6c-0.4-0.4-0.6-0.8-0.6-1.4C79.3,75.3,79.5,74.8,79.8,74.4z"></path>
+      <path id="icon-cdn" fill="#FFFFFF" d="M58.9,150.7c3.8,0,7.4,0.7,10.9,2.2c3.5,1.5,6.5,3.5,9,6s4.5,5.5,6,9
+        c1.5,3.5,2.2,7.1,2.2,10.9c0,3.8-0.7,7.4-2.2,10.9c-1.5,3.5-3.5,6.5-6,9c-2.5,2.5-5.5,4.5-9,6c-3.5,1.5-7.1,2.2-10.9,2.2
+        c-3.8,0-7.4-0.7-10.9-2.2c-3.5-1.5-6.5-3.5-9-6c-2.5-2.5-4.5-5.5-6-9c-1.5-3.5-2.2-7.1-2.2-10.9c0-3.8,0.7-7.4,2.2-10.9
+        c1.5-3.5,3.5-6.5,6-9c2.5-2.5,5.5-4.5,9-6C51.5,151.5,55.1,150.7,58.9,150.7z M34.6,178.8c0,3.2,0.6,6.3,1.9,9.4H43
+        c-0.6-3.1-1-5.9-1-8.4s0.1-4.7,0.4-6.5h-7.2C34.8,175.1,34.6,176.9,34.6,178.8z M36.5,169.5H43c1.1-5,2.8-9.2,5.4-12.6
+        c-2.7,1.3-5.1,3-7.1,5.2C39.2,164.2,37.6,166.7,36.5,169.5z M44,191.9h-5.6c2.5,3.9,5.8,6.8,10,8.8C46.6,198.3,45.1,195.4,44,191.9
+        z M57,173.2H46.2c-0.3,1.8-0.4,4-0.4,6.6c0,2.7,0.4,5.4,1.1,8.4H57V173.2z M57,169.5v-14.7c-2.6,0.7-4.8,2.8-6.9,6.1
+        c-1.5,2.5-2.6,5.4-3.3,8.6H57z M57,191.9h-9.1c2.3,6.2,5.4,9.9,9.1,11V191.9z M60.8,169.5H71c-0.7-3.2-1.9-6.1-3.3-8.6
+        c-2-3.4-4.3-5.4-6.8-6.1V169.5z M60.8,173.2v15H71c0.7-2.9,1.1-5.7,1.1-8.4c0-2.7-0.1-4.9-0.4-6.6H60.8z M60.8,191.9v11
+        c3.7-1.1,6.8-4.7,9.1-11H60.8z M74.8,169.5h6.6c-1.2-2.8-2.8-5.2-4.8-7.4c-2.1-2.2-4.4-3.9-7.1-5.2
+        C71.9,160.2,73.7,164.4,74.8,169.5z M79.4,191.9h-5.6c-1.1,3.5-2.5,6.4-4.4,8.8C73.6,198.8,76.9,195.8,79.4,191.9z M75.7,179.7
+        c0,2.6-0.3,5.4-1,8.4h6.6c1.3-3,1.9-6.1,1.9-9.4c0-1.9-0.2-3.8-0.7-5.6h-7.2C75.6,175,75.7,177.2,75.7,179.7z"></path>
+      <path id="icon-backups" fill="#FFFFFF" d="M172.3,75.8h-4.6c-3.8,0-7.1-1.3-9.8-4c-2.7-2.7-4-5.7-4-9.2c0-3.4,0.9-6.3,2.7-8.7
+        c1.8-2.4,4.1-4,6.9-5c0.9-5.4,3.5-10,7.8-13.6c4.3-3.6,9.2-5.5,14.9-5.5c4.6,0,8.9,1.3,12.7,3.8c3.8,2.5,6.6,5.9,8.4,10
+        c4.3,0.1,8,1.7,11.1,4.9c3.1,3.1,4.6,6.9,4.6,11.2c0,2.7-0.7,5.3-2.1,7.8c-1.4,2.4-3.3,4.4-5.8,6s-5.2,2.3-8.2,2.3h-2.3v-4.6h2.3
+        c2.2,0,4.1-0.6,6-1.8c1.8-1.2,3.2-2.6,4.1-4.3c1-1.7,1.4-3.5,1.4-5.4c0-3.1-1.1-5.8-3.3-8c-2.2-2.3-4.8-3.4-7.9-3.5l-2.9-0.1
+        l-1.2-2.7c-1.5-3.3-3.7-6-6.8-8c-3.1-2-6.6-3-10.7-3c-4.1,0-7.8,1.4-11.2,4.3c-3.4,2.9-5.5,6.5-6.3,10.9l-0.5,2.8l-2.7,0.8
+        c-1.9,0.6-3.4,1.7-4.6,3.4c-1.2,1.6-1.8,3.6-1.8,5.8c0,2.3,0.9,4.3,2.7,6.1c1.8,1.8,4,2.7,6.5,2.7h4.6V75.8z M190.7,85h-4.6V57
+        l-9.9,9.8l-3.2-3.3l15.5-15.4l15.3,15.4l-3.2,3.3l-9.9-9.9V85z"></path>
+    </g>
+    <g id="media-temple-logo">
+      <path id="logo-4" fill="#FFFFFF" d="M188,96.9c5.6,8.4,9.3,18.5,9.3,28.5c0,11.9-4.7,21.6-9.4,28.4h-5.7c4.2-9.3,7-17.2,7-28.7
+        c0-13.2-4.7-23.3-6.8-27.9c-0.1-0.1-0.2-0.3-0.2-0.4L188,96.9L188,96.9z"></path>
+      <path id="logo-3" fill="#FFFFFF" d="M180.8,119.7h-10.2v10.1c0,3.6,0,4.8,4.2,4.8c2,0,3.7-0.2,5.6-0.6h0.4l1.3,5.1
+        c-4.9,0.9-10.3,1-11.8,1c-4.6,0-10.5-0.7-12.7-2.6c-1.9-1.5-2.1-3.1-2.1-6.9v-11h-6.9v-5.3h6.9v-5l15.1-3.9v8.9h10.2V119.7z"></path>
+      <path id="logo-2" fill="#FFFFFF" d="M81.7,114.1v3.4h0.2c6.2-3.7,12.5-4,16.3-4c10.3,0,13.7,2.9,15.1,4c2.4-1.4,7.5-4,16.2-4
+        c17.4,0,17.4,6.9,17.4,9.7v16.2h-14.1V125c0-3,0-6.3-7.5-6.3c-3.7,0-7.5,1.1-8.8,2.8c-1.2,1.4-1.7,2.7-1.7,5.8v12.2h-14.1v-13.9
+        c0-4.3,0.1-6.9-7.3-6.9c-3.7,0-7.5,1-8.9,2.4c-1.1,1.1-1.9,2.3-1.9,6v12.3h-14v-25.3C68.6,114.1,81.7,114.1,81.7,114.1z"></path>
+      <path id="logo-1" fill="#FFFFFF" d="M61.8,153.7c-5.6-8.4-9.3-18.5-9.3-28.5c0-11.9,4.7-21.6,9.4-28.4h5.7c-4.2,9.3-7,17.2-7,28.7
+        c0,13.2,4.7,23.3,6.8,27.9c0.1,0.1,0.2,0.3,0.2,0.4L61.8,153.7L61.8,153.7z"></path>
+    </g>
+    </svg>
+
+    <p>CSS-Tricks uses and recommends Media Temple web hosting. Their exceptional service and support keep this site fast. Use coupon code <b>CSSTRICKS</b> to save 20% for the first&nbsp;year.</p>
+
+    <span class="button full-width-button">
+      Save 20% on Web Hosting
+    </span>
+
+  </a>
+
+</div>
+</aside>
+    
+  </div>
+
+</div>
+
+<div class="end-of-article-ads">
+      <div class="bsap-doubles side-by-side">
+      <div id="bsap_1250418" class="bsarocks bsap_3469a2a501a9e18091036aa0c89f9dcb"></div>
+    </div>
+  </div>
+
+<div class="comments-col">
+      <div class="module-comments">
+      <section id="comments">
+
+
+
+  <h1 class="h2 comments-title">
+    Comments
+  </h1>
+
+  <ol class="commentlist group">
+    
+    <li class="comment even thread-even depth-1" id="li-comment-1603130">
+
+      <div class="grid group comment-wrap" id="comment-1603130">
+
+        <div class="comment-avatar grid-1-5">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="lazyload-gravatar" data-src="https://secure.gravatar.com/avatar/535b4b4d3dd038a34325f02ab4103271?s=160&amp;d=mm&amp;r=pg" width="50" height="50">
+        </div>
+
+        <div class="comment-body group grid-4-5">
+
+          <div class="comment-author-wrap vcard">
+            <div class="comment-author">SHAUN KARDINAL</div> <div class="comment-time"><a href="https://css-tricks.com/state-css-reflections/#comment-1603130"><span class="screen-reader">Permalink to comment</span>#</a> <time datetime="2016-07-29T18:16:26+00:00">July 29, 2016</time></div>
+            
+          </div>
+          
+          <div class="comment-content">
+
+            <p>O______________O</p>
+
+            <div class="reply">
+                          </div><!-- .reply -->
+
+          </div>
+        </div>
+      </div>
+    
+  </li><!-- #comment-## -->
+
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-1603132">
+
+      <div class="grid group comment-wrap" id="comment-1603132">
+
+        <div class="comment-avatar grid-1-5">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="lazyload-gravatar" data-src="https://secure.gravatar.com/avatar/52648ca9bee250edf351385c1e87416c?s=160&amp;d=mm&amp;r=pg" width="50" height="50">
+        </div>
+
+        <div class="comment-body group grid-4-5">
+
+          <div class="comment-author-wrap vcard">
+            <div class="comment-author">Fez Vrasta</div> <div class="comment-time"><a href="https://css-tricks.com/state-css-reflections/#comment-1603132"><span class="screen-reader">Permalink to comment</span>#</a> <time datetime="2016-07-30T06:24:59+00:00">July 30, 2016</time></div>
+            
+          </div>
+          
+          <div class="comment-content">
+
+            <p>Question: Why are you using <code>box-shadow</code> to create the border instead of the simpler&nbsp;<code>outline</code>?</p>
+
+            <div class="reply">
+                          </div><!-- .reply -->
+
+          </div>
+        </div>
+      </div>
+    
+  <ul class="children">
+
+    <li class="comment byuser comment-author-thebabydino bypostauthor even depth-2" id="li-comment-1603137">
+
+      <div class="grid group comment-wrap" id="comment-1603137">
+
+        <div class="comment-avatar grid-1-5">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="lazyload-gravatar" data-src="https://secure.gravatar.com/avatar/bee436794e066a5423040cf673c7506f?s=160&amp;d=mm&amp;r=pg" width="50" height="50">
+        </div>
+
+        <div class="comment-body group grid-4-5">
+
+          <div class="comment-author-wrap vcard">
+            <div class="comment-author">Ana Tudor</div> <div class="comment-time"><a href="https://css-tricks.com/state-css-reflections/#comment-1603137"><span class="screen-reader">Permalink to comment</span>#</a> <time datetime="2016-07-30T15:26:17+00:00">July 30, 2016</time></div>
+            
+          </div>
+          
+          <div class="comment-content">
+
+            <p>To quote the above article:</p>
+<blockquote><p>I prefer <code>box-shadow</code> over <code>outline</code> when highlighting the boundaries of an element as <a href="http://codepen.io/thebabydino/pen/yJzPog" rel="nofollow"><code>outline is inconsistent across browsers when children overflow their parents</code></a>.</p>
+<p><img src="art_refl_box_sh_vs_outline.png" alt="How box-shadow and outline behave in WebKit browsers and Edge (top) vs. Firefox (bottom) - outline gives different results when children overflow"></p>
+<p>How box-shadow and outline behave in WebKit browsers and Edge (top) vs. Firefox (bottom) - outline gives different results when children&nbsp;overflow</p></blockquote>
+
+            <div class="reply">
+                          </div><!-- .reply -->
+
+          </div>
+        </div>
+      </div>
+    
+  </li><!-- #comment-## -->
+
+    <li class="comment odd alt depth-2" id="li-comment-1603145">
+
+      <div class="grid group comment-wrap" id="comment-1603145">
+
+        <div class="comment-avatar grid-1-5">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="lazyload-gravatar" data-src="https://secure.gravatar.com/avatar/52648ca9bee250edf351385c1e87416c?s=160&amp;d=mm&amp;r=pg" width="50" height="50">
+        </div>
+
+        <div class="comment-body group grid-4-5">
+
+          <div class="comment-author-wrap vcard">
+            <div class="comment-author">Fez Vrasta</div> <div class="comment-time"><a href="https://css-tricks.com/state-css-reflections/#comment-1603145"><span class="screen-reader">Permalink to comment</span>#</a> <time datetime="2016-07-31T06:57:06+00:00">July 31, 2016</time></div>
+            
+          </div>
+          
+          <div class="comment-content">
+
+            <p>Uh I missed that line,&nbsp;sorry</p>
+
+            <div class="reply">
+                          </div><!-- .reply -->
+
+          </div>
+        </div>
+      </div>
+    
+  </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+    <li class="comment even thread-even depth-1" id="li-comment-1603133">
+
+      <div class="grid group comment-wrap" id="comment-1603133">
+
+        <div class="comment-avatar grid-1-5">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="lazyload-gravatar" data-src="https://secure.gravatar.com/avatar/2d0b807b098f3e357cbd5c7ef5469128?s=160&amp;d=mm&amp;r=pg" width="50" height="50">
+        </div>
+
+        <div class="comment-body group grid-4-5">
+
+          <div class="comment-author-wrap vcard">
+            <div class="comment-author">AJ Otto</div> <div class="comment-time"><a href="https://css-tricks.com/state-css-reflections/#comment-1603133"><span class="screen-reader">Permalink to comment</span>#</a> <time datetime="2016-07-30T06:34:04+00:00">July 30, 2016</time></div>
+            
+          </div>
+          
+          <div class="comment-content">
+
+            <p>Wow, a very comprehensive article on reflections!<br>
+The Css standards accross browsers really need a re-thinking,<br>
+it’s pretty damn retarded that Mozilla, Google and Micro©licence™ don’t come together and make one, extendable, standardized format for making a browser not have silly cross-browser issues.</p>
+<p>Really though, this was a treat to read&nbsp;through.</p>
+
+            <div class="reply">
+                          </div><!-- .reply -->
+
+          </div>
+        </div>
+      </div>
+    
+  </li><!-- #comment-## -->
+
+    <li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-1603139">
+
+      <div class="grid group comment-wrap" id="comment-1603139">
+
+        <div class="comment-avatar grid-1-5">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="lazyload-gravatar" data-src="https://secure.gravatar.com/avatar/3f0cf0b1890d8336e2d7cdc626bc766e?s=160&amp;d=mm&amp;r=pg" width="50" height="50">
+        </div>
+
+        <div class="comment-body group grid-4-5">
+
+          <div class="comment-author-wrap vcard">
+            <div class="comment-author">Marvin Danig</div> <div class="comment-time"><a href="https://css-tricks.com/state-css-reflections/#comment-1603139"><span class="screen-reader">Permalink to comment</span>#</a> <time datetime="2016-07-30T20:51:53+00:00">July 30, 2016</time></div>
+            
+          </div>
+          
+          <div class="comment-content">
+
+            <p>Mind blowing! How long did it take to research, implement denos and write this article? I think loaders are best served with GIFs, especially those with reflection, gradient&nbsp;etc.</p>
+
+            <div class="reply">
+                          </div><!-- .reply -->
+
+          </div>
+        </div>
+      </div>
+    
+  <ul class="children">
+
+    <li class="comment byuser comment-author-thebabydino bypostauthor even depth-2" id="li-comment-1603140">
+
+      <div class="grid group comment-wrap" id="comment-1603140">
+
+        <div class="comment-avatar grid-1-5">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="lazyload-gravatar" data-src="https://secure.gravatar.com/avatar/bee436794e066a5423040cf673c7506f?s=160&amp;d=mm&amp;r=pg" width="50" height="50">
+        </div>
+
+        <div class="comment-body group grid-4-5">
+
+          <div class="comment-author-wrap vcard">
+            <div class="comment-author">Ana Tudor</div> <div class="comment-time"><a href="https://css-tricks.com/state-css-reflections/#comment-1603140"><span class="screen-reader">Permalink to comment</span>#</a> <time datetime="2016-07-30T22:00:03+00:00">July 30, 2016</time></div>
+            
+          </div>
+          
+          <div class="comment-content">
+
+            <p>I started playing with reflections in early June and got the idea for this article about two weeks later when I saw the original loader demo.</p>
+<p>And I disagree. Things like gradients are much crisper when you use CSS. I don’t want bad quality&nbsp;loaders.</p>
+
+            <div class="reply">
+                          </div><!-- .reply -->
+
+          </div>
+        </div>
+      </div>
+    
+  </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+    <li class="comment odd alt thread-even depth-1" id="li-comment-1603142">
+
+      <div class="grid group comment-wrap" id="comment-1603142">
+
+        <div class="comment-avatar grid-1-5">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="lazyload-gravatar" data-src="https://secure.gravatar.com/avatar/ddd9a01b2d6c92daa5b3d88257cc0c7c?s=160&amp;d=mm&amp;r=pg" width="50" height="50">
+        </div>
+
+        <div class="comment-body group grid-4-5">
+
+          <div class="comment-author-wrap vcard">
+            <div class="comment-author">Javier Falbo</div> <div class="comment-time"><a href="https://css-tricks.com/state-css-reflections/#comment-1603142"><span class="screen-reader">Permalink to comment</span>#</a> <time datetime="2016-07-31T01:42:13+00:00">July 31, 2016</time></div>
+            
+          </div>
+          
+          <div class="comment-content">
+
+            <p>Great wonderful post. I ever see this type of detailed analysis on any others related to web designing. I like this fade reflecting bars. <a href="http://www.gaincoupon.com/" &nbsp;rel="nofollow"></a></p>
+
+            <div class="reply">
+                          </div><!-- .reply -->
+
+          </div>
+        </div>
+      </div>
+    
+  </li><!-- #comment-## -->
+
+    <li class="comment even thread-odd thread-alt depth-1" id="li-comment-1603150">
+
+      <div class="grid group comment-wrap" id="comment-1603150">
+
+        <div class="comment-avatar grid-1-5">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="lazyload-gravatar" data-src="https://secure.gravatar.com/avatar/c01a07c3d1edd4316aaf7a9471a1fda0?s=160&amp;d=mm&amp;r=pg" width="50" height="50">
+        </div>
+
+        <div class="comment-body group grid-4-5">
+
+          <div class="comment-author-wrap vcard">
+            <div class="comment-author">Jean-Charles</div> <div class="comment-time"><a href="https://css-tricks.com/state-css-reflections/#comment-1603150"><span class="screen-reader">Permalink to comment</span>#</a> <time datetime="2016-08-01T01:24:21+00:00">August 1, 2016</time></div>
+            
+          </div>
+          
+          <div class="comment-content">
+
+            <p>Nice reflection on&nbsp;reflection</p>
+
+            <div class="reply">
+                          </div><!-- .reply -->
+
+          </div>
+        </div>
+      </div>
+    
+  </li><!-- #comment-## -->
+
+    <li class="comment odd alt thread-even depth-1" id="li-comment-1603154">
+
+      <div class="grid group comment-wrap" id="comment-1603154">
+
+        <div class="comment-avatar grid-1-5">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="lazyload-gravatar" data-src="https://secure.gravatar.com/avatar/10964f88679e65b66799af9f915c1604?s=160&amp;d=mm&amp;r=pg" width="50" height="50">
+        </div>
+
+        <div class="comment-body group grid-4-5">
+
+          <div class="comment-author-wrap vcard">
+            <div class="comment-author">Chuck</div> <div class="comment-time"><a href="https://css-tricks.com/state-css-reflections/#comment-1603154"><span class="screen-reader">Permalink to comment</span>#</a> <time datetime="2016-08-01T03:05:48+00:00">August 1, 2016</time></div>
+            
+          </div>
+          
+          <div class="comment-content">
+
+            <p>The level of detail and complexity on your article posts is always astounding Ana, and you manage to break it all down to be understood (relatively) simply. Thanks again for&nbsp;this.</p>
+
+            <div class="reply">
+                          </div><!-- .reply -->
+
+          </div>
+        </div>
+      </div>
+    
+  </li><!-- #comment-## -->
+
+    <li class="comment byuser comment-author-nimah even thread-odd thread-alt depth-1 buried" id="li-comment-1603158">
+
+      <div class="grid group comment-wrap" id="comment-1603158">
+
+        <div class="comment-avatar grid-1-5">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="lazyload-gravatar" data-src="https://secure.gravatar.com/avatar/7533e388c02984a2028b7e4ae3a51448?s=160&amp;d=mm&amp;r=pg" width="50" height="50">
+        </div>
+
+        <div class="comment-body group grid-4-5">
+
+          <div class="comment-author-wrap vcard">
+            <div class="comment-author">nimah</div> <div class="comment-time"><a href="https://css-tricks.com/state-css-reflections/#comment-1603158"><span class="screen-reader">Permalink to comment</span>#</a> <time datetime="2016-08-01T05:25:25+00:00">August 1, 2016</time></div>
+            
+          </div>
+          
+          <div class="comment-content">
+
+            <p>Mind blowing! How long did it take to research, implement denos and write this article? I think loaders are best served with GIFs, especially those with reflection, gradient&nbsp;etc.<br>
+<a href="https://www.designvation.com/" rel="nofollow">https://www.designvation.com</a></p>
+
+            <div class="reply">
+                          </div><!-- .reply -->
+
+          </div>
+        </div>
+      </div>
+    
+  </li><!-- #comment-## -->
+
+    <li class="comment byuser comment-author-alexisromagnoli odd alt thread-even depth-1" id="li-comment-1603196">
+
+      <div class="grid group comment-wrap" id="comment-1603196">
+
+        <div class="comment-avatar grid-1-5">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="lazyload-gravatar" data-src="https://secure.gravatar.com/avatar/353c49c1310d78ef8acaf53f96e857b5?s=160&amp;d=mm&amp;r=pg" width="50" height="50">
+        </div>
+
+        <div class="comment-body group grid-4-5">
+
+          <div class="comment-author-wrap vcard">
+            <div class="comment-author">alexisromagnoli</div> <div class="comment-time"><a href="https://css-tricks.com/state-css-reflections/#comment-1603196"><span class="screen-reader">Permalink to comment</span>#</a> <time datetime="2016-08-03T07:54:15+00:00">August 3, 2016</time></div>
+            
+          </div>
+          
+          <div class="comment-content">
+
+            <p>Hi Ana,<br>
+ Great article. Please, could you tell me which tools you use to create those awesome graphics with guidelines, etc.<br>
+Thanks in&nbsp;advance.</p>
+
+            <div class="reply">
+                          </div><!-- .reply -->
+
+          </div>
+        </div>
+      </div>
+    
+  <ul class="children">
+
+    <li class="comment byuser comment-author-thebabydino bypostauthor even depth-2" id="li-comment-1603245">
+
+      <div class="grid group comment-wrap" id="comment-1603245">
+
+        <div class="comment-avatar grid-1-5">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="lazyload-gravatar" data-src="https://secure.gravatar.com/avatar/bee436794e066a5423040cf673c7506f?s=160&amp;d=mm&amp;r=pg" width="50" height="50">
+        </div>
+
+        <div class="comment-body group grid-4-5">
+
+          <div class="comment-author-wrap vcard">
+            <div class="comment-author">Ana Tudor</div> <div class="comment-time"><a href="https://css-tricks.com/state-css-reflections/#comment-1603245"><span class="screen-reader">Permalink to comment</span>#</a> <time datetime="2016-08-04T14:17:31+00:00">August 4, 2016</time></div>
+            
+          </div>
+          
+          <div class="comment-content">
+
+            <p>CodePen and… neurons? Other than the original demo that gave me the idea for the article, everything is coded by me from scratch directly on CodePen. Demos, intermediate steps, helper interactive stuff, helper graphics… everything that’s not plain&nbsp;text.</p>
+
+            <div class="reply">
+                          </div><!-- .reply -->
+
+          </div>
+        </div>
+      </div>
+    
+  </li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+    <li class="comment byuser comment-author-alexisromagnoli odd alt thread-odd thread-alt depth-1" id="li-comment-1603252">
+
+      <div class="grid group comment-wrap" id="comment-1603252">
+
+        <div class="comment-avatar grid-1-5">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="lazyload-gravatar" data-src="https://secure.gravatar.com/avatar/353c49c1310d78ef8acaf53f96e857b5?s=160&amp;d=mm&amp;r=pg" width="50" height="50">
+        </div>
+
+        <div class="comment-body group grid-4-5">
+
+          <div class="comment-author-wrap vcard">
+            <div class="comment-author">alexisromagnoli</div> <div class="comment-time"><a href="https://css-tricks.com/state-css-reflections/#comment-1603252"><span class="screen-reader">Permalink to comment</span>#</a> <time datetime="2016-08-04T19:00:43+00:00">August 4, 2016</time></div>
+            
+          </div>
+          
+          <div class="comment-content">
+
+            <p>Hi Ana,  thanks for your answer! What a pity, I’m not going to be able to download the “neurons” app, I think it’s proprietary software, isn’t it…??? &nbsp;;-P</p>
+<p>Cheers.</p>
+
+            <div class="reply">
+                          </div><!-- .reply -->
+
+          </div>
+        </div>
+      </div>
+    
+  </li><!-- #comment-## -->
+  </ol>
+
+
+
+<div class="comments-closed">
+  This comment thread is closed. If you have important information to share, please <a href="https://css-tricks.com/contact/">contact us</a>.
+</div>
+
+
+</section>    </div>
+  </div>
+
+  <footer class="newsletter-footer">
+
+    <h4>We have a pretty good<sup>*</sup> newsletter.</h4>
+
+    <form action="https://chriscoyier.us2.list-manage.com/subscribe/post?u=155f5a9ccc4e24c318130cace&amp;id=197f127a68" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate="">
+
+      <p class="mc-field-group flexy-search">
+        <label for="mce-EMAIL" class="screen-reader">Email Address</label>
+        <input name="EMAIL" class="required email mailchimp-email-input" id="mce-EMAIL" type="email">
+        <svg class="icon-email" width="20px" height="15px">
+          <use xlink:href="#icon-email"></use>
+        </svg>
+        <input value="Subscribe" name="Subscribe" id="mc-embedded-subscribe" class="button subscribe-button" type="submit">
+      </p>
+      <div id="mce-responses" class="clear">
+        <div class="response" id="mce-error-response" style="display: none;"></div>
+        <div class="response" id="mce-success-response" style="display: none;"></div>
+      </div>
+      <div style="position: absolute; left: -5000px;"><input name="b_155f5a9ccc4e24c318130cace_197f127a68" value="" type="text"></div>
+
+    </form>
+
+    <svg viewBox="0 0 1000 600" preserveAspectRatio="none" class="site-footer-newsletter-background">
+      <defs>
+        <linearGradient id="footer-newsletter-gradient" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#FBDA61"></stop>
+          <stop offset="100%" stop-color="#F76B1C"></stop>
+        </linearGradient>
+      </defs>
+      <path class="jagged-top-newsletter" id="jagged-top-newsletter" fill="url(#footer-newsletter-gradient)" d="M1004,90 L800,90 L600,90 L400,90 L200,90 L100,90 L-4,90 L-4,604 L1004,604 L1004,90 Z"></path>
+    </svg>
+
+  </footer>
+
+  <footer class="site-footer">
+
+    <div class="site-footer-inside">
+
+      <div class="colophon">
+        <p>CSS-Tricks* is created, written by, and maintained by <a href="http://chriscoyier.net/">Chris Coyier</a> and <a href="https://css-tricks.com/about/">a team</a> of swell people. It is built on <a href="http://wordpress.org/">WordPress</a>, hosted by <a href="http://bit.ly/1n2DZjU">Media Temple</a>, and the assets are served by <a href="http://tracking.maxcdn.com/c/13088/3982/378">MaxCDN</a>. The fonts are Source Sans Pro and Cooper Hewitt. It is made possible through <a href="https://css-tricks.com/advertising/">sponsorships</a> from products and services we like.</p>
+
+        <p class="mega-big-time-warning"><small>*May or may not contain any actual "CSS" or "Tricks".</small></p>
+
+        <iframe id="twitter-widget-0" scrolling="no" allowtransparency="true" class="twitter-follow-button twitter-follow-button-rendered" style="position: static; visibility: visible; width: 251px; height: 20px;" title="Twitter Follow Button" src="index_57.html" data-screen-name="Real_CSS_Tricks" frameborder="0"></iframe>
+      </div>
+
+      <nav>
+        <a href="https://css-tricks.com/contact/">Contact</a>
+        <a href="https://css-tricks.com/about/">About</a>
+        <a href="https://css-tricks.com/archives/">Archives</a>
+        <a href="https://css-tricks.com/advertising/">Advertise</a>
+        <a href="https://css-tricks.com/jobs/">Jobs</a>
+      </nav>
+
+      <nav>
+        <a href="https://css-tricks.com/guest-posting/">Guest Posting</a>
+        <a href="https://css-tricks.com/license/">License</a>
+        <a href="https://css-tricks.com/shop/">Shop</a>
+        <a href="https://css-tricks.com/subscription-options/">Subscribe</a>
+        <a href="https://css-tricks.com/feed/">RSS</a>
+      </nav>
+
+    </div>
+
+    <svg viewBox="0 0 1000 600" preserveAspectRatio="none" class="site-footer-links-background">
+      <defs>
+        <linearGradient id="footer-links-gradient" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#FBDA61"></stop>
+          <stop offset="100%" stop-color="#DBA0D2"></stop>
+        </linearGradient>
+      </defs>
+      <path class="jagged-top-links" id="jagged-top-links" fill="url(#footer-links-gradient)" d="M1004,90 L800,90 L600,90 L400,90 L200,90 L100,90 L-4,90 L-4,200 L1004,200 L1004,100 Z"></path>
+    </svg>
+
+  </footer>
+
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" display="none"><symbol id="icon-close" viewBox="0 0 100 100.1"><title>icon-close</title><path d="M80.87 2.89L50 33.76 19.13 2.89a9.7 9.7 0 0 0-13.63 0l-2.7 2.7a9.7 9.7 0 0 0 0 13.63L33.67 50.1 2.8 81a9.7 9.7 0 0 0 0 13.63l2.7 2.7a9.7 9.7 0 0 0 13.63 0L50 66.43 80.87 97.3a9.7 9.7 0 0 0 13.63 0l2.7-2.7a9.7 9.7 0 0 0 0-13.6L66.33 50.1 97.2 19.23a9.7 9.7 0 0 0 0-13.63l-2.7-2.7a9.47 9.47 0 0 0-13.63-.01z" data-name="Layer 1"></path></symbol><symbol id="icon-email" viewBox="0 0 100 68.89"><title>icon-email</title><path d="M36.25 38.44L47.74 49.1a3.33 3.33 0 0 0 4.51 0l11.5-10.66 24.69 23.78H11.56zM93.33 11v46.6L68.68 33.85zM6.67 11l24.65 22.85L6.67 57.64zm5.1-4.37h76.46L50 42.12zM4.44 0A4.51 4.51 0 0 0 0 4.44v60a4.51 4.51 0 0 0 4.44 4.44h91.12a4.51 4.51 0 0 0 4.44-4.44v-60A4.51 4.51 0 0 0 95.56 0z" data-name="Layer 1"></path></symbol><symbol id="icon-link" viewBox="0 0 100 58.84"><title>icon-link</title><path d="M78.47 48H49.21a10.66 10.66 0 0 1-9-4.91h10.58A21.57 21.57 0 0 0 71.7 26.64h6.76a10.67 10.67 0 0 1 0 21.33zm-67.6-26.47a10.67 10.67 0 0 1 10.67-10.66H50.8A10.59 10.59 0 0 1 58.34 14a10.94 10.94 0 0 1 1.43 1.79H49.21a21.57 21.57 0 0 0-20.92 16.4h-6.76a10.67 10.67 0 0 1-10.66-10.66zm39.92 10.66H39.86a10.68 10.68 0 0 1 9.35-5.54h10.93a10.67 10.67 0 0 1-9.35 5.54zM100 37.31a21.53 21.53 0 0 0-21.53-21.53h-6.92A21.53 21.53 0 0 0 50.8 0H21.54a21.53 21.53 0 0 0 0 43.06h6.83v-.31A21.41 21.41 0 0 0 34 52.53a21.4 21.4 0 0 0 15.2 6.31h29.26A21.56 21.56 0 0 0 100 37.31z"></path></symbol><symbol id="icon-menu" viewBox="0 0 100 68.42"><title>icon-menu</title><path d="M94.73 10.53H5.27c-7 0-7-10.53 0-10.53h89.46c6.88.14 6.88 10.38 0 10.53zm0 18.42H5.27c-7 0-7 10.53 0 10.53h89.46c6.86-.17 6.86-10.38 0-10.53zm0 28.94H5.27c-7 0-7 10.53 0 10.53h89.46c7.03 0 7.03-10.53 0-10.53z" data-name="Layer 1"></path></symbol><symbol id="icon-search" viewBox="0 0 100 100"><title>icon-search</title><path d="M80.65 66.78a33.55 33.55 0 0 1-47.44-47.44 33.55 33.55 0 1 1 47.44 47.44zm6.73-54.16a43.06 43.06 0 0 0-65.32 55.71L2 88.39A6.8 6.8 0 0 0 11.61 98l20.06-20.06a43.06 43.06 0 0 0 55.71-65.32z"></path></symbol><symbol id="icon-tag" viewBox="0 0 100 99.98"><title>icon-tag</title><path d="M42 42a10.07 10.07 0 1 1 0-14.24A10 10 0 0 1 42 42zm56 6.5l-43.74-44a7.19 7.19 0 0 0-5-2.25L8 0a7.55 7.55 0 0 0-8 7v1l2.5 41a7.11 7.11 0 0 0 2.25 4.75l43.49 44a7.2 7.2 0 0 0 5.24 2.25 6.81 6.81 0 0 0 5.25-2.25L97.72 59A7.47 7.47 0 0 0 98 48.5z"></path></symbol></svg>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<iframe id="rufous-sandbox" scrolling="no" allowtransparency="true" allowfullscreen="true" style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: medium none;" title="Twitter analytics iframe" src="index_59.html" frameborder="0"></iframe></body>
+</html>

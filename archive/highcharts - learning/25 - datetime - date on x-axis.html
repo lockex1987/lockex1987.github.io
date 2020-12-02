@@ -1,0 +1,78 @@
+<!doctype HTML>
+<meta charset='utf-8'>
+<html>
+
+<head>
+    <style>
+        #container {
+            margin: 30px auto;
+            width: 500px;
+            height: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='container'></div>
+
+
+    <script src='https://code.highcharts.com/highcharts.js'></script>
+    <script>
+        new Highcharts.Chart('container', {
+            title: {
+                text: null
+            },
+            yAxis: [
+                {
+                    title: {
+                        text: "Numbers"
+                    }
+                }
+            ],
+            series: [
+                {
+                    data: [
+                        [1388880000000, 16],
+                        [1389484800000, 82],
+                        [1390089600000, 177],
+                        [1390694400000, 270],
+                        [1391299200000, 381],
+                        [1391904000000, 461]
+                    ],
+                    name: "Type-1",
+                    type: "line",
+                    marker: {
+                        radius: 6
+                    }
+                },
+                {
+                    data: [
+                        [1389484800000, 2],
+                        [1390694400000, 3],
+                        [1391904000000, 4]
+                    ],
+                    name: "Type-2",
+                    type: "line",
+                    marker: {
+                        radius: 6
+                    }
+                }
+            ],
+            xAxis: {
+                type: "datetime",
+                labels: {
+                    format: "{value:%d-%m-%Y}"
+                },
+                dateTimeLabelFormats: {
+                    day: '%d/%m',
+                    month: '%m/%Y'
+                }
+            },
+            tooltip: {
+                headerFormat: '{point.x:%d/%m/%Y}<br>'
+            },
+        });
+    </script>
+</body>
+
+</html>

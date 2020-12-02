@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    #container {
+      border: 5px solid #F4F7F8;
+      width: 100%;
+      display: flex;
+      height: 300px;
+      overflow: scroll;
+      box-sizing: border-box;
+    }
+    
+    .box {
+      margin: 5px;
+      padding: 5px;
+      margin-top: 100px;
+      background-color: yellow;
+      border: 2px solid red;
+      color: red;
+      font-family: monospace;
+      height: 100px;
+    }
+    
+    .text {
+      padding: 0 0.5em 0 120px;
+      max-width: 120px;
+      font-family: "Open Sans", sans-serif;
+    }
+    
+    .relative {
+      position: relative;
+      top: 40px;
+      right: 20px;
+    }
+    
+    .sticky {
+      position: sticky;
+      top: 20px;
+    }
+    
+    .fixed {
+      position: fixed;
+      left: 280px;
+    }
+  </style>
+</head>
+
+<body>
+  <p>Chuyển sang CSS sticky</p>
+  <div id="container">
+    <div class="box">
+      <strong>static</strong>
+    </div>
+    <div class="box relative">
+      <strong>relative</strong>
+      <br/>
+      <br/>
+      top:40px;
+      <br/>
+      right:20px;
+    </div>
+    <div class="box sticky">
+      <strong>sticky</strong>
+      <br/>
+      <br/>
+      top:20px;
+    </div>
+    <div class="box fixed">
+      <strong>fixed</strong>
+      <br/>
+      <br/>
+      left: 280px;
+    </div>
+
+    <div class="text">
+      <p>Try scrolling this text to see the effect of specifying <strong><code>fixed</code></strong> or <strong><code>sticky</code></strong> positioning.</p>
+      <p>With <strong><code>fixed</code></strong> positioning the element does not move as the viewport scrolls.</p>
+      <p>With <strong><code>sticky</code></strong> positioning, the element moves until it reaches a threshold: in this case 20 pixels from the top of the container.</p>
+      <p>The other two boxes show the effect of <strong><code>static</code></strong> and <strong><code>relative</code></strong> positioning.</p>
+    </div>
+  </div>
+</body>
+</html>

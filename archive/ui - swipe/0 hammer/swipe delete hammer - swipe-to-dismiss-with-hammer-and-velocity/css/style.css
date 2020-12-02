@@ -1,0 +1,50 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  background: #616161;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+ul li {
+  position: relative;
+  list-style: none;
+  text-align: center;
+  background: #9e9e9e;
+  height: 150px;
+  line-height: 150px;
+  width: 40vw;
+}
+ul li:before,
+ul li:after {
+  width: 10000%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  display: block;
+  content: '';
+  transition: box-shadow 500ms;
+}
+ul li:before {
+  right: 100%;
+  background-color: #61AE24;
+}
+ul li:after {
+  left: 100%;
+  background-color: #E54028;
+}
+ul li.action:before,
+ul li.action:after {
+  box-shadow: inset 0px 0px 70px -10px rgba(0, 0, 0, 0.25);
+}

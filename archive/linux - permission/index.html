@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="selinux, umask">
+    <title>Phân quyền trong Linux</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Phân quyền trong Linux</h2>
+      <p>Bạn đã khi nào deploy ứng dụng web trên server và gặp phải các vấn đề
+        về quyền?</p>
+      <h3>Tổng quan về quyền</h3>
+      <p>Một file hay thư mục trong hệ thống có 4 quyền cơ bản sau:</p>
+      <ul>
+        <li>Read (<code>r</code>): Đối với một file thì quyền Read chính là
+          quyền được xem nội dung của file, còn đối với một folder thì quyền
+          Read chính là quyền xem được danh sách các folder con và file bên
+          trong folder đó.</li>
+        <li>Write (<code>w</code>):&nbsp;Đối với một file thì quyền Write là cho
+          phép thêm, sửa nội dùng file, còn đối với một folder thì Write cho
+          phép thêm, xóa một folder con hay file trong thư mục đó.</li>
+        <li>Execute (<code>x</code>):&nbsp;Đây là quyền thực thi. Đối với một
+          file thì Execute cho phép thực thi file trong trường hợp file này
+          thuộc dạng program hoặc script, còn đối với một folder Execute cho
+          phép <code>cd</code> vào thư mục này.</li>
+        <li>Deny (<code>-</code>): Không có quyền làm một thao tác gì đó đối với
+          một file hay folder xác định.</li>
+      </ul>
+      <h3>Cách xem sự phân quyền</h3>
+      <p>Dùng lệnh <code>ll</code> hoặc <code>ls -la</code>.</p>
+      <p>Như trên ta thấy câu lệnh <code>ls -la</code> liệt kê ra danh sách thư
+        mục và file gồm thư mục hiện tại, thư mục con và file đi cùng với chúng
+        ta thông tin phân quyền. Ngoài ra còn có cả user và group nữa.</p>
+      <p>Cột đầu tiên gồm 10 bits thể hiện quyền hạn.</p>
+      <div class="mb-3"> <img src="images/ll.png"> </div>
+      <pre>drwxr-xr-x 2 root root afolder (1)<br>-rw-r--r-- 1 root root notice.txt (2)</pre>
+      <p>Bit đầu tiên thể hiện kiểu file. Ví dụ ở dòng (1) ký hiệu <code>d</code>
+        cho biết đó là thư mục, ở dòng (2) ký hiệu <code>-</code> cho biết đó
+        là 1 file thường.</p>
+      <p>3 bit tiếp theo thể hiện quyền của user sở hữu file này.</p>
+      <p>3 bit tiếp theo thể hiện quyền của group sở hữu file này.</p>
+      <p>3 bit cuối thể hiện quyền của các user khác.</p>
+      <p>Ví dụ trong dòng (2):</p>
+      <ul>
+        <li>3 bit đầu là <code>rw-</code> chỉ ra rằng owner user có quyền đọc (<code>r</code>),
+          sửa (<code>w</code>) file <code>notice.txt</code></li>
+        <li>3 bit tiếp là <code>r--</code> chỉ ra rằng owner group có chỉ có
+          thể đọc (<code>r</code>) file này và không có quyền khác</li>
+        <li>3 bit cuối là <code>r--</code> chỉ ra rằng other user có chỉ có thể
+          đọc (<code>r</code>) file này và không có quyền khác</li>
+      </ul>
+      <h3>Thay đổi quyền</h3>
+      <p>Chỉ có user có quyền root hoặc owner user của file mới có thể thay đổi
+        quyền của file đó.</p>
+      <p>Sử dụng lệnh <code>chmod</code> để thay đổi quyền:</p>
+      <pre>chmod &lt;mode&gt; file_name</pre>
+      <p>Trong đó <code>mode</code> có thể được viết theo 2 cách là symbolic
+        hoặc octal.</p>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th><br>
+              </th>
+              <th>Symbolic mode</th>
+              <th>Octal mode</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mô tả</td>
+              <td>Trong cách này chúng ta có thể thêm toán tử (+ - =;) (tương
+                ứng với thêm, loại bỏ, chỉ định) các quyền (r w x) cho từng nhóm
+                đối tượng (u g o a) (tương ứng user, group, other, all)</td>
+              <td>Trong cách này mỗi quyền được thể hiện bằng một số tương ứng -
+                : 0, x : 1, w : 2, r : 4<br>
+                Quyền của mỗi nhóm đối tượng thể hiện ở tổng của các thành phần<br>
+                Khi gán quyền phải gán cho cả 3 nhóm</td>
+            </tr>
+            <tr>
+              <td>Cách dùng</td>
+              <td>mode = (who) + (op) + (permissions)</td>
+              <td>Ví dụ:<br>
+                <code> 644</code> tương ứng <code>rw-r–r–</code><br>
+                <code> 751</code> tương ứng <code>rwxr-x–x</code><br>
+                <code> 775</code> tương ứng <code>rwxrwxr-x</code><br>
+                <code> 777</code> tương ứng <code>rwxrwxrwx</code></td>
+            </tr>
+            <tr>
+              <td>Ví dụ</td>
+              <td>
+                <pre>chmod g-w notice.txt</pre>
+                bỏ quyền write trên group<br>
+                <br>
+                Một vài ví dụ thêm:<br>
+                <code>g+rw</code>: cho phép group sở hữu có quyền đọc và ghi<br>
+                <code> a+rws</code>: cho phép toàn bộ user có full quyền<br>
+                <code> o+rws</code>: cho phép user còn lại có full quyền<br>
+                <code> u+x</code>: cho phép các user sở hữu có quyền thực thi</td>
+              <td>
+                <pre>chmod 644 notice.txt</pre>
+                6 = <code>rw-</code> nghĩa là owner user có quyền đọc ghi file<br>
+                4 = <code>r--</code> nghĩa là group chỉ có quyền đọc file<br>
+                4 = <code>r--</code> nghĩa là other user cũng chỉ có quyền đọc
+                file</td>
+            </tr>
+            <tr>
+              <td>Ghi chú</td>
+              <td>Ưu điểm là chúng ta có thể kế thừa quyền cũ</td>
+              <td>Cách này không thể kế thừa quyền cũ nhưng bù lại cú pháp ngắn
+                gọn dễ dùng</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Chuyển tất cả các thư mục thành <code>755</code> (<code>drwxr-xr-x</code>):</p>
+      <pre>find /opt/lampp/htdocs -type d -exec chmod 755 {} \;</pre>
+      <p>Chuyển tất cả các file thành <code>644</code> (<code>-rw-r--r--</code>):</p>
+      <pre>find /opt/lampp/htdocs -type f -exec chmod 644 {} \;</pre>
+      <h3>Quyền mặc định và thay đổi quyền mặc định với umask</h3>
+      <p>Khi chúng ta tạo ra file hoặc thư mục, mặc định hệ thống gán cho nó 1
+        quyền mặc định</p>
+      <ul>
+        <li>File: 666 (<code>rw-rw-rw-</code>) (3)</li>
+        <li>Folder: 777 (<code>rwxrwxrwx</code>) (4)</li>
+      </ul>
+      <p>Vậy nếu chúng ta muốn thay đổi quyền mặc định của một file, folder khi
+        nó được tạo thì phải làm thế nào.</p>
+      <p>Trong Linux điều này khá đơn giản, bởi hệ thống cung cấp cho chúng ta
+        một công cụ đó là <code>umask</code>. Khi <code>umask</code> được khởi
+        tạo giá trị thì các quyền mặc định sẽ không còn như (3) và (4) nữa.</p>
+      <p>Mặc định thì <code>umask</code> = 022. Khi đó các quyền mặc định với
+        file và folder được tính lại như sau:</p>
+      <p>File:</p>
+      <pre>666: rw- rw- rw-<br>022: --- -w- -w-<br>644: rw- r-- r--</pre>
+      <p>Folder:</p>
+      <pre>777: rwx rwx rwx<br>022: --- -w- -w-<br>755: rwx r-x r-x</pre>
+      <p>Lưu ý: có một trường hợp ngoại lệ, nếu như <code>umask</code>=123 thì
+        quyền mặc định cho file sẽ là 644 chứ không phải là 543.</p>
+      <p>Xem giá trị và thay đổi giá trị <code>umask</code> rất đơn giản như ví
+        dụ dưới đây:</p>
+      <div class="mb-3"> <img src="images/umask.png"> </div>
+      <h3>Thay đổi owner với chown</h3>
+      <p>Cú pháp:</p>
+      <pre>chown &lt;option&gt; [user:group] file/folder</pre>
+      <p>Tùy chọn <code>-R</code> được sử dụng trong trường hợp muốn đổi tất cả
+        thư mục con và file trong thư mục.</p>
+      <pre>chgrp</pre>
+      <p>Lệnh <code>chmod</code> chỉ có khả năng thay đổi quyền truy xuất tới
+        file (đọc, ghi, thực thi ...).</p>
+      <p>Còn nếu ta muốn thay đổi chủ sở hữu hoặc nhóm sở hữu thì phải dùng đến
+        2 lệnh là <code>chown</code> và <code>chgrp</code>.</p>
+      <p><code>chown</code> là lệnh dùng để thay đổi chủ sở hữu (có thể thay đổi
+        nhóm sở hữu) còn <code>chgrp</code> thì chỉ cho phép thay đổi nhóm sở
+        hữu của file.</p>
+      <p>VD:</p>
+      <pre>chown john:admin file_a</pre>
+      <p>Sẽ chuyển quyền sở hữu của <code>file_a</code> sang cho người dùng <code>john</code>
+        và nhóm <code>admin</code>.</p>
+      <pre>chgrp video file_b</pre>
+      <p>Sẽ chuyển nhóm sở hữu cho <code>file_b</code> sang nhóm <code>video</code>.</p>
+      <p>Đặc biệt ta có thể thêm tùy chọn <code>-R</code> (hoặc <code>--recursive</code>)
+        để chuyển quyền cho toàn bộ cây thư mục (file và thư mục con).</p>
+      <p>Tùy chọn này sẽ hữu ích khi ta muốn thay đổi chủ sở hữu hoặc nhóm trên
+        tất cả file trong thư mục nào đó mà không muốn lặp đi lặp lại một thao
+        tác.</p>
+      <h3>SELinux</h3>
+      <p>Nhiều khi bạn đã phân quyền 777 rồi nhưng vẫn không thể ghi file. Lúc
+        đó hãy thử kiểm tra và tắt SELinux.</p>
+      <p>SELinux (Security-Enhanced Linux) là một module bảo mật ở nhân của
+        Linux.</p>
+      <p>Kiểm tra trạng thái hiện tại bằng lệnh:</p>
+      <pre>sestatus</pre>
+      <p>Tắt tạm thời bằng lệnh:</p>
+      <pre>setenforce 0</pre>
+      <p>Tắt vĩnh viễn bằng cách sửa cấu hình <code>SELINUX</code> bằng <code>disabled</code>
+        trong file <code>/etc/selinux/config</code> (cần restart máy):</p>
+      <pre># SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=disabled</pre>
+      <h3>Tham khảo</h3>
+      <p><a href="https://viblo.asia/p/phan-quyen-trong-linux-oZVRgl4lMmg5" target="_blank">https://viblo.asia/p/phan-quyen-trong-linux-oZVRgl4lMmg5</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

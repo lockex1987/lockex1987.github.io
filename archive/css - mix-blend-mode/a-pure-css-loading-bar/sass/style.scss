@@ -1,0 +1,30 @@
+.wrapper {
+    $color1: rgb(255, 0, 0);
+    //$color1: rgb(0, 123, 255);
+    //$color1: #007bff;
+    
+    $color2: rgb(0, 255, 255);
+    //$color2: rgb(123, 0, 132);
+    //$color2: color.invert($color1);
+    //$color2: invert($color1);
+    
+    $width: 200px;
+
+    width: $width;
+    border: 1px solid #555;
+    box-sizing: border-box;
+
+    .bg {
+        background-color: $color1;
+
+        .el {
+            width: $width;    
+            font-size: 50px;
+            text-align: center;
+            //color: #007bff;
+            color: $color2;
+            //color: invert($color1);
+            mix-blend-mode: difference;
+        }
+    }
+}

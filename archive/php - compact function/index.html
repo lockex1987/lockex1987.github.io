@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Hàm compact</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Hàm compact">
+ </head> 
+ <body> 
+  <article> 
+   <h2>Hàm compact trong PHP</h2> 
+   <p>Hàm <code>compact</code> có tác dụng tạo một mảng từ các biến định nghĩa trước đó. Tên biến sẽ là khóa, giá trị của biến sẽ là giá trị của phần tử tương ứng. Nếu biến chưa được định nghĩa thì phần tử đó sẽ bị loại bỏ khỏi mảng.</p> 
+   <p>Hàm rất tiện khi truyền dữ liệu cho view trong Laravel.</p> 
+   <p>Cú pháp:</p> 
+   <pre>compact('tên biến 1', 'tên biến 2',...)</pre> 
+   <p>Ví dụ:</p> 
+   <pre>&lt;?php
+$firstname = "Peter";
+$lastname = "Griffin";
+$age = 41;
+
+$result = compact("firstname", "lastname", "age");
+
+print_r($result);</pre> 
+   <p>Kết quả</p> 
+   <pre>Array
+(
+    [firstname] =&gt; Peter
+    [lastname] =&gt; Griffin
+    [age] =&gt; 41
+)</pre> 
+   <p>File <a href="demo.php">demo.php</a>.</p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

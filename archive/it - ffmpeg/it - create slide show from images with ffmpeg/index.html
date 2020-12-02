@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ffmpeg, slide">
+    <title>Tạo slide show từ hình ảnh với ffmpeg</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Tạo slide show từ hình ảnh với ffmpeg</h2>
+      <p>Bắt đầu</p>
+      <p>Giả sử chúng ta có một thư mục chứa các ảnh cùng một định dạng và theo
+      </p>
+      <p>Thêm audio</p>
+      <p>Thêm transition</p>
+      <p>Giả sử chúng ta </p>
+      <p>Có nhiều bạn đang muốn làm slideshow video từ hình ảnh và file âm thanh
+        hiện có.</p>
+      <h1>Basic examples</h1>
+      <p>Bạn có thể tạo một video bằng cách thêm nhiều images liên tục, hoặc sử
+        dụng glob pattern hay thông qua piping, hay concat demuxer. Ngoài ra bạn
+        cũng có thể làm video từ một hình ảnh.</p>
+      <h3>Sequential</h3>
+      <p>Trong ví dụ, images đầu vào là những images tuần tự có tên là: <code>img001.png</code>,
+        <code>img002.png</code>, <code>img003.png</code>,...</p>
+      <pre>ffmpeg -framerate 24 -i img%03d.png output.mp4</pre>
+      <p>Trong đó:</p>
+      <ul>
+        <li>Khi output sử dụng chuẩn H.264, thêm <code>-vf format=yuv420p</code>
+          hay <code>-pix_fmt yuv420p</code> sẽ đảm bảo người sử dụng có thể
+          decode nội dung video. Xem thêm <a href="https://trac.ffmpeg.org/wiki/Slideshow#Colorspaceconversionandchromasub-sampling">colorspace
+            and chroma-subsampling</a> để biết thêm thông tin.</li>
+        <li>Nếu <code>-framerate</code> option bị bỏ qua thì mặc định input và
+          output framerate là 25 frames per second. Xem thêm <a href="https://trac.ffmpeg.org/wiki/Slideshow#Framerates">Frame
+            rates</a> để biết thêm.</li>
+      </ul>
+      <h3>Starting with a specific image</h3>
+      <p>Trong ví dụ, video được tạo từ hình <code>img126.png</code> thì sử
+        dụng tùy chọn <code>-start_number</code>:</p>
+      <pre>ffmpeg -start_number 126 -i img%03d.png -pix_fmt yuv420p out.mp4</pre>
+      <h3>Glob pattern</h3>
+      <p>Bash-style globbing (* đại diện cho bất kỳ số ký tự nào) hữu ích nếu
+        hình ảnh của bạn là tuần tự nhưng không nhất thiết theo thứ tự số thứ tự
+        như trong ví dụ trước.</p>
+      <pre>ffmpeg -framerate 10 -pattern_type glob -i '*.jpg' -c:v libx264 -pix_fmt yuv420p out.mp4</pre>
+      <p>Glob không được sử dụng trong Window.</p>
+      <h3>Pipe</h3>
+      <p>Bạn có thể sử dụng <code>cat</code> hay các command tool khác để pipe
+        to ffmpeg:</p>
+      <pre>cat *.png | ffmpeg -f image2pipe -i - output.mkv</pre>
+      <h3>Concat demuxer</h3>
+      <p>Bạn có thể sử dụng <a href="https://ffmpeg.org/ffmpeg-formats.html#concat">concat
+          demuxer</a> để tự sắp xếp thứ tự các hình ảnh và mở rộng thêm thời
+        gian xuất hiện của từng ảnh.</p>
+      <p>Bạn tạo một file input.txt với cấu trúc như sau:</p>
+      <pre>file '/path/to/dog.png'
+duration 5
+file '/path/to/cat.png'
+duration 1
+file '/path/to/rat.png'
+duration 3
+file '/path/to/tapeworm.png'
+duration 2
+file '/path/to/tapeworm.png'
+</pre>
+      <p>(Do không rõ ràng, hình ảnh cuối cùng phải xuất hiện 2 lần – lần thứ 2
+        không cần chỉ định thời gian)</p>
+      <p>Chạy <tt>ffmpeg</tt> command:</p>
+      <pre>ffmpeg -f concat -i input.txt -vsync vfr -pix_fmt yuv420p output.mp4</pre>
+      <h3>Single image</h3>
+      <p>Ví dụ, tạo một output video có thời gian 30s, bằng thông số -t 30:</p>
+      <pre>ffmpeg -loop 1 -i img.jpg -c:v libx264 -t 30 -pix_fmt yuv420p out.mp4</pre>
+      <h2>Additional Info</h2>
+      <h3>Frame rates</h3>
+      <p>Bạn có thể chỉ định two frame rates: input and output.</p>
+      <p>Đặt thông số -framerate input option (before -i). Mặc định options
+        –framerate nếu không tồn tại thì đặt mặc định -framerate 25. Output
+        frame rate cho video stream bằng cách setting <code>-r</code> after <code>-i</code>
+        hay sử dụng fps filter. Nếu bạn muốn đặt input và output framerate giống
+        nhau thì bạn chỉ cần khi báo input <code>-framerate</code>, output
+        framerate sẽ kế thừa giá trị tương tự. (nghĩa là bạn có thể bỏ qua thông
+        số <code>-r</code>).</p>
+      <p>Bằng cách sử dụng một tỉ lệ khung hình cho input and output bạn có thể
+        kiểm soát thời gian mà mỗi đầu vào được hiển thị và cho <code>ffmpeg</code>
+        biết frame rate bạn muốn cho output file. Sẽ rất hữu ích nếu như trình
+        phát của bạn không thể xử lý tốc độ khung hình không chuẩn. Trong trường
+        hợp input -framerate thấp hơn output <code>-r</code> thì <code>ffmpeg</code>
+        sẽ tiến hành duplicate frames để đạt được khung hình mong muốn cho
+        output frame rate. Nếu input <code>-framerate</code> cao hơn output <code>-r</code>
+        thì <code>ffmpeg</code> sẽ drop frames để đạt được thông số output
+        framerate mong muốn.</p>
+      <p>Trong ví dụ mỗi image có thời gian tồn tại 5 seconds (nghịch đảo của
+        1/5 frames per second). Luồng video có tốc độ khung hình là 30 fps sẽ
+        tiến hành duplicating các frames cho phù hợp:</p>
+      <pre>ffmpeg -framerate 1/5 -i img%03d.png -c:v libx264 -r 30 -pix_fmt yuv420p out.mp4</pre>
+      <h3>If your video does not show the frames correctly</h3>
+      <p>Nếu bạn gặp sự cố, chẳng hạn như hình ảnh đầu tiên bị bỏ qua hoặc chỉ
+        hiển thị cho một khung, sau đó sử dụng fps video filter thay vì <code>-r</code>
+        cho output framerate (see <a title="defect: variable FPS incorrect frame length (closed: fixed)"
+          href="https://trac.ffmpeg.org/ticket/1578">ticket:1578</a> and <a title="defect: fps filter changes video length (closed: fixed)"
+          href="https://trac.ffmpeg.org/ticket/2674">ticket:2674</a> / <a title="defect: First image skipped when forcing output rate (closed: duplicate)"
+          href="https://trac.ffmpeg.org/ticket/3164">ticket:3164</a> for more
+        info): </p>
+      <pre>ffmpeg -framerate 1/5 -i img%03d.png -c:v libx264 -vf fps=25 -pix_fmt yuv420p out.mp4</pre>
+      <p>Ngoài ra, <a href="http://ffmpeg.org/ffmpeg-filters.html#format">​
+          format video filter</a> có thể được chèn vào <a href="http://ffmpeg.org/ffmpeg-filters.html#Filtergraph-syntax-1">​
+          filterchain</a> để thay thế <code>-pix_fmt yuv420p</code>. Ưu điểm
+        của phương pháp này là bạn có thể kiểm soát bộ lọc nào đi trước:</p>
+      <pre>ffmpeg -framerate 1/5 -i img%03d.png -c:v libx264 -vf "fps=25,format=yuv420p" out.mp4</pre>
+      <h3>Color space conversion and chroma sub-sampling</h3>
+      <p>Khi sử dụng mặc định thư viện<code> libx264</code>, và tùy thuộc vào
+        input, <code>ffmpeg</code> sẽ cố gắng tránh color subsampling. Về mặt
+        kĩ thuật, điều này được ưu tiên, nhưng tiếc là tất cả các video players,
+        ngoại trừ FFmpeg based players, và nhiều dịch vị video online chỉ hỗ trợ
+        YUV color space với 4:2:0 chroma subsampling. Sử dụng options <code>-pix_fmt
+          yuv420p</code> or <code>-vf format=yuv420p</code> sẽ tối đa tính
+        tương thích.</p>
+      <h3>Adding audio</h3>
+      <p>Nếu bạn muốn thêm audio (e.g. <tt>audio.wav</tt>) vào một image, bạn
+        cần <tt>-shortest</tt> để dừng lại lại sau khi audio stream dừng lại
+        .Bộ mã hóal AAC encoder được sử dụng trong ví dụ này, nhưng bạn có thể
+        sử dụng <a href="https://trac.ffmpeg.org/wiki/AACEncodingGuide">use any
+          other supported AAC encoder</a> :</p>
+      <pre>ffmpeg -loop 1 -i img.jpg -i audio.wav -c:v libx264 -c:a aac -b:a 192k -shortest out.mp4</pre>
+      <p>Nếu như file âm thanh được sử dụng một codec mà output container hỗ trợ
+        (e.g. MP3 audio in AVI or M4A/AAC audio in MP4), bạn có thể sử dụng <a
+          href="https://ffmpeg.org/ffmpeg.html#Stream-copy">stream copy</a>
+        (re-mux) thay vì re-encoding , sữ giữ lại được audio quality:</p>
+      <pre>ffmpeg -loop 1 -i img.jpg -i audio.m4a -c:v libx264 -c:a copy -shortest out.mp4</pre>
+      <h3>Tham khảo</h3>
+      <p><a href="https://chiaseall.com/lam-video-slideshow-bang-ffmpeg/">Làm
+          Video Slideshow bằng ffmpeg kết hợp với một hoặc nhiều file nhạc</a></p>
+      <p><a href="http://hamelot.io/visualization/using-ffmpeg-to-convert-a-set-of-images-into-a-video/">Using
+          ffmpeg to convert a set of images into a video</a></p>
+      <p><a href="https://trac.ffmpeg.org/wiki/Slideshow">Slideshow – FFmpeg</a></p>
+      <p><a href="https://github.com/tanersener/ffmpeg-video-slideshow-scripts">tanersener/ffmpeg-video-slideshow-scripts:
+          Shell scripts to create video slideshows using images</a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

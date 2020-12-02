@@ -1,0 +1,53 @@
+
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Typical setInterval Pattern</title>
+
+<script>
+
+var timer = 0;
+
+var PERIOD = 1000; // check for mail every second
+
+ 
+
+function onLoad() {
+
+timer = setInterval(checkEmail, PERIOD);
+
+}
+
+ 
+
+function checkEmail() {
+
+debugMessage("Checking email at " + new Date().toTimeString());
+
+}
+
+ 
+
+function debugMessage(s) {
+
+var p = document.createElement("p");
+
+p.appendChild(document.createTextNode(s));
+
+document.body.appendChild(p);
+
+}
+
+</script>
+
+</head>
+
+<body onload="onLoad()">
+
+</body>
+
+</html>

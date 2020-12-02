@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Arrow function</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Arrow function">
+ </head> 
+ <body> 
+  <article> 
+   <h1>ES6 Arrow Function</h1> 
+   <p>Arrow functon trong ECMAScript là kiểu cú pháp giúp đơn giản hoá việc việc định nghĩa hàm.</p> 
+   <h2>Cú Pháp Arrow Function</h2> 
+   <p>Trước khi sử dụng arrow function thì chúng ta hãy cùng xem cách định nghĩa một hàm JavaScript theo cách thông thường trước đây:</p> 
+   <pre><code>var sumNumbers = function (a, b) {
+    return a + b;
+}</code></pre> 
+   <p>Với tính năng arrow function trong ECMAScript 6 chúng ta có thể viết lại đoạn code trên như sau:</p> 
+   <pre><code>const sumNumbers = (a, b) =&gt; {
+    return a + b;
+}</code></pre> 
+   <p>Có 2 điểm bạn cần lưu ý ở cách viết trên:</p> 
+   <ul> 
+    <li>Từ khoá <code>function</code> được bỏ đi</li> 
+    <li>Thêm ký tự <code>=&gt;</code> (gần giống với mũi tên) đặt giữa dấu ngoặc kết thúc danh sách tham số <code>)</code> và dấu ngoặc bắt đầu logic của hàm <code>{</code></li> 
+   </ul> 
+   <p>Ngoài ra chúng ta thay từ khoá <code>var</code> bằng <code>const</code> để quy định rằng giá trị của <code>sumNumbers</code> sẽ không thay đổi (tất nhiên bạn có thể dùng <code>let</code> nếu muốn).</p> 
+   <h2>Giải Thích Cú Pháp</h2> 
+   <p>Rất nhiều lập trình viên cảm thấy cú pháp arrow function khó hiểu và thậm chí phức tạp hơn cú pháp định nghĩa hàm thông thường trong ECMAScript phiên bản trước. Để hiểu ý nghĩa của cú pháp arrow function thì chúng ta cần nhớ lại rằng về bản chất công dụng của một hàm đó là thực hiện các thao tác để biến đổi đầu vào (các tham số) để đưa ra một kết quả mới.</p> 
+   <p>Cùng xem lại ví dụ phía trên:</p> 
+   <pre><code>let sumNumbers = (a, b) =&gt; {
+    return a + b;
+}</code></pre> 
+   <ins data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-7490225591585331" data-ad-slot="1172433020"></ins> 
+   <br> 
+   <p>Ký tự <code>=&gt;</code> (tương tự một dấu mũi tên) mang ý nghĩa rằng chúng ta sẽ biến đối các tham số đầu vào <code>a</code> và <code>b</code> ớ phía trước mũi tên và kết quả của sự chuyển đổi này được đặt ở phía sau mũi tên.</p> 
+   <h2>Hàm Với Một Tham Số Duy Nhất</h2> 
+   <p>Đối với các hàm được định nghĩa chỉ với một tham số thì bạn có thể bỏ qua cặp dấu ngoặc <code>()</code>:</p> 
+   <pre><code>let doubleNumber = a =&gt; {
+    return a * 2;
+}</code></pre> 
+   <p>Tuy nhiên nếu hàm không có đối số nào thì chúng ta vẫn phải sử dụng <code>()</code>:</p> 
+   <pre><code>let sayHello =&gt; () {
+    console.log("Hello everyone!");
+}</code></pre> 
+   <h2>Trả Về Giá Trị (Return Value)</h2> 
+   <p>Đối với các hàm mà bên trong đó chỉ chứa một câu lệnh duy nhất và câu lệnh này dùng để trả về giá trị cho hàm như ví dụ ở trên:</p> 
+   <pre><code>let sumNumbers = (a, b) =&gt; {
+    return a + b;
+}</code></pre> 
+   <p>Thì chúng ta có thể viết sử dụng cú pháp ngắn hơn sau:</p> 
+   <pre><code>let sumNumbers = (a, b) =&gt; a + b;</code></pre> 
+   <p>------------------------------</p> 
+   <p><a href="arrow-function.js">arrow-function.js</a></p> 
+   <p></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

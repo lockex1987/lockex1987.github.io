@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="sso, cookie, session, login">
+    <title>Single Sign-on</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Single Sign-on</h2>
+      <h3>Single Sign On (SSO) là gì?</h3>
+      <p>Một cách đơn giản SSO nghĩa là khi người dùng đăng nhập vào một hệ
+        thống, họ sẽ đăng nhập vào tất cả các hệ thống khác liên quan.</p>
+      <p>Một ví dụ điển hình cho việc ứng dụng thuật ngữ này là Google. Google
+        sử dụng cho những sản phẩm của họ như: Gmail, YouTube, Maps... Điều này
+        được thực hiển bởi một "dịch vụ trung tâm" (trong trường hợp Google là <a
+          href="https://accounts.google.com" target="_blank">accounts.google.com</a>).</p>
+      <br>
+      <h3>Xác thực SSO</h3>
+      <p>Ban đầu, chúng ta có hai ứng dụng ở domain1.com và domain2.com. Mỗi ứng
+        dụng tự quản lý đăng nhập bằng cookie của trình duyệt.</p>
+      <p><img src="https://cdn.auth0.com/blog/sso/non-sso-scenario.png"></p>
+      <p>Chúng ta có thể chia sẻ cookie giữa hai domain nếu cả hai có cùng một
+        root. Ví dụ domain thứ nhất là <code>xxx.abc.com</code> và domain thứ
+        hai là <code>yyy.abc.com</code>. Chúng ta có thể thiết lập cookie cho
+        root là <code>.abc.com</code>.</p>
+      <p>Nếu hai ứng dụng không cùng domain thì không thể chia sẻ cookie.</p>
+      <p><img src="https://cdn.auth0.com/blog/sso/same-origin-policy-forbids-this.png"></p>
+      <p>Để giải quyết vấn đề, chúng ta có thể thêm một ứng dụng đăng nhập tập
+        trung.</p>
+      <p><img src="https://cdn.auth0.com/blog/sso/using-central-auth-domain.png"></p>
+      <p>Bất cứ khi nào người dùng tới một domain yêu cầu phải xác thực, anh ta
+        hay cô ta sẽ được chuyển đến domain xác thực (authentication domain).
+        Nếu người dùng đã đăng nhập tại domain xác thực, anh ta hay cô ta sẽ
+        ngay lập tức được chuyển hướng trở lại domain gốc với token để xác thực
+        các request tiếp theo.</p>
+      <p><img src="https://cdn.auth0.com/blog/sso/typical-sso-v2.png"></p>
+      <h3>Mô hình</h3>
+      <p>Chúng ta sẽ thử trên 2 app: Passport và Consumer.</p>
+      <p>Ứng dụng Consumer là ứng dụng tập trung vào nghiệp vụ của chúng ta.
+        Việc xác thực được thực hiện qua Passport.</p>
+      <p>Ứng dụng Passport cần có 3 chức năng sau:</p>
+      <ul>
+        <li>Đăng nhập.
+          <ul>
+            <li>https://passport.cttd.tk/login?app=consumer.cttd.tk</li>
+          </ul>
+        </li>
+        <li>Đổi password sau khi đăng nhập. Có thể đổi thêm avatar.
+          <ul>
+            <li>https://passport.cttd.tk/change-password</li>
+          </ul>
+        </li>
+        <li>Quên mật khẩu
+          <ul>
+            <li>https://passport.cttd.tk/reset-password</li>
+          </ul>
+        </li>
+      </ul>
+      <p>Ngoài ra có thể thêm app vsa-admin để quản lý người dùng: thêm, sửa,
+        xóa, đổi password; quản lý các app tương tự Consumer do người quản trị
+        thực hiện.</p>
+      <h3>Luồng chạy chính của hệ thống sử dụng SSO</h3>
+      <p>Khi bạn đăng nhập lần đầu tiên, cookie được khởi tạo ở "dịch vụ trung
+        tâm", sau đó khi bạn truy cập vào hệ thống thứ hai thì trình duyệt sẽ
+        chuyển hướng tới trung tâm nhưng bạn đã có cookie khi đăng nhập từ trước
+        nên điều đó có nghĩa là bạn đã đăng nhập thành công vào các hệ thống còn
+        lại.</p>
+      <ul>
+        <li>Người dùng truy cập Consumer mà chưa đăng nhập</li>
+        <li>Consumer redirect người dùng tới Passport cho việc xác minh</li>
+        <li>Người dùng đăng nhập vào Passport</li>
+        <li>Passport lưu thông tin đăng nhập của người dùng ở nội tại ứng dụng
+          Passport</li>
+        <li>Passport redirect người dùng trở lại Consumer với một <code>token</code>
+          được sinh ra ngẫu nhiên</li>
+        <li><strong>Consumer sử dụng <code>token</code> đó để tạo lời gọi API
+            tới Passport cùng với ID và Secret Key tạo nên <code>Access Token</code></strong></li>
+        <li><strong>Những request sau được xác minh thông qua <code>Access
+              Token</code></strong></li>
+        <li>Consumer sử dụng token đó để gọi API của Passport, được trả về thông
+          tin của người dùng</li>
+        <li>Consumer lưu thông tin đăng nhập của người dùng ở nội tại ứng dụng
+          Consumer</li>
+        <li>Đăng xuất xóa bỏ session ở Consumer cũng như Passport</li>
+      </ul>
+      <h3>Chú ý</h3>
+      <p>Nếu các ứng dụng con mà triển khai trên các sub-domain khác nhau thì
+        chúng ta có thể áp dụng phương pháp share cookie cho đơn giản.</p>
+      <p>Chúng ta có thể tùy chỉnh màn hình đăng nhập dựa vào app truyền vào,
+        tạo cảm giác mỗi ứng dụng có một trang đăng nhập khác nhau.</p>
+      <p>Khi bản thân passport lại sử dụng API của một bên nữa thì passport sẽ
+        phải lưu tooken trong session hoặc cookie.</p>
+      <p>Đúng là không có mô hình nào là tuyệt đối. Chúng ta cần hiểu các nguyên
+        lý và áp dụng tùy chỉnh trong từng trường hợp cụ thể.</p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

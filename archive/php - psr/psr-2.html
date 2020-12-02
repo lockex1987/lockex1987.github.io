@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PSR-2">
+    <title>PSR-2</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>PSR-2 Hướng dẫn trình bày code PHP</h2>
+      <p>Trình bày theo quy tắc ở đây áp dụng cho tất cả các project, giúp cho
+        code sáng sủa, dễ hiểu, dễ bảo trì hơn.</p>
+      <h3>Tổng quan về trình bày code PHP</h3>
+      <ul>
+        <li>Code PHẢI tuân thủ PSR-1</li>
+        <li>Code PHẢI sử dụng 4 ký tự space để lùi khối (không dùng tab)</li>
+        <li>Mỗi dòng code PHẢI dưới 120 ký tự, NÊN dưới 80 ký tự</li>
+        <li>PHẢI có 1 dòng trắng sau namespace, và PHẢI có một dòng trắng sau
+          mỗi khối code</li>
+        <li>Ký tự mở lớp { PHẢI ở dòng tiếp theo, và đóng lớp } PHẢI ở dòng tiếp
+          theo của thân class</li>
+        <li>Ký tự { cho hàm PHẢI ở dòng tiếp theo, và ký tự } kết thúc hàm PHẢI
+          ở dòng tiếp theo của thân hàm</li>
+        <li>Các visibility (public, private, protected) PHẢI được khai báo cho
+          tất cả các hàm và các thuộc tính của lớp</li>
+        <li>Các từ khóa điều khiển khối (if, elseif, else) PHẢI có một khoảng
+          trống sau chúng; hàm và lớp thì KHÔNG ĐƯỢC làm như vậy</li>
+        <li>Mở khối { cho cấu trúc điều khiển PHẢI trên cùng một dòng; và đóng
+          khối này } với ở dòng tiếp theo của thân khối.</li>
+        <li>Hằng số <code>true</code>, <code>false</code>, <code>null</code>
+          PHẢI viết với chữ thường</li>
+        <li>Từ khóa <code>extends</code> và <code>implements</code> phải cùng
+          dòng với <code>class</code></li>
+        <li><code>implements</code> nhiều lớp, thì mỗi lớp trên một dòng</li>
+        <li>Keyword <code>var</code> KHÔNG ĐƯỢC dùng sử dụng khai báo property</li>
+        <li>Tên property KHÔNG NÊN có tiền tố _ nhằm thể hiện thuộc protect hay
+          private</li>
+        <li>Tham số cho hàm, phương thức: KHÔNG được thêm space vào trước dấu <code>,</code>
+          và <code>PHẢI</code> có một space sau <code>,</code>. Các tham số CÓ
+          THỂ trên nhiều dòng, nếu làm như vậy thì PHẢI mỗi dòng 1 tham số.</li>
+        <li><code>abstract</code>, <code>final</code> PHẢI đứng trước
+          visibility, còn <code>static</code> phải đi sau</li>
+      </ul>
+      <p> </p>
+      <p>Ví dụ:</p>
+      <pre>&lt;?php
+namespace Vendor\Package;
+
+use FooInterface;
+use BarClass as Bar;
+use OtherVendor\OtherPackage\BazClass;
+
+class Foo extends Bar implements FooInterface
+{
+    public function sampleFunction($a, $b = null)
+    {
+        if ($a === $b) {
+            bar();
+        } elseif ($a &gt; $b) {
+            $foo-&gt;bar($arg1);
+        } else {
+            BazClass::bar($arg2, $arg3);
+        }
+    }
+
+    final public static function bar()
+    {
+        // method body
+    }
+}</pre>
+      <pre>&lt;?php
+namespace Vendor\Package;
+
+use FooClass;
+use BarClass as Bar;
+use OtherVendor\OtherPackage\BazClass;
+
+// ... additional PHP code ...</pre>
+      <pre>&lt;?php
+namespace Vendor\Package;
+
+use FooClass;
+use BarClass as Bar;
+use OtherVendor\OtherPackage\BazClass;
+
+class ClassName extends ParentClass implements
+    \ArrayAccess,
+    \Countable,
+    \Serializable
+{
+    // constants, properties, methods
+}</pre>
+      <h3>Gọi phương thức và hàm</h3>
+      <p>Khi gọi một hàm hay phương thức của lớp, KHÔNG ĐƯỢC có khoảng trắng
+        giữa phương thức, hàm và toán tử và dấu <code>(</code> đồng thời không
+        được có khoảng trắng sau <code>(</code>. không có khoảng trắng trước ),
+        như phần trên không được có khoảng trắng trước <code>,</code> nhưng
+        PHẢI có khoảng trắng sau <code>,</code>.</p>
+      <pre>&lt;?php
+bar();
+$foo-&gt;bar($arg1);
+Foo::bar($arg2, $arg3);</pre>
+      <pre>&lt;?php
+$foo-&gt;bar(
+    $longArgument,
+    $longerArgument,
+    $muchLongerArgument
+);</pre>
+      <h3>Các lệnh điều khiển</h3>
+      <h4>if-else, switch-case</h4>
+      <pre>&lt;?php
+if ($expr1) {
+    // if body
+} elseif ($expr2) {
+    // elseif body
+} else {
+    // else body;
+}</pre>
+      <pre>&lt;?php
+switch ($expr) {
+    case 0:
+        echo 'First case, with a break';
+        break;
+    case 1:
+        echo 'Second case, which falls through';
+        // no break
+    case 2:
+    case 3:
+    case 4:
+        echo 'Third case, return instead of break';
+        return;
+    default:
+        echo 'Default case';
+        break;
+}</pre>
+      <h4>while</h4>
+      <pre>&lt;?php
+while ($expr) {
+    // structure body
+}</pre>
+      <h4>for</h4>
+      <pre>&lt;?php
+for ($i = 0; $i &lt; 10; $i++) {
+    // for body
+}</pre>
+      <pre>&lt;?php
+foreach ($iterable as $key =&gt; $value) {
+    // foreach body
+}</pre>
+      <h4>try-catch</h4>
+      <pre>&lt;?php
+try {
+    // try body
+} catch (FirstExceptionType $e) {
+    // catch body
+} catch (OtherExceptionType $e) {
+    // catch body
+}</pre>
+      <h4>Trình bày Closure</h4>
+      <pre>&lt;?php
+$closureWithArgs = function ($arg1, $arg2) {
+    // body
+};
+
+$closureWithArgsAndVars = function ($arg1, $arg2) use ($var1, $var2) {
+    // body
+};</pre>
+      <h3>Lời kết cho PSR-2</h3>
+      <p>Có nhiều thành phần cần thực hành để trình bày code PHP như hướng dẫn,
+        nếu ngay từ đầu học PHP bạn tuân thủ nó, nó trở thành thói quen và không
+        còn gò bó nữa, ngược lại tạo cho bạn thói quen viết code đúng chuẩn, dễ
+        đọc, đẹp. Vậy, ngay từ bây giờ hãy lưu tâm đến PSR-2 khi gõ các dòng
+        code PHP nhé.</p>
+      <p></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="resize, convert, modify, image processing, imagemagick">
+    <title>Chỉnh sửa ảnh</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Chỉnh sửa ảnh</h2>
+      <p>ImageMagick là một bộ tiện ích để chỉnh sửa và làm việc với ảnh.
+        ImageMagick có thể thực hiện nhanh các thao tác trên một ảnh từ một
+        terminal, thực hiện xử lý ảnh đồng loạt, hoặc là tích hợp với một bash
+        script (hoặc chương trình Java).</p>
+      <p>ImageMagick có thể thực hiện nhiều loại thao tác.</p>
+      <p>Lệnh convert lấy một ảnh, thực hiện các hành động trên nó, và lưu nó
+        với tên mà bạn chỉ định.</p>
+      <h3>Convert giữa các định dạng</h3>
+      <p>Chỉ định định dạng bằng tên file:</p>
+      <pre>convert howtogeek.png howtogeek.jpg</pre>
+      <h3>Resize kích thước</h3>
+      <pre>convert example.png -resize 200×100 example.png</pre>
+      <p>ImageMagick sẽ cố gắng giữ lại tỷ lệ chiều rộng-chiều cao của ảnh. Nó
+        sẽ chỉnh ảnh sao cho vừa với vùng 200x100, nhưng ảnh có thể không chính
+        xác là 200x100. Nếu bạn muốn bắt buộc ảnh phải có kích thước như vậy -
+        kể cả nó làm sai tỷ lệ chiều rộng với chiều cao - thì hãy thêm dấu chấm
+        than vào kích thước:</p>
+      <pre>convert example.png -resize 200×100! example.png</pre>
+      <p>Nếu bạn chỉ chỉ định chiều rộng hoặc chiều cao thì ImageMagick sẽ
+        resize ảnh với chiều rộng hoặc chiều cao đó trong khi giữ nguyên tỷ lệ.</p>
+      <p>Ví dụ reszie với chiều rộng là 200:</p>
+      <pre>convert example.png -resize 200 example.png</pre>
+      <p>Resize với chiều cao là 100:</p>
+      <pre>convert example.png -resize x100 example.png</pre>
+      <p>Bạn có thể chỉ định mức compress của ảnh JPEG. </p>
+      <pre>convert howtogeek.png -quality 95 howtogeek.jpg</pre>
+      <p>Mức độ giữa 1 và 100. ImageMagick sử dụng mức độ của ảnh đầu vào nếu có
+        thể. Nếu không, ImageMagick sử dụng giá trị mặc định 92.</p>
+      <p>Giữ định dạng và kích thước, nhưng giảm chất lượng (để giảm dung
+        lượng):</p>
+      <pre>convert input.png -quality 75 output.jpg</pre>
+      <p>Tùy thuộc vào ảnh để đưa ra con số quality hợp lý. JPEG tốt nhất cho
+        các ảnh thật trong cuộc sống, như là ảnh chụp người, phong cảnh. Nó
+        không phù hợp với logo, screenshot hoặc các ảnh khác mà cần độ nét giữa
+        sáng và tối (khi đó hãy dùng PNG).</p>
+      <h3>Batch xử lý nhiều file</h3>
+      <p>Có thể dùng vòng for của Shell script:</p>
+      <pre>for i in $( ls *.jpg); do convert -resize 50% $i re_$i; done</pre>
+      <p>Hoặc sử dụng lệnh mogrify:</p>
+      <pre>mogrify -path output/ -resize 300 *.jpg</pre>
+      <p>Lệnh trên lấy tất cả các file JPG trong thư mục hiện tại, resize chúng
+        xuống còn rộng 300 pixel và lưu chúng vào thư mục output.</p>
+      <pre>for f in *; do echo "$f"; mkdir "$f.resized"; mogrify -path "$f.resized" -quality 75 -format jpg -resize 50% "$f"/*; done</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

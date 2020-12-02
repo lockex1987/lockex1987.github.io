@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>CKEditor 5 - Inline editor</title>
+    <!--script src="https://cdn.ckeditor.com/ckeditor5/1.0.0-alpha.1/inline/ckeditor.js"></script-->
+	<script src="js/ckeditor-inline.js"></script>
+</head>
+<body>
+    <h1>Inline editor</h1>
+    <div id="editor">
+        <p>This is some sample content.</p>
+    </div>
+
+    <script>
+        InlineEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+</body>
+</html>

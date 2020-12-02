@@ -1,0 +1,130 @@
+﻿<HTML>
+<HEAD>
+<TITLE>Ho Ngoc Duc's Vietnamese lunar calendar</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="keywords" content="lunar calendar, am lich, Vietnam, Ho Ngoc Duc">
+</HEAD>
+<BODY>
+
+<!--
+<H1 align=center>Âm lịch Việt Nam</a></H1>
+
+<p>
+-->
+<TABLE ALIGN="center" BORDER=5 CELLSPACING=5 CELLPADDING=0>
+<TR>
+	<TD>
+		<APPLET CODE=duc.calendar.LunarCalendar.class ARCHIVE=lunar45.jar WIDTH=450 HEIGHT=450>
+		Java applet support required to display the lunar calendar.
+		</APPLET>
+	</TD>
+</TR>
+</TABLE>
+</p>
+
+<h3>Các chức năng cơ bản</h3>
+
+Chương trình <b>VNCal</b> hiển thị một tháng dương lịch với ngày âm lịch Việt Nam tương ứng. Với chương trình này, bạn có thể dễ dàng đổi ngày dương lịch ra ngày âm lịch và ngược lại. Ngoài ra, bạn có thể dùng chương trình để xem ngày, tính giờ; xem Can-Chi của ngày tháng âm lịch; tính giờ mặt trời mọc, lặn và giờ Chính Ngọ cho một địa điểm bất kỳ, so sánh âm lịch Việt Nam với âm lịch dùng tại các nước khác (Trung Quốc, Nhật Bản...), tính lịch âm cho một múi giờ bất kỳ v.v.
+
+<p>Khi khởi động, chương trình sẽ hiển thị tháng hiện tại. Trong mỗi ô sẽ hiện ngày dương lịch và ngày âm tương ứng. Tên các Khí (Lập xuân, Thanh minh, Hạ chí...) cũng được hiện lên trong ngày Khí đó. Ngày âm lịch được in bằng màu xanh ở góc dưới bên phải trong ô. Tháng nhuận âm lịch được đánh dấu với chữ 'N' và hiển thị bằng màu đỏ, ví dụ như <font color="#FF1F00">12/2&nbsp;N</font>. Ngày hiện tại được thể hiện trên màu nền khác. Thông tin đầy đủ cho ngày này được thể hiện khi nhấn chuột vào ngày đó: ngày tháng năm dương lịch, Can-Chi của ngày, tháng, năm âm lịch; <a href="http://www.informatik.uni-leipzig.de/~duc/sach/phongtuc/cau_109.html">trực</a>, <a href="http://www.informatik.uni-leipzig.de/~duc/sach/phongtuc/cau_109.html"> sao Nhị thập bát tú</a>, sao Hoàng đạo và <a href="http://www.informatik.uni-leipzig.de/~duc/sach/phongtuc/cau_111.html">giờ hoàng đạo</a> cho ngày tương ứng. Để xem thông tin về một ngày khác trong tháng, hãy nhấn chuột vào ô hiển thị ngày đó. Nền của ô đó sẽ chyển sang màu khác, và thông tin về ngày được chọn sẽ hiện lên.
+
+<p>Để hiện tháng khác, bạn hãy chọn tháng và năm rồi gõ "Enter" hoặc bấm nút <b>Display</b>. Các năm trước Công nguyên (TCN) được nhập như sau: năm 1 TCN là 0, năm 2 TCN là -1, năm 3 TCN là -2 v.v. Các nút &lt;&lt; và &gt;&gt; được dùng để chuyển sang tháng trước hoặc tháng sau. Bạn cũng có thể sử dụng các phím mũi tên ("arrow keys") để chọn một ngày khác, phím PgUp/PgDown để chuyển sang tháng trước/tháng sau và HOME/END để chuyển tới năm trước/năm sau. Để chuyển ngược trở lại ngày hiện tại hãy nhấn nút <b>Today</b>.
+
+<p>Nếu bạn muốn in lịch tháng hay lịch năm, hãy sử dụng chức năng in của chương trình duyệt Web (browser) với <a href="http://www.ifis.uni-luebeck.de/~duc/amlich/JavaScript/">chương trình lịch JavaScript</a>.
+
+<h3>Cách tính âm lịch Việt Nam</h3>
+
+<p>Âm lịch Việt Nam là một loại lịch thiên văn, có nguồn gốc từ Trung Quốc. Ngày tháng âm lịch được xác định dựa trên vị trí tương đối của mặt trời, mặt trăng và trái đất. Cách tính toán lịch khá phức tạp, bạn có thể tham khảo thêm tại đây:
+<a href="calrules.html">Cách tính âm lịch Việt Nam</a> (in Vietnamese) | 
+<a href="calrules_en.html">Rules of Vietnamese lunar calendar</a> (in English) .
+
+<p> Các nguyên tắc tính âm lịch Việt Nam hiện đại mới được áp dụng trong cả nước từ 1976. Nếu ta áp dụng các nguyên tắc này để tính lịch cho các năm trước thì sẽ có một chương trình lịch thiên văn. Tuy nhiên kết quả tính toán sẽ chênh lệch đôi chút so với lịch chính thức được dùng vì lịch chính thức dùng trước đây (lịch pháp định, lịch lịch sử) khác với âm lịch hiện đại ở 2 điểm cơ bản: (1) múi giờ dùng để tính lịch và (2) độ chính xác của các công thức thiên văn để tính vị trí của mặt trời và mặt trăng. Ví dụ, hiện nay âm lịch được tính cho múi giờ của Việt Nam (múi giờ thứ 7, GMT+7h) nhưng trước đây thường dùng múi giờ thứ 8 để tính. Xem <a href="histcal.html">Âm lịch Việt Nam qua các thời kỳ lịch sử</a> để biết thêm chi tiết.
+
+<p>Để tính âm lịch cho các năm từ 1975 về trước, chương trình âm lịch này đã phục chế âm lịch Việt Nam cho các thế kỷ trước dựa trên kết quả các công trình nghiên cứu của GS. Hoàng Xuân Hãn. <!--Kết quả của lịch lịch sử đã được kiểm chứng cho các năm từ 1301 trở đi.-->
+
+<p>Theo GS. Hoàng Xuân Hãn, trong quá khứ có hai quãng thời gian dài mà âm lịch Việt Nam có nhiều điểm khác biệt với âm lịch Trung Quốc: từ khoảng 1080 đến 1300 và từ 1645 đến 1812. Nguyên nhân chủ yếu là trong những giai đoạn này ở Trung Quốc đã cải cách lịch trong khi ở Việt Nam vẫn dùng phép lịch cũ để tính âm lịch. Từ 1968 trở đi Việt Nam tính âm lịch với múi giờ thứ 7 trong khi tại Trung Quốc người ta dùng múi giờ thứ 8, do đó âm lịch của hai nước thỉnh thoảng có khác biệt. Ví dụ năm 1984 lịch Việt Nam không có tháng nhuận trong khi lịch Trung Quốc nhuận tháng 10. (Từ 1968 đến 1975 miền Bắc Việt Nam dùng lịch âm tính với múi giờ thứ 7 trong khi ở miền Nam vẫn dùng âm lịch Trung Quốc, do vậy thỉnh thoảng có sự chênh lệch giữa lịch của hai miền.) Chương trình VNCal hiển thị thêm ngày âm theo lịch Trung Quốc nếu như lịch Việt Nam và lịch Trung Quốc khác nhau trong ngày đó và đánh dấu những ngày này bằng dấu <font color="#red">X</font> ở góc trên bên phải của ô hiện ngày. 
+
+<p>Ví dụ: xem lịch tháng 12 năm 1974. Trong ô hiện ngày 13/12/1974 có đánh dấu <font color="#red">X</font> ở góc trên bên phải. Nhấn chuột vào ô này sẽ hiển thị Can Chi của ngày 13/12/1974 cùng vài thông tin khác. Ngoài ra còn có:
+<pre>
+Trong ngày này lịch âm Việt Nam và Trung Quốc khác nhau:
+VN: Ngày 1/11 âm lịch
+TQ: Ngày 30/10 âm lịch
+(Lịch dùng tại miền Nam giống lịch TQ)
+</pre>
+
+Điều này có nghĩa là: ngày 13/12/1974 là ngày 1/11 âm lịch theo lịch dùng tại miền Bắc Việt Nam nhưng lại là ngày 30/10 theo lịch Trung Quốc (được dùng tại miền Nam.) Nếu bạn sinh ngày 15/11 năm Giáp Dần (1974) âm lịch thì ngày dương lịch tương ứng sẽ là 28/12/1974 nếu bạn sinh tại miền Nam, còn nếu bạn sinh tại miền Bắc thì ngày sinh theo dương lịch là 27/12/1974.
+
+<H3>Xem âm lịch các nước khác</H3>
+
+<p>Âm lịch các nước Đông Á khác như Trung Quốc, Hàn Quốc, Nhật Bản... được tính theo các nguyên tắc giống lịch Việt Nam nhưng sử dụng múi giờ khác: Trung Quốc dùng múi giờ thứ 8, Nhật Bản dùng múi giờ thứ 9 v.v. Để tính lịch âm cho các nước này bạn có thể dùng chức năng lịch thiên văn của chương trình (chọn "<b>Astro Calendar</b>" ở menu góc trên bên trái). Ở ô "GMT+" hãy điền số phút chênh lệch giữa GMT và múi giờ của nơi mà bạn muốn tính lịch rồi bấm "<b>Display</b>". Chẳng hạn, Việt Nam đi trước GMT 7h, như thế giờ Việt Nam nhanh hơn GMT 420 phút, ta sẽ điền số 420 vào ô "GMT+". Tương tự, để tính lịch Trung Quốc ta điền số 480; để tính âm lịch Nhật Bản điền 540. Ở những vùng mà giờ đi sau GMT ta sẽ điền một số âm vào ô "GMT+": với California phải điền <code>-480</code> (vì múi giờ California là GMT-8h, tức là sau GMT 480 phút), ở Houston, TX điền <code>-360</code>.
+</p>
+
+<H3>Công cụ lịch</H3>
+
+<p>Với chức năng "Công cụ lịch" ta có thể tính toán nhiều thông số liên quan tới âm lịch: tất cả các ngày Tết trong 100 năm, các tháng nhuận, thời điểm Sóc, các Tiết/Khí, thời điểm mặt trời mọc/lặn... Sau khi chọn "Calendar Tool" bạn có thể chọn tháng, năm và sử dụng các chức năng sau:
+
+<ul>
+
+<li><b>Lunar date/time</b>: Tính ngày âm lịch cho ngày tháng và địa điểm đã chọn. Hiển thị thông tin chi tiết về ngày giờ âm lịch. Bạn có thể chọn một trong những địa điểm cho sẵn hoặc chọn "Location" là "(Custom)" và điền vĩ độ vào ô "Latitude" và kinh độ vào ô "Longitude". Chức năng này có tính chất thử nghiệm: ngày tháng âm lịch được tính phụ thuộc vào cả kinh và vĩ độ, do đó âm lịch cho một nơi ở bán cầu Nam sẽ chênh lệch 6 tháng so với một nơi cùng kinh độ nhưng ở bán cầu Bắc.</li>
+
+<li><b>Show Solar Terms</b>: Tính các các thời điểm KHÍ (Trung khí và Tiết khí) cho năm đã chọn.</li>
+
+<li><b>Show New Moons</b>: Tính các các thời điểm Sóc cho năm đã chọn. Ngày chứa điểm Sóc là ngày đầu tháng âm lịch.</li>
+
+<li><b>New Year's (Official)</b>: Tính ngày Tết theo lịch pháp định (lịch dùng chính thức tại Việt Nam) cho 100 năm kể từ năm đã chọn.</li>
+
+<li><b>New Year's (Astronomical)</b>: Tính ngày Tết theo lịch thiên văn cho 100 năm kể từ năm đã chọn. Cần chọn múi giờ để tính lịch thiên văn bằng cách chọn một địa điểm cho sẵn hoặc điền kinh độ vào ô "Longitude".</li>
+
+<li><b>Leap Months (Official)</b>: Tính tất cả các tháng nhuận theo lịch pháp định (lịch dùng chính thức tại Việt Nam) cho 100 năm kể từ năm đã chọn.</li>
+
+<li><b>Leap Months (Astronomical)</b>: Tính tất cả các tháng nhuận theo lịch thiên văn cho 100 năm kể từ năm đã chọn. Cần chọn múi giờ để tính lịch thiên văn bằng cách chọn một địa điểm cho sẵn hoặc điền kinh độ vào ô "Longitude".</li>
+
+<li><b>Sun Rise/Transit/Set</b>: Tính thời điểm mặt trời mọc/lặn và giờ chính ngọ cho tháng và địa điểm đã chọn. Bạn có thể chọn một trong những địa điểm cho sẵn hoặc chọn "Location" là "(Custom)" và điền vĩ độ vào ô "Latitude" và kinh độ vào ô "Longitude".</li>
+
+</ul>
+
+Sau khi chọn chức năng hãy nhấn "Compute".
+
+<p><b>Ví dụ:</b> để tính giờ chính ngọ cho tháng 5/2000 tại Cần Thơ, hãy chọn chức năng <b>Sun Rise/Transit/Set</b>, điền năm 2000, chọn tháng 5, chọn địa điểm ("Location") là "(Custom)" và điền tọa độ của Cần Thơ. Kinh tuyến và vĩ tuyến của Cần Thơ có thể tìm thấy dễ dàng trên Internet, ví dụ như tại trang Web <a href="http://www.world-gazetteer.com/c/c_vn.htm">http://www.world-gazetteer.com</a>. Khi biết số liệu cho Cần Thơ ta sẽ điền: 105.78 vào ô "Longitude", 10.03 vào "Latitude" và "GMT+(min)" là 420. Khi nhấn "Compute", một bảng sẽ hiện lên với các cột sau: ngày tháng, giờ mặt trời mọc, giờ chính ngọ, giờ mặt trời lặn.
+
+<H3>Change log</H3>
+
+<ul>
+<li> 03/2007: Add name of hour. Display data on a new screen
+<li> 8/2006: some cached data corrected
+<li> 5/2005: Fixed bug in displaying time of sunrise/sunset.
+<li> 11/2004: Complete redesign. Many bugs fixed.
+<li> 9/2004: <a href="http://www.ifis.uni-luebeck.de/~duc/amlich/JavaScript/">JavaScript lunar calendar</a> released (valid 1800 - 2199)
+<li> 7/2004: Names of major/minor solar terms for years before 1582 corrected.
+<li> 5/2004: Minor corrections (date/time format, Full Moon indicator...)
+<li> 4/2004: Some additional calculations available. Sunrise/transit/sunset moved to Calendar tool (from month display window).
+<li> 3/2004: Fixed bug in LunarYear. Cached data for 900-1200 added. Calendar comparison for 1789-1802 (Tay Son-Nguyen)  and 1955-1975 (Bac-Nam). Compute sunrise, sunset and transit (chính ngọ) for any location.
+<li> 3/2004: <a href="histcal.html">True historical calendar</a> added (version 3.0).
+<li> 3/2004: Corrected calculation of leap month in 2033. <a href="calrules.html">Paper on calendar algorithms</a> added.
+<li> 10/2003: Added Rules for calculating Vietnamese lunar calendar in Vietnamese
+<li> 10/2003: Windows executable (<a href="../LunarCal.zip">LunarCal.exe</a>) available for download
+<li> 9/2003: Add button "Today" to change back to current day
+<li> 7/2003: show tru+.c of selected day and major and minor solar terms in the month. Merge 2 applets
+<li> 5/2003: add times of sunrise/sunset in Hanoi, Hue, Saigon. Let user select time zone for computation. Added <a href="http://www.informatik.uni-leipzig.de/~duc/Java/J2ME/">Lunar calendar for Palm and Lunar calendar for mobile phones</a>.
+<li> 5/2002: applet "Lunar calendar calculations" added
+<li> 2/2002: full month display
+<li> 8/2000: More accurate conversion with Calendrical Calculations Software Package
+<li> 2/1998: Initial version (calendar conversion applet)
+</ul>
+
+<hr>
+
+Chương trình âm lịch có thể được <a href="../amlich.zip">tải về</a> để sử dụng offline. Bạn cũng có thể tải <a href="http://www.informatik.uni-leipzig.de/~duc/Java/J2ME/">chương trình âm lịch cho thiết bị cầm tay</a> (như điện thoại di động và Palm PDAs). Ý kiến đóng góp có thể gửi cho tác giả 
+<a href="http://www.informatik.uni-leipzig.de/~duc">Hồ Ngọc Đức</a> hoặc đưa lên trao đổi trên <a href="http://jdictd.sourceforge.net/cgi-bin/yabb/YaBB.cgi">diễn đàn</a>.
+
+<table width=100% border=5 bgcolor="#C0FF00">
+<tr>
+<td width=33% align=center> <a href="http://www.informatik.uni-leipzig.de/~duc/"><b>Home</b></a> </td>
+<td width=33% align=center> <a href="http://www.informatik.uni-leipzig.de/~duc/Dict/"><b>Dictionary</b></a> </td>
+<td width=* align=center> <a href="http://jdictd.sourceforge.net/cgi-bin/yabb/YaBB.cgi"><b>Forum</b></a> </td>
+</tr>
+</table>
+
+
+</BODY>
+</HTML>

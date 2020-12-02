@@ -1,0 +1,23 @@
+{
+    "manifest_version": 2,
+    "name": "Clean HTML",
+    "description": "Chỉ giữ những thẻ cần thiết nhất",
+    "version": "1.0.0",
+    "permissions": [
+        "activeTab"
+    ],
+    "browser_action": {
+        "default_icon": {
+            "128": "images/128.png",
+            "32": "images/32.png",
+            "96": "images/96.png"
+        },
+        "default_title": "Clean"
+    },
+    "background": {
+        "scripts": [
+            "js/background.js"
+        ],
+        "persistent": false
+    }
+}

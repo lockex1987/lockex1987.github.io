@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Redux">
+    <title>Redux</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Redux</h2>
+      <p>Redux là một thư viện JS giúp quản lý trạng thái của ứng dụng.</p>
+      <p>Redux là độc lập với React, nhưng kết hợp hoàn hảo với React.</p>
+      <h3>Tại sao nên sử dụng Redux</h3>
+      <p>Giả sử chúng ta có một ứng dụng single page application gồm nhiều node
+        (component) như hình:</p>
+      <p><img src="images/tree1.png" alt=""></p>
+      <p>Giả sử có một hành động nào đó được kích hoạt ở node <code>d3</code>
+        và ta muốn thay đổi trạng thái (state) ở <code>d4</code> và <code>c3</code>
+        thì:</p>
+      <ul>
+        <li>luồng dữ liệu sẽ được truyền từ node <code>d3</code> trở về node <code>a</code></li>
+        <li>từ node <code>a</code> mới truyền được đến các node <code>d4</code>
+          và <code>c3</code></li>
+      </ul>
+      <p><img src="images/tree2.png" alt=""></p>
+      <p>Cập nhật trạng thái (state) cho node <code>d4</code>:
+        d3-c2-b1-a-b2-c4-d4</p>
+      <p>Cập nhật trạng thái (state) cho node <code>c3</code>: d3-c2-b1-a-b2-c3</p>
+      <p>Với những bài toàn nhỏ thì chúng ta hoàn toàn có thể dùng React để cập
+        nhật các trạng thái (state) một cách dễ dàng mà không cần dùng đến
+        Redux.</p>
+      <p>Nhưng nếu là một bài toàn lớn thì sao lúc này nếu chỉ sử dụng Reac để
+        cập nhật các trạng thái (state) thì thật sự là một khó khăn rất là lớn.
+        Từ những nhược điểm trên thì Redux ra đời nhằm khắc phục nhược điểm đó.</p>
+      <p><img src="images/tree3.png" alt=""></p>
+      <p>Từ hình vẽ ta thấy để giải quyết bài toán trên ta chỉ cần dispatch một
+        action từ node <code>d3</code> về <code>store</code> rồi <code>d4</code>
+        và <code>c3</code> chỉ cần connect tới <code>store</code> và cập nhật
+        data thay đổi thế là bài toán được giải quyết một cách dễ dàng.</p>
+      <h3>Cài đặt</h3>
+      <p>Để cài đặt Redux cho ứng dụng của bạn thì bạn chạy lệnh sau:</p>
+      <pre>npm install redux</pre>
+      <h3>Nguyên lý của Redux</h3>
+      <p>Redux được xây dựng dựa trên ba nguyên lý như sau:</p>
+      <ul>
+        <li>Trạng thái (state) của toàn bộ ứng dụng được lưu trong trong 1 store
+          duy nhất là 1 Object mô hình tree</li>
+        <li>Chỉ có 1 cách duy nhất để thay đổi trạng thái (state) đó là tạo ra
+          một action (là 1 object mô tả những gì xảy ra)</li>
+        <li>Để chỉ rõ trạng thái (state) tree được thay đổi bởi 1 action bạn
+          phải viết pure reducers</li>
+      </ul>
+      <p>Hình ảnh minh họa nguyên lý hoạt động của Redux:</p>
+      <p><img src="images/pipeline.gif" alt=""></p>
+      <h3>Cách sử dụng Redux cơ bản</h3>
+      <p>Nếu muốn sử dụng Redux, chúng ta cần nhớ bốn thành phần chính của
+        Redux:</p>
+      <ul>
+        <li>Store</li>
+        <li>Views</li>
+        <li>Actions</li>
+        <li>Reducers</li>
+      </ul>
+      <p>Chi tiết 4 thành phần được mô tả như sau.</p>
+      <p><strong>Store</strong>: Là nơi quản lý trạng thái (state), có thể truy
+        cập để lấy trạng thái (state) ra, update state hiện có, và listener để
+        nhận biết xem có thay đổi gì không, và cập nhật qua views.</p>
+      <pre>import { createStore } from 'redux';
+
+const store = createStore(myReducer);
+console.log('Default:', store);</pre>
+      <p>Đối tượng store có 3 phương thức quan trọn bạn cần chú ý đó là:</p>
+      <ul>
+        <li><code>getState()</code>: Giúp lấy ra state hiện tại</li>
+        <li><code>dispatch(action)</code>: Thực hiện gọi 1 action</li>
+        <li><code>subscrible(listener)</code>: Luôn lắng nghe xem có thay đổi gì
+          ko rồi ngay lập tức cập nhật ra View</li>
+      </ul>
+      <p><strong>Actions</strong>: nó là một object JS thuần túy, định nghĩa hai
+        thuộc tính lần lượt là:</p>
+      <ul>
+        <li><code>type</code>: kiểu của action, ví dụ như ‘TOGGLE_STATUS’</li>
+        <li><code>payload</code>: giá trị tham số mà action creator truyền lên</li>
+      </ul>
+      <pre>var action = {
+    type: 'TOGGLE_STATUS',
+    payload: // tham số
+};</pre>
+      <p><strong>Reducers</strong>: Khác với actions có chức năng là mô tả những
+        thứ gì đã xảy ra, nó không chỉ rõ state nào của response thay đổi, mà
+        việc này là do reducers đảm nhiệm, nó là nơi xác định state sẽ thay đổi
+        như thế nào, sau đó trả ra một state mới.</p>
+      <pre>var myReducer = (state = initialState, action) =&gt; {
+    if (action.type === 'TOGGLE_STATUS') {
+        let newState = {...state}
+        newState.status = !state.status;
+        return newState; // muc dich cua reducer la tra ra cai state moi
+    }<br>
+    return state;
+}</pre>
+      <p><strong>Views</strong>: Hiển thị dữ liệu được cung cấp bởi Store.</p>
+      <h3>Kết hợp Redux với React</h3>
+      <p>Cài đặt redux, react, react-redux.</p>
+      <pre>npx create-react-app test-react-redux
+cd test-react-redux
+npm install redux react-redux<br><br>npm install classnames
+npm install react-autobind
+npm install todomvc-app-css</pre>
+      <p>Gói <code>react-redux</code> chính là view layer binding, làm nhiệm vụ
+        kết nối cho <code>redux</code> và <code>react</code>.</p>
+      <p>Chạy chương trình</p>
+      <pre>npm start</pre>
+      <p>Chúng ta có thể tạo ra các thư mục:</p>
+      <ul>
+        <li>actions</li>
+        <li>constants</li>
+        <li>reducers</li>
+        <li>store</li>
+        <li>containers</li>
+        <li>components</li>
+      </ul>
+      <p><br>
+      </p>
+      <h3>Middleware</h3>
+      <p>redux-thunk, redux-saga, redux-observable.</p>
+      <h4>redux-thunk</h4>
+      <p>Cài đặt:</p>
+      <pre>create-react-app redux-thunk-demo
+cd redux-thunk-demo
+npm install redux react-redux redux-thunk redux-saga redux-observable</pre>
+      <p>x</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://www.youtube.com/watch?v=CVpUuw9XSjY" target="_blank">Redux
+          For Beginners | React Redux Tutorial - YouTube</a></p>
+      <p><a href="https://viblo.asia/p/redux-co-ban-m68Z00JdZkG" target="_blank">Redux
+          cơ bản - Viblo</a></p>
+      <p><a href="https://viblo.asia/p/redux-cho-nguoi-moi-bat-dau-part-2-first-project-aRBvXWQZkWE"
+          target="_blank">Redux cho người mới bắt đầu - Part 2 First Project -
+          Viblo</a></p>
+      <p><a href="https://insights.innovatube.com/redux-th%E1%BA%ADt-l%C3%A0-%C4%91%C6%A1n-gi%E1%BA%A3n-ph%E1%BA%A7n-cu%E1%BB%91i-4155b1cfed03"
+          target="_blank">Redux thật là đơn giản (phần cuối) - Nexus
+          FrontierTech</a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

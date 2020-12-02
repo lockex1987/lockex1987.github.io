@@ -1,0 +1,61 @@
+#gallery {
+    // Responsive
+    @media (min-width: 768px) {
+        --carouselItemGap: 16px;
+        --carouselItemNum: 2;
+
+        // width - 64 - 16 chia hết cho 2
+        // width: 720px;
+    }
+
+    @media (min-width: 1200px) {
+        --carouselItemNum: 3;
+
+        // width - 64 - 32 chia hết cho 3
+        // width: 1140px;
+    }
+
+    .nat-carousel-item {
+        img {
+            height: 320px;
+        }
+    }
+}
+
+.nat-carousel-control {
+    width: 32px;
+    font-size: 32px;
+
+    // Tạo hiệu ứng click
+    &:active {
+        transform: scale(0.8);
+    }
+
+    &.prev {
+        // background-image: linear-gradient(to right,rgba(0,0,0,.5) 0,rgba(0,0,0,.0001) 100%);
+    }
+    
+    &.next {
+        // background-image: linear-gradient(to right,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+    }
+}
+
+.nat-carousel {
+    .nat-carousel-indicators {
+        li {
+            width: 10px;
+            height: 10px;
+            transition: opacity .6s ease;
+            margin: 3px;
+            border-radius: 50%;
+            cursor: pointer;
+            background-color: #AAA;
+            opacity: .5;
+
+            &.active {
+                background-color: #F00;
+                opacity: 1;
+            }
+        }
+    }
+}

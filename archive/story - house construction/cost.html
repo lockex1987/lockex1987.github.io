@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="cost"/>
+    
+    <title>Chi phí xây nhà</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+</head>
+
+<body>
+    <article id="app">
+        <h2>Chi phí xây nhà</h2>
+        <div class="out-of-box">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center">Stt</th>
+                        <th class="text-center">Mục</th>
+                        <th class="text-center">Đơn giá</th>
+                        <th class="text-center">Số lượng</th>
+                        <th class="text-center">Đơn vị</th>
+                        <th class="text-center">Thành tiền</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td colspan="5" class="font-weight-500 text-danger">
+                            Xây thô
+                        </td>
+                        <td class="text-right text-success">{{formatNumber(rawSum)}}</td>
+                    </tr>
+
+                    <tr v-for="(item, idx) in rawList">
+                        <td class="text-center">{{idx + 1}}</td>
+                        <td>{{item.name}}</td>
+                        <td class="text-right">{{formatNumber(item.price)}}</td>
+                        <td class="text-right">{{item.quantity}}</td>
+                        <td>{{item.unit}}</td>
+                        <td class="text-right">{{formatNumber(item.price * item.quantity)}}</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="5" class="font-weight-500 text-danger">
+                            Nội thất
+                        </td>
+                        <td class="text-right text-success">{{formatNumber(furnitureSum)}}</td>
+                    </tr>
+
+                    <tr v-for="(item, idx) in furnitureList">
+                        <td class="text-center">{{idx + 1 + rawList.length}}</td>
+                        <td>{{item.name}}</td>
+                        <td class="text-right">{{formatNumber(item.price)}}</td>
+                        <td class="text-right">{{item.quantity}}</td>
+                        <td>{{item.unit}}</td>
+                        <td class="text-right">{{formatNumber(item.price * item.quantity)}}</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="5" class="font-weight-500 text-danger">
+                            Tổng chi phí
+                        </td>
+                        <td class="text-right text-success">{{formatNumber(rawSum + furnitureSum)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <ul>
+            <li>Xây tầm 900 triệu (cả sân, tường, cổng, lán để xe), 100 triệu để sắm đồ, phát sinh 100 triệu</li>
+            <li>Camera an ninh có cảm ứng chuyển động chống trộm, không nuôi chó nữa</li>
+        </ul>
+    </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="js/cost.js"></script> 
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

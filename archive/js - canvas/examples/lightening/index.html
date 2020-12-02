@@ -1,0 +1,277 @@
+<html>
+<head>
+
+<!--INSERT BELOW INSIDE HEAD SECTION-->
+<SCRIPT language="Javascript">
+<!--
+
+/*
+Document lightening effect (By Joe Lard, darg36@home.com)
+Submitted to Dynamic Drive to feature script in archive
+For full source and 100's more DHTML scripts, visit http://www.dynamicdrive.com
+*/
+
+ie4=document.all?1:0;
+ns4=document.layers?1:0;
+ns5=(document.getElementById && !document.all)?1:0;
+
+function init(){
+// Bolt has an aura? (true | false) // takes twice as long to strike
+aura=false;
+bcolor="white";
+acolor="blue";
+
+// Make background color flash? (true | false)
+flash=true;
+skyNorm="black";
+skyFlash="#000050";
+if (flash) document.bgColor=skyNorm;
+
+// nbs = Number of main bolt segments
+nbs = 50;
+ct=0;
+// Font sizes for lightning bolt and aura segments
+fsb=shi*.3;
+fsf=shi*.2;
+fsbi=shi*.2;
+fsfi=shi*.12;
+fsbii=shi*.12;
+fsfii=shi*.07;
+
+xpos=cswi; ypos=0;
+if (ns5) ark = document.getElementById("ark");
+if (ns4) {
+
+ol=document.layers["ark"];
+ol = new Layer(swi);
+ol.left = 0;
+ol.top = 0;
+ol.height = shi;
+ol.zIndex=1;
+ol.visibility = "hide";
+
+ret="<STYLE TYPE='text/css'>";
+for (i=1;i<10;i++){
+ret+="DIV.bolt"+i+" {position:absolute; font-style:'Times New Roman'; font-size:"+(fsf*i/9)+"px; color:"+bcolor+"; visibility:inherit; z-index:1}";
+if (aura) ret+="DIV.bolta"+i+" {position:absolute; font-style:'Times New Roman'; font-size:"+(fsf*1.3*i/9)+"px; color:blue; visibility:inherit; z-index:0}";
+} ret+="</STYLE>";
+
+for (fs=1;fs<10;fs++)
+for (i=1;i<nbs;i++) {
+if (aura) ret+="<DIV id=a"+i+"f"+fs+" class=bolta"+fs+">.</DIV>";
+ret+="<DIV id=s"+i+"f"+fs+" class=bolt"+fs+">.</DIV>";
+}
+
+//ol.document.open();
+ol.document.write(ret);
+ol.document.close();
+}
+Time1=setTimeout("mainplot()",100);
+}
+
+function mainplot()
+{
+lang=0;
+xpos=Math.random()*cswi+cswi/2; ypos=0; fs=9; fsi=8
+deg=Math.random()*30-15+((xpos<cswi)? +15:-15);
+jag=Math.round(Math.random()*100)/100;
+zag=Math.round(Math.random()*100)/100;
+cur=Math.round((.5 * (Math.random()*10-5))*100)/100;
+ion=(Math.random()>.5)? 1:-1;
+//status=" "+ct+" Divs "+format(jag)+" jag "+format(zag)+" zag "+cur+" curve"; ct=0;
+
+if (ns4)
+{
+for (i=1;i<nbs;i++) {
+ang=Math.random()*jag*90-jag*45;
+if (Math.random()+.05>zag) lang=Math.random()*zag*90-zag*45; 
+ang+=lang;
+ct++;
+if (Math.random()*10>9.5 && fsi>1) {fsi--; leg1();}
+xpos+=Math.sin((deg+(ang+i*cur))/57.3)*(fsf*fs/9)*.07;
+ypos+=Math.abs(Math.cos((deg+(ang+i*cur))/57.3)*(fsf*fs/9)*.07); //fsb=fsf*1.5;
+if (aura) { ol.document.layers["a"+i+"f"+fs].moveTo(xpos-(fsf*1.3*fs/9)*.125,ypos-(fsf*1.3*fs/9)*.85); ct++;}
+ol.document.layers["s"+i+"f"+fs].moveTo(xpos-(fsf*fs/9)*.125,ypos-(fsf*fs/9)*.85);
+if (ypos>shi || xpos<0 || xpos>swi) i=nbs;
+}
+//status=" "+ct+" Divs "+format(jag)+" jag "+format(zag)+" zag "+cur+" curve";
+ol.resizeTo(swi,shi);
+Time1=setTimeout("light()",100);
+}
+
+if (ie4 || ns5) { 
+// Rewriting layers can be faster than repositioning in internet explorer
+ret="";
+fsf=shi*.2;
+for (i=1;i<nbs;i++)
+{
+ang=Math.random()*jag*90-jag*45;
+if (Math.random()+.05>zag) lang=Math.random()*zag*90-zag*45; 
+ang+=lang;
+ct++;
+if (Math.random()*10>9.5) {fsfi=fsf*.6; fsf*=.95; leg1();}
+xpos+=Math.sin((deg+(ang+i*cur))/57.3)*fsf*.07;
+ypos+=Math.abs(Math.cos((deg+(ang+i*cur))/57.3)*fsf*.07); fsb=fsf*1.3;
+if (ypos>shi || xpos<0 || xpos>swi) i=nbs;
+if (aura) { ret+="<DIV id='darg"+i+"' style='position:absolute; left:"+(xpos-fsb*.125)+"; top:"+(ypos-fsb*.85)+"; font-size:"+fsb+"px; color:rgb(0,0,255); z-Index:0' >.</DIV>"; ct++;}
+ret+="<DIV style='position:absolute; left:"+(xpos-fsf*.125)+"; top:"+(ypos-fsf*.85)+"; font-size:"+fsf+"px; color:"+bcolor+"; z-Index:1' >.</DIV>";
+}
+//status=" "+ct+" Divs "+format(jag)+" jag "+format(zag)+" zag "+cur+" curve";
+ark.innerHTML=ret;
+Time1=setTimeout("lightie()",100);
+}
+}
+
+function leg1() {
+xpo=xpos; ypo=ypos;
+lang=zag*ion*(30+Math.random()*20-10);
+ion*=-1; lang1=0;
+deg1=deg+ion*50+Math.random()*20-10;
+jlen=Math.random()*nbs*.25+nbs*.25; 
+if(ns4) {
+fsii=fsi-1
+for (j=1;j<jlen;j++) {
+ang1=Math.random()*jag*90-jag*45;
+if (Math.random()+.05>zag) lang1=Math.random()*zag*90-zag*45; 
+ang1-=lang1;
+ct++;
+if (Math.random()*10>9.9 && fsii>1) {fsii--; leg2();}
+xpo+=Math.sin((deg1+(ang1+j*cur))/57.3)*(fsf*fsi/9)*.07;
+ypo+=Math.abs(Math.cos((deg1+(ang1+j*cur))/57.3)*(fsf*fsi/9)*.07);
+if (aura) { ol.document.layers["a"+j+"f"+fsi].moveTo(xpo-(fsf*1.3*fsi/9)*.125,ypo-(fsf*1.3*fsi/9)*.85); ct++;}
+ol.document.layers["s"+j+"f"+fsi].moveTo(xpo-(fsf*fsi/9)*.125,ypo-(fsf*fsi/9)*.85);
+if (ypo>shi || xpo<0 || xpo>swi) j=jlen;
+}
+}
+if (ie4 || ns5) {
+ret+="<DIV id='fork'>"; 
+for (j=1;j<jlen;j++)
+{
+ang1=Math.random()*jag*90-jag*45;
+if (Math.random()+.05>zag) lang1=Math.random()*zag*90-zag*45; 
+ang1-=lang1;
+ct++;
+if (Math.random()*10>9.9) {fsfii=fsfi*.6; fsfi*=.95; leg2();}
+xpo+=Math.sin((deg1+(ang1+j*cur))/57.3)*fsfi*.07;
+ypo+=Math.cos((deg1+(ang1+j*cur))/57.3)*fsfi*.07; fsbi=fsfi*1.3;
+if (ypo>shi || xpo<0 || xpo>swi) j=jlen;
+if (aura) { ret+="<DIV id='arg"+j+"' style='position:absolute; left:"+(xpo-fsbi*.125)+"; top:"+(ypo-fsbi*.85)+"; font-size:"+fsbi+"px; color:rgb(0,0,255); z-Index:0' >.</DIV>"; ct++;}
+ret+="<DIV style='position:absolute; left:"+(xpo-fsfi*.125)+"; top:"+(ypo-fsfi*.85)+"; font-size:"+fsfi+"px; color:"+bcolor+"; z-Index:1' >.</DIV>";
+}ret+="</DIV>";
+}
+}
+
+function leg2() {
+xp=xpo; yp=ypo;
+lang1=zag*ion*(30+Math.random()*20-10);
+//ion*=-1;
+lang2=0;
+deg2=deg1+ion*50+Math.random()*20-10;
+klen=Math.random()*nbs/2+nbs/2; // //
+if (ns4) {
+for (k=nbs/2;k<klen;k++) {
+ang2=Math.random()*jag*90-jag*45;
+if (Math.random()+.05>zag) lang2=Math.random()*zag*90-zag*45; 
+ang2-=lang2;
+ct++;
+xp+=Math.sin((deg2+(ang2+k*cur))/57.3)*(fsf*fsii/9)*.07;
+yp+=Math.cos((deg2+ang2)/57.3)*(fsf*fsii/9)*.07;
+if (aura) { ol.document.layers["a"+k+"f"+fsii].moveTo(xp-(fsf*1.3*fsii/9)*.125,yp-(fsf*1.3*fsii/9)*.85); ct++;}
+ol.document.layers["s"+k+"f"+fsii].moveTo(xp-(fsf*fsii/9)*.125,yp-(fsf*fsii/9)*.85);
+if (yp>shi || xp<0 || xp>swi) k=klen;
+}
+}
+if (ie4 || ns5) {
+ret+="<DIV id='forki'>"; 
+for (k=nbs/2;k<klen;k++)
+{
+ang2=Math.random()*jag*90-jag*45;
+if (Math.random()+.05>zag) lang2=Math.random()*zag*90-zag*45; 
+ang2-=lang2;
+ct++;
+xp+=Math.sin((deg2+(ang2+k*cur))/57.3)*fsfii*.07;
+yp+=Math.cos((deg2+(ang2+k*cur))/57.3)*fsfii*.07; fsbii=fsfii*1.3;
+if (yp>shi || xp<0 || xp>swi) k=klen;
+if (aura) { ret+="<DIV id='arg"+k+"' style='position:absolute; left:"+(xp-fsbii*.125)+"; top:"+(yp-fsbii*.85)+"; font-size:"+fsbii+"px; color:rgb(0,0,255); z-Index:0' >.</DIV>"; ct++;}
+ret+="<DIV style='position:absolute; left:"+(xp-fsfii*.125)+"; top:"+(yp-fsfii*.85)+"; font-size:"+fsfii+"px; color:"+bcolor+"; z-Index:1' >.</DIV>";
+}
+ret+="</DIV>";
+}
+}
+
+function light()
+{ ol.moveTo(pageXOffset,pageYOffset);
+ol.visibility = "show";
+if (flash) document.bgColor=skyFlash;
+Time2=setTimeout("ning()",(Math.random()*1000+1000));
+}
+
+function lightie()
+{ ark.style.left=document.body.scrollLeft;
+ark.style.top=document.body.scrollTop;
+ark.style.visibility = "visible";
+if (flash) document.bgColor=skyFlash;
+Time2=setTimeout("ningie()",(Math.random()*500+100));
+}
+
+function ning()
+{
+if (flash) document.bgColor=skyNorm;
+ol.visibility = "hide";
+if (Math.random()*3>2) Time2=setTimeout("light()",(Math.random()*500+100));
+else {
+for (fs=1;fs<10;fs++)
+for (i=1;i<nbs;i++) {
+if (aura) ol.document.layers["a"+i+"f"+fs].moveTo(-100,-100);
+ol.document.layers["s"+i+"f"+fs].moveTo(-100,-100);
+}
+Time1=setTimeout("mainplot()",(Math.random()*500+100))
+}
+}
+
+function ningie()
+{ ark.style.visibility = "hidden";
+if (flash) document.bgColor=skyNorm;
+if (Math.random()*3>2) Time2=setTimeout("lightie()",(Math.random()*500+100)); else Time1=setTimeout("mainplot()",(Math.random()*500+100));
+}
+
+function format(f){ f+="";
+if (f.charAt(0)==".") f="0"+f;
+if (f.length==1) f+=".00";
+if (f.length==3) f+="0";
+return f;
+}
+
+function halt() {
+if (Time1) {clearTimeout(Time1); Time1=null;}
+if (Time2) {clearTimeout(Time2); Time2=null;}
+}
+
+//-->
+</SCRIPT>
+<STYLE TYPE="text/css">
+#frm {position:absolute; left:20; top:10; width:100; height:100; visibility:visible; z-Index:951;
+color:blue; overflow:clip; font-style:Times}
+</STYLE>
+
+</head>
+
+<!--ADD THE FOLLOWING EVENTS INTO THE BODY TAG ITSELF-->
+<BODY onLoad="window.focus();init();" onResize="document.location.href=document.location.href;" bgColor="#000000" text="#FFFFFF" onUnload="halt();" link="#FFFF00" vlink="#00FF00">
+
+<!--ADD THE BELOW SCRIPT INSIDE THE BODY SECTION, AT THE END-->
+<SCRIPT language="Javascript">
+<!--
+swi=(ie4)? document.body.offsetWidth-17:window.innerWidth;
+shi=(ie4)? document.body.offsetHeight-4:window.innerHeight;
+cswi=swi/2;
+cshi=shi/2;
+
+ret="<DIV id='ark' style='position:absolute; left:0; top:0; width:"+swi+"; height:"+shi+"; visibility:visible; z-index=1; overflow:hidden; clip:rect(0,"+(swi)+","+(shi)+",0)'></DIV>";
+document.write(ret);
+
+//-->
+</SCRIPT>
+
+</body>
+</html>

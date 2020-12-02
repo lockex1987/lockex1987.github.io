@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>3D donut</title>
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="container" style="height: 400px"></div>
+
+    <script src="../../highcharts.js"></script>
+    <script src="../../highcharts-3d.js"></script>
+    <script>
+        Highcharts.chart('container', {
+            chart: {
+                type: 'pie',
+                options3d: {
+                    enabled: true,
+                    alpha: 45
+                }
+            },
+            title: {
+                text: 'Contents of Highsoft\'s weekly fruit delivery'
+            },
+            subtitle: {
+                text: '3D donut in Highcharts'
+            },
+            plotOptions: {
+                pie: {
+                    innerSize: 100,
+                    depth: 45
+                }
+            },
+            series: [{
+                name: 'Delivered amount',
+                data: [
+                    ['Bananas', 8],
+                    ['Kiwi', 3],
+                    ['Mixed nuts', 1],
+                    ['Oranges', 6],
+                    ['Apples', 8],
+                    ['Pears', 4],
+                    ['Clementines', 4],
+                    ['Reddish (bag)', 1],
+                    ['Grapes (bunch)', 1]
+                ]
+            }]
+        });
+    </script>
+</body>
+</html>

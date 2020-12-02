@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>In the Spotlight</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <style>
+:root {
+  --show-dropdown: 1;
+}
+
+.spotlight {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), hsl(334, 80%, 80%) 20%, rgba(0,0,0,.96) 30%);
+  mix-blend-mode: var(--blend, multiply);
+}
+
+.scene {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/61811/figure8s.jpg) center center;
+  background-size: cover;
+  overflow:hidden;
+}
+
+form {
+  position: absolute;
+  top: 0.5rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  
+  opacity: var(--show-dropdown);
+}
+  </style>
+</head>
+
+<body>
+  <div class="scene"></div>
+  <div class="spotlight"></div>
+
+  <form>
+    <select id="blend">
+      <option>normal</option>
+      <option selected>multiply</option>
+      <option>difference</option>
+      <option>screen</option>
+      <option>overlay</option>
+      <option>darken</option>
+      <option>lighten</option>
+      <option>color-dodge</option>
+      <option>color-burn</option>
+      <option>hard-light</option>
+      <option>soft-light</option>
+      <option>difference</option>
+      <option>exclusion</option>
+      <option>hue</option>
+      <option>saturation</option>
+      <option>color</option>
+      <option>luminosity</option>
+    </select>
+  </form>
+
+  <script>
+var spotlight = document.querySelector('.spotlight');
+var isUserMotion = false;
+
+function move(e) {
+  if (e.clientX || e.touches) {
+    isUserMotion = true;
+    spotlight.style.setProperty('--x', (e.clientX || e.touches[0].clientX) + 'px');
+    spotlight.style.setProperty('--y', (e.clientY || e.touches[0].clientY) + 'px');
+  }
+}
+
+if (window.PointerEvent) {
+  spotlight.addEventListener('pointermove', move);
+} else {
+  spotlight.addEventListener('touchmove', move);
+  spotlight.addEventListener('mousemove', move);
+}
+
+// Play when first loaded, then let user control
+(() => {
+  var startTime = Date.now();
+  autorun();
+
+  function autorun() {
+    var now = Date.now();
+    if (!isUserMotion && now <= startTime + 3000) {
+      console.log(now - startTime);
+      spotlight.style.setProperty('--x', ((now - startTime) / 6000 * 100) + '%');
+      requestAnimationFrame(autorun);
+    }
+  }
+})();
+
+document.getElementById('blend').addEventListener('input', e => {
+  spotlight.style.setProperty('--blend', e.currentTarget.value);
+});
+  </script>
+</body>
+</html>

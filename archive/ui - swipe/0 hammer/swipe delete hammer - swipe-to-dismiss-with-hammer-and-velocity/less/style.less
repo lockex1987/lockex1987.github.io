@@ -1,0 +1,66 @@
+@import "lesshat";
+
+// Sensible sizing model
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+// Constant-ish type things
+@dark: #616161;
+@light: #FFF - @dark;
+@approve: #61AE24;
+@reject: #E54028;
+@timing: 500ms;
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  background: #616161;
+  // Horizontal + vertical centering
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// List
+ul {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  li {
+    position: relative;
+    list-style: none;
+    text-align: center;
+    background: @light;
+    @height: 150px;
+    height: @height;
+    line-height: @height;
+    width: 40vw;
+    // The green and red areas.
+    &:before, &:after {
+      width: 10000%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      display: block;
+      content: '';
+      transition: box-shadow @timing;
+    }
+    // Green
+    &:before {
+      right: 100%;
+      background-color: @approve;
+    }
+    // Red
+    &:after {
+      left: 100%;
+      background-color: @reject;
+    }
+    // When action is to be taken
+    &.action {
+      &:before, &:after {
+        box-shadow: inset 0px 0px 70px -10px rgba(0,0,0,0.25);
+      }
+    }
+  }
+}

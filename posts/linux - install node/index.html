@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="date" content="2020-02-21 19:02:00">
+    <meta name="description" content="nvm">
+    <title>Cài đặt Node</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Cài đặt Node</h2>
+      <p>Cài đặt Node trên Ubuntu 18.04.</p>
+      <h3>Các cách cài đặt</h3>
+      <h4>Cài đặt từ phiên bản distro-stable của Ubuntu</h4>
+      <p>Phiên bản Node của Ubuntu 18.03 là 8.10.0. Đây không phải là phiên bản
+        mới nhất.</p>
+      <pre>sudo apt update<br>sudo apt install nodejs<br>sudo apt install npm</pre>
+      <p>Chú ý: vì bị conflict với package khác, file chạy từ Ubuntu repo được
+        đặt tên là <code>nodejs</code> chứ không phải <code>node</code>.</p>
+      <p>Kiểm tra:</p>
+      <pre>nodejs -v</pre>
+      <p>Phiên bản ở Ubuntu 18.04 chỉ là 8.10.0.</p>
+      <h4>Cài đặt sử dụng một PPA</h4>
+      <p>Để cài đặt phiên bản mới hơn của Node, bạn có thể thêm PPA (personal
+        package archive) được maintain bởi NodeSource. Phiên bản này sẽ mới hơn
+        phiên bản chính thức của Ubuntu repo, và cho phép bạn chọn các phiên bản
+        Node (6.x, 8.x, 10.x,...).</p>
+      <pre>cd ~<br>curl -sL https://deb.nodesource.com/setup_10.x -o nodesource_setup.sh<br>sudo bash nodesource_setup.sh<br>sudo apt install nodejs</pre>
+      <h4>Cài đặt sử dụng NVM</h4>
+      <p>Một cách khác để thay cách cài với <code>apt</code> là sử dụng công cụ
+        <code>nvm</code> (Node.js Verson Manager). Bạn có thể cài đặt nhiều
+        phiên bản Node cùng một lúc và switch việc sử dụng giữa các phiên bản.</p>
+      <p>Cài đặt nvm:</p>
+      <pre>curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh -o install_nvm.sh<br>bash install_nvm.sh<br><br># hoặc<br><br>wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash</pre>
+      <p>Áp dụng các thay đổi:</p>
+      <pre>source ~/.profile</pre>
+      <h4>Cài từ file ZIP</h4>
+      <p>Dùng cách này có thể cài offline, không cần mạng.</p>
+      <p>Download ở địa chỉ sau:</p>
+      <p><a href="https://nodejs.org/en/download/" target="_blank">nodejs.org/en/download</a></p>
+      <p>Giải nén.</p>
+      <p>Thiết lập biến môi trường <code>PATH</code> ở file <code>/etc/profile</code>.</p>
+      <h3>Sử dụng nhiều phiên bản với NVM</h3>
+      <h4>Các phiên bản NVM</h4>
+      <p>Tình hình là tôi đang sử dụng Node phiên bản 12. Tuy nhiên, tôi cần bảo
+        trì một dự án sử dụng Node phiên bản 10. Giờ mà chỉnh lại các package
+        phụ thuộc trong package.json rất khó mà cũng rất nguy hiểm.</p>
+      <p>Sử dụng nhiều phiên bản với NVM.</p>
+      <p>Có 2 repository NVM khác nhau, độc lập, nhưng các câu lệnh sử dụng
+        giống nhau.</p>
+      <p> <a href="https://github.com/nvm-sh/nvm" target="_blank">GitHub -
+          nvm-sh/nvm: Node Version Manager - POSIX-compliant bash script to
+          manage multiple active node.js versions</a></p>
+      <p> <a href="https://github.com/coreybutler/nvm-windows" target="_blank">GitHub
+          - coreybutler/nvm-windows: A node.js version management utility for
+          Windows. Ironically written in Go.</a></p>
+      <h4>Các câu lệnh NVM</h4>
+      <p>Liệt kê các phiên bản có:</p>
+      <pre>nvm ls-remote</pre>
+      <p>Cài đặt một phiên bản nào đó:</p>
+      <pre>nvm install &lt;version&gt;</pre>
+      <p>Kiểm tra phiên bản hiện tại:</p>
+      <pre>node -v<br># hoặc<br>nvm current</pre>
+      <p>Liệt kê các phiên bản đã cài đặt</p>
+      <pre>nvm ls</pre>
+      <p>Sử dụng phiên bản nào đó:</p>
+      <pre>nvm use &lt;version&gt;</pre>
+      <p>Gỡ bỏ phiên bản nào đó:</p>
+      <pre>nvm deactivate<br>nvm uninstall &lt;version&gt;</pre>
+      <h3>Gỡ bỏ Node</h3>
+      <p>Bạn có thể sử dụng apt hoặc nvm.</p>
+      <pre>sudo apt remove nodejs</pre>
+      <h3>Tham khảo</h3>
+      <p><a href="https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-18-04"
+          target="_blank">How To Install Node.js on Ubuntu 18.04 | DigitalOcean</a>
+      </p>
+      <p> <a href="https://stackjava.com/nodejs/nvm-la-gi-cai-dat-nvm-tren-windows-node-js.html"
+          target="_blank">NVM là gì? Cài đặt nvm trên windows (Node.js) -
+          STACKJAVA</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,592 @@
+<!doctype html>
+<html>
+ <head> 
+  <title>Git Beginner's Guide for dummies</title> 
+  <meta charset="UTF-8"> 
+  <link href="style.css" rel="stylesheet"> 
+  <link href="images/favicon.ico" rel="shortcut icon"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../../css/style.css"> 
+  <meta name="description" content="Git Beginner's Guide for dummies">
+ </head> 
+ <body> 
+  <article class="Post" id="article0"> 
+   <div class="Entry-content"> 
+    <div class="Introduce Mg-b30"> 
+     <p>Hello there! I'm Dr. Chimp, your Git tutor. Today, we will learn the basics of a distributed version control system called Git.</p> 
+    </div> 
+    <p class="Mg-b30">What do you do when you want to recover past versions of a file?</p> 
+    <p class="Mg-b30">The most common way to do it is to save multiple files with different dates and file names (eg. 12-02-2014-monkey_code.php). However, this method is often cumbersome especially when we are dealing with hundreds of files, making it close to impossible to manage. </p> 
+    <p class="Mg-b30 Text-center"><img src="images/0-capture_intro1_1_1.png" alt="Examples of backing up a file"></p> 
+    <p class="Mg-b30">Naming files randomly like the above example also makes it difficult to distinguish the later versions from earlier ones, or who they are were edited by. Most importantly, it is impossible to find out what changes have been made simply from file names. </p> 
+    <p class="Mg-b30">When team members are editing a file simultaneously, things may get messy and overwriting may occur. </p> 
+    <p class="Mg-b30 Text-center"><img src="images/0-capture_intro1_1_2.png" alt="Failure examples while working as a team"></p> 
+    <p class="Mg-b40">This is when a version control system like Git comes in handy.</p> 
+    <h2>Version control with Git</h2> 
+    <p class="Mg-b30">Git is a distributed version control system originally developed to manage Linux source codes.</p> 
+    <p class="Mg-b30">Using Git, you can easily view the revision history of your source code to track changes and easily go back in time to learn about the differences between different versions of your files.</p> 
+    <p class="Mg-b30">If the latest version of a file is on the shared repository, Git will prevent an unintentional overwrite by those maintaining an older version of the file. </p> 
+    <p class="Mg-b40 Text-center"><img src="images/0-capture_intro1_1_3.png" alt="Examples of team works using the management of versions"></p> 
+    <div class="Point Mg-b60"> 
+     <p class="Mg-b10">With Git, it is unnecessary to manually backup a copy every file version (ie. saving multiple copies of your source directories). </p> 
+    </div> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article1"> 
+   <div class="Entry-content"> 
+    <p class="Mg-b30">When you create a Git repository with the given files and directories, you can record their change history and start tracking their status and versions.</p> 
+    <p class="Mg-b40 Text-center"><img src="images/1-capture_intro1_2_1.png" alt="Repository for managing the history of files and directories"></p> 
+    <h2 class="Mg-b15">Remote repositories and local repositories </h2> 
+    <p>There are two types of Git repositories namely a Remote repository and a Local repository.</p> 
+    <ul> 
+     <li>Remote repository: Repository that resides on a remote server that is shared among multiple team members.</li> 
+     <li>Local repository: Repository that resides on a local machine of an individual user.</li> 
+    </ul> 
+    <p class="Mg-b30">You can use all of Git's version control features on your local repository such as reverting changes, tracking changes, etc. However, when it comes to sharing your changes or pulling changes from your team members, that is where a remote repository comes in handy.</p> 
+    <p class="Mg-b40 Text-center"><img src="images/1-capture_intro1_2_2.png" alt="Remote repositories and local repositories "></p> 
+    <h2 class="Mg-b15">Creating a repository</h2> 
+    <p>There are two ways to create a local repository on your local machine.</p> 
+    <p>You can either create a brand new repository from scratch or by cloning an existing remote repository onto your local machine.</p> 
+    <p class="Mg-b40 Text-center"><img src="images/1-capture_intro1_2_3.png" alt="How to make a repository"></p> 
+    <div class="Important Mg-b60"> 
+     <p>Next, I will explain the role of Commits.</p> 
+    </div> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article2"> 
+   <div class="Entry-content"> 
+    <p class="Mg-b30">The "commit" operation enables you to record changes that were made to a file or directory in the Git history.</p> 
+    <p class="Mg-b30">By commiting every change made, you will be able to view all changes chronologically in the respective file or directory.</p> 
+    <p class="Mg-b40 Text-center"><img src="images/2-capture_intro1_3_1.png" alt="Stored in the repository linked chronologically to each other"></p> 
+    <p class="Mg-b30">To uniquely identify a commit, a 40-character checksum hash is used as its identifier. You can use that checksum hash to retrieve the status or changes on files and directories that were made at the given commit in your repository.</p> 
+    <div class="Tips Mg-b60"> 
+     <p class="subhead">Tip</p> 
+     <p>Separating different types of change such as bug fixes, new feature, and improvements into different sets of commits will allow you and your team members to easily understand why and how those changes were made.</p> 
+    </div> 
+    <p class="Mg-b30">When commiting your changes, you are required to enter a commit message. The commit message provides descriptive comments regarding the changes you have made.</p> 
+    <div class="Tips Mg-b60"> 
+     <p class="subhead">Tip</p> 
+     <p class="Mg-b10">The commit message is important as it helps to convey the reason for a file or directory change made. It would be useful to you and your team members when revisiting those changes in future. Write commit messages that are descriptive and easy to understand. The following is a recommended structure for an effective Git commit message.</p> 
+     <pre class="Mg-b10">
+1st line: Abstract of the contents changed by commits
+2nd line: Blank line
+3rd line and the following lines: Reason for changes</pre> 
+    </div> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article3"> 
+   <div class="Entry-content"> 
+    <p>A "working tree" consist of files that you are currently working on.</p> 
+    <p class="Mg-b30">An "index" is a staging area where new commits are prepared. It acts as the interface between a repository and a working tree.</p> 
+    <p class="Mg-b40 Text-center"><img src="images/3-capture_intro1_4_1.png" alt="Work tree and index"></p> 
+    <p>Changes made on the working tree will not be commited directly to the repository. They need to be staged on the index first. All changes residing on the index will be the ones that actually get committed into the repository.</p> 
+    <p class="Mg-b60">An index gives you better control on what files should be included and allows you to commit a specific part of a file staged on the index into the repository.</p> 
+    <div class="Important Mg-b60"> 
+     <p>Next, we are going to apply what we've learned so far. We'll be going to install Git and start committing!</p> 
+    </div> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article4"> 
+   <div id="console" class="Entry-content"> 
+    <h2>Console</h2> 
+    <p>Download the Git installer from the Git website at <br><a href="http://git-scm.com/" target="_blank">http://git-scm.com/</a></p> 
+    <div class="Note Mg-b60"> 
+     <p class="subhead">Note</p> 
+     <p>For Mac users, you can install Git with package management tools such as MacPorts and Homebrew.</p> 
+    </div> 
+    <h2>Windows</h2> 
+    <p>After installation, go to Start menu &gt; All programs &gt; Git &gt; Git Bash.</p> 
+    <h2>Mac</h2> 
+    <p>After installing, open Terminal which is located in Applications/Utilities.</p> 
+    <p>Let's verify that Git has been successfully installed by doing a version check. The output string may differ depending on the installed environment or the version.</p> 
+    <pre class="Mg-b30">$ <b>git --version</b>
+git version 1.7.7.5 (Apple Git-26)</pre> 
+    <p class="Mg-b60 Text-center"><img src="images/4-capture_intro2_1_1_cui.png" alt="See the next page for explanation"></p> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article5"> 
+   <div id="console" class="Entry-content"> 
+    <p>Now, let's set up the default username and e-mail address for Git that will be used to identify the person who commits the change. This setup only needs to be done once.</p> 
+    <h2>Console</h2> 
+    <p>The Git console configuration is saved in the .gitconfig file in the user's home directory. You can manually edit the file but in this tutorial we will be using the "config" command.</p> 
+    <pre class="Mg-b30">$ <b>git config --global user.name <i>"&lt;Username&gt;"</i></b>
+$ <b>git config --global user.email <i>"&lt;Email address&gt;"</i></b></pre> 
+    <p>Set Git output color.</p> 
+    <pre class="Mg-b30">$ <b>git config --global color.ui auto</b></pre> 
+    <p>You can also set aliases for Git commands. For instance, you can abbreviate "checkout" to "co" and use that to execute the command.</p> 
+    <pre class="Mg-b30">$ <b>git config --global alias.co checkout</b></pre> 
+    <div class="Note"> 
+     <p class="subhead">Note</p> 
+     <p>If you use Console (Git Bash) on Windows, a file name containing non-ascii characters will be displayed in a form like "\346\226\260\350\246...". We can configure it to allow the file to display the file name as it is by doing the following.</p> 
+     <pre class="Mg-b30">$ git config --global core.quotepath off</pre> 
+     <p>If you use Console on Windows, you can only use ascii characters. Accordingly, if you want to include multi-byte characters in a commit message, you have to set an external editor and should not use the -m option.</p> 
+     <p>External editors should be compatible with the character code UTF-8 and linefeed code LF.</p> 
+     <pre>git config --global core.editor "\"[path of the editor you use]\"" </pre> 
+    </div> 
+    <div class="Important Mg-b60"> 
+     <p>Set up is now complete! On the next page, we will start with creating a repository.</p> 
+    </div> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article6"> 
+   <div id="console" class="Entry-content"> 
+    <p>Let's start off by creating a new local repository. Our goal is to create a new tutorial directory and put it under the Git version control.</p> 
+    <p>We will be using this directory throughout this tutorial.</p> 
+    <h2>Console</h2> 
+    <p>Create the tutorial directory anywhere on your computer. Access the directory and use the "init" command to turn that directory into a local Git repository.</p> 
+    <pre class="Mg-b30">$ git init</pre> 
+    <p>Follow the steps below to turn the new tutorial directory into a Git repository.</p> 
+    <pre class="Mg-b60">$ <b>mkdir tutorial</b>
+$ <b>cd tutorial</b>
+$ <b>git init</b>
+Initialized empty Git repository in /Users/yourname/Desktop/tutorial/.git/</pre> 
+    <div class="Important Mg-b60"> 
+     <p>Now that you're ready, let's commit some files to this respository. </p> 
+    </div> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article7"> 
+   <div id="console" class="Entry-content"> 
+    <p>In the tutorial directory that we have created earlier, we are going to add a new file and have it registered under the repository.</p> 
+    <p>Create a file named "sample.txt" in that directory with the following text content.</p> 
+    <pre class="Mg-b30"><b>Git commands even a monkey can understand</b>
+
+</pre> 
+    <h2>Console</h2> 
+    <p>We can use the "status" command to confirm the status of our Git working tree and index.</p> 
+    <pre class="Mg-b30">$ git status</pre> 
+    <p>Let's execute the "status" command and inspect the status of the tutorial directory.</p> 
+    <pre class="Mg-b30">$ <b>git status</b>
+# On branch master
+#
+# Initial commit
+#
+# Untracked files:
+#   (use "git add &lt;file&gt;..." to include in what will be committed)
+#
+#     sample.txt
+nothing added to commit but untracked files present (use "git add" to track)</pre> 
+    <p>As we can tell from status response, "sample.txt" is currently not being tracked. You will need to add "sample.txt" to the index first in order to track its change.</p> 
+    <p>In order to do that, you will use the "add" command followed by the &lt;file&gt; that you wish to add to the index. If you would like to add multiple files to the index, you can do so by separating them with a space.</p> 
+    <pre class="Mg-b30">$ git add &lt;file&gt;..</pre> 
+    <div class="Tips Mg-b60"> 
+     <p class="subhead">Tips</p> 
+     <p>Specify "." instead of individual file names, if you wish to add all of the changed files to the index.</p> 
+     <pre class="Mg-b30">$ git add .</pre> 
+    </div> 
+    <p>Now, let's verify that "sample.txt" has been successfully added to the index.</p> 
+    <pre class="Mg-b30">$ <b>git add sample.txt</b>
+$ <b>git status</b>
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#   (use "git rm --cached &lt;file&gt;..." to unstage)
+#
+#     new file:   sample.txt
+#</pre> 
+    <p>Now that "sample.txt" has been added to the index, we can proceed with committing the file. Use the "commit" command shown below.</p> 
+    <pre class="Mg-b30">$ git commit -m "&lt;commit&gt;"</pre> 
+    <p>After executing the “commit” command, check the status.</p> 
+    <pre class="Mg-b30">$ <b>git commit -m "first commit"</b>
+[master (root-commit) 116a286] first commit
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 sample.txt
+
+$ <b>git status</b>
+# On branch master
+nothing to commit (working directory clean)</pre> 
+    <p>The "status" command response tells us that there are no more new changes to be commited.</p> 
+    <p>We can see the newly added commit in the repository's history log with the "log" command.</p> 
+    <pre class="Mg-b30">$ <b>git log</b>
+commit ac56e474afbbe1eab9ebce5b3ab48ac4c73ad60e
+Author: eguchi &lt;eguchi@nulab.co.jp&gt;
+Date:   Thu Jul 12 18:00:21 2012 +0900
+
+    first commit</pre> 
+    <div class="Note Mg-b60"> 
+     <p class="subhead">Note</p> 
+     <p>If you prefer a GUI way of diving into the repository history, you can do so using "gitk" that is shipped along side with Git.</p> 
+     <pre class="Mg-b30">$ <b>gitk</b></pre> 
+     <p class="Mg-b40"><img src="images/7-capture_intro2_4_1_cui.png" width="540" alt="gitk"></p> 
+    </div> 
+    <div class="Important Mg-b60"> 
+     <p>Next up, we are going to share our repository with other members in the team.</p> 
+    </div> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article8"> 
+   <div class="Entry-content"> 
+    <p class="Mg-b30">So far, we have only been dealing with local repositories. From here, we will be dealing with remote repositories which will allow us to share our changes with other members in the team.</p> 
+    <h2 class="Mg-b15">Push</h2> 
+    <p>In order to start sharing our changes with others, we have to push them to a remote repository using the "push" command. This will cause the remote repository to update and synchronize with our local repository.</p> 
+    <p class="Mg-b40 Text-right"><img src="images/8-capture_intro3_1_1.png" alt="Push"></p> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article9"> 
+   <div class="Entry-content"> 
+    <p class="Mg-b30">If a remote repository already exists, you can fetch a copy from your local machine and start working on it.</p> 
+    <h2 class="Mg-b15">Clone</h2> 
+    <p>Use the "clone" command to copy a remote repository.</p> 
+    <p>By default, the "clone" command would automatically set up a local master branch that tracks the remote master branch that was cloned from.</p> 
+    <div class="Note Mg-b60"> 
+     <p class="subhead">Note</p> 
+     <p>A cloned repository would have the exact same history log as the original remote one. You can refer and backtrack to any of those commits within your local repository.</p> 
+    </div> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article10"> 
+   <div class="Entry-content"> 
+    <p class="Mg-b30">When somebody pushes their changes to the shared remote repository, your local repository becomes out of date. Using Git, it is fairly easy to synchronize your local repository with the newly updated remote repository.</p> 
+    <h2 class="Mg-b15">Pull</h2> 
+    <p>Do a "pull" operation to pull the changes from the remote repository onto your local repository.</p> 
+    <p>When pull is executed, the latest revision history is downloaded from the remote repository and imported to your local repository.</p> 
+    <p class="Mg-b40 Text-right"><img src="images/10-capture_intro3_3_1.png" alt="Pull"></p> 
+    <div class="Important Mg-b60"> 
+     <p>The following section will be a tutorial on how to use Backlog's remote repository to share the repository.</p> 
+    </div> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article11"> 
+   <div class="Entry-content"> 
+    <div class="Note Mg-b60"> 
+     <p class="subhead">Tips</p> 
+     <p>On Backlog, only users with administrative privilege will be allowed to create new Git repositories. If you don not have administrative privilege, you will have to contact the administrator of your Space to have a new repository created. Alternatively, you can start your own Space and create a repository there. Backlog offers a free trial plan for you to get started!</p> 
+     <p><a target="_blank" href="http://backlogtool.com/pricing/">Start a new space here!</a></p> 
+    </div> 
+    <p>First, log in to Backlog and click "Git" from the menu of the project in which you want to create a repository. If you do not have a project yet, you may want to create one first.</p> 
+    <p class="Mg-b40"><img src="images/11-capture_intro4_1_1.png" alt="Click “Git” in the project in which you wish to create a repository."></p> 
+    <p>If Git is not displayed as shown above, you will have to activate it by selecting the project and then go to "Project Settings" &gt; "Git Settings".</p> 
+    <p class="Mg-b40"><img src="images/11-capture_intro4_1_2.png" alt="Enable Git function by Git configuration."></p> 
+    <p>After Git feature has been activated, click “Add Repository” on the same Git Settings screen.</p> 
+    <p class="Mg-b40"><img src="images/11-capture_intro4_1_3.png" alt="Click &quot;Add a repository&quot;"></p> 
+    <p>Enter the a name and description, then click the “Create Repository” button. For this tutorial, enter “tutorial” as the name and “For use in tutorial” as the description.</p> 
+    <p class="Mg-b40"><img src="images/11-capture_intro4_1_4.png" alt="Click &quot;Create Repository&quot; button after entering &quot;Repository name&quot; and &quot;Instruction&quot;."></p> 
+    <p>We can see that a new repository has been added as shown below.</p> 
+    <p class="Mg-b60"><img src="images/11-capture_intro4_1_5.png" alt="A new repository was added"></p> 
+    <div class="Important Mg-b60"> 
+     <p>Next, let’s push a change to this remote repository!</p> 
+    </div> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article12"> 
+   <div id="console" class="Entry-content"> 
+    <h2>Console</h2> 
+    <p>You can give an alias or nickname to a remote repository. This is helpful as we do not need to remember the long address of the remote repository each time we intend to do a push. In this tutorial, we will register a remote repository name as "origin".</p> 
+    <p>To add a remote repository, use the "remote" command. &lt;name&gt; is used as an alias of a remote repository, followed by &lt;url&gt; with the URL of the remote repository.</p> 
+    <pre class="Mg-b30">$ git remote add &lt;name&gt; &lt;url&gt;</pre> 
+    <p>Execute the command using the URL of the remote repository from the previous page. The new remote repository URL will be given an alias of "origin".</p> 
+    <p class="Mg-b40"><img src="images/12-capture_intro4_2_1_cui.png" alt="The remote repository’s URL is registered under the name “origin”."></p> 
+    <pre class="Mg-b30">$ <b>git remote add origin <i>https://[your_space_id].backlogtool.com/git/[your_project_key]/tutorial.git</i></b></pre> 
+    <div class="Tips Mg-b60"> 
+     <p class="subhead">Tips</p> 
+     <p>The remote repository named "origin" will be used by default if you omit the remote name when pushing/pulling. That is because "origin" is commonly used as a remote name by convention.</p> 
+    </div> 
+    <p>To push changes to the remote repository, use the "push" command. Assign the address in &lt;repository&gt;, and the branch name in &lt;refspec&gt;, that you wish to push to. We will be covering branch in greater depth in the "Working with Git" section.</p> 
+    <pre class="Mg-b30">$ git push &lt;repository&gt; &lt;refspec&gt;...</pre> 
+    <p>Run the following command to push a commit to the remote repository "origin". If you specify the -u option when executing the command, you can omit the branch name the next time you push to the remote repository. When you push to a vacant remote however, you must specify the remote repository and branch name.</p> 
+    <p>When asked for the user name and password, enter your Backlog user credentials.</p> 
+    <pre class="Mg-b30">$ <b>git push -u origin master</b>
+Username: <b>&lt;username&gt;</b>
+Password: <b>&lt;password&gt;</b>
+Counting objects: 3, done.
+Writing objects: 100% (3/3), 245 bytes, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://monkey.backlogtool.com/git/BLGGIT/tutorial.git
+ * [new branch]      master -&gt; master</pre> 
+    <p>Open the Git page on Backlog. You will find that a new update that corresponds to your push to the remote repository has been listed under recent updates.</p> 
+    <p class="Mg-b40"><img src="images/12-capture_intro4_2_9.png" alt="The push item is added to the recent updates."></p> 
+    <p>The pushed file has also been added under the list of files of the remote repository.</p> 
+    <p class="Mg-b60"><img src="images/12-capture_intro4_2_10.png" alt="The file from the pushed repository is added."></p> 
+    <div class="Important Mg-b60"> 
+     <p>Next, let’s clone this remote repository!</p> 
+    </div> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article13"> 
+   <div id="console" class="Entry-content"> 
+    <div class="Important Mg-b60"> 
+     <p>Now, let's assume the role of another member in the team and clone the existing remote repository onto another directory named "tutorial 2".</p> 
+    </div> 
+    <h2>Console</h2> 
+    <p>Use the "clone" command to copy a remote repository as shown in the example below. Substitute &lt;repository&gt; with the remote repository URL and &lt;directory&gt; with the new directory name in which the remote contents will be placed.</p> 
+    <pre class="Mg-b30">$ git clone &lt;repository&gt; &lt;directory&gt;</pre> 
+    <p>By executing the following command, the remote repository will be copied into the directory named tutorial2.</p> 
+    <pre class="Mg-b30">$ <b>git clone <i>https://monkey.backlogtool.com/git/BLGGIT/tutorial.git</i> tutorial2</b>
+Cloning into 'tutorial2'...
+Username: <b>&lt;username&gt;</b>
+Password: <b>&lt;password&gt;</b>
+remote: Counting objects: 3, done.
+remote: Total 3 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.</pre> 
+    <p>To verify that the cloning has been executed successfully, check that the following line is contained within sample.txt of the newly cloned "tutorial 2" directory.</p> 
+    <pre class="Mg-b30">Git commands even a monkey can understand</pre> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article14"> 
+   <div id="console" class="Entry-content"> 
+    <h2>Console</h2> 
+    <p>First, lets add the bold text below to "sample.txt" in the newly cloned directory and commit the change.</p> 
+    <pre class="Mg-b30">Git commands even a monkey can understand
+<b>add: Register a change in an index</b></pre> 
+    <pre class="Mg-b30">$ <b>git add sample.txt</b>
+$ <b>git commit -m "append description of the add command"</b>
+[master 1ef5c8c] append description of the add command
+ 1 files changed, 1 insertions(+), 1 deletions(-)</pre> 
+    <p><span class="Tutorial2">Working in tutorial2</span><br>Next, let's push this new commit to the remote repository</p> 
+    <p>You can omit the repository and branch name when executing "push" in a cloned repository directory.</p> 
+    <pre class="Mg-b30">$ <b>git push</b>
+Username: <b>&lt;username&gt;</b>
+Password: <b>&lt;password&gt;</b>
+Counting objects: 5, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 351 bytes, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://monkey.backlogtool.com/git/BLGGIT/tutorial.git
+   486789c..1ef5c8c  master -&gt; master</pre> 
+    <p>You will now find the newly pushed commit on Backlog. It will be listed under "recent updates" on Backlog's Git page.</p> 
+    <p class="Mg-b40"><img src="images/14-capture_intro4_4_6.png" alt="The commit you have just pushed has been added to the lastest update."></p> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article15"> 
+   <div id="console" class="Entry-content"> 
+    <h2>Console</h2> 
+    <p>Now that our remote repository is up to date with the changes from "tutorial2", let's pull the change and synchronize our initial repository directory, "tutorial".</p> 
+    <p>To execute a pull, use the "pull" command. If you do not include the repository name, the pull will be executed on the repository under the alias of "origin".</p> 
+    <pre class="Mg-b30">$ git pull &lt;repository&gt; &lt;refspec&gt;...</pre> 
+    <p><span class="Tutorial1">Working in tutorial.</span><br>Execute the following command.</p> 
+    <pre class="Mg-b30">$ <b>git pull origin master</b>
+Username: <b>&lt;username&gt;</b>
+Password: <b>&lt;password&gt;</b>
+From https://monkey.backlogtool.com/git/BLGGIT/tutorial.git
+ * branch            master     -&gt; FETCH_HEAD
+Updating ac56e47..3da09c1
+Fast-forward
+ sample.txt |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)</pre> 
+    <p><span class="Tutorial1">Working in tutorial.</span><br>Let's verify that the history is updated with the "log" command.</p> 
+    <pre class="Mg-b30">$ <b>git log</b>
+commit 3da09c1134a41f2bee854a413916e4ebcae7318d
+Author: eguchi &lt;eguchi@nulab.co.jp&gt;
+Date:   Thu Jul 12 18:02:45 2012 +0900
+
+    append description of the add command
+
+commit ac56e474afbbe1eab9ebce5b3ab48ac4c73ad60e
+Author: eguchi &lt;eguchi@nulab.co.jp&gt;
+Date:   Thu Jul 12 18:00:21 2012 +0900
+
+    first commit
+
+</pre> 
+    <p>Looks good, the new commit that we have added in "tutorial2" is now listed under this repository's history log.</p> 
+    <p><span class="Tutorial1">Working in tutorial.</span><br>Let's open the file sample.txt and check the content.</p> 
+    <pre class="Mg-b30">Git commands even a monkey can understand
+add: Register a change in an index</pre> 
+    <p>We should see the newly added content "add: Register a change in an index".</p> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article16"> 
+   <div class="Entry-content"> 
+    <h2 class="Mg-b15">Merge</h2> 
+    <p class="Mg-b30 Text-center"><img src="images/16-capture_intro5_1_1.png" alt="Merge example 1"></p> 
+    <p class="Mg-b30">Your push to the remote repository will be rejected if your local repository is out of date, possibly because there are some updates that are on the remote repository added by others that you do not have locally yet.</p> 
+    <p class="Mg-b40 Text-center"><img src="images/16-capture_intro5_1_2.png" alt="Merge example 2"></p> 
+    <p class="Mg-b30">If that is the case, do a "merge" to grab the latest change from the remote repository before you are allowed to push. Git enforces this to ensure that changes made by other members get retained in the history (Commit C in the figure above).</p> 
+    <div class="Important Mg-b60"> 
+     <p>During "merge", Git will attempt to automatically apply those history changes and merge them with the current branch. However, if there is a conflict in changes, Git will throw an error prompting you to resolve the conflict manually. We will cover the ways to resolve such conflicts in the next page.</p> 
+    </div> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article17"> 
+   <div class="Entry-content"> 
+    <p>As described in the previous page, Git will attempt to automatically apply the merging changes into an existing change history when executing "merge".</p> 
+    <p>There are times that "merge" could fail and that can happen when there is a conflict. If two or more members make changes on the same part of a file in the two different branches (remote and local branch in this case) that are being merged, Git will not be able to automatically merge them and you will get a merge conflict.</p> 
+    <p>When this happens, Git will add some standard conflict-resolution markers to the conflicting file. The markers act as an indicator to help us figure out sections in the content of the conflicting file that needs to be manually resolved.</p> 
+    <p class="Mg-b15"><img src="images/17-capture_intro5_1_3.png" alt="Example of a conflict occurrence"></p> 
+    <div class="Point Mg-b30"> 
+     <p>Everything above "=====" is your local content, and everything below it comes from the remote branch.</p> 
+    </div> 
+    <p>Resolve the conflicting parts as shown below. Now you are ready to proceed with creating a merge commit.</p> 
+    <p class="Mg-b60"><img src="images/17-capture_intro5_1_4.png" alt="Example of resolving a conflict"></p> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article18"> 
+   <div id="console" class="Entry-content"> 
+    <h2>Console</h2> 
+    <p><span class="Tutorial1">Working in tutorial.</span><br>First, open the "sample.txt" file in the "tutorial" directory. Add the bold text below to the file and commit.</p> 
+    <pre class="Mg-b30">Git commands even a monkey can understand
+add: Register a change in an index
+<b>commit: Save the status of an index</b></pre> 
+    <pre class="Mg-b30">$ <b>git add sample.txt</b>
+$ <b>git commit -m "append description of the commit command"</b>
+[master 95f15c9] append description of the commit command
+ 1 files changed, 1 insertions(+), 0 deletions(-)</pre> 
+    <p><span class="Tutorial2">Working in tutorial 2</span><br>Next, open the "sample.txt" file in the "tutorial2" directory. Add the bold text below to the file and commit.</p> 
+    <pre class="Mg-b30">Git commands even a monkey can understand
+add: Register a change in an index
+<b>pull: Obtain the content of the remote repository</b></pre> 
+    <pre class="Mg-b30">$ <b>git add sample.txt</b>
+$ <b>git commit -m "append description of the pull command"</b>
+[master 4c01823] append description of the pull command
+ 1 files changed, 1 insertions(+), 0 deletions(-)</pre> 
+    <p><span class="Tutorial2">Working in tutorial 2</span><br>Now push the change from "tutorial2" to the remote repository.</p> 
+    <pre class="Mg-b30">$ <b>git push</b>
+Username: <b>&lt;username&gt;</b>
+Password: <b>&lt;password&gt;</b>
+Counting objects: 5, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 391 bytes, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://monkey.backlogtool.com/git/BLGGIT/tutorial.git
+   3da09c1..4c01823  master -&gt; master</pre> 
+    <div class="Point Mg-b30"> 
+     <p>In our current remote repository, the "sample.txt" file contains the third line "pull: Obtain the content of the remote repository" and has been commited in the history log.</p> 
+    </div> 
+    <p><span class="Tutorial1">Working in tutorial.</span><br>Now, we are going to push the commit from our "tutorial" repository to the remote repository.</p> 
+    <pre class="Mg-b30">$ <b>git push</b>
+Username: <b>&lt;username&gt;</b>
+Password: <b>&lt;password&gt;</b>
+To https://monkey.backlogtool.com/git/BLGGIT/tutorial.git
+ ! [rejected]        master -&gt; master (non-fast-forward)
+error: failed to push some refs to 'https://monkey.backlogtool.com/git/BLGGIT/tutorial.git'
+To prevent you from losing history, non-fast-forward updates were rejected
+Merge the remote changes (e.g. 'git pull') before pushing again.  See the
+'Note about fast-forwards' section of 'git push --help' for details.</pre> 
+    <p>As you can see, Git will raise a conflict and reject your push.</p> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <article class="Post" id="article19"> 
+   <div id="console" class="Entry-content"> 
+    <h2>Console</h2> 
+    <p><span class="Tutorial1">Working in tutorial.</span><br>Execute the following command</p> 
+    <pre class="Mg-b30">$ <b>git pull origin master</b>
+Username: <b>&lt;username&gt;</b>
+Password: <b>&lt;password&gt;</b>
+remote: Counting objects: 5, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+From https://monkey.backlogtool.com/git/BLGGIT/tutorial.git
+ * branch            master     -&gt; FETCH_HEAD
+Auto-merging sample.txt
+CONFLICT (content): Merge conflict in sample.txt
+Automatic merge failed; fix conflicts and then commit the result.</pre> 
+    <p>A message should appear warning us of a merge conflict.</p> 
+    <p><span class="Tutorial1">Working in tutorial.</span><br>When you open "sample.txt", you can see markers that have been added by Git to indicate conflicts in that section of the file as shown below.</p> 
+    <pre class="Mg-b30">Git commands even a monkey can understand
+add: Register a change in an index
+<b>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+commit: Save the status of an index
+=======
+pull: Obtain the content of the remote repository
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 17c860612953c0f9d88f313c8dfbf7d858e02e91</b></pre> 
+    <p><span class="Tutorial1">Working in tutorial.</span></p> 
+    <p class="Align-right Mg-b0"><img class="Align-bottom" src="images/19-img_modified_mascot.png" alt="Correct the conflict!"></p> 
+    <p class="Mg-t40 Mg-b10">We are going to resolve the conflict by accepting both changes and remove the marker.</p> 
+    <pre class="Mg-b30">Git commands even a monkey can understand
+add: Register a change in an index
+<b>commit: Save the status of an index
+pull: Obtain the content of the remote repository</b></pre> 
+    <p><span class="Tutorial1">Working in tutorial.</span><br>When you are done editing the file, you will need to commit.</p> 
+    <pre class="Mg-b30">$ <b>git add sample.txt</b>
+$ <b>git commit -m "merge"</b>
+[master d845b81] merge</pre> 
+    <p>We are now up to date with the latest change from the remote repository.</p> 
+    <p><span class="Tutorial1">Working in tutorial.</span><br>We can verify the accuracy of the repository history using the "log" command. The --graph option will show the branch history in a graph format and the --oneline will try to compact the output message.</p> 
+    <pre class="Mg-b30">$ <b>git log --graph --oneline</b>
+*   d845b81 merge
+|\
+| * 4c01823 append description of the pull command
+* | 95f15c9 append description of the commit command
+|/
+* 3da09c1 append description of the add command
+* ac56e47 first commit
+</pre> 
+    <p>This indicates that the two histories have been merged safely with a new merge commit.</p> 
+    <p>We can safely push this change to the remote repository without any merge conflicts.</p> 
+    <div class="Important Mg-b60"> 
+     <p>Well done! We have pretty much covered the basics of Git. If you would like to learn about other advanced topics such as branches and commit revision, head on to the "Working with Git" section!</p> 
+    </div> 
+    <!-- .Entry-content --> 
+   </div> 
+  </article> 
+  <ol id="myNav"> 
+   <li><h1>Introduction</h1></li> 
+   <li><a href="" onclick="openArticle(0); return false;">Version control with Git</a></li> 
+   <li><a href="" onclick="openArticle(1); return false;">Repository to control history</a></li> 
+   <li><a href="" onclick="openArticle(2); return false;">A Commit records changes within a file/directory</a></li> 
+   <li><a href="" onclick="openArticle(3); return false;">Git Working Tree and Index</a></li> 
+   <li><h1>Git basics</h1></li> 
+   <li><a href="" onclick="openArticle(4); return false;">Installing Git</a></li> 
+   <li><a href="" onclick="openArticle(5); return false;">Default settings</a></li> 
+   <li><a href="" onclick="openArticle(6); return false;">Create a new repository</a></li> 
+   <li><a href="" onclick="openArticle(7); return false;">Commit a file</a></li> 
+   <li><h1>Share a repository</h1></li> 
+   <li><a href="" onclick="openArticle(8); return false;">Push to a remote repository</a></li> 
+   <li><a href="" onclick="openArticle(9); return false;">Clone a remote repository</a></li> 
+   <li><a href="" onclick="openArticle(10); return false;">Pull from a remote repository</a></li> 
+   <li><h1>Remote repository</h1></li> 
+   <li><a href="" onclick="openArticle(11); return false;">Creating a remote repository on Backlog</a></li> 
+   <li><a href="" onclick="openArticle(12); return false;">Push to a remote repository</a></li> 
+   <li><a href="" onclick="openArticle(13); return false;">Clone a remote repository</a></li> 
+   <li><a href="" onclick="openArticle(14); return false;">Push from a cloned repository</a></li> 
+   <li><a href="" onclick="openArticle(15); return false;">Pull from a repository</a></li> 
+   <li><h1>Merge histories</h1></li> 
+   <li><a href="" onclick="openArticle(16); return false;">Merge histories</a></li> 
+   <li><a href="" onclick="openArticle(17); return false;">Resolve a conflict</a></li> 
+   <li><a href="" onclick="openArticle(18); return false;">Make a conflict</a></li> 
+   <li><a href="" onclick="openArticle(19); return false;">Resolve a remote conflict</a></li> 
+  </ol> 
+  <script>
+	var articles = document.querySelectorAll("article");
+	var links = document.querySelectorAll("#myNav a")
+	
+	function resetArticlesAndLinks() {
+		var i;
+		for (i = 0; i < articles.length; i++) {
+			articles[i].style.display = "none";
+		}
+		for (i = 0; i < articles.length; i++) {
+			links[i].className = "";
+		}
+	}
+	
+	function showCurrent(idx) {
+		articles[idx].style.display = "";
+		links[idx].className = "Selected";
+	}
+	
+	function openArticle(idx) {
+		resetArticlesAndLinks();
+		showCurrent(idx);
+	}
+	
+	openArticle(0);
+</script> 
+    
+ </body>
+</html>

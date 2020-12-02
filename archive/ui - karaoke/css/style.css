@@ -1,0 +1,75 @@
+html,body {
+  padding:0;
+  margin:0;
+  height:100%;
+
+  background: #090000;
+  font-size: 20px;
+}
+
+.karaoke-wrapper {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.karaoke-caption {
+  font-weight: 200;
+  font-size: 1.8em;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #fff;
+}
+
+.karaoke-caption .word {
+  display: inline-block;
+  line-height: 1em;
+
+  font-family: Bad Script;
+
+  color: lightpink;
+  --color1: pink;
+  --color2: orangered;
+  --color3: red;
+  --color4: magenta;
+
+  text-shadow: 
+    0 0 10px var(--color1),
+    0 0 20px var(--color2),
+    0 0 40px var(--color3),
+    0 0 80px var(--color4);
+
+}
+
+@keyframes pulse {
+  0% {
+    color: #AAA;
+  }
+  50% {
+    color: #FFF;
+  }
+  100% {
+    color: #AAA;
+  }
+}
+
+.karaoke-caption .word.highlighting {
+  color: azure;
+  --color1: azure;
+  --color2: aqua;
+  --color3: dodgerblue;
+  --color4: blue;
+
+  /*animation: pulse 0.3s ease-out;*/
+}
+
+.karaoke-caption .word.highlighted {
+  color: yellow;
+  --color1: yellow;
+  --color2: lime;
+  --color3: green;
+  --color4: darkgreen;
+  font-family: Monoton;
+}

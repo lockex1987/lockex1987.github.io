@@ -1,0 +1,265 @@
+@fonts: Arial, Helvetica, sans-serif;
+@headerHeight: 50px;
+@imageWidth: 256px;
+
+// Part 1: RESET
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,  figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	margin: 0; padding: 0; border: 0; vertical-align: baseline;
+	font-size: 100%; font: inherit; font-family: @fonts;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+table {
+	border-collapse: collapse; border-spacing: 0; width: 100%; margin-left: auto; margin-right: auto;
+}
+td {
+	padding: 5px; vertical-align: middle;
+}
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+	font-family: @fonts;
+}
+
+
+// Part 2: TAGS
+button {
+	border: 1px solid #AAA;
+	cursor: pointer; height: 31px; margin: 5px; padding: 0 10px;
+	font-weight: bold; border-radius: 4px; min-width: 90px; font-size: 13px;
+	color: #FFF;
+	
+	&:hover { color: #333; border-color: #FFF; }
+}
+button::-moz-focus-inner { border: 0; }
+input[type="text"], input[type="password"], select, textarea {
+	border: 1px solid #c0c0c0; width: 100%; max-width: 270px;
+	background: #FFFFFF;
+	
+	&:focus {
+		border: 1px solid #e78f08; background: #fdf9e1; color: #000;
+		box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+	}
+}
+textarea {
+	max-width: none;
+}
+form {
+	label, input, select, textarea {
+		display: block;
+	}
+}
+
+// Part 3: LAYOUT
+body { background: #FFF; }
+
+header {
+	background: rgb(42, 169, 229);
+	line-height: @headerHeight;
+	
+	#logo { max-width: 120px; height: @headerHeight; float: left; padding: 5px; }
+	
+	&::after {
+		content: "";
+		display: block;
+		clear: both;
+	}
+}
+
+
+
+#listDiv {
+	float: left; width: 30%;
+}
+#wordList {
+	border: 1px solid #c0c0c0;
+	margin-top: 5px;
+	padding: 5px;
+	
+	a {
+		display: block;
+	}
+}
+#mainDiv { float: right; width: 70%; }
+
+
+#formLink {
+	background: rgb(96, 169, 23);
+	
+}
+#cancelLink { background: rgb(227, 200, 0); }
+#saveLink { background: rgb(96, 169, 23); }
+
+#updateLink { background: rgb(42, 169, 229); float: right; }
+#deleteLink { background: rgb(206, 53, 44);  float: right; }
+
+
+#homeDiv { padding: 5px; }
+#formDiv { padding: 5px 10px 5px 5px; }
+#viewDiv { padding: 5px; }
+
+#wordView {
+	font-size: 3em;
+	font-weight: bold;
+}
+#pronounceView {
+	color: #5690b1;
+}
+#volumeIcon {
+	height: 16px;
+    margin-left: 10px;
+    vertical-align: middle;
+    width: 16px;
+		cursor: pointer;
+}
+#myAudio {
+	display: none;
+}
+#meaningsView {
+	margin-top: 5px;
+}
+#examplesView {
+	color: #E00;
+	margin-top: 5px;
+}
+footer { font-size: smaller; text-align: center; }
+
+
+
+
+
+a { text-decoration: none; }
+//a:hover { color: #B91D47; text-decoration: underline; }
+
+// CLASSES
+.viewContent { color: green; }
+.padding {
+	padding: 5px;
+}
+.clearFix {
+	clear: both;
+}
+.tinyButton {
+border-radius: 50px;
+    border-radius: 50px;
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    width: 20px;
+		color: #FFF;
+		font-weight: bold;
+		margin-left: 5px;	
+}
+.wordType {
+	color: #00E;
+}
+
+.fileInput {
+	/* Hide it, but don't make it disappear from the form */
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+	
+	/* clip: rect(0, 0, 0, 0); */
+}
+
+.fileInput + label {
+	font-size: 1.25em;
+	font-weight: 700;
+	color: white;
+	background-color: black;
+	display: inline-block;
+	cursor: pointer;
+	padding: 3px 7px;
+	vertical-align: middle;
+}
+
+.fileInput:focus + label,
+.fileInput + label:hover {
+	background-color: red;
+}
+
+/* Focus effect */
+.fileInput:focus + label {
+	outline: 1px dotted #000;
+	outline: -webkit-focus-ring-color auto 5px;
+}
+
+#imagesLabel {
+	cursor: pointer;
+}
+
+#previewList {
+	list-style:none;
+	margin-top: 5px;
+	padding:0;
+	
+	li {
+		background: #fff;
+		border: 1px solid #ccc;
+		text-align:center;
+		padding: 20px;
+		margin-bottom:19px;
+	
+		img {
+			width: @imageWidth;
+			vertical-align: middle;
+			border:1px solid #474747;
+		}
+		
+		.deleteButton {
+			float: right;
+			cursor: pointer;
+		}
+	}
+}
+
+#attachmentList {
+	img {
+		width: @imageWidth;
+	}
+	.deleted {
+		text-decoration: line-through;
+
+		img {
+			filter: grayscale(100%);
+		}
+	}
+}
+
+#imagesView {
+	figure {
+		float: left;
+		margin: 5px;
+		
+		img {
+			width: @imageWidth;
+			height: 170px;
+		}
+		figcaption {
+			font-size: smaller;
+		}
+	}
+}
+
+// DESKTOP
+@media screen and (min-width: 800px) {
+	// Make the font larger
+	html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+	a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,
+	small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li,
+	fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+	article, aside, canvas, details, embed,  figure, figcaption, footer, header, hgroup, 
+	menu, nav, output, ruby, section, summary, time, mark, audio, video {
+		font-size: 105%;
+	}
+}
+

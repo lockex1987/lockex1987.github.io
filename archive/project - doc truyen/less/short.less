@@ -1,0 +1,92 @@
+@tablet: ~'(min-width: 768px)';
+
+#mainFrame {
+	#listDiv {
+		max-height: 720px;
+		overflow: auto;
+
+		p {
+            padding-right: 16px;
+            
+            &::before {
+                content: '+';
+                color: green;
+            }
+		}
+
+		@media @tablet {
+			width: 40%;
+		}
+	}
+
+	#mplayer {		
+		#titleDiv {
+			color: #009DDE;
+			font-size: 16px;
+			font-weight: bold;
+			height: 20px;
+			margin-bottom: 15px;
+        }
+
+		#avatar {
+            display: block;
+            margin-bottom: 10px;
+            width: 100%;
+            max-height: 260px;
+            object-fit: cover;
+		}
+
+		#descriptionDiv {
+            margin-top: 5px;
+            text-align: justify;
+		}
+
+		@media @tablet {
+			width: 55%;
+		}
+	}
+
+	@media @tablet {
+		flex-direction: row;
+		display: flex;
+		justify-content: space-between;
+		padding-top: 15px;
+	}
+}
+
+
+body {
+    padding-top: 0;
+}
+
+#storyList img.media-object {
+    width: 180px;
+    height: 95px;
+    object-fit: cover;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.mobile-screen {
+    padding-top: 50px;
+    padding-bottom: 90px;
+}
+
+.top-panel {
+    box-shadow: 0px 3px 2px #aaa;
+    top: 0;
+    left: 0;
+}
+
+.bottom-panel {
+    box-shadow: 0px -3px 2px #aaa;
+    bottom: 0;
+    left: 0;
+}
+
+// Ẩn header chung, nút scroll top ở màn hình mobile
+.subHeader, .float-button {
+    display: none;
+}

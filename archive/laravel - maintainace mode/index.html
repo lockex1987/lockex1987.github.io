@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="upgrade, update">
+    <title>Chế độ bảo trì</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Chế độ bảo trì</h2>
+      <p>Khi ứng dụng của bạn ở chế độ bảo trì, một giao diện sẽ được hiển thị
+        cho tất cả request vào ứng dụng của bạn. Thật dễ để "vô hiệu hóa" ứng
+        dụng của bạn trong khi đang cập nhật hoặc bảo trì. Việc bảo trì nằm
+        trong stack middleware cho ứng dụng của bạn. Nếu ứng dụng của bạn ở chế
+        độ bảo trì, <code>MaintenanceModeException</code> sẽ bắn ra một status
+        code là 503.</p>
+      <h3>Câu lệnh</h3>
+      <p>Để bật chế độ bảo trì, bạn chỉ cần thực thi lệnh <code>down</code>:</p>
+      <pre>php artisan down</pre>
+      <p>Ngoài ra bạn có thể cung cấp các lựa trọn <code>message</code> và <code>retry</code>
+        khi thực hiện lệnh <code>down</code>. Nội dung <code>message</code>
+        được dùng để hiển thị hoặc tạo một thông báo, trong khi giá trị <code>retry</code>
+        sẽ được thiết lập như là giá trị <code>Retry-After</code> HTTP header.</p>
+      <pre>php artisan down --message='Upgrading Database' --retry=60</pre>
+      <p>Để vô hiệu hóa chế độ bảo trì, sử dụng lệnh <code>up</code>:</p>
+      <pre>php artisan up</pre>
+      <p>Khi bạn thực hiện lệnh <code>down</code>, Laravel sẽ tạo một file tên
+        là <code>down</code> ở <code>storage/framework</code>. Nội dung là các
+        cấu hình dạng JSON. Khi bạn thực hiện lệnh <code>up</code>, Laravel sẽ
+        xóa file này đi.</p>
+      <h3>Template chế độ bảo trì</h3>
+      <p>Mặc định template chế độ bảo trì nằm tại <code>resources/views/errors/503.blade.php</code>.
+        Bạn có thể thay đổi dao diện sao cho phù hợp với ứng dụng của bạn.</p>
+      <h3>Chế độ bảo trì &amp; Queue</h3>
+      <p>Khi ứng dụng của bạn đang ở chế độ bảo trì, không có <a href="https://giaphiep.com/docs/5.3/queues">queued
+          jobs</a> nào được xử lý. Các jobs sẽ tiếp tục xử lý khi ứng dụng của
+        bạn vô hiệu hóa chế độ bảo trì.</p>
+      <h3>Giải pháp khác cho chế độ bảo trì</h3>
+      <p>Vì chế độ bảo trì yêu cầu ứng dụng của bạn bị down trong vài giây, bạn
+        có thể cân nhắc việc sử dụng cách khác như <a href="https://envoyer.io/">Envoyer</a>
+        không có thời gian down khi triển khai với Laravel.</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://laravel.com/docs/master/configuration#maintenance-mode"
+          target="_blank">laravel.com/docs/master/configuration#maintenance-mode</a></p>
+      <p>---</p>
+      <p>Giả sử bạn cần tạm dừng hệ thống production để upgrade, update.</p>
+      <p>Bạn có thể chuyển sang chế độ maintain.</p>
+      <p>Khi đó, trang web sẽ trả về thông báo như sau:</p>
+      <p><br>
+      </p>
+      <p>Bạn có thể tạo file <code>resources/views/errors/503.blade.php</code>.</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8"/>
+	<title>W3Data demo</title>
+	<link rel="stylesheet" href="w3.css"/>
+</head>
+
+<body>
+	<h3>Simple text</h3>
+	<div id="id01">
+		{{firstName}} {{lastName}}
+	</div>
+	<h3>Repeat 1 (scalar)</h3>
+	<div>
+		<select id="id02">
+			<option w3-repeat="x in cars">{{x}}</option>
+		</select>
+	</div>
+	<h3>Repeat 2 (object)</h3>
+	<select id="id03">
+		<option w3-repeat="customers">{{CustomerName}}</option>
+	</select>
+	<h3>Repeat 3</h3>
+	<ul id="id04">
+		<li w3-repeat="customers">{{CustomerName}}</li>
+	</ul>
+	<h3>Filling check boxes</h3>
+	<table id="id05" class="w3-table w3-bordered w3-striped">
+		<tr w3-repeat="customers">
+			<td>{{CustomerName}}</td>
+			<td><input type="checkbox" {{checked}}/></td>
+		</tr>
+	</table>
+	<h3>Filling classes</h3>
+	<table id="id06" class="w3-table">
+		<tr w3-repeat="customers" class="{{Color}}">
+			<td>{{CustomerName}}</td>
+		</tr>
+	</table>
+	<h3>Filling a table</h3>
+	<table id="id07" class="w3-table w3-bordered w3-striped">
+		<tr>
+			<th>Customer</th>
+			<th>City</th>
+			<th>Country</th>
+		</tr>
+		<tr w3-repeat="customers">
+			<td>{{CustomerName}}</td>
+			<td>{{City}}</td>
+			<td>{{Country}}</td>
+		</tr>
+	</table>
+
+	<script src="w3data.js"></script>
+	<script>
+		w3DisplayData("id01", { "firstName": "John", "lastName": "Doe" });
+		w3DisplayData("id02", { "cars": ["Volvo", "Ford", "BMW", "Mercedes"] });
+		
+		var myObject = {
+			"customers": [
+				{ "CustomerName": "Alfreds Futterkiste", "City": "Berlin", "Country": "Germany", "checked": "checked", "Color": "w3-red" },
+				{ "CustomerName": "Around the Horn", "City": "London", "Country": "UK", "checked": "", "Color": "w3-blue" },
+				{ "CustomerName": "B's Beverages", "City": "London", "Country": "UK", "checked": "checked", "Color": "w3-teal" },
+				{ "CustomerName": "Blauer See Delikatessen", "City": "Mannheim", "Country": "Germany", "checked": "checked", "Color": "w3-yellow" },
+				{ "CustomerName": "Bon app'", "City": "Marseille", "Country": "France", "checked": "", "Color": "w3-green" },
+				{ "CustomerName": "Bottom-Dollar Marketse", "City": "Tsawassen", "Country": "Canada", "checked": "", "Color": "w3-red" },
+				{ "CustomerName": "Chop-suey Chinese", "City": "Bern", "Country": "Switzerland", "checked": "", "Color": "w3-blue" }
+			]
+		};
+
+		w3DisplayData("id03", myObject);
+		w3DisplayData("id04", myObject);
+		w3DisplayData("id05", myObject);
+		w3DisplayData("id06", myObject);
+		w3DisplayData("id07", myObject);
+	</script>
+</body>
+
+</html>

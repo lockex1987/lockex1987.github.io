@@ -1,0 +1,133 @@
+/* =========================================================================== */
+/* the animations */
+/* fade */
+.tooltip-container.fade:after,
+.tooltip-container.fade .tooltip {
+  transform: translate3d(0, -10px, 0);
+  transition: all 0.15s ease-in-out;
+}
+.tooltip-container.fade:hover:after,
+.tooltip-container.fade:hover .tooltip {
+  transform: translate3d(0, 0, 0);
+}
+/* expand */
+.tooltip-container.expand .tooltip {
+  transform: scale3d(0.2, 0.2, 1);
+  transition: all 0.2s ease-in-out;
+}
+.tooltip-container.expand:after {
+  transform: translate3d(0, 6px, 0);
+  transition: all 0.1s ease-in-out;
+}
+.tooltip-container.expand:hover .tooltip,
+.tooltip-container.expand:hover:after {
+  transform: scale3d(1, 1, 1);
+}
+.tooltip-container.expand:hover:after {
+  transition: all 0.2s 0.1s ease-in-out;
+}
+/* Thiết lập tooltip container */
+.tooltip-container {
+  /* Thiết lập relative để các thành phần con (.tooltip) là absolute */
+  position: relative;
+  /* Có thể ở trong một đoạn văn */
+  display: inline-block;
+  /* If you want dots under the hoverable text */
+  /* Có 2 thành phần con là nội dung tooltip và dấu mũi tên */
+  /* Nội dung tooltip */
+  /* Dấu mũi tên */
+}
+.tooltip-container .tooltip,
+.tooltip-container:after {
+  display: block;
+  opacity: 0;
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+  /* Hidden by default */
+}
+.tooltip-container .tooltip {
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  box-shadow: 0 1em 2em -0.5em rgba(0, 0, 0, 0.35);
+  text-align: center;
+  border-radius: 2px;
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 1s;
+  font-size: 14px;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+.tooltip-container:after {
+  width: 0;
+  height: 0;
+  content: '';
+  border-style: solid;
+  border-width: 5px;
+  border-color: transparent;
+}
+.tooltip-container.right .tooltip {
+  top: 50%;
+  transform: translateY(-50%);
+  left: 100%;
+  margin-left: 15px;
+}
+.tooltip-container.right::after {
+  top: 50%;
+  margin-top: -5px;
+  left: 100%;
+  margin-left: 5px;
+  border-color: transparent rgba(0, 0, 0, 0.75) transparent transparent;
+}
+.tooltip-container.left .tooltip {
+  top: 50%;
+  transform: translateY(-50%);
+  right: 100%;
+  margin-right: 10px;
+}
+.tooltip-container.left::after {
+  top: 50%;
+  margin-top: -5px;
+  right: 100%;
+  margin-right: 0px;
+  border-color: transparent transparent transparent rgba(0, 0, 0, 0.75);
+}
+.tooltip-container.top .tooltip {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px;
+}
+.tooltip-container.top::after {
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  margin-bottom: -5px;
+  border-color: rgba(0, 0, 0, 0.75) transparent transparent transparent;
+}
+.tooltip-container.bottom .tooltip {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 5px;
+}
+.tooltip-container.bottom::after {
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  margin-top: -5px;
+  border-color: transparent transparent rgba(0, 0, 0, 0.75) transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip-container:hover {
+  /* Đổi màu để biết đang ở phần tử nào */
+  color: yellow;
+  /* Hiển thị nội dung tooltip và mũi tên */
+}
+.tooltip-container:hover .tooltip,
+.tooltip-container:hover::after {
+  visibility: visible;
+  opacity: 1;
+}

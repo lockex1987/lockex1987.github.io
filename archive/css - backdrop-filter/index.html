@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Backdrop-filter" />
+
+    <title>Backdrop-filter</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <article>
+        <h2>Backdrop-filter</h2>
+        <h3>Cách 1: Dùng 2 phần tử</h3>
+
+        <div class="out-of-box position-relative">
+            <div class="bg-image"></div>
+
+            <div class="bg-text">
+                <h2>Blurred Background</h2>
+                <h1 style="font-size:50px">I am John Doe</h1>
+                <div>And I'm a Photographer</div>
+            </div>
+        </div>
+
+        <h3>Cách 2: Dùng backdrop-filter</h3>
+
+        <div class="d-flex justify-content-center align-items-center demo-2 mb-3">
+            <div class="box text-center rounded py-3 px-4">
+                <div>backdrop-filter: blur(10px)</div>
+            </div>
+        </div>
+
+        <div class="container mb-3">
+            <div class="modal-x">
+
+                <div>The background image should be pleasantly blurred under this box</div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <img src="images/login.jfif" />
+        </div>
+
+        <p>
+            <a href="demo.html">Demo</a>
+        </p>
+
+        <h3>Tham khảo</h3>
+        <p><a href="https://css-tricks.com/almanac/properties/b/backdrop-filter/" target="_blank">backdrop-filter |
+                CSS-Tricks</a></p>
+
+
+
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

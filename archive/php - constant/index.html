@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Hằng số trong PHP</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Hằng số trong PHP">
+ </head> 
+ <body> 
+  <article> 
+   <p>Một hằng (constant) là một tên hoặc một định danh cho một giá trị đơn. Giá trị của hằng không thể thay đổi trong quá trình thực thi script. Theo mặc định, một hằng là phân biệt kiểu chữ. Theo qui ước, các định danh hằng luôn luôn là chữ hoa. Tên hằng bắt đầu với một chữ cái hoặc dấu gạch dưới ( _ ), được theo sau bởi bất kì số lượng chữ cái, số hoặc dấu gạch dưới nào. Nếu bạn đã định nghĩa một hằng số, nó có thể không bao giờ được thay đổi hoặc định nghĩa lại.</p> 
+   <p>Để định nghĩa một hằng số trong PHP, bạn phải sử dụng hàm define() và để lấy giá trị của một hằng, bạn phải chỉ ra tên của nó. Không giống như biến, bạn không cần thêm $ vào hằng. Bạn cũng có thể sử dụng hàm constant() để đọc một giá trị của hằng nếu bạn muốn lấy tên của hằng một cách linh hoạt.</p> 
+   <h3>Hàm constant() trong PHP</h3> 
+   <p>Như tên hàm đã đề cập, hàm này sẽ trả về giá trị của hằng số.</p> 
+   <p>Điều này là rất hữu ích khi bạn muốn lấy giá trị của một hằng, nhưng bạn không biết tên của nó, ví du: nó được lưu giữ trong một biến hoặc được trả về bởi một hàm.</p> 
+   <h3>Ví dụ hàm constant() trong PHP</h3> 
+   <pre>&lt;?php
+   define("VIETJACK", 98);
+   
+   echo VIETJACK;
+   echo constant("VIETJACK"); // Kết quả được in như lệnh echo bên trên
+?&gt;</pre> 
+   <p>Chỉ có dữ liệu vô hướng (Boolean, integer, float và string) có thể được giữ trong các hằng số.</p> 
+   <h3>Khác nhau giữa hằng số và biến trong PHP là:</h3> 
+   <ul> 
+    <li> <p>Để định nghĩa biến cần viết kí tự $ vào trước, ngược lại hằng thì không cần.</p> </li> 
+    <li> <p>Hằng không thể được định nghĩa bằng phép gán đơn giản, chúng chỉ có thể được định nghĩa bằng cách sử dụng hàm define().</p> </li> 
+    <li> <p>Hằng có thể được định nghĩa và truy cập bất cứ đâu mà không quan tâm đến quy tắc phạm vi biến.</p> </li> 
+    <li> <p>Một hằng khi đã được định nghĩa, nó không thể định nghĩa lại hoặc hủy định nghĩa.</p> </li> 
+   </ul> 
+   <ins data-ad-client="ca-pub-2373417360267295" data-ad-slot="1455912478"></ins> 
+   <h3>Tên hằng hợp lệ và không hợp lệ trong PHP</h3> 
+   <pre>// Ví dụ các tên hằng hợp lệ
+define("ONE",     "Ví dụ tên hằng hợp lệ 1");
+define("TWO2",    "Ví dụ tên hằng hợp lệ 2");
+define("THREE_3", "Ví dụ tên hằng hợp lệ 3")
+
+// Ví dụ các tên hằng không hợp lệ
+define("2TWO",    "Ví dụ tên hằng không hợp lệ 1");
+define("__THREE__", "Ví dụ tên hằng không hợp lệ 2"); 
+</pre> 
+   <h3>Hằng số Magic trong PHP</h3> 
+   <p>PHP cung cấp một số lượng lớn các hằng số được định nghĩa trước để bất kỳ script nào cũng có thể sử dụng nó.</p> 
+   <p>Có 5 hằng số magic, thay đổi tùy thuộc vào nơi chúng được sử dụng. Ví dụ, giá trị của __LINE__ phụ thuộc vào dòng mà nó được sử dụng trong script của bạn. Các hằng đặc biệt này là phân biệt kiểu chữ.</p> 
+   <p>Bảng dưới liệt kê một số hằng magic trong PHP:</p> 
+   <table> 
+    <tbody> 
+     <tr> 
+      <th>Tên</th> 
+      <th>Miêu tả</th> 
+     </tr> 
+     <tr> 
+      <td><b>__LINE__</b></td> 
+      <td>Dòng hiện tại của file</td> 
+     </tr> 
+     <tr> 
+      <td><b>__FILE__</b></td> 
+      <td>Đường dẫn đầy đủ và tên đầy đủ của file. Nếu sử dụng bên trong một include thì tên của file được include sẽ được trả về. Từ PHP 4.0.2, <b>__FILE__</b> luôn luôn chưa một đường dẫn tuyệt đối, trong khi ở phiên bản cũ hơn chúng chứa đường dẫn tương đối trong một số trường hợp</td> 
+     </tr> 
+     <tr> 
+      <td><b>__FUNCTION__</b></td> 
+      <td>Tên của hàm. (Được thêm trong PHP 4.3.0) Như PHP 5, hằng số này trả về tên của hàm như nó đã khai báo trước đó (phân biệt kiểu chữ). Trong PHP 4, giá trị của nó luôn là chữ in thường</td> 
+     </tr> 
+     <tr> 
+      <td><b>__CLASS__</b></td> 
+      <td>Tên của lớp. (Được thêm trong PHP 4.3.0) Như PHP 5, hằng số này trả về tên của lớp như nó đã khai báo trước đó (phân biệt kiểu chữ). Trong PHP 4 giá trị của nó luôn là chữ in thường</td> 
+     </tr> 
+     <tr> 
+      <td><b>__METHOD__</b></td> 
+      <td>Tên phương thức lớp. (Được thêm trong PHP 5.0.0) Tên phương thức này được trả về như đã khai báo trước đó (phân biệt kiểu chữ).</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <p></p> 
+   <p><br> </p> 
+   <p>__DIR__ là gì?<br> </p> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p><br> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

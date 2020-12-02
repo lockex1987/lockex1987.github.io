@@ -1,0 +1,31 @@
+.file-icon {
+    padding: 5px 0 5px 22px;
+    background-size: 16px 16px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center left;
+}
+
+a[href$='.zip'], a[href$='.rar'] {
+    @extend .file-icon;
+    
+    background-image: url(/images/file-zip.png);
+}
+
+a[href$='.py'] {
+    @extend .file-icon;
+    
+    background-image: url(/images/file-py.png);
+}
+
+a[href$='.php'] {
+    @extend .file-icon;
+    
+    background-image: url(/images/file-php.png);
+}
+
+a[href$='.js'] {
+    @extend .file-icon;
+    
+    background-image: url(/images/file-js.png);
+}

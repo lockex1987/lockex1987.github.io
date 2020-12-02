@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Loader bằng border</title>
+
+<style>
+#demo-frame {
+	width: 100%;
+}
+
+#demo-frame td {
+	width: 50%;
+	vertical-align: top;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-top-color: #3498db;
+  width: 120px;
+  height: 120px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(  0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+</head>
+
+<body>
+<table id="demo-frame">
+	<tr>
+		<td>
+			<input type="checkbox"
+					onclick='loader.style.borderRadius = this.checked ? "50%" : "0%";'/>
+			Circle
+			
+			<br />
+			<input type="checkbox"
+					onclick='loader.style.animation = this.checked ? "spin 2s linear infinite" : "none";'/>
+			Spin
+
+			<br />
+			<input type="checkbox"
+					onclick='loader.style.borderRightColor = this.checked ? "green" : "#f3f3f3";'/>
+			Border right
+
+			<br />
+			<input type="checkbox"
+					onclick='loader.style.borderBottomColor = this.checked ? "red" : "#f3f3f3";'/>
+			Border bottom
+
+			<br />
+			<input type="checkbox"
+					onclick='loader.style.borderLeftColor = this.checked ? "pink" : "#f3f3f3";'/>
+			Border left
+		</td>
+
+		<td>
+			<div class="loader"></div>
+		</td>
+	</tr>
+</table>
+
+<script>
+	var loader = document.getElementsByClassName("loader")[0];
+</script>
+</body>
+</html>

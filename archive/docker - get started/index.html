@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Docker Get Started">
+    <meta name="keywords" content="docker, start">
+    <meta name="author" content="lockex1987">
+    <title>Docker Get Started</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Docker Get Started</h2>
+      <p>https://dev.to/maximization/why-docker-what-s-all-the-hype-about-1io1</p>
+      <p> Docker là một nền tảng mở (open platform), dùng để phát triển và vận
+        hành ứng dụng.</p>
+      <h3> Tại sao sử dụng Docker? </h3>
+      <ul>
+        <li> Với sự hỗ trợ của Docker, việc coding, testing, deploying trở nên
+          đơn giản hơn. </li>
+        <li> Khả năng di động (portable): môi trường develop được dựng lên bằng
+          Docker có thể chuyển từ người này sang người khác mà không làm thay
+          đổi cấu hình ở trong. </li>
+        <li> Application-centric: Docker được dùng trên nhiều môi trường, đặc
+          biệt tương thích trên môi trường develop, hướng đến việc coding thuận
+          tiện nhất. </li>
+        <li> Versioning: Docker được tích hợp VCS-git, để tracking các dòng lệnh
+          thiết lập, hay đánh dấu version. </li>
+        <li> Component re-use: nghĩa là Docker có khả năng sử dụng lại resource
+          trước đó, bằng cách đánh dấu những resources giống nhau bằng một mã
+          ID. Các môi trường được dựng lên sau đó sẽ kiểm tra các mã ID trước
+          đó, nếu trùng Docker sẽ sử dụng lại. </li>
+        <li> Sharing: với Docker Hub (public registry), các developer có thể tìm
+          và sử dụng các môi trường được dựng sẵn. </li>
+        <li> Hỗ trợ nhiều hệ điều hành, nhiều dịch vụ điện toán đám mây </li>
+        <li> Tách biệt các cài đặt cho từng ứng dụng, không gây ảnh hưởng lẫn
+          nhau </li>
+        <li> Xây dựng môi trường làm việc mà không quá tốn nhiều thời gian cho
+          việc cài đặt </li>
+        <li> Đồng nhất môi trường phát triển </li>
+        <li> Đóng gói môi trường thực thi một cách nhỏ gọn kèm theo cho dự án </li>
+        <li> Tiết kiệm thời gian cài đặt OS, thư viện </li>
+        <li> Tránh xung đột phần mềm, port </li>
+        <li> Có thể triển khai bất cứ nơi đâu do không phụ thuộc vào OS và cơ sở
+          hạ tầng </li>
+        <li> Thời gian khởi động cực nhanh </li>
+        <li> Khi nhiều người cùng phát triển một dự án sẽ không sợ sai khác về
+          môi trường </li>
+        <li> Giảm deployment time. Việc setup chỉ thực hiện một lần, đóng gói và
+          có thể ‘ship’ ra nhiều instance trên nhiều môi trường khác nhau. </li>
+        <li> Tăng tính nhất quán, đồng bộ giữa các instance, các môi trường vì
+          giảm vấn đề thiếu step hay cách làm có khác một chút ít khi lặp lại
+          việc cài đặt. </li>
+        <li> Tăng tính độc lập của các dự án, ứng dụng, không còn lo vấn đề lib
+          conflict. Nhờ đó việc sửa chửa, cải tiến, nâng cấp hệ thống nhanh
+          chóng và an toàn hơn. </li>
+        <li> Dễ dàng hơn nhiều (so với máy ảo) cho việc auto scale khi
+          load/traffic lên cao. </li>
+        <li> Một môi trường chạy giống nhau (OS, thư viện). Không phải cài cắm
+          lại các thứ khi thêm server mới (cài Docker thôi). Việc scale (deploy
+          trên nhiều máy) sẽ dễ hơn. </li>
+      </ul>
+      <p> Ví dụ 1 ứng dụng web được dev A nào đó đóng gói bằng Docker Engine,
+        cái đóng gói được gọi là Docker Image. Trong Docker Image chứa Ubuntu đã
+        cài đặt sẵn Apache và ứng dụng web. Docker Image được đưa lên Docker
+        Hub. Sau đó Docker Image được chia sẻ cho các dev B, C, D, E. Từ Docker
+        Image, dev B, C, D, E có thể tạo ra Docker Container, run Docker
+        Container này là có thể thao tác với ứng dụng web mà không cần phải cài
+        đặt môi trường hay các phần mềm liên quan. </p>
+      <p> Yêu cầu là các máy phải cài Docker. </p>
+      <ul>
+      </ul>
+      <h3> Docker gồm những gì? </h3>
+      <p> <img src="https://image.slidesharecdn.com/introductiontodockeranddockercompose-160612121700/95/introduction-to-docker-and-docker-compose-13-638.jpg">
+      </p>
+      <p> Registry (Docker Hub) là server trung tâm nơi chứa các images
+        original, hoặc các bản images đã được cài đặt chỉnh sửa theo nhu cầu
+        riêng biệt. Registry nằm ở server Internet, còn image và container nằm ở
+        máy người dùng. Registry là nơi để mọi người upload, chia sẽ các images
+        Docker của mình (hiện có khoảng 300.000 images).</p>
+      <p> Image là OS, một ứng dụng đã được cài đặt và đóng gói. Image chỉ có
+        quyền đọc. Image tương tự file <code>.gho</code> để ghost win. Một
+        Docker image thường chứa OS (Windows, Ubuntu, CentOS) và các môi trường
+        lập trình được cài sẵn (httpd, mysqld, nginx, python, git,…). Bạn có thể
+        tải các image từ người khác.</p>
+      <p>Container là bản thực thể của một image, được clone ra từ image, mọi
+        người sẽ sử dụng và làm việc trên container là chính.</p>
+      <p>Docker engine: là phần chính của docker, chứa các tool cho phép người
+        dùng đóng gói ứng dụng, tạo và khởi chạy docker container từ các docker
+        image.</p>
+      <h3>Danh sách bài viết của tôi</h3>
+      <p><a href="../docker%20-%20install%20docker%20on%20ubuntu/index.html">Cài
+          đặt Docker trên Ubuntu</a></p>
+      <p>Cài đặt Docker trên Windows 7</p>
+      <p>Cài đặt Docker trên Windows 10</p>
+      <p>Docker image</p>
+      <p>Docker container</p>
+      <p><a href="../docker%20-%20use%20redis/index.html">Sử dụng Redis với
+          Docker</a></p>
+      <p><a href="../docker%20-%20use%20mysql/index.html">Sử dụng MySQL với
+          Docker</a></p>
+      <p><a href="../docker%20-%20use%20nginx/index.html">Sử dụng nginx với
+          Docker</a></p>
+      <p>Tạo image từ container</p>
+      <p><a href="../docker%20-%20dockerfile/index.html">Tạo image từ Dockerfile</a></p>
+      <p>Dùng Docker Compose để khởi tạo nhiều container</p>
+      <p><a href="../docker%20-%20laradock/index.html">Sử dụng Laradock cho dự
+          án Laravel với Docker</a></p>
+      <p><a href="../docker%20-%20common%20commands/index.html">Các lệnh hay
+          dùng</a></p>
+      <h3> Tham khảo </h3>
+      <ul>
+        <li> <a href="https://docs.docker.com/" target="_blank"> Official
+            Documentation </a> </li>
+        <li> <a href="https://hub.docker.com/explore/" target="_blank"> Docker
+            Hub </a> </li>
+        <li> <a href="https://kipalog.com/tags/Docker" target="_blank"> Kipalog
+            posts </a> </li>
+        <li> <a href="https://viblo.asia/tags/docker" target="_blank"> Viblo
+            posts </a> </li>
+        <li> <a href="https://www.youtube.com/playlist?list=PLw9qBNSomVxe6yG1f02QApv3neSJyyWqg"
+            target="_blank"> YouTube videos </a> </li>
+        <li> <a href="https://www.tutorialspoint.com/docker/docker_quick_guide.htm"
+            target="_blank"> Tutorials Point </a> </li>
+      </ul>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

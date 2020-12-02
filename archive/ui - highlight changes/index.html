@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Highlight các thay đổi">
+    <title>Highlight các thay đổi</title>
+
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <article>
+        <h2>Highlight các thay đổi</h2>
+        <div id="myDiv" class="highlighted-x">
+            Vùng này sẽ được highlight
+        </div>
+
+        <p>Sửa chỗ tag input, highlight tag trùng</p>
+        <p>
+            <button onclick="highlightMyDiv()">
+                Highlight
+            </button>
+        </p>
+
+        <table style="margin-top: 20px; width: 100%">
+            <tr class="row">
+                <td class="origin">Portland, OR</td>
+                <td class="dest">Boise, ID</td>
+                <td class="dho">325</td>
+                <td class="dhd">38</td>
+                <td class="length">53</td>
+                <td class="weight">20000</td>
+            </tr>
+            <tr class="row">
+                <td class="origin">Portland, OR</td>
+                <td class="dest">Seattle, WA</td>
+                <td class="dho">185</td>
+                <td class="dhd">291</td>
+                <td class="length">48</td>
+                <td class="weight">10000</td>
+            </tr>
+            <tr class="row">
+                <td class="origin">Boise, ID</td>
+                <td class="dest">Seattle, WA</td>
+                <td class="dho">293</td>
+                <td class="dhd">291</td>
+                <td class="length">&mdash;</td>
+                <td class="weight">15000</td>
+            </tr>
+            <tr class="row">
+                <td class="origin">Denver, CO</td>
+                <td class="dest">Portland, OR</td>
+                <td class="dho">235</td>
+                <td class="dhd">136</td>
+                <td class="length">48</td>
+                <td class="weight">&mdash;</td>
+            </tr>
+            <tr class="row">
+                <td class="origin">Portland, OR</td>
+                <td class="dest">Boise, ID</td>
+                <td class="dho">53</td>
+                <td class="dhd">263</td>
+                <td class="length">&mdash;</td>
+                <td class="weight">20000</td>
+            </tr>
+            <tr class="row">
+                <td class="origin">Denver, CO</td>
+                <td class="dest">Portland, OR</td>
+                <td class="dho">157</td>
+                <td class="dhd">248</td>
+                <td class="length">48</td>
+                <td class="weight">25000</td>
+            </tr>
+        </table>
+    </article>
+
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

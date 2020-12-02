@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Một số vấn đề khác trong Laravel Passport</title>
+  </head>
+  <body>
+    <h2>5. Một số vấn đề khác trong Laravel Passport</h2>
+    <p>Như vậy, chúng ta đã thực hành với một số các loại ủy quyền trong Laravel
+      Passport. Trong quá trình thực hiện, chúng thấy còn một số công việc khác
+      chưa đi vào chi tiết, chúng ta sẽ cùng xem xét ở đây:</p>
+    <h3>5.1 Thời gian hiệu lực của access token</h3>
+    <p>Mặc định, Laravel Passport tạo ra các access token có thời gian hiệu lực
+      dài, chúng ta không bao giờ yêu cầu tạo lại access token bằng refresh
+      token, tuy nhiên trong thiết kế ứng dụng của bạn có thể cần thời gian hiêu
+      lực ngắn, việc này hoàn toàn có thể thực hiện được khi bạn sử dụng các
+      phương thức tokensExpireIn() và refreshTokensExpireIn() trong phương thức
+      boot() của AuthServiceProvider:</p>
+    <pre>use Carbon\Carbon;
+
+/**
+ * Register any authentication / authorization services.
+ *
+ * @return void
+ */
+public function boot()
+{
+    $this-&gt;registerPolicies();
+
+    Passport::routes();
+
+    Passport::tokensExpireIn(Carbon::now()-&gt;addDays(15));
+
+    Passport::refreshTokensExpireIn(Carbon::now()-&gt;addDays(30));
+}</pre>
+    <h3>5.2 Thêm, sửa, xóa Client</h3>
+    <p>Laravel Passport cho phép tạo các Client (Client ID và Client Secret)
+      thông qua câu lệnh <code>artisan passport:client</code>. Ngoài ra, có thể
+      thực hiện được thông qua các JSON API đã được xây dựng sẵn. Trong các ví
+      dụ dưới đây, sẽ sử dụng Axios là một HTTP client dạng Javascript, axios đã
+      được đưa vào sẵn trong cấu hình Laravel (<code>package.json</code>), bạn
+      có thể cài đặt bằng <code>npm install</code>.</p>
+    <h4>5.2.1 Danh sách client</h4>
+    <p>Gửi request GET đến oauth/clients</p>
+    <pre>axios.get('/oauth/clients')
+    .then(response =&gt; {
+        console.log(response.data);
+    });</pre>
+    <h4>5.2.2 Tạo mới một client</h4>
+    <p>Gửi request POST đến oauth/clients</p>
+    <pre>const data = {
+    name: 'Client Name',
+    redirect: 'http://example.com/callback'
+};
+
+axios.post('/oauth/clients', data)
+    .then(response =&gt; {
+        console.log(response.data);
+    })
+    .catch (response =&gt; {
+        // List errors on response...
+    });</pre>
+    <p>Chú ý, name là tên của Client, khi Client được tạo ra nó sẽ sinh Client
+      ID và Client Secret gửi lại trong response.</p>
+    <h4>5.2.3 Cập nhật client</h4>
+    <p>Gửi request PUT đến oauth/clients/{client_id}</p>
+    <pre>const data = {
+    name: 'New Client Name',
+    redirect: 'http://example.com/callback'
+};
+
+axios.put('/oauth/clients/' + clientId, data)
+    .then(response =&gt; {
+        console.log(response.data);
+    })
+    .catch (response =&gt; {
+        // List errors on response...
+    });</pre>
+    <h4>5.2.4 Xóa client</h4>
+    <p>Gửi request DELETE đến oauth/clients/{client_id}</p>
+    <pre>axios.delete('/oauth/clients/' + clientId)
+    .then(response =&gt; {
+        //
+    });</pre>
+    <h3>5.3 Tạo access token</h3>
+    <h4>5.3.1 Tạo Personal Access Client</h4>
+    <p>Trước khi tạo ra access token, bạn cần tạo Personal Access Client là một
+      khóa mật mã được sử dụng trong quá trình tạo các access token. Để tạo ra
+      Personal Access Token bạn có thể sử dụng lệnh</p>
+    <pre>php artisan passport:client --personal</pre>
+    <p>Hoặc nếu đã chạy câu lệnh</p>
+    <pre>php artisan passport:install</pre>
+    <p>trong phần cài đặt rồi thì thôi.</p>
+    <h4>5.3.2 Quản lý Personal Access Token</h4>
+    <p>Sử dụng phương thức createToken() của Model User để tạo ra access token</p>
+    <pre>$user = App\User::find(1);
+
+// Creating a token without scopes...
+$token = $user-&gt;createToken('Token Name')-&gt;accessToken;
+
+// Creating a token with scopes...
+$token = $user-&gt;createToken('My Token', ['place-orders'])-&gt;accessToken;</pre>
+    <h3>5.4 Bắt buộc xác thực API</h3>
+    <p>Các route cho API được khai báo trong routes/api.php (từ Laravel 5.3 các
+      route được tách biệt từ app\Http\route.php về các file web.php, api.php
+      trong thư mục routes). Để bắt buộc phải xác thực với các API giúp bảo vệ
+      dữ liệu khỏi con mắt tò mò, chúng ta chỉ cần sử dụng <a href="https://allaravel.com/laravel-tutorials/laravel-middleware-co-che-bo-loc-trung-gian/">Middleware
+        </a>auth:api cho các route này:</p>
+    <pre>Route::get('/user', function () {
+    //
+})-&gt;middleware('auth:api');</pre>
+    <p></p>
+  </body>
+</html>

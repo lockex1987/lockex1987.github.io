@@ -1,0 +1,212 @@
+@import url('https://fonts.googleapis.com/css?family=Russo+One');
+
+$fontFamily: 'Russo One', sans-serif;
+
+$small: 520px;
+$medium: 768px;
+$large: 1216px;
+
+html, body, #app {
+    height: 100%;
+    background: linear-gradient(to bottom ,#015492,#010134);
+}
+
+html {
+    overflow: auto;
+}
+
+.logo {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin: auto;
+}
+
+.character {
+    height: 100%;
+    overflow: hidden;
+}
+
+.character .columns {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.character .parent.columns {
+    min-width: 1000px;
+}
+
+.character .column {
+    display: flex;
+    justify-content: center; 
+}
+
+.character__profile {
+    max-width: 400px;
+    position: relative;
+  
+    img {
+        max-height: 550px;
+    }
+}
+
+.character__stats {
+    width: 100%;
+    font-family: $fontFamily;
+    position: relative;
+    bottom: 35px;
+
+    .name {
+        font-size: 40px;
+        color: #FFF;
+        font-family: $fontFamily;
+        text-shadow: 0 0 3px yellow;
+        text-transform: uppercase;
+    }
+  
+    .stat {
+        padding: 3px 0;
+        color: #FFF;
+    }
+  
+    .stat.final {
+        padding-top: 30px;
+    }
+
+    .tag {
+        background-color: yellow;
+    }
+  
+    .flag {
+        transform: scale(1.5);
+        margin-left: 3px;
+    }
+  
+    .alignment {
+        font-size: 22.5px;
+        text-shadow: 0 0 1px white;
+        position: relative;
+        top: 2.5px;
+    }
+    
+    .alignment.good {
+        color: #01ff2c;
+    }
+    
+    .alignment.evil {
+        color: #f52808;
+    }
+}
+
+.character-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    margin: auto;
+
+    .columns.is-gapless:not(:last-child) {
+        margin-bottom: 0;
+    }
+
+    .column {
+        max-width: 71.5px;
+    }
+  
+    .character-box {
+        filter: grayscale(1);
+        margin-bottom: 2px;
+        height: 80px;
+        outline: 2px solid gray;
+        align-self: stretch;
+        cursor: pointer;
+        position: relative;
+        text-align: center;
+
+        .character-img, .character-name {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .character-img {
+            height: 100%;
+        }
+
+        .character-name {
+            transform: translateY(-3em);
+            display: none;
+        }
+    }
+
+    .character-box.active {
+        filter: grayscale(0);
+        outline: 2px solid yellow;
+        z-index: 99;
+        animation: flash 300ms linear; 
+        
+        .character-name {
+            display: block;
+            background-color: rgba(227,35,30,0.7);
+            color: white;
+            margin-top: .8em;
+            font-size: .55em;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: .05em 0;
+        }
+    }
+}
+
+.twitter-section {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+  
+    .fa-twitter-square {
+        color: #f52808;
+        font-size: 30px;
+    }
+}
+
+@keyframes flash {
+	0% {
+		filter: brightness(100%);
+	}
+	20% {
+		filter: brightness(150%);
+	}
+	40% {
+		filter: brightness(100%);
+	}
+	60% {
+		filter: brightness(150%);
+	}
+	80% {
+		filter: brightness(100%);
+	}
+	100% {
+		filter: brightness(150%);
+	}
+}
+
+@media(max-width: $large) and (max-height: $medium) {
+    .character__profile img {
+        max-height: 325px;
+        position: relative;
+        right: 40px;
+    }
+
+    .character-container .column {
+        max-width: 48px;
+    }
+  
+    .character-container .character-box {
+        height: 53.5px;
+    }
+  
+    .character__stats .stat.final {
+        padding-top: 0;
+    }
+}

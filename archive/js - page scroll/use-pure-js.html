@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pure JS</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="btns">
+        <button class="btn js-btn1">Section 1</button>
+        <button class="btn js-btn2">Section 2</button>
+        <button class="btn js-btn3">Section 3</button>
+        <button class="btn js-btn500">Position 500px</button>
+        <button class="btn js-btn50000">Position 50000px (on purpose longer than document)</button>
+        <button class="btn js-btn0">Scroll to top</button>
+    </div>
+
+    <div class="section js-section1">Section 1</div>
+    <div class="section js-section2">Section 2</div>
+    <div class="section js-section3">Section 3</div>
+
+    <script src="scroll-to-top.js"></script>
+    <script>
+        // Predefine list of available timing functions
+        // If you need more, tween js is full of great examples
+        // https://github.com/tweenjs/tween.js/blob/master/src/Tween.js#L421-L737
+        // 
+        /**
+         * Định nghĩa các hàm timing.
+         * Hay dùng "easeInOutQuad".
+         * Xem minh họa ở: https://easings.net/en
+         */
+        var easings = {
+            linear: function linear(t) {
+                return t;
+            },
+            easeInQuad: function easeInQuad(t) {
+                return t * t;
+            },
+            easeOutQuad: function easeOutQuad(t) {
+                return t * (2 - t);
+            },
+            easeInOutQuad: function easeInOutQuad(t) {
+                return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+            },
+
+            easeInCubic: function easeInCubic(t) {
+                return t * t * t;
+            },
+            easeOutCubic: function easeOutCubic(t) {
+                return --t * t * t + 1;
+            },
+            easeInOutCubic: function easeInOutCubic(t) {
+                return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+            },
+            easeInQuart: function easeInQuart(t) {
+                return t * t * t * t;
+            },
+            easeOutQuart: function easeOutQuart(t) {
+                return 1 - --t * t * t * t;
+            },
+            easeInOutQuart: function easeInOutQuart(t) {
+                return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
+            },
+            easeInQuint: function easeInQuint(t) {
+                return t * t * t * t * t;
+            },
+            easeOutQuint: function easeOutQuint(t) {
+                return 1 + --t * t * t * t * t;
+            },
+            easeInOutQuint: function easeInOutQuint(t) {
+                return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t;
+            }
+        };
+
+        function currentTime() {
+            return 'now' in window.performance ? performance.now() : new Date().getTime();
+        }
+
+        /**
+         * Scroll bằng JS thuần.
+         * @param {(number|HTMLElement)} destination - Đích để scroll đến (đối tượng DOM hoặc một số)
+         * @param {number} duration - Thời gian thực hiện scroll
+         * @param {string} easing - Tên hàm timing (các giá trị cho phép là: 'linear', 'easeInQuad', 'easeOutQuad', 'easeInOutQuad', 'easeInCubic', 'easeOutCubic', 'easeInOutCubic', 'easeInQuart', 'easeOutQuart', 'easeInOutQuart', 'easeInQuint', 'easeOutQuint', 'easeInOutQuint')
+         * @param {function} callback - Hàm gọi sau khi scroll xong
+         */
+        function scrollIt(destination, duration = 200, easing = 'easeInOutQuad', callback) {
+            // Lưu các giá trị ban đầu: vị trí, thời gian
+            var start = window.pageYOffset;
+            var startTime = currentTime();
+
+            // Tính toán vị trị cần scroll đến
+            // Chú ý không được vượt quá độ cao của viewport
+            var documentHeight = Math.max(
+                document.body.scrollHeight,
+                document.body.offsetHeight,
+                document.documentElement.clientHeight,
+                document.documentElement.scrollHeight,
+                document.documentElement.offsetHeight
+            );
+            var windowHeight = window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight;
+            var destinationOffset = typeof destination === 'number' ? destination : destination.offsetTop;
+            var destinationOffsetToScroll = Math.round(documentHeight - destinationOffset < windowHeight ? documentHeight - windowHeight : destinationOffset);
+
+            // Nếu trình duyệt không hỗ trợ requestAnimationFrame thì dịch chuyển luôn
+            // và gọi hàm callback
+            if ('requestAnimationFrame' in window === false) {
+                window.scroll(0, destinationOffsetToScroll);
+                if (callback) {
+                    callback();
+                }
+                return;
+            }
+
+            // Hàm tính toán lại vị trí của window dựa vào delta của thời gian
+            function animateScroll() {
+                var now = currentTime();
+                var time = Math.min(1, (now - startTime) / duration);
+                var timeFunction = easings[easing];
+                var ratio = timeFunction(time);
+                window.scroll(0, Math.ceil(ratio * (destinationOffsetToScroll - start) + start));
+
+                // Kiểm tra đã đến đích chưa thì dừng lại và gọi hàm callback
+                if (window.pageYOffset === destinationOffsetToScroll) {
+                    if (callback) {
+                        callback();
+                    }
+                    return;
+                }
+
+                // Nếu vẫn cần scroll nữa thì gọi tiếp hàm
+                requestAnimationFrame(animateScroll);
+            }
+
+            // Bắt đầu scroll
+            animateScroll();
+        }
+
+        // Scroll to section 1
+        document.querySelector('.js-btn1').addEventListener('click', function () {
+            scrollIt(
+                document.querySelector('.js-section1'),
+                300,
+                'easeOutQuad',
+                function () {
+                    return console.log('Just finished scrolling to ' + window.pageYOffset + 'px');
+                }
+            );
+        });
+
+        // Scroll to section 2
+        document.querySelector('.js-btn2').addEventListener('click', function () {
+            scrollIt(
+                document.querySelector('.js-section2'),
+                300,
+                'easeOutQuad',
+                function () {
+                    return console.log('Just finished scrolling to ' + window.pageYOffset + 'px');
+                }
+            );
+        });
+
+        // Scroll to section 3
+        document.querySelector('.js-btn3').addEventListener('click', function () {
+            scrollIt(
+                document.querySelector('.js-section3'),
+                300,
+                'easeOutQuad',
+                function () {
+                    return console.log('Just finished scrolling to ' + window.pageYOffset + 'px');
+                }
+            );
+        });
+
+        // Scroll to 500px from top
+        document.querySelector('.js-btn500').addEventListener('click', function () {
+            scrollIt(
+                500,
+                300,
+                'easeOutQuad',
+                function () {
+                    return console.log('Just finished scrolling to ' + window.pageYOffset + 'px');
+                }
+            );
+        });
+
+        // Scroll to top
+        document.querySelector('.js-btn0').addEventListener('click', function () {
+            scrollToTop();
+        });
+
+        // Scroll to 50000px from top (on purpose longer than document)
+        document.querySelector('.js-btn50000').addEventListener('click', function () {
+            scrollIt(
+                50000,
+                300,
+                'easeOutQuad',
+                function () {
+                    return console.log('Just finished scrolling to ' + window.pageYOffset + 'px');
+                }
+            );
+        });
+    </script>
+</body>
+
+</html>

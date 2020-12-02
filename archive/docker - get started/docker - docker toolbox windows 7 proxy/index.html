@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Running Docker Toolbox on Windows 7 behind a proxy</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Running Docker Toolbox on Windows 7 behind a proxy">
+ </head> 
+ <body> 
+  <article> 
+   <h2>Running Docker Toolbox on Windows 7 behind a proxy</h2> 
+   <p>For some reasons, your system may not meet the requirements to run ”Docker for Windows“. You will need use Docker Toolbox to install and run docker. And for some reasons, you are working in a restrictive network environment with proxy servers. How should we deal with this condition?</p> 
+   <p>I am going to share how I run Docker on Windows 7 behind a proxy. Yes, two points in this article:</p> 
+   <ul> 
+    <li>Docker on Win 7</li> 
+    <li>Behind a proxy</li> 
+   </ul> 
+   <h3>Setup a Proxy in git-bash</h3> 
+   <p>You may need to setup a proxy in git-bash to get Boot2Docker iso file to create a VM for Docker-machine. Otherwise, you may see the error message as the below.</p> 
+   <p><img src="https://cdn-images-1.medium.com/max/800/1*WLSOsrG-VguxK7iYZ1n0GA.png"></p> 
+   <p>To setup and save the environment variable, you need to edit a <code>.bash_profile</code> for git-bash. Usually, the file in located in your Git home folder. Add the following code in your .bash_profile file. For NO_PROXY, you may also add ip address of docker-machine.</p> 
+   <pre>export HTTP_PROXY=http://account:password@proxy_Domain:port<br>export HTTPS_PROXY=https://account:password@proxy_Domain:port<br>export NO_PROXY=localhost,127.0.0.1,$docker-machine_ip</pre> 
+   <p>Restart “Docker Quickstart Terminal”, then it should look like the following figure.</p> 
+   <p><img src="https://cdn-images-1.medium.com/max/800/1*ZYHi_H0P84I8whCQ2CPKkA.png"></p> 
+   <p>Now Docker is up and running!</p> 
+   <p><img src="https://cdn-images-1.medium.com/max/800/1*nFzEOXTWK0SLoDyX35TI1Q.png"></p> 
+   <h3>Error when connect to docker machine</h3> 
+   <p>If the IP address of the default docker machine was not added into the NO_PROXY variable list, you may occur the follow error.</p> 
+   <p><img src="https://cdn-images-1.medium.com/max/800/1*nBACgyAAzcQsRMl9RuQycg.png"></p> 
+   <p>Check ip of docker-machine.</p> 
+   <p><img src="https://cdn-images-1.medium.com/max/800/1*EAfa4FpcsEfK744jhyitIQ.png"></p> 
+   <p>Add ip of docker-machine by editing <code>.bash_profile</code>.</p> 
+   <p><img src="https://cdn-images-1.medium.com/max/800/1*SH4uHpxFFVbGOja5M53_2w.png"></p> 
+   <h3>Verify your installation</h3> 
+   <p>Type the following command to pull a image and run a container for “hello-world”:</p> 
+   <pre>$ docker run hello-world</pre> 
+   <p><img src="https://cdn-images-1.medium.com/max/800/1*t6TqFxCpsA7QUZqtqK45Vg.png"></p> 
+   <h3>Another way to setup a proxy by connecting the default docker-machine</h3> 
+   <p>This above describes how to add a proxy settings in git-bash and initiate a docker terminal via git-bash. We can also setup the proxy in a docker-machine by the following commands.</p> 
+   <pre># Connect docker-machine
+$ docker-machine ssh default
+
+# Use root
+$ sudo -s
+
+# Check file
+cat /var/lib/boot2docker/profile
+
+# Http proxy
+$ echo "export HTTP_PROXY=http://proxy.cyberspace.vn:3128" &gt;&gt; /var/lib/boot2docker/profile
+
+# Https proxy
+$ echo "export HTTPS_PROXY=http://proxy.cyberspace.vn:3128" &gt;&gt; /var/lib/boot2docker/profile
+
+# No proxy
+
+# Verify file
+$ cat /var/lib/boot2docker/profile
+
+# Exit root
+$ exit
+
+# Exit docker machine
+$ exit
+
+# Restart docker machine
+$ docker-machine restart default</pre> 
+   <figure></figure> 
+   <p><img src="https://cdn-images-1.medium.com/max/800/1*qxnApZOgzYsfI1eONezM6Q.png"></p> 
+   <h3>Conclusion</h3> 
+   <p>Install Docker on win 7 with a proxy by the following steps:</p> 
+   <ol> 
+    <li>Install docker by Docker Toolbox</li> 
+    <li>Setup a proxy by adding settings ❶ in .bash_profile of git-bash or ❷ in default VM of docker-machine</li> 
+    <li>Try “hello-world” to verify the installation and settings</li> 
+   </ol> 
+   <p>Cách 1 không thực hiện được ở máy tính ở công ty.</p> 
+   <p>Cách 2 thì chạy được, pull được image, nhưng không apt-get được.</p> 
+   <h3>Reference</h3> 
+   <p>https://medium.com/@suci/running-docker-on-windows-7-behind-a-proxy-b363d3966d7</p> 
+   <p>https://stackoverflow.com/questions/23111631/cannot-download-docker-images-behind-a-proxy</p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="Money Manager">
+   <title>Money Manager</title>
+   <link rel="icon" href="../../images/favicon.png">
+   <link rel="stylesheet" href="../../css/style.css">
+   <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+   <article>
+      <h2>Money Manager</h2>
+      <div class="mb-3">
+         <button class="not-logged-only-block btn btn-success"
+               onclick="handleAuthClick()">
+            Đăng nhập
+         </button>
+
+         <button class="logged-only-block btn btn-danger"
+               onclick="handleSignoutClick()">
+            Đăng xuất
+         </button>
+      </div>
+
+      <div class="date-label"
+            id="todayLabel"></div>
+
+      <pre class="logged-only-block"
+            id="content">
+https://github.com/jakubgarfield/expenses
+https://github.com/mitul45/expense-manager
+https://mitul45.github.io/expense-manager/
+https://demo-expenses.chodounsky.net/
+
+https://en.wikipedia.org/wiki/Peter_Drucker
+</pre>   
+   </article>
+
+   <script src="js/moment-with-locales.min.js"></script>
+   <script src="js/app.js"></script>
+   <script async
+         defer
+         src="https://apis.google.com/js/api.js"
+         onload="this.onload = function () {}; handleClientLoad()"
+         onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
+   <script src="../../js/docs.js"></script>
+</body>
+
+</html>

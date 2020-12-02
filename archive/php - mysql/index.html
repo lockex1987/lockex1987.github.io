@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="description" content="pdo, mysqli">
+    <title>Truy cập MySQL với PHP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Truy cập MySQL với PHP</h2>
+      <h3>Cơ bản</h3>
+      <p>Nếu đơn giản quá thì viết script cho nhanh.</p>
+      <p>Demo các thao tác cơ bản:</p>
+      <p><a href="mysql_demo.php">mysql_demo.php</a></p>
+      <p><a href="pdo_demo.php">pdo_demo.php</a></p>
+      <p>Bảng dữ liệu test là:</p>
+      <pre>create table my_guest (
+    id int unsigned auto_increment primary key,
+    firstname varchar(30) not null,
+    lastname varchar(30) not null,
+    email varchar(50),
+    reg_date timestamp,
+    duration decimal(20, 5)
+);</pre>
+      <h3>Prepare statement</h3>
+      <p>Luôn sử dụng prepare statement để không bị lỗi SQL Injection.</p>
+      <p>Khi bind_param:</p>
+      <ul>
+        <li>i - integer</li>
+        <li>d - double</li>
+        <li>s - string</li>
+        <li>b - blob</li>
+      </ul>
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://www.w3schools.com/php7/php7_mysql_intro.asp">https://www.w3schools.com/php7/php7_mysql_intro.asp</a></p>
+      <p><a href="http://zetcode.com/php/pdo/" target="_blank">PHP PDO tutorial
+          - programming databases in PHP PDO</a></p>
+      <p><a href="https://phpdelusions.net/pdo" target="_blank">(The only
+          proper) PDO tutorial - Treating PHP Delusions</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+
+<head>
+<META http-equiv=Content-Type content="text/html; charset=windows-1253">
+<title>A different kind of menu system</title>
+
+<SCRIPT LANGUAGE="Javascript1.2">
+var WIDTH = "230px";
+var HEIGHT = "40px";
+var BGCOLOR = "#DDDDDD"; //"#d3bd13";
+var MENU_TEXT = '<div style="width:' + WIDTH + '; height:' + HEIGHT + '; background:' + BGCOLOR + '; text-align:center;"><b>Choice 1</b></div>'
+		+ '<div style="width:' + WIDTH + '; height:' + HEIGHT + '; background:' + BGCOLOR + '; text-align:center;"><b>Choice 2</b></div>'
+		+ '<div style="width:' + WIDTH + '; height:' + HEIGHT + '; background:' + BGCOLOR + '; text-align:center;"><b>Choice 3</b></div>'
+		+ '<div style="width:' + WIDTH + '; height:' + HEIGHT + '; background:' + BGCOLOR + '; text-align:center;"><b>Choice 4</b></div>';
+var MENU_ID = 'test1';
+
+/* Take a look at the links to see how it is called on the onClick event
+ * two parameters. first one is the name of the span you're going to appear and dissapear.
+ * 2nd one is the text that's going to be in it. Which in our case is the HTML tags of our choice table
+ * also notice that the ID and Name parameters have to be the same name.
+ * and the initial STYLE parameters on the span have to be position: relative and visibiity: hidden */
+function changeVisible() {
+	if (document.getElementById(MENU_ID).style.visibility == "hidden") {
+		document.getElementById(MENU_ID).style.visibility = "visible";
+		document.getElementById(MENU_ID).innerHTML = MENU_TEXT;
+	} else {
+		document.getElementById(MENU_ID).style.visibility = "hidden";
+		document.getElementById(MENU_ID).innerHTML = '';
+	}
+}
+</SCRIPT>
+
+</head>
+
+<body>
+<CENTER>
+	<H2>Minimum amount of DHTML... maximum effect</H2>
+</CENTER>
+<CENTER>
+	<H2>Author:  Dimitris Anoyatis</H2>
+</CENTER>
+
+<CENTER>
+<table cellspacing="0" cellpadding="0">
+	<tr>
+		<td>
+			<a HREF="javascript:void(0);" onClick="changeVisible();">
+				<img src="l.gif" width="103" height="189" border="0">
+			</a>
+		</td>
+		<td>
+			<span id="test1" name="test1" style="position:relative;  height:80px; visibility:hidden; background:#d3bd13"></span>
+		</td>
+		<td>
+			<a HREF="javascript:void(0);" onClick="changeVisible();">
+				<img src="r.gif" width="103" height="189" border="0">
+			</a>
+		</td>
+	</tr>
+</table>
+</CENTER>
+
+</body>
+</html>

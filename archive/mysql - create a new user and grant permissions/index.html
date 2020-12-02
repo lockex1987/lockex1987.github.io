@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="How to create a new user and grant permissions in MySQL">
+    <title>Tạo mới người dùng và gán quyền trong</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Tạo mới người dùng và gán quyền trong MySQL</h2>
+      <p>Hãy bắt đầu bằng việc truy cập MySQL shell và tạo mới người dùng:</p>
+      <pre>create user 'huyennv9'@'%' identified by 'abc123a@';</pre>
+      <p>Gán quyền:</p>
+      <pre>grant all privileges on sso.* to 'huyennv9'@'%';</pre>
+      <p>Hiệu lực các quyền đã cấp:</p>
+      <pre>flush privileges;</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

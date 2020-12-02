@@ -1,0 +1,155 @@
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+html,
+body {
+  height: 100%;
+}
+/* DEBUG */
+/*div:hover {
+  background: rgba(0,0,255,.2);
+  cursor: pointer;
+  &:after {
+    content: ' - 'attr(class);
+  }
+}*/
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
+}
+.dimensional {
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+}
+.stage {
+  -webkit-perspective: 800px;
+          perspective: 800px;
+}
+.office {
+  width: 500px;
+  height: 500px;
+  background: grey;
+  -webkit-transform: rotateX(80deg) translateY(250px);
+          transform: rotateX(80deg) translateY(250px);
+  -webkit-transition: -webkit-transform ease-in 4s;
+  transition: -webkit-transform ease-in 4s;
+  transition: transform ease-in 4s;
+  transition: transform ease-in 4s, -webkit-transform ease-in 4s;
+}
+.zoom .office {
+  -webkit-transform: rotateX(80deg) translateY(600px);
+          transform: rotateX(80deg) translateY(600px);
+}
+.crate {
+  position: absolute;
+  -webkit-transform: translate3d(100px, 0, 100px);
+          transform: translate3d(100px, 0, 100px);
+}
+.crate:hover {
+  cursor: pointer;
+}
+.crate .face {
+  padding-top: 20px;
+}
+.face {
+  display: block;
+  position: absolute;
+  text-align: center;
+  border: none;
+}
+.side {
+  width: 100px;
+  height: 200px;
+}
+.top {
+  background-color: pink;
+  width: 100px;
+  height: 100px;
+  -webkit-transform: translate3d(0, 100px, 100px);
+          transform: translate3d(0, 100px, 100px);
+}
+.one {
+  background-color: #f90;
+  left: 0px;
+  top: 100px;
+  -webkit-transform-origin: 0%;
+          transform-origin: 0%;
+  -webkit-transform: rotateX(-90deg) rotateY(0deg);
+          transform: rotateX(-90deg) rotateY(0deg);
+  -webkit-transition: -webkit-transform ease-in 4s;
+  transition: -webkit-transform ease-in 4s;
+  transition: transform ease-in 4s;
+  transition: transform ease-in 4s, -webkit-transform ease-in 4s;
+}
+.open {
+  -webkit-transform: rotateX(-90deg) rotateY(-130deg);
+          transform: rotateX(-90deg) rotateY(-130deg);
+}
+.two {
+  background-color: #0c0;
+  left: 50px;
+  top: 50px;
+  -webkit-transform: rotateX(-90deg) rotateY(90deg);
+          transform: rotateX(-90deg) rotateY(90deg);
+}
+.three {
+  background-color: #0cc;
+  left: -50px;
+  top: 50px;
+  -webkit-transform: rotateX(-90deg) rotateY(-90deg);
+          transform: rotateX(-90deg) rotateY(-90deg);
+}
+.four {
+  background-color: #c0c;
+  left: 0px;
+  top: 0px;
+  -webkit-transform: rotateX(-90deg);
+          transform: rotateX(-90deg);
+}
+.caesar {
+  background: url('http://www.butrint.org/images/explore/05/caesar.gif') no-repeat;
+  background-size: contain;
+  width: 50px;
+  height: 150px;
+  -webkit-transform: rotateX(-90deg) translate3d(25px, 25px, 75px);
+          transform: rotateX(-90deg) translate3d(25px, 25px, 75px);
+}
+.media-cart {
+  -webkit-transform: translate3d(250px, 125px, 100px);
+          transform: translate3d(250px, 125px, 100px);
+}
+.media-cart .tv {
+  width: 200px;
+  height: 120px;
+  -webkit-transform: rotateX(-90deg);
+          transform: rotateX(-90deg);
+}
+.media-cart .back {
+  background-color: black;
+  top: -20px;
+}
+.media-cart .screen {
+  background-color: #345;
+  border: solid 10px black;
+  top: 0;
+}
+.media-cart .stand {
+  background: red;
+  width: 220px;
+  height: 100px;
+  -webkit-transform: translate3d(-10px, -20px, -60px);
+          transform: translate3d(-10px, -20px, -60px);
+}

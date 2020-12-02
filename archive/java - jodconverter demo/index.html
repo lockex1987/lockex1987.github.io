@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>JODConverter</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="JODConverter">
+ </head> 
+ <body> 
+  <article> 
+   <h2>JOD Converter </h2> 
+   <p>JOD Converter (Java Open Document Converter) là một giải pháp convert tổng thể, dựa vào OpenOffice. Nó có thể convert qua lại giữa các định dạng.</p> 
+   <p>Chúng ta cần phân biệt nghiệp vụ export và nghiệp vụ convert. Export dữ liệu động thì nên sử dụng các thư viện khác. Convert qua lại giữa các định dạng thì nên dùng JODConverter.</p> 
+   <p>Việc convert thực sự được cung cấp bởi OpenOffice, tương tự như việc chúng ta mở file và <strong>Save as</strong> thành định dạng khác. Do đó chất lượng convert là tốt.</p> 
+   <p>Hiện tại đang có 2 phiên bản chính JODConverter là phiên bản 2 và phiên bản 3, cách sử dụng khác nhau. Ngoài ra cũng có nhiều phiên bản fork trên GitHub.</p> 
+   <p>Chúng ta sẽ tập trung sử dụng phiên bản 3.</p> 
+   <h3>Cài Open Office</h3> 
+   <p>Chú ý ở phiên bản nào JOD Converter nào thì chúng ta cũng phải cài Open Office.</p> 
+   <p>Chúng ta test trên LibreOffice phiên bản 5 (LibreOffice chứ không phải Apache OpenOffice, mặc dù cả 2 đều được, vì LibreOffice được cập nhật nhiều hơn).</p> 
+   <p>Cài trên Ubuntu, Debian:</p> 
+   <pre><code>sudo aptitude install libreoffice</code></pre> 
+   <p>Cài trên Redhat, CentOS, Fedora:</p> 
+   <pre><code>sudo yum install libreoffice libreoffice-headless</code></pre> 
+   <p>Chúng ta có thể cài offline bằng các file deb và rpm. Chúng ta nên cài từ file file .deb hoặc .rpm để có phiên bản mới nhất.</p> 
+   <p>Thư mục cài trên Linux thường là <strong>/usr/lib/libreoffice</strong>, trên Windows là <strong>C:\Program Files (x86)\LibreOffice 5</strong>.</p> 
+   <h3>Khởi động dịch vụ Open Office</h3> 
+   <p>Chỉ phiên bản 2 của JODConverter phải làm cái này. Các phiên bản sau sẽ có code Java để khởi động và đóng dịch vụ luôn.</p> 
+   <p>Lệnh Linux:</p> 
+   <pre><code>/usr/lib/libreoffice/program/soffice -headless -accept="socket,host=localhost,port=8100;urp;" -nofirststartwizard</code></pre> 
+   <p>Lệnh Windows:</p> 
+   <pre><code>"C:\Program Files (x86)\LibreOffice 5\program\soffice.exe" -headless -accept="socket,host=127.0.0.1,port=8100;urp;" -nofirststartwizard</code></pre> 
+   <p>Có thể chạy script trên Linux như sau:</p> 
+   <pre><code>#!/bin/bash
+# openoffice.org headless server script
+SOFFICE=/usr/bin/soffice
+PIDFILE=/var/run/openoffice-server.pid
+set -e
+case "$1" in
+&nbsp; &nbsp; start)
+&nbsp; &nbsp; &nbsp; &nbsp; if [ -f $PIDFILE ]; then
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; echo "OpenOffice headless server has already started."
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; sleep 5
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; exit
+&nbsp; &nbsp; &nbsp; &nbsp; fi
+&nbsp; &nbsp; &nbsp; &nbsp; echo "Starting OpenOffice headless server"
+&nbsp; &nbsp; &nbsp; &nbsp; $SOFFICE -headless -nologo -nofirststartwizard -accept="socket,host=127.0.0.1,port=8100;urp" &amp; &gt; /dev/null 2&gt;&amp;1
+&nbsp; &nbsp; &nbsp; &nbsp; touch $PIDFILE
+&nbsp; &nbsp; &nbsp; &nbsp; ;;
+&nbsp; &nbsp; stop)
+&nbsp; &nbsp; &nbsp; &nbsp; if [ -f $PIDFILE ]; then
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; echo "Stopping OpenOffice headless server."
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; killall -9 soffice &amp;&amp; killall -9 soffice.bin
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; rm -f $PIDFILE
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; exit
+&nbsp; &nbsp; &nbsp; &nbsp; fi
+&nbsp; &nbsp; &nbsp; &nbsp; echo "Openoffice headless server is not running."
+&nbsp; &nbsp; &nbsp; &nbsp; exit
+&nbsp; &nbsp; &nbsp; &nbsp; ;;
+&nbsp; &nbsp; *)
+&nbsp; &nbsp; &nbsp; &nbsp; echo "Usage: $0 {start|stop}"
+&nbsp; &nbsp; &nbsp; &nbsp; exit 1
+esac
+exit 0
+</code></pre> 
+   <h3>Version 2</h3> 
+   <p>Source code: jod-converter-2-demo.zip<br> </p> 
+   <h3>Version 3</h3> 
+   <p>Maven:</p> 
+   <pre><code class="xml">&lt;!-- https://mvnrepository.com/artifact/org.artofsolving.jodconverter/jodconverter-core --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.artofsolving.jodconverter&lt;/groupId&gt;
+    &lt;artifactId&gt;jodconverter-core&lt;/artifactId&gt;
+    &lt;version&gt;3.0-beta-4&lt;/version&gt;
+&lt;/dependency&gt;</code></pre> 
+   <p>Github: https://github.com/mirkonasato/jodconverter</p> 
+   <p>Wiki: https://code.google.com/archive/p/jodconverter/wikis/FAQ.wiki</p> 
+   <p>Source code: jod-converter-3-demo.zip</p> 
+   <h4>Chú ý</h4> 
+   <p>Hiện tại nếu sử dụng dependency của Maven như trên thì bị lỗi không download được.</p> 
+   <p>Chúng ta có thể làm như sau:</p> 
+   <p>Bước 1: Include các phụ thuộc trước, đó laf các thư viện của OpenOffice</p> 
+   <pre><code class="xml">&lt;!-- https://mvnrepository.com/artifact/org.openoffice/juh --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.openoffice&lt;/groupId&gt;
+    &lt;artifactId&gt;juh&lt;/artifactId&gt;
+    &lt;version&gt;3.2.1&lt;/version&gt;
+&lt;/dependency&gt;<br><br>&lt;!-- https://mvnrepository.com/artifact/org.openoffice/ridl --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.openoffice&lt;/groupId&gt;
+    &lt;artifactId&gt;ridl&lt;/artifactId&gt;
+    &lt;version&gt;3.2.1&lt;/version&gt;
+&lt;/dependency&gt;
+<br>&lt;!-- https://mvnrepository.com/artifact/org.openoffice/unoil --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.openoffice&lt;/groupId&gt;
+    &lt;artifactId&gt;unoil&lt;/artifactId&gt;
+    &lt;version&gt;3.2.1&lt;/version&gt;
+&lt;/dependency&gt;<br><br>&lt;!-- Tren Linux thi them thu vien nay nua --&gt;<br>&lt;!-- https://mvnrepository.com/artifact/commons-io/commons-io --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;commons-io&lt;/groupId&gt;
+    &lt;artifactId&gt;commons-io&lt;/artifactId&gt;
+    &lt;version&gt;1.4&lt;/version&gt;
+&lt;/dependency&gt;
+<br></code></pre> 
+   <p>Bước 2: Install jod-converter từ file jar, có thể lấy file jar từ <a href="https://code.google.com/archive/p/jodconverter/downloads">code.google.com</a></p> 
+   <pre><code>mvn install:install-file -Dfile=jodconverter-core-3.0-beta-4.jar -DgroupId=org.artofsolving.jodconverter -DartifactId=jodconverter-core -Dversion=3.0-beta-4-local -Dpackaging=jar</code></pre> 
+   <p>Bước 3: Sử dụng jod-converter local</p> 
+   <pre><code class="xml">&lt;dependency&gt;
+&nbsp; &nbsp; &lt;groupId&gt;org.artofsolving.jodconverter&lt;/groupId&gt;<br>&nbsp; &nbsp; &lt;artifactId&gt;jodconverter-core&lt;/artifactId&gt;
+&nbsp; &nbsp; &lt;version&gt;3.0-beta-4-local&lt;/version&gt;
+&lt;/dependency<br></code></pre> 
+   <p>Cách khác đơn giản hơn là thêm jahia repository</p> 
+   <pre><code class="xml"><code class="xml">&lt;project&gt;</code></code><code class="xml"><code class="xml"><code class="xml"><br> &lt;dependencies&gt;</code> </code>&lt;!-- https://mvnrepository.com/artifact/org.artofsolving.jodconverter/jodconverter-core --&gt;
+		&lt;dependency&gt;
+		    &lt;groupId&gt;org.artofsolving.jodconverter&lt;/groupId&gt;
+		    &lt;artifactId&gt;jodconverter-core&lt;/artifactId&gt;
+		    &lt;version&gt;3.0-beta-4-jahia5&lt;/version&gt;
+		&lt;/dependency&gt;
+	&lt;/dependencies&gt;
+	
+	&lt;repositories&gt;
+		&lt;repository&gt;
+			&lt;id&gt;jahia&lt;/id&gt;
+			&lt;url&gt;http://maven.jahia.org/maven2/&lt;/url&gt;
+		&lt;/repository&gt;
+	&lt;/repositories&gt;
+&lt;/project&gt;</code></pre> 
+   <p>Chúng ta có thể convert cả file có chứa ảnh sang HTML. Trên Windows thì nó tạo một file ngoài riêng. Trên Linux thì nó tạo ảnh base64 (hay là do phiên bản Libre Office 4 và 5 nhỉ? 4 ra ảnh ngoài, 5 ra ảnh base64. Đã test và là do phiên bản Libre Office).</p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

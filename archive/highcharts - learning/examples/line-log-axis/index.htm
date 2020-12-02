@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trục y là logarit</title>
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <script src="../../highcharts.js"></script>
+    
+    
+
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+
+
+    <script>
+        Highcharts.chart('container', {
+            title: {
+                text: 'Logarithmic axis demo'
+            },
+            xAxis: {
+                tickInterval: 1
+            },
+            yAxis: {
+                type: 'logarithmic',
+                minorTickInterval: 0.1
+            },
+            tooltip: {
+                headerFormat: '<b>{series.name}</b><br />',
+                pointFormat: 'x = {point.x}, y = {point.y}'
+            },
+            series: [
+                {
+                    data: [1, 2, 4, 8, 16, 32, 64, 128, 256, 512],
+                    pointStart: 1
+                }
+            ]
+        });
+    </script>
+</body>
+
+</html>

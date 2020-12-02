@@ -1,0 +1,284 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Laravel Scout</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Laravel Scout">
+ </head> 
+ <body> 
+  <article> 
+   <p>Scout là thư viện cung cấp 1 giải pháp đơn giản và dựa vào driver để đưa tìm kiếm full-text vào Eloquent Models. Sử dụng các model observer, Scout sẽ tự động cập nhật và đồng bộ hóa các index tìm kiếm của bạn với các bản ghi Eloquent.</p> 
+   <p>Hiện tại, Scout mặc định kết nối với driver Algolia; tuy nhiên các bạn có thể dễ dàng cài đặt mở rộng cho Scout hoặc viết driver search riêng. Ví dụ như với 1 search engine nổi tiếng là ElasticSearch có ví dụ <a href="https://viblo.asia/p/elasticsearch-with-php-gDVK2jLvKLj" target="_blank">đây</a>, hoặc 1 search engine khác là TNTSearch thì mình cũng từng thử <a href="https://viblo.asia/p/demo-laravel-voi-scout-tntsearch-voi-viec-tim-kiem-phim-nhat-naQZRbMjZvx" target="_blank">demo</a> đây.</p> 
+   <h3>Cài đặt</h3> 
+   <p>Đầu tiên, cài đặt Scout bằng Composer:</p> 
+   <pre><code>composer require laravel/scout
+</code></pre> 
+   <p>Sau khi cài đặt Scout, bạn nên công khai cấu hình Scout bằng cách sử dụng lệnh <code>vendor:publish</code> của Artisan. Lệnh này sẽ cho phép đưa file <code>scout.php</code> vào thư mục config.</p> 
+   <pre><code>php artisan vendor:publish --provider="Laravel\Scout\ScoutServiceProvider"
+</code></pre> 
+   <p>Cuối cùng, đưa trait <code>Laravel\Scout\Searchable</code> vào model bạn mong muốn có thể tìm kiếm được. Trait này sẽ tạo 1 model observer để liên tục đồng bộ hóa model với driver tìm kiếm.</p> 
+   <pre><code>&lt;?php
+namespace App;
+
+use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model
+{
+    use Searchable;
+}
+</code></pre> 
+   <h3>Queueing</h3> 
+   <p>Mặc dù Scout là không bắt buộc, nhưng khi dùng Scout thì bạn nên coi trọng việc cấu hình lại queue driver trước khi dùng thư viện này. Chạy một queue worker sẽ cho phép Scout xếp hàng tất cả các hoạt động đồng bộ hóa thông tin mô hình của bạn với các chỉ mục tìm kiếm của bạn, cung cấp thời gian phản hồi tốt hơn cho giao diện web của ứng dụng của bạn.</p> 
+   <p>Sau khi cấu hình lại queue driver, đặt giá trị của <code>queue</code> trong <code>config/scout.php</code> thành <code>true</code>.</p> 
+   <pre><code>'queue' =&gt; true,
+</code></pre> 
+   <h3>Driver</h3> 
+   <h4>Algolia</h4> 
+   <p>Với driver Algolia, bạn phải chỉnh <code>id</code> và <code>secret</code> lấy từ Algolia của bạn (và nhân tiện, Algolia cho phép dùng thử free 14 ngày). Sau khi tùy chỉnh, cài đặt Algolia PHP SDK bằng Composer:</p> 
+   <pre><code>composer require algolia/algoliasearch-client-php
+</code></pre> 
+   <h3>Tùy chỉnh</h3> 
+   <h4>Tùy chỉnh chỉ mục Model</h4> 
+   <p>Mỗi Eloquent model được đồng bộ hóa với "chỉ mục" tìm kiếm đã cho, chứa tất cả các bản ghi có thể tìm kiếm cho model đó. Nói cách khác, bạn có thể nghĩ về từng chỉ mục giống như một bảng MySQL. Theo mặc định, mỗi model sẽ được duy trì cho một chỉ mục phù hợp với tên "bảng" điển hình của model. Thông thường, đây là dạng số nhiều của tên model; tuy nhiên, bạn có thể tùy chỉnh chỉ mục của mô hình bằng cách ghi đè phương thức <code>searchableAs</code> trên model:</p> 
+   <pre><code>&lt;?php
+namespace App;
+
+use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model
+{
+    use Searchable;
+
+    /**
+     * Get the index name for the model.
+     *
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return 'posts_index';
+    }
+}
+</code></pre> 
+   <h4>Tùy chỉnh dữ liệu cho phép search</h4> 
+   <p>Theo mặc định, toàn bộ biểu mẫu <code>toArray</code> của một mô hình cụ thể sẽ được duy trì cho chỉ mục tìm kiếm của nó. Nếu bạn muốn tùy chỉnh dữ liệu được đồng bộ hóa với chỉ mục tìm kiếm, bạn có thể ghi đè lên phương thức <code>toSearchableArray</code> trên mô hình:</p> 
+   <pre><code>&lt;?php
+namespace App;
+
+use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model
+{
+    use Searchable;
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this-&gt;toArray();
+
+        // Customize array...
+
+        return $array;
+    }
+}
+</code></pre> 
+   <h4>Tùy chỉnh ID của Model</h4> 
+   <p>Theo mặc định, Scout sẽ sử dụng khóa chính của model làm ID duy nhất được lưu trữ trong chỉ mục tìm kiếm. Nếu bạn cần tùy chỉnh hành vi này, bạn có thể ghi đè phương thức <code>getScoutKey</code> trên mô hình:</p> 
+   <pre><code>&lt;?php
+namespace App;
+
+use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+{
+    use Searchable;
+
+    /**
+     * Get the value used to index the model.
+     *
+     * @return mixed
+     */
+    public function getScoutKey()
+    {
+        return $this-&gt;email;
+    }
+}
+</code></pre> 
+   <h3>Đánh chỉ mục</h3> 
+   <h4>Nhập hàng loạt</h4> 
+   <p>Nếu bạn đang cài đặt Scout vào một dự án hiện có, bạn có thể đã có các bản ghi cơ sở dữ liệu mà bạn cần phải nhập vào trình điều khiển tìm kiếm của bạn. Scout cung cấp lệnh Artisan <code>import</code> mà bạn có thể sử dụng để nhập tất cả các bản ghi hiện có của bạn vào chỉ mục tìm kiếm của bạn:</p> 
+   <pre><code>php artisan scout:import "App\Post"
+</code></pre> 
+   <p>Lệnh <code>flush</code> có thể được sử dụng để xóa tất cả các bản ghi của một mô hình khỏi các chỉ mục tìm kiếm của bạn:</p> 
+   <pre><code>php artisan scout:flush "App\Post"
+</code></pre> 
+   <h4>Thêm bản ghi</h4> 
+   <p>Một khi bạn đã thêm trait <code>Laravel\Scout\Searchable</code> vào một model, tất cả những gì bạn cần làm là <code>save</code> một model instance và nó sẽ tự động được thêm vào chỉ mục tìm kiếm của bạn. Nếu bạn đã cấu hình Scout để sử dụng hàng đợi, thao tác này sẽ được thực hiện dưới nền bởi queue worker của bạn:</p> 
+   <pre><code>$order = new App\Order;
+
+// ...
+
+$order-&gt;save();
+</code></pre> 
+   <h4>Thêm thông qua query</h4> 
+   <p>Nếu bạn muốn thêm một tập hợp các mô hình vào chỉ mục tìm kiếm của mình thông qua truy vấn Eloquent, bạn có thể chuỗi phương thức <code>searchable</code> vào truy vấn Eloquent. Phương thức <code>searchable</code> sẽ chia các kết quả của truy vấn và thêm các bản ghi vào chỉ mục tìm kiếm của bạn. Một lần nữa, nếu bạn đã cấu hình Scout để sử dụng hàng đợi, tất cả các khối sẽ được thêm vào background bởi queue worker của bạn:</p> 
+   <pre><code>// Adding via Eloquent query...
+App\Order::where('price', '&gt;', 100)-&gt;searchable();
+
+// You may also add records via relationships...
+$user-&gt;orders()-&gt;searchable();
+
+// You may also add records via collections...
+$orders-&gt;searchable();
+</code></pre> 
+   <p>Phương thức <code>searchable</code> có thể được coi là một hoạt động "upsert". Nói cách khác, nếu bản ghi mô hình đã có trong chỉ mục của bạn, nó sẽ được cập nhật. Nếu nó không tồn tại trong chỉ mục tìm kiếm, nó sẽ được thêm vào chỉ mục.</p> 
+   <h2>Cập nhật bản ghi</h2> 
+   <p>Để cập nhật một model có thể tìm kiếm được, bạn chỉ cần cập nhật các thuộc tính của model instance và <code>save</code> model vào cơ sở dữ liệu của bạn. Scout sẽ tự động duy trì các thay đổi đối với chỉ mục tìm kiếm của bạn:</p> 
+   <pre><code>$order = App\Order::find(1);
+
+// Update the order...
+
+$order-&gt;save();
+</code></pre> 
+   <p>Bạn cũng có thể sử dụng phương thức <code>searchable</code> trên truy vấn Eloquent để cập nhật một tập hợp các model. Nếu các model không tồn tại trong chỉ mục tìm kiếm của bạn, chúng sẽ được tạo:</p> 
+   <pre><code>// Updating via Eloquent query...
+App\Order::where('price', '&gt;', 100)-&gt;searchable();
+
+// You may also update via relationships...
+$user-&gt;orders()-&gt;searchable();
+
+// You may also update via collections...
+$orders-&gt;searchable();
+</code></pre> 
+   <h2>Loại bỏ bản ghi</h2> 
+   <p>Để xóa một bản ghi khỏi chỉ mục của bạn, <code>delete</code> mô hình khỏi cơ sở dữ liệu. Hình thức xóa này thậm chí còn tương thích với các mẫu bị xóa soft-deleted:</p> 
+   <pre><code>$order = App\Order::find(1);
+
+$order-&gt;delete();
+</code></pre> 
+   <p>Nếu bạn không muốn truy xuất mô hình trước khi xóa bản ghi, bạn có thể sử dụng phương thức <code>unsearchable</code> trên một instance hoặc collection truy vấn Eloquent:</p> 
+   <pre><code>// Removing via Eloquent query...
+App\Order::where('price', '&gt;', 100)-&gt;unsearchable();
+
+// You may also remove via relationships...
+$user-&gt;orders()-&gt;unsearchable();
+
+// You may also remove via collections...
+$orders-&gt;unsearchable();
+</code></pre> 
+   <h2>Tạm dừng lập chỉ mục</h2> 
+   <p>Đôi khi bạn có thể cần thực hiện một loạt các hoạt động Eloquent trên một mô hình mà không đồng bộ hóa dữ liệu model với chỉ mục tìm kiếm của bạn. Bạn có thể làm điều này bằng cách sử dụng phương thức <code>withoutSyncingToSearch</code>. Phương thức này chấp nhận một callback đơn sẽ được thực hiện ngay lập tức. Mọi hoạt động trong model xảy ra trong callback sẽ không được đồng bộ hóa với chỉ mục của mô hình:</p> 
+   <pre><code>App\Order::withoutSyncingToSearch(function () {
+    // Perform model actions...
+});
+</code></pre> 
+   <h2>Model Instance có thể tìm kiếm có điều kiện</h2> 
+   <p>Đôi khi, bạn có thể chỉ cần tạo mô hình có thể tìm kiếm trong các điều kiện nhất định. Ví dụ, hãy tưởng tượng bạn có model <code>App\Post</code> có thể thuộc một trong hai trạng thái: "draft" và "published". Bạn chỉ có thể muốn cho phép các bài đăng "published" có thể tìm kiếm được. Để thực hiện điều này, bạn có thể định nghĩa phương thức <code>shouldBeSearchable</code> trên model của mình:</p> 
+   <pre><code>public function shouldBeSearchable()
+{
+    return $this-&gt;isPublished();
+}
+</code></pre> 
+   <h1>Tìm kiếm</h1> 
+   <p>Đã đến chức năng quan trọng nhất.</p> 
+   <p>Bạn có thể bắt đầu tìm kiếm một model bằng cách sử dụng phương thức <code>search</code>. Phương thức tìm kiếm chấp nhận một chuỗi đơn sẽ được sử dụng để tìm kiếm các model của bạn. Sau đó, bạn nên chuỗi phương thức <code>get</code> vào truy vấn tìm kiếm để truy xuất các model Eloquent khớp với truy vấn tìm kiếm đã cho:</p> 
+   <pre><code>$orders = App\Order::search('Star Trek')-&gt;get();
+</code></pre> 
+   <p>Vì các tìm kiếm Scout trả về một tập hợp các mô hình Eloquent, bạn thậm chí có thể trả lại kết quả trực tiếp từ một tuyến hoặc bộ điều khiển và chúng sẽ tự động được chuyển thành JSON:</p> 
+   <pre><code>use Illuminate\Http\Request;
+
+Route::get('/search', function (Request $request) {
+    return App\Order::search($request-&gt;search)-&gt;get();
+});
+</code></pre> 
+   <p>Nếu bạn muốn nhận được các kết quả thô trước khi chúng được chuyển đổi thành các model Eloquent, bạn nên sử dụng phương thức <code>raw</code>:</p> 
+   <pre><code>$orders = App\Order::search('Star Trek')-&gt;raw();
+</code></pre> 
+   <p>Các truy vấn tìm kiếm thường sẽ được thực hiện trên chỉ mục được chỉ định bởi phương thức <code>searchableAs</code> của model. Tuy nhiên, bạn có thể sử dụng phương thức <code>within</code> để chỉ định một chỉ mục tùy chỉnh cần được tìm kiếm thay thế:</p> 
+   <pre><code>$orders = App\Order::search('Star Trek')
+    -&gt;within('tv_shows_popularity_desc')
+    -&gt;get();
+</code></pre> 
+   <h2>Các mệnh đề where</h2> 
+   <p>Scout cho phép bạn thêm các mệnh đề "where" đơn giản vào các truy vấn tìm kiếm của bạn. Hiện tại, các mệnh đề này chỉ hỗ trợ kiểm tra bình đẳng số cơ bản và chủ yếu hữu ích cho việc tìm kiếm các truy vấn tìm kiếm theo ID mượn. Vì chỉ mục tìm kiếm không phải là một cơ sở dữ liệu quan hệ, nên các mệnh đề "where" nâng cao hiện không được hỗ trợ:</p> 
+   <pre><code>$orders = App\Order::search('Star Trek')-&gt;where('user_id', 1)-&gt;get();
+</code></pre> 
+   <h2>Phân trang</h2> 
+   <p>Ngoài việc truy xuất tập hợp các model, bạn có thể phân trang kết quả tìm kiếm của mình bằng phương thức <code>paginate</code>. Phương thức này sẽ trả về một instance <code>Paginator</code> giống như khi bạn đã phân trang một truy vấn Eloquent truyền thống:</p> 
+   <pre><code>$orders = App\Order::search('Star Trek')-&gt;paginate();
+</code></pre> 
+   <p>Ta cũng có thể truyền tham số vào <code>paginate</code> để số kết qủa hiện ra trong 1 trang như ta mong muốn</p> 
+   <pre><code>$orders = App\Order::search('Star Trek')-&gt;paginate(10);
+</code></pre> 
+   <p>Và ta đưa vào Blade như thường</p> 
+   <pre><code>&lt;div &gt;
+    @foreach ($orders as $order)
+        {{ $order-&gt;price }}
+    @endforeach
+&lt;/div&gt;
+
+{{ $orders-&gt;links() }}
+</code></pre> 
+   <h2>Soft deleting</h2> 
+   <p>Nếu các model được lập chỉ mục của bạn bị xóa mềm và bạn cần phải tìm kiếm các model bị xóa mềm của bạn, hãy đặt tùy chọn <code>soft_delete</code> của tệp cấu hình <code>config / scout.php</code> thành <code>true</code>:</p> 
+   <pre><code>'soft_delete' =&gt; true,
+</code></pre> 
+   <p>Khi tùy chọn cấu hình này là <code>true</code>, Scout sẽ không xóa các mô hình bị xóa mềm khỏi chỉ mục tìm kiếm. Thay vào đó, nó sẽ thiết lập một thuộc tính <code>__soft_deleted</code> ẩn trên bản ghi được lập chỉ mục. Sau đó, bạn có thể sử dụng phương thức <code>withTrashed</code> hoặc<code>onlyTrashed</code> để truy xuất các bản ghi đã xóa mềm khi tìm kiếm:</p> 
+   <pre><code>// Include trashed records when retrieving results...
+$orders = App\Order::withTrashed()-&gt;search('Star Trek')-&gt;get();
+
+// Only include trashed records when retrieving results...
+$orders = App\Order::onlyTrashed()-&gt;search('Star Trek')-&gt;get();
+</code></pre> 
+   <p>CHÚ Ý: Khi một model bị xóa mềm bị xóa vĩnh viễn bằng <code>forceDelete</code>, Scout sẽ tự động xóa nó khỏi chỉ mục tìm kiếm.</p> 
+   <h1>Tùy chỉnh Engine</h1> 
+   <h2>Tự viết engine</h2> 
+   <p>Nếu một trong những công cụ tìm kiếm được xây dựng trong Scout không phù hợp với nhu cầu của bạn, bạn có thể viết engine của riêng bạn và đăng ký nó với Scout. Engine của bạn sẽ extend abstract class <code>Laravel\Scout\Engines\Engine</code>. Abstract class này chứa bảy phương thức mà công cụ tùy chỉnh của bạn phải triển khai:</p> 
+   <pre><code>use Laravel\Scout\Builder;
+
+abstract public function update($models);
+abstract public function delete($models);
+abstract public function search(Builder $builder);
+abstract public function paginate(Builder $builder, $perPage, $page);
+abstract public function mapIds($results);
+abstract public function map($results, $model);
+abstract public function getTotalCount($results);
+</code></pre> 
+   <p>Bạn có thể thấy hữu ích khi xem lại việc triển khai các phương thức này trên class <code>Laravel\Scout\Engines\AlgoliaEngine</code>. Class này sẽ cung cấp cho bạn một điểm khởi đầu tốt cho việc học cách thực hiện từng phương pháp trong công cụ của riêng bạn.</p> 
+   <h2>Đăng ký engine</h2> 
+   <p>Một khi bạn đã viết công cụ tùy chỉnh của bạn, bạn có thể đăng ký nó với Scout bằng cách sử dụng phương thức <code>extend</code> của trình quản lý công cụ Scout. Bạn nên gọi phương thức <code>extend</code> từ phương thức <code>boot</code> của <code>AppServiceProvider</code> hoặc bất kỳ nhà cung cấp dịch vụ nào khác mà ứng dụng của bạn sử dụng. Ví dụ, nếu bạn đã viết <code>MySqlSearchEngine</code>, bạn có thể đăng ký nó như sau:</p> 
+   <pre><code>use Laravel\Scout\EngineManager;
+
+/**
+ * Bootstrap any application services.
+ *
+ * @return void
+ */
+public function boot()
+{
+    resolve(EngineManager::class)-&gt;extend('mysql', function () {
+        return new MySqlSearchEngine;
+    });
+}
+</code></pre> 
+   <p>Khi công cụ của bạn đã được đăng ký, bạn có thể chỉ định nó là <code>driver</code> Scout mặc định trong tệp cấu hình <code>config / scout.php</code> của bạn:</p> 
+   <pre><code>'driver' =&gt; 'mysql',
+</code></pre> 
+   <h1>Tham khảo</h1> 
+   <p><a href="https://laravel.com/docs/5.7/scout/" target="_blank">https://laravel.com/docs/5.7/scout/</a></p> 
+   <p></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

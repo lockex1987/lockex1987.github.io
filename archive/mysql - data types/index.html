@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="mysql">
+    <title>Các kiểu dữ liệu trong MySQL</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Các kiểu dữ liệu trong MySQL</h2>
+      <p>Việc định nghĩa đúng và hợp lý các kiểu dữ liệu là quan trọng để tối ưu
+        hóa cơ sở dữ liệu của bạn.</p>
+      <h3>Kiểu dữ liệu số</h3>
+      <h4>Kiểu dữ liệu số nguyên</h4>
+      <p>Dữ liệu có thể có dấu (SIGNED) hoặc không dấu (UNSIGNED).</p>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th class="text-center align-middle">Kiểu dữ liệu</th>
+              <th class="text-center align-middle">Độ dài<br>
+                (số byte)</th>
+              <th class="text-center align-middle">Min<br>
+                (có dấu)</th>
+              <th class="text-center align-middle">Max<br>
+                (có dấu)</th>
+              <th class="text-center align-middle">Min<br>
+                (không dấu)</th>
+              <th class="text-center align-middle">Max<br>
+                (không dấu)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>TINYINT<br>
+              </td>
+              <td>1<br>
+              </td>
+              <td>-128<br>
+              </td>
+              <td>127<br>
+              </td>
+              <td>0<br>
+              </td>
+              <td>255<br>
+              </td>
+            </tr>
+            <tr>
+              <td>SMALLINT<br>
+              </td>
+              <td>2<br>
+              </td>
+              <td>-32,768<br>
+              </td>
+              <td>32,767<br>
+              </td>
+              <td>0<br>
+              </td>
+              <td>65,535<br>
+              </td>
+            </tr>
+            <tr>
+              <td>MEDIUMINT<br>
+              </td>
+              <td>3<br>
+              </td>
+              <td>-8,388,608<br>
+              </td>
+              <td>8,388,607<br>
+              </td>
+              <td>0<br>
+              </td>
+              <td>16,777,215<br>
+              </td>
+            </tr>
+            <tr>
+              <td>INT</td>
+              <td>4</td>
+              <td>-2,147,483,648</td>
+              <td>2,147,483,647</td>
+              <td>0</td>
+              <td>4,294,967,295</td>
+            </tr>
+            <tr>
+              <td>BIGINT</td>
+              <td>8</td>
+              <td>-9223372036854775808</td>
+              <td>9223372036854775807</td>
+              <td>0</td>
+              <td>18446744073709551615</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h4>Kiểu dữ liệu số dấu chấm động (floating-point)</h4>
+      <p>Kiểu dữ liệu FLOAT và DOUBLE mô tả gần đúng giá trị số thực.</p>
+      <p>Bạn có thể chỉ định FLOAT(M,D), DOUBLE(M,D); trong đó M là độ dài số, D
+        là số chữ số sau dấu phảy. Điều này là không bắt buộc.</p>
+      <p>FLOAT tương đương FLOAT(10,2). Phần sau dấu phảy có thể lên tới 24.
+        FLOAT dùng 4 byte.</p>
+      <p>DOUBLE tương đương DOUBLE(16,4). Phần sau dấu phảy có thể lên tới 53.
+        DOUBLE dùng 8 byte.</p>
+      <p>REAL là từ đồng nghĩa với DOUBLE.</p>
+      <p>Bạn không nên sử dụng FLOAT hoặc DOUBLE, vì có thể bị sai số. Nên sử
+        dụng DECIMAL.</p>
+      <h4>Kiểu dữ liệu số dấu chấm cố định (fixed-point)</h4>
+      <p>Kiểu dấu chấm cố định DECIMAL được sử dụng để bảo vệ độ chính xác
+        (precision), ví dụ như dữ liệu tiền tệ. NUMERIC là từ đồng nghĩa với
+        DECIMAL.</p>
+      <p>Trong SQL chuẩn, cú pháp DECIMAL(5,2) nghĩa là độ chính xác (precision)
+        là 5, và 2 là phần thập phân (scale), nghĩa là nó có thể lưu trữ một giá
+        trị có 5 chữ số trong đó có 2 số thập phân. Vì vậy giá trị lưu trữ sẽ là
+        -999.99 tới 999.99.&nbsp; Cú pháp DECIMAL(M) tương đương với
+        DECIMAL(M,0). Tương tự DECIMAL tương đương với DECIMAL(M,0) ở đây M mặc
+        định là 10.</p>
+      <p>Độ dài tối đa các chữ số cho DECIMAL là 65.</p>
+      <h4>Kiểu dữ liệu bit</h4>
+      <p>Kiểu dữ liệu BIT được sử dụng để lưu trữ trường giá trị bit. Kiểu
+        BIT(N) có thể lưu trữ N giá trị bit. N có phạm vi từ 1 tới 64.</p>
+      <p>Để chỉ định giá trị các bit, có thể sử dụng <code>b'value'</code>,
+        trong đó <code>value</code> là dãy các số nhị phân&nbsp; 0 hoặc 1. Ví
+        dụ <code>b'111'</code> mô tả số 7, và <code>b'10000000'</code> mô tả
+        số 128.</p>
+      <h3>Kiểu dữ liệu date và time</h3>
+      <h4>Kiểu dữ liệu DATE, DATETIME, TIMESTAMP</h4>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th class="text-center align-middle">Kiểu dữ liệu</th>
+              <th class="text-center align-middle">Mô tả</th>
+              <th class="text-center align-middle">Định dạng hiển thị</th>
+              <th class="text-center align-middle">Min</th>
+              <th class="text-center align-middle">Max</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>DATE<br>
+              </td>
+              <td>Chỉ lưu ngày tháng<br>
+              </td>
+              <td>YYYY-MM-DD<br>
+              </td>
+              <td>1000-01-01<br>
+              </td>
+              <td>9999-12-31<br>
+              </td>
+            </tr>
+            <tr>
+              <td>DATETIME<br>
+              </td>
+              <td>Lưu cả ngày tháng và thời gian<br>
+              </td>
+              <td>YYYY-MM-DD HH:MM:SS<br>
+              </td>
+              <td>1000-01-01 00:00:00<br>
+              </td>
+              <td>9999-12-31 23:59:59<br>
+              </td>
+            </tr>
+            <tr>
+              <td>TIMESTAMP</td>
+              <td>Lưu cả ngày tháng và thời gian.<br>
+                <br>
+                Giá trị này sẽ được chuyển đổi từ múi giờ hiện tại sang UTC
+                trong khi lưu trữ, và sẽ chuyển trở lại múi giờ hiện tại khi lấy
+                dữ liệu ra.</td>
+              <td>YYYY-MM-DD HH:MM:SS</td>
+              <td>1970-01-01 00:00:01</td>
+              <td>2038-01-19 03:14:07</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h4>Kiểu dữ liệu TIME</h4>
+      <p>MySQL lấy và hiển thị thời gian theo định dạng 'HH:MM:SS' (hoặc định
+        dạng 'HHH:MM:SS' đối với các giá trị giờ lớn). Giá trị của TIME có thể
+        trong khoảng '-838:59:59' tới '838:59:59'.</p>
+      <p>Phần thời gian có thể lớn bởi vì kiểu TIME có thể không chỉ mô tả thời
+        gian của một ngày (vốn chỉ có tối đa 24 giờ), mà nó có thể là thời gian
+        trôi qua hoặc khoảng thời gian giữa hai sự kiện (cái mà có thể lớn hơn
+        24 giờ hoặc thậm trí có giá trị âm).</p>
+      <h4>Kiểu dữ liệu YEAR</h4>
+      <p>Kiểu dữ liệu YEAR được sử dụng 1 byte để mô tả giá trị. Nó có thể khai
+        báo YEAR(2) hoặc YEAR(4) chỉ định rõ chiều rộng hiển thị là 2 hay 4 ký
+        tự. Nếu không chỉ rõ chiều rộng mặc định là 4 ký tự.</p>
+      <p>YEAR(4) và YEAR(2) khác nhau định dạnh hiển thị nhưng có cùng phạm vi
+        giá trị.</p>
+      <p>Với định dạng 4 số, MySQL hiển thị&nbsp; giá trị YEAR theo định dạng
+        YYYY, với phạm vi 1901 tới 2155, hoặc 0000.</p>
+      <p>Với định dạng 2 số, MySQL chỉ hiển thị 2 số cuối, ví dụ 70 (1970 hoặc
+        2070) hoặc 69 (2069).</p>
+      <h4>Sự khác nhau giữa kiểu dữ liệu DATETIME và TIMESTAMP</h4>
+      <p>Kiểu dữ liệu DATETIME có phạm vi từ '1000-01-01 00:00:00' tới
+        '9999-12-31 23:59:59'.</p>
+      <p>Kiểu dữ liệu TIMESTAMP có phạm vi từ '1970-01-01 00:00:01' UTC tới
+        '2038-01-19 03:14:07' UTC</p>
+      <p>Sự khác biệt chính của DATETIME và TIMESTAMP là giá trị của TIMESTAMP
+        được chuyển đổi từ múi giờ hiện tại sang UTC trong khi lưu trữ, và
+        chuyển ngược trở lại từ UTC sang múi giờ hiện tại trong lúc lấy ra. Còn
+        kiểu dữ liệu DATETIME thì không có gì thay đổi.</p>
+      <h3>Kiểu dữ liệu chuỗi</h3>
+      <h4>Kiểu dữ liệu CHAR và VARCHAR</h4>
+      <p>Kiểu dữ liệu CHAR và VARCHAR là giống nhau, nhưng khác nhau ở cách
+        chúng được lưu trữ và truy xuất. Chúng cũng khác nhau về chiều dài tối
+        đa và giữ lại hay không khoảng trắng phía trước (trailing spaces).</p>
+      <p>CHAR có độ dài tối đa 255. Khi lưu trữ chúng được độn thêm bên phải
+        (right-padded) để có độ dài chỉ được chỉ định.</p>
+      <p>VARCHAR có độ dài tối đa 65,535. Dữ liệu có chiều dài thay đổi.</p>
+      <h4>Kiểu dữ liệu BINARY và VARBINARY</h4>
+      <p>Các kiểu dữ liệu BINARY và VARBINARY tương tự như CHAR và VARCHAR,
+        ngoại trừ việc chúng có chứa các chuỗi nhị phân chứ không phải là chuỗi
+        non-binary.</p>
+      <h4>Kiểu dữ liệu BLOB và TEXT</h4>
+      <p>BLOB là một đối tượng nhị phân lớn (<strong>B</strong>inary <strong>L</strong>arge
+        <strong>OB</strong>ject) có thể chứa một lượng lớn dữ liệu. Có bốn loại
+        BLOB, TINYBLOB, BLOB, MEDIUMBLOB, và LONGBLOB. Những chỉ khác nhau về độ
+        dài tối đa của các giá trị mà họ có thể giữ.</p>
+      <p>Bốn loại TEXT là TINYTEXT, TEXT, MEDIUMTEXT, và LONGTEXT. Chúng tương
+        ứng với bốn loại BLOB và có độ dài tối đa và các yêu cầu lưu trữ tương
+        tự.</p>
+      <p>BLOG lưu nhị phân. TEXT lưu chuỗi.</p>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th class="text-center align-middle">Kiểu dữ liệu</th>
+            <th class="text-center align-middle">Độ dài tối đa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TINYBLOB<br>
+              TINYTEXT</td>
+            <td>255<br>
+            </td>
+          </tr>
+          <tr>
+            <td>BLOB<br>
+              TEXT</td>
+            <td>65,535</td>
+          </tr>
+          <tr>
+            <td>MEDIUMBLOB<br>
+              MEDIUMTEXT<br>
+            </td>
+            <td>16,777,215<br>
+            </td>
+          </tr>
+          <tr>
+            <td>LONGBLOB<br>
+              LONGTEXT</td>
+            <td>4,294,967,295</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Kiểu dữ liệu ENUM</h3>
+      <p>Một đối tượng chuỗi có giá trị được chọn từ một danh sách các giá trị
+        được đưa ra ở thời điểm tạo ra bảng. Ví dụ:</p>
+      <pre>create table my_table (
+    length enum('small', 'medium', 'large')
+);</pre>
+      <p>Khi định nghĩa một trường kiểu này, tức là, ta đã chỉ ra một danh sách
+        các đối tượng mà trường phải nhận (có thể là <code>null</code>). Ví dụ,
+        nếu ta muốn một trường nào đó chỉ nhận một trong các giá trị "A" hoặc
+        "B" hoặc "C" thì ta phải định nghĩa kiểu ENUM cho nó như sau: ENUM ('A',
+        'B', 'C'). Và chỉ có các giá trị này (hoặc <code>null</code>) có thể
+        xuất hiện trong trường đó.</p>
+      <h3>Kiểu dữ liệu SET</h3>
+      <p>Một đối tượng chuỗi có không hoặc nhiều dấu phẩy tách giá trị (tối đa
+        64). Các giá trị được lựa chọn từ một danh sách các giá trị được đưa ra
+        ở thời điểm tạo ra bảng. </p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://dev.mysql.com/doc/refman/8.0/en/data-types.html" target="_blank">MySQL
+          8.0 Reference Manual :: 11 Data Types</a></p>
+      <p><a href="https://o7planning.org/vi/10321/du-lieu-va-cau-truc-trong-mysql"
+          target="_blank">Dữ liệu và cấu trúc trong MySQL</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

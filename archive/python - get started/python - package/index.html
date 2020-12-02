@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Package trong Python">
+    <meta name="keywords" content="python, package">
+    <meta name="author" content="lockex1987">
+    <title>Package trong Python</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Package trong Python</h2>
+      <p>Có thể gom nhiều module <code>.py</code> vào một thư mục. Khi đó tên
+        thư mục là tên của package. Chúng ta cũng cần tạo file <code>__init__.py</code>
+        trong thư mục này.</p>
+      <p>Như vậy cấu trúc của một package sẽ như sau:</p>
+      <pre>|-- mypackage<br>|    |-- __init__.py<br>|    |-- mymodule1.py<br>|    |-- mymodule2.py</pre>
+      <p>Có thể sử dụng mymodule1 theo cú pháp import sau:</p>
+      <p><code>import mypackage.mymodule1</code></p>
+      <p>hoặc</p>
+      <p><code>import mypackage.mymodule1 as mymodule1</code></p>
+      <p>hoặc</p>
+      <p><code>import mypackage.mymodule1 as mod</code></p>
+      <p>hoặc</p>
+      <p><code>from mypackage import mymodule1</code></p>
+      <p>Khi sử dụng một module thuộc một package thì các lệnh trong file <strong>__init__.py</strong>
+        sẽ được thực hiện trước. Thông thường thì file <strong>__init__.py</strong>
+        sẽ rỗng.</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

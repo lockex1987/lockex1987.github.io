@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="git flow">
+    <title>Quy trình phân nhánh branch chuẩn</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Quy trình phân nhánh branch chuẩn</h2>
+      <p>Git flow đưa ra các quy ước để triển khai công việc. Thực chất đó là
+        cách chia nhánh và merge.</p>
+      <p>Các nhóm công việc có thể triển khai song song mà không ảnh hưởng tới
+        nhau.</p>
+      <p>Các môi trường development (test), staging (giống thật), production
+        (thật) tách biệt.</p>
+      <figure> <img alt="" src="images/git-flow.png"> <figcaption>Mô hình Git
+          flow</figcaption> </figure>
+      <h3>Các branch hay dùng</h3>
+      <h4>master</h4>
+      <p>Branch chứa code ổn định nhất. Code ở trạng thái production.</p>
+      <p>Đây là branch chính của tất cả các repository → code ở trên branch này
+        là code đã ở trạng thái production-ready.</p>
+      <p>Các developer không thể tự ý push code lên branch này, mà buộc phải
+        thông qua pull request từ cách branch khác.</p>
+      <p>Branch sẽ được tự động build và test qua hệ thống CI/CD → nếu build và
+        test failed thì developer cần có trách nhiệm khắc phục càng sớm càng
+        tốt.</p>
+      <p>Code trên branch master sẽ được release lên các server sit, uat,
+        production qua cách đánh tag tương ứng.</p>
+      <p>Đặt tag mỗi lần merge từ các nhánh khác (release, hot-fix).</p>
+      <p>Tự động build lên production server mỗi khi có commit ở master bằng kết
+        hợp với các hệ thống CI/CD hoặc Git hook.</p>
+      <h4>develop</h4>
+      <p>Branch chứa code ở trạng thái phát triển.</p>
+      <p>Đây là branch cho công việc phát triển code → code tại đây sẽ là xuất
+        phát điểm cho tất cả các branch phát triển feature.</p>
+      <p>Code trên branch develop cũng sẽ được tự động build và test.</p>
+      <p>Các developer cũng nên hạn chế code trực tiếp trên branch develop nếu
+        không cần thiết.</p>
+      <h4>feature</h4>
+      <ul>
+        <li>Tách từ: <code>develop</code></li>
+        <li>Cần merge về: <code>develop</code></li>
+        <li>Quy tắc đặt tên: <code>feature/*</code></li>
+      </ul>
+      <p>Feature branch là branch dành cho việc phát triển code cho cách tính
+        năng / nhiệm vụ riêng biệt.</p>
+      <p>Branch cần được base từ develop và merge lại vào develop (tất cả các
+        pull request để merge thẳng từ feature vào master sẽ bị reject).</p>
+      <p>Branch này sẽ không được tự động build và test, tuy nhiên developer khi
+        pull request thì hệ thống sẽ build → nếu failed thì developer cần có
+        nghĩa vụ phải fix trước khi merge vào develop branch.</p>
+      <p>Cách đặt tên branch feature sẽ mặc định là: feature/ten_tinh_nang,
+        feature/ten_nhiem_vu.</p>
+      <h4>release</h4>
+      <ul>
+        <li>Tách từ: <code>develop</code></li>
+        <li>Cần merge về: <code>develop</code> và <code>master</code></li>
+        <li>Quy tắc đặt tên: <code>release/*</code></li>
+      </ul>
+      <p>Branch release là branch có thời gian tồn tại ngắn, được tách ra từ
+        nhánh develop và để chuẩn bị cho việc release (ví dụ: thay version
+        number).</p>
+      <p>Sau khi hoàn thành các thay đổi, branch sẽ được merge lại vào develop
+        và master để tiến hành release (bằng cách đánh tag trên master). Branch
+        này sau đó sẽ được remove ngay lập tức.</p>
+      <p>Tên branch release nên được đặt theo tên version, ví dụ:
+        release-v1.0.0-beta1.</p>
+      <p>Tự động build lên test server mỗi khi có commit ở develop bằng kết hợp
+        với các hệ thống CI/CD hoặc Git hook.</p>
+      <h4>hotfix</h4>
+      <ul>
+        <li>Tách từ: <code>master</code></li>
+        <li>Cần merge về: <code>master</code> và <code>develop</code></li>
+        <li>Quy tắc đặt tên: <code>hotfix/*</code></li>
+      </ul>
+      <p>Khi một version đã được release lên môi trường sit / uat / production.
+        Để fix các tính năng hoặc lỗi nhưng không muốn tiến hành một đợt release
+        như workflow ở trên thì ta có thể mở ra những nhánh hotfix (có thể
+        branch bắt đầu từ master). Nhánh này sau khi apply trên master sẽ bắt
+        buộc cần phải merge vào nhánh develop.</p>
+      <h3>Versioning</h3>
+      <p>Cách đánh version trong các sản phẩm của DigiMed sẽ theo cách sau:</p>
+      <ul>
+        <li>Alpha version: áp dụng khi đang phát triển nội bộ (trong sprint,
+          sit, uat). Ví dụ: version 1.0.0-alpha15</li>
+        <li>Beta version: áp dụng khi sản phẩm đã được đưa ra production nhưng
+          vẫn được bên khách hàng dùng thử nghiệm</li>
+        <li>Release version: áp dụng khi sản phẩm đã được đưa ra market (nhiều
+          người biết đến, hoặc là sản phẩm thương mại). Version sẽ được đánh
+          đồng nhất trên tất cả các platform (backend, frontend, ios, android).
+          Version được release và version tên JIRA cần được map chính xác như
+          nhau. Khi apply hotfixes cho các version, chúng ta sẽ không bump
+          version mà là đánh thêm số, ví dụ đối với version 1.0.0-alpha15, khi
+          apply hotfixes sẽ được tags dưới dạng 1.0.0-alpha15.1,
+          1.0.0-alpha15.2.<br>
+        </li>
+      </ul>
+      <h3>Tham khảo</h3>
+      <p><a href="https://datasift.github.io/gitflow/IntroducingGitFlow.html" target="_blank">https://datasift.github.io/gitflow/IntroducingGitFlow.html</a></p>
+      <p><a href="https://zellwk.com/blog/git-flow/" target="_blank">https://zellwk.com/blog/git-flow/</a></p>
+      <p><a href="https://leanpub.com/git-flow/read#leanpub-auto-git-flow-workflow"
+          target="_blank">https://leanpub.com/git-flow/read#leanpub-auto-git-flow-workflow</a></p>
+    </article>
+  </body>
+</html>

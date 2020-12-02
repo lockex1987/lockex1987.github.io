@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>getImageData</title>
+</head>
+
+<body>
+    <h3>View data</h3>
+    <canvas id="myCanvas1" width="300" height="150" style="border:1px solid #d3d3d3;"></canvas>
+
+    <script>
+        function viewData() {
+            var c = document.getElementById("myCanvas1");
+            var ctx = c.getContext("2d");
+            ctx.fillStyle = "red";
+            ctx.fillRect(10, 10, 50, 50);
+
+            var imgData = ctx.getImageData(30, 30, 50, 50);
+            console.log(imgData.width);
+            console.log(imgData.height);
+            red = imgData.data[0];
+            green = imgData.data[1];
+            blue = imgData.data[2];
+            alpha = imgData.data[3];
+            console.log(red + " " + green + " " + blue + " " + alpha);
+        }
+
+        viewData();
+    </script>
+
+    <h3>Copy (putImageData)</h3>
+    <canvas id="myCanvas2" width="300" height="150" style="border:1px solid #d3d3d3;"></canvas>
+    <div>
+        <button id="copyButton">Copy</button>
+    </div>
+
+    <script>
+        function copy() {
+            var c = document.getElementById("myCanvas2");
+            var ctx = c.getContext("2d");
+            ctx.fillStyle = "red";
+            ctx.fillRect(10, 10, 50, 50);
+
+            document.querySelector('#copyButton').addEventListener('click', function() {
+                var imgData = ctx.getImageData(10, 10, 50, 50);
+                ctx.putImageData(imgData, 10, 70);
+            });
+        }
+
+        copy();
+    </script>
+    
+
+    <h3>Manipulate (Invert)</h3>
+    <img id="scream" src="img_the_scream.jpg" alt="The Scream" width="220" height="277">
+    <canvas id="myCanvas3" width="220" height="277" style="border:1px solid #d3d3d3;"></canvas>
+
+    <script>
+        function invert() {
+            document.getElementById("scream").onload = function () {
+                var c = document.getElementById("myCanvas3");
+                var ctx = c.getContext("2d");
+                var img = document.getElementById("scream");
+                ctx.drawImage(img, 0, 0);
+                var imgData = ctx.getImageData(0, 0, c.width, c.height);
+                // invert colors
+                var i;
+                for (i = 0; i < imgData.data.length; i += 4) {
+                    imgData.data[i] = 255 - imgData.data[i];
+                    imgData.data[i + 1] = 255 - imgData.data[i + 1];
+                    imgData.data[i + 2] = 255 - imgData.data[i + 2];
+                    imgData.data[i + 3] = 255;
+                }
+                ctx.putImageData(imgData, 0, 0);
+            };
+        }
+
+        invert();
+    </script>
+
+    <h3>createImageData</h3>
+    <canvas id="myCanvas4"></canvas>
+
+    <script>
+        function create() {
+            const canvas = document.getElementById('myCanvas4');
+            const ctx = canvas.getContext('2d');
+            const imageData = ctx.createImageData(100, 100);
+
+            // Iterate through every pixel
+            for (let i = 0; i < imageData.data.length; i += 4) {
+                // Percentage in the x direction, times 255
+                let x = (i % 400) / 400 * 255;
+                // Percentage in the y direction, times 255
+                let y = Math.ceil(i / 400) / 100 * 255;
+
+                // Modify pixel data
+                imageData.data[i + 0] = x;        // R value
+                imageData.data[i + 1] = y;        // G value
+                imageData.data[i + 2] = 255 - x;  // B value
+                imageData.data[i + 3] = 255;      // A value
+            }
+
+            // Draw image data to the canvas
+            ctx.putImageData(imageData, 20, 20);
+        }
+
+        create();
+    </script>
+</body>
+
+</html>

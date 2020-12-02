@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Đồng bộ file giữa hai server, sync">
+    <title>Lệnh rsync</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Lệnh rsync</h2>
+      <p>Lệnh rsync copy và đồng bộ file hoặc thư mục giữa hai máy tính.</p>
+      <h3>Ưu điểm</h3>
+      <ul>
+        <li>Hiệu quả trong việc sao lưu và đồng bộ file từ một hệ thống khác.</li>
+        <li>Hỗ trợ sao chép link, owner, group, permission, timestamp.</li>
+        <li>Nhanh hơn sử dụng scp.</li>
+        <li>rsync tiêu tốn ít bandwidth vì nó có sử dụng cơ chế nén khi truyền
+          tải và nhận dữ liệu.</li>
+      </ul>
+      <h3>Cú pháp</h3>
+      <p>Syntax cơ bản của rsync sẽ như sau:</p>
+      <pre>rsync [tùy chọn] &lt;thư mục gốc&gt; &lt;thư mục đích&gt;</pre>
+      <p>Thư mục ở máy khác có thể chỉ định bằng cách:</p>
+      <pre>&lt;user&gt;@&lt;server&gt;:&lt;path&gt;</pre>
+      <p>Nên luôn để ký tự <code>/</code> ở cuối thư mục.</p>
+      <h3>Tùy chọn</h3>
+      <p><strong>-r</strong>: sao chép đệ quy, bao gồm thư muc con và các file
+        từ thư mục gốc.</p>
+      <p><strong>-a</strong> (archive): sao chép các thuộc tính như liên kết, sở
+        hữu, quyền hạn, thời gian chỉnh sửa,... Nếu đã dùng tùy chọn <code>-a</code>
+        rồi thì không cần dùng tùy chọn <code>-r</code> nữa.</p>
+      <p><strong>--dry-run</strong>: tham số này dùng để chạy thử trước để bạn
+        thấy thay đổi, nhưng hành động copy sẽ không thực sự diễn ra.</p>
+      <p><strong>-v</strong> (verbose): hiển thị danh sách file được sao chép.</p>
+      <p><strong>--progress</strong>: hiển thị quá trình sao chép đang diễn ra
+        như thế nào.</p>
+      <p><strong>-z</strong>: nén file để chuyển trên mạng. Tiết kiệm băng thông
+        nhưng tốn thêm thời gian.</p>
+      <p><strong>-h</strong> (human-readable): kết hợp với <code>-v</code>,
+        định dạng số cho dung lượng file, không phải là một con số lớn theo đơn
+        vị <code>bytes</code>.</p>
+      <p><strong>--update</strong>: Bỏ qua các file mà mới hơn ở thư mục đích.</p>
+      <p><strong>--delete</strong>: Xóa các file đang tồn tại ở thư mục đích mà
+        không có ở thư mục nguồn.</p>
+      <p><strong>--exclude</strong>: loại trừ ra dữ liệu không muốn truyền đi.
+        Có thể dùng nhiều lần.</p>
+      <p><strong>--safe-links</strong>: Bỏ qua các symlink mà trỏ ra ngoài cây
+        thư mục nguồn.</p>
+      <h3>Ví dụ</h3>
+      <p>Để sao chép đồng bộ giữa hai thư mục, ví dụ từ&nbsp; <code>dir1</code>
+        đến <code>dir2</code> gõ lệnh:</p>
+      <pre>rsync -r dir1/ dir2</pre>
+      <p>Chú ý, nếu bạn bỏ dấu <code>/</code> ở cuối như các lệnh sau, thì bạn
+        sẽ có thư mục <code>dir1</code> bên trong thư mục <code>dir2</code>.</p>
+      <pre>rsync -r dir1 dir2<br>rsync -r dir1 dir2/</pre>
+      <p>Bạn cũng có thể thêm dấu <code>/</code> ở cuối <code>dir2</code> như
+        sau:</p>
+      <pre>rsync -r dir1/ dir2/</pre>
+      <p>Copy project Laravel:</p>
+      <pre>rsync -avz \<br>    --update \<br>    --exclude .git/ \<br>    --exclude storage/ \<br>    --exclude .env \<br>    ./ devops@192.168.101.20:/var/www/html/ncsc</pre>
+      <h3>Chú ý</h3>
+      <p>Thời gian giữa các server là khác nhau, dẫn đến không đồng bộ được?</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://rsync.samba.org/tech_report/" target="_blank">The
+          rsync algorithm</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

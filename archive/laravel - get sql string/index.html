@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lấy câu SQL">
+    <title>Lấy câu SQL</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Lấy câu SQL</h2>
+      <p>Trong Laravel, bạn thường sử dụng DB query builder hoặc Eloquent để
+        truy vấn CSDL.</p>
+      <p>Vậy có cách nào để lấy ra câu lệnh SQL thuần (để select trực tiếp khi
+        debug chẳng hạn)?</p>
+      <p>Ví dụ, bạn có đoạn code:</p>
+      <pre>DB::table('users')-&gt;get();</pre>
+      <p>hoặc:</p>
+      <pre>User::get();</pre>
+      <p>Bạn muốn lấy ra câu lệnh:</p>
+      <pre>SELECT * FROM users</pre>
+      <p>Bạn có thể sử dụng phương thức <code>toSql()</code> của đối tượng <code>QueryBuilder</code>.
+        Phương thức này trả về một string. Sau đó, bạn có thể lấy string này
+        bằng <code>dd()</code> hoặc <code>Log::info()</code>.</p>
+      <p>Ví dụ:</p>
+      <pre>$sql = DB::table('users')-&gt;toSql();<br>$sql = User::getQuery()-&gt;toSql();<br>dd($sql);</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

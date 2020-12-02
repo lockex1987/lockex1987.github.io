@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <leia></leia>
+    <luke></luke>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/riot/3.13.2/riot+compiler.min.js"></script>
+    <script src="leia.tag" type="riot/tag"></script>
+    <script src="luke.tag" type="riot/tag"></script>
+    
+    <script src="store.js"></script>
+    <script>
+        riot.store = new Store()
+        riot.mount('*')
+    </script>
+</body>
+</html>

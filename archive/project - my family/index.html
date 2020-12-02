@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="description" content="genealogy, tree"/>
+    
+    <title>My Family</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+    <link rel="stylesheet" href="css/genealogy.css" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="no-float-button">
+    <article id="app" v-cloak class="mw-none">
+        <h2 class="text-center">My Family</h2>
+
+        <div id="graph" class="text-center mb-3 border overflow-hidden graphx d-none"></div>
+        <p class="d-none">Vẽ bằng CSS đơn giản hơn.</p>
+
+        <div class="borderx overflow-hidden mb-3" id="treeContainer">
+            <div class="tree m-3 graph"></div>
+        </div>
+
+        <div class="text-center mb-3">
+            <select v-model="you"
+                    @change="changed"
+                    class="select-person custom-select">
+                <option v-for="p in peopleCodes" :value="p">
+                    {{p}}
+                </option>
+            </select>
+
+            <span class="relation-name text-center d-inline-block">
+                là {{linkType}}
+            </span>
+
+            <select v-model="relative"
+                    @change="changed"
+                    class="select-person custom-select">
+                <option v-for="p in peopleCodes" :value="p">
+                    {{p}}
+                </option>
+            </select>
+        </div>
+
+        <div class="text-center">
+            <button @click="swap" class="btn btn-primary">
+                Swap
+            </button>
+        </div>
+
+        <p class="text-center d-none">
+            <a href="pedigree-css.html">Biểu đồ CSS</a>
+        </p>
+        <p class="text-center d-none">
+            <a href="pedigree-position.html">Biểu đồ Absolute Position</a>
+        </p>
+
+        <!-- Popup hiển thị chi tiết thông tin người dùng -->
+        <div id="detailInfo" v-show="personObj.fullName" class="position-fixed justify-content-center align-items-center w-100">
+            <div class="model-dialog rounded p-3 text-white">
+                <div class="d-flex">
+                    <div class="mr-4">
+                        <img id="photo"
+                                :src="personObj.avatar ? 'avatar/' + personObj.avatar : 'images/default.png'"
+                                class="object-fit-cover rounded"/>
+                    </div>
+                    <div class="flex-1">
+                        <div class="font-weight-500 text-success mb-3">
+                            {{personObj.fullName}}
+                        </div>
+
+                        <div class="mb-3">
+                            <img id="gender"
+                                    v-if="personObj.gender"
+                                    :src="'images/' + personObj.gender + '.png'"/>
+                            <span id="yearOfBirth" class="ml-2 text-orange">
+                                {{personObj.dob || 'N/A'}}
+                            </span>
+
+                            <span class="ml-2 text-white">
+                                {{personObj.job}}
+                            </span>
+                        </div>
+
+                        <div class="container-fluid">
+                            <div class="row mb-3" v-if="personObj.father">
+                                <div class="col-lg-2 text-right text-muted">
+                                    Father
+                                </div>
+                                <div class="col-lg-4">
+                                    <span @click="viewPersonByCode(personObj.father.code)"
+                                            class="text-warning text-decoration-none cursor-pointer link">
+                                        {{personObj.father.lastName}}
+                                    </span>
+                                </div>
+                                <div class="col-lg-2 text-right text-muted">
+                                    Mother
+                                </div>
+                                <div class="col-lg-4">
+                                    <span @click="viewPersonByCode(personObj.mother.code)"
+                                            class="text-warning text-decoration-none cursor-pointer link">
+                                        {{personObj.mother.lastName}}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3" v-if="personObj.moreInfo && personObj.moreInfo.fatherName">
+                                <div class="col-lg-2 text-right text-muted">
+                                    Father
+                                </div>
+                                <div class="col-lg-4">
+                                    {{personObj.moreInfo.fatherName}}
+                                </div>
+                                <div class="col-lg-2 text-right text-muted">
+                                    Mother
+                                </div>
+                                <div class="col-lg-4">
+                                    {{personObj.moreInfo.motherName}}
+                                </div>
+                            </div>
+
+                            <div class="row mb-3" v-if="personObj.spouse">
+                                <div class="col-lg-2 text-right text-muted">
+                                    Spouse
+                                </div>
+                                <div class="col-lg-10">
+                                    <span @click="viewPersonByCode(personObj.spouse.code)"
+                                            class="text-warning text-decoration-none cursor-pointer link">
+                                        {{personObj.spouse.lastName}}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3" v-if="personObj.directChildren && personObj.directChildren.length > 0">
+                                <div class="col-lg-2 text-right text-muted">
+                                    Children
+                                </div>
+                                <div class="col-lg-10">
+                                    <span @click="viewPersonByCode(child.code)"
+                                            v-for="child in personObj.directChildren"
+                                            class="mr-2 text-warning text-decoration-none cursor-pointer link">
+                                        {{child.lastName}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-right">
+                    <button @click="closePopup()" class="btn btn-secondary">
+                        Đóng
+                    </button>
+                </div>
+            </div>
+        </div>
+    </article>    
+
+    <!--script src="../../js/docs.js"></script-->
+
+    <script src="https://cdn.jsdelivr.net/lodash/4.17.4/lodash.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdn.rawgit.com/ErikGartner/dTree/master/dist/dTree.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+    <!-- Dữ liệu thô, có thể thay đổi -->
+    <script src="js/people.js"></script>
+    <script src="js/marriages.js"></script>
+
+    <script src="js/personMap.js"></script>
+
+    <script src="js/raw-data-processing.js"></script>
+
+	<script src="js/relationship.js"></script>
+    <script src="js/calculate-relation.js"></script>
+    <!--script src="js/calculate-relation-test.js"></script-->
+
+    <script src="js/genealogy.js"></script>
+    
+    <script src="../../js/common.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

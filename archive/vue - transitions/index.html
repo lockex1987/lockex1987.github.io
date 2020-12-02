@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <title>Transition cho enter/leave &amp; danh sách</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
+</head>
+
+<body>
+    <article>
+        <h2>Transition cho enter/leave &amp; danh sách</h2>
+        <p>Để tiện đối chiếu giữa các class CSS mà Vue tạo ra trong một
+            transition (chuyển tiếp) và trạng thái của các phần tử hoặc
+            component, trong phần này chúng tôi giữ nguyên bản tiếng Anh các
+            từ <code>enter</code> (đi vào, nhập vào) và <code>leave</code>
+            (rời khỏi) khi cần.</p>
+        <h3>Tổng quan</h3>
+        <p>Vue cung cấp nhiều cách khác nhau để áp dụng các hiệu ứng
+            transition khi các phần tử được thêm vào, thay đổi, hoặc gỡ bỏ
+            khỏi DOM. Điều này bao gồm các công cụ để:</p>
+        <ul>
+            <li>tự động áp dụng các class CSS cho các transition và animation</li>
+            <li>tích hợp các thư viện chuyển động CSS bên thứ ba, ví dụ như <a
+                    href="https://daneden.github.io/animate.css/" target="_blank">Animate.css</a>
+            </li>
+            <li>sử dụng JavaScript để trực tiếp thay đổi DOM trong các hook
+                transition</li>
+            <li>tích hợp các thư viện chuyển động JavaScript bên thứ ba, ví dụ
+                như <a href="http://velocityjs.org/" target="_blank">Velocity.js</a></li>
+        </ul>
+        <p>Trên trang này, chúng ta sẽ chỉ bàn về transition cho enter/leave
+            và danh sách, nhưng bạn có thể xem phần tiếp theo về <a href="transitioning-state.html">quản
+                lí transition cho trạng thái (state transition)</a>.</p>
+        <h3>Transition cho phần tử hoặc component đơn lẻ</h3>
+        <p>Vue cung cấp một component <code>transition</code>, cho phép bạn
+            áp dụng các hiệu ứng transition enter/leave lên các phần tử hoặc
+            component trong các ngữ cảnh sau:</p>
+        <ul>
+            <li>Render theo điều kiện (sử dụng <code>v-if</code>)</li>
+            <li>Hiển thị theo điều kiện (sử dụng <code>v-show</code>)</li>
+            <li>Component động</li>
+            <li>Root node của component</li>
+        </ul>
+        <p>Sau đây là một ví dụ:</p>
+        <pre>&lt;div id="demo"&gt;<br>  &lt;button v-on:click="show = !show"&gt;<br>    Kích hoạt<br>  &lt;/button&gt;<br>  &lt;transition name="fade"&gt;<br>    &lt;p v-if="show"&gt;Xin chào&lt;/p&gt;<br>  &lt;/transition&gt;<br>&lt;/div&gt;</pre>
+        <pre>new Vue({<br>  el: '#demo',<br>  data: {<br>    show: true<br>  }<br>})</pre>
+        <pre>.fade-enter-active, .fade-leave-active {<br>  transition: opacity .5s;<br>}<br>.fade-enter,
+.fade-leave-to
+/* .fade-leave-active below version 2.1.8 */ {<br>  opacity: 0;<br>}</pre>
+
+
+
+        <div id="demo">
+            <p>
+                <button v-on:click="show = !show" class="btn btn-primary">
+                    Kích hoạt
+                </button>
+            </p>
+
+            <transition name="demo-transition">
+                <p v-if="show">Xin chào</p>
+            </transition>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#demo',
+                data: {
+                    show: true
+                }
+            })
+        </script>
+
+        <style>
+            .demo-transition-enter-active,
+            .demo-transition-leave-active {
+                transition: opacity .5s
+            }
+
+            .demo-transition-enter,
+            .demo-transition-leave-to {
+                opacity: 0
+            }
+        </style>
+
+        <p>Khi một phần tử chứa trong component <code>transition</code> được thêm vào hoặc gỡ bỏ khỏi DOM, các bước
+            sau đây sẽ diễn ra:</p>
+        <ol>
+            <li>
+                Vue sẽ tự phát hiện ra nếu phần tử đang nhắc đến có CSS <code>transition</code> hoặc
+                <code>animation</code> và thêm/bớt các class CSS transition vào đúng thời điểm.
+            </li>
+            <li>
+                Nếu component cung cấp <a href="#Hook-JavaScript">hook JavaScript</a>, các hook này sẽ được gọi
+                vào đúng thời điểm.
+            </li>
+            <li>
+                Trong trường hợp không tìm thấy <code>transition</code> hoặc <code>animation</code> nào trong CSS
+                và cũng không có hook JavaScript nào, việc thêm vào hoặc gỡ bỏ khỏi DOM sẽ được thực thi ngay
+                trong frame tiếp theo (Lưu ý: đây là <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame"
+                    target="_blank">animation frame</a> của trình duyệt, khác với khái niệm
+                <code>nextTick</code> của Vue).
+            </li>
+        </ol>
+
+        <h3>Các class transition</h3>
+        <p>Có tổng cộng 6 class được áp dụng cho enter/leave transition.</p>
+        <ol>
+            <li>
+                <p><code>v-enter</code>: Trạng thái bắt đầu của <code>enter</code>. Được áp dụng trước khi phần tử
+                    được thêm vào DOM và gỡ bỏ đi một frame sau đó.</p>
+            </li>
+            <li>
+                <p><code>v-enter-active</code>: Trạng thái active của <code>enter</code>. Được áp dụng trong suốt
+                    quá trình enter, từ ngay sau khi phần tử được thêm vào DOM cho đến khi transition/animation kết
+                    thúc. Class này có thể được dùng để định nghĩa <a
+                        href="https://developer.mozilla.org/en-US/docs/Web/CSS/transition-duration"
+                        target="_blank">duration</a>, <a
+                        href="https://developer.mozilla.org/en-US/docs/Web/CSS/transition-delay"
+                        target="_blank">delay</a>, và <a
+                        href="https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function"
+                        target="_blank">hàm easing</a> cho transition enter.</p>
+            </li>
+            <li>
+                <p><code>v-enter-to</code>: <strong>2.1.8+.</strong> Trạng thái kết thúc của <code>enter</code>. Áp
+                    dụng một frame sau khi element được thêm vào DOM (cùng lúc với việc <code>v-enter</code> được gỡ
+                    bỏ), gỡ bỏ đi khi transition/animation kết thúc.</p>
+            </li>
+            <li>
+                <p><code>v-leave</code>: Trạng thái bắt đầu của <code>leave</code>. Được áp dụng ngay khi một leave
+                    transition được kích hoạt và gỡ bỏ đi một frame sau đó.</p>
+            </li>
+            <li>
+                <p><code>v-leave-active</code>: Trạng thái active của <code>leave</code>. Được áp dụng trong suốt
+                    quá trình leave, từ khi transition được kích hoạt cho đến khi transition/animation kết thúc.
+                    Class này có thể được dùng để định nghĩa duration, delay, và hàm easing cho leave transition.
+                </p>
+            </li>
+            <li>
+                <p><code>v-leave-to</code>: <strong>2.1.8+.</strong> Trạng thái kết thúc của <code>leave</code>. Áp
+                    dụng một frame sau khi leave transition được kích hoạt (cùng lúc với việc <code>v-leave</code>
+                    được gỡ bỏ), gỡ bỏ đi khi transition/animation kết thúc.</p>
+            </li>
+        </ol>
+        <div class="mb-3"><img src="images/transition.png" alt="Sơ đồ transition"></div>
+        <p>Mỗi class trên đây sẽ có prefix (tiếp đầu ngữ) là tên của <code>transition</code>. Ở đây prefix
+            <code>v-</code> là mặc định khi bạn dùng một thẻ <code>&lt;transition&gt;</code> không có tên. Nếu chẳng
+            hạn bạn dùng <code>&lt;transition name="my-transition"&gt;</code> thì class
+            <code>v-enter</code> sẽ trở thành <code>my-transition-enter</code>.</p>
+        <p><code>v-enter-active</code> và <code>v-leave-active</code> cho phép bạn dùng các hàm easing khác nhau cho
+            các enter/leave transition, như bạn sẽ thấy trong phần tiếp theo đây.</p>
+
+
+        <h3>CSS transition</h3>
+        <p>CSS transition là một trong những transition thông dụng nhất. Ví dụ:</p>
+        <pre>&lt;div id="example-1"&gt;<br>  &lt;button @click="show = !show"&gt;<br>    Kích hoạt<br>  &lt;/button&gt;<br>  &lt;transition name="slide-fade"&gt;<br>    &lt;p v-if="show"&gt;Xin chào&lt;/p&gt;<br>  &lt;/transition&gt;<br>&lt;/div&gt;</pre>
+        <pre>new Vue({<br>  el: '#example-1',<br>  data: {<br>    show: true<br>  }<br>})</pre>
+        <pre>/*<br>  Animation cho enter và leave có thể có giá trị<br>  duration và timing function khác nhau.<br>*/<br>.slide-fade-enter-active {<br>  transition: all .3s ease;<br>}<br>.slide-fade-leave-active {<br>  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);<br>}<br>.slide-fade-enter, .slide-fade-leave-to<br>/* Trước 2.1.8 thì dùng .slide-fade-leave-active */ {<br>  transform: translateX(10px);<br>  opacity: 0;<br>}</pre>
+
+        <div id="example-1" class="demo">
+            <p>
+                <button @click="show = !show" class="btn btn-primary">
+                    Kích hoạt
+                </button>
+            </p>
+
+            <transition name="slide-fade">
+                <p v-if="show">Xin chào</p>
+            </transition>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#example-1',
+                data: {
+                    show: true
+                }
+            })
+        </script>
+
+        <style>
+            .slide-fade-enter-active {
+                transition: all .3s ease;
+            }
+
+            .slide-fade-leave-active {
+                transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+            }
+
+            .slide-fade-enter,
+            .slide-fade-leave-to {
+                transform: translateX(10px);
+                opacity: 0;
+            }
+        </style>
+
+
+        <h3>CSS animation </h3>
+        <p>CSS animation được áp dụng cùng một cách như CSS transition. Điểm khác nhau là <code>v-enter</code> không
+            được gỡ bỏ ngay lập tức sau khi phần tử được thêm vào DOM mà là khi sự kiện <code>animationend</code>
+            được phát ra.</p>
+        <p>Đây là một ví dụ (chúng ta sẽ bỏ đi các prefix CSS cho gọn):</p>
+
+        <pre>&lt;div id="example-2"&gt;<br>  &lt;button @click="show = !show"&gt;Kích hoạt&lt;/button&gt;<br>  &lt;transition name="bounce"&gt;<br>    &lt;p v-if="show"&gt;Cân đẩu vân&lt;/p&gt;<br>  &lt;/transition&gt;<br>&lt;/div&gt;</pre>
+        <pre>new Vue({<br>  el: '#example-2',<br>  data: {<br>    show: true<br>  }<br>})</pre>
+        <pre>.bounce-enter-active {<br>  animation: bounce-in .5s;<br>}<br>.bounce-leave-active {<br>  animation: bounce-in .5s reverse;<br>}<br>@keyframes bounce-in {<br>  0% {<br>    transform: scale(0);<br>  }<br>  50% {<br>    transform: scale(1.5);<br>  }<br>  100% {<br>    transform: scale(1);<br>  }<br>}</pre>
+
+        <div id="example-2" class="demo">
+            <p>
+                <button @click="show = !show" class="btn btn-primary">
+                    Kích hoạt
+                </button>
+            </p>
+
+            <transition name="bounce">
+                <p v-show="show">Cân đẩu vân</p>
+            </transition>
+        </div>
+
+        <style>
+            .bounce-enter-active {
+                animation: bounce-in .5s;
+            }
+
+            .bounce-leave-active {
+                animation: bounce-in .5s reverse;
+            }
+
+            @keyframes bounce-in {
+                0% {
+                    transform: scale(0);
+                }
+
+                50% {
+                    transform: scale(1.5);
+                }
+
+                100% {
+                    transform: scale(1);
+                }
+            }
+        </style>
+
+        <script>
+            new Vue({
+                el: '#example-2',
+                data: {
+                    show: true
+                }
+            })
+        </script>
+
+
+
+        <h3>Class tùy biến cho transition</h3>
+        <p>Bạn cũng có thể chỉ định các class tùy biến cho transition bằng cách cung cấp các thuộc tính sau đây:</p>
+        <ul>
+            <li><code>enter-class</code></li>
+            <li><code>enter-active-class</code></li>
+            <li><code>enter-to-class</code> (2.1.8+)</li>
+            <li><code>leave-class</code></li>
+            <li><code>leave-active-class</code></li>
+            <li><code>leave-to-class</code> (2.1.8+)</li>
+        </ul>
+        <p>Các thuộc tính này sẽ override những tên class theo thông lệ của Vue. Điều này đặc biệt có ích khi bạn
+            muốn kết hợp giữa hệ thống transition của Vue và một thư viện CSS animation có sẵn như Animate.css.</p>
+        <p>Đây là một ví dụ:</p>
+
+        <pre>&lt;link href="/animate.css@3.5.1" rel="stylesheet"&gt;<br><br>&lt;div id="example-3"&gt;<br>  &lt;button @click="show = !show"&gt;<br>    Kích hoạt<br>  &lt;/button&gt;<br>  &lt;transition<br>    name="custom-classes-transition"<br>    enter-active-class="animated tada"<br>    leave-active-class="animated bounceOutRight"<br>  &gt;<br>    &lt;p v-if="show"&gt;Thú nhún&lt;/p&gt;<br>  &lt;/transition&gt;<br>&lt;/div&gt;</pre>
+
+        <pre>new Vue({<br>  el: '#example-3',<br>  data: {<br>    show: true<br>  }<br>})</pre>
+
+
+
+
+        <div id="example-3" class="demo">
+            <p>
+                <button @click="show = !show" class="btn btn-primary">
+                    Kích hoạt
+                </button>
+            </p>
+
+            <transition name="custom-classes-transition" enter-active-class="animated tada"
+                leave-active-class="animated bounceOutRight">
+                <p v-if="show">Thú nhún</p>
+            </transition>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#example-3',
+                data: {
+                    show: true
+                }
+            })
+        </script>
+
+
+
+        <h3>Sử dụng animation và transition cùng nhau</h3>
+        <p>Vue cần phải đính kèm một sự kiện để có thể biết khi nào thì một chuyển động kết thúc. Sự kiện này có thể
+            là <code>transitionend</code> hoặc <code>animationend</code>, tùy thuộc vào các rule CSS được áp dụng.
+            Nếu bạn chỉ sử dụng animation hoặc transition, Vue có thể tự phát hiện kiểu chuyển động (animation hay
+            transition).</p>
+        <p>Tuy nhiên, trong một số trường hợp có thể bạn muốn dùng cả transition và animation trên cùng một phần tử,
+            ví dụ sử dụng Vue để kích hoạt một CSS animation, đồng thời áp dụng một hiệu ứng CSS transition khi
+            hover. Trong những trường hợp này, bạn sẽ phải khai báo rõ kiểu chuyển động bạn muốn Vue xử lí bằng cách
+            dùng một thuộc tính <code>type</code> với giá trị là <code>animation</code> hoặc
+            <code>transition</code>.</p>
+
+
+
+        <h3>Chỉ định rõ thời lượng cho transition</h3>
+        <blockquote>
+            <p>2.2.0+</p>
+        </blockquote>
+        <p>Trong đa số các trường hợp, Vue có thể tự biết được khi nào một transition kết thúc. Mặc định, Vue đợi
+            cho sự kiện <code>transitionend</code> hoặc <code>animationend</code> của phần tử transition gốc được
+            phát ra. Tuy nhiên, không phải lúc nào đây cũng là điều bạn muốn – ví dụ, chúng ta có thể có một chuỗi
+            các transition nối tiếp nhau, trong đó một số phần tử bên trong có transition được trì hoãn (delay) hoặc
+            kéo dài lâu hơn transition của phần tử transition gốc.</p>
+        <p>Trong những trường hợp như vậy, bạn có thể chỉ định một cách tường minh thời lượng (duration) của
+            transition (với đơn vị là mili giây) dùng thuộc tính <code>duration</code> trên component
+            <code>&lt;transition&gt;</code>:</p>
+
+        <pre>&lt;transition :duration="1000"&gt;
+    ...
+&lt;/transition&gt;</pre>
+
+        <p>Bạn cũng có thể chỉ định hai giá trị tách biệt nhau cho thời lượng <code>enter</code> và
+            <code>leave</code>:</p>
+
+        <pre>&lt;transition :duration="{ enter: 500, leave: 800 }"&gt;
+    ...
+&lt;/transition&gt;</pre>
+
+
+        <h3>Hook JavaScript</h3>
+        <p>Bạn cũng có thể định nghĩa các hook JavaScript trong các thuộc tính của component
+            <code>&lt;transition&gt;</code>:</p>
+        <pre>&lt;transition<br>  v-on:before-enter="beforeEnter"<br>  v-on:enter="enter"<br>  v-on:after-enter="afterEnter"<br>  v-on:enter-cancelled="enterCancelled"<br><br>  v-on:before-leave="beforeLeave"<br>  v-on:leave="leave"<br>  v-on:after-leave="afterLeave"<br>  v-on:leave-cancelled="leaveCancelled"<br>&gt;<br>  &lt;!-- ... --&gt;<br>&lt;/transition&gt;</pre>
+        <pre>// ...<br>methods: {<br>  // -----<br>  // ENTER<br>  // -----<br><br>  beforeEnter: function (el) {<br>    // ...<br>  },<br>  // callback `done()` là không bắt buộc<br>  // khi sử dụng cùng với CSS<br>  enter: function (el, done) {<br>    // ...<br>    done()<br>  },<br>  afterEnter: function (el) {<br>    // ...<br>  },<br>  enterCancelled: function (el) {<br>    // ...<br>  },<br><br>  // -----<br>  // LEAVE<br>  // -----<br><br>  beforeLeave: function (el) {<br>    // ...<br>  },<br>  // callback `done()` là không bắt buộc<br>  // khi sử dụng cùng với CSS<br>  leave: function (el, done) {<br>    // ...<br>    done()<br>  },<br>  afterLeave: function (el) {<br>    // ...<br>  },<br>  // leaveCancelled chỉ hoạt động với v-show<br>  leaveCancelled: function (el) {<br>    // ...<br>  }<br>}</pre>
+
+        <p>Những hook này có thể được sử dụng độc lập hoặc dùng chung với CSS transition/animation.</p>
+        <p>Khi sử dụng các transition JavaScript, <strong>hàm callback <code>done</code> là bắt buộc đối
+                với các hook <code>enter</code> và <code>leave</code></strong>. Trong các trường hợp khác, các hook
+            này sẽ được gọi một cách đồng bộ và transition sẽ kết thúc ngay lập tức.</p>
+
+        <p>Bạn cũng nên chỉ định rõ <code>v-bind:css="false"</code> cho các transition
+            JavaScript để Vue có thể bỏ qua phần dò tìm CSS. Việc này cũng ngăn không cho các rule trong CSS can
+            thiệp vào transition.</p>
+
+        <p>Giờ chúng ta hãy xem một ví dụ. Đây là một transition JavaScript sử dụng Velocity.js:</p>
+        <pre>&lt;!--<br>Velocity hoạt động rất giống như jQuery.animate<br>và là một lựa chọn tuyệt vời cho animation bằng JavaScript<br>--&gt;<br>&lt;script src="/libs/velocity/1.2.3/velocity.min.js"&gt;&lt;/script&gt;<br><br>&lt;div id="example-4"&gt;<br>  &lt;button @click="show = !show"&gt;<br>    Kích hoạt<br>  &lt;/button&gt;<br>  &lt;transition<br>    v-on:before-enter="beforeEnter"<br>    v-on:enter="enter"<br>    v-on:leave="leave"<br>    v-bind:css="false"<br>  &gt;<br>    &lt;p v-if="show"&gt;<br>      Demo<br>    &lt;/p&gt;<br>  &lt;/transition&gt;<br>&lt;/div&gt;</pre>
+        <pre
+            class="out-of-box">new Vue({<br>  el: '#example-4',<br>  data: {<br>    show: false<br>  },<br>  methods: {<br>    beforeEnter: function (el) {<br>      el.style.opacity = 0<br>    },<br>    enter: function (el, done) {<br>      Velocity(el, { opacity: 1, fontSize: '1.4em' }, { duration: 300 })<br>      Velocity(el, { fontSize: '1em' }, { complete: done })<br>    },<br>    leave: function (el, done) {<br>      Velocity(el, { translateX: '15px', rotateZ: '50deg' }, { duration: 600 })<br>      Velocity(el, { rotateZ: '100deg' }, { loop: 2 })<br>      Velocity(el, {<br>        rotateZ: '45deg',<br>        translateY: '30px',<br>        translateX: '30px',<br>        opacity: 0<br>      }, { complete: done })<br>    }<br>  }<br>})</pre>
+
+        <div id="example-4" class="demo">
+            <p>
+                <button @click="show = !show" class="btn btn-primary">
+                    Kích hoạt
+                </button>
+            </p>
+
+            <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave">
+                <p v-if="show">
+                    Demo
+                </p>
+            </transition>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#example-4',
+                data: {
+                    show: false
+                },
+
+                methods: {
+                    beforeEnter: function (el) {
+                        el.style.opacity = 0;
+                        el.style.transformOrigin = 'left';
+                    },
+
+                    enter: function (el, done) {
+                        Velocity(el, { opacity: 1, fontSize: '1.4em' }, { duration: 300 });
+                        Velocity(el, { fontSize: '1em' }, { complete: done });
+                    },
+
+                    leave: function (el, done) {
+                        Velocity(el, { translateX: '15px', rotateZ: '50deg' }, { duration: 600 });
+                        Velocity(el, { rotateZ: '100deg' }, { loop: 2 });
+                        Velocity(el, {
+                            rotateZ: '45deg',
+                            translateY: '30px',
+                            translateX: '30px',
+                            opacity: 0
+                        }, { complete: done });
+                    }
+                }
+            });
+        </script>
+
+
+        <h3>Transition khi render lần đầu tiên</h3>
+        <p>Nếu muốn áp dụng một transition ngay trong lần render đầu tiên của một node, bạn có thể dùng thuộc tính
+            <code>appear</code>:</p>
+
+        <pre>&lt;transition appear&gt;<br>  &lt;!-- ... --&gt;<br>&lt;/transition&gt;</pre>
+        <p>Mặc định, các transition được chỉ định khi enter và leave sẽ được sử dụng. Nếu muốn, bạn cũng có thể dùng
+            các class CSS tùy biến:</p>
+        <pre>&lt;transition<br>  appear<br>  appear-class="custom-appear-class"<br>  appear-to-class="custom-appear-to-class" (2.1.8+)<br>  appear-active-class="custom-appear-active-class"<br>&gt;<br>  &lt;!-- ... --&gt;<br>&lt;/transition&gt;</pre>
+        <p>và các hook JavaScript tùy biến:</p>
+
+        <pre>&lt;transition<br>  appear<br>  v-on:before-appear="customBeforeAppearHook"<br>  v-on:appear="customAppearHook"<br>  v-on:after-appear="customAfterAppearHook"<br>  v-on:appear-cancelled="customAppearCancelledHook"<br>&gt;<br>  &lt;!-- ... --&gt;<br>&lt;/transition&gt;</pre>
+
+
+        <h3>Transition giữa các phần tử web</h3>
+        <p>Chúng ta sẽ bàn về <a href="#Transition-giua-cac-component">transition giữa các component</a> sau, nhưng
+            bạn cũng có thể transition giữa các phần tử thô (raw element) sử dụng
+            <code>v-if</code>/<code>v-else</code>. Một trong các transition giữa hai phần tử thông dụng nhất là giữa
+            một phần tử chứa danh sách (<code>ul</code>, <code>ol</code>, <code>table</code>…) và một thông điệp mô
+            tả một danh sách rỗng:</p>
+
+        <pre>&lt;transition&gt;<br>  &lt;table v-if="searchResults.length &gt; 0"&gt;<br>    &lt;!-- ... --&gt;<br>  &lt;/table&gt;<br>  &lt;p v-else&gt;Không tìm ra kết quả nào.&lt;/p&gt;<br>&lt;/transition&gt;</pre>
+
+        <p>Cách này hoạt động tốt, nhưng có một điểm cần lưu ý:</p>
+        <p class="tip">Khi kích hoạt giữa các phần tử <strong>có cùng tên thẻ</strong>, bạn phải cho Vue biết rằng
+            đây là các phần tử khác nhau bằng cách cung cấp các giá trị <code>key</code> duy nhất. Nếu không, trình
+            biên dịch của Vue sẽ chỉ thay đổi <em>nội dung</em> của phần tử để hiệu quả hơn. Ngay cả khi về mặt kĩ
+            thuật là không cần thiết, <strong>hãy luôn dùng <code>key</code> cho các item trong một component
+                <code>&lt;transition&gt;</code>.</strong></p>
+
+        <p>Ví dụ:</p>
+
+        <pre>&lt;transition&gt;<br>  &lt;button v-if="isEditing" key="save"&gt;<br>    Lưu<br>  &lt;/button&gt;<br>  &lt;button v-else key="edit"&gt;<br>    Sửa<br>  &lt;/button&gt;<br>&lt;/transition&gt;</pre>
+
+        <p>Trong những trường hợp này, bạn cũng có thể dùng thuộc tính <code>key</code> cho việc chuyển tiếp giữa
+            các trạng thái khác nhau trong cùng một phần tử. Thay vì dùng <code>v-if</code> và <code>v-else</code>,
+            ví dụ trên có thể được viết lại như sau:</p>
+
+        <pre>&lt;transition&gt;<br>  &lt;button v-bind:key="isEditing"&gt;<br>    {{ isEditing ? 'Lưu' : 'Sửa' }}<br>  &lt;/button&gt;<br>&lt;/transition&gt;</pre>
+
+        <p>Thật ra chúng ta có thể chuyển tiếp giữa một số lượng bất kì các phần tử bằng cách dùng nhiều
+            <code>v-if</code> hoặc bind một phần tử đơn lẻ vào một thuộc tính động. Ví dụ:</p>
+
+        <pre>&lt;transition&gt;<br>  &lt;button v-if="docState === 'saved'" key="saved"&gt;<br>    Sửa<br>  &lt;/button&gt;<br>  &lt;button v-if="docState === 'edited'" key="edited"&gt;<br>    Lưu<br>  &lt;/button&gt;<br>  &lt;button v-if="docState === 'editing'" key="editing"&gt;<br>    Hủy<br>  &lt;/button&gt;<br>&lt;/transition&gt;</pre>
+
+        <p>Ví dụ trên cũng có thể được viết thành:</p>
+
+        <pre>&lt;transition&gt;<br>  &lt;button v-bind:key="docState"&gt;<br>    {{ buttonMessage }}<br>  &lt;/button&gt;<br>&lt;/transition&gt;</pre>
+
+        <pre>// ...<br>computed: {<br>  buttonMessage: function () {<br>    switch (this.docState) {<br>      case 'saved': return 'Sửa'<br>      case 'edited': return 'Lưu'<br>      case 'editing': return 'Hủy'<br>    }<br>  }<br>}</pre>
+
+
+
+        <h3>Các chế độ transition</h3>
+        <p>Chúng ta vẫn còn một vấn đề ở đây. Thử bấm vào nút bên dưới:</p>
+
+        <div id="no-mode-demo" class="demo mb-4">
+            <transition name="no-mode-fade">
+                <button v-if="on" key="on" @click="on = false">
+                    bật
+                </button>
+                <button v-else="" key="off" @click="on = true">
+                    tắt
+                </button>
+            </transition>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#no-mode-demo',
+                data: {
+                    on: false
+                }
+            })
+        </script>
+
+        <style>
+            .no-mode-fade-enter-active,
+            .no-mode-fade-leave-active {
+                transition: opacity .5s
+            }
+
+            .no-mode-fade-enter,
+            .no-mode-fade-leave-active {
+                opacity: 0
+            }
+        </style>
+
+        <p>Khi việc chuyển tiếp giữa hai nút “bật” và “tắt” diễn ra, cả hai nút đều được render - một nút mờ dần
+            trong khi nút kia rõ dần. Đây là hành vi mặc định của <code>&lt;transition&gt;</code> - quá trình enter
+            và leave xảy ra đồng thời.</p>
+        <p>Thỉnh thoảng đây là điều ta muốn, ví dụ khi chuyển tiếp giữa hai phần tử được sắp xếp chồng lên nhau:</p>
+
+        <div id="no-mode-absolute-demo" class="demo mb-4">
+            <div class="no-mode-absolute-demo-wrapper">
+                <transition name="no-mode-absolute-fade">
+                    <button v-if="on" key="on" @click="on = false">
+                        bật
+                    </button>
+                    <button v-else="" key="off" @click="on = true">
+                        tắt
+                    </button>
+                </transition>
+            </div>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#no-mode-absolute-demo',
+                data: {
+                    on: false
+                }
+            })
+        </script>
+
+        <style>
+            .no-mode-absolute-demo-wrapper {
+                position: relative;
+                height: 18px;
+            }
+
+            .no-mode-absolute-demo-wrapper button {
+                position: absolute;
+            }
+
+            .no-mode-absolute-fade-enter-active,
+            .no-mode-absolute-fade-leave-active {
+                transition: opacity .5s;
+            }
+
+            .no-mode-absolute-fade-enter,
+            .no-mode-absolute-fade-leave-active {
+                opacity: 0;
+            }
+        </style>
+
+        <p>Chúng ta cũng có thể sử dụng thêm <a
+                href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translate"
+                target="_blank"><code>translate</code></a> để tạo hiệu ứng giống như slide:</p>
+
+        <div id="no-mode-translate-demo" class="demo mb-4">
+            <div class="no-mode-translate-demo-wrapper">
+                <transition name="no-mode-translate-fade">
+                    <button v-if="on" key="on" @click="on = false">
+                        bật
+                    </button>
+                    <button v-else="" key="off" @click="on = true">
+                        tắt
+                    </button>
+                </transition>
+            </div>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#no-mode-translate-demo',
+                data: {
+                    on: false
+                }
+            })
+        </script>
+
+        <style>
+            .no-mode-translate-demo-wrapper {
+                position: relative;
+                height: 18px;
+            }
+
+            .no-mode-translate-demo-wrapper button {
+                position: absolute;
+            }
+
+            .no-mode-translate-fade-enter-active,
+            .no-mode-translate-fade-leave-active {
+                transition: all 1s;
+            }
+
+            .no-mode-translate-fade-enter,
+            .no-mode-translate-fade-leave-active {
+                opacity: 0;
+            }
+
+            .no-mode-translate-fade-enter {
+                transform: translateX(31px);
+            }
+
+            .no-mode-translate-fade-leave-active {
+                transform: translateX(-31px);
+            }
+        </style>
+
+        <p>Tuy nhiên, không phải lúc nào chúng ta cũng muốn transition enter và leave xảy ra đồng thời. Vì thế, Vue
+            cung cấp thêm một số <strong>chế độ transition</strong> thay thế:</p>
+        <ul>
+            <li>
+                <p><code>in-out</code>: Transition đi vào (in) của phần tử mới xảy ra trước, và sau khi hoàn tất mới
+                    đến lượt transition đi ra (out) của phần tử hiện tại.</p>
+            </li>
+            <li>
+                <p><code>out-in</code>: Transition đi ra (out) của phần tử hiện tại xảy ra trước, và sau khi hoàn
+                    tất mới đến lượt transition đi vào (in) của phần tử mới.</p>
+            </li>
+        </ul>
+        <p>Bây giờ chúng ta thử cập nhật transition cho các nút bật/tắt với <code>out-in</code>:</p>
+
+        <pre>&lt;transition name="fade" mode="out-in"&gt;<br>  &lt;!-- ... hai nút bật/tắt ... --&gt;<br>&lt;/transition&gt;</pre>
+
+        <div id="with-mode-demo" class="demo mb-4">
+            <transition name="with-mode-fade" mode="out-in">
+                <button v-if="on" key="on" @click="on = false">
+                    bật
+                </button>
+                <button v-else="" key="off" @click="on = true">
+                    tắt
+                </button>
+            </transition>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#with-mode-demo',
+                data: {
+                    on: false
+                }
+            })
+        </script>
+
+        <style>
+            .with-mode-fade-enter-active,
+            .with-mode-fade-leave-active {
+                transition: opacity .5s
+            }
+
+            .with-mode-fade-enter,
+            .with-mode-fade-leave-active {
+                opacity: 0
+            }
+        </style>
+
+        <p>Vậy là chỉ cần thêm một thuộc tính, chúng ta đã sửa xong transition ban đầu mà không cần phải viết bất kì
+            style CSS đặc biệt nào.</p>
+        <p>Chế độ <code>in-out</code> không được dùng nhiều như <code>out-in</code>, nhưng thỉnh thoảng cũng có thể
+            hữu dụng khi dùng cho một hiệu ứng transition hơi khác một chút. Chúng ta hãy thử kết hợp
+            <code>in-out</code> với ví dụ slide-fade phía trên:</p>
+
+        <div id="in-out-translate-demo" class="demo mb-4">
+            <div class="in-out-translate-demo-wrapper">
+                <transition name="in-out-translate-fade" mode="in-out">
+                    <button v-if="on" key="on" @click="on = false">
+                        bật
+                    </button>
+                    <button v-else="" key="off" @click="on = true">
+                        tắt
+                    </button>
+                </transition>
+            </div>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#in-out-translate-demo',
+                data: {
+                    on: false
+                }
+            })
+        </script>
+
+        <style>
+            .in-out-translate-demo-wrapper {
+                position: relative;
+                height: 18px;
+            }
+
+            .in-out-translate-demo-wrapper button {
+                position: absolute;
+            }
+
+            .in-out-translate-fade-enter-active,
+            .in-out-translate-fade-leave-active {
+                transition: all .5s;
+            }
+
+            .in-out-translate-fade-enter,
+            .in-out-translate-fade-leave-active {
+                opacity: 0;
+            }
+
+            .in-out-translate-fade-enter {
+                transform: translateX(31px);
+            }
+
+            .in-out-translate-fade-leave-active {
+                transform: translateX(-31px);
+            }
+        </style>
+
+        <p>Không đến nỗi nào, đúng không?</p>
+
+
+
+        <h3>Transition giữa các component</h3>
+        <p>Transition giữa các component lại càng đơn giản hơn - chúng ta còn không cần dùng thuộc tính
+            <code>key</code>. Thay vào đó, chúng ta wrap một <a href="components.html#component-dong">component
+                động</a>:</p>
+
+        <pre>&lt;transition name="component-fade" mode="out-in"&gt;<br>  &lt;component v-bind:is="view"&gt;&lt;/component&gt;<br>&lt;/transition&gt;</pre>
+        <pre>new Vue({<br>  el: '#transition-components-demo',<br>  data: {<br>    view: 'v-a'<br>  },<br>  components: {<br>    'v-a': {<br>      template: '&lt;div&gt;Component A&lt;/div&gt;'<br>    },<br>    'v-b': {<br>      template: '&lt;div&gt;Component B&lt;/div&gt;'<br>    }<br>  }<br>})</pre>
+        <pre>.component-fade-enter-active, .component-fade-leave-active {<br>  transition: opacity .3s ease;<br>}<br>.component-fade-enter, .component-fade-leave-to {<br>  opacity: 0;<br>}</pre>
+
+        <div id="transition-components-demo" class="demo mb-4">
+            <input v-model="view" value="v-a" id="a" name="view" type="radio"><label for="a">A</label>
+            <input v-model="view" value="v-b" id="b" name="view" type="radio"><label for="b">B</label>
+            <transition name="component-fade" mode="out-in">
+                <component v-bind:is="view"></component>
+            </transition>
+        </div>
+
+        <style>
+            .component-fade-enter-active,
+            .component-fade-leave-active {
+                transition: opacity .3s ease;
+            }
+
+            .component-fade-enter,
+            .component-fade-leave-to {
+                opacity: 0;
+            }
+        </style>
+
+        <script>
+            new Vue({
+                el: '#transition-components-demo',
+                data: {
+                    view: 'v-a'
+                },
+                components: {
+                    'v-a': {
+                        template: '<div>Component A</div>'
+                    },
+                    'v-b': {
+                        template: '<div>Component B</div>'
+                    }
+                }
+            })
+        </script>
+
+
+
+        <h3>Transition cho danh sách</h3>
+        <p>Đến lúc này, chúng ta đã bàn về transition cho:</p>
+        <ul>
+            <li>Các node đơn</li>
+            <li>Nhiều node khác nhau nhưng chỉ có một node được render mỗi lúc</li>
+        </ul>
+        <p>Vậy nếu chúng ta có một danh sách chứa các item mà ta muốn render đồng thời, ví dụ với
+            <code>v-for</code>, thì sao? Trong trường hợp này, ta sẽ dùng component
+            <code>&lt;transition-group&gt;</code>. Trước khi xem ví dụ, có một số điều quan trọng mà bạn cần biết về
+            component này:</p>
+        <ul>
+            <li>Khác với <code>&lt;transition&gt;</code>, <code>&lt;transition-group&gt;</code> render một phần tử
+                thật sự, mặc định là <code>&lt;span&gt;</code>. Bạn có thể thay đổi kiểu phần tử được render ra bằng
+                thuộc tính <code>tag</code>.</li>
+            <li>Các phần tử bên trong <code>&lt;transition-group&gt;</code> <strong>bắt buộc</strong> phải có thuộc
+                tính <code>key</code> duy nhất</li>
+        </ul>
+
+
+        <h3>Transition enter/leave cho danh sách</h3>
+        <p>Bây giờ chúng ta sẽ xem một ví dụ về transition cho enter/leave với cùng các class CSS mà ta đã dùng trên
+            đây:</p>
+        <pre>&lt;div id="list-demo"&gt;<br>  &lt;button v-on:click="add"&gt;Thêm&lt;/button&gt;<br>  &lt;button v-on:click="remove"&gt;Bớt&lt;/button&gt;<br><br>  &lt;transition-group name="list" tag="p"&gt;<br>    &lt;span v-for="item in items"<br>        v-bind:key="item"<br>        class="list-item"&gt;<br>      {{ item }}<br>    &lt;/span&gt;<br>  &lt;/transition-group&gt;<br>&lt;/div&gt;</pre>
+        <pre>new Vue({<br>  el: '#list-demo',<br>  data: {<br>    items: [1, 2, 3, 4, 5, 6, 7, 8, 9],<br>    nextNum: 10<br>  },<br><br>  methods: {<br>    randomIndex: function () {<br>      return Math.floor(Math.random() * this.items.length)<br>    },<br><br>    add: function () {<br>      this.items.splice(this.randomIndex(), 0, this.nextNum++)<br>    },<br><br>    remove: function () {<br>      this.items.splice(this.randomIndex(), 1)<br>    },<br>  }<br>})</pre>
+        <pre>.list-item {<br>  display: inline-block;<br>  margin-right: 10px;<br>}<br><br>.list-enter-active, .list-leave-active {<br>  transition: all 1s;<br>}<br><br>.list-enter, .list-leave-to {<br>  opacity: 0;<br>  transform: translateY(30px);<br>}</pre>
+
+        <div id="list-demo" class="demo">
+            <p>
+                <button v-on:click="add" class="btn btn-success">Thêm</button>
+                <button v-on:click="remove" class="btn btn-danger">Bớt</button>
+            </p>
+
+            <transition-group name="list" tag="p">
+                <span v-for="item in items" :key="item" class="list-item">
+                    {{ item }}
+                </span>
+            </transition-group>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#list-demo',
+                data: {
+                    items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    nextNum: 10
+                },
+                methods: {
+                    randomIndex: function () {
+                        return Math.floor(Math.random() * this.items.length);
+                    },
+
+                    add: function () {
+                        this.items.splice(this.randomIndex(), 0, this.nextNum++);
+                    },
+
+                    remove: function () {
+                        this.items.splice(this.randomIndex(), 1);
+                    }
+                }
+            });
+        </script>
+
+        <style>
+            .list-item {
+                display: inline-block;
+                margin-right: 10px;
+            }
+
+            .list-enter-active,
+            .list-leave-active {
+                transition: all 1s;
+            }
+
+            .list-enter,
+            .list-leave-to {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        </style>
+
+        <p>Có một vấn đề với ví dụ này: Khi bạn thêm hoặc bớt một item, những item xung quanh nó ngay lập tức nhảy
+            đến vị trí mới thay vì chuyển tiếp một cách mềm mại. Chúng ta sẽ giải quyết vấn đề này sau.</p>
+
+
+
+
+        <h3>Transition dịch chuyển trong danh sách</h3>
+        <p>Component <code>&lt;transition-group&gt;</code> có một tính năng nữa. Không chỉ có thể animate enter và
+            leave, nó còn có thể animate vị trí của các item. Khái niệm mới duy nhất bạn cần biết đến để sử dụng
+            tính năng này là <strong>class <code>v-move</code></strong>, được thêm vào khi item thay đổi vị trí.
+            Tương tự như các class khác, prefix của <code>v-move</code> chính là thuộc tính <code>name</code>, và
+            bạn có thể sử dụng một class khác với thuộc tính <code>move-class</code>.</p>
+        <p>Class này có ích nhất là để chỉ định thời lượng và hàm easing cho transition, như có thể thấy sau đây:</p>
+        <pre>&lt;script src="/libs/lodash.js/4.14.1/lodash.min.js"&gt;&lt;/script&gt;<br><br>&lt;div id="flip-list-demo" class="demo"&gt;<br>  &lt;button v-on:click="shuffle"&gt;Xáo trộn&lt;/button&gt;<br>  &lt;transition-group name="flip-list" tag="ul"&gt;<br>    &lt;li v-for="item in items" v-bind:key="item"&gt;<br>      {{ item }}<br>    &lt;/li&gt;<br>  &lt;/transition-group&gt;<br>&lt;/div&gt;</pre>
+        <pre>new Vue({<br>  el: '#flip-list-demo',<br>  data: {<br>    items: [1,2,3,4,5,6,7,8,9]<br>  },<br>  methods: {<br>    shuffle: function () {<br>      this.items = _.shuffle(this.items)<br>    }<br>  }<br>})</pre>
+        <pre>.flip-list-move {<br>  transition: transform 1s;<br>}</pre>
+
+
+
+
+        <div id="flip-list-demo" class="demo">
+            <p>
+                <button v-on:click="shuffle" class="btn btn-primary">Xáo trộn</button>
+            </p>
+            <transition-group name="flip-list" tag="ul">
+                <li v-for="item in items" :key="item">
+                    {{ item }}
+                </li>
+            </transition-group>
+        </div>
+
+
+
+        <script>
+            new Vue({
+                el: '#flip-list-demo',
+                data: {
+                    items: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                },
+                methods: {
+                    shuffle: function () {
+                        this.items = _.shuffle(this.items)
+                    }
+                }
+            })
+        </script>
+
+        <style>
+            .flip-list-move {
+                transition: transform 1s;
+            }
+        </style>
+
+        <p>Nhìn thì có vẻ như là phép màu, nhưng thật ra ở bên trong Vue đang dùng một kĩ thuật animation gọi là <a
+                href="https://aerotwist.com/blog/flip-your-animations/" target="_blank" rel="noopener">FLIP</a> để
+            thay đổi vị trí của các item một cách mềm mại bằng <a
+                href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform?v=a" target="_blank"
+                rel="noopener"><code>transform</code></a>.</p>
+        <p>Chúng ta có thể kết hợp kĩ thuật này với các ví dụ phía trên để animate bất kì thay đổi nào xảy ra trong
+            danh sách:</p>
+
+        <pre>&lt;script src="/libs/lodash.js/4.14.1/lodash.min.js"&gt;&lt;/script&gt;<br><br>&lt;div id="list-complete-demo" class="demo"&gt;<br>  &lt;button v-on:click="shuffle"&gt;Xáo trộn&lt;/button&gt;<br>  &lt;button v-on:click="add"&gt;Thêm&lt;/button&gt;<br>  &lt;button v-on:click="remove"&gt;Bớt&lt;/button&gt;<br>  &lt;transition-group name="list-complete" tag="p"&gt;<br>    &lt;span<br>        v-for="item in items"<br>        v-bind:key="item"<br>        class="list-complete-item"&gt;<br>      {{ item }}<br>    &lt;/span&gt;<br>  &lt;/transition-group&gt;<br>&lt;/div&gt;</pre>
+        <pre>new Vue({<br>  el: '#list-complete-demo',<br>  data: {<br>    items: [1,2,3,4,5,6,7,8,9],<br>    nextNum: 10<br>  },<br>  methods: {<br>    randomIndex: function () {<br>      return Math.floor(Math.random() * this.items.length)<br>    },<br>    add: function () {<br>      this.items.splice(this.randomIndex(), 0, this.nextNum++)<br>    },<br>    remove: function () {<br>      this.items.splice(this.randomIndex(), 1)<br>    },<br>    shuffle: function () {<br>      this.items = _.shuffle(this.items)<br>    }<br>  }<br>})</pre>
+        <pre>.list-complete-item {<br>  transition: all 1s;<br>  display: inline-block;<br>  margin-right: 10px;<br>}<br><br>.list-complete-enter, .list-complete-leave-to {<br>  opacity: 0;<br>  transform: translateY(30px);<br>}<br><br>.list-complete-leave-active {<br>  position: absolute;<br>}</pre>
+
+
+        <div id="list-complete-demo" class="demo">
+            <p>
+                <button v-on:click="shuffle" class="btn btn-primary">Xáo trộn</button>
+                <button v-on:click="add" class="btn btn-success">Thêm</button>
+                <button v-on:click="remove" class="btn btn-danger">Bớt</button>
+            </p>
+
+            <transition-group name="list-complete" tag="p">
+                <span v-for="item in items" :key="item" class="list-complete-item">
+                    {{ item }}
+                </span>
+            </transition-group>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#list-complete-demo',
+                data: {
+                    items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+                    nextNum: 10
+                },
+
+                methods: {
+                    randomIndex: function () {
+                        return Math.floor(Math.random() * this.items.length)
+                    },
+
+                    add: function () {
+                        this.items.splice(this.randomIndex(), 0, this.nextNum++)
+                    },
+
+                    remove: function () {
+                        this.items.splice(this.randomIndex(), 1)
+                    },
+
+                    shuffle: function () {
+                        this.items = _.shuffle(this.items)
+                    }
+                }
+            })
+        </script>
+
+        <style>
+            .list-complete-item {
+                transition: all 1s;
+                display: inline-block;
+                margin-right: 10px;
+            }
+
+            .list-complete-enter,
+            .list-complete-leave-to {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            .list-complete-leave-active {
+                position: absolute;
+            }
+        </style>
+
+        <p>Một điểm quan trọng cần lưu ý là các transition FLIP này không hoạt động đối với các phần tử
+            có <code>display: inline</code>. Để thay thế, bạn có thể dùng <code>display: inline-block</code> hoặc
+            đặt trong một flexbox.</p>
+
+        <p>FLIP animation cũng không bị giới hạn chỉ trong một trục. Item trong một grid (lưới) đa chiều cũng có thể
+            được animate:</p>
+
+        <div id="sudoku-demo" class="demo">
+            <p>
+                <button @click="shuffle" class="btn btn-primary">
+                    Này thì xáo này
+                </button>
+            </p>
+
+            <transition-group name="cell" tag="div" class="sudoku-container mb-4 mx-auto">
+                <div v-for="cell in cells" :key="cell.id" class="cell">
+                    {{ cell.number }}
+                </div>
+            </transition-group>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#sudoku-demo',
+                data: {
+                    cells: Array.apply(null, { length: 81 })
+                        .map(function (_, index) {
+                            return {
+                                id: index,
+                                number: index % 9 + 1
+                            }
+                        })
+                },
+
+                methods: {
+                    shuffle: function () {
+                        //console.log(this.cells);
+                        this.cells = _.shuffle(this.cells);
+                    }
+                }
+            });
+        </script>
+
+        <style>
+            .sudoku-container {
+                display: flex;
+                flex-wrap: wrap;
+                width: 238px;
+            }
+
+            .cell {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                width: 25px;
+                height: 25px;
+                border: 1px solid #aaa;
+                margin-right: -1px;
+                margin-bottom: -1px;
+            }
+
+            .cell:nth-child(3n) {
+                margin-right: 0;
+            }
+
+            .cell:nth-child(27n) {
+                margin-bottom: 0;
+            }
+
+            .cell-move {
+                transition: transform 1s;
+            }
+        </style>
+
+
+
+        <h3>Transition tuần tự</h3>
+        <p>Bằng cách giao tiếp với các transition JavaScript thông qua các thuộc tính dữ liệu, ta có thể khiến cho
+            các transition trong một danh sách diễn ra một cách tuần tự:</p>
+
+        <pre>&lt;script src="/libs/velocity/1.2.3/velocity.min.js"&gt;&lt;/script&gt;<br><br>&lt;div id="staggered-list-demo"&gt;<br>  &lt;input v-model="query"&gt;<br>  &lt;transition-group<br>      name="staggered-fade"<br>      tag="ul"<br>      v-bind:css="false"<br>      v-on:before-enter="beforeEnter"<br>      v-on:enter="enter"<br>      v-on:leave="leave"&gt;<br>    &lt;li<br>        v-for="(item, index) in computedList"<br>        v-bind:key="item.msg"<br>        v-bind:data-index="index"&gt;<br>      {{ item.msg }}<br>    &lt;/li&gt;<br>  &lt;/transition-group&gt;<br>&lt;/div&gt;</pre>
+        <pre>new Vue({<br>  el: '#staggered-list-demo',<br>  data: {<br>    query: '',<br>    list: [<br>      { msg: 'Hai Bà Trưng' },<br>      { msg: 'Ngô Quyền' },<br>      { msg: 'Đinh Tiên Hoàng' },<br>      { msg: 'Lý Thường Kiệt' },<br>      { msg: 'Trần Hưng Đạo' }<br>    ]<br>  },<br><br>  computed: {<br>    computedList: function () {<br>      var vm = this<br>      return this.list.filter(function (item) {<br>        return item.msg.toLowerCase()<br>            .indexOf(vm.query.toLowerCase()) !== -1;<br>      })<br>    }<br>  },<br><br>  methods: {<br>    beforeEnter: function (el) {<br>      el.style.opacity = 0<br>      el.style.height = 0<br>    },<br>    enter: function (el, done) {<br>      var delay = el.dataset.index * 150<br>      setTimeout(function () {<br>        Velocity(<br>          el,<br>          { opacity: 1, height: '1.6em' },<br>          { complete: done }<br>        )<br>      }, delay)<br>    },<br>    leave: function (el, done) {<br>      var delay = el.dataset.index * 150<br>      setTimeout(function () {<br>        Velocity(<br>          el,<br>          { opacity: 0, height: 0 },<br>          { complete: done }<br>        )<br>      }, delay)<br>    }<br>  }<br>})</pre>
+
+
+
+        <div id="example-5" class="demo">
+            <input v-model="query" class="form-control mb-2">
+            <transition-group name="staggered-fade" tag="ul" v-bind:css="false" v-on:before-enter="beforeEnter"
+                v-on:enter="enter" v-on:leave="leave">
+                <li v-for="(item, index) in computedList" v-bind:key="item.msg" v-bind:data-index="index">
+                    {{ item.msg }}</li>
+            </transition-group>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#example-5',
+                data: {
+                    query: '',
+                    list: [
+                        { msg: 'Hai Bà Trưng' },
+                        { msg: 'Ngô Quyền' },
+                        { msg: 'Đinh Tiên Hoàng' },
+                        { msg: 'Lý Thường Kiệt' },
+                        { msg: 'Trần Hưng Đạo' }
+                    ]
+                },
+                computed: {
+                    computedList: function () {
+                        var vm = this
+                        return this.list.filter(function (item) {
+                            return item.msg.toLowerCase().indexOf(vm.query.toLowerCase()) !== -1
+                        })
+                    }
+                },
+                methods: {
+                    beforeEnter: function (el) {
+                        el.style.opacity = 0
+                        el.style.height = 0
+                    },
+                    enter: function (el, done) {
+                        var delay = el.dataset.index * 150
+                        setTimeout(function () {
+                            Velocity(
+                                el,
+                                { opacity: 1, height: '1.6em' },
+                                { complete: done }
+                            )
+                        }, delay)
+                    },
+                    leave: function (el, done) {
+                        var delay = el.dataset.index * 150
+                        setTimeout(function () {
+                            Velocity(
+                                el,
+                                { opacity: 0, height: 0 },
+                                { complete: done }
+                            )
+                        }, delay)
+                    }
+                }
+            })
+        </script>
+
+
+        <h3>Transition tái sử dụng được</h3>
+        <p>Transition có thể được tái sử dụng trong hệ thống component của Vue. Để tạo ra một transition sử dụng lại
+            được, bạn chỉ cần đặt một component <code>&lt;transition&gt;</code> hoặc
+            <code>&lt;transition-group&gt;</code> ở phần tử root, sau đó truyền bất cứ component con nào vào.</p>
+        <p>Đây là một ví dụ sử dụng một component template:</p>
+
+        <pre>Vue.component('my-special-transition', {<br>  template: '\<br>    &lt;transition\<br>      name="very-special-transition"\<br>      mode="out-in"\<br>      v-on:before-enter="beforeEnter"\<br>      v-on:after-enter="afterEnter"\<br>    &gt;\<br>      &lt;slot&gt;&lt;/slot&gt;\<br>    &lt;/transition&gt;\<br>  ',<br>  methods: {<br>    beforeEnter: function (el) {<br>      // ...<br>    },<br>    afterEnter: function (el) {<br>      // ...<br>    }<br>  }<br>})</pre>
+
+        <p>Và component chức năng (functional component) đặc biệt phù hợp cho nhiệm vụ này:</p>
+
+        <pre>Vue.component('my-special-transition', {<br>  functional: true,<br>  render: function (createElement, context) {<br>    var data = {<br>      props: {<br>        name: 'very-special-transition',<br>        mode: 'out-in'<br>      },<br>      on: {<br>        beforeEnter: function (el) {<br>          // ...<br>        },<br>        afterEnter: function (el) {<br>          // ...<br>        }<br>      }<br>    }<br>    return createElement('transition', data, context.children)<br>  }<br>})</pre>
+
+
+        <h3>Transition động</h3>
+        <p>Đúng, ngay cả transition trong Vue cũng hướng dữ liệu! Ví dụ cơ bản nhất của một transition động bind
+            thuộc tính <code>name</code> vào một property động.</p>
+
+        <pre>&lt;transition v-bind:name="transitionName"&gt;<br>  &lt;!-- ... --&gt;<br>&lt;/transition&gt;</pre>
+
+        <p>Điều này có thể có ích khi bạn đã định nghĩa transition/animation CSS với quy chuẩn đặt tên cho class
+            transition của Vue và muốn hoán chuyển giữa các transition/animation này.</p>
+        <p>Tuy nhiên, sự thật thì bất kì thuộc tính transition nào cũng có thể được bind động. Và không chỉ có thuộc
+            tính. Vì thật ra chỉ là các phương thức, các hook cho sự kiện có thể truy xuất đến bất kì dữ liệu nào
+            trong ngữ cảnh hiện tại. Điều này có nghĩa là tùy vào trạng thái của component, các transition
+            JavaScript của bạn có thể có các hành vi rất khác nhau.</p>
+
+        <pre>&lt;script src="/libs/velocity/1.2.3/velocity.min.js"&gt;&lt;/script&gt;<br><br>&lt;div id="dynamic-fade-demo" class="demo"&gt;<br>  Thời gian hiện ra:<br>  &lt;input type="range" v-model="fadeInDuration" min="0"<br>      v-bind:max="maxFadeDuration"&gt;<br><br>  Thời gian mờ đi:<br>  &lt;input type="range" v-model="fadeOutDuration" min="0"<br>      v-bind:max="maxFadeDuration"&gt;<br><br>  &lt;transition<br>    v-bind:css="false"<br>    v-on:before-enter="beforeEnter"<br>    v-on:enter="enter"<br>    v-on:leave="leave"<br>  &gt;<br>    &lt;p v-if="show"&gt;Xin chào&lt;/p&gt;<br>  &lt;/transition&gt;<br>  &lt;button<br>    v-if="stop"<br>    v-on:click="stop = false; show = false"<br>  &gt;Bắt đầu&lt;/button&gt;<br>  &lt;button<br>    v-else<br>    v-on:click="stop = true"<br>  &gt;Dừng lại&lt;/button&gt;<br>&lt;/div&gt;</pre>
+        <pre>new Vue({<br>  el: '#dynamic-fade-demo',<br>  data: {<br>    show: true,<br>    fadeInDuration: 1000,<br>    fadeOutDuration: 1000,<br>    maxFadeDuration: 1500,<br>    stop: true<br>  },<br>  mounted: function () {<br>    this.show = false<br>  },<br>  methods: {<br>    beforeEnter: function (el) {<br>      el.style.opacity = 0<br>    },<br>    enter: function (el, done) {<br>      var vm = this<br>      Velocity(el,<br>        { opacity: 1 },<br>        {<br>          duration: this.fadeInDuration,<br>          complete: function () {<br>            done()<br>            if (!vm.stop) vm.show = false<br>          }<br>        }<br>      )<br>    },<br>    leave: function (el, done) {<br>      var vm = this<br>      Velocity(el,<br>        { opacity: 0 },<br>        {<br>          duration: this.fadeOutDuration,<br>          complete: function () {<br>            done()<br>            vm.show = true<br>          }<br>        }<br>      )<br>    }<br>  }<br>})</pre>
+
+
+        <div id="dynamic-fade-demo" class="demo">
+            <p>
+                Thời gian hiện ra: <input v-model="fadeInDuration" min="0" v-bind:max="maxFadeDuration" type="range">
+            </p>
+            <p>
+                Thời gian mờ đi: <input v-model="fadeOutDuration" min="0" v-bind:max="maxFadeDuration" type="range">
+            </p>
+            <transition v-bind:css="false" v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave">
+                <p v-if="show">Xin chào</p>
+            </transition>
+
+            <p>
+                <button v-if="stop" v-on:click="stop = false; show = false" class="btn btn-success">Bắt đầu</button>
+                <button v-else="" v-on:click="stop = true" class="btn btn-danger">Dừng lại</button>
+            </p>
+        </div>
+
+        <script>
+            new Vue({
+                el: '#dynamic-fade-demo',
+                data: {
+                    show: true,
+                    fadeInDuration: 1000,
+                    fadeOutDuration: 1000,
+                    maxFadeDuration: 1500,
+                    stop: true
+                },
+                mounted: function () {
+                    this.show = false
+                },
+                methods: {
+                    beforeEnter: function (el) {
+                        el.style.opacity = 0
+                    },
+                    enter: function (el, done) {
+                        var vm = this
+                        Velocity(el,
+                            { opacity: 1 },
+                            {
+                                duration: this.fadeInDuration,
+                                complete: function () {
+                                    done()
+                                    if (!vm.stop) vm.show = false
+                                }
+                            }
+                        )
+                    },
+                    leave: function (el, done) {
+                        var vm = this
+                        Velocity(el,
+                            { opacity: 0 },
+                            {
+                                duration: this.fadeOutDuration,
+                                complete: function () {
+                                    done()
+                                    vm.show = true
+                                }
+                            }
+                        )
+                    }
+                }
+            })
+        </script>
+
+        <p>Cuối cùng, cách tốt nhất để tạo transition động là thông qua các component nhận vào <code>props</code> để
+            thay đổi bản chất của transition đang dùng. Nói thì có vẻ sến, nhưng thực sự giới hạn duy nhất là trí
+            tưởng tượng của bạn.</p>
+        <h3>Tham khảo</h3>
+        <p><a target="_blank" href="https://vi.vuejs.org/v2/guide/transitions.html">Transition cho enter/leave &amp;
+                danh sách — Vue.js</a></p>
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

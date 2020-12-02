@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Laravel route, url, asset</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Laravel route, url, asset">
+ </head> 
+ <body> 
+  <article> 
+   <p>Không dùng route, asset, url</p> 
+   <p>route để trỏ đến đường dẫn PHP (theo tên)</p> 
+   <p>url để trỏ đến đường dẫn PHP</p> 
+   <p>asset để trỏ đến các đường dẫn file tĩnh như CSS, JS, ảnh.</p> 
+   <p>The files must located in the public folder.</p> 
+   <p>The url() method used to generate an url to a link, {{ url('users', ['page' =&gt; 22], $secure = null) }}</p> 
+   <p><br> </p> 
+   <p>It will generate a valid URL for an asset. From your code, it is OK when you host your application in root of the domain (http://www.example.com/). But if you host it in a sub folder as http://www.example.com/app/ Then your asset file attempts to load from root and will fail, but using asset() function always create application related URL.</p> 
+   <p><br> </p> 
+   <p>Không chuyển HTTPS nên bị lỗi</p> 
+   <p>Illuminate\Routing\UrlGenerator</p> 
+   <p><br> </p> 
+   <p>Khi bạn sử dụng SSL trong website Laravel của bạn. Khi đó, khi bạn gọi các hàm như asset để import JS hay CSS file ví dụ:</p> 
+   <pre><code>{{ asset('js/my_script.js') }}<br>{{ asset('css/my_styles.css') }}</code></pre> 
+   <p>thì mặc định nó trả về là http chứ không phải là https. Do đó URL bạn nhận được sẽ là:</p> 
+   <pre><code>http://yourdomain.com/public/js/my_script.js
+http://yourdomain.com/public/js/my_script.js</code></pre> 
+   <p>Nhưng mong muốn của chúng ta là nó phải được gọi bởi giao thức HTTPS là:</p> 
+   <pre><code>https://yourdomain.com/public/js/my_script.js
+https://yourdomain.com/public/js/my_script.js</code></pre> 
+   <p>Vì vậy khi đó nếu bạn muốn khi sử dụng các hàm này thì buộc Laravel trả về giao thức https thì ta mở file <code>app/Providers/AppServiceProvider.php</code> và cập nhật lại hàm boot như sau:</p> 
+   <pre>&lt;?php
+namespace App\Providers;
+
+
+class AppServiceProvider extends ServiceProvider {
+
+    public function boot(UrlGenerator $url) {<br>        if (env('REDIRECT_HTTPS')) {<br>            $url-&gt;forceSchema('https');<br>        }<br>    }<br>}</pre> 
+   <p> </p> 
+   <p>Tiếp đó, bạn mở file <code>.env</code> tại thư mục root của project rồi thêm 1 hằng số <code>REDIRECT_HTTPS</code> và thiết lập giá trị cho nó là <code>true</code>.</p> 
+   <pre><code>REDIRECT_HTTPS=true</code></pre> 
+   <p>Như vậy tất cả các link được gọi từ hàm như asset ... đều trả về cho bạn là giao thức https.</p> 
+   <p> </p> 
+   <p>Thật đơn giản phải không các bạn? Chúc các bạn thành công!</p> 
+   <p></p> 
+   <p>----</p> 
+   <p>Here are several ways. Choose most convenient.</p> 
+   <ol> 
+    <li><p>Configure your web server to redirect all non-secure requests to https. Example of a nginx config:</p><pre><code>server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name example.com www.example.com;
+    return 301 https://example.com$request_uri;
+}</code></pre></li> 
+    <li><p>Set your environment variable <code>APP_URL</code> using https:</p><pre><code>APP_URL=https://example.com</code></pre></li> 
+    <li><p>Use helper <a href="https://laravel.com/docs/5.6/helpers#method-secure-url" rel="nofollow noreferrer">secure_url()</a> (Laravel5.6)</p></li> 
+    <li><p>Add following string to AppServiceProvider::boot() method (for version 5.4+):</p><pre><code>\Illuminate\Support\Facades\URL::forceScheme('https');</code></pre></li> 
+   </ol> 
+   <p>Update:</p> 
+   <ol start="5"> 
+    <li><p>Implicitly setting scheme for route group (Laravel5.6):</p><pre><code>Route::group(['scheme' =&gt; 'https'], function () {
+    // Route::get(...)-&gt;name(...);
+});</code></pre></li> 
+   </ol> 
+   <p> </p> 
+   <p>Place this in the AppServiceProvider in the boot() method</p> 
+   <pre><code>if($this-&gt;app-&gt;environment('production')) {
+    URL::forceScheme('https');
+}</code></pre> 
+   <p></p> 
+   <p><br> </p> 
+   <p><br></p> 
+   <p><br> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

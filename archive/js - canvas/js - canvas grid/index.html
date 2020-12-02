@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta charset="utf-8"> 
+  <title>Canvas Grid</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=1, user-scalable=no"> 
+  <style>
+
+#c1 {
+/*
+    background: #fff;
+    margin: 20px;*/
+	
+	/*
+	width: 421px;
+		height: 421px;*/
+}
+
+	</style> 
+  <style>
+	/*
+	#c2 {
+		width: 501px;
+		height: 381px;
+	}*/
+	</style> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Canvas Grid">
+ </head> 
+ <body> 
+  <article> 
+   <!--canvas id="c1" width="421px" height="421px" ></canvas--> 
+   <canvas id="c2" width="501px" height="381px"></canvas> 
+   <p> Để canvas hiển thị đúng, đẹp thì chúng ta phải thiết lập thuộc tính <b>width</b> và <strong>height</strong> của canvas (không phải là CSS). </p> 
+   <p> Vẽ vời, học computer graphics với JavaScript canvas. </p> 
+   <!--script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script--> 
+   <script>
+(function() {
+	//grid width and height
+	var bw = 400;
+	var bh = 400;
+
+	//padding around grid
+	var p = 10;
+
+	//size of canvas
+	var cw = bw + (p * 2) + 1;
+	var ch = bh + (p * 2) + 1;
+
+	// Làm thế này sẽ hiển thị xấu
+	//var canvas = $('<canvas/>').css({ width: cw, height: ch }).attr("id", "c1").appendTo('body');
+	//var context = canvas.get(0).getContext("2d");
+
+	// Làm thế này thì hiển thị đẹp
+	//var canvas = document.getElementById("c1");
+	//var context = canvas.getContext("2d");
+
+	// Làm thế này thì sao nhỉ?
+	var canvas = document.createElement("canvas");
+	canvas.width = cw;
+	canvas.height = ch;
+	canvas.id = "c1";
+	document.body.appendChild(canvas);
+	var context = canvas.getContext("2d");
+
+
+	// Sao nó không được mảnh như ví dụ 2 nhỉ?
+	function drawBoard() {
+		for (var x = 0; x <= bw; x += 10) {
+			context.moveTo(0.5 + x + p, p);
+			context.lineTo(0.5 + x + p, bh + p);
+		}
+
+		for (var x = 0; x <= bh; x += 10) {
+			context.moveTo(p, 0.5 + x + p);
+			context.lineTo(bw + p, 0.5 + x + p);
+		}
+
+		context.strokeStyle = "#DDD";
+		context.stroke();
+	}
+
+	drawBoard();
+})();
+</script> 
+   <script>
+(function() {
+	var c_canvas = document.getElementById("c2");
+	var context = c_canvas.getContext("2d");
+
+	// Sao lại là 0.5 nhỉ?
+	for (var x = 0.5; x < 501; x += 10) {
+	  context.moveTo(x, 0);
+	  context.lineTo(x, 381);
+	}
+
+	for (var y = 0.5; y < 381; y += 10) {
+	  context.moveTo(0, y);
+	  context.lineTo(500, y);
+	}
+
+	context.moveTo(0, 0);
+	context.lineTo(380, 380);
+
+	context.strokeStyle = "#ddd";
+	context.stroke();
+})();
+</script> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

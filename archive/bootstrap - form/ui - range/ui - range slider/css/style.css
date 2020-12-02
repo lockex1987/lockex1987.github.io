@@ -1,0 +1,36 @@
+.range-slider {
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  padding: 7px 8px;
+}
+.range-slider > .bar {
+  background: #e6e6e6;
+  border-radius: 4px;
+  position: relative;
+}
+.range-slider > .bar > .bar-process {
+  background-color: #007aff;
+  height: 4px;
+  border-radius: 4px;
+}
+.range-slider > .bar > .bar-btn {
+  position: absolute;
+  background-color: #02c38a;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  transform: translateX(-50%);
+  top: -7px;
+  z-index: 30;
+  box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15), 0 0 0 1px rgba(34, 36, 38, 0.15) inset;
+}
+.range-slider > input[type=range] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  -webkit-appearance: none;
+  opacity: 0;
+}

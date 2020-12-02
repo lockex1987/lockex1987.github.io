@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Riot Options</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Riot Options">
+ </head> 
+ <body> 
+  <article> 
+   <p>Tùy chọn</p> 
+   <p>Bạn có thể truyền các tùy chọn cho tag ở tham số thứ hai:</p> 
+   <pre>&lt;script&gt;
+  riot.mount('todo', { title: 'My TODO app', items: [ ... ] })
+&lt;/script&gt;</pre> 
+   <p>Dữ liệu truyền có thể là bất cứ gì, từ đối tượng, Flux store,... tùy theo thiết kế.</p> 
+   <p>Bên trong tag các tùy chọn có thể được ánh xạ với biến opts như sau:</p> 
+   <pre>&lt;my-tag&gt;
+
+  &lt;!-- Options in HTML --&gt;
+  &lt;h3&gt;{ opts.title }&lt;/h3&gt;
+
+  // Options in JavaScript
+  var title = opts.title
+
+&lt;/my-tag&gt;</pre> 
+   <p><br> </p> 
+   <p><br> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

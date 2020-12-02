@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Simple Calculator</title>    
+</head>
+<body>
+    <textarea id="statement"></textarea>
+    <div>
+        <button onclick="calculate()">Calculate</button>
+        <button onclick="useResult()">Use result</button>
+        <button onclick="clearStatement()">Clear</button>
+    </div>
+    <div id="result"></div>
+    Speech recognition, speech synthesis
+
+    <script>
+var statement = document.getElementById("statement"); 
+var result = document.getElementById("result");
+
+function calculate() {
+    var res;
+    try {
+        res = eval(statement.value.trim());
+    } catch (ex) {
+        res = ex.message;
+    }
+    result.innerHTML = res;
+}
+
+function useResult() {
+    statement.value = result.innerHTML;
+    statement.focus();
+}
+
+function clearStatement() {
+    statement.value = "";
+    statement.focus();
+}
+    </script>
+</body>
+</html>

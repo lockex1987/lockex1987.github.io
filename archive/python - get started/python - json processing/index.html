@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="description" content="Xử lý JSON với Python"/>
+	<meta name="keywords" content="python, json"/>
+	<meta name="author" content="lockex1987"/>
+	
+	<title>Xử lý JSON với Python</title>
+
+	<link rel="icon" href="../../images/favicon.png"/>
+	<link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body>
+	<article>
+    <h2>Xử lý JSON với Python</h2>
+    <p>JSON là một trong những định dạng trao đổi dữ liệu thông dụng nhất hiện
+      nay. Để xử lý JSON với Java, chúng ta thường phải thêm các thư viện ngoài
+      như GSON. Ngoài ra chúng ta cũng phải định nghĩa các class tương ứng với
+      cấu trúc dữ liệu JSON khá là dài dòng.</p>
+    <p>Xử lý JSON với Python rất là tự nhiên và dễ dàng.</p>
+    <p>Để chuyển dữ liệu Python về xâu JSON chúng ta sử dụng hàm <code>json.dumps</code>,
+      ngược lại sử dụng hàm <code>json.loads</code>.</p>
+    <div style="color: #d4d4d4;background-color: #1e1e1e;font-family: Consolas, 'Courier New', monospace;font-weight: normal;font-size: 14px;line-height: 19px;white-space: pre;"><div><span
+
+style="color: #c586c0;">import</span><span style="color: #d4d4d4;"> json</span></div><br><div><span
+
+style="color: #d4d4d4;">raw_json = </span><span style="color: #ce9178;">'''</span></div><div><span
+
+style="color: #ce9178;">{</span></div><div><span style="color: #ce9178;">    "field_str": "Hello Python",</span></div><div><span
+
+style="color: #ce9178;">    "field_int": 123,</span></div><div><span style="color: #ce9178;">    "field_float": 45.6,</span></div><div><span
+
+style="color: #ce9178;">    "field_array": [1, 2, 3, 4, 5]</span></div><div><span
+
+style="color: #ce9178;">}</span></div><div><span style="color: #ce9178;">'''</span></div><div><span
+
+style="color: #d4d4d4;">data = json.loads(raw_json)</span></div><div><span style="color: #d4d4d4;">string_json = json.dumps(data)</span></div><div><span
+
+style="color: #d4d4d4;">pretty_json = json.dumps(data, </span><span style="color: #9cdcfe;">indent</span><span
+
+style="color: #d4d4d4;"> = </span><span style="color: #b5cea8;">2</span><span style="color: #d4d4d4;">)</span></div><br><div><span
+
+style="color: #dcdcaa;">print</span><span style="color: #d4d4d4;">(data)</span></div><div><span
+
+style="color: #dcdcaa;">print</span><span style="color: #d4d4d4;">(data[</span><span
+
+style="color: #ce9178;">"field_str"</span><span style="color: #d4d4d4;">])</span></div><div><span
+
+style="color: #dcdcaa;">print</span><span style="color: #d4d4d4;">(string_json)</span></div><div><span
+
+style="color: #dcdcaa;">print</span><span style="color: #d4d4d4;">(pretty_json)</span></div></div><p></p><p>Để xâu JSON đẹp chúng ta có thể thêm tham số <code>indent</code> cho hàm <code>json.dumps</code>.</p><p><a
+
+href="json_demo.py">Source</a></p>
+	</article>
+
+	<script src="../../js/docs.js"></script>
+</body>
+</html>
+

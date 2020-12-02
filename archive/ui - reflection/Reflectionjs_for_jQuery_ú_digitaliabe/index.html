@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reflection.js for jQuery · digitalia.be</title>
+    
+    
+    <link rel="canonical" href="http://www.digitalia.be/software/reflectionjs-for-jquery/">
+    <link rel="icon" type="image/png" href="favicon-192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="favicon-32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="favicon-16.png" sizes="16x16">
+    <link rel="alternate" type="application/rss+xml" title="digitalia.be" href="http://www.digitalia.be/feed">
+
+    <meta name="author" content="Christophe Beyls">
+    <meta name="description" content="This is an improved version of the reflection.js script rewritten for the jQuery javascript library. It allows you to add instant reflection effects to your images in modern browsers, in less than 2 KB.">
+    <meta name="keywords" content="reflection.js, reflection, jQuery, reflect, mirror, instant, images">
+    <meta name="theme-color" content="#2196f3">
+
+    <meta property="og:title" content="Reflection.js for jQuery">
+    <meta property="og:description" content="This is an improved version of the reflection.js script rewritten for the jQuery javascript library. It allows you to add instant reflection effects to your images in modern browsers, in less than 2 KB.">
+    <meta property="og:site_name" content="digitalia.be">
+    <meta property="og:type" content="blog">
+    <meta property="og:url" content="http://www.digitalia.be/software/reflectionjs-for-jquery/">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@BladeCoder">
+    <meta name="twitter:title" content="Reflection.js for jQuery">
+    <meta name="twitter:description" content="This is an improved version of the reflection.js script rewritten for the jQuery javascript library. It allows you to add instant reflection effects to your images in modern browsers, in less than 2 KB.">
+
+
+    <!--[if lt IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+<link media="all" href="index.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <div class="navbar-toggle-wrapper visible-xs">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".js-navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <a href="http://www.digitalia.be/" class="navbar-brand" title="Christophe Beyls' homepage">digitalia<span class="text-muted">.be</span></a>
+        </div>
+        <div class="collapse navbar-collapse js-navbar-collapse">
+          <ul class="navbar-nav nav">
+            <li><a href="http://www.digitalia.be/archive/">Archive</a></li>
+<li class="active"><a href="http://www.digitalia.be/software/">Software</a></li>
+<li class="hidden-xs"><a href="http://www.digitalia.be/feed" title="Subscribe to RSS feed"><i class="fa fa-rss fa-lg"></i><span class="hidden">RSS Feed</span></a></li>
+
+          </ul>
+          <ul class="navbar-nav nav navbar-right">
+            <li class="pull-left"><a href="https://twitter.com/BladeCoder" title="@BladeCoder on Twitter"><i class="fa fa-twitter fa-lg"></i><span class="hidden">Twitter</span></a></li>
+<li class="pull-left"><a href="https://medium.com/@BladeCoder" title="@BladeCoder on Medium"><i class="fa fa-medium fa-lg"></i><span class="hidden">Medium</span></a></li>
+<li class="pull-left"><a href="https://github.com/cbeyls" title="cbeyls on GitHub"><i class="fa fa-github fa-lg"></i><span class="hidden">GitHub</span></a></li>
+<li class="pull-left"><a href="https://www.youtube.com/user/digitaliabe/videos" title="digitalia.be channel on YouTube"><i class="fa fa-youtube fa-lg"></i><span class="hidden">YouTube</span></a></li>
+<li class="pull-left"><a href="https://www.linkedin.com/in/cbeyls" title="Christophe Beyls on LinkedIn"><i class="fa fa-linkedin fa-lg"></i><span class="hidden">LinkedIn</span></a></li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container container-main">
+      <div class="row">
+        
+          <div class="col-sm-10 col-sm-offset-1">
+            <header class="post-header">
+  <h1 class="post-title-main">Reflection.js for jQuery</h1>
+</header>
+
+<nav>
+  <ul class="nav nav-pills">
+    <li role="presentation"><a href="#introduction">Introduction</a></li>
+    <li role="presentation"><a href="#demo">Demo</a></li>
+    <li role="presentation"><a href="#features">Features</a></li>
+    <li role="presentation"><a href="#performance">Performance</a></li>
+    <li role="presentation"><a href="#compatibility">Compatibility</a></li>
+    <li role="presentation"><a href="#requirements">Requirements</a></li>
+    <li role="presentation"><a href="#usage">Usage</a></li>
+    <li role="presentation"><a href="#download">Download</a></li>
+    <li role="presentation"><a href="#changelog">Changelog</a></li>
+  </ul>
+</nav>
+
+<article class="post-content">
+  <h2 id="introduction">Introduction</h2>
+<p>This is an improved version of the <a href="http://cow.neondragon.net/stuff/reflection/">reflection.js script</a> rewritten for the <a href="http://jquery.com/">jQuery</a> javascript library. It allows you to add instant reflection effects to your images in modern browsers, in less than 2 KB.</p>
+<h2 id="demo">Demo</h2>
+<p class="clearfix"><div class="reflect pull-left img-square" style="width: 128px; height: 170px; overflow: hidden;"><img src="reflection-cubes.png" class="reflected" alt="" style="display: block; border: 0px none;"><canvas width="128" height="42" style="display: block; border: 0px none;"></canvas></div> <div class="reflect pull-left img-square" style="width: 128px; height: 170px; overflow: hidden;"><img src="reflection-mac.png" class="reflected" alt="" style="display: block; border: 0px none;"><canvas width="128" height="42" style="display: block; border: 0px none;"></canvas></div></p>
+<form style="margin-bottom: 10px; margin-top: 10px;" action="http://www.digitalia.be/software/reflectionjs-for-jquery/"><fieldset><h3>Reflection effect</h3><input value="Default values" style="margin-right: 20px;" type="button"><label></label><label style="margin-right: 10px;">Height</label><input size="4" maxlength="4" readonly="readonly" value="0.33" type="text"><input value="+" type="button"><input value="-" style="margin-right: 20px;" type="button"><label style="margin-right: 10px;">Opacity</label><input size="4" maxlength="4" readonly="readonly" value="0.5" type="text"><input value="+" type="button"><input value="-" type="button"></fieldset><fieldset><h3>Background</h3><input value="Black" type="button"><input value="White" type="button"><input value="Random" type="button"></fieldset></form><p style="padding: 10px; background-color: rgb(255, 255, 255);" id="demozone"><div class="img-responsive img-square" style="margin: 0px auto; width: 480px; height: 416px; overflow: hidden;"><img src="reflection-arthur.jpg" alt="A cat in the garden" class="reflected" style="display: block; border: 0px none;"><canvas width="480" height="103" style="display: block; border: 0px none;"></canvas></div></p>
+<h2 id="features">Features</h2>
+<p>Compared to the original reflection.js, this script has the following added features:</p>
+<ul>
+	<li>The reflections appear instantly under each image as soon as it completes loading, instead of having to wait for all images of the page to be loaded before seeing all reflections being applied at the same time. This provides a much better user experience.</li>
+	<li>The code is smaller than the original reflection.js and has been optimized for jQuery. If you are already using jQuery, you will gain a few kilobytes.</li>
+	<li>The code has a few bugfixes that the original script doesn’t have. It usually works better.</li>
+	<li>It allows you to specify a fixed height or a relative height for the reflection.</li>
+</ul>
+<h2 id="performance">Performance</h2>
+<p>Like the original reflection.js, this script is <strong>much</strong> faster than the <a href="http://mir.aculo.us/stuff/reflector/reflector.html">script.aculo.us Reflector script</a> (which is not suited for production use), because it does not create a large number of image zones (one for each pixel line). Instead, it uses the canvas tag available in most modern browsers, and DirectX image transformation filters in Internet Explorer, so the reflection image is drawn natively in one step.</p>
+<h2 id="compatibility">Compatibility</h2>
+<p>This script works in all browsers supporting the canvas tag: Firefox 1.5+, Opera 9+, Safari 2+, Camino, Google Chrome and Internet Explorer 9+. It also works in Internet Explorer 6-8 by using an alternative drawing technique.</p>
+<p>In older browsers, the script will degrade automatically (the images will remain untouched).</p>
+<p class="alert alert-warning"><strong>Warning:</strong> Firefox 2.0.0.10 broke the <em>canvas.drawImage()</em> javascript function and therefore this particular version does not work with this script. Firefox 2.0.0.11 and more recent will work.</p>
+<p>It works with all image formats, but reflections of animated GIFs will not be animated: the first frame will be used for the reflection. <strong>There is no way to make a dynamic animated reflection for <span class="caps">GIF</span> images using javascript.</strong></p>
+<h2 id="requirements">Requirements</h2>
+<p>Reflection.js for jQuery (obviously) requires the <a href="http://jquery.com/">jQuery</a> library, <strong>version 1.2.3</strong> or more recent.</p>
+<h2 id="usage">Usage</h2>
+<h3>Setup</h3>
+<p>Just include the script in the header of your page, after the inclusion of the jQuery library:</p>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"js/jquery.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"js/reflection.js"</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure><h3>Adding reflections</h3>
+<p>Reflections can be added to any image tag over any kind of background (even image backgrounds!). There are two ways of adding a reflection:</p>
+<p>1) Using <span class="caps">HTML</span>, by applying a <span class="caps">CSS</span> class named “reflect” to your images:</p>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"test.jpg"</span> <span class="na">alt=</span><span class="s">""</span> <span class="na">class=</span><span class="s">"reflect"</span> <span class="nt">/&gt;</span></code></pre></figure><p>This will use the default reflection parameters (see below). You can apply multiple classes to an image (separated by spaces), the script will detect if “reflect” is one of them.</p>
+<p>2) Using javascript, by calling the reflect() method on a jQuery selector. Examples:</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s2">"#photo1"</span><span class="p">).</span><span class="nx">reflect</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span></code></pre></figure><p>or</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s2">"#gallery img"</span><span class="p">).</span><span class="nx">reflect</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span></code></pre></figure><p>“options” is an optional argument similar to the other options arguments in jQuery. The following options are available:</p>
+<ul>
+	<li><strong>height</strong>: The height of the reflection. It can be proportional or fixed. If the value is included between 0 and 1, it is considered as proportional to the image’s height (where 1 means 100%). If the value exceeds 1, it is considered as a fixed height, in pixels. Note that the reflection will never be taller than the image, even if this value exceeds the image’s height. Default is 1/3 (proportional).</li>
+	<li><strong>opacity</strong>: The starting opacity of the reflection (range: 0 to 1). The reflection is shown as an opacity gradient going from this value to 0. Default is 1/2.</li>
+</ul>
+<p>If you call this method more than once for the same image, the previous reflection will be automatically replaced by the new one.</p>
+<p><strong>Important</strong>: If you use javascript to add the reflection effect, you can call these methods either as soon as the <span class="caps">DOM</span> is ready (using the <a href="http://docs.jquery.com/Core/jQuery#callback" title="callback">jQuery</a> function) or by placing the call directly in a javascript block below the image you want to reflect. You <strong>don’t need</strong> to delay the call after the window “load” event. Your images will appear reflected as soon as they complete loading, even if they were not fully loaded when the javascript method was called. This is the main difference between this script and the original reflection.js.</p>
+<h3>Removing reflections</h3>
+<p>You can remove a reflection using javascript, by calling the unreflect() method on a jQuery selector. Example:</p>
+<figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">$</span><span class="p">(</span><span class="s2">"#photo1"</span><span class="p">).</span><span class="nx">unreflect</span><span class="p">();</span></code></pre></figure><h3><span class="caps">CSS</span> limitations</h3>
+<p>When adding the reflection effect, the script wraps the image inside a <code>&lt;div&gt;</code> block and adds the reflection to the same block, just below the original image. The <code>class</code> and <code>style</code> attributes of the image will be set blank and applied to the div instead, so the whole block will show like the original image. This operation is reverted when removing the reflection.</p>
+<p>This means that you can style the mirrored images using <span class="caps">CSS</span> classes and using their <code>style</code> attribute, but you can <strong>not</strong> style the <code>img</code> tag directly.</p>
+<p>For example, when reflected, the following image will <strong>not</strong> display properly because it is using a <span class="caps">CSS</span> rule mentioning the <code>img</code> tag:</p>
+<p><strong><span class="caps">CSS</span>:</strong></p>
+<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nf">#content</span> <span class="nt">img</span> <span class="p">{</span>
+   <span class="nl">float</span><span class="p">:</span> <span class="nb">left</span><span class="p">;</span>
+   <span class="nl">margin</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure><p><strong><span class="caps">HTML</span>:</strong></p>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"..."</span> <span class="na">alt=</span><span class="s">""</span> <span class="na">class=</span><span class="s">"reflect"</span> <span class="nt">/&gt;</span></code></pre></figure><p>Instead, you must use a <span class="caps">CSS</span> class without referring to the <code>img</code> tag (or use the style attribute) and it will display like expected:</p>
+<p><strong><span class="caps">CSS</span>:</strong></p>
+<figure class="highlight"><pre><code class="language-css" data-lang="css"><span class="nf">#content</span> <span class="nc">.leftimage</span> <span class="p">{</span>
+   <span class="nl">float</span><span class="p">:</span> <span class="nb">left</span><span class="p">;</span>
+   <span class="nl">margin</span><span class="p">:</span> <span class="m">20px</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure><p><strong><span class="caps">HTML</span>:</strong></p>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"..."</span> <span class="na">alt=</span><span class="s">""</span> <span class="na">class=</span><span class="s">"leftimage reflect"</span> <span class="nt">/&gt;</span></code></pre></figure><p>Also, the reflection will display properly with block-style images, but not with inline-style images. If you apply it to an inline-style image, it will be transformed to a block-style image. Most websites use only block-style images, so it should not be a problem.</p>
+<p>Finally, you <strong>must not</strong> specify the height of the reflected image using a <span class="caps">CSS</span> <code>class</code> or <code>style</code> property, because the height will increase when the reflection will be applied. Set the <code>width</code> and <code>height</code> attributes on the <code>&lt;img&gt;</code> tag instead if you want to (it’s optional).</p>
+<h2 id="download">Download</h2>
+<p>Reflection.js for jQuery is free software released under <a href="http://www.opensource.org/licenses/mit-license.php"><span class="caps">MIT</span> License</a>.<br>
+If you like it, talk about it and promote it by linking to this page.</p>
+<p><a href="http://www.digitalia.be/download/reflection-jquery.zip" class="btn btn-primary"><i class="fa fa-download"></i> reflection-jquery.zip</a></p>
+<h2 id="changelog">Changelog</h2>
+<p><strong>v1.11 (2013-05-08)</strong></p>
+<ul>
+	<li>Updated code for jQuery 1.9 and 2.0.</li>
+</ul>
+<p><strong>v1.1 (2011-05-25)</strong></p>
+<ul>
+	<li>Canvas rendering is now used in Internet Explorer 9 in standards mode.</li>
+	<li>Improved compatibility with Internet Explorer legacy mode (credits to Peter Toth).</li>
+</ul>
+<p><strong>v1.03 (2009-11-21)</strong></p>
+<ul>
+	<li>Added the ability to specify a fixed height, in pixels, for the reflection.</li>
+	<li>Better usage of variables resulting in a smaller minified file size.</li>
+</ul>
+<p><strong>v1.02 (2008-12-17)</strong></p>
+<ul>
+	<li>The “reflected” class is now applied to the img tag while the image is reflected.</li>
+</ul>
+<p><strong>v1.01 (2008-12-16)</strong></p>
+<ul>
+	<li>Small code optimizations.</li>
+</ul>
+<p><strong>v1.0 (2008-12-15)</strong></p>
+<ul>
+	<li>Initial release. Provides the same features set as Reflection.js for MooTools v1.41.</li>
+</ul>
+</article>
+
+          </div>
+        
+      </div>
+      <footer class="row footer">
+        <div class="col-sm-12 text-center">
+          <p>© 2016 Christophe Beyls. 
+Built with <a href="http://jekyllrb.com/" rel="nofollow">Jekyll</a> and <a href="http://getbootstrap.com/" rel="nofollow">Bootstrap</a>.</p>
+
+        </div>
+      </footer>
+    </div>
+
+    
+    
+
+    
+    
+    
+
+
+  
+
+</body>
+</html>

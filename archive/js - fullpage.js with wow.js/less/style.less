@@ -1,0 +1,122 @@
+@font-face {
+  font-family: 'Dimbo';
+  src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/323909/Dimbo_Regular.ttf');
+}
+
+body {
+  text-align: center;
+  font-family: 'Dimbo';
+  background: #000;
+}
+
+.wrapper {
+  overflow: hidden;
+}
+
+.scrollDown {
+  font-size: 60px;
+  min-height: 100vh;
+  -webkit-animation: colorCycle 7s infinite ease-in-out;
+  animation: colorCycle 7s infinite ease-in-out;
+  &:before,
+  &:after {
+    content: "\2193 \2193";
+    -webkit-animation: flash 1.5s 6;
+    animation: flash 1.5s 6;
+  }
+}
+
+.word {
+  min-height: 80vh;
+  .letter {
+    display: inline-block;
+    margin: 0 0.2vw;
+    font-size: 8vw;
+    .colorShadow(@baseColor) {
+      color: @baseColor;
+      text-shadow: 0.2vw 0.2vw 0 darken(@baseColor, 30%);
+    }
+    &.color0 {
+      .colorShadow(#F94816);
+    }
+    &.color1 {
+      .colorShadow(#E9D443);
+    }
+    &.color2 {
+      .colorShadow(#FD91F7);
+    }
+    &.color3 {
+      .colorShadow(#28963F);
+    }
+    &.color4 {
+      .colorShadow(#E43485);
+    }
+    &.color5 {
+      .colorShadow(#A2E4F2);
+    }
+    &.color6 {
+      .colorShadow(#FA476E);
+    }
+  }
+}
+
+.wow {
+  visibility: hidden;
+  min-height: 10vh;
+  display: block;
+  margin: 0 auto;
+}
+
+@-webkit-keyframes colorCycle {
+  0% {
+    color: #F94816;
+  }
+  14.286% {
+    color: #E9D443;
+  }
+  28.572% {
+    color: #FD91F7;
+  }
+  42.858% {
+    color: #28963F;
+  }
+  57.144% {
+    color: #E43485;
+  }
+  71.43% {
+    color: #A2E4F2;
+  }
+  85.716% {
+    color: #FA476E;
+  }
+  100% {
+    color: #F94816;
+  }
+}
+
+@keyframes colorCycle {
+  0% {
+    color: #F94816;
+  }
+  14.286% {
+    color: #E9D443;
+  }
+  28.572% {
+    color: #FD91F7;
+  }
+  42.858% {
+    color: #28963F;
+  }
+  57.144% {
+    color: #E43485;
+  }
+  71.43% {
+    color: #A2E4F2;
+  }
+  85.716% {
+    color: #FA476E;
+  }
+  100% {
+    color: #F94816;
+  }
+}

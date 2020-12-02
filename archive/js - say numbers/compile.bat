@@ -1,0 +1,2 @@
+javac SayNumbersExample.java
+pause

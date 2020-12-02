@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--meta property="og:image" content="https://lockex1987.github.io/images/logo/logo-256.png"/>
+    <meta property="og:image:secure_url" content="https://lockex1987.github.io/images/logo/logo-256.png"/>
+
+    <meta property="og:image:width" content="400" />
+    <meta property="og:image:height" content="400" />
+
+    <meta property="og:url"           content="https://lockex1987.github.io/posts/project%20-%20post%20management/" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="Your Website Title" />
+    <meta property="og:description"   content="Your description" />
+    <meta property="og:image"         content="https://lockex1987.github.io/images/logo/logo-256.png" /-->
+
+    <meta name="description" content="Quản lý các bài viết trên blog của tôi">
+    <meta name="date" content="2020-01-01 15:56:00">
+    <title>Quản lý bài viết</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Quản lý bài viết</h2>
+      <p>Tôi đã từng sưu tầm các bài viết trên mạng (về lập trình, kiến thức),
+        số lượng có lúc đến hơn 1000 bài. Dù đã cố gắng giảm nhưng số lượng bài
+        viết vẫn còn gần 700 bài. Tuy nhiên, chất lượng các bài thì không cao.
+        Những bài viết đó chỉ mình tôi hiểu, không thể chia sẻ với người khác.</p>
+
+      <p>Vào ngày đầu tiên của năm 2020 này, tôi quy hoạch lại các bài viết:
+        giảm số lượng, tăng chất lượng, tập trung vào những cái ghi trong CV.</p>
+      <p>Chia làm 2 thư mục con:</p>
+      <ul>
+        <li>archive: Các bài viết cũ, ghi chép dạng nháp</li>
+        <li>posts: Các bài viết đã hoàn thành, thuộc trạng thái có thể xuất bản,
+          có Facebook comment, có thời gian xuất bản, có ảnh minh họa</li>
+      </ul>
+      <h3>Biểu đồ archive</h3>
+      <div id="archiveChart" class="my-3" style="height: 400px;"></div>
+      <h3>Biểu đồ posts</h3>
+      <div id="postChart" class="my-3" style="height: 400px;"></div>
+    </article>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <!--script src="https://code.highcharts.com/modules/exporting.js"></script-->
+    <!--script src="https://code.highcharts.com/modules/export-data.js"></script-->
+
+    <!--script src="https://code.highcharts.com/highcharts-3d.js"></script-->
+    <script src="js/category-data.js"></script>
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,156 @@
+/*----------------------------------------------------------------------
+#Youjoomla Live Search - 
+# ----------------------------------------------------------------------
+# Copyright (C) 2008 - 2009 You Joomla. All Rights Reserved.
+# License: Commercial
+# Website: http://www.youjoomla.com
+------------------------------------------------------------------------*/
+.yjlivecont {
+margin:0 auto;
+text-align:center;
+}
+#container p{
+clear:both; 
+margin:5px 0px 5px;
+}
+.yj_inputbox {
+border:1px #DEDCDC solid ;
+line-height:16px;
+font-family:Tahoma;
+font-size:16px;
+color:#999;
+text-align:left;
+}
+.yj_button{}
+
+/* Live Search *//* input text search */
+#LiveSearch {
+padding:5px;
+}
+.LiveSearchLoading {
+background:url(images/ajax-loader.gif) right no-repeat;
+}
+.LiveSearchStop{
+background: url(images/search_icon.gif) right no-repeat;
+}
+/* overall container for search results; same width as .LiveSearchResults */
+.LiveSearchContainer {
+display:none;
+position:absolute;
+border:none; 
+background:none;
+top:0px;
+left:0px;
+}
+/* pointer */
+.LiveSearchHeader{
+display:block;
+position:relative;
+z-index:1000;
+height:20px;
+background:url(images/header_results.gif) bottom center no-repeat;
+}
+/* no results container*/
+.LiveSearchContainer .noResults{
+display:block;
+position:relative;
+padding:10px;
+color:#333333;
+font-weight:bold;
+font-size:12px;
+text-align:center;
+}
+/* results container; same width as .LiveSearchContainer */
+.LiveSearchResults {
+position:absolute;
+display:block;
+top:19px;
+border:1px #ccc solid;
+background-color:#FFFFFF;
+overflow:hidden;
+padding-bottom:15px;
+left:0;
+}
+.LiveSearchResults .LiveSearchResult, 
+.LiveSearchResults .LiveSearchResultHover{
+display:block;
+background:#FFFFFF;
+border-bottom:1px #DDDDDD solid;
+position:relative;
+color:#333333;
+text-align:left;
+}
+.LiveSearchResults .LiveSearchResultHover{
+background:#768b01 url(images/result_bg.jpg) top repeat-x;
+color:#FFFFFF;
+}
+.LiveSearchResults a,
+.LiveSearchResults a:visited {
+color:#999;
+font-size:11px;
+text-decoration:none;
+font-weight:bold;
+display:block;
+padding:10px;
+}
+.LiveSearchResults a.hovered,
+.LiveSearchResults a.focus,
+.LiveSearchResults a:HOVER{
+color:#FFFFFF;
+}
+.LiveSearchResults .LiveSearchExpandDetails,
+.LiveSearchResults .LiveSearchExpandDetails a:HOVER,
+.LiveSearchResults .LiveSearchExpandDetails a.hovered{
+position:absolute;
+display:block;
+width:12px;
+height:12px;
+background:url(images/info.png) no-repeat center center;
+top:0px;
+right:0px;
+}
+.LiveSearchResults .LiveSearchExpander{
+font-size:11px;
+padding:10px;
+text-align:left;
+}
+.LiveSearchResults a.next, .LiveSearchResults a.back{
+display:block;
+width:50px;
+margin:5px 3px 5px 3px;
+float:right;
+text-align:left;
+background:url(images/nav.jpg) no-repeat left top;
+padding:0;
+height:25px;
+line-height:25px;
+text-align:center;
+color:#FFFFFF;
+font-size:11px;
+}
+.LiveSearchResults a.back{
+float:left;
+}
+.LiveSearchResults a.next:hover, .LiveSearchResults a.back:hover{
+background:url(images/nav.jpg) no-repeat left bottom;
+}
+a.copy{
+position:absolute;
+bottom:0;
+right:3px;
+width:15px;
+height:5px;
+padding:0;
+margin:0;
+text-indent:-50000px;
+background:url(images/yjinfo.jpg) no-repeat center center;
+}
+a.copy:hover{
+color:#768d01;
+text-decoration:none;
+}
+.yjls_copyright{
+background:#fff;
+height:20px;
+width:100%;
+}

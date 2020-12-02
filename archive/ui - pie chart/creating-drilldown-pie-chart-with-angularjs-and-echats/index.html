@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>Creating drilldown pie chart with AngularJS and echats</title>
+  
+  
+  
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+
+  <div ng-app="demo" ng-controller="MyCtrl">
+  <breadcrumb paths="paths" go="go"></breadcrumb>
+  <drill-table class="table"
+    headers="['No', 'Period', 'Profile']"
+    source="profits"
+    drill-down="drillDown(profit)">
+  </drill-table>
+  <div class="pie-chart" pie-chart source="profits" drill-down="drillDown(profit)"></div>
+</div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.20/angular.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/echarts/3.8.5/echarts.min.js'></script>
+
+  
+
+    <script  src="js/index.js"></script>
+
+
+
+
+</body>
+
+</html>

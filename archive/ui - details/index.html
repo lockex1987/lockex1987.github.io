@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="details, summary, accordion, collapse, expand, fieldset, legend, heading">
+    <title>Phần tử details</title>
+
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+	
+    <link rel="stylesheet" href="css/details.css">
+</head>
+
+<body>
+    <article>
+        <h2>Phần tử details</h2>
+
+        <details open>
+            <summary>Tác dụng</summary>
+            <p>Thẻ <code>details</code> sử dụng để đóng / mở một vùng nào đó.</p>
+            <p>Trình duyệt sẽ hỗ trợ nó một cách tự nhiên, bạn không cần sử dụng các cách hack (ví dụ sửa dụng
+                checkbox).</p>
+            <p>Có thể sử dụng thẻ <code>details</code> để làm các giao diện accordion, menu dọc dạng cha con,...</p>
+            <p>Bạn không cần sử dụng JS.</p>
+        </details>
+
+        <details>
+            <summary>Cách sử dụng</summary>
+            <p>Bao ngoài nội dung bằng thẻ <code>details</code>.</p>
+            <p>Thiết lập tiêu đề bằng thẻ <code>summary</code>, là con đầu tiên của thẻ <code>details</code>.</p>
+            <p>Mặc định nội dung sẽ bị đóng. Nếu bạn muốn ban đầu là mở thì thiết lập thuộc tính <code>open</code>:</p>
+            <pre>&lt;​details open&gt;...&lt;​/details&gt;</pre>
+        </details>
+
+        <details>
+            <summary>Style</summary>
+            <p>Bạn có thể tự do style (border, padding,...) các thẻ <code>details</code>, <code>summary</code> như bạn muốn.</p>
+            
+            <p>The <code>summary</code> element is where the <code>▸</code> marker lives. If you want to get rid of
+                that, there is a prefixed pseudo-element selector <code>::-webkit-details-marker</code>: set that to
+                <code>display: none</code> for WebKit browser. In Firefox, it's much simpler: set the
+                <code>summary</code> to <code>display: block</code> or <code>flex</code> (anything but the native
+                <code>display: list-item</code>) and you'll get rid of the <code>▸</code> for you.</p>
+            <p>Once again, <code>details</code> has got your back! When a <code>details</code> block is open, it has the
+                <code>open</code> attribute that I mentioned earlier. To style it (or its children) based on its state,
+                use <code>details[open] { }</code>.</p>
+            <p>Note: there's no <code>closed</code> attribute: styles you apply by "default" will be used on the closed
+                state.</p>
+        </details>
+
+        <details>
+            <summary>Tham khảo</summary>
+            <ul>
+                <li>MDN:
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details"
+                        target="_blank">details</a>,
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary"
+                        target="_blank">summary</a>
+                </li>
+                <li><a href="accordion.html">Accordion sử dụng radio</a></li>
+                <li><a href="fieldset.html">Fieldset và legend</a></li>
+            </ul>
+        </details>
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

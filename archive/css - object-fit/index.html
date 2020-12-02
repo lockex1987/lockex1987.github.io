@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CSS The object-fit Property">
+    <meta name="keywords" content="css, object-fit">
+    <meta name="author" content="lockex1987">
+    <title>CSS The object-fit Property</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+.fill {object-fit: fill;}
+.contain {object-fit: contain;}
+.cover {object-fit: cover;}
+.scale-down {object-fit: scale-down;}
+.none {object-fit: none;}
+.fixed-size { width:200px; height:400px; }
+.box { float: left; margin: 5px;}
+img { border: 1px solid #555; }
+</style> </head>
+  <body>
+    <article>
+      <h2>CSS The object-fit Property</h2>
+      <p>The CSS <code>object-fit</code> property is used to specify how an
+        &lt;img&gt; or &lt;video&gt; should be resized to fit its container.</p>
+      <p>The <code>object-fit</code> property can have the following values:</p>
+      <ul>
+        <li><code>fill</code>: This is default. The replaced content is sized to
+          fill the element's content box. If necessary, the object will be
+          stretched or squished to fit.</li>
+        <li><code>none</code>: The replaced content is not resized.</li>
+        <li><code>contain</code>: The replaced content is scaled to maintain its
+          aspect ratio while fitting within the element's content box.</li>
+        <li><code>scale-down</code>: The content is sized as if none
+          or contain were specified (would result in a smaller concrete object
+          size).</li>
+        <li><code>cover</code>: The replaced content is sized to maintain its
+          aspect ratio while fitting the element's entire content box. The
+          object will be clipped to fit.</li>
+      </ul>
+      <div class="box">
+        <h3>Original image</h3>
+      	<img src="paris.jpg">
+      </div>
+      <div class="box">
+        <h3>No object-fit</h3>
+      	<img class="fixed-size" src="paris.jpg">
+      </div>
+      <div class="box">
+        <h3>object-fit: fill (this is default)</h3>
+      	<img class="fixed-size fill" src="paris.jpg">
+      </div>
+      <div class="box">
+        <h3>object-fit: none</h3>
+      	<img class="fixed-size none" src="paris.jpg">
+      </div>
+      <div class="box">
+        <h3>object-fit: contain</h3>
+      	<img class="fixed-size contain" src="paris.jpg">
+      </div>
+      <div class="box">
+        <h3>object-fit: scale-down</h3>
+      	<img class="fixed-size scale-down" src="paris.jpg">
+      </div>
+      <div class="box">
+        <h3>object-fit: cover</h3>
+      	<img class="fixed-size cover" src="paris.jpg">
+      </div>
+		</article>      
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="read, write">
+    <title>Xử lý dữ liệu trên file trong PHP</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Xử lý dữ liệu trên file trong PHP</h2>
+      <h3>Mở và đóng file</h3>
+      <p>Để mở file ta dùng hàm <code>fopen</code>:</p>
+      <pre>$fileObj = fopen('đường dẫn', 'thuộc tính');</pre>
+      <p>Các thuộc tính cơ bản:</p>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td><code>r</code></td>
+            <td>Mở file chỉ để đọc. Con trỏ ở đầu file.</td>
+          </tr>
+          <tr>
+            <td><code>w</code></td>
+            <td>Mở file chỉ để ghi. Xóa nội dung file hoặc tạo file mới nếu chưa
+              tồn tại. Con trỏ ở đầu file.</td>
+          </tr>
+          <tr>
+            <td><code>a</code></td>
+            <td>Mở file chỉ để ghi. Dữ liệu đang có được giữ lại. Con trỏ ở cuối
+              file. Tạo file mới nếu chưa tồn tại.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Ngoài ra còn các thuộc tính ít dùng hơn như <code>x</code>, <code>r+</code>,
+        <code>w+</code>, <code>a+</code>, <code>x+</code>.</p>
+      <p>Để đóng file ta dùng hàm <code>fclose</code>:</p>
+      <pre>fclose(&lt;file vừa mở&gt;)</pre>
+      <h3>Đọc file</h3>
+      <p>Đọc file theo từng dòng bằng hàm <code>fgets</code>:</p>
+      <pre>fgets($fileObj)</pre>
+      <p>Đọc file theo từng ký tự bằng hàm <code>fgetc</code>:</p>
+      <pre>fgetc($fileObj)</pre>
+      <p>Kiểm tra đã đến cuối file chưa bằng hàm <code>feof</code>:</p>
+      <pre>feof($fileObj)</pre>
+      <p>Để đọc cả file ta có thể làm như sau bằng hàm <code>fread</code>:</p>
+      <pre>$fileObj = fopen($inputFilePath, 'r');
+$content = fread($fileObj, filesize($inputFilePath));</pre>
+      <p>Để đọc cả file, bạn có thể sử dụng hàm file_get_contents.</p>
+      <pre>file_get_contents(string $filename): string</pre>
+      <h3>Ghi file</h3>
+      <p>Để ghi dữ liệu vào file ta dùng hàm <code>fwrite</code>:</p>
+      <pre>fwrite($fileObj, 'Nội dung cần ghi vào file')</pre>
+      <p>Để ghi cả file, bạn có thể sử dụng hàm file_put_contents.</p>
+      <pre>file_put_contents(string $filename, mixed $data): int</pre>
+      <h3>Code mẫu</h3>
+      <p><a target="_blank" href="demo.php">demo.php</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

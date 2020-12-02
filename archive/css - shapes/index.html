@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>CSS Shapes</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="CSS Shapes">
+ </head> 
+ <body> 
+  <article> 
+   <style>
+    .clearfix::before,
+    .clearfix::after {
+      content: " ";
+      display: table;
+    }
+    
+    .clearfix::after {
+      clear: both;
+    }
+    
+    .wrapper {
+      padding: 30px;
+      max-width: 720px;
+      margin-right: auto;
+      margin-left: auto;
+      color: #66595c;
+      background-color: #faf6ec;
+    }
+    
+    .circle {
+      width: 250px;
+      height: 250px;
+      background-color: #40a977;
+      border-radius: 50%;
+      float: left;
+      shape-outside: circle();
+      -webkit-shape-outside: circle();
+      margin-right: 20px;
+    }
+    
+    .polygon {
+      width: 300px;
+      height: 300px;
+      background: repeating-linear-gradient(red, orange 50px);
+      animation: 4s poly infinite alternate ease-in-out;
+      margin: 30px;
+      float: left;
+                  clip-path: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
+      -webkit-shape-outside: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
+              shape-outside: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
+    }
+    
+    @keyframes poly {
+      from {
+                    clip-path: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
+        -webkit-shape-outside: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
+                shape-outside: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
+      }
+      to {
+                    clip-path: polygon(50% 30%, 100% 0%, 70% 50%, 100% 100%, 50% 70%, 0% 100%, 30% 50%, 0% 0%);
+        -webkit-shape-outside: polygon(50% 30%, 100% 0%, 70% 50%, 100% 100%, 50% 70%, 0% 100%, 30% 50%, 0% 0%);
+                shape-outside: polygon(50% 30%, 100% 0%, 70% 50%, 100% 100%, 50% 70%, 0% 100%, 30% 50%, 0% 0%);
+      }
+    }
+    
+    .shape {
+      float: left;
+      shape-image-threshold: .5;
+      shape-margin: 1em;
+      shape-outside: url(https://www.chenhuijing.com/assets/images/posts/css-shapes/beyonce.png);
+      width: auto;
+    }
+  </style> 
+   <h2>Cách sử dụng CSS Shapes</h2> 
+   <p>Trong một thời gian dài, hình chữ nhật, hình vuông là hình dạng duy nhất mà một nhà phát triển web có thể tạo bằng cách sử dụng CSS. Hầu hết bố cục không phải hình chữ nhật, hình vuông đều được tạo bằng cách sử dụng hình ảnh, làm ảnh hưởng đến hiệu suất web rất nhiều. Với sự ra đời của CSS3 và CSS Shapes, vấn đề đó đã được giải quyết và làm cho các trang web, trang tạp chí có layout phong phú hơn và đẹp hơn.</p> 
+   <p>CSS Shapes cho phép các nhà thiết kế web tạo ra các layout hình học trừu tượng hơn, bên cạnh các hình vuông và chữ nhật đơn giản như cũ. Công nghệ phát triển cung cấp cho chúng ta các thuộc tính CSS mới bao gồm <code>shape-outside</code>, <code>shape-inside</code>, <code>shape-margin</code> và <code>shape-padding</code>. Ngoài ra <code>shape-outside</code> còn có thể làm việc với giá trị <code>url()</code> để có thể tạo shape theo hình png hoặc SVG, lúc này để cắt phần tử theo shape ta sẽ không dùng clip-path nữa mà sẽ dùng mask-image. Trình duyệt hỗ trợ những thuộc tính này khá ít vì các thuộc tính này hiện chỉ hoạt động trên Chrome, Opera và Safari... Bạn có thể kiểm tra các trình duyệt hỗ trợ <a href="https://caniuse.com/#search=shape-outside" target="_blank">tại đây</a>.</p> 
+   <h3>Cách tạo Shape cơ bản</h3> 
+   <p>Cách dễ nhất để xem quy trình CSS Shapes hoạt động là tạo một hình tròn. Dưới đây là một thẻ div (hình tròn) với một đoạn văn kế bên.</p> 
+   <p>HTML:</p> 
+   <pre><code>&lt;div class="circle"&gt;&lt;/div&gt;
+&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+    Odio ducimus, minus distinctio quae alias velit vel quas aliquid laboriosam, expedita reiciendis, aperiam quos!
+    Soluta necessitatibus commodi adipisci eum optio mollitia.&lt;/p&gt;
+&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+    At provident in commodi similique deserunt atque nostrum fuga aspernatur eos quisquam.&lt;/p&gt;
+&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus, sit.&lt;/p&gt;
+</code></pre> 
+   <p>Dưới đây là một số style cơ bản để tạo ra một hình tròn, bao gồm <code>width</code> và <code>height</code> của hình tròn của chúng ta, <code>border-radius</code> để định hình, và <code>float</code> để đoạn văn bao quanh hình tròn. Để cho đoạn văn bám vào đường cong của shape, chúng ta cần thay đổi nó thành một shape thật sự thông qua thuộc tính <code>shape-outside</code>; trong trường hợp này, chúng ta sẽ thêm một hàm <code>circle()</code> truyền vào như là một giá trị.</p> 
+   <p>CSS</p> 
+   <pre><code>.circle {
+    width: 250px;
+    height: 250px;
+    margin: 25px;
+    background-color: #40a977;
+    border-radius: 50%;
+    float: left;
+    -webkit-shape-outside: circle();
+    shape-outside: circle();
+}
+</code></pre> 
+   <p>Như vậy với 1 số thuộc tính CSS cơ bản và sử dụng <code>shape-outside</code> chúng ta đã tạo ra một layout khá là bắt mắt.</p> 
+   <div class="wrapper clearfix"> 
+    <div class="circle"></div> 
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio ducimus, minus distinctio quae alias velit vel quas aliquid laboriosam, expedita reiciendis, aperiam quos! Soluta necessitatibus commodi adipisci eum optio mollitia.</p> 
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At provident in commodi similique deserunt atque nostrum fuga aspernatur eos quisquam.</p> 
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus, sit.</p> 
+   </div> 
+   <h3>Cách tạo Shape nâng cao</h3> 
+   <p>Ngoài việc sử dụng 1 số hàm hình học sẵn có của CSS Shapes như <code>circle()</code>, <code>ellipse()</code>, hay <code>inset()</code>. Bạn có thể tạo ra các hình học mà mình thích với hàm <code>polygon()</code> và sử dụng <code>url()</code></p> 
+   <p>Sử dụng hàm <code>polygon()</code></p> 
+   <p>Để sử dụng được hàm <code>polygon()</code> thì ta sử dụng theo định dạng polygon(x1 y1, x2 y2, x3 y3 ...) trong đó tọa độ x và y là tọa độ cho mỗi điểm của đa giác đó, và số điểm tối thiểu của đa giác là 3 điểm.</p> 
+   <div class="wrapper clearfix"> 
+    <div class="polygon"></div> 
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio ducimus, minus distinctio quae alias velit vel quas aliquid laboriosam, expedita reiciendis, aperiam quos! Soluta necessitatibus commodi adipisci eum optio mollitia.</p> 
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. At provident in commodi similique deserunt atque nostrum fuga aspernatur eos quisquam.</p> 
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus, sit.</p> 
+   </div> 
+   <p>Sử dụng hàm <code>url()</code></p> 
+   <p>Một giá trị khác mà chúng ta có thể sử dụng trong thuộc tính <code>shape-outside</code> là hàm <code>url()</code>; hàm tương tự mà chúng ta sử dụng trong CSS để thêm một hình nền. Trong trường hợp này, hàm <code>url()</code> cho phép thuộc tính <code>shape-outside</code> xác định một hình dạng dựa trên hình ảnh. Hình ảnh này được tạo dưới dạng png và được cắt viền sát theo chủ thể ta muốn tạo hình cho shape.</p> 
+   <div class="wrapper"> 
+    <img class="shape" src="https://www.chenhuijing.com/assets/images/posts/css-shapes/beyonce.png" alt="Beyoncé"> 
+    <p>To be honest, the W3C spec is not that easy to understand, so here’s my attempt at explaining it in plain English. A prerequisite for applying a CSS shape property to an element is that the element must be floated. It doesn’t work on non-floated elements.</p> 
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste et veniam tempore dolor recusandae magni at quia! Tempore, nihil aliquam. Blanditiis ea ipsum officiis numquam id veritatis nobis quasi vitae inventore recusandae illum exercitationem corporis hic, voluptates expedita dolore! Dolor ipsum iure, pariatur, molestias autem beatae ducimus rerum optio quos atque aut cupiditate sapiente eos enim id? Cupiditate voluptates atque, eum tempore distinctio laboriosam fugit aliquam officia architecto, asperiores ducimus, consectetur autem non esse! Modi tempore sit deleniti minima, qui repudiandae maxime eum nulla. Incidunt repudiandae ratione officia, iste provident adipisci, aut expedita praesentium, qui quisquam totam assumenda. Molestiae, impedit.</p> 
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste et veniam tempore dolor recusandae magni at quia! Tempore, nihil aliquam. Blanditiis ea ipsum officiis numquam id veritatis nobis quasi vitae inventore recusandae illum exercitationem corporis hic, voluptates expedita dolore! Dolor ipsum iure, pariatur, molestias autem beatae ducimus rerum optio quos atque aut cupiditate sapiente eos enim id? Cupiditate voluptates atque, eum tempore distinctio laboriosam fugit aliquam officia architecto, asperiores ducimus, consectetur autem non esse! Modi tempore sit deleniti minima, qui repudiandae maxime eum nulla. Incidunt repudiandae ratione officia, iste provident adipisci, aut expedita praesentium, qui quisquam totam assumenda. Molestiae, impedit.</p> 
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam impedit minima officia, maiores, est voluptate magni aut, aliquid ipsa enim quae nam. Consectetur exercitationem commodi consequuntur perspiciatis, expedita, incidunt minima odit animi temporibus corporis sapiente error at autem corrupti qui? Omnis delectus repellat unde accusamus enim assumenda, et fugiat repellendus?.</p> 
+   </div> 
+   <h3>Tham khảo</h3> 
+   <p>https://viblo.asia/p/cach-su-dung-css-shape-hieu-qua-trong-thiet-ke-web-GrLZDXd3Zk0</p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="popup">
+    <title>Bootstrap modal</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Bootstrap modal</h2>
+      <h3>Phần tử mở modal</h3>
+      <p>Để mở modal, bạn cần sử dụng một nút <code>&lt;button&gt;</code> hoặc
+        một link <code>&lt;a&gt;</code>.</p>
+      <p>Sau đó thêm các thuộc tính:</p>
+      <ul>
+        <li><code>data-toggle="modal"</code> để đánh dấu là mở modal</li>
+        <li><code>data-target="#myModal"</code> để chỉ ID của modal</li>
+      </ul>
+      <p>Với link <code>&lt;a&gt;</code>, bạn có thể bỏ qua thuộc tính <code>data-target</code>
+        mà sử dụng <code>href="#myModal"</code>.</p>
+      <p>Ví dụ:</p>
+      <pre class="out-of-box">&lt;button type="button" data-toggle="modal" data-target="#myModal"&gt;<br>    Open modal<br>&lt;/button&gt;<br><br>&lt;a data-toggle="modal" href="#myModal"&gt;Open Modal &lt;/a&gt;
+</pre><ul></ul>
+      <h3>Phần tử modal<strong></strong></h3>
+      <p>Phần tử cha &lt;div&gt; của modal phải có ID trùng với giá trị của thuộc tính <code>data-target</code> dùng để mở modal ("myModal"). Class là <code>.modal</code>. Có thể thêm class <code>.fade</code> để thêm hiệu ứng đóng/mở.</p><p>Tiếp theo là phần tử <code>.modal-dialog</code> để thiết lập đúng chiều rộng và margin cho modal.</p>
+      
+      <p>Tiếp theo là phần tử <code>.modal-content</code> để thiết lập border, background-color,.... Bên trong là <code>.modal-header</code>, <code>.modal-body</code>, <code>.modal-footer</code>.</p><p>Bên trong <code>.modal-header</code>, chúng ta có thể thêm <code>.modal-title</code> và <code>.close</code> để có line-height đúng.</p><p>Chúng ta có thể thêm thuộc tính <code>data-dismiss="modal"</code> vào các phần tử mà chúng ta dùng để đóng modal (nút <strong>×</strong>, nút "Đóng").</p>
+      
+            <h3>Cơ bản</h3>
+            <p><a target="_blank" href="demo_01_basic.html">Demo 1: Cơ bản</a></p>
+            <h3>Animation</h3>
+            
+            <p>Thêm class <code>.fade</code> để thêm hiệu ứng khi mở/đóng.</p>
+            <pre>&lt;!-- Fading modal --&gt;
+&lt;div class="modal fade"&gt;&lt;/div&gt;
+
+&lt;!-- Modal without animation --&gt;
+&lt;div class="modal"&gt;&lt;/div&gt;</pre>
+            <p><a target="_blank" href="demo_02_animation.html">Demo 2: Thêm
+                animation</a></p>
+            <h3>Kích thước modal</h3>
+            <p>Thay đổi kích thước của modal bằng cách thêm <code>.modal-sm</code>
+              cho kích thước nhỏ, <code>.modal-lg</code> cho kích thước lớn, <code>.modal-xl</code>
+              cho kích thước cực lớn. Thêm các class kích thước vào phần tử
+              &lt;div&gt; với class <code>.modal-dialog</code>.</p>
+            <pre>&lt;div class="modal-dialog modal-sm"&gt;<br>&lt;div class="modal-dialog modal-lg"&gt;<br>&lt;div class="modal-dialog modal-xl"&gt;</pre><p>Mặc đinh, các modal có kích thước bình thường.</p><p><a
+
+target="_blank" href="demo_03_size.html">Demo 3: Kích thước modal</a></p><h3>Căn giữa</h3><p>Căn giữa theo chiều dọc và theo chiều ngang với class <code>.modal-dialog-centered</code>.</p><pre>&lt;div class="modal-dialog modal-dialog-centered"&gt;</pre><p><a
+
+target="_blank" href="demo_04_center.html">Demo 4: Căn giữa</a></p><h3>Scroll</h3><p>Khi bạn có nhiều nội dung ở modal, thanh scrollbar sẽ được thêm vào trong trang.</p><p>Bạn cũng có thể chỉ scroll bên trong modal (thay cho cả trang) bằng cách thêm <code>.modal-dialog-scrollable</code> vào <code>.modal-dialog</code>.</p><p><a
+
+target="_blank" href="demo_05_scroll.html">Demo 5: Scroll</a>
+      </p><h3>Sử dụng với JS</h3><p>Chúng ta có các phương thức <code>.modal("toggle")</code>, <code>.modal("show")</code>, <code>.modal("hide")</code>.</p><p>Chúng ta có thể lắng nghe các sự kiện <code>show.bs.modal</code>, <code>shown.bs.modal</code>, <code>hide.bs.modal</code>, <code>hidden.bs.modal</code>.</p><p><a
+
+target="_blank" href="demo_06_use_js.html">Demo 6: Sử dụng với JS</a></p><h3>Nhiều lớp modal</h3><p>Các modal chồng lên nhau.</p><p>Cần phải xử lý backdrop overlay và scroll.</p><p><a
+
+target="_blank" href="demo_07_multiple_layers.html">Demo 7: Nhiều lớp modal</a></p><h3>Code tự viết</h3><p><a
+
+target="_blank" href="my_code.html">Demo</a></p><p>Không nên tự viết. Nên sử dụng Bootstrap. Hỗ trợ animation, xử lý scroll, có hàm callback.</p><h3>Tham khảo</h3>
+
+<p><a
+
+target="_blank" href="https://www.w3schools.com/bootstrap4/bootstrap_modal.asp">https://www.w3schools.com/bootstrap4/bootstrap_modal.asp</a></p><p><a
+
+target="_blank" href="https://www.w3schools.com/bootstrap4/bootstrap_ref_js_modal.asp">https://www.w3schools.com/bootstrap4/bootstrap_ref_js_modal.asp</a></p><p><a
+
+href="https://getbootstrap.com/docs/4.3/components/modal/" target="_blank">https://getbootstrap.com/docs/4.3/components/modal/</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+</body></html>

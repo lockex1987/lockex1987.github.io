@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+ <head> 
+  <meta charset="UTF-8"> 
+  <title>Chiến tranh biên giới Việt - Trung</title> 
+  <link href="css/chientranhVT.css" rel="stylesheet" type="text/css"> 
+  <link href="css/jquery.fancybox.css" rel="stylesheet" type="text/css"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Chiến tranh biên giới Việt - Trung">
+ </head> 
+ <body> 
+  <article> 
+   <div id="chientranhVT"> 
+    <div class="share_vt"> 
+     <a href="https://www.facebook.com/sharer/sharer.php?u=http://vnexpress.net/customize/chien-tranh-viet-trung/" class="icon_share_vt"> <img src="images/f.gif"> </a> 
+     <a href="https://twitter.com/share?u=http://vnexpress.net/customize/chien-tranh-viet-trung/" class="icon_share_vt"> <img src="images/t.gif"> </a> 
+     <a href="https://plus.google.com/share?url=http://vnexpress.net/customize/chien-tranh-viet-trung/" class="icon_share_vt"> <img src="images/g.gif"></a> 
+    </div> 
+    <a href="images/Tran-Lai-Chau.png" id="tx_laichau" class="vungchien" data-fancybox-group="tranchien_viettrung"> 
+     <div class="phan_vung_tinh tx_laichau"></div> </a> 
+    <a href="images/Tran-Lao-Cai.png" id="batxat_laocai" class="vungchien" data-fancybox-group="tranchien_viettrung"> 
+     <div class="phan_vung_tinh laocai"></div> </a> 
+    <a href="images/Tran-Ha-Giang.png" id="hagiang" class="vungchien" data-fancybox-group="tranchien_viettrung"> 
+     <div class="phan_vung_tinh hagiang"></div> </a> 
+    <a href="images/Tran-Cao-Bang.png" id="caobang" class="vungchien" data-fancybox-group="tranchien_viettrung"> 
+     <div class="phan_vung_tinh caobang"></div> </a> 
+    <a href="images/Tran-Dong-Dang---Lang-Son.png" id="langson" class="vungchien" data-fancybox-group="tranchien_viettrung"> 
+     <div class="phan_vung_tinh langson"></div> </a> 
+    <a href="images/Tran-Mong-Cai---Quang-Ninh.png" id="mongcai" class="vungchien" data-fancybox-group="tranchien_viettrung"> 
+     <div class="phan_vung_tinh mongcai"></div> </a> 
+    <img src="images/laichau_hover.png" style="visibility:hidden"> 
+    <img src="images/hagiang_hover.png" style="visibility:hidden"> 
+    <img src="images/caobang_hover.png" style="visibility:hidden"> 
+    <img src="images/langson_hover.png" style="visibility:hidden"> 
+    <img src="images/laocai_hover.png" style="visibility:hidden"> 
+    <img src="images/mongcai_hover.png" style="visibility:hidden"> 
+   </div> 
+   <script src="js/jquery-1.7.1.min.js"></script> 
+   <script src="js/jquery.fancybox.js"></script> 
+   <script>
+		$(document).ready(function() {			
+			//('.vungchien').fancybox();
+			$(".vungchien").fancybox({
+				padding: 0,
+				margin: 0,
+				width: 980,
+				height: 'auto',
+				prevEffect: 'fade',
+				nextEffect: 'fade'
+			});
+	})
+	</script> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

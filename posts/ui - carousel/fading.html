@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+
+    <title>Fading</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="css/fading.css">
+</head>
+
+<body>
+    <article>
+        <h2>Fading</h2>
+        <p>The .animate-fading class animates an element in and out (takes about 10 seconds).</p>
+        <div>
+            <img class="carousel-item animate-fading w-100"
+                src="images/001_thien%20khoi%20tinh_ho%20bao%20nghia_tong%20giang.jpg">
+            <img class="carousel-item animate-fading w-100"
+                src="images/002_thien%20cuong%20tinh_ngoc%20ky%20lan_lu%20tuan%20nghia.jpg">
+            <img class="carousel-item animate-fading w-100"
+                src="images/003_thien%20co%20tinh_tri%20da%20tinh_ngo%20dung.jpg">
+        </div>
+    </article>
+
+    <script>
+        let currentImage = 0;
+
+        function carousel() {
+            const items = document.querySelectorAll('.carousel-item');
+            items.forEach(e => {
+                e.style.display = 'none';
+            });
+
+            currentImage++;
+            if (currentImage > items.length - 1) {
+                currentImage = 0;
+            }
+
+            items[currentImage].style.display = 'block';
+            setTimeout(carousel, 9 * 1000);
+        }
+
+        carousel();
+    </script>
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

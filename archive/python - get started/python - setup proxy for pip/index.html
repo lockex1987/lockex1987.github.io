@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cấu hình proxy cho pip">
+    <meta name="keywords" content="python, pip, proxy">
+    <meta name="author" content="lockex1987">
+    <title>Cấu hình proxy cho pip</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Cấu hình proxy cho pip</h2>
+      <p><code>pip</code> là một tiện ích để cài các thư viện từ mạng của
+        Python. Nó gần tương tự như Maven của Java.</p>
+      <p>Ở môi trường mà không có kết nối Internet trực tiếp và chỉ có thể kết
+        nối qua proxy (ví dụ như ở công ty), chúng ta vẫn có kể cài các thư viện
+        với <code>pip</code> bằng cách thêm tùy chọn <code>--proxy</code> như
+        sau:</p>
+      <pre>$ pip install &lt;library&gt; --proxy=&lt;proxy server and port&gt;</pre>
+      <p>Ví dụ:</p>
+      <pre>$ pip install PyMySQL --proxy="proxy.mydomain.vn:3128"</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

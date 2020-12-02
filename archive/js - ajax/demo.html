@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="Fake CRSF Token" />
+    <title>AJAX demo</title>
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+    <article>
+        <h2>AJAX demo</h2>
+
+        <h3>Gọi phương thức GET</h3>
+        <p id="demo1"> Hãy để AJAX thay đổi văn bản này </p>
+        <p>
+            <form id="frm">
+                <input type="text" name="name" value="Nguyễn Anh & Tuấn" />
+            </form>
+        </p>
+        <p> <button type="button" onclick="callGet1()"> Đổi nội dung 1 </button> </p>
+
+        <p id="demo2"> Hãy để AJAX thay đổi văn bản này 2 </p>
+        <p> <button type="button" onclick="callGet2()"> Đổi nội dung 2 </button> </p>
+
+        <p> <button type="button" onclick="callParallel()"> Thực hiện nhiều request đồng thời </button> </p>
+
+        <h3>Gọi phương thức POST form</h3>
+        <p id="demo3"> Hãy để AJAX thay đổi văn bản này 3 </p>
+        <p> <button type="button" onclick="callPostForm()"> Submit </button> </p>
+
+        <h3>Gọi phương thức POST JSON</h3>
+        <p id="demo4"> Hãy để AJAX thay đổi văn bản này 4 </p>
+        <p> <button type="button" onclick="callPostJson()"> Submit </button> </p>
+
+        <h3>Gọi phương thức POST upload</h3>
+        <p id="demo5"> Hãy để AJAX thay đổi văn bản này 5 </p>
+        <p><input type="file" name="uploadImage" id="uploadImage" /></p>
+        <p> <button type="button" onclick="callPostUpload()"> Submit </button> </p>
+
+        <h3>Xử lý lỗi</h3>
+        <p> <button type="button" onclick="callErrorPage()"> Submit </button> </p>
+    </article>
+
+    <script src="js/common.js"></script>
+
+    <!-- Axios -->
+    <!--script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/axios.js"></script-->
+
+    <!-- Fetch API -->
+    <script src="js/fetch-api.js"></script>
+
+    <!-- jQuery AJAX -->
+    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/jquery-ajax.js"></script-->
+
+    <!-- XMLHttpRequest -->
+    <!--script src="js/xmlhtmlrequest.js"></script-->
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Tạo các shape đơn giản, shape-outside" />
+    <title>Thuộc tính clip-path</title>
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <article>
+        <h2>Thuộc tính clip-path</h2>
+        <h3>Hiện hai ảnh chéo và overlap</h3>
+
+        <div class="overlap-images position-relative">
+            <img src="images/500x300a.jpg" class="position-absolute"/>
+            <img src="images/500x300b.jpg" class="position-absolute"/>
+        </div>
+
+        <h3>Các loại clip-path</h3>
+        <div class="d-flex justify-content-center">
+            <div class="border">
+                <img id="clipped" src="images/300x300.jpg">
+            </div>
+        </div>
+
+        <!-- Phải hiển thị cái này, không được để .d-none -->
+        <svg height="0" width="0">
+            <defs>
+                <clipPath id="cross">
+                    <rect y="110" x="137" width="90" height="90" />
+                    <rect x="0" y="110" width="90" height="90" />
+                    <rect x="137" y="0" width="90" height="90" />
+                    <rect x="0" y="0" width="90" height="90" />
+                </clipPath>
+            </defs>
+        </svg>
+
+        <div class="mb-3">
+            <select id="clipPath" class="custom-select">
+                <option value="none">none</option>
+                <option value="circle(40%)">circle 1</option>
+                <option value="circle(50%)">circle 2</option>
+                <option value="circle(70% at 70% 20%)">circle 3</option>
+                <option value="circle(100px at 110px 100px)">circle 4</option>
+                <option value="ellipse(50% 35%)">ellipse 1</option>
+                <option value="ellipse(50% 65% at 70% 50%)">ellipse 2</option>
+                <option value="ellipse(130px 140px at 10% 20%)">ellipse 3</option>
+                <option value="inset(20% 25% 20% 10%)">inset 1</option>
+                <option value="inset(45% 0% 33% 10% round 10px)">inset 2</option>
+                <option value="inset(20px round 20px)">inset 3</option>
+                <option value="polygon(50% 0, 100% 50%, 50% 100%, 0 50%)">polygon</option>
+                <option value="polygon(50% 0%, 0% 100%, 100% 100%)">triangle</option>
+                <option value="polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%)">&times;</option>
+                <option value="polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)">star</option>
+                <option value="url(#cross)">url cross</option>
+                <option value="path('M 0 200 L 0,110 A 110,90 0,0,1 240,100 L 200 340 z')">path</option>
+            </select>
+        </div>
+
+        <h3>Animation</h3>
+        <div class="mb-3">
+            <img class="animate-clip-path-1" src="images/300x300.jpg">
+        </div>
+
+        <div class="mb-3">
+            <img class="animate-circle" src="images/300x300.jpg">
+        </div>
+
+        <h3>Diamond grid</h3>
+
+        <div class="diamond-grid__wrapper border mb-3">
+            <div class="diamond-grid">
+                <!-- 9 ô -->
+                <div></div>
+                <img src="https://picsum.photos/200" class="position-relative diamond-grid__item">
+                <div></div>
+                <img src="https://picsum.photos/300" class="position-relative diamond-grid__item">
+                <div></div>
+                <img src="https://picsum.photos/400" class="position-relative diamond-grid__item">
+                <div></div>
+                <img src="https://picsum.photos/500" class="position-relative diamond-grid__item">
+                <div></div>
+            </div>
+        </div>
+
+        <h3>Nhóm các ảnh</h3>
+        <div class="group">
+            <div class="left">
+                <div class="text">SPORTS</div>
+            </div>
+            <div class="top">
+                <div class="text">TECHNOLOGY</div>
+            </div>
+            <div class="right">
+                <div class="text">FOOD</div>
+            </div>
+            <div class="bottom">
+                <div class="text">NATURE</div>
+            </div>
+        </div>
+
+        <h3>Transition</h3>
+        <div class="boxes mb-3"></div>
+
+        <div class="mb-3">
+            <button id="goBtn" class="btn btn-primary">
+                Go
+            </button>
+        </div>
+
+        <h3>Ảnh clip-path và shape-outside</h3>
+
+        <div>
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/495197/0st9yhngses-benjamin-child.jpg" class="shape-image" />
+
+  <p>Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or
+    twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, ‘and what
+    is the use of a book,’ thought Alice ‘without pictures or conversations?’</p>
+  <p>So she was considering in her own mind (as well as she could, for the hot day made her feel very sleepy and
+    stupid), whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the
+    daisies, when suddenly a White Rabbit with pink eyes ran close by her.</p>
+  <p>There was nothing so very remarkable in that; nor did Alice think it so very much out of the way to hear the Rabbit
+    say to itself, ‘Oh dear! Oh dear! I shall be late!’ (when she thought it over afterwards, it occurred to her that
+    she ought to have wondered at this, but at the time it all seemed quite natural); but when the Rabbit actually took
+    a watch out of its waistcoat-pocket, and looked at it, and then hurried on, Alice started to her feet, for it
+    flashed across her mind that she had never before seen a rabbit with either a waistcoat-pocket, or a watch to take
+    out of it, and burning with curiosity, she ran across the field after it, and fortunately was just in time to see it
+    pop down a large rabbit-hole under the hedge.</p>
+        </div>
+
+        <h3>SVG clip-path masking effect</h3>
+
+        
+        <div id="content" class="mb-3">
+            <img id="img" src="images/picture.png">
+
+            <svg width="0" height="0">
+                <clippath id="mask"></clippath>
+            </svg>
+        </div>
+
+        <div class="mb-3 text-center">
+            <input type="range" min="0" max="100" value="50" class="slider" id="controlRange"/>
+        </div>
+
+        <p>You can control the effect using the slider in the bottom center. With the variables gridCellsX and gridCellsY
+            you can determine how many elements the effect should consist of. The SVG elements are created dynamically in
+            the clipPath element and their properties are manipulated as needed. </p>
+
+
+
+        <h3>Tham khảo</h3>
+        <ul>
+            <li>
+                <span class="text-muted mr-2">bennettfeely.com</span>
+                <a href="https://bennettfeely.com/clippy/" target="_blank">Clippy — CSS clip-path maker</a>
+            </li>
+            <li>
+                <span class="text-muted mr-2">css-tricks.com</span>
+                <a href="https://css-tricks.com/animating-with-clip-path/" target="_blank">Animating with Clip-Path</a>
+            </li>
+        </ul>
+    </article>
+
+    <script src="js/script.js"></script>
+    <script src="js/svg-clip-path.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

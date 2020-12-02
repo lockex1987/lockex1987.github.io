@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Demo common validation</title>
+
+	<link rel="icon" href="../../images/favicon.png">
+	<link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+	<article>
+		<h2>Demo common validation</h2>
+		<p>TODO: Hỗ trợ thông báo lỗi từ server, cụ thể là Laravel validate, tương tự vform. Tích hợp VueJS.</p>
+
+		<form id="loginForm">
+			<h3>required</h3>
+			<div>
+				<div class="form-group validate-container">
+					<label class="required">
+						Bắt buộc (thông báo lỗi do người dùng cấu hình)
+					</label>
+					<input class="form-control" type="text" name="username" maxlength="50" data-validation="required:Vui lòng nhập tên đăng nhập" value="1" />
+				</div>
+
+				<div class="form-group validate-container">
+					<label class="required">
+						Bắt buộc nhập
+					</label>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">prepend</span>
+						</div>
+
+						<input class="form-control"
+								type="password"
+								maxlength="50"
+								name="password"
+								data-validation="required"
+								value="2"/>
+
+						<div class="input-group-append">
+							<span class="input-group-text">
+								append
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group validate-container">
+					<label class="required">
+						Bắt buộc nhập (select)
+					</label>
+					<select class="form-control" data-validation="required" name="role">
+						<option value="">-- Choose --</option>
+						<option value="admin" selected>Admin</option>
+						<option value="user">Normal User</option>
+					</select>
+				</div>
+			</div>
+
+			<h3>groupRequired</h3>
+
+			<div class="form-group validate-container">
+				<label class="required">
+					Chọn loại hành động
+				</label>
+				<div>
+					<div class="form-check d-inline-block" style="min-width: 100px">
+						<label class="form-check-label">
+							<input class="form-check-input" type="checkbox" name="actionTypes[]" value="1" data-validation="groupRequired:actionTypes[]" checked/> Cảm xúc
+						</label>
+					</div>
+					<div class="form-check d-inline-block" style="min-width: 100px">
+						<label class="form-check-label">
+							<input class="form-check-input" type="checkbox" name="actionTypes[]" value="2" data-validation="groupRequired:actionTypes[]"/> Chia sẻ
+						</label>
+					</div>
+					<div class="form-check d-inline-block" style="min-width: 100px">
+						<label class="form-check-label">
+							<input class="form-check-input" type="checkbox" name="actionTypes[]" value="3" data-validation="groupRequired:actionTypes[]"/> Bình luận
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<h3>Biểu thức chính quy phức tạp</h3>
+
+			<div class="form-group validate-container">
+				<label class="required">
+					Link Facebook
+				</label>
+				<input type="text"
+						name="actionUrlsType1[]"
+						value="https://facebook.com/xyz"
+						class="form-control"
+						data-validation="required"
+						data-validation-regex="^https?:\/\/(www\.)?(facebook|fb)\.com\/\S+\/?$"
+						data-validation-regex-message="Vui lòng nhập link của Facebook"/>
+			</div>
+
+			<h3>Kiểu dữ liệu</h3>
+			<div>
+				<div class="form-group validate-container">
+					<label>
+						Email
+					</label>
+					<input class="form-control" type="email" maxlength="50" name="email" value="lockex1987@gmail.com" data-validation="email" />
+				</div>
+
+				<div class="form-group validate-container">
+					<label>
+						Số điện thoại
+					</label>
+					<input class="form-control" type="tel" maxlength="50" name="phone1" value="123456789" data-validation="phone" />
+				</div>
+
+				<div class="form-group validate-container">
+					<label>
+						Số nguyên
+					</label>
+					<input class="form-control" type="text" maxlength="50" name="n1" value="123" data-validation="integer" />
+				</div>
+
+				<div class="form-group validate-container">
+					<label>
+						Số
+					</label>
+					<input class="form-control" maxlength="50" name="n2" value="123" data-validation="numeric" />
+				</div>
+
+				<div class="form-group validate-container">
+					<label>
+						Ngày
+					</label>
+					<input class="form-control" type="text" maxlength="50" name="date" value="11-05-1987" data-validation="date" />
+				</div>
+
+				<div class="form-group validate-container">
+					<label>
+						Chứng minh thư
+					</label>
+					<input class="form-control" type="text" maxlength="50" name="id-number" value="" data-validation="idNumber" />
+				</div>
+
+				<div class="form-group validate-container">
+					<label>
+						Tên miền
+					</label>
+					<input class="form-control" type="text" value="" data-validation="domainName" />
+				</div>
+
+				<div class="form-group validate-container">
+					<label>
+						Mật khẩu (có detect CAPS LOCK)
+					</label>
+					<input class="form-control" type="text" maxlength="50" name="myPassword" value="" data-validation="password|passwordStrong" />
+					<!-- 12345 â -->
+					<small class="form-text text-danger" id="password-caps-warning" style="display: none">* Đang bật Caps Lock</small>
+				</div>
+			</div>
+
+			<h3>Biểu thức chính quy</h3>
+			<div>
+				<div class="form-group validate-container">
+					<label>
+						Pattern (Nhập bắt đầu bằng A hoa)
+					</label>
+					<input class="form-control"
+							type="text"
+							data-validation="regex:^A.*$:Nhập bắt đầu bằng A hoa"
+							maxlength="50"
+							name="pattern"
+							value=""/>
+				</div>
+			</div>
+
+			<h3>Độ dài input</h3>
+			<div>
+				<div class="form-group validate-container">
+					<label>
+						Ít nhất 3 ký tự
+					</label>
+					<input class="form-control" type="text" maxlength="50" name="minLength" value="123" data-validation="minLength:3" />
+				</div>
+
+				<div class="form-group validate-container">
+					<label>
+						Nhiều nhất 5 ký tự
+					</label>
+					<input class="form-control" type="text" maxlength="50" name="maxLength" value="12345" data-validation="maxLength:5" />
+				</div>
+			</div>
+
+			<h3>Giới hạn giá trị số</h3>
+			<div>
+				<div class="form-group validate-container">
+					<label>
+						Nhỏ nhất là 10
+					</label>
+					<input class="form-control" type="number" maxlength="50" name="n3" value="19" data-validation="min:10" />
+				</div>
+
+				<div class="form-group validate-container">
+					<label>
+						Lớn nhất nhất là 20
+					</label>
+					<input class="form-control" type="number" maxlength="50" name="n4" value="1" data-validation="max:20" />
+				</div>
+			</div>
+
+			<h3>Phải nhập giống nhau</h3>
+			<div>
+				<div class="form-group">
+					<label>
+						Giá trị 1
+					</label>
+					<input class="form-control" type="text" maxlength="50" name="v1" id="v1" value="123456" />
+				</div>
+
+				<div class="form-group validate-container">
+					<label>
+						Giá trị 2
+					</label>
+					<input class="form-control" type="text" data-validation="same:#v1:Nhập giống giá trị 1" maxlength="50" name="v2" value="123456" />
+				</div>
+			</div>
+
+			<h3>Giới hạn loại file, dung lượng file</h3>
+			<div>
+				<div class="form-group validate-container">
+					<label>
+						File EXE, TXT và có dung lượng nhỏ hơn 5 MB
+					</label>
+					<input class="form-control" type="file" name="myFile" id="myFile" data-validation="fileTypes:exe,txt|maxFileSize:5" />
+				</div>
+                <p>Nên sử dụng thuộc tính accept của thẻ input để trình duyệt tự động chỉ cho phép chọn những loại file chỉ định.</p>
+                <p>Vẫn bắt buộc phải validate ở server (sử dụng validation mimes của Laravel).</p>
+			</div>
+
+			<h3>Phải nhập trong tập các giá trị cho trước</h3>
+			<div>
+				<div class="form-group validate-container">
+					<label>
+						Nhập loại (Tài khoản, Page, Group)
+					</label>
+					<input class="form-control" type="text" data-validation="in:Tài khoản, Page, Group"/>
+				</div>
+			</div>
+
+			<div class="text-center">
+				<button type="button" class="btn btn-raised btn-primary" onclick="processLogin();">
+					Kiểm tra
+				</button>
+			</div>
+		</form>
+	</article>
+
+	<link rel="stylesheet" href="css/common-validation.css">
+	<script src="js/common-validation.js"></script>
+
+	<script>
+		function processLogin() {
+            const frm = document.querySelector('#loginForm');
+			if (CV.invalidForm(frm)) {
+				return false;
+			}
+			alert('Form OK');
+		}
+
+		// showError(document.querySelector('[name=username]'), 'Message test thôi');
+
+		// Đơn giản, nhưng rất hữu ích
+		(() => {
+			const passwordField = document.querySelector('[name=myPassword]');
+			const capsErrorField = document.querySelector('#password-caps-warning');
+
+			// Detect Caps Lock
+			passwordField.addEventListener('keydown', (evt) => {
+				capsErrorField.style.display = evt.getModifierState('CapsLock') ? 'block' : 'none';
+			});
+		})();
+
+
+		// Gọi validate ở trường hợp riêng biệt
+		const domainValidation = {
+			domainName: true,
+			domainNameMessage: 'Tên miền không hợp lệ'
+		};
+		// console.log('com.vn: ' + CV.validateByValueAndValidation('com.vn', domainValidation));
+		// console.log('xxx: ' + CV.validateByValueAndValidation('xxx', domainValidation));
+
+		const urlTestcases = `
+https://www.example.com
+http://www.example.com
+files:///C:/files/xxx.txt
+www.example.com
+example.com
+http://blog.example.com
+http://www.example.com/product
+http://www.example.com/products?id=1&page=2
+http://www.example.com#up
+http://255.255.255.255
+255.255.255.255
+https://www.facebook.com/profile.php?id=100007649763247
+http://invalid.com/perl.cgi?key= | http://web-site.com/cgi-bin/perl.cgi?key1=value1&key2
+http://www.site.com:8008`;
+
+		urlTestcases.trim().split('\n').forEach(s => {
+			const temp = s.trim();
+			if (temp) {
+				const check = CV.validateUrl(temp);
+				console.log(check, temp);
+				try {
+					new URL(temp);
+				} catch (ex) {
+					console.log('Ex', temp);
+				}
+			}
+		});
+	</script>
+	
+	<script src="../../js/docs.js"></script>
+</body>
+
+</html>

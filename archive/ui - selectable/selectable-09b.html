@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery UI Selectable</title>
+	<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
+
+<style>
+/* Table */
+.scheduler {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+}
+.scheduler th, .scheduler td {
+	border-left: 1px solid #DDD;
+	border-right: 1px solid #DDD;
+	border: 1px solid #DDD;
+}
+.scheduler .header {
+	background: #F7F7F7;
+	white-space: nowrap;
+	padding: 5px;
+	width: 40px;
+}
+.scheduler .item {	
+	padding: 5px;
+	height: 20px;
+}
+
+/* JQuery UI Selectable */
+.scheduler .ui-selecting {
+	background: #97B58F;
+}
+.scheduler .ui-selected {
+	background: #4C6840;
+	color: white;
+}
+.ui-selectable-helper {
+	border:1px solid #747474;
+}
+</style>
+</head>
+
+<body>
+<p id="feedback">
+<span>You've selected:</span> <span id="select-result">none</span>.
+</p>
+
+<script>
+function createTable(startHour, endHour) {
+	var thead = "";
+	var tbody = "";
+	var noOfColumns = 7;
+	var r, c;
+	for (c = 1; c <= noOfColumns; c++) {
+		thead += '<th class="header">' + c + '</th>';
+	}
+	for (r = startHour; r <= endHour; r++) {
+		// First row
+		tbody += '<tr>';
+		tbody += '<td>' + r + '</td>'; // rowspan="4"
+		for (c = 1; c <= noOfColumns; c++) {
+			tbody += '<td class="item" row="' + r + 'a" col="' + c + '"></td>';
+		}
+		tbody += '</tr>';
+		
+		// Second row
+		tbody += '<tr>';
+		tbody += '<td></td>';
+		for (c = 1; c <= noOfColumns; c++) {
+			tbody += '<td class="item" row="' + r + 'b" col="' + c + '"></td>';
+		}
+		tbody += '</tr>';
+	}
+	return '<table class="scheduler"><thead><th class="header">Time</th>' + thead + '</thead><tbody>' + tbody + '</tbody></table>';
+}
+
+$('body').append( createTable(8, 17) );
+
+var currentCol;
+
+var items = document.querySelectorAll(".scheduler tbody .item");
+
+
+$(".scheduler tbody .item")
+	.mousedown(function(event) {
+		//console.info("mousedown");
+		for (var i = 0; i < items.length; i++) {
+			var e = items[i];
+			e.classList.remove("ui-selected");
+		}
+		
+		var ele = event.target;
+		
+		currentCol = ele.getAttribute("col");
+		//console.info('currentCol: ' + currentCol);
+		return false;
+	})
+	.mouseover(function(event) {
+		var ele = event.target;
+		//console.info(ele.getAttribute("col") + ', ' + ele.getAttribute("row"));
+		
+		if (currentCol && currentCol == ele.getAttribute("col")) {
+			ele.classList.add("ui-selecting");
+		}
+	})
+	.mouseup(function(event) {
+		currentCol = undefined;
+		
+		var result = $( "#select-result" ).empty();
+		$( ".ui-selected", this ).each(function() {
+			var index = $( ".scheduler .item" ).index( this );
+			
+		});
+		for (var i = 0; i < items.length; i++) {
+			var e = items[i];
+			if (e.classList.contains("ui-selecting")) {
+				e.classList.remove("ui-selecting");
+				e.classList.add("ui-selected");
+				
+				result.append(" #" + e.getAttribute("row"));
+			}
+		}
+	});
+</script>
+</body>
+</html>

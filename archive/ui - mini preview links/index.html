@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hover trên link sẽ hiển thị popup nhỏ chứa screen của target">
+    <title>Mini-Preview link</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <article>
+        <h2>Mini-Preview link</h2>
+        <p>Hover over a link to see a mini-preview of where the link goes. Previews are live and can be controlled by a variety of prefetch options.</p>
+        <p>Tham khảo: <a href="http://codersblock.com/blog/mini-previews-for-links/" target="_blank" class="mini-preview-pageload">Mini-Previews for Links</a></p>
+
+        <p>
+            This demo shows how to add live mini-previews to links on hover. Check out these links to
+            <a href="https://tympanus.net/codrops/" target="_blank" class="mini-preview-pageload">Codrops</a>
+            and
+            <a href="https://alistapart.com/" target="_blank" class="mini-preview-pageload">A List Apart</a>.
+            Hover over them to see a small preview of what they point to.
+        </p>
+
+        <p>
+            Those previews were fetched as soon as this page loaded.
+            This is great for having the previews ready ahead of time, but can eat up extra bandwidth.
+            As an alternative, check out these links to
+            <a href="https://webaim.org/" target="_blank" class="mini-preview-parenthover">WebAIM</a>
+            and
+            <a href="https://css-tricks.com/" target="_blank" class="mini-preview-parenthover">CSS-Tricks</a>.
+            These previews aren't fetched until you hover over this paragraph.
+        </p>
+        
+        <p>
+            Finally, check out these links to
+            <a href="https://www.growingwiththeweb.com/" target="_blank" class="mini-preview-none">Daniel's blog</a>,
+            <a href="http://jonibologna.com/" target="_blank" class="mini-preview-none">Joni's blog</a>,
+            and
+            <a href="https://codersblock.com/blog/" target="_blank" class="mini-preview-none">my blog</a>.
+            These previews are only fetched when needed.
+            This saves the most bandwidth, but there will be a delay before the previews can be shown.
+        </p>
+
+        <p>
+            <a href="https://lockex1987.github.io/" target="_blank" class="mini-preview-pageload">lockex1987.github.io</a>
+        </p>
+    </article>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

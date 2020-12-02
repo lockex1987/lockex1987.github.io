@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Laravel 7 có gì mới">
+    <title>Laravel 7</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Laravel 7</h2>
+      <p>Tuy Laravel 6.0 mới ra mắt cách đây không lâu (tháng 9 năm 2019), nhưng
+        hôm nay Laravel đã ra mắt phiên bản thứ 7 với khá nhiều cập nhật lớn và
+        hữu ích: giới thiệu Laravel Airlock, cải thiện tốc độ routing, tùy chỉnh
+        Eloquent casts, Blade component tags, fluent string operations, HTTP
+        client, first-party CORS support, cải tiến scoping cho route model
+        binding, tùy biến stub, cải thiện hàng đợi database, hỗ trợ đồng thời
+        nhiều mail drivers, casts khi truy vấn, command mới&nbsp;<code>test</code>,
+        sửa lỗi và cải thiện nhiều phần khác.</p>
+      <h3>Laravel Airlock</h3>
+      <p>Laravel Airlock cung cấp một hệ thống authentication gọn nhẹ cho SPA
+        (single page application), ứng dụng mobile, và đơn giản hơn là token
+        based API. Airlock cho phép mỗi người dùng ứng dụng của bạn có thể tạo
+        ra nhiều API token cho tài khoản của họ. Những token này có thể được cấp
+        abilities / scopes quy định hành động nào mà nó có thể thực hiện.</p>
+      <p>Để xem thông tin chi tiết về Laravel Airlock, xem chi tiết tại&nbsp;<a
+          href="https://laravel.com/docs/7.x/airlock" target="_blank">Airlock
+          documentation</a>.</p>
+      <h3>Tùy chỉnh Eloquent cast</h3>
+      <p>Laravel được tích hợp sẵn sẵn nhiều kiểu cast hữu ích. Tuy nhiên, đôi
+        khi bạn cần định nghĩa kiểu cast khác cho dự án của mình. Bây giờ bạn có
+        thể thực hiện điều đó bằng cách tạo một class implement <code>CastsAttributes</code>
+        interface.</p>
+      <p>Những class implement interface này phải định nghĩa hai phương thức
+        là&nbsp;<code>get</code>&nbsp;và&nbsp;<code>set</code>. Phương
+        thức&nbsp;<code>get</code>&nbsp;sẽ chuyển đổi giá trị từ DB thành sang
+        kiểu dữ liệu mong muốn. Ngược lại, phương thức&nbsp;<code>set</code>&nbsp;sẽ
+        chuyển đổi giá trị của trường thành giá trị có thể lưu trữ được trong
+        DB. Vị dụ về cast&nbsp;<code>json</code>&nbsp;được tích hợp sẵn:</p>
+      <pre>namespace App\Casts;
+        
+use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
+        
+class Json implements CastsAttributes
+{
+    /**
+     * Cast the given value.
+     *
+     * @param \Illuminate\Database\Eloquent\Model&nbsp; $model
+     * @param&nbsp; string&nbsp; $key
+     * @param&nbsp; mixed&nbsp; $value
+     * @param&nbsp; array&nbsp; $attributes
+     * @return array
+     */
+    public function get($model, $key, $value, $attributes)
+    {
+        return json_decode($value, true);
+    }
+        
+    /**
+     * Prepare the given value for storage.
+     *
+     * @param \Illuminate\Database\Eloquent\Model&nbsp; $model
+     * @param&nbsp; string&nbsp; $key
+     * @param&nbsp; array&nbsp; $value
+     * @param&nbsp; array&nbsp; $attributes
+     * @return string
+     */
+    public function set($model, $key, $value, $attributes)
+    {
+        return json_encode($value);
+    }
+}</pre>
+      <p>Sau khi định nghĩa kiểu cast, bạn có thể gán cho thuộc tính trong Model
+        thông qua tên class.</p>
+      <pre>&lt;?php
+          
+namespace App;
+
+use App\Casts\Json;
+use Illuminate\Database\Eloquent\Model;
+          
+class User extends Model
+{
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */<br>    protected $casts = [
+        'options' =&gt; Json::class,
+    ];
+}        </pre>
+      <p> Để tìm hiểu chi tiết, xem thêm tại&nbsp;<a href="https://laravel.com/docs/7.x/eloquent-mutators#custom-casts"
+          target="_blank">Eloquent documentation</a>.</p>
+      <h3>Blade Component Tag và các cải tiến</h3>
+      <p>Blade component đã được cải tiến, cho phép sử dụng tag, quản lý thuộc
+        tính, component class, inline view component,... Bởi vì những thay đổi
+        này rất rộng, vui lòng truy cập&nbsp;<a href="https://laravel.com/docs/7.x/blade#components"
+          target="_blank">full Blade component documentation</a>&nbsp;để tìm
+        hiểu một cách đầy đủ nhất.</p>
+      <p>Tóm lại, từ bây giờ, một component có thể gán với một class quy định dữ
+        liệu của nó. Tất cả các thuộc tính và phương thức public của class sẽ có
+        hiệu lực trong component view. Bất kỳ thuộc tính HTML nào khác của
+        component sẽ được lưu vào biến&nbsp;<code>$attribute</code>.</p>
+      <p>Tạo một component mới:</p>
+      <pre>php artisan make:component Alert</pre>
+      <p>Lệnh trên sẽ tạo ra 2 file:</p>
+      <ul>
+        <li>classs <code>App\View\Components\Alert.php</code></li>
+        <li>template <code>resources/views/components/alert.blade.php</code></li>
+      </ul>
+      <p>Sửa class <code>Alert</code> như sau:</p>
+      <pre>&lt;?php
+
+namespace App\View\Components;
+
+use Illuminate\View\Component;
+
+class Alert extends Component
+{
+    /**
+     * The alert type.
+     *
+     * @var string
+     */
+    public $type;
+
+    /**
+     * Create the component instance.
+     *
+     * @param  string  $type
+     * @return void
+     */
+    public function __construct($type)
+    {
+        $this-&gt;type = $type;
+    }
+
+    /**
+     * Get the class for the given alert type.
+     *
+     * @return string
+     */
+    public function classForType()
+    {
+        return $this-&gt;type == 'danger' ? 'alert-danger' : 'alert-warning';
+    }
+
+    /**
+     * Get the view / contents that represent the component.
+     *
+     * @return \Illuminate\View\View|string
+     */
+    public function render()
+    {
+        return view('components.alert');
+    }
+}</pre>
+      <p>Và template của component trên như sau:</p>
+      <pre>&lt;!-- /resources/views/components/alert.blade.php --&gt;
+<br>&lt;div {{ $attributes-&gt;merge(['class' =&gt; 'alert ' . $classForType]) }}&gt;
+    &lt;p class="font-weight-bold"&gt;{{ $heading }}&lt;/p&gt;
+
+    &lt;p&gt;{{ $slot }}&lt;/p&gt;
+&lt;/div&gt;</pre>
+      <p>Để hiển thị component ở Blade, sử dụng cú pháp <code>x-</code> (kebab
+        case).</p>
+      <p>Khi đó, component này có thể sử dụng ở template Blade khác bằng cách sử
+        dụng component tag:</p>
+      <pre>&lt;x-alert type="error" class="mb-4"&gt;<br>    &lt;x-slot name="heading"&gt;<br>        Alert content...<br>&nbsp;&nbsp;&nbsp; &lt;/x-slot&gt;<br><br>&nbsp;&nbsp;&nbsp; Default slot content...<br>&lt;/x-alert&gt;</pre>
+      <p>Như đã nói, đây chỉ là một ví dụ rất nhỏ trong số rất nhiều thay đổi
+        của Blade của Laravel 7. Vui lòng tham khảo&nbsp;<a href="https://laravel.com/docs/7.x/blade#components"
+          target="_blank">full Blade component documentation</a>&nbsp;để tìm
+        hiểu chi tiết.</p>
+	<p>Giờ mình cũng ít dùng Blade rồi, hay dùng SPA với Vue. Tuy nhiên, Blade (và component tag) vẫn có chỗ hữu ích, như là email template, export template,...</p>
+      <h3>HTTP client</h3>
+      <p>Bây giờ, Laravel cung cấp một HTTP Client tối giản sử dụng&nbsp;<strong>Guzzle
+          HTTP client</strong>, cho phép bạn thực hiện các HTTP request một cách
+        nhanh nhất, tập trung vào những trường hợp phổ biến và trải nghiệm của
+        developer. Ví dụ gửi POST request với JSON data:</p>
+      <pre>use Illuminate\Support\Facades\Http;
+
+$response = Http::withHeaders([
+    'X-First' =&gt; 'foo'
+    'X-Second' =&gt; 'bar'
+])-&gt;post('http://test.com/users', [
+    'name' =&gt; 'Taylor',
+]);
+
+return $response['id'];</pre>
+      <p>Ngoài ra, HTTP Client còn cung cấp chức năng test tiện dụng:</p>
+      <pre>Http::fake([
+    // Stub a JSON response for GitHub endpoints...
+    'github.com/*' =&gt; Http::response(['foo' =&gt; 'bar'], 200, ['Headers']),
+
+    // Stub a string response for Google endpoints...
+    'google.com/*' =&gt; Http::response('Hello World', 200, ['Headers']),
+
+    // Stub a series of responses for Facebook endpoints...
+    'facebook.com/*' =&gt; Http::sequence()
+                            -&gt;push('Hello World', 200)
+                            -&gt;push(['foo' =&gt; 'bar'], 200)
+                            -&gt;pushStatus(404),
+]);</pre>
+      <p>Để tim hiểu thêm về HTTP client, vui lòng truy cập&nbsp;<a href="https://laravel.com/docs/7.x/http-client"
+          target="_blank">HTTP client documentation</a>.</p>
+      <h3>Fluent String Operation</h3>
+      <p>Như bạn đã biết, class <code>Illuminate\Support\Str</code> cung cấp
+        khá nhiều function hữu ích để thao tác với chuỗi. Laravel 7 cung cấp một
+        thư viện hướng đối tượng hơn để làm việc với chuỗi, dựa trên những
+        function đã có. Bạn có thể tạo một đối tượng <code>Illuminate\Support\Stringable</code>
+        bằng cách sử dụng phương thức <code>Str::of</code>. Khi đó, nhiều
+        phương thức có thể sử dụng liên tiếp để thao tác với chuỗi:</p>
+      <pre>return (string) Str::of('  Laravel Framework 6.x ')
+                    -&gt;trim()
+                    -&gt;replace('6.x', '7.x')
+                    -&gt;slug();</pre>
+      <p>Để tìm hiểu thêm và các phương thức có sẵn, vui lòng truy cập&nbsp;<a href="https://laravel.com/docs/7.x/helpers#fluent-strings"
+          target="_blank">full documentation</a>.</p>
+      <h3>Cải thiện Route Model Binding</h3>
+      <h4>Key customization</h4>
+      <p>Đôi khi bạn muốn resolve Eloquent model bằng một column khác id. Để làm
+        điều đó, Laravel 7 cho phép chỉ định column trong định nghĩa route
+        parameter:</p>
+      <pre>Route::get('api/posts/{post:slug}', function (App\Post $post) {
+    return $post;
+});</pre>
+      <h4>Automatic scoping</h4>
+      <p>Đôi khi, khi binding ngầm nhiều Eloquent model trong cùng một route,
+        bạn muốn ràng buộc Eloquent model thứ 2 là còn của Eloquent model thứ
+        nhất. Ví dụ, khi bạn muốn truy cập một bài đăng theo slug cho user chỉ
+        định:</p>
+      <pre>use App\Post;
+use App\User;
+
+Route::get('api/users/{user}/posts/{post:slug}', function (User $user, Post $post) {
+    return $post;
+});</pre>
+      <p>Khi sử dụng các route parameter lồng nhau, Laravel 7 sẽ tự động giới
+        hạn truy vấn để lấy thông tin nested model theo parent của nó, sử dụng
+        conventions để đoán relationship trong parent model. Trong trường hợp
+        này, giả sử User model có một relationship là&nbsp;<code>posts</code>&nbsp;(số
+        nhiều của tham số trong route), nó sẽ được sử dụng để lấy thông tin Post
+        model. Để xem thêm về route model binding, vui lòng truy cập&nbsp;<a href="https://laravel.com/docs/7.x/routing#route-model-binding"
+          target="_blank">routing documentation</a>.</p>
+      <h3>Multiple mail driver</h3>
+      <p>Laravel 7 cho phép cấu hình nhiều "mailer" cho một ứng dụng. Mỗi cấu
+        hình mailer trong config&nbsp;<code>mail</code>&nbsp;sẽ có tùy chọn
+        riêng, kể cả "transport", cho phép ứng dụng của bạn sử dụng các email
+        service khác nhau để gửi email message. Ví dụ, ứng dụng của bạn có thể
+        sử dụng Postmark để gửi email trực tiếp, đồng thời sử dụng Amazon SES để
+        gửi email hàng loạt.</p>
+      <p>Mặc định, Laravel sử dụng mailer được thiết lập&nbsp;<code>default</code>&nbsp;trong
+        file&nbsp;<code>mail</code>&nbsp;config. Tuy nhiên, bạn có thể sử dụng
+        phương thức&nbsp;<code>mailer</code> để gửi email bằng mailer chỉ định:</p>
+      <pre>Mail::mailer('postmark')
+        -&gt;to($request-&gt;user())
+        -&gt;send(new OrderShipped($order));</pre>
+      <h3>Cải thiện tốc độ Route Caching</h3>
+      <p>Laravel 7 bao gồm một phương thức matching compiled mới, cached routes
+        được cache bằng lệnh Artisan&nbsp;<code>route:cache</code>. Đối với các
+        ứng dụng lớn (khoảng 800 route trở lên), những cải thiện này cho kết quả
+        nhanh gấp 2 lần. Những thay đổi này sẽ tự động được áp dụng mà không cần
+        thay đổi từ hệ thống của bạn.</p>
+      <h3>CORS Support</h3>
+      <p>Laravel 7 bao gồm first-party support để cấu hình Cross-Origin Resource
+        Sharing (CORS) OPTIONS bằng cách tích hợp package Laravel CORS được viết
+        bởi Barry vd. Heuvel. File cấu hình&nbsp;<code>cors</code>&nbsp;mặc định
+        sẽ được thêm vào trong ứng dụng Laravel.</p>
+      <p>Để tìm hiểu thêm về CORS support in Laravel 7.x, vui lòng truy
+        cập&nbsp;<a href="https://laravel.com/docs/7.x/routing#cors" target="_blank">CORS
+          documentation</a>.</p>
+      <h3>Query Time Cast</h3>
+      <p>Đôi khi, bạn cần áp dụng cast khi thực thi truy vấn, ví dụ như select
+        raw từ table. Ví dụ:</p>
+      <pre>use App\Post;
+use App\User;
+
+$users = User::select([
+    'users.*',
+    'last_posted_at' =&gt; Post::selectRaw('MAX(created_at)')
+            -&gt;whereColumn('user_id', 'users.id')
+])-&gt;get();</pre>
+      <p>Thuộc tính <code>last_posted_at</code> trong kết quả của query trên là
+        một string. Sẽ thuận tiện hơn nếu chúng ta có thể áp dụng cast thuộc
+        tính này thành date khi thực thi truy vấn. Để thực hiện điều này, chúng
+        ta sử dụng phương thức <code>withCasts</code> được cung cấp bởi Laravel
+        7:</p>
+      <pre>$users = User::select([
+    'users.*',
+    'last_posted_at' =&gt; Post::selectRaw('MAX(created_at)')
+            -&gt;whereColumn('user_id', 'users.id')
+])-&gt;withCasts([
+    'last_posted_at' =&gt; 'date'
+])-&gt;get();</pre>
+      <h3>Cải thiện MySQL 8+ Database Queue</h3>
+      <p>Trong các bản phát hành trước đây của Laravel,&nbsp;<code>database</code>&nbsp;queue
+        không đủ mạnh để sử dụng trong production. Tuy nhiên, Laravel 7 cung cấp
+        các cải tiến cho các ứng dụng sử dụng MySQL 8+. Bằng cách sử dụng mệnh
+        đề&nbsp;<code>FOR UPDATE SKIP LOCKED</code>&nbsp;và các cải tiến SQL
+        khác, trình&nbsp;<code>database</code>&nbsp;driver giờ đây có thể được
+        sử dụng một cách an toàn trong các ứng dụng production.</p>
+      <h3>Lệnh artisan&nbsp;<code>test</code></h3>
+      <p>Ngoài lệnh&nbsp;<code>phpunit</code>, từ bây giờ bạn có thể sử dụng
+        lệnh artisan&nbsp;<code>test</code>&nbsp;để chạy test. Artisan test
+        runner cung cấp giao diện đẹp hơn và hiển thị nhiều thông tin hơn về
+        test đang chạy. Ngoài ra, runner sẽ tự động dừng lại khi gặp trường hợp
+        fail đầu tiên:</p>
+      <pre>php artisan test
+</pre>
+      <p><img src="https://images.viblo.asia/d74ae574-bef6-490a-9c33-a42621e01268.png"></p>
+      <p>Bất kỳ tham số nào có thể truyền vào lệnh&nbsp;<code>phpunit</code>&nbsp;cũng
+        có thể được sử dụng với lệnh&nbsp;<code>php artisan test</code>:</p>
+      <pre>php artisan test --group=feature
+</pre>
+      <h3>Cải thiện Markdown Mail Template</h3>
+      <p>Markdown mail template mặc định đã được làm mới, hiện đại hơn dựa theo
+        Tailwind CSS color palette. Tất nhiên, template này có thể published và
+        tùy chỉnh theo nhu cầu ứng dụng của bạn:</p>
+      <p> <img src="https://images.viblo.asia/a9cdb040-fbe7-446f-9427-16e5925b5290.png">
+      </p>
+      <p>Để biết thêm thông tin về Markdown mail, vui lòng truy cập&nbsp;<a href="https://laravel.com/docs/7.x/mail#markdown-mailables"
+          target="_blank">mail documentation</a>.</p>
+      <h3>Tùy chỉnh Stub</h3>
+      <p>Lệnh artisan&nbsp;<code>make</code>&nbsp;được sử dụng để tạo rất nhiều
+        class, ví dụ như: controller, job, migration, và test. Những class này
+        được từ các "stub" file và dựa theo giá trị bạn nhập vào. Tuy nhiên, đôi
+        khi có thể bạn muốn có những thay đổi nhỏ đối với file được tạo ra bởi
+        lệnh artisan. Để làm điều này, Laravel 7 cung cấp lệnh&nbsp;<code>stub:publish</code>&nbsp;để
+        publish hầu hết các stub thông thường để bạn có thể tùy biến:</p>
+      <p><code>php artisan stub:publish</code></p>
+      <p>Những stub published sẽ nằm ở thư mục&nbsp;<code>stubs</code>&nbsp;trong
+        thư mục gốc của ứng dụng. Bất cứ thay đổi nào bạn thực hiện với những
+        stubs này sẽ được phản ánh khi bạn tạo class tương ứng bằng lệnh
+        artisan&nbsp;<code>make</code>.</p>
+      <h3>Cấu hình queue maxExceptions</h3>
+      <p>Đôi khi bạn muốn quy định một job có thể được thử lại nhiều lần, nhưng
+        sẽ thất bại nếu nếu khi thử lại có một số lượng exceptions nhất định.
+        Trong Laravel 7, bạn có thể định nghĩa thuộc tính maxExceptions trong
+        job class:</p>
+      <pre>&lt;?php
+
+namespace App\Jobs;
+
+class ProcessPodcast implements ShouldQueue
+{
+    /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 25;
+
+    /**
+     * The maximum number of exceptions to allow before failing.
+     *
+     * @var int
+     */
+    public $maxExceptions = 3;
+
+    /**
+     * Execute the job.
+     *
+     * @return void
+     */
+    public function handle()
+    {
+        Redis::throttle('key')-&gt;allow(10)-&gt;every(60)-&gt;then(function () {
+            // Lock obtained, process the podcast...
+        }, function () {
+            // Unable to obtain lock...
+            return $this-&gt;release(10);
+        });
+    }
+}</pre>
+      <p>In this example, the job is released for ten seconds if the application
+        is unable to obtain a Redis lock and will continue to be retried up to
+        25 times. However, the job will fail if three unhandled exceptions are
+        thrown by the job.</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://laravel.com/docs/7.x/releases" target="_blank">Laravel
+          7 Release Notes</a></p>
+      <p><a href="https://viblo.asia/p/laravel-7-co-gi-moi-1Je5EndmKnL" target="_blank">Laravel
+          7 có gì mới? - Viblo</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="youtube, subtitle, download, closed caption">
+    <title>Tiện ích download subtitle từ YouTube</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Tiện ích download subtitle từ YouTube</h2>
+      <p>Screenshot:</p>
+      <p><img alt="" src="images/screenshot%2020190927.png"></p>
+      <p>Subtitle ở YouTube gọi là Closed Caption.</p>
+      <h3>Release notes</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Version</th>
+            <th>Thời gian</th>
+            <th>Mô tả</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0.0.1</td>
+            <td>23/05/2016<br>
+            </td>
+            <td>First runable.<br>
+            </td>
+          </tr>
+          <tr>
+            <td>0.0.2<br>
+            </td>
+            <td>24/05/2016<br>
+            </td>
+            <td>Fix Mozilla review.<br>
+            </td>
+          </tr>
+          <tr>
+            <td>0.0.3<br>
+            </td>
+            <td>25/05/2016<br>
+            </td>
+            <td>Fix download error (videoId variable is null, langName is
+              required, unescape URL).<br>
+              Change "all_frames" config in manitest.json to false (we don't
+              have to check every frame).<br>
+              Change logo.<br>
+              Change download link to button.<br>
+            </td>
+          </tr>
+          <tr>
+            <td>0.0.4<br>
+            </td>
+            <td>07/06/2016<br>
+            </td>
+            <td>Change the protocols of used URLs from HTTP into HTTPS to fix
+              error "Blocked loading mixed active content" on Firefox 45.<br>
+            </td>
+          </tr>
+          <tr>
+            <td>1.0.0<br>
+            </td>
+            <td>12/03/2017<br>
+            </td>
+            <td>Fix CORS error on Firefox 52.<br>
+            </td>
+          </tr>
+          <tr>
+            <td>1.1.0<br>
+            </td>
+            <td>16/05/2017<br>
+            </td>
+            <td>Change how to detect new video (use interval timer).<br>
+              Support new YouTube design.<br>
+            </td>
+          </tr>
+          <tr>
+            <td>1.1.1</td>
+            <td>09/08/2018</td>
+            <td>Fix bug on new YouTube design.</td>
+          </tr>
+          <tr>
+            <td>1.2.1</td>
+            <td>27/09/2019</td>
+            <td>Tương thích với cả Chrome.<br>
+              Bỏ thuộc tính <code>applications</code>:<br>
+              <pre>"applications": {<br>    "gecko": {<br>        "id": "youtube-subtitle-downloader@mozilla.org",<br>        "strict_min_version": "45.0"<br>    }<br>},</pre>
+              Những chỗ nào dùng <code>browser</code> thì chuyển thành <code>chrome</code>.<br>
+              Fix bug không download được trên phiên bản Firefox mới (do hàm <code>saveTextAsFile</code>).<br>
+              Dùng cho Chrome.<br>
+              Refactor code, bỏ hỗ trợ giao diện cũ, fix lỗi không hiển thị vì
+              có nhiều phần tử <code>#meta</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://google2srt.sourceforge.io/en/">https://google2srt.sourceforge.io/en/</a></p>
+      <p><a target="_blank" href="https://github.com/ytdl-org/youtube-dl">https://github.com/ytdl-org/youtube-dl</a></p>
+      <p><a target="_blank" href="https://addons.mozilla.org/en-US/firefox/addon/youtube-subtitle-downloader/">Link
+          Firefox</a></p>
+      <p><a target="_blank" href="https://chrome.google.com/webstore/detail/youtube-subtitle-download/falajjjalaffofcbkhgdemihkpllibom">Link
+          Chrome</a></p>
+      <p><a target="_blank" href="https://addons.mozilla.org/en-US/developers/addons">Firefox
+          dashboard</a></p>
+      <p><a target="_blank" href="https://chrome.google.com/webstore/developer/dashboard">Chrome
+          dashboard</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

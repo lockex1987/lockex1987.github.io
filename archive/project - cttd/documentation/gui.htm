@@ -1,0 +1,85 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <title>GUI</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <link href="theme.css" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+        <div id="main">
+            <h2 id="div7">7. Giao diện chương trình</h2>
+            <div>
+                Cấu trúc layout của các trang đều được dựa trên trang baseLayout.jsp hoặc popupLayout.jsp.
+                Các trang chỉ khác nhau ở phần nội dung, còn bố cục đều giống nhau. Các trang này ở thư mục /jsp/layout/.
+                Thư mục này còn chứa các file khác: externalCssJs.jsp (nơi khai báo include các file JS, CSS),
+                processing.jsp (hiển thị thanh processing).<br />
+                <br />
+                Framework sử dụng các file CSS sau:
+                <ul>
+                    <li>jquery-ui-1.8.13.custom.css (CSS của JQuery)</li>
+                    <li>validationEngine.jquery.css (CSS của Validation engine)</li>
+                    <li>notify-osd.css (CSS của cơ chế phản hồi)</li>
+                    <li>ui.dynatree.css (CSS của cây)</li>
+                    <li>displaytagex.css (CSS của display table)</li>
+                    <li>layout.css (CSS của bố cục chương trình)</li>
+                    <li>menu.css (CSS dùng riêng cho menu)</li>
+                    <li>theme.css (CSS hay dùng trong framework)</li>
+                </ul>
+                Một giao diện đẹp hay không còn tùy thuộc vào thẩm mỹ của từng người, tùy thuộc vào mục đích chương trình
+                (chương trình giải trí cần bắt mắt, chương trình quản lý cần rõ ràng, dễ sử dụng,...). Chúng ta nên phát triển
+                thành các chủ đề khác nhau (bố trí các file CSS vào các thư mục chủ đề riêng). Các dự án có thể tùy chọn chủ đề
+                phù hợp.<br />
+                <br />
+                Trong quá trình phát triển chương trình, dev hạn chế tối đa việc thiết lập giao diện qua thuộc tính style của các thẻ.
+                Dev cần sử dụng các class sau:
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Thẻ</th>
+                            <th>Mục đích</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>borderDiv</td>
+                            <td>Tạo border đơn giản</td>
+                        </tr>
+                        <tr>
+                            <td>fieldset, legend</td>
+                            <td>Tạo vùng bao cho nội dung</td>
+                        </tr>
+                        <tr>
+                            <td>label</td>
+                            <td>Để hiện thị nhãn của các form</td>
+                        </tr>
+                        <tr>
+                            <td>multiCheckbox</td>
+                            <td>Dùng khi sử dụng danh sách checkbox</td>
+                        </tr>
+                        <tr>
+                            <td>viewContent</td>
+                            <td>Dùng để hiện thị nội dung ở trang xem chi tiết</td>
+                        </tr>
+                        <tr>
+                            <td>ticker</td>
+                            <td>Dùng để hiển thị đối tượng đang được thao tác</td>
+                        </tr>
+                        <tr>
+                            <td>activeButton, inactiveButton, roundContainer</td>
+                            <td>Dùng để tạo nút đơn giản</td>
+                        </tr>
+                        <tr>
+                            <td>myTree</td>
+                            <td>Dùng cho tree, nếu cần viết lại tree</td>
+                        </tr>
+                        <tr>
+                            <td>dataPicker</td>
+                            <td>Dùng cho dataPicker, nếu cần phải viết lại dataPicker</td>
+                        </tr>
+                    </tbody>
+                </table>
+                Các class này được định nghĩa trong file theme.css.
+            </div>
+        </div>
+    </body>
+</html>

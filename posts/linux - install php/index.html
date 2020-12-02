@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="date" content="2020-02-19 23:54:00">
+    <meta name="description" content="php8">
+    <title>Cài đặt PHP trên Ubuntu</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Cài đặt PHP trên Ubuntu</h2>
+      <p>Chúng ta sẽ cài đặt PHP 7.2.</p>
+      <p>Xóa PHP và các extension cũ:</p>
+      <pre>sudo apt remove php php-*<br>sudo apt list --installed | grep php<br><br>sudo apt autoremove<br>
+sudo apt update<br>sudo apt list --upgradable
+sudo apt dist-upgrade</pre>
+      <p> Thêm repository (bước này chỉ cần thực hiện một lần):</p>
+      <pre>sudo add-apt-repository ppa:ondrej/php
+sudo apt update</pre>
+      <p>Kiểm tra các package PHP có:</p>
+      <pre>sudo apt-cache search php</pre>
+      <p>Cài đặt và các extension thường dùng:</p>
+      <pre>sudo apt install php7.2 php7.2-common php7.2-cli \<br>        php7.2-mysql php7.2-gd php7.2-mbstring \<br>&nbsp; &nbsp; &nbsp; &nbsp; php7.2-xml \<br>        php7.2-zip php7.2-curl  php7.2-ldap \<br>        php7.2-fileinfo php7.2-redis \<br>        php7.2-mysqlnd php7.2-json php7.2-bcmath</pre>
+      <p>Cài extension <code>php-fpm</code> để chạy PHP với nginx:</p>
+      <pre>sudo apt install php7.2-fpm</pre>
+      <p>Cài extension <code>php-dev</code> để có lệnh <code>phpize</code> để
+        compile extension từ source:</p>
+      <pre>sudo apt install php7.2-dev</pre>
+      <p>Hiển thị danh sách các phiên bản PHP đã cài đặt (bạn có thể thiết lập
+        luôn phiên bản mặc định):</p>
+      <pre>sudo update-alternatives --config php</pre>
+      <p> Kiểm tra lại:</p>
+      <pre>php --version</pre>
+      <p>Tham khảo:</p>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <a href="https://mwop.net/blog/2019-04-30-ondrej-multiversion-php.html"
+          target="_blank">phly, boy, phly :: Managing Multiple PHP versions via
+          the ondrej/php PPA</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

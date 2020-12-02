@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Laravel Cookie">
+    <title>Laravel Cookie</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Laravel Cookie</h2>
+      <h3>Lấy cookie từ Request</h3>
+      <p>Tất cả cookies được tạo bởi Laravel framework đều được mã hóa và ký một
+        mã xác thực, nghĩa là chúng có thể bị coi là không hợp lệ nếu nó bị thay
+        đổi phía dưới client. Để lấy một giá trị cookie từ request, sử dụng
+        phương thức <code>cookie</code> từ <code>Illuminate\Http\Request</code>:</p>
+      <pre>$value = $request-&gt;cookie('name');</pre>
+      <p>Ngoài ra, bạn có thể sử dụng facade <code>Cookie</code>.</p>
+      <pre>$value = Cookie::get('name');</pre>
+      <h3>Gắn cookies vào Response</h3>
+      <p>Bạn có thể gắp một cookie vào <code>Illuminate\Http\Response</code>
+        bằng cách sử dụng phương thức <code>cookie</code>. Bạn có thể truyền
+        tên, giá trị, và số phút cookie sẽ hết hạn vào phương thức:</p>
+      <pre>return response('Hello World')-&gt;cookie(
+    'name', 'value', $minutes
+);</pre>
+      <p>Phương thức <code>cookie</code> ngoài ra còn có một vài đối sô ít được
+        sử dụng. Nói chung, những đối số đó có cùng mục đích và ý nghĩa giống
+        với đối số của <a href="http://php.net/manual/en/function.setcookie.php">setcookie</a>
+        của PHP:</p>
+      <pre>return response('Hello World')-&gt;cookie(
+    'name', 'value', $minutes, $path, $domain, $secure, $httpOnly
+);</pre>
+      <p>Cách khác, bạn có thể sử dụng facade Cookie để xếp hàng các cookie để
+        gắn vào response từ chương trình của bạn.</p>
+      <pre>Cookie::queue(Cookie::make('name', 'value', $minutes));
+
+Cookie::queue('name', 'value', $minutes);</pre>
+      <h3>Tạo Cookie instance</h3>
+      <p>Nếu bạn muốn tạo một <code>Symfony\Component\HttpFoundation\Cookie</code>
+        có thể response sau một khoảng thời gian, bạn có thể sử dụng helper
+        global <code>cookie</code>. Khi đó cookie sẽ không gửi lại cho client
+        trừ khi nó được gán vào response instance:</p>
+      <pre>$cookie = cookie('name', 'value', $minutes);
+
+return response('Hello World')-&gt;cookie($cookie);</pre>
+      <p>Bạn có thể sử dụng facade <code>Cookie</code>, các phương thức <code>Cookie::make</code>
+        để tạo cookie và <code>Cookie::forget</code> để xóa cookie.</p>
+      <pre>\Cookie::queue(\Cookie::forget('myCookie'));
+return ['ok' =&gt; true];</pre>
+      <h3>Ví dụ</h3>
+      <pre>use Cookie;
+
+private function getRootDomain($request)
+{
+    $host = $request-&gt;getHost();
+    $temp = array_reverse( explode('.', $host) );
+    $domain = '.' . $temp[1] . '.' . $temp[0];
+    return $domain;
+}
+
+$cookieName = 'token';
+$path = '/';
+$domain = $this-&gt;getRootDomain($request);
+
+// Thêm cookie
+$ttlMinutes = 60;
+$token = 'xxx';
+$secure = false;
+$httpOnly = false;
+$cookie = Cookie::make($cookieName, $token, $ttlMinutes, $path, $domain, $secure, $httpOnly);
+
+// Xóa cookie
+$cookie = Cookie::forget($cookieName, $path, $domain);
+
+return response()
+        -&gt;json(['code' =&gt; 0)
+        -&gt;cookie($cookie);</pre>
+      <h3>Tham khảo</h3>
+      <p><a href="https://laravel.com/docs/5.8/requests#cookies">https://laravel.com/docs/5.8/requests#cookies</a></p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

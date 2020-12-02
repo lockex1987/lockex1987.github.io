@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Download GitHub folder, zip" />
+    <title>DownGit</title>
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body class="no-float-button">
+    <article v-cloak
+            class="text-center"
+            id="app">
+        <h2>DownGit</h2>
+        <div class="mt-5">
+            <input class="text-center form-control mw-none"
+                    v-model.trim="url"
+                    placeholder="Nhập đường dẫn thư mục GitHub"
+                    type="url"
+                    autocomplete="off"/>
+        </div>
+
+        <div class="my-5">
+            <button class="btn btn-primary btn-ripple"
+                    @click="download()"
+                    type="button">
+                Download
+            </button>
+        </div>
+
+        <div v-show="isProcessing"
+                class="my-2 mx-auto">
+            <div id="processing-animation">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <p class="text-center">
+                Đã download
+                {{downloadedFiles}}
+                /
+                {{totalFiles}}
+                file
+            </p>
+        </div>
+    </article>
+
+    <link rel="stylesheet" href="css/processing-animation.css" />
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/axios@0.19.2/dist/axios.min.js"></script>
+    <script src="https://cdn.rawgit.com/Stuk/jszip/v3.0.0/dist/jszip.min.js"></script>
+
+    <script src="../../js/common.js"></script>
+
+    <script src="js/down-git.js"></script>
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

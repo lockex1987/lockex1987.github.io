@@ -1,0 +1,12 @@
+html { overflow: hidden; background: #333; }
+
+body { margin: 0; height: 100vh; perspective: 125vmin; filter: drop-shadow(-1vmin 1vmin 1vmin #000); }
+
+div { position: absolute; transform-style: preserve-3d; }
+
+.assembly { top: 50%; left: calc(50% - .5*var(--dx)*85vmin); transform: rotatey(35deg); }
+
+.panel { --mid: calc((var(--p) + var(--k)*0.25)*85vmin); transform: translate3d(calc(var(--dx)*85vmin), 0, calc(var(--dz)*85vmin)); }
+.panel:before, .panel:after { position: absolute; margin: -32.5vmin -42.5vmin; width: 85vmin; height: 65vmin; background: url("../images/bg_sq_halloween_0.jpg") 50%/cover; content: ""; }
+.panel:before { transform-origin: var(--mid); transform: rotatey(-90deg); clip-path: inset(0 calc(100% - var(--mid)) 0 calc(var(--p)*100%)); filter: brightness(0.4); }
+.panel:after { clip-path: inset(0 calc(100% - (var(--p) + var(--k))*85vmin) 0 var(--mid)); }

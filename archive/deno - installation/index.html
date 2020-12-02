@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="offline, manually">
+    <title>Cài đặt Deno</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Cài đặt Deno</h2>
+      <p>Theo hướng dẫn ở trang chủ, sử dụng lệnh sau:</p>
+      <pre><meta http-equiv="content-type" content="text/html; charset=utf-8">curl -fsSL https://deno.land/x/install/install.sh | sh</pre>
+      <p>Tình hình là ở Việt Nam bị đứt cáp. Nếu cài đặt qua mạng như hướng dẫn
+        ở trang chủ thì bước download file từ GitHub rất là chậm. Ngoài ra, thực
+        tế có thể bạn cần cài cho một server nào đó mà server đó lại không có
+        kết nối Internet. Do đó hãy cài offline nào.</p>
+      <p>Đầu tiên, hãy download file <code>deno-x86_64-unknown-linux-gnu.zip</code>
+        từ địa chỉ sau:</p>
+      <p> <a href="https://github.com/denoland/deno/releases" target="_blank">Releases
+          · denoland/deno</a></p>
+      <p>Tiếp theo, để file <code>install.sh</code> ở ngang với file vừa
+        download, rồi thực hiện lệnh:</p>
+      <pre>sh install.sh</pre>
+      <p>Nội dung file <code>install.sh</code> như sau:</p>
+      <pre>#!/bin/sh
+
+deno_install="${DENO_INSTALL:-$HOME/.deno}"
+bin_dir="$deno_install/bin"
+exe="$bin_dir/deno"
+
+if [ ! -d "$bin_dir" ]; then
+&nbsp; &nbsp; mkdir -p "$bin_dir"
+fi
+
+cp deno-x86_64-unknown-linux-gnu.zip "$exe.zip"
+
+cd "$bin_dir"
+unzip -o "$exe.zip"
+chmod +x "$exe"
+rm "$exe.zip"</pre>
+      <p>Sau đó, sửa file <code>~/.bashrc</code>, thêm đoạn sau:</p>
+      <pre>DENO_INSTALL="$HOME/.deno"
+PATH="$DENO_INSTALL/bin:$PATH"
+
+export DENO_INSTALL
+export PATH</pre>
+      <p>Kiểm tra:</p>
+      <pre>deno --version</pre>
+      <p>Nếu mà các biến môi trường vẫn chưa được hiệu lực, bạn không cần login
+        lại mà có thể làm như sau:</p>
+      <pre>source ~/.bashrc</pre>
+      <p>Deno lưu các file cache ở thư mục <code>~/.cache/deno</code>.</p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

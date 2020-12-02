@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>getComputedStyle</title>
+    <style>
+#test3::first-letter {
+    font-size: xx-large;
+}
+    </style>
+</head>
+
+<body>
+    <section>
+        <p>Click the button to get the computed background color for the test div.</p>
+        <p><button onclick="myFunction1()">Try it</button></p>
+        <div id="test1" style="height: 50px; background-color: lightblue;">Test Div</div>
+        <p>The computed background color for the test div is: <span id="demo1"></span></p>
+    </section>
+
+    <section>
+        <p>Click the button to get all the computed styles for the test div.</p>
+        <p><button onclick="myFunction2()">Try it</button></p>
+        <div id="test2" style="height: 50px; background-color: lightblue;">Test Div</div>
+        <p>The computed styles for the test div are: <br><span id="demo2"></span></p>
+    </section>
+
+    <section>
+        <p>Click the button to get the computed font size for the first letter in the test div.</p>
+        <p><button onclick="myFunction3()">Try it</button></p>
+        <div id="test3" style="height: 50px; background-color: lightblue;">Test Div</div>
+        <p>The computed font size for div::first-letter in the test div is: <span id="demo3"></span></p>
+    </section>
+
+    <script>
+function myFunction1() {
+    var elem = document.getElementById("test1");
+    var theCSSprop = window.getComputedStyle(elem, null).getPropertyValue("background-color");
+    document.getElementById("demo1").innerHTML = theCSSprop;
+}
+
+function myFunction2() {
+    var elem = document.getElementById("test2");
+    var cssObj = window.getComputedStyle(elem, null);
+    var txt = "";
+
+    for (var i = 0; i < cssObj.length; i++) {
+        var cssObjProp = cssObj.item(i);
+        txt += cssObjProp + " = " + cssObj.getPropertyValue(cssObjProp) + "<br>";
+    }
+    
+    //txt = cssObj.cssText;
+    document.getElementById("demo2").innerHTML = txt;
+}
+
+function myFunction3() {
+    var elem = document.getElementById("test3");
+    // Pull style info from pseudo-elements
+    // For example ::after, ::before, ::marker, ::first-letter
+    var theCSSprop = window.getComputedStyle(elem, "first-letter").getPropertyValue("font-size");
+    document.getElementById("demo3").innerHTML = theCSSprop;
+}
+
+function dumpComputedStyles(elem, prop) {
+    var cs = window.getComputedStyle(elem, null);
+    if (prop) {
+        console.log(prop + " : " + cs.getPropertyValue(prop));
+        return;
+    }
+    var len = cs.length;
+    for (var i = 0; i < len; i++) {
+        var style = cs[i];
+        console.log(style + " : " + cs.getPropertyValue(style));
+    }
+}
+    </script>
+</body>
+</html>

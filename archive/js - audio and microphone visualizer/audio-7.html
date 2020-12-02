@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>#codevember 05 - music: spectrum visualizer</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+<style>
+html, body {
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(#006a5f, #000000);
+  background-size: 200% 200%;
+  background-position: -100% 50%;
+}
+
+.btn-play-pause {
+  cursor: pointer;
+  position: absolute;
+  z-index: 1;
+  bottom: 20px;
+  left: 30px;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  border: 1px solid white;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+  -webkit-animation: clickMe 0.5s;
+          animation: clickMe 0.5s;
+  transition: opacity 0.8s;
+}
+.btn-play-pause .fa {
+  margin-right: 8px;
+}
+.btn-play-pause .fa-spinner {
+  -webkit-animation: spin 1.5s infinite;
+          animation: spin 1.5s infinite;
+}
+.btn-play-pause.loading {
+  pointer-events: none;
+  pointer-events: none;
+  opacity: 0.5;
+  -webkit-animation: load 3s infinite;
+          animation: load 3s infinite;
+  transition: none;
+}
+
+@-webkit-keyframes load {
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes load {
+  50% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes clickMe {
+  65% {
+    -webkit-transform: scale(1.2) rotate(-5deg);
+            transform: scale(1.2) rotate(-5deg);
+  }
+}
+@keyframes clickMe {
+  65% {
+    -webkit-transform: scale(1.2) rotate(-5deg);
+            transform: scale(1.2) rotate(-5deg);
+  }
+}
+#codepen-link {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  height: 40px;
+  width: 40px;
+  z-index: 10;
+  border-radius: 50%;
+  box-sizing: border-box;
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/544318/logo.jpg");
+  background-position: center center;
+  background-size: cover;
+  opacity: 0.4;
+  transition: all 0.25s;
+}
+#codepen-link:hover {
+  opacity: 0.8;
+  box-shadow: 0 0 6px #efefef;
+}
+</style>
+</head>
+
+<body>
+  <span class="btn-play-pause loading"> <i class="fa fa-spinner"></i>Loading...</span>
+  <script>
+var defaultTrackUrl = "https://res.cloudinary.com/sf-cloudinary/video/upload/v1525614320/haydntrumpet.mp3";
+
+var canvas = void 0;
+var ctx = void 0;
+var audio = void 0;
+
+function createAudio() {
+	if (audio) return audio;
+
+	var element = document.createElement("audio");
+	document.body.appendChild(element);
+	var ctx = new AudioContext();
+	var source = ctx.createMediaElementSource(element);
+	var gain = ctx.createGain();
+	var analyser = ctx.createAnalyser();
+	var btn = document.querySelector('.btn-play-pause');
+
+	analyser.smoothingTimeConstant = 0.88;
+	analyser.minDecibels = -120;
+	analyser.maxDecibels = -10;
+	analyser.fftSize = 1024;
+
+	var frequencies = new Uint8Array(analyser.frequencyBinCount);
+	//var frequencies = new Uint8Array(analyser.fftSize);
+
+	source.connect(gain);
+	gain.connect(analyser);
+	analyser.connect(ctx.destination);
+
+	return {
+		element: element,
+		btn: btn,
+		ctx: ctx,
+		gain: gain,
+		analyser: analyser,
+		playing: false,
+		load: function load(data) {
+			element.src = window.URL.createObjectURL(data);
+			return this;
+		},
+		play: function play() {
+			this.playing = true;
+			element.play();
+			btn.innerHTML = '<i class="fa fa-pause"></i>Pause';
+			return this;
+		},
+		pause: function pause() {
+			this.playing = false;
+			element.pause();
+			btn.innerHTML = '<i class="fa fa-play"></i>Play';
+			return this;
+		},
+		get frequencyData() {
+			analyser.getByteFrequencyData(frequencies);
+			//analyser.getByteTimeDomainData(frequencies);
+			return frequencies;
+		}
+	};
+
+}
+
+function fetchFile() {
+	var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultTrackUrl;
+	return new Promise(function (resolve, reject) {
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", url, true);
+		xhr.responseType = 'blob';
+		xhr.addEventListener("load", function () { return resolve(xhr.response); });
+		xhr.send();
+	});
+}
+
+function playPause() {
+	audio.playing ? audio.pause() : audio.play();
+}
+
+function setup() {
+	canvas = {
+		a: document.createElement("canvas"),
+		b: document.createElement("canvas")
+	};
+	canvas.b.style = "\n\t\tposition: absolute;\n\t\ttop: 0;\n\t\tleft: 0;\n\t\twidth: 100%;\n\t\theight: 100%;\n\t";
+	document.body.appendChild(canvas.b);
+	ctx = {
+		a: canvas.a.getContext("2d"),
+		b: canvas.b.getContext("2d")
+	};
+	audio = createAudio();
+
+	resize();
+
+	fetchFile().then(function(data) {
+		audio.btn.classList.remove('loading');
+		audio.btn.innerHTML = '<i class="fa fa-play"></i>Play';
+		audio.btn.addEventListener('click', function userClicked(event) {
+			audio.load(data).play();
+			audio.element.addEventListener('ended', function () {
+				audio.element.currentTime = 0;
+				audio.element.pause();
+			});
+			audio.btn.addEventListener('click', playPause);
+			audio.btn.removeEventListener('click', userClicked);
+			draw();
+		});
+	});
+}
+
+function resize() {
+	canvas.a.width = canvas.b.width = window.innerWidth;
+	canvas.a.height = canvas.b.height = window.innerHeight;
+}
+
+function draw() {
+	var _audio = audio, frequencyData = _audio.frequencyData;
+	var spectrumWidth = 0.5 * frequencyData.length;
+	var lineWidth = canvas.a.width / spectrumWidth * 0.5;
+	var y = 0.5 * canvas.a.height;
+
+	ctx.a.clearRect(0, 0, canvas.a.width, canvas.a.height);
+	ctx.b.clearRect(0, 0, canvas.b.width, canvas.b.height);
+
+	var i = void 0, frequency = void 0, fNorm = void 0, x = void 0, hue = void 0, height = void 0;
+
+	//var meterWidth = 10; // width of the meters in the spectrum
+	//var step = Math.round(frequencyData.length / meterNum); //sample limited data from the total array
+
+	for (i = frequencyData.length - 1; i >= 0; i--) {
+		frequency = frequencyData[i];
+		fNorm = frequency / 256;
+		x = i / spectrumWidth * canvas.a.width;
+		hue = 110 * (1 - fNorm);
+		height = 0.25 * canvas.a.height * fNorm;
+
+		
+		ctx.a.beginPath();
+		ctx.a.lineWidth = lineWidth;
+		ctx.a.strokeStyle = "hsla(" + hue + ", 60%, 50%, 1)";
+		ctx.a.moveTo(x, y);
+		ctx.a.lineTo(x, y - height);
+		ctx.a.stroke();
+		ctx.a.closePath();
+		
+
+
+		ctx.a.beginPath();
+		ctx.a.lineWidth = lineWidth;
+		ctx.a.strokeStyle = "hsla(" + hue + ", 60%, 50%, 1)";
+		ctx.a.moveTo(x, y);
+		ctx.a.lineTo(x, y + height);
+		ctx.a.stroke();
+		ctx.a.closePath();
+
+	}
+
+
+	ctx.b.save();
+	ctx.b.filter = 'blur(5px)';
+	ctx.b.drawImage(canvas.a, 0, 0);
+	ctx.b.restore();
+
+
+	ctx.b.save();
+	ctx.b.globalCompositeOperation = 'lighter';
+	ctx.b.drawImage(canvas.a, 0, 0);
+	ctx.b.restore();	
+
+	window.requestAnimationFrame(draw);
+}
+
+window.addEventListener("load", setup);
+window.addEventListener("resize", resize);
+</script>
+</body>
+</html>

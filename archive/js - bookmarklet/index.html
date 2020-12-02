@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Bookmarklet"/>
+    
+    <title>Bookmarklet</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body>
+    <article>
+        <h2>Bookmarklet</h2>
+        <p>Làm bookmarlet tập trung vào mobile (page split, fast read,...).</p>
+        <h3>Ví dụ</h3>
+        <p>
+            <a href="javascript:(function() {
+                function se(d) {
+                    return d.selection ? d.selection.createRange().text : d.getSelection()
+                } 
+                s = se(document); 
+                for (let i=0; i<frames.length && !s; i++) {
+                    s = se(frames[i].document);
+                }
+                if (!s || s=='') s = prompt('Enter%20search%20terms%20for%20Wikipedia',''); 
+                open('https://en.wikipedia.org' + (s ? '/w/index.php?title=Special:Search&search=' + encodeURIComponent(s) : '')).focus();
+                })();">Wikipedia search</a>
+            
+        </p>
+        <p>
+            <a href="javascript:alert('\tdocument.URL:\n' + document.URL + '\n\tdocument.lastModified:\n' + document.lastModified + '\n\tlocation:\n' + location);">
+                Show URL info
+            </a>
+        </p>
+        <p>
+            <a href="javascript:var%20d=document,b=d.body,s=d.createElement('style'),m;s.innerHTML='*{cursor:help%20!important;}';b.appendChild(s);b.addEventListener('click',l,0);function%20l(e){m=/&quot;([^&quot;]+)&quot;|'([^']+)'|([^,]+)/.exec(window.getComputedStyle(e.target).fontFamily);alert('That%20font%20is%20'+(m[1]||m[2]||m[3]));b.removeChild(s);b.removeEventListener('click',l);e.preventDefault()}">
+                What’s that font?
+            </a>
+        </p>
+        <h3>Tham khảo</h3>
+        <p><a href="https://en.wikipedia.org/wiki/Bookmarklet" target="_blank">en.wikipedia.org/wiki/Bookmarklet</a></p>
+		<p>https://www.hongkiat.com/blog/100-useful-bookmarklets-for-better-productivity-ultimate-list/</p>
+		<p>http://www.dev-hq.net/posts/1--create-javascript-bookmarklet</p>
+		<p>https://code.tutsplus.com/tutorials/create-bookmarklets-the-right-way--net-18154</p>
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

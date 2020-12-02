@@ -1,0 +1,816 @@
+body {
+	background: #fff;
+	font-family: "Poppins", sans-serif;
+}
+
+$color-border: #096b72;
+$color-bg: #fff;
+$color-window: rgb(226, 240, 241);
+$color-shade: #ffc107;
+$border-radius: 4px;
+
+@mixin border {
+	border: 4px solid $color-border;
+}
+
+@mixin utility-border {
+	border: 2px solid $color-border;
+}
+
+.main-content {
+	margin: 6em auto;
+	display: grid;
+	width: 750px;
+	grid: 100px 80px 160px 100px 120px / 80px 80px repeat(2, 1fr) 75px 75px 2fr;
+	@include border;
+	border-width: 4px 0 0 4px;
+	position: relative;
+	> div {
+		position: relative;
+	}
+	> .door-hor {
+		top: -4px;
+		left: 15px;
+	}
+}
+
+.utility {
+	grid-column: 1 / span 1;
+	grid-row: 1 / span 2;
+	@include border;
+	border-width: 0 4px 4px 0;
+	.door-hor {
+		bottom: -34px;
+		left: 18px;
+	}
+}
+
+.kitchen {
+	grid-row: 1 / span 3;
+	grid-column: 3 / span 2;
+	.island {
+		position: absolute;
+		width: 100px;
+		height: 45px;
+		@include utility-border;
+		top: 100px;
+		left: 50px;
+		&:before,
+		&:after,
+		.chair {
+			content: "";
+			position: absolute;
+			width: 25px;
+			height: 25px;
+			bottom: -35px;
+			border-radius: 50%;
+			@include utility-border;
+			left: 5px;
+			background: $color-shade;
+		}
+		&:after {
+			left: 38px;
+		}
+		.chair {
+			left: 70px;
+		}
+	}
+	.rug {
+		width: 40px;
+		height: 40px;
+		top: 50px;
+		right: 45px;
+	}
+	.ref {
+		position: absolute;
+		@include utility-border;
+		top: -2px;
+		width: 45px;
+		height: 40px;
+		left: 8px;
+	}
+	.cabinets {
+		position: absolute;
+		@include utility-border;
+		top: -2px;
+		width: 120px;
+		height: 40px;
+		right: 37px;
+		.stove {
+			position: absolute;
+			width: 54px;
+			height: 32px;
+			@include utility-border;
+			right: 2px;
+			top: 2px;
+			&:before,
+			&:after {
+				content: "";
+				position: absolute;
+				width: 16px;
+				height: 16px;
+				top: 5px;
+				border-radius: 50%;
+				@include utility-border;
+				left: 5px;
+			}
+			&:after {
+				right: 5px;
+				left: auto;
+			}
+		}
+	}
+	.sink {
+		position: absolute;
+		right: -1px;
+		@include utility-border;
+		top: -2px;
+		width: 35px;
+		height: 98px;
+		.sink-tap-1,
+		.sink-tap-2 {
+			position: absolute;
+			width: 19px;
+			height: 15px;
+			@include utility-border;
+			right: 8px;
+			bottom: 27px;
+			border-radius: 4px;
+		}
+		.sink-tap-2 {
+			bottom: 10px;
+			height: 10px;
+			&:before {
+				content: "";
+				position: absolute;
+				border-radius: 50%;
+				width: 4px;
+				height: 4px;
+				border: 1px solid $color-border;
+				right: -8px;
+				top: -6px;
+			}
+		}
+	}
+}
+
+.bathroom-2 {
+	grid-column: 5 / span 2;
+	@include border;
+	border-width: 0 0 4px 4px;
+	.rug {
+		width: 45px;
+		height: 25px;
+		top: 45%;
+		left: 25px;
+		transform: rotate(-40deg);
+		z-index: 20;
+	}
+	.door-hor {
+		bottom: -4px;
+		left: 40px;
+		transform: rotate(180deg);
+	}
+	.window-hor {
+		left: 30px;
+	}
+	.toilet {
+		left: auto;
+		right: 8px;
+	}
+	.vanity {
+		bottom: auto;
+		top: -2px;
+		width: 50px;
+	}
+}
+
+.bedroom-2 {
+	grid-column: 7 / span 1;
+	grid-row: 1 / span 2;
+	@include border;
+	border-width: 0 4px 4px;
+	.door-ver {
+		left: -4px;
+		bottom: 10px;
+		transform: scaleY(-1);
+	}
+	.window-hor {
+		left: 45px;
+		width: 120px;
+	}
+}
+
+.living-room {
+	grid-column: 5 / span 3;
+	grid-row: 3 / span 1;
+	@include border;
+	border-width: 0 4px 0 0;
+}
+
+.bedroom-1 {
+	grid-column: 1 / span 4;
+	grid-row: 4 / span 2;
+	@include border;
+	border-width: 4px 4px 4px 0;
+	.rug {
+		left: 20%;
+		top: 20%;
+		height: 150px;
+	}
+	.door-hor {
+		top: -4px;
+		left: 40px;
+	}
+	.window-hor {
+		left: 30px;
+		top: auto;
+		bottom: -6px;
+		width: 200px;
+	}
+	.bed {
+		height: 100px;
+		width: 170px;
+		transform: scaleX(-1);
+		left: -2px;
+		top: 70px;
+		.pillow {
+			height: 35px;
+			top: 8px;
+			right: 15px;
+			&:nth-child(3) {
+				bottom: 8px;
+				top: auto;
+			}
+		}
+	}
+	.bed-table {
+		width: 25px;
+		height: 25px;
+		top: 37px;
+		right: auto;
+		left: -2px;
+		&:nth-child(5) {
+			top: auto;
+			bottom: 5px;
+			width: 25px;
+			height: 25px;
+		}
+	}
+}
+
+.closet {
+	grid-column: 4 / span 1;
+	grid-row: 4 / span 1;
+	z-index: 3;
+	border-left: 4px solid $color-border;
+	.wall-gap {
+		left: -4px;
+		top: 30px;
+	}
+}
+
+.bathroom-1 {
+	grid-column: 4 / span 2;
+	grid-row: 5 / span 1;
+	z-index: 2;
+	@include border;
+	background: $color-bg;
+	.door-ver:nth-child(1) {
+		left: -4px;
+		bottom: 10px;
+		transform: scaleY(-1);
+	}
+	.door-ver:nth-child(2) {
+		right: -4px;
+		bottom: 40px;
+		transform: scaleX(-1);
+	}
+	.window-hor {
+		top: auto;
+		bottom: -6px;
+		right: 30px;
+	}
+	.rug {
+		width: 50px;
+		height: 20px;
+		top: 55px;
+		left: 100px;
+		z-index: 20;
+	}
+}
+
+.office {
+	grid-row: 4 / span 2;
+	grid-column: 5 / span 3;
+	@include border;
+	border-width: 4px 0;
+	.door-hor {
+		top: -4px;
+		left: 45px;
+	}
+	.window-hor {
+		top: auto;
+		bottom: -6px;
+		left: 82px;
+		width: 54px;
+	}
+	.table {
+		width: 160px;
+		height: 25px;
+		transform: scaleY(-1);
+		top: -4px;
+		right: 65px;
+	}
+}
+
+.patio {
+	grid-row: 4 / span 2;
+	grid-column: 7 / span 1;
+	margin-top: 4px;
+	position: relative;
+	&:before {
+		content: "";
+		width: 140%;
+		height: 4px;
+		background: $color-border;
+		bottom: 50%;
+		left: -21%;
+		transform: rotate(-44deg);
+		position: absolute;
+	}
+	&:after {
+		content: "";
+		width: 140%;
+		height: 140px;
+		bottom: 0;
+		right: 0;
+		position: absolute;
+		width: 0;
+		height: 0;
+		border-bottom: 215px solid $color-bg;
+		border-left: 223px solid transparent;
+	}
+	.real-patio {
+		width: 139%;
+		height: 80px;
+		position: absolute;
+		z-index: 20;
+		transform: rotate(-44deg);
+		bottom: 39px;
+		margin-left: -20px;
+		border: 2px solid $color-border;
+		border-width: 0 2px 2px 2px;
+	}
+}
+
+/*utilities*/
+
+.wall-gap {
+	position: absolute;
+	background: $color-bg;
+	width: 4px;
+	height: 40px;
+}
+
+.door-hor {
+	position: absolute;
+	background: $color-bg;
+	width: 45px;
+	height: 35px;
+	overflow: hidden;
+	z-index: 10;
+	&:before {
+		content: "";
+		position: absolute;
+		background: $color-bg;
+		width: 2px;
+		height: 31px;
+		border: 1px solid $color-border;
+	}
+	&:after {
+		content: "";
+		position: absolute;
+		width: inherit;
+		height: 80px;
+		width: 130px;
+		right: -1px;
+		bottom: -0.5px;
+		border-radius: 50%;
+		border: 1px solid $color-border;
+	}
+}
+
+.door-ver {
+	position: absolute;
+	background: $color-bg;
+	height: 45px;
+	width: 35px;
+	overflow: hidden;
+	z-index: 10;
+	&:before {
+		content: "";
+		position: absolute;
+		background: $color-bg;
+		height: 2px;
+		width: 31px;
+		border: 1px solid $color-border;
+	}
+	&:after {
+		content: "";
+		position: absolute;
+		width: inherit;
+		width: 80px;
+		height: 130px;
+		right: -1px;
+		bottom: 0.5px;
+		border-radius: 50%;
+		border: 1px solid $color-border;
+	}
+}
+
+.door-sliding {
+	position: absolute;
+	background: linear-gradient(
+		to right,
+		$color-border 0,
+		$color-border 8%,
+		$color-bg 8%,
+		$color-bg 92%,
+		$color-border 92%
+	);
+	width: 200px;
+	height: 6px;
+	transform: rotate(-44deg);
+	bottom: 50%;
+	margin-bottom: -9px;
+	z-index: 15;
+	&:before,
+	&:after {
+		content: "";
+		position: absolute;
+		height: 2px;
+		width: 70%;
+		border: 1px solid $color-border;
+	}
+	&:before {
+		top: -1px;
+	}
+	&:after {
+		right: 0;
+		bottom: 0;
+	}
+}
+
+.window-hor {
+	position: absolute;
+	top: -6px;
+	height: 6px;
+	border: 2px solid $color-border;
+	width: 80px;
+	background: $color-window;
+	z-index: 10;
+}
+
+.window-ver {
+	position: absolute;
+	right: -6px;
+	top: 8px;
+	height: 140px;
+	border: 2px solid $color-border;
+	width: 6px;
+	background: $color-window;
+}
+
+.vanity {
+	width: 90px;
+	height: 30px;
+	position: absolute;
+	@include utility-border;
+	bottom: -2px;
+	right: -2px;
+	&:before {
+		content: "";
+		position: absolute;
+		border: 1px solid $color-border;
+		box-shadow: 0 0 0 2px $color-bg, 0 0 0 3px $color-border;
+		height: 15px;
+		width: 15px;
+		border-radius: 50%;
+		top: 5px;
+		left: 50%;
+		margin-left: -7.5px;
+	}
+}
+
+.toilet {
+	width: 30px;
+	height: 8px;
+	position: absolute;
+	@include utility-border;
+	bottom: -2px;
+	left: 40px;
+	&:after {
+		content: "";
+		position: absolute;
+		@include utility-border;
+		height: 22px;
+		width: 20px;
+		border-radius: 20px 20px 0 0;
+		top: -26px;
+		left: 50%;
+		margin-left: -12px;
+	}
+}
+
+.bathtub {
+	width: 110px;
+	height: 48px;
+	position: absolute;
+	@include utility-border;
+	top: -2px;
+	left: -2px;
+	&:before {
+		content: "";
+		position: absolute;
+		width: 85px;
+		height: 25px;
+		border-radius: 3px;
+		@include utility-border;
+		top: 10px;
+		left: 10px;
+	}
+}
+
+.shower {
+	width: 55px;
+	height: 50px;
+	position: absolute;
+	@include utility-border;
+	top: -2px;
+	left: -2px;
+	border-radius: 0 0% 2000% 0;
+	&:before {
+		content: "";
+		position: absolute;
+		border-radius: 50%;
+		width: 6px;
+		height: 6px;
+		border: 1px solid #096b72;
+		left: 6px;
+		top: 6px;
+	}
+}
+
+.bed {
+	width: 140px;
+	height: 70px;
+	position: absolute;
+	@include utility-border;
+	right: -2px;
+	top: 35px;
+	border-radius: 8px 0 0 8px;
+	background: $color-bg;
+	.blanket {
+		width: 55%;
+		left: 0;
+		position: absolute;
+		top: 0;
+		height: 100%;
+		border-right: 2px solid $color-border;
+		background: repeating-linear-gradient(
+				to right,
+				transparent,
+				transparent 6px,
+				rgba($color-border, 0.5) 6px,
+				rgba($color-border, 0.5) 8px
+			),
+			repeating-linear-gradient(
+				to bottom,
+				transparent,
+				transparent 6px,
+				rgba($color-border, 0.5) 6px,
+				rgba($color-border, 0.5) 8px
+			);
+		&:before {
+			content: "";
+			position: absolute;
+			right: -18px;
+			width: 0;
+			height: 100%;
+			border-right: 2px solid $color-border;
+		}
+	}
+	.pillow {
+		width: 25px;
+		@include utility-border;
+		height: 40px;
+		border-radius: 6px;
+		right: 8px;
+		top: 14px;
+		position: absolute;
+		background: $color-shade;
+	}
+}
+
+.bed-table {
+	width: 30px;
+	height: 30px;
+	top: -2px;
+	right: -2px;
+	position: absolute;
+	@include utility-border;
+}
+
+.table {
+	width: 90px;
+	height: 15px;
+	bottom: -2px;
+	right: 20px;
+	position: absolute;
+	@include utility-border;
+	&:before {
+		content: "";
+		position: absolute;
+		@include utility-border;
+		width: 20px;
+		height: 16px;
+		top: -20px;
+		left: 50%;
+		margin-left: -10px;
+		border-radius: 40px 40px 0 0;
+		background: linear-gradient(
+			to bottom,
+			transparent 0,
+			transparent 50%,
+			$color-border 50%,
+			$color-border 60%,
+			transparent 60%
+		);
+	}
+}
+
+.sofa {
+	width: 130px;
+	height: 40px;
+	bottom: -2px;
+	right: 20px;
+	position: absolute;
+	@include utility-border;
+	border-radius: 8px 8px 0 0;
+	background: $color-shade;
+	&:before {
+		content: "";
+		position: absolute;
+		@include utility-border;
+		border-width: 0 2px 2px;
+		width: 80%;
+		height: 70%;
+		left: 8%;
+		border-radius: 0 0 4px 4px;
+		background: $color-bg;
+	}
+	&:after {
+		content: "";
+		position: absolute;
+		@include utility-border;
+		width: 30px;
+		height: 30px;
+		transform: rotate(60deg);
+		left: -50px;
+		bottom: 50px;
+		border-radius: 6px;
+		background: $color-shade;
+	}
+}
+
+.coffee-table,
+.patio-table {
+	width: 40px;
+	height: 40px;
+	bottom: 60px;
+	right: 80px;
+	border-radius: 50%;
+	position: absolute;
+	@include utility-border;
+	background: $color-bg;
+}
+
+.patio-table {
+	width: 30px;
+	height: 30px;
+	bottom: 35px;
+	z-index: 25;
+}
+
+.patio-chair {
+	width: 34px;
+	height: 26px;
+	bottom: 30px;
+	left: 65px;
+	border-radius: 20px 20px 0 0;
+	position: absolute;
+	@include utility-border;
+	background: $color-shade;
+	z-index: 25;
+	transform: rotate(-95deg);
+	&:before {
+		content: "";
+		position: absolute;
+		width: 25px;
+		height: 82%;
+		border-radius: inherit;
+		background: $color-bg;
+		bottom: 0;
+		left: 10%;
+		border: 1px solid $color-border;
+		border-width: 1px 1px 0;
+	}
+	&:nth-child(5) {
+		transform: rotate(15deg);
+		bottom: 75px;
+		left: 115px;
+	}
+}
+
+.tv-set {
+	width: 140px;
+	height: 20px;
+	top: -2px;
+	right: 35px;
+	border-radius: 0 0 50% 50%;
+	position: absolute;
+	@include utility-border;
+}
+
+.rug {
+	width: 150px;
+	height: 110px;
+	top: 25px;
+	right: 35px;
+	position: absolute;
+	background: rgba($color-shade, 0.25);
+}
+
+.name {
+	font: 600 14px/1 "Poppins", sans-serif;
+	text-transform: uppercase;
+	color: $color-border;
+	position: absolute;
+	text-align: center;
+	z-index: 30;
+}
+
+.utility .name {
+	width: 200%;
+	transform: rotate(-90deg);
+	bottom: 45%;
+	left: -38px;
+}
+
+.kitchen .name {
+	top: 20%;
+	left: 30%;
+}
+
+.bathroom-2 .name {
+	top: 45px;
+	left: 40px;
+}
+
+.bedroom-2 .name {
+	width: 100px;
+	bottom: 25px;
+	left: 25px;
+}
+
+.living-room .name {
+	top: 38px;
+	left: 30%;
+}
+
+.bedroom-1 .name {
+	width: 100px;
+	top: 25px;
+	left: 130px;
+}
+
+.closet .name {
+	top: 35px;
+}
+
+.bathroom-1 .name {
+	bottom: 40px;
+	right: 50px;
+}
+
+.office .name {
+	width: 80px;
+	top: 45%;
+	left: 30%;
+}
+
+.patio .name {
+	right: 20px;
+	top: 40%;
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeNet - Thông báo chặn</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/extra.css">
+</head>
+
+<body>
+    <div id="sn-block">
+        <div class="main clr" id="sn-notify-content">
+            <!-- Màn hình thông báo -->
+            <div class="container" id="container1">
+                <div class="block-icon">
+                    <img src="images/stop.png" alt="Stop"/>
+                </div>
+                <div class="block-message">
+                    <h4>Đã bị chặn</h4>
+                    <p id="notify_id">
+                        Trang web này đã bị chặn bởi <span>SAFENET</span>
+                    </p>
+                    <p>
+                        <strong id="blocked_url"></strong>
+                    </p>
+                    <p class="url">
+                        Trang web bị chặn theo yêu cầu của người dùng.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/blocked.js"></script>
+</body>
+</html>

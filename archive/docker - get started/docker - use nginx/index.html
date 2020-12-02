@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sử dụng nginx với Docker">
+    <meta name="keywords" content="docker, nginx">
+    <meta name="author" content="lockex1987">
+    <title>Sử dụng nginx với Docker</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Sử dụng nginx với Docker</h2>
+      <p> Pull image </p>
+      <pre>docker pull nginx</pre>
+      <p> Chạy:</p>
+      <pre>docker run nginx</pre>
+      <p>Khi đó truy cập <a href="http://172.17.0.2/" target="_blank">http://172.17.0.2/</a>.</p>
+      <p>Expose port:</p>
+      <pre>docker run -p 8080:80 nginx</pre>
+      <p>Khi đó truy cập <a href="http://172.17.0.2/" target="_blank">http://172.17.0.2/</a>
+        hoặc <a href="http://localhost:8080/" target="_blank">http://localhost:8080/</a>.</p>
+      <p>Volume:</p>
+      <pre>docker run -v /data/docker:/usr/share/nginx/html -p 80:80 nginx</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

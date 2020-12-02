@@ -1,0 +1,122 @@
+@import "compass/css3";
+
+$background: #2a2a2a;
+$primary: #70b37d;
+$alternate: #e14e54;
+$width: 200px;
+$height: 100px;
+$gaugewidth: 40px;
+$black: #000;
+$white: #fff;
+$speed: 800ms;
+@import url(https://fonts.googleapis.com/css?family=Ubuntu);
+
+html, body {
+  height: 100%;
+}
+body {
+  background-color: $background;
+  padding-top: 40px;
+  text-align: center;
+}
+
+.gauge {
+  width: $width;
+  height: $height;
+  position: relative;
+  overflow: hidden;
+}
+
+.inner {
+  width: $width;
+  height: $height;
+  display: block;
+  background-color: lighten($background, 10%);
+  border-radius: $width $width 0 0;
+  z-index:1;
+  &:after {
+    content: '';
+    width: $width - ($gaugewidth * 2);
+    height: $height - $gaugewidth;
+    top: $gaugewidth;
+    left: $gaugewidth;
+    background-color: $background;
+    border-radius: $width $width 0 0;
+    position: absolute;
+    z-index: 3;
+  }
+}
+
+
+.spinner {
+  width: $width;
+  height: $height;
+  background-color: $primary;
+  position: absolute;
+  z-index: 2;
+  transform-origin: top center;
+  transform: rotate(0deg);
+  transition: transform $speed ease;
+  transform: translateZ(0);
+  border-radius: 0 0 $width $width;
+  &.alt {
+    background-color: $alternate;
+  }
+}
+
+.gauge-cont {
+  display: inline-block;
+  position: relative;
+  width: $width;
+  height: $height;
+  margin-left: 30px;
+  &:first-child {
+    margin: 0;
+  }
+}
+
+.pointer {
+  display: block;
+  width: 6px;
+  height: $height + 5;
+  background-color: $white;
+  border-radius: 4px 4px 0 0;
+  position: absolute;
+  z-index: 4;
+  bottom: 0px;
+  left: ($width / 2) - 3;
+  transform: rotate(-90deg);
+  transform-origin: center bottom;
+  transition: transform $speed ease;
+}
+
+.pointer-knob {
+  width: 20px;
+  height: 20px;
+  background-color: $white;
+  position: absolute;
+  left: ($width / 2) - 10;
+  bottom: -10px;
+  z-index: 5;
+  border-radius: 20px;
+}
+
+.reset {
+  display: inline-block;
+  margin-top: 30px;
+  background-color: $alternate;
+  color: $white;
+  font-family: 'Ubuntu', sans-serif;
+  padding: 10px 30px;
+  font-size: 18px;
+  text-decoration: none;
+  border-radius: 2px;
+  border-bottom: 3px solid darken($alternate, 15%);
+  box-shadow: 0px 4px 3px 0px rgba(0,0,0,.3);
+  transition: all 200ms ease;
+  &.active {
+    background-color: $primary;
+    border-color: darken($primary, 10%);
+    transition: all 200ms ease;
+  }
+}

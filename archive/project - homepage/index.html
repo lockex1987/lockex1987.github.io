@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="motorbike oil alert, calendar, water, electricity, bill warning" />
+	<title>Trang chủ</title>
+	<link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css"/>
+	<link rel="stylesheet" href="css/homepage.css"/>
+</head>
+
+<body>
+	<iframe src="../project - lich cua toi/index.html"
+            id="calendarFrame"></iframe>
+
+	<iframe src="oil.html"
+            id="oilFrame"></iframe>
+
+    <!--div id="oilFrame"></div>-->
+	
+
+	<!--iframe src="../project%20-%20weather%20app/embed-accu.html" id="weatherFrame" style=""></iframe>-->
+
+	<script>
+		function includeHtml(src, domNode) {
+			fetch(src)
+				.then(resp => resp.text())
+				.then(html => {
+					domNode.innerHTML = html;
+				})
+		}
+
+		// includeHtml('oil.html', document.querySelector('#oilFrame'));
+	</script>
+
+    <link rel="stylesheet" href="https://lockex1987.github.io/posts/project%20-%20noti/css/noti.css" />
+	<script src="https://lockex1987.github.io/posts/project%20-%20noti/js/noti.js"></script>
+
+	<script src="js/bill-warning.js"></script>
+</body>
+</html>

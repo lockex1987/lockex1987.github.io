@@ -1,0 +1,38 @@
+.ribbon {
+  overflow: hidden;
+  position: relative; }
+  .ribbon .ribbon-content {
+    background: #f0ad4e;
+    color: #FFF;
+    text-align: center;
+    transform: rotate(-40deg) translate(-25px, -15px);
+    width: 100px;
+    position: absolute;
+    left: 0;
+    top: 0; }
+
+.simple-ribbon {
+  top: 10px;
+  right: -6px;
+  height: 20px;
+  line-height: 20px;
+  background-color: #F47530;
+  border-bottom-right-radius: 3px; }
+  .simple-ribbon:before, .simple-ribbon:after {
+    content: '';
+    position: absolute;
+    height: 0;
+    width: 0; }
+  .simple-ribbon:before {
+    right: 0px;
+    top: -6px;
+    border-bottom: 6px solid #8D5A20;
+    border-right: 6px solid transparent; }
+  .simple-ribbon:after {
+    top: 0;
+    left: -10px;
+    border-bottom: 10px solid #F47530;
+    border-top: 10px solid #F47530;
+    border-left: 10px solid transparent; }
+
+/*# sourceMappingURL=ribbon.css.map */

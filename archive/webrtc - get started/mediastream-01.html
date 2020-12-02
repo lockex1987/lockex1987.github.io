@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<title>Capturing Video and Audio</title>
+</head>
+
+<body>
+	<h1>Capturing Video and Audio</h1>
+
+	<video autoplay></video>
+
+	<script src="js/mediastream.js"></script>
+	<script>
+function errorCallback(e) {
+	console.log('Rejected!', e);
+}
+
+function successCallback(localMediaStream) {
+	window.stream = localMediaStream; // stream available to console
+
+	var video = document.querySelector('video');
+	video.src = window.URL.createObjectURL(localMediaStream);
+	
+	// Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
+	// See crbug.com/110938.
+	video.onloadedmetadata = function(e) {
+		// Ready to go. Do some stuff.
+	};
+}
+
+function init() {
+	if (hasGetUserMedia()) {
+		var constraints = { video: true, audio: true };
+		/*
+		var constraints = {
+			video: {
+				mandatory: {
+					maxWidth: 640,
+					maxHeight: 360
+				}
+			}
+		};*/
+
+		navigator.getUserMedia(constraints, successCallback, errorCallback);
+	}
+}
+
+init();
+</script>
+</body>
+</html>

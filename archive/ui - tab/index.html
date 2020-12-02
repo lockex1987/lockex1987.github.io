@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <title>Tab</title> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Tab">
+ </head> 
+ <body> 
+  <article> 
+   <link rel="stylesheet" href="css/tab.css"> 
+   <h3>Simple tab (horizontal)</h3> 
+   <!-- Tab links --> 
+   <div class="tab-wrapper"> 
+    <div class="tab"> 
+     <button class="tab-link active" onclick="openTab(event, 'London')">London</button> 
+     <button class="tab-link" onclick="openTab(event, 'Paris')">Paris</button> 
+     <button class="tab-link" onclick="openTab(event, 'Tokyo')">Tokyo</button> 
+    </div> 
+    <!-- Tab content --> 
+    <div class="tab-content-wrapper"> 
+     <div id="London" class="tab-content active"> 
+      <h3>London</h3> 
+      <p>London is the capital city of England.</p> 
+     </div> 
+     <div id="Paris" class="tab-content"> 
+      <h3>Paris</h3> 
+      <p>Paris is the capital of France.</p> 
+     </div> 
+     <div id="Tokyo" class="tab-content"> 
+      <h3>Tokyo</h3> 
+      <p>Tokyo is the capital of Japan.</p> 
+     </div> 
+    </div> 
+   </div> 
+   <p> <a href="vertical.html">Vertical tab</a> </p> 
+   <p> <a href="cute.html">Cute tab</a> </p> 
+   <script src="js/tab.js"></script> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

@@ -1,0 +1,24 @@
+#theImage {
+  max-height: 100%;
+  max-width: 100%;
+  transition: all 0.2s;
+  width: 720px;
+  height: 960px;
+}
+
+/* Pinned class */
+#theImage.pinned {
+  box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.698);
+  position: fixed !important;
+  top: 30px;
+  right: 30px;
+  width: 240px;
+  height: 320px;
+
+  /*
+		var scaleRatio = 0.5;
+		var remainRatio = (1 - scaleRatio) / 2;
+		var translatePercent = remainRatio * 100 / scaleRatio;
+		transform: scale(${scaleRatio}) translate(${translatePercent}%, -${translatePercent}%)
+		*/
+}

@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>CTTD</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="CTTD">
+ </head> 
+ <body> 
+  <article> 
+   <p>CTTD</p> 
+   <p>What is CTTD? It's a Java library that contains almost common patterns.</p> 
+   <p>Diagram:</p> 
+   <ul> 
+    <li>CTTD base on third party library like apache commons, mail. You can think of it as a wrapper.</li> 
+    <li>CTTD contains common patterns (use cases)</li> 
+    <li>With each pattern, we have web features (in Universal Website) and utilities</li> 
+   </ul> 
+   <p>Example, we have <strong>rename</strong> utility, we have <strong>thumbnail</strong> web features and have <strong>batch resize</strong> utility.</p> 
+   <p>Java 8</p> 
+   <p>cttd-common (datetime)</p> 
+   <p>cttd-logging</p> 
+   <p>cttd-bean</p> 
+   <p>cttd-dynamic-calculator</p> 
+   <p>cttd-i18n</p> 
+   <p>cttd-mail</p> 
+   <p>cttd-networking</p> 
+   <p>cttd-database</p> 
+   <p>cttd-encryption</p> 
+   <p>cttd-excel</p> 
+   <p>cttd-web</p> 
+   <p>Common Patterns:</p> 
+   <ul> 
+    <li>compress file: handle compressed files, save disk space</li> 
+    <li>cryptography: encrypt sensitive information</li> 
+    <li>download (parse XML, service API)</li> 
+    <li>email (send mail, process incoming mail?)</li> 
+    <li>excel (import, export)</li> 
+    <li>file manager (CRUD)</li> 
+    <li>json (parse, output)</li> 
+    <li>pdf &amp; doc (export)</li> 
+    <li>regular expression (filter, validate)</li> 
+    <li>scheduler (automatic)</li> 
+    <li>sync (synchronize databases, files?)</li> 
+    <li>upload (thumbnail)</li> 
+    <li><del>Unicode</del> internationalization</li> 
+   </ul> 
+   <h3>Common Patterns</h3> 
+   <ul> 
+    <li>CRUD</li> 
+    <li>Form validation and manipulation</li> 
+    <li>Internationalization (i18n - multi-language)</li> 
+    <li>HTML template (only JSON?)</li> 
+    <li>Access database</li> 
+    <li>Testing</li> 
+    <li>Logging</li> 
+    <li>Multithread</li> 
+    <li>Read and write storage (IO)</li> 
+    <li>Import</li> 
+    <li>Export (Excel, PDF, DOC, QR Code)</li> 
+    <li>Email (SMS)</li> 
+    <li>Attachment</li> 
+    <li>Parser (HTML, XML, JSON)</li> 
+    <li>Web service (create and use Youtube, Dropbox, Facebook,...)</li> 
+    <li>Web socket</li> 
+    <li>Streaming</li> 
+    <li>Bookmark &amp; shortcut</li> 
+    <li>Customize (personalize)</li> 
+    <li>Performance (non-blocking)</li> 
+    <li>Scalability</li> 
+    <li>Security</li> 
+    <li>Robust - reliable</li> 
+    <li>Extending (plugin, module)</li> 
+    <li>Compress</li> 
+    <li>Image processing</li> 
+    <li>Networking, FTP, SMB</li> 
+    <li>GUI</li> 
+    <li>Tuning Storage</li> 
+    <li>Design Storage</li> 
+    <li>Migrate Storage</li> 
+    <li>Synchronization</li> 
+    <li>Connection pool</li> 
+   </ul> 
+   <p>Logging is very important</p> 
+   <p>Unit test is not perfect</p> 
+   <p>mvn install:install-file -Dfile=target/cttd-core-1.0.jar -DgroupId=cttd -DartifactId=cttd-core -Dversion=1.0 -Dpackaging=jar -DgeneratePom=true</p> 
+   <p>cttd-excel</p> 
+   <p>// Kiem tra trung<br> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (columnConfig[col].getCheckDuplicate()) {<br> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (dupplicateList[col].contains(content.toUpperCase())) {<br> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (errorList.size() &lt; MAX_ERROR_NUM) {<br> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; errorList.add(new ImportError(row, col, columnConfig[col].getExcelColumn()<br> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; + " trùng với dòng " + dupplicateList[col].indexOf(content.toUpperCase()), content));<br> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }<br> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }<br> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; dupplicateList[col].add(content.toUpperCase());<br> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }<br> <br> -----------------------------------<br> /**<br> &nbsp;&nbsp;&nbsp; &nbsp;* Check duplicate<br> &nbsp;&nbsp;&nbsp; &nbsp;*/<br> &nbsp;&nbsp;&nbsp; private List[] dupplicateList;<br> <br> dupplicateList = new List[columnConfig.length];<br> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; for (int i = 0; i &lt; dupplicateList.length; i++) {<br> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; dupplicateList[i] = new ArrayList();<br> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }<br> -------------------------------------<br> if (columnConfig[col].getCheckDuplicate()) {<br> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; dupplicateList[col].add(null);<br> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }<br> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

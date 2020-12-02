@@ -1,0 +1,24 @@
+// Counter TOC
+body {
+    counter-reset: h3Counter;
+}
+
+h3 {
+    counter-reset: h4Counter;
+}
+
+h3:before, h4:before {
+    //color: $mutedColor;
+    color: rgba($color: #000000, $alpha: 0.4);
+    margin-right: 7px;
+}
+
+h3:before {
+    counter-increment: h3Counter;
+    content: counter(h3Counter) ".";
+}
+
+h4:before {
+    counter-increment: h4Counter;
+    content: counter(h3Counter) "." counter(h4Counter) ".";
+}

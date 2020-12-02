@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PSR-4">
+    <title>PSR-4</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>PSR-4 Autoload - Tiêu chuẩn viết tự động nạp, khởi tạo PHP</h2>
+      <p>Tiêu chuẩn kỹ thuật viết các lớp tự động nạp vào khi cần sử dụng đến,
+        kỹ thuật tự Autoload trong PHP.</p>
+      <h3>Nội dung tiêu chuẩn PHP PSR-4</h3>
+      <p>Trước đây trong PHP việc nạp các file thư viện, mã dùng lại vào một
+        file PHP khác thường dùng các lệnh <code>include</code> và <code>require</code>.
+        Điều này thực sự mất thời gian và rắc rối. Tiếp theo từ PHP 5 đã có các
+        hàm trợ giúp tự động hóa việc gọi thư viện bằng các hàm như: <code>spl_autoload_register</code>,
+        <code>spl_autoload_functions</code>, <code>spl_autoload_extensions</code>,...</p>
+      <p>Từ các hàm này cùng với khái niệm namespace trong PHP, các lập trình
+        viên xây dựng cho mình một bộ code tự động nạp. Tuy nhiên để dễ dàng
+        chia sẻ dùng lại code giữa các framework, giữa các dự án..., cộng đồng
+        PHP thống nhất một cách thức tự động nạp thư viện theo một chuẩn bố trí
+        thư viện. Việc thống nhất đó hình thành một tiêu chuẩn nên tuân theo đó
+        là PSR-4 Autoload. Ngoài tiêu chuẩn tự động load PSR-4 còn có tiêu chuẩn
+        tự động load theo PSR-0 (tuy nhiên đã lỗi thời, các dự án mới không nên
+        theo PSR-0 nữa).</p>
+      <p>Ứng dụng của tiêu chuẩn này như sau: Phải có một có chế và cách bố trí
+        code trong các thư mục sao cho mọi lớp (class) đều có thể được tham
+        chiếu đến bằng cách viết mã như sau:</p>
+      <pre>\&lt;Namespace&gt;(\&lt;SubNamespaces&gt;)*\&lt;ClassName&gt;</pre>
+      <p>Có nghĩa là mỗi lớp bạn phải xây dựng sao cho có thể được tham chiếu
+        đến bởi dòng code ba thành phần: Namespace, các SubNamespaces con, và
+        tên lớp ClassName.</p>
+      <ul>
+        <li>Namespace: Tiền đố đầu tiên bắt buộc phải có - được hiểu là tên <code>vendor</code>.
+          Tên này do bạn tự đặt, sao cho không xung đột tên các thư viện khác.</li>
+        <li>SubNamespaces: Các namespace con (theo sau Namespace đầu tiên -
+          vendor). Có một hoặc nhiều tùy bạn. Nhưng bắt đầu từ SubNamespaces thì
+          nó tương ứng với cấu trúc thư mục lưu trữ code. Ví dụ bạn lưu trữ code
+          thư viện tại thư mục gốc là <code>src</code>, và gọi đến một lớp của
+          bạn tên là cls1 với cú pháp như sau <code>\myvendor\namespace1\namespace2\cls1</code>.
+          Điều này có nghĩa là trong thư mục <code>src</code> có thư mục tên là
+          <code>namespace1</code>, trong thư mục <code>namespace1</code> có thư
+          mục <code>namespace2</code>.</li>
+        <li>ClassName: Bắt buộc phải có và phải có tên file PHP trùng tên
+          ClassName ở thư mục tương ứng với namespace cuối cùng (<code>ClassName.php</code>),
+          trong file đó sẽ định nghĩa nội dung của code của lớp.</li>
+      </ul>
+      <p>Đó là cách thống nhất viết bố trí code PHP trên các thư mục và theo các
+        namespace. Khi đã viết code tuân thủ theo hướng dẫn này thì các famework
+        khác nhau đều sử dụng một cơ chế tự động nạp tương tự nhau nên có thể
+        dùng lại thư viện.</p>
+      <p>Đến đây trong dự án của bạn cần sử dụng một thư viện Autoload để tự
+        động nạp cấu trúc trên khi cần dùng đến. Các framework PHP hầu hết có sử
+        dụng bộ tự động nạp theo PSR-4. Tham khảo mẫu Autoload tự động đăng ký
+        các lớp tự động tải vào khi dùng đến, với điều kiện các lớp viết theo
+        PSR-4. Dùng Composer nó sẽ phát sinh mã tự động nạp thư viện theo PSR-4
+        cho bạn.</p>
+      <h3>Ví dụ về PRS-4 trong PHP</h3>
+      <p>Lưu ý sử dụng Composer để phát sinh code autoload cho bạn. Nếu chưa cài
+        đặt Composer thì đọc thêm: <a href="http://xuanthulab.net/su-dung-composer-trong-lap-trinh-php.html">Composer</a>.
+      </p>
+      <p>Ở ví dụ này bạn xây dựng một lớp tên là Cat, sao cho khi cần gọi đến
+        lớp đó thì chỉ cần viết dòng code <code>myvendor\sinhvat\dongvat\Cat</code>
+        bạn làm như sau:</p>
+      <p>1) Tạo một thư mục dự án có tên <code>prs4example</code></p>
+      <p>2) Tạo cấu trúc thư mục và file lưu giữ code lớp Cat như sau:</p>
+      <pre>prs4example/mycode/sinhvat/dongvat/Cat.php</pre>
+      <p>Trong thư mục <code>dongvat</code> tạo file php có tên <code>Cat.php</code>.
+        Như vậy đã tạo ra cấu trúc theo chuẩn, và khi sử dụng bộ Autoload thì
+        bất kỳ khi nào gọi đến lớp Cat bạn chỉ cần gọi đến nó theo cấu trúc chỉ
+        ra lớp theo quy tắc trên hoặc dùng lệnh use.</p>
+      <p>Cập nhật nội dung file: <code>Cat.php</code> để trình bày code cho lớp
+        Cat như sau:</p>
+      <pre>&lt;?php
+namespace myvendor\sinhvat\dongvat;
+
+class Cat
+{
+    public function sound()
+    {
+        echo "MEO MEO";
+    }
+}</pre>
+      <p>Giờ dùng Compose đệ tạo bộ Autoload. Tạo file <code>composer.json</code>
+        với nội dung:</p>
+      <pre>{
+    "autoload": {
+        "psr-4": {
+            "myvendor\\": "mycode/"
+        }
+    }
+}</pre>
+      <p>Rồi từ dòng lệnh cmd gõ <code>composer dump-autoload</code>. Lúc này
+        nó sẽ sinh ra <code>autoload.php</code> trong thư mục <code>vendor</code>.</p>
+      <p>Giờ thì bạn có thể sử dụng Autoload để nạp thư viện của bạn rồi.</p>
+      <p>Tạo file <code>index.php</code> trong thư mục gốc <code>psr4example</code>
+        với nội dung:</p>
+      <pre>&lt;?php
+include '/vendor/autoload.php';
+
+$cat = new myvendor\sinhvat\dongvat\Cat();
+$cat-&gt;sound();</pre>
+      <p>Chạy đoạn code trên, sẽ in ra màn hình dòng Meo Meo. Thư viện đã nạp
+        chính xác. Tốt hơn bạn nên khai báo use khi sử dụng ở bất kỳ đâu, nghĩa
+        là thay đổi code theo dạng này.</p>
+      <pre>&lt;?php
+use myvendor\sinhvat\dongvat\Cat;
+
+include '/vendor/autoload.php';
+
+$cat = new Cat();
+$cat-&gt;sound();</pre>
+      <p>Nếu muốn đưa thư viên của bạn vào chính thư mục vendor thì di chuyển
+        toàn bộ thư mục mycode vào vendor và trong <code>composer.json</code>
+        cập nhật lại dòng khai báo.</p>
+      <pre>"psr-4": {
+    "myvendor\\": "vendor/mycode/"
+}</pre>
+      <p>Rồi dump lại autoload bằng lệnh <code>composer dump-autoload</code>
+        như trên.</p>
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://xuanthulab.net/psr-4-autoloader-tieu-chuan-viet-tu-dong-nap-khoi-tao-php.html">PSR-4
+          Autoloader - Tiêu chuẩn viết tự động nạp, khởi tạo PHP</a></p>
+      <p><a target="_blank" href="https://viblo.asia/p/php-autoloading-psr4-and-composer-V3m5Wy0QZO7">PHP
+          Autoloading, PSR4 and Composer</a></p>
+      <p><a target="_blank" href="https://viblo.asia/p/psr-0-vs-psr-4-cac-chuan-autoload-file-924lJDjNKPM">PSR-0
+          vs PSR-4: Các chuẩn Autoload file</a></p>
+      
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

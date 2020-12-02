@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Câu lệnh curl">
+    <title>Câu lệnh curl</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Câu lệnh curl</h2>
+      <h3>Demo</h3>
+      <p>Method GET.</p>
+      <pre>curl http://localhost/posts/php%20-%20mock%20api/get_demo.php?name=NAT</pre>
+      <p>Method POST.</p>
+      <pre>curl --request POST --data "name=NAT" http://localhost/posts/php%20-%20mock%20api/post_form_demo.php<br>curl -X POST --data "name=NAT" http://localhost/posts/php%20-%20mock%20api/post_form_demo.php<br>curl -X POST -d "name=NAT&amp;age=23" http://localhost/posts/php%20-%20mock%20api/post_form_demo.php</pre>
+      <p>Method DELETE.</p>
+      <pre>curl -X DELETE http://localhost/posts/php%20-%20mock%20api/response_json_demo.php</pre>
+      <p>Method PUT.</p><pre>curl -X PUT http://localhost/posts/php%20-%20mock%20api/response_json_demo.php</pre><p>Upload file.</p>
+      <pre>curl --form uploadImage=@curl.png http://localhost/posts/php%20-%20mock%20api/post_upload_demo.php
+curl --form uploadImage=@./curl.png http://localhost/posts/php%20-%20mock%20api/post_upload_demo.php
+</pre>
+      <p>Lấy header thôi.
+      </p>
+      <pre>curl -I http://localhost/posts/php%20-%20mock%20api/response_json_demo.php</pre>
+      
+      
+      
+      
+      
+      
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://curl.haxx.se/docs/httpscripting.html">https://curl.haxx.se/docs/httpscripting.html</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  
+
+</body></html>

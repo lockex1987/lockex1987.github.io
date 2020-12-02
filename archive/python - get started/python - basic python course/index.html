@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="lockex1987">
+    <title>Khóa học lập trình Python cơ bản</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Khóa học lập trình Python cơ bản</h2>
+      <p>Có nhiều tutorial rất hay trên Internet. Một trong số đó là khóa học
+        của nhóm K team.</p>
+      <ul>
+        <li><a target="_blank" href="https://www.youtube.com/playlist?list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg">Danh
+            sách YouTube</a>: tự động chạy lần lượt các bài</li>
+        <li><a target="_blank" href="http://www.howkteam.vn/course/lap-trinh-python-co-ban/cach-ghi-chu-trong-python-1538">Link
+            chính thức</a>: có cả text, PDF, nhiều bài hơn là danh sách YouTube</li>
+      </ul>
+      <p>Xin cảm ơn nhóm K team vì khóa học rất hay, đầy đủ.</p>
+      <p><a href="#" id="toggleButton">(Ẩn)</a> ghi chú của tôi.</p>
+      <table id="courseLessons">
+        <tbody>
+          <tr>
+            <td><strong>#</strong></td>
+            <td><strong>Bài học</strong></td>
+            <td><strong>Ghi chú</strong></td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td><a href="https://www.youtube.com/watch?v=NZj6LI5a9vc&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=1">Giới
+                thiệu ngôn ngữ lập trình Python</a></td>
+            <td>
+              <p>Python ở rất nhiều lĩnh vực (web, AI,&nbsp; kể cả nhúng Arduino
+                và Raspberry)</p>
+              <p>Nhu cầu cao (thế giới). Ở Việt Nam thì ít. Nhưng mà ít sẽ là
+                quý hiếm. Chúng ta nên học bây giờ để đi trước thời đại. Chuẩn
+                bị cho tương lai (Startup).</p>
+              <p>Java web không còn phù hợp với các trang web "đơn giản" mà chỉ
+                phù hợp với môi trường doanh nghiệp.</p>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><a href="https://www.youtube.com/watch?v=jf-q_dG8WzI&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=2">Cài
+                đặt môi trường Python</a></td>
+            <td>
+              <p>Sử dụng editor là Visual Studio Code.</p>
+              <p>Cài thêm Python extension để có hỗ trợ auto complete và báo
+                lỗi.</p>
+              <p>Cài pip nếu chưa có:</p>
+              <p>sudo apt-get install pip</p>
+              <p>Cài pylint:</p>
+              <p>pip install --user pylint</p>
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td><a href="https://www.youtube.com/watch?v=QFxqY8qv42E&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=3">Chạy
+                file Python</a> </td>
+            <td>
+              <p>Open with Python hoặc Sublime Text.</p>
+            </td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td><a href="https://www.youtube.com/watch?v=t3dERE9T5yg&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=4">Comment
+                trong Python</a> </td>
+            <td>
+              <p>Code <span style="text-decoration: line-through;">nên</span>
+                phải comment rõ ràng.</p>
+              <p>Comment DOC thế nào?</p>
+            </td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td><a href="https://www.youtube.com/watch?v=nclE18Yl-kA&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=5">Biến
+                (Variable) trong Python</a> </td>
+            <td>
+              <p>Sử dụng hàm type(&lt;tên biến&gt;).<br>
+                <br>
+                Python has six standard data types:</p>
+              <ul>
+                <li>Numbers</li>
+                <ul>
+                  <li>int (signed integers)</li>
+                  <li>long (long integers, they can also be represented in octal
+                    and hexadecimal)</li>
+                  <li>float (floating point real values)</li>
+                  <li>complex (complex numbers)</li>
+                </ul>
+                <li>String</li>
+                <li>List</li>
+                <li>Tuple</li>
+                <li>Set</li>
+                <li>Dictionary</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td><a href="https://www.youtube.com/watch?v=IAVvgqDBiv0&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=6">Kiểu
+                số trong Python</a> </td>
+            <td>
+              <p>Giá trị là vô hạn. </p>
+              <p>Có kiểu Fraction (Python 3?) để biểu diễn phân số. Phải import
+                fractions.</p>
+              <p>Toán tử // (chia nguyên) và ** (lũy thừa)</p>
+              <p>Thư viện math</p>
+              <p>import math<br>
+                math.sqrt(4)</p>
+            </td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td><a href="https://www.youtube.com/watch?v=Vb6XWSLPQfg&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=7">Kiểu
+                chuỗi trong Python p1</a> </td>
+            <td>
+              <p>DOC string</p>
+            </td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td><a href="https://www.youtube.com/watch?v=gzWriEOVjU0&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=8">Kiểu
+                chuỗi trong Python p2</a> </td>
+            <td>
+              <p>Raw text r'' (biểu thức chính quy, đường dẫn file)</p>
+              <p>Nhân chuỗi 'a' * 4</p>
+              <p>Chuỗi con</p>
+              <p>Ép kiểu</p>
+            </td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td> <a href="https://www.youtube.com/watch?v=LRUHnuHljPQ&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=9">Kiểu
+                chuỗi trong Python p3</a> </td>
+            <td>
+              <p>Định dạng chuỗi </p>
+              <p>%</p>
+              <p>f''</p>
+              <p>format</p>
+            </td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td><a href="https://www.youtube.com/watch?v=q2TNJMBx6GE&amp;index=10&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg">Kiểu
+                chuỗi trong Python p4</a></td>
+            <td>
+              <p>Các phương thức của chuỗi (upper, lower, swapcase, title,
+                center, join, replace, strip)</p>
+              <p>Python nhiều hàm hỗ trợ hơn Java.</p>
+            </td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td><a href="https://www.youtube.com/watch?v=u2Kd3weqPZE&amp;index=11&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg">Kiểu
+                chuỗi trong Python p5</a></td>
+            <td>
+              <p>Tiếp tục các phương thức của chuỗi (find, isdigit)</p>
+            </td>
+          </tr>
+          <tr>
+            <td>12</td>
+            <td><a href="https://www.youtube.com/watch?v=UzTE665WXb8&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=12">List
+                trong Python p1</a></td>
+            <td>
+              <p>Gần tương tự String.</p>
+              <p>Tài liệu PDF:</p>
+              <p>https://drive.google.com/file/d/1xPI-aKVAqmnFF7wQd-Ts8-vhK9fFlSou/view</p>
+              <p>Tham chiếu hay tham trị.</p>
+            </td>
+          </tr>
+          <tr>
+            <td>13</td>
+            <td><a href="https://www.youtube.com/watch?v=9IH3EynbcpU&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=13">List
+                trong Python p2</a></td>
+            <td>
+              <p>Các phương thức của List (count, index, copy, clear, append,
+                insert, pop, remove, reverse, sort).</p>
+              <p> </p>
+            </td>
+          </tr>
+          <tr>
+            <td>14</td>
+            <td><a href="https://www.youtube.com/watch?v=dDFFCbRGm3o&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=14">Tuple
+                trong Python</a></td>
+            <td>
+              <p>Trả về nhiều giá trị.</p>
+              <p>Gán nhiều giá trị cho nhiều biến một lúc.</p>
+            </td>
+          </tr>
+          <tr>
+            <td>15</td>
+            <td><a href="https://www.youtube.com/watch?v=gw9zbl2Q7r4&amp;index=15&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg">Hashable
+                và Unhashable trong Python</a></td>
+            <td>
+              <p>Hàm id.</p>
+              <p> </p>
+            </td>
+          </tr>
+          <tr>
+            <td>16</td>
+            <td><a href="https://www.youtube.com/watch?v=S-CWHkKiOBs&amp;index=16&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg">Set
+                trong Python</a></td>
+            <td>
+              <p>Không chứa unhashable như list.</p>
+              <p> </p>
+            </td>
+          </tr>
+          <tr>
+            <td>17</td>
+            <td><a href="https://www.youtube.com/watch?v=zFDTmZjJFws&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=17">Dict
+                trong Python p1</a></td>
+            <td>
+              <p>Giới thiệu dict.</p>
+              <p> </p>
+            </td>
+          </tr>
+          <tr>
+            <td>18</td>
+            <td><a href="https://www.youtube.com/watch?v=jmwBKuJl2Zg&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=18">Dict
+                trong Python p2</a></td>
+            <td>
+              <p>Các phương thức của dict (items, keys).</p>
+              <p> </p>
+            </td>
+          </tr>
+          <tr>
+            <td>19</td>
+            <td><a href="https://www.youtube.com/watch?v=6J8-jkoRBXw&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=19">File
+                trong Python</a></td>
+            <td>
+              <p>Gần giống C.</p>
+              <p>Không nhiều loại như Java.</p>
+              <p> </p>
+            </td>
+          </tr>
+          <tr>
+            <td>20</td>
+            <td><a href="https://www.youtube.com/watch?v=GSUwh958k_A&amp;t=0s&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=20">Iteration
+                trong Python</a></td>
+            <td>
+              <p>Có hàm sorted, min, max giống kiểu lập trình hàm.</p>
+              <p> </p>
+            </td>
+          </tr>
+          <tr>
+            <td>21</td>
+            <td><a href="https://www.youtube.com/watch?v=rhOyCSIf1is&amp;t=0s&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=21">Hàm
+                xuất trong Python</a></td>
+            <td>
+              <p>Hàm print</p>
+              <p> </p>
+            </td>
+          </tr>
+          <tr>
+            <td>22</td>
+            <td><a href="https://www.youtube.com/watch?v=rK4MphZVhDM&amp;t=0s&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=22">Hàm
+                nhập trong Python</a></td>
+            <td>
+              <p>Hàm input.</p>
+              <h1> </h1>
+            </td>
+          </tr>
+          <tr>
+            <td>23</td>
+            <td><a href="https://www.youtube.com/watch?v=iB9EhSZvfFk&amp;t=0s&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=23">Kiểu
+                Boolean trong Python</a></td>
+            <td>
+              <p>Các giá trị rỗng (xâu, list), giá trị không cũng là False.</p>
+              <p> </p>
+            </td>
+          </tr>
+          <tr>
+            <td>24</td>
+            <td><a href="https://www.youtube.com/watch?v=4_Jb1xZsDJ8&amp;t=0s&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;index=24">Cấu
+                trúc rẽ nhánh trong Python</a></td>
+            <td>
+              <p>Cấu trúc if..., if...else..., if...<strong>elif</strong>...else.</p>
+              <p> </p>
+            </td>
+          </tr>
+          <tr>
+            <td>25</td>
+            <td><a href="https://www.youtube.com/watch?v=wq7Th3nXyCQ&amp;list=PL33lvabfss1xczCv2BA0SaNJHu_VXsFtg&amp;t=0s&amp;index=25">While
+                Loop trong Python</a></td>
+            <td>
+              <p>break, continue</p>
+              <p> </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Tôi sẽ không <em>reinvent the wheel</em>. Không nên, không tốn thời
+        gian để tự làm các hướng dẫn này (không có thời gian nữa).</p>
+      <p>Tôi sẽ viết các bài viết mà ít có hướng dẫn tiếng Việt hơn như:</p>
+      <ul>
+        <li>Hàm, truyền tham số là hàm như JavaScript</li>
+        <li>Class</li>
+        <li>Unit test</li>
+        <li>Xử lý ngoại lệ</li>
+        <li>Regular Expression</li>
+        <li>Multithreading</li>
+        <li>XML processing</li>
+        <li>JSON processing</li>
+        <li>Excel processing</li>
+        <li>File IO</li>
+        <li>Truyền hàm</li>
+        <li>Database</li>
+        <li>Các thư viện hữu ích</li>
+        <li>Logging</li>
+      </ul>
+      <p></p>
+      <p>---------</p>
+      <p>Không đọc những cái khác nữa (lặp lại, tốn thời gian)</p>
+      <p>Python rất là cơ bản ebook</p>
+      <p>https://o7planning.org/vi/11377/python</p>
+      <p>https://www.tutorialspoint.com/python/python_reg_expressions.htm</p>
+      <p>Các bài viết của tôi sẽ ngắn gọn hơn.</p>
+      <p>Lệnh pip toàn phải thêm tham số --user thì mới chạy được.</p>
+      <p><br>
+      </p>
+      <script>
+      var isShow = true;
+      var toggleButton = document.querySelector("#toggleButton");
+      var notes = document.querySelectorAll("#courseLessons td:nth-child(3)");
+      
+      function toggleNotes() {
+        isShow = !isShow;
+        notes.forEach(e => e.style.display = isShow ? "" : "none");
+        toggleButton.textContent = isShow ? "(Ẩn)" : "(Hiện)";
+      }
+      
+      toggleButton.addEventListener("click", toggleNotes);
+
+      toggleNotes();
+    </script> </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

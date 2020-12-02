@@ -1,0 +1,23 @@
+.badge-label {
+    position: absolute;
+    top: 0px;
+    right: 7px;
+    text-align: center;
+    font-size: 9px;
+    padding: 2px 5px;
+    line-height: .9;
+}
+
+/* Ẩn caret */
+.no-caret-right-down::after {
+    display: none;
+}
+
+.caret-up {
+    display: inline-block;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid #FFF; /* cùng màu background của .dropdown-menu */
+    position: absolute;
+    bottom: 100%;
+}

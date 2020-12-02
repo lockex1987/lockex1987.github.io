@@ -1,0 +1,49 @@
+.context-menu {
+    width: 120px;
+    z-index: 10;
+    background-color: #FFFF;
+    box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
+    border: 1px solid lightgray;
+    position: absolute;
+    padding: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+
+    &.open {
+        opacity: 1;
+        visibility: visible;
+        transition: none;
+    }
+
+    .context-menu-content {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        .context-menu-option {
+            display: block;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 10px 40px 10px 20px;
+            cursor: pointer;
+            color: #222;
+
+            &:hover {
+                background-color: tomato;
+                color: white;
+            }
+        }
+    }
+}
+
+.context-menu-trigger {
+    background-color: #AAA;
+    padding: 20px;
+    margin-bottom: 5px;
+    border: 1px solid #555;
+
+    &.selected {
+        background-color: #A0A;
+    }
+}

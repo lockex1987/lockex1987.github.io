@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="sso, cookie, session, login">
+    <title>Single Sign-on Laravel</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Single Sign-on Laravel</h2>
+      <h3>Ứng dụng Passport</h3>
+      <p>Khởi tạo dự án:</p>
+      <pre>composer create-project --prefer-dist laravel/laravel passport<br>cd passport</pre>
+      <p>Chúng ta cũng dựa vào đăng nhập mặc định của Laravel.</p>
+      <pre>php artisan make:auth</pre>
+      <p>Lệnh trên sẽ sửa file <code>routes/web.php</code>, sửa một số file <code>blade.php</code>.</p>
+      <p>Nhưng chúng ta sẽ không có đăng ký (vẫn có reset password), do đó chúng
+        ta khai báo như sau ở <code>routes/web.php</code>:</p>
+      <pre>&lt;?php
+
+Route::get('/', function() {
+    return view('welcome');
+});
+
+Route::get('/home', 'HomeController@index')-&gt;name('home');
+
+//Auth::routes();
+
+Route::get('login', 'Auth\LoginController@showLoginForm')-&gt;name('login');
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\LoginController@logout')-&gt;name('logout');
+
+Route::get('logout-sso', 'Auth\LoginController@logoutSso');
+
+Route::post('check-login-code', 'Auth\LoginController@checkLoginCode');
+Route::post('check-logout-code', 'Auth\LoginController@checkLogoutCode');
+
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')-&gt;name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')-&gt;name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')-&gt;name('password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset')-&gt;name('password.update');</pre>
+      <p>Chuẩn bị database có tên là passport:</p>
+      <pre>create database passport;</pre>
+      <p>Sửa cấu hình DB ở file <code>.env</code> và chạy migrate:</p>
+      <pre>php artisan migrate</pre>
+      <p>Chúng ta cũng thêm luôn một người dùng test bằng cách sau:</p>
+      <pre>php artisan make:seeder UsersTableSeeder</pre>
+      <p>Sửa nội dung file <code>UsersTableSeeder.php</code>:</p>
+      <pre>&lt;?php
+use Illuminate\Database\Seeder;
+use App\User as User;
+
+class UsersTableSeeder extends Seeder<br>{
+
+    public function run() {
+        User::create([
+            'name' =&gt; 'lockex1987',
+            'email' =&gt; 'lockex1987@gmail.com',
+            'password' =&gt; Hash::make('abc123a@')
+        ]);
+    }
+}</pre>
+      <p>Chạy tiếp lệnh đẩy dữ liệu:</p>
+      <pre>php artisan db:seed --class=UsersTableSeeder</pre>
+      <p>Chúng ta thêm bảng <code>sso_app</code> như sau:</p>
+      <pre>CREATE TABLE sso_app (
+    id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(191),
+    secret VARCHAR(100),
+    login_redirect TEXT,
+    logout_redirect TEXT,
+    PRIMARY KEY (id)
+)
+COLLATE='utf8_unicode_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=1;</pre>
+      <p>Thêm dữ liệu test:</p>
+      <pre>INSERT INTO sso_app (<br>    id,<br>    name,<br>    secret,<br>    login_redirect,<br>    logout_redirect<br>)<br>VALUES (<br>    1,<br>    'consumer.cttd.tk',<br>    '123',<br>    'http://consumer.cttd.tk/login-callback',<br>    'http://consumer.cttd.tk/logout-callback'<br>);</pre>
+      <p>Có thể thấy ở file <code>routes/web.php</code> chúng ta thêm 2 route
+        POST mới. Nhưng hai route này sẽ không cần bảo vệ CSRF, do đó thêm 2
+        exception vào <code>VerifyCsrfToken.php</code> ở <code>app/Http/Middleware</code>:</p>
+      <pre>protected $except = [
+    'check-login-code',
+    'check-logout-code'
+];</pre>
+      <p>Sửa hết LoginController như <a href="LoginController.php">file này</a>.</p>
+      <p>Chúng ta có dùng Redis để lưu tạm các code. Cài đặt Redis cho Laravel
+        như sau:</p>
+      <pre>composer require predis/predis</pre>
+      <p>Nếu người dùng đã đăng nhập hoặc đăng nhập thành công thì forward về
+        trang của consumer.cttd.tk.</p>
+      <p>Nếu người dùng chưa đăng nhập thì hiển thị trang đăng nhập.</p>
+      <p>Session passport trong 2 tiếng</p>
+      <p>Sửa <code>login.blade.php</code>, thêm trường sau:</p>
+      <pre>&lt;input type="hidden" name="app" value="{{ $app }}"&gt;</pre>
+      <h3>Ứng dụng Consumer</h3>
+      <p>Vào trang đăng nhập thì redirect đến trang passport.cttd.tk/login. Khi
+        đăng xuất Consumer thì cũng đăng xuất Passport.</p>
+      <p>Khởi tạo dự án:</p>
+      <pre>composer create-project --prefer-dist laravel/laravel consumer<br>cd consumer</pre>
+      <p>Consumer có DB riêng:</p>
+      <pre>CREATE DATABASE consumer;</pre>
+      <p>Consumer vẫn phải có bảng <code>User</code>, nhưng có cấu trúc gọn
+        hơn. Chỗ Laravel Authentication vẫn cần trường <code>remember_token</code>
+        :(. Trong phương thức logout hình như vẫn có thao tác xóa trường <code>remember_token</code>.</p>
+      <pre>CREATE TABLE `users` (
+    `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(191) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+    `email` VARCHAR(191) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+    `remember_token` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `users_email_unique` (`email`)
+)
+COLLATE='utf8mb4_unicode_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=1;</pre>
+      <p>Đổi cấu hình DB ở file <code>.env</code>.</p>
+      <p>Sửa file <code>User.php</code> như sau:</p>
+      <pre>&lt;?php
+
+namespace App;
+
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class User extends Authenticatable
+{
+    use Notifiable;
+
+    protected $fillable = [
+        'name', 'email'
+    ];
+
+    protected $hidden = [
+        
+    ];
+
+    public $timestamps = false;
+}</pre>
+      <p>Thêm các chức năng đăng nhập cho Consumer:</p>
+      <pre>php artisan make:auth</pre>
+      <p>Xóa thư mục <code>resources/views/auth</code>.</p>
+      <p>Xóa thư mục <code>app/Http/Controllers/Auth</code>.</p>
+      <p>Thêm file <a href="ConsumerLoginController.php">ConsumerLoginController.php</a>.</p>
+      <p>Thêm file <a href="Sso.php">Sso.php</a> ở <code>app/Helpers</code>.</p>
+      <p>File <code>.env</code> thêm các cấu hình sau: </p>
+      <pre>SSO_CONSUMER_DOMAIN=consumer.cttd.tk<br>SSO_PASSPORT_URL=http://passport.cttd.tk</pre>
+      <p>File <code>config/services.php</code> thêm các cấu hình sau:</p>
+      <pre>'sso' =&gt; [
+    'consumerDomain' =&gt; env('SSO_CONSUMER_DOMAIN'),
+    'passportUrl' =&gt; env('SSO_PASSPORT_URL')
+]</pre>
+      <p>Sửa file <code>routes/web.php</code>, bỏ các đường dẫn như đăng ký,
+        reset mật khẩu, thêm 4 route phục vụ đăng nhập và đăng xuất như sau:</p>
+      <pre>Route::get('/', function() {
+    return view('welcome');
+});
+//Route::get('/', 'HomeController@index');
+
+Route::get('/home', 'HomeController@index')-&gt;name('home');
+
+Route::get('/login', 'ConsumerLoginController@login')-&gt;name('login');
+Route::post('/logout', 'ConsumerLoginController@logout')-&gt;name('logout');
+Route::get('/login-callback', 'ConsumerLoginController@loginCallback');
+Route::get('/logout-callback', 'ConsumerLoginController@logoutCallback');</pre>
+      <p>Kiểm tra lại các route:</p>
+      <pre>php artisan route:list</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

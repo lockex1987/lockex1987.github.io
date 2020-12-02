@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+      <html lang="vi">
+        <head>
+          <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta name="description" content="Kéo thả danh sách dạng cây, tree">
+          <title>Nestable</title>
+          <link rel="icon" href="../../images/favicon.png">
+          <link rel="stylesheet" href="../../css/style.css">
+		  
+          <link rel="stylesheet" href="css/style.css">
+        </head>
+        <body>
+          <article>
+            <h2>Nestable</h2>
+            <p>Kéo thả danh sách dạng cây với chuột hoặc touch.</p>
+            <p><a href="https://github.com/dbushell/Nestable" target="_blank">Thư
+                viện trên GitHub</a></p>
+            <h3>Cách sử dụng</h3>
+            <p>Mã HTML dạng như sau:</p>
+            <pre class="out-of-box">&lt;div class="dd"&gt;
+    &lt;ol class="dd-list"&gt;
+        &lt;li class="dd-item" data-id="1"&gt;
+            &lt;div class="dd-handle"&gt;Item 1&lt;/div&gt;
+        &lt;/li&gt;
+        &lt;li class="dd-item" data-id="2"&gt;
+            &lt;div class="dd-handle"&gt;Item 2&lt;/div&gt;
+        &lt;/li&gt;
+        &lt;li class="dd-item" data-id="3"&gt;
+            &lt;div class="dd-handle"&gt;Item 3&lt;/div&gt;
+            &lt;ol class="dd-list"&gt;
+                &lt;li class="dd-item" data-id="4"&gt;
+                    &lt;div class="dd-handle"&gt;Item 4&lt;/div&gt;
+                &lt;/li&gt;
+                &lt;li class="dd-item" data-id="5"&gt;
+                    &lt;div class="dd-handle"&gt;Item 5&lt;/div&gt;
+                &lt;/li&gt;
+            &lt;/ol&gt;
+        &lt;/li&gt;
+    &lt;/ol&gt;
+&lt;/div&gt;</pre>
+            <p>Chú ý các phần tử:</p>
+            <pre>div.dd<br>    ol.dd-list<br>        li.dd-item<br>            div.dd-handle</pre>
+      <p>Thêm thuộc tính <code>data-id</code> vào <code>li.dd-item</code>.<br>Sau đó khởi tạo như sau:</p>
+      <pre>$('.dd').nestable({ /* config options */ });</pre>
+      <h3>Các sự kiện</h3>
+      <p>Sự kiện <code>change</code> được kích hoạt khi các phần tử được sắp xếp lại.</p>
+      <pre>$('.dd').on('change', () =&gt; {
+    /* on change event */
+});</pre>
+      <h3>Phương thức</h3>
+      <p>Bạn có thể lấy ra đối tượng với các thuộc tính <code>data-*</code> bằng cách như
+        sau:</p>
+      <pre>$('.dd').nestable('serialize');</pre>
+      <p>Ví dụ kết quả:</p>
+      <pre><code style="box-sizing: border-box; font-family: SFMono-Regular, Consolas, &quot;Liberation Mono&quot;, Menlo, monospace; font-size: 13.6px; padding: 0px; margin: 0px; background: initial; border-radius: 3px; word-break: normal; white-space: pre; border: 0px; display: inline; overflow: visible; line-height: inherit; overflow-wrap: normal;">[<br>    { "id": 1 },<br>    { "id": 2 },<br>    {<br>        "id": 3,<br>        "children": [<br>            { "id": 4 },<br>            { "id": 5 }<br>        ]<br>     }<br>]</code></pre>
+      <h3>Cấu hình</h3>
+	  <div class="out-of-box">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Cấu hình</th>
+            <th>Mô tả</th>
+            <th>Mặc định</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>maxDepth</code><br>
+            </td>
+            <td>Số cấp nhiều nhất có thể lồng nhau<br>
+            </td><td>5</td>
+          </tr>
+          <tr>
+            <td><code>group</code><br>
+            </td>
+            <td>ID của nhóm để cho phép kéo thả giữa các nhóm<br>
+            </td><td>0</td>
+          </tr>
+          <tr>
+            <td><code>listNodeName</code><br>
+            </td>
+            <td><br>
+            </td><td><br></td>
+          </tr>
+          <tr>
+            <td><code>itemNodeName</code><br>
+            </td>
+            <td><br>
+            </td><td><br></td>
+          </tr><tr><td><code>rootClass</code></td><td><br></td><td><br></td></tr><tr><td><code>listClass</code></td><td><br></td><td><br></td></tr><tr><td><code>itemClass</code></td><td><br></td><td><br></td></tr><tr><td><code>dragClass</code></td><td><br></td><td><br></td></tr><tr><td><code>handleClass</code></td><td><br></td><td><br></td></tr><tr><td><code>collapsedClass</code></td><td><br></td><td><br></td></tr><tr><td><code>placeClass</code></td><td><br></td><td><br></td></tr><tr><td><code>emptyClass</code></td><td><br></td><td><br></td></tr><tr><td><code>expandBtnHTML</code></td><td><br></td><td><br></td></tr><tr><td><code>collapseBtnHTML</code></td><td><br></td><td><br></td></tr>
+        </tbody>
+      </table>
+	  </div>
+      <h3>Demo</h3>
+      
+
+        
+      
+        <div class="dd mb-2" id="nestable1">
+          <ol class="dd-list">
+            <li class="dd-item" data-id="1">
+              <div class="dd-handle">Item 1</div>
+            </li>
+            <li class="dd-item" data-id="2">
+              <div class="dd-handle">Item 2</div>
+              <ol class="dd-list">
+                <li class="dd-item" data-id="3">
+                  <div class="dd-handle">Item 3</div>
+                </li>
+                <li class="dd-item" data-id="4">
+                  <div class="dd-handle">Item 4</div>
+                </li>
+                <li class="dd-item" data-id="5">
+                  <div class="dd-handle">Item 5</div>
+                  <ol class="dd-list">
+                    <li class="dd-item" data-id="6">
+                      <div class="dd-handle">Item 6</div>
+                    </li>
+                    <li class="dd-item" data-id="7">
+                      <div class="dd-handle">Item 7</div>
+                    </li>
+                    <li class="dd-item" data-id="8">
+                      <div class="dd-handle">Item 8</div>
+                    </li>
+                  </ol>
+                </li>
+                <li class="dd-item" data-id="9">
+                  <div class="dd-handle">Item 9</div>
+                </li>
+                <li class="dd-item" data-id="10">
+                  <div class="dd-handle">Item 10</div>
+                </li>
+              </ol>
+            </li>
+            <li class="dd-item" data-id="11">
+              <div class="dd-handle">Item 11</div>
+            </li>
+            <li class="dd-item" data-id="12">
+              <div class="dd-handle">Item 12</div>
+            </li>
+          </ol>
+        </div>
+
+        
+      
+    
+
+      <p>Output của danh sách:</p>
+      <pre id="nestable1Output"></pre>
+
+      <h3>Demo handle kéo thả riêng</h3>
+      <p>Chỉ cần tách <code>.dd-handle</code> ra phần tử riêng. Không cần thay đổi code JS.</p>
+
+      
+        
+
+        <div class="dd" id="nestable3">
+          <ol class="dd-list">
+            <li class="dd-item dd3-item" data-id="13">
+              <div class="dd-handle dd3-handle">Drag</div>
+              <div class="dd3-content">Item 13</div>
+            </li>
+            <li class="dd-item dd3-item" data-id="14">
+              <div class="dd-handle dd3-handle">Drag</div>
+              <div class="dd3-content">Item 14</div>
+            </li>
+            <li class="dd-item dd3-item" data-id="15">
+              <div class="dd-handle dd3-handle">Drag</div>
+              <div class="dd3-content">Item 15</div>
+              <ol class="dd-list">
+                <li class="dd-item dd3-item" data-id="16">
+                  <div class="dd-handle dd3-handle">Drag</div>
+                  <div class="dd3-content">Item 16</div>
+                </li>
+                <li class="dd-item dd3-item" data-id="17">
+                  <div class="dd-handle dd3-handle">Drag</div>
+                  <div class="dd3-content">Item 17</div>
+                </li>
+                <li class="dd-item dd3-item" data-id="18">
+                  <div class="dd-handle dd3-handle">Drag</div>
+                  <div class="dd3-content">Item 18</div>
+                </li>
+              </ol>
+            </li>
+          </ol>
+        </div>
+      
+      
+    </article>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="js/jquery.nestable.js"></script>
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+</body></html>

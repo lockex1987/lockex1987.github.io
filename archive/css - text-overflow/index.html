@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="text-overflow, line-clamp">
+    <title>Hiển thị dấu ba chấm khi text quá dài</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <article>
+        <h2>Hiển thị dấu ba chấm khi text quá dài</h2>
+        <h3>Một dòng, sử dụng text-overflow</h3>
+
+        <p>Vì <code>text-overflow</code> yêu cầu <code>white-space: nowrap</code> và <code>overflow: hidden</code> nên
+            chúng ta chỉ có thể hiển thị trên một
+            dòng.</p>
+
+        <div class="demo-box text-overflow-ellipsis">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit
+            minus autem ipsam alias reprehenderit
+            beatae ut fugiat,
+            qui officia aspernatur nam quod, rerum eos? Ex nobis tempore omnis, laudantium quasi.
+        </div>
+
+        <h3>Nhiều dòng, sử dụng line-clamp</h3>
+
+        <div class="demo-box">
+            <div class="line-clamp-ellipsis">
+                Hey, don't cut me off like that. I want to speak my mind and don't appreciate being put into a box.
+            </div>
+        </div>
+
+        <p>Rất hữu ích với danh sách các tin, có tiêu đề tin và mô tả của tin và link "Đọc thêm". Chúng ta có thể giới
+            hạn số dòng mô tả của tin.</p>
+
+        <h3>Nhiều dòng, sử dụng CSS</h3>
+        <div class="demo-box">
+            <p class="demo-boxx block-with-text">
+                The Hitch Hiker's Guide to the Galaxy has a few things to say on the
+                subject of
+                towels. A towel, it says, is about the
+                most massivelyuseful thing an interstellar hitch hiker can have. Partly it has great practical value -
+                you
+                can wrap it
+                around you for warmth as you bound across the cold moons of Jaglan Beta; you can lie on it on the
+                brilliant
+                marble-sanded
+                beaches of Santraginus V, inhaling the heady sea vapours; you can sleep under it beneath the stars which
+                shine so redly
+                on the desert world of Kakrafoon; use it to sail a mini raft down the slow heavy river Moth; wet it for
+                use
+                in hand-to-hand-combat;
+                wrap it round your head to ward off noxious fumes or to avoid the gaze of the Ravenous Bugblatter Beast
+                of
+                Traal (a mindboggingly
+                stupid animal, it assumes that if you can't see it, it can't see you - daft as a bush, but very
+                ravenous);
+                you can wave
+                your towel in emergencies as a distress signal, and of course dry yourself off with it if it still seems
+                to
+                be clean
+                enough. More importantly, a towel has immense psychological value. For some reason, if a strag (strag:
+                non-hitch hiker)
+                discovers that a hitch hiker has his towel with him, he will automatically assume that he is also in
+                possession of a
+                toothbrush, face flannel, soap, tin of biscuits, flask, compass, map, ball of string, gnat spray, wet
+                weather gear, space
+                suit etc., etc. Furthermore, the strag will then happily lend the hitch hiker any of these or a dozen
+                other
+                items that
+                the hitch hiker might accidentally have "lost". What the strag will think is that any man who can hitch
+                the
+                length and
+                breadth of the galaxy, rough it, slum it, struggle against terrible odds, win through, and still knows
+                where
+                his towel
+                is is clearly a man to be reckoned with.
+            </p>
+        </div>
+
+        <div class="demo-box">
+            <p class="demo-boxx block-with-text">Small text, without dottes.</p>
+        </div>
+        <div class="demo-box">
+            <p class="demo-boxx block-with-text">2.5 lines example: A towel is about the most massively useful
+                thing an interstellar hitch hiker can have
+            </p>
+        </div>
+        <h3>Tham khảo</h3>
+        <p>
+            <a href="http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/" target="_blank">
+                http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation
+            </a>
+        </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

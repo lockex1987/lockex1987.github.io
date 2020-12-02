@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Laravel Excel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta name="description" content="Laravel Excel, import, export">
+  </head>
+  <body>
+    <article>
+      <h2>Laravel Excel</h2>
+      <p>Laravel Excel có nhiều phiên bản, các phiên bản không tương thích lẫn
+        nhau. Chúng ta sẽ tìm hiểu phiên bản hiện tại: 3.1.</p>
+      <p>Laravel Excel thực chất chỉ là wrapper của thư viện PhpSpreadsheet.</p>
+      <h3>Cài đặt</h3>
+      <p> Cài đặt với composer:</p>
+      <pre>composer create-project --prefer-dist laravel/laravel laravel-excel
+cd laravel-excel
+composer require maatwebsite/excel</pre>
+      <h3>Khởi tạo DB</h3>
+      <p>Tạo database mới trong MySQL:</p>
+      <pre>create database laravel_excel;</pre>
+      <p>Chỉnh cấu hình DB ở file <code>.env</code>.</p>
+      <p>Migrate dữ liệu để tạo bảng users.</p>
+      <pre>php artisan migrate</pre>
+      <h3>Import và Export</h3>
+      <p>Tạo lớp Import mới: </p>
+      <pre>php artisan make:import UsersImport --model=User</pre>
+      <p>Câu lệnh sẽ tạo file <code>UsersImport.php</code> trong thư mục <code>app/Imports</code>.</p>
+      <p>UsersImport.php</p>
+      <pre>&lt;?php
+namespace App\Imports;
+
+use App\User;
+use Maatwebsite\Excel\Concerns\ToModel;
+
+class UsersImport implements ToModel
+{
+    public function model(array $row)
+    {
+        return new User([
+            'name'     =&gt; $row[0],
+            'email'    =&gt; $row[1],
+            'password' =&gt; bcrypt($row[2])
+        ]);
+    }
+}</pre>
+      <p>Tạo lớp Export mới:</p>
+      <pre>php artisan make:export UsersExport --model=User</pre>
+      <p>Câu lệnh sẽ tạo file <code>UsersExport.php</code> ở thư mục <code>app/Exports</code>.</p>
+      <p>UsersExport.php</p>
+      <pre>&lt;?php
+namespace App\Exports;
+
+use App\User;
+use Maatwebsite\Excel\Concerns\FromCollection;
+
+class UsersExport implements FromCollection
+{
+    /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function collection()
+    {
+        return User::all();
+    }
+}</pre>
+      <p>Tạo Controller:</p>
+      <pre>php artisan make:controller UsersController</pre>
+      <p>UsersController.php</p>
+      <pre>&lt;?php
+namespace App\Http\Controllers;
+
+use App\Imports\UsersImport;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
+
+class UsersController extends Controller
+{
+    public function export() 
+    {
+        return Excel::download(new UsersExport(), 'users.xlsx');
+    }
+    
+    public function import() 
+    {
+        Excel::import(new UsersImport, request()-&gt;file('file'));
+        return redirect('/')-&gt;with('success', 'All good!');
+    }
+}</pre>
+      <p>Khai báo route ở <code>web.php</code>:</p>
+      <pre>Route::get('excel', 'UsersController@excelView');
+Route::get('export', 'UsersController@export')-&gt;name('export');
+Route::post('import', 'UsersController@import')-&gt;name('import');</pre>
+      <p>Tạo file view <code>resources/views/excel.blade.php</code>:</p>
+      <pre>x</pre>
+      <p>Chạy ứng dụng:</p>
+      <pre>php artisan serve</pre>
+      <p>Kiểm tra:</p>
+      <p><a target="_blank" href="http://localhost:8000/excel">localhost:8000/excel</a></p>
+      <p>File mẫu:</p>
+      <p><a target="_blank" href="UsersImport.php">UsersImport.php</a></p>
+      <p><a target="_blank" href="UsersExport.php">UsersExport.php</a></p>
+      <p><a target="_blank" href="UsersController.php">UsersController.php</a></p>
+      <p><a target="_blank" href="excel.blade.php">excel.blade.php</a></p>
+      <p><a target="_blank" href="users.blade.php">users.blade.php</a></p>
+      <h3>Validate Import </h3>
+      Validate và hiển thị lỗi.<br>
+      Hiển thị import thành công.<br>
+      Bỏ qua dòng header.<br>
+      <h3>Tham khảo </h3>
+      <p><a target="_blank" href="https://laravel-excel.com/">laravel-excel.com</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

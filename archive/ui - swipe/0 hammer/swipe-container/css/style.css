@@ -1,0 +1,210 @@
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-height: 100%;
+}
+
+.bg1,
+.green {
+  background: #42d692;
+}
+
+.bg2,
+.blue {
+  background: #4986e7;
+}
+
+.bg3,
+.red {
+  background: #d06b64;
+}
+
+.bg4,
+.purple {
+  background: #cd74e6;
+}
+
+.bg5,
+.azure {
+  background: #9fe1e7;
+}
+
+.panes {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.panes.wrapper {
+  max-width: 960px;
+  background: #666;
+  margin: 40px auto;
+}
+.panes.animate > .pane {
+  transition: all 0.3s;
+}
+.panes .pane {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  text-align: center;
+  font: bold 60px/250px 'Open Sans', Helvetica, Arial, sans-serif;
+  color: #fff;
+}
+
+/*
+
+Table Row Stuff
+
+*/
+.table-row {
+  position: relative;
+  overflow: hidden;
+  cursor: move;
+}
+
+.table-row__actions {
+  overflow: hidden;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  transition: -webkit-transform 300ms ease-out;
+  transition: transform 300ms ease-out;
+  transition: transform 300ms ease-out, -webkit-transform 300ms ease-out;
+  will-change: transform;
+  z-index: 0;
+  width: auto;
+}
+
+.table-row__actions__button {
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 0;
+  color: #fff !important;
+  border-radius: 0;
+  padding: 2px 15px;
+  min-width: 75px;
+}
+
+.table-row__actions__button i {
+  display: block;
+}
+
+.table-row__actions .btn-delete {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  transition: background-color 0.2s linear;
+  background-color: #e53838;
+  border: none;
+  outline: none;
+}
+
+.table-row__actions .btn-delete:active {
+  background-color: #a21515;
+}
+
+.table-row__actions .btn-delete:hover {
+  background-color: #b81818;
+}
+
+.table-row__actions .btn-flag {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  transition: background-color 0.2s linear;
+  background-color: #dd6b1f;
+  border: none;
+  outline: none;
+}
+
+.table-row__actions .btn-flag:active {
+  background-color: #844012;
+}
+
+.table-row__actions .btn-flag:hover {
+  background-color: #9a4b16;
+}
+
+.table-row__actions .btn-more {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  transition: background-color 0.2s linear;
+  background-color: #4364dd;
+  border: none;
+  outline: none;
+}
+
+.table-row__actions .btn-more:active {
+  background-color: #1c389e;
+}
+
+.table-row__actions .btn-more:hover {
+  background-color: #2040b3;
+}
+
+.table-row__actions .btn-info {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  transition: background-color 0.2s linear;
+  background-color: #848484;
+  border: none;
+  outline: none;
+}
+
+.table-row__actions .btn-info:active {
+  background-color: #515151;
+}
+
+.table-row__actions .btn-info:hover {
+  background-color: #5e5e5e;
+}
+
+.table-row__actions--left {
+  left: 0;
+  -webkit-transform: translateX(0%);
+          transform: translateX(0%);
+}
+
+.table-row__actions--left.is-visible {
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
+}
+
+.table-row__actions--left.is-visible .table-row__actions__button {
+  transition: width 300ms ease-out;
+  width: auto;
+}
+
+.table-row__actions--right {
+  right: 0;
+  -webkit-transform: translateX(100%);
+          transform: translateX(100%);
+}
+
+.table-row__actions--right.is-visible {
+  -webkit-transform: translateX(0%);
+          transform: translateX(0%);
+}

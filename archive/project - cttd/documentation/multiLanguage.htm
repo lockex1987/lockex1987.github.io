@@ -1,0 +1,245 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <title>Đa ngôn ngữ</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <link href="theme.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="jquery/jquery.js"></script>
+        <script>
+            function tctToggleCode(myButton) {
+                var contentDiv = $(myButton).next();
+                if (contentDiv.is(":hidden")) {
+                    myButton.innerHTML = "Ẩn";
+                    contentDiv.show();
+                } else {
+                    myButton.innerHTML = "Hiện";
+                    contentDiv.hide();
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div id="main">
+            <h3>Phần 1: Cách thực hiện đa ngôn ngữ:</h3>
+            <p>Chúng ta sẽ phải đa ngôn ngữ ở các phần sau:</p>
+            <ul>
+                <li>Menu</li>
+                <li>JSP</li>
+                <li>Java</li>
+                <li>JavaScript</li>
+                <li>Biểu mẫu báo cáo</li>
+                <li>Các giá trị hằng (VD các giá trị xác định mà mình chọn từ combobox)</li>
+            </ul>
+            <p>Các bước làm:</p>
+            <ul>
+                <li>Khai báo các message-resources ở struts-config.xml</li>
+                <li>Tạo các file properties tương ứng</li>
+                <li>Ở code java sử dụng lớp ResourceBundle (nên viết thành hàm chung ở CommonUtils.getApplicationResource)</li>
+                <li>Ở code JSP sử dụng bean:message</li>
+                <li>Ở display:column sử dụng titleKey</li>
+                <li>Tạo action đổi ngôn ngữ ở AuthenticateController</li>
+            </ul>
+            <h3>Phần 2: Convention</h3>
+            <p>Với display:table (phân trang, số bản ghi,...) thì chúng ta chỉnh ở displaytag.properties.
+                Chúng ta sẽ tập trung tất ở file ApplicationResources.
+                Nếu một file mà được phân chia rõ ràng thì kể cả dài cũng có thể kiểm soát được.
+                Chúng ta sẽ chia nó thành các phần.
+                Có các phần mà dự án nào cũng có: layout, button, action, global, import, response, title, js.
+            </p>
+            <br />
+            <br />
+            <p>layout định nghĩa bố cục giao diện chương trình, các trang điển hình.</p>
+            <button type="button" onclick="tctToggleCode(this)">Hiện</button>
+            <div class="myCode" style="display:none;">
+                layout.welcome = Đăng nhập hệ thống!<br />
+                layout.systemName = TẬP ĐOÀN VIỄN THÔNG QUÂN ĐỘI&lt;br /&gt;HỆ THỐNG BÁO CÁO TÀI CHÍNH QUẢN TRỊ<br />
+                layout.credit = Phiên bản triển khai thử nghiệm<br />
+                layout.changePassword = Đổi mật khẩu<br />
+                layout.logout = Thoát<br />
+                layout.returnHomePage = Về trang chủ<br />
+                layout.contact = Liên hệ<br />
+                layout.releaseLog = Lịch sử<br />
+                layout.help = Trợ giúp<br />
+                layout.processing = &lt;img src="/bctc/share/img/indicator.gif" alt=""/&gt;&lt;p&gt;Processing...&lt;/p&gt;<br />
+                layout.contactPeople = Đầu mối<br />
+                layout.warning = Thông báo<br />
+                layout.mailContent = Nội dung<br />
+                layout.mailTitle = Tiêu đề<br />
+                layout.mailAddress = Email<br />
+                layout.error = &lt;img src="/bctc/share/img/error.png" alt=""/&gt; Lỗi xảy ra<br />
+            </div>
+            <p>button định nghĩa các nút. Mình nên cho ảnh vào các nút này cho đẹp.</p>
+            <button type="button" onclick="tctToggleCode(this)">Hiện</button>
+            <div class="myCode" style="display:none;">
+                button.choose = &lt;img src="/bctc/share/img/button/choose.png" alt=""/&gt; Chọn<br />
+                button.close = &lt;img src="/bctc/share/img/button/close.png" alt=""/&gt; Đóng<br />
+                button.create = &lt;img src="/bctc/share/img/button/add.png" alt=""/&gt; Thêm mới<br />
+                button.update = &lt;img src="/bctc/share/img/button/save.png" alt=""/&gt; Cập nhật<br />
+                button.import = &lt;img src="/bctc/share/img/button/import.png" alt=""/&gt; Nhập dữ liệu<br />
+                button.delete = &lt;img src="/bctc/share/img/button/delete.png" alt=""/&gt; Xóa<br />
+                button.report = &lt;img src="/bctc/share/img/button/export.png" alt=""/&gt; Báo cáo<br />
+                button.viewHistory = &lt;img src="/bctc/share/img/button/export.png" alt=""/&gt; Xem lịch sử<br />
+                button.save = &lt;img src="/bctc/share/img/button/save.png" alt=""/&gt; Ghi lại<br />
+                button.search = &lt;img src="/bctc/share/img/button/search.png" alt=""/&gt; Tìm kiếm<br />
+                button.add = &lt;img src="/bctc/share/img/button/add.png" alt=""/&gt; Bổ sung<br />
+                button.addToList = &lt;img src="/bctc/share/img/button/add.png" alt=""/&gt; Thêm vào danh sách<br />
+                button.removeFromList = &lt;img src="/bctc/share/img/button/delete.png" alt=""/&gt; Loại khỏi danh sách<br />
+                button.confirm = &lt;img src="/bctc/share/img/button/confirm.png" alt=""/&gt; Xác nhận<br />
+                button.unconfirm = &lt;img src="/bctc/share/img/button/unconfirm.png" alt=""/&gt; Bỏ xác nhận<br />
+                button.deny = &lt;img src="/bctc/share/img/button/delete.png" alt=""/&gt; Từ chối<br />
+                button.lock = &lt;img src="/bctc/share/img/button/lock.png" alt=""/&gt; Khóa<br />
+                button.unlock = &lt;img src="/bctc/share/img/button/unlock.png" alt=""/&gt; Bỏ khóa<br />
+                button.addProcess = &lt;img src="/bctc/share/img/button/add.png" alt=""/&gt; Thêm quá trình<br />
+                button.cancel = &lt;img src="/bctc/share/img/button/close.png" alt=""/&gt; Quay lại<br />
+                button.viewDetail = &lt;img src="/bctc/share/img/button/export.png" alt=""/&gt; Xem chi tiết<br />
+                button.login = &lt;img alt="" src="/bctc/share/img/button/add.png"&gt; Đăng nhập<br />
+                button.sendMail = &lt;img src="/bctc/share/img/button/mail.png" alt=""/&gt; Gửi mail<br />
+                button.sendError = &lt;img src="/bctc/share/img/button/mail.png" alt=""/&gt; Thông báo lỗi<br />
+            </div>
+            <p>action định nghĩa các hành động (table header, tooltip).</p>
+            <button type="button" onclick="tctToggleCode(this)">Hiện</button>
+            <div class="myCode" style="display:none;">
+                action.create = Thêm mới<br />
+                action.delete = Xóa<br />
+                action.update = Cập nhật<br />
+                action.viewDetail = Xem chi tiết<br />
+                action.viewHistory = Xem lịch sử<br />
+                action.viewTree = Xem theo hình cây<br />
+                action.choose = Chọn<br />
+                action.remove = Loại bỏ<br />
+                action.addAndRemove = Thêm/Xóa<br />
+                action.resetPassword = Đổi mật khẩu<br />
+            </div>
+            <p>Global, được sử dụng chung (form, legend, không biết chia vào nhóm nào nữa).</p>
+            <button type="button" onclick="tctToggleCode(this)">Hiện</button>
+            <div class="myCode" style="display:none;">
+                global.selectAllCbo = --- Chọn tất cả ---<br />
+                global.selectCbo = --- Chọn ---<br />
+                global.fromDate = Từ ngày<br />
+                global.toDate = Đến ngày<br />
+                global.mandatoryNote = &lt;font color="red" size="2"&gt;*&lt;/font&gt;<br />
+                global.basicSearch = Tìm kiếm cơ bản<br />
+                global.advanceSearch = Tìm kiếm nâng cao<br />
+                global.reportDate = Thời điểm lấy báo cáo<br />
+                global.reportType = Loại báo cáo<br />
+                global.reportInfo = Thông tin báo cáo<br />
+                global.attachmentFile = Đính kèm file<br />
+                global.fileName = Tên file<br />
+                global.stt = Stt<br />
+                global.noRecordFound = &nbsp; &lt;div class="errorMessage"&gt;Không tồn tại bản ghi&lt;/div&gt;<br />
+                global.commonInfo = Thông tin chung<br />
+                global.searchInfo = Thông tin tìm kiếm<br />
+                global.searchResult = Kết quả tìm kiếm<br />
+                global.list = Danh sách<br />
+                global.info = Thông tin<br />
+                global.download = &lt;img src="/bctc/share/img/download.png" alt=""/&gt; Tải về<br />
+            </div>
+            <p>import định nghĩa các nhãn liên quan đến phần import (vì nhiều quá nên tách riêng một phần).</p>
+            <button type="button" onclick="tctToggleCode(this)">Hiện</button>
+            <div class="myCode" style="display:none;">
+                import.importInfo = Thông tin import<br />
+                import.downloadTemplate = &lt;img src="/bctc/share/img/download.png" alt=""/&gt; Tải file biểu mẫu<br />
+                import.chooseFile = Chọn file<br />
+                import.importResult = Kết quả import<br />
+                import.importError1 = Dữ liệu phải bắt đầu từ dòng {0}.<br />
+                import.importError2 = Thông tin trên file Import rỗng.<br />
+                import.importError3 = Dữ liệu có lỗi.<br />
+                import.importError4 = File không có định dạng không chuẩn (hãy bỏ qua các format đặc biệt).<br />
+                import.importError5 = Không đủ bộ nhớ (hãy loại bỏ các định dạng trong file import).<br />
+                import.importError6 = Lỗi đọc file cấu hình.<br />
+                import.importError7 = Lỗi đọc sheet của file excel.<br />
+                import.importError8 = Bạn chỉ được import tối đa {0} dòng (thực tế {1} dòng)<br />
+                import.row = Hàng<br />
+                import.column = Cột<br />
+                import.cellContent = Giá trị Excel<br />
+                import.inserting = &nbsp; Đang insert dữ liệu...<br />
+                import.insertComplete = Import thành công {0} bản ghi.<br />
+            </div>
+            <p>Phần response định nghĩa các thông báo phản hồi cho người dùng.</p>
+            <button type="button" onclick="tctToggleCode(this)">Hiện</button>
+            <div class="myCode" style="display:none;">
+                response.deleteSuccess = Xóa dữ liệu thành công<br />
+                response.saveSuccess = Lưu dữ liệu thành công<br />
+                response.resetPasswordSuccess = Đã reset mật khẩu về "%s"<br />
+                response.changePasswordSuccess = Thay đổi mật khẩu thành công<br />
+                response.sendMailSuccess = Gửi mail thành công<br />
+                response.changeStatusSuccess = Thay đổi trạng thái thành công<br />
+                response.duplicateName = Tên đã tồn tại<br />
+                response.duplicateCode = Mã đã tồn tại<br />
+                response.hasConstraint = Bản ghi đã được sử dụng<br />
+                response.conflictProcess = Quá trình giao với một quá trình khác đã tồn tại<br />
+                response.invalidParent = Bạn không được chọn cha là chính node đó hoặc node con<br />
+                response.hasChildren = Không thể xóa vì có node con<br />
+                response.recordNotExist = Bản ghi không tồn tại<br />
+                response.invalidOldPassword = Mật khẩu cũ không chính xác<br />
+                response.authenticateFailed = Đăng nhập thất bại<br />
+                response.noPermission = Bạn không có quyền thực hiện chức năng này<br />
+            </div>
+            <p>title định nghĩa menu, title của trình duyệt, phần title của layout (nếu có). VD:</p>
+            <button type="button" onclick="tctToggleCode(this)">Hiện</button>
+            <div class="myCode" style="display:none;">
+                title.category = Danh mục<br />
+                title.carCategory = Nhóm danh mục ô tô<br />
+                title.carBrand = Nhãn hiệu xe<br />
+                title.carType = Kiểu loại xe<br />
+                title.fuelType = Loại nhiên liệu<br />
+                title.car = Danh mục ô tô<br />
+                title.usageGroupCategory = Nhóm danh mục hoạt động<br />
+                title.paperStuff = Giấy tờ đồ nghề<br />
+                title.gpsDevice = Thiết bị GPS<br />
+                title.maintainIssue = Nội dung bảo dưỡng<br />
+                title.carPart = Thiết bị sửa chữa<br />
+                title.driver = Danh mục lái xe<br />
+            </div>
+            <p>Phần js chúng ta định nghĩa đa ngôn ngữ cho các file JavaScript. Chúng ta lại chia tiếp theo các file JavaScript. VD:</p>
+            <button type="button" onclick="tctToggleCode(this)">Hiện</button>
+            <div class="myCode" style="display:none;">js.viettel.saveConfirm = Bạn có muốn lưu lại thông tin?</div>
+            <p>Có một file viettel.jsp định nghĩa các hằng JavaScript.</p>
+            <button type="button" onclick="tctToggleCode(this)">Hiện</button>
+            <div class="myCode" style="display:none;">SAVE_CONFIRM = '&lt;bean:message key="js.viettel.saveConfirm"/&gt;';</div>
+            <p>Định nghĩa hàm JavaScript ở file viettel.js:</p>
+            <button type="button" onclick="tctToggleCode(this)">Hiện</button>
+            <div class="myCode" style="display:none;">
+                function tctConfirmSave() {<br />
+                &nbsp; &nbsp; &nbsp; &nbsp;return confirm(SAVE_CONFIRM);<br />
+                }<br />
+            </div>
+            <p>Có thể có phần homepage, nếu trang chủ có các thuật ngữ đặc biệt. VD:</p>
+            <button type="button" onclick="tctToggleCode(this)">Hiện</button>
+            <div class="myCode" style="display:none;">homepage.groupInfomationStatistic = Thống kê thông tin đơn vị</div>
+            <p>Tiếp theo chúng ta sẽ khai báo phần common, là các bảng trong dự án. VD:</p>
+            <button type="button" onclick="tctToggleCode(this)">Hiện</button>
+            <div class="myCode" style="display:none;">
+                common.sysResource = Tài nguyên<br />
+                common.application = Ứng dụng<br />
+                common.appDomainType = Danh sách loại miền dữ liệu<br />
+                common.domainData = Miền dữ liệu<br />
+                common.operation = Tác động<br />
+                common.permission = Quyền<br />
+                common.rolePermission = Quyền của vai trò<br />
+                common.roleMenu = Menu của vai trò<br />
+                common.sysCat = Danh mục dùng chung<br />
+                common.sysCatType = Loại danh mục dùng chung<br />
+                common.organization = Đơn vị<br />
+                common.sysRole = Vai trò<br />
+            </div>
+            <p>Tiếp theo chúng ta chia thành các phần còn lại theo các bảng, key là các cột của bảng. Các thuật ngữ đặc trưng của chức năng, các giá trị hằng cũng được định nghĩa hết ở đây. VD:</p>
+            <button type="button" onclick="tctToggleCode(this)">Hiện</button>
+            <div class="myCode" style="display:none;">
+                # Thong tin co ban giao dich<br />
+                baseTransaction.fileName = File import<br />
+                baseTransaction.importDate = Ngày import<br />
+                baseTransaction.sysUserId = Người import<br />
+                baseTransaction.duplicate = Trong một ngày chỉ được import một lần<br />
+                baseTransaction.bankImportTemplateNotFound = Ngân hàng chưa được định nghĩa biểu mẫu import<br />
+            </div>
+            <br />
+            <br />            
+            <p>Chú ý:</p>
+            <ul>
+                <li>Nên sử dụng các thuật ngữ một cách chung nhất.</li>
+                <li>Application xuống dòng, có ký tự " hoặc ' có thể gây lỗi JavaScript.</li>
+                <li>Cần có chuyên gia ngôn ngữ.</li>
+            </ul>
+        </div>
+    </body>
+</html>

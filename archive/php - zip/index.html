@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="zip, rar, extract, compress, docx">
+    <title>Thao tác với ZIP file bằng PHP</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+	
+  </head>
+  <body>
+    <article>
+      <h2>Thao tác với ZIP file bằng PHP</h2>
+      <p>Lớp <a href="http://php.net/manual/en/class.ziparchive.php" rel="external"
+          target="_blank"><code>ZipArchive</code></a> chứa nhiều các thuộc tính
+        và phương thức giúp bạn nén và giải nén file.</p>
+      <h3>Nén các file riêng lẻ</h3>
+      <p>Bạn có thể thêm từng file vào zip archive hoặc thêm cả thư mục một lúc.
+        Trong cả hai trường hợp, bước đầu tiên là tạo một đối tượng <code>ZipArchive</code>
+        và sau đó gọi phương thức <code>open($filename, [$flags])</code>.
+        Phương thức này sẽ mở một zip archive mới để đọc, ghi, hoặc chỉnh sửa.
+        Có bốn giá trị hợp lệ cho tham số tùy chọn <code>$flag</code>:</p>
+      <ul>
+        <li><code>ZipArchive::OVERWRITE</code> - Sẽ ghi đè file zip nếu nó đã
+          tồn tại</li>
+        <li><code>ZipArchive::CREATE</code> - Sẽ tạo mới một file zip nếu nó
+          chưa tồn tại</li>
+        <li><code>ZipArchive::EXCL</code> - Sẽ lỗi nếu file zip đã tồn tại</li>
+        <li><code>ZipArchive::CHECKCONS</code> - This flag will tell PHP to
+          perform additional consistency checks on the archive and give an error
+          if they fail.</li>
+      </ul>
+      <p>Nếu file zip được mở hoặc tạo thành công, phương thức trả về <code>true</code>.</p>
+      <p>Sau khi bạn đã mở file thành công, bạn có thể sử dụng phương thức <code>addFile($filename,
+          $localname, $start, $length)</code> để thêm bất cứ file nào từ đường
+        dẫn nào đó. Tham số&nbsp;<code>$filename</code> là đường dẫn đến một
+        file. Tham số <code>$localname</code> được sử dụng để chỉ định tên của
+        file ở bên trong file zip.</p>
+      <p>Sau khi bạn đã thêm tất cả các file, bạn có thể đơn giản gọi phương
+        thức <code>close()</code> để đóng và lưu các thay đổi.</p>
+      <p>Ví dụ mẫu:</p>
+      <pre>$zip = new ZipArchive();
+$zip-&gt;open('compressed/font_files.zip', ZipArchive::CREATE);
+$zip-&gt;addFile('fonts/Monoton/Monoton-Regular.ttf', 'Monoton-Regular.ttf');
+$zip-&gt;addFile('fonts/Monoton/OFL.txt', 'license.txt');
+$zip-&gt;close();</pre>
+      <h3>Nén nhiều file từ một thư mục</h3>
+      <p>Bạn có thể chỉ định tạo một file zip từ tất cả các file <strong>.pdf</strong>
+        hoặc <strong>.png</strong> trong một thư mục. Khi đó phương thức <code>addGlob($pattern,
+          $flags, $options)</code> sẽ rất hữu ích trong trường hợp này.</p>
+      <p>However, you can still influence the directory structure inside the
+        archive using the <code>$options</code> parameter. The options are
+        passed in the form of an associative array.</p>
+      <ul>
+        <li><code>add_path</code> - The value you assign to <code>add_path</code>
+          is prefixed to the local path of the file within the archive.</li>
+        <li><code>remove_path</code> - The value you assign to <code>remove_path</code>
+          is used to remove a matching prefix from the path of different files
+          which are added to the archive.</li>
+        <li><code>remove_all_path</code> - Setting the value of <code>remove_all_path</code>
+          to <code>true</code> will remove everything from the path of the file
+          besides its name. In this case, the files are added to the root of the
+          archive.</li>
+      </ul>
+      <p>It's important to remember that removal of a path is done before
+        prefixing the value specified in <code>add_path</code>. </p>
+      <p>The following code snippet will make the use of <code>addGlob()</code>
+        and all these options clearer.</p>
+      <pre>$zip = new ZipArchive();
+$zip-&gt;open('compressed/user_archive.zip', ZipArchive::CREATE);
+
+$options = [
+    'add_path' =&gt; 'light_wallpapers/',
+    'remove_all_path' =&gt; true
+];
+$zip-&gt;addGlob('lights/*.jpg', 0, $options);
+ 
+$options = [
+    'add_path' =&gt; 'font_files/',
+    'remove_all_path' =&gt; true
+];
+$zip-&gt;addGlob('documents/*.ttf', 0, $options);
+
+$options = [
+    'add_path' =&gt; 'pdf_books/',
+    'remove_all_path' =&gt; true
+];
+$zip-&gt;addGlob('documents/*.pdf', 0, $options);
+ 
+$options = [
+    'add_path' =&gt; 'images/',
+    'remove_all_path' =&gt; true
+];
+$zip-&gt;addGlob('documents/*.{jpg, png}', GLOB_BRACE, $options);
+  
+$zip-&gt;close();</pre>
+      <p>As usual, we begin by creating a <code>ZipArchive</code> instance and
+        then use the <code>open()</code> method to create our archive. We also
+        specify different values for the <code>add_path</code> key in the <code>$options</code>
+        array each time before calling the <code>addGlob()</code> method. This
+        way, we can deal with one specific set of files at a time and provide
+        archiving options accordingly.</p>
+      <p>In the first case, we iterate over all <strong>.jpg</strong> files in
+        the <strong>lights</strong> directory and place them in the <strong>light_wallpapers</strong>directory
+        in the archive. Similarly, we iterate over all the <strong>.ttf</strong>
+        files in the <strong>documents</strong> directory and then put them
+        inside a folder called <strong>font_files</strong> in our archive.
+        Finally, we iterate over all the <strong>.jpg</strong> and <strong>.png</strong>
+        files in our documents at once and put them all together in the <strong>images</strong>
+        directory.</p>
+      <p>As you can see, the values in the <code>$options</code> parameter are
+        useful in organizing the content inside the archive.</p>
+      <h3>Giải nén</h3>
+      <p>The <code>ZipArchive</code> class has a method called <code>extractTo($destination,
+          $entries)</code> to extract the contents of an archive. You can use it
+        to either extract everything inside the archive or just some specific
+        files. The <code>$entries</code> parameter can be used to specify a
+        single file name which is to be extracted, or you can use it to pass an
+        array of files.</p>
+      <p>One important point to remember is that you need to specify the proper
+        path of the file inside the archive in order to extract it. For example,
+        we archived a font file called <strong>AlegreyaSans-Light.ttf</strong>
+        in the previous section. The file was stored within the archive in a
+        directory called <strong>font_files</strong>. This means that the path
+        you need to specify in the <code>$entries</code> parameter would be <strong>font_files/AlegreyaSans-Light.ttf</strong>
+        and not simply <strong>AlegreyaSans-Light.ttf</strong>.</p>
+      <p>The directory and file structure will be preserved during the
+        extraction process, and files will be extracted in their respective
+        directories.</p>
+      <pre>$zip = new ZipArchive();
+$zip-&gt;open('compressed/user_archive.zip', ZipArchive::CREATE);
+$zip-&gt;extractTo('uncompressed/', 'font_files/AlegreyaSans-Light.ttf');
+$zip-&gt;close();</pre>
+      <p>If you omit the second parameter, the method will extract all files in
+        the archive.</p>
+      <h3>Một số thao tác khác</h3>
+      <p>The <code>ZipArchive</code> class also has a lot of other methods and
+        properties to help you get more information about the archive before
+        extracting all its contents.</p>
+      <p>You can count the number of files in an archive using the <code>count()</code>
+        method. Another option is to use the <code>numFiles</code> property.
+        They can be used to iterate over all the files in the archive and only
+        extract the ones you need—or you can do something else with them, like
+        removing them from the archive.</p>
+      <p>In the following example, we are deleting all files in the archive
+        which contain the word <strong>Italic</strong>. Similar code could be
+        used to delete all files which don't contain a specific word. You could
+        also iterate over these files and replace a particular word with
+        something else.</p>
+      <pre>$zip = new ZipArchive();
+$zip-&gt;open('compressed/user_archive.zip', ZipArchive::CREATE);
+
+$file_count = $zip-&gt;count();
+
+for ($i = 0; $i &lt; $file_count; $i++) {
+    $file_name = $zip-&gt;getNameIndex($i);
+
+    if (stripos($file_name, 'Italic') !== false) {
+        $zip-&gt;deleteName($file_name);
+    }
+}
+
+$zip-&gt;close();</pre>
+      <p>In the above code, we are using <code>deleteName()</code> to delete an
+        individual file. However, you can also use it to delete an entire
+        directory.</p>
+      <p>A similar function <code>renameName($oldname, $newname)</code> can be
+        used to change the name of any files in the archive. You will get an
+        error if a file titled <code>$newname</code> already exists.</p>
+      <h3>Báo cáo file định dạng docx</h3>
+      <p>Định dạng <code>docx</code> bản chất là file zip.</p>
+      <p><a target="_blank" href="export_docx.php">export_docx.php</a></p>
+      <h3>Định dạng rar</h3>
+      <p>Để sử dụng định dạng rar, cần cài thêm extension rar.</p>
+      <p><a target="_blank" href="https://pecl.php.net/package/rar/4.0.0/windows">PECL
+          :: Package :: rar 4.0.0 for Windows</a></p>
+      <p>Khi download file dll, chú ý chọn đúng phiên bản:</p>
+      <ul>
+        <li><code>Thread Safe</code> hay <code>Non Thread Safe</code></li>
+        <li><code>x64</code> hay <code>x86</code></li>
+      </ul>
+      <p>Kiểm tra ở đây:</p>
+      <p><a target="_blank" href="check_x64_and_thread_safe.php">check_x64_and_thread_safe.php</a><br>
+      </p>
+      <p>Chú ý không hỗ trợ phiên bản PHP 7.3.</p>
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://www.php.net/manual/en/book.rar.php">https://www.php.net/manual/en/book.rar.php</a></p>
+      <p><a target="_blank" href="https://www.php.net/manual/en/book.zip.php">https://www.php.net/manual/en/book.zip.php</a></p>
+      <p><a target="_blank" href="https://www.geeksforgeeks.org/what-is-thread-safe-or-non-thread-safe-in-php/">https://www.geeksforgeeks.org/what-is-thread-safe-or-non-thread-safe-in-php/</a></p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

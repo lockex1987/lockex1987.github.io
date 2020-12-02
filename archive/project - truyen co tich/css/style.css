@@ -1,0 +1,126 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0 none;
+  vertical-align: baseline;
+}
+
+@font-face {
+    font-family: 'Gentium Book Basic';
+    src: url('../fonts/GentiumBookBasic-Italic.woff2') format('woff2'),
+        url('../fonts/GentiumBookBasic-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+  color: #444;
+  font-family: 'Gentium Book Basic', "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
+  padding-top: var(--header-height);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+    max-width: 500px;
+    width: 100%;
+    min-height: 480px;
+    max-height: 800px;
+    height: 100%;
+    margin: 0 auto;
+    background-image: url(../images/background.png);
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: cover;
+    padding: 10px;
+}
+
+.screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+#screen1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#screen2 {
+    display: flex;
+    flex-direction: column;
+}
+
+.list {
+    flex: 1;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.player {
+
+}
+
+.btn {
+    cursor: pointer;
+    background: transparent;
+    font-family: 'Gentium Book Basic';
+}
+
+.btn, .btn:hover, .btn:focus {
+    box-shadow: none;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.category {
+    display: block;
+    background-image: url(../images/rect.png);
+    background-size: cover;
+    width: calc(210px);
+    height: calc(69px);
+    margin: 10px;
+    font-size: 20px;
+    color: blue;
+}
+
+.item {
+    display: flex;
+    margin: 10px;
+    
+}
+
+.item .title {
+    flex: 1;
+    font-size: 20px;
+}
+
+.exit {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    background-image: url(../images/round.png);
+    width: 69px;
+    height: 71px;
+    font-size: 15px;
+    font-weight: bold;
+    color: darkcyan;
+}
+
+.home img {
+    height: 32px;
+}

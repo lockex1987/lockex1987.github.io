@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+
+    <title>Double Range Slider</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <article>
+        <h2>Double Range Slider</h2>
+
+        <div slider id="slider-distance">
+            <div>
+                <div inverse-left style="width:70%;"></div>
+                <div inverse-right style="width:70%;"></div>
+
+                <div range style="left:0%;right:0%;"></div>
+
+                <span thumb style="left:0%;"></span>
+                <span thumb style="left:100%;"></span>
+
+                <div sign style="left:0%;">
+                    <span id="value">0</span>
+                </div>
+                <div sign style="left:100%;">
+                    <span id="value">100</span>
+                </div>
+            </div>
+
+            <input type="range" max="100" min="0" step="1"
+                    value="0"
+                    oninput="checkLowerRange(this)" />
+            <input type="range" max="100" min="0" step="1"
+                    value="100"
+                    oninput="checkUpperRange(this)" />
+        </div>
+    </article>
+
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

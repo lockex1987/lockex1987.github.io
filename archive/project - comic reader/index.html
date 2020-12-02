@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="description" content="Comic reader">
+	<meta name="keywords" content="comic, reader, relax">
+	<meta name="author" content="lockex1987">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="icon" href="../../images/favicon.png"/>
+	<link rel="stylesheet" href="../../css/style.css"/>
+	<link rel="stylesheet" href="css/comic.css"/>
+
+	<title>Comic Reader</title>
+
+	<!-- Tach JSON thanh tung file theo chapter va comic -->
+	<!-- Download ZIP -->
+	<!-- Swipe -->
+	<!-- Lưu chương hiện tại, chương sau -->
+	<!-- Full screen -->
+	<!-- Đọc hết thì hiển thị các option: đọc chương tiếp -->
+	<!-- Trang web này chỉ có mục đích demo -->
+	<!-- Cảm ơn tác giả Kim Khánh đã sáng tác những bộ truyện rất hay, thuần Việt, có ý nghĩa giáo dục cao. -->
+</head>
+<body>
+	<article>
+		<section id="homePage">
+			<h3>Danh sách truyện</h3>
+			<ul id="comicList" class="list"></ul>
+			<p>
+				<a href="other-version.html">Other Version</a>
+			</p>
+		</section>
+
+		<section id="comicInfo" style="display: none;">
+			<a class="heading" href="" onclick="backToComicList(); return false;">
+				<h3>&larr; COMIC NAME</h3>
+			</a>
+			<div id="savedInfo">
+				<p>Bạn đang đọc <a href="#" onclick="gotoCurrentSavedChapter()"></a></p>
+				<p>Đọc tập tiếp <a href="#" onclick="gotoNextSavedChapter()"></a></p>
+				<p>Đọc tập trước <a href="#" onclick="gotoPreviousSavedChapter()"></a></p>
+			</div>
+			<ul id="chapterList" class="list"></ul>
+		</section>
+
+		<section id="chapterViewer" style="display: none;">			
+			<a class="heading" href="" onclick="backToInfo(); return false;">
+				<h3>&larr; CHAPTER NAME</h3>
+			</a>
+
+			<div id="viewer"></div>
+		</section>
+	</article>
+
+	<script src="../../js/docs.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="js/comic.js"></script>
+</body>
+</html>

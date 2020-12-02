@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Compile, minimize file CSS, JS">
+    <title>Laravel Mix</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Laravel Mix</h2>
+      <p>Có thể bạn chỉ muốn code JS thuần, không sử dụng những framework như
+        Vue, React,...; tuy nhiên, bạn vẫn nên dùng Laravel Mix để:</p>
+      <ul>
+        <li>Sử dụng SASS, compile và minify ra CSS</li>
+        <li>Minify, concat các file JS</li>
+      </ul>
+      <p>Hãy tìm hiểu Laravel Mix.</p>
+      <h3>Cài đặt</h3>
+      <p>Laravel Mix là một gói Node, không liên quan gì đến code PHP Laravel.
+        Vì vậy hãy đảm bảo máy bạn có cài <code>node</code> và <code>npm</code>.
+        Bạn hoàn toàn có thể chỉ sử dụng Laravel Mix cho một dự án bất kỳ không
+        phải Laravel.</p>
+      <p>Mix là tầng cấu hình ở trên của Webpack, mục đích loại bỏ những sự phức
+        tạp của Webpack.</p>
+      <p>Với một bản Laravel mới được khởi tạo, chúng ta đã có sẵn file <code>package.json</code>
+        ở thư mục gốc. File <code>package.json</code> mặc định đã chứa gần như
+        tất cả những gì bạn cần.</p>
+      <p>Để cài đặt <code>node_modules</code>, chúng ta sử dụng lệnh sau:</p>
+      <pre>npm install</pre>
+      <p>Trong thư mục gốc của ứng dụng ta sẽ thấy file <code>webpack.mix.js</code>
+        là file thiết lập các entry point – là các điểm bắt đầu để mix quét và
+        thực hiện các kịch bản.</p>
+      <p>Cài đặt độc lập với Laravel:</p>
+      <pre>mkdir mix-demo &amp;&amp; cd mix-demo
+npm init -y
+npm install laravel-mix --save-dev
+cp node_modules/laravel-mix/setup/webpack.mix.js ./</pre>
+      <p>Thực hiện compile:</p>
+      <pre>node_modules/.bin/webpack --config=node_modules/laravel-mix/setup/webpack.config.js</pre>
+      <p>Chú ý, chúng ta vẫn phải thêm bốn devDependencies:</p>
+      <ul>
+        <li>resolve-url-loader</li>
+        <li>sass</li>
+        <li>sass-loader</li>
+        <li>vue-template-compiler</li>
+      </ul>
+      <p>Nếu lúc đầu chưa có, lệnh compile sẽ tự động thực hiện cài bốn gói trên
+        (do thấy các lệnh <code>js</code>, <code>sass</code> trong file <code>webpack.mix.js</code>).</p>
+      <p>Khi chúng ta sử dụng lệnh <code>react</code>, sẽ tự động cài đặt thêm
+        devDependencies <strong>@babel/preset-react</strong>.</p>
+      <p>Thêm cross-env nữa để switch giữa các môi trường.</p>
+      <p>Tham khảo devDependencies của Laravel <a href="https://github.com/laravel/laravel/blob/master/package.json"
+          target="_blank">ở đây</a>.</p>
+      <p>Để sử dụng Vue:</p>
+      <pre>npm install vue --save-dev</pre>
+      <p>Để sử dụng React:</p>
+      <pre>npm install react react-dom --save-dev</pre>
+      <p><a href="mix-demo/index.html">Demo</a></p>
+      <h3>Chạy mix</h3>
+      <p>Chúng ta thường có các lệnh sau:</p>
+      <pre>npm run dev
+npm run watch
+npm run prod</pre>
+      <p><code>npm run dev</code>: Câu lệnh này sẽ thực thi mix các file một
+        lần.</p>
+      <p><code>npm run watch</code>: Câu lệnh này sẽ thực thi mix các file hiện
+        tại và theo dõi các file cần mix (là những file trong thư mục <code>webpack.mix.js</code>)
+        khi có sự thay đổi thì nó sẽ mix cho chúng ta luôn. Cái này chúng ta rất
+        hay sử dụng trong dự án.</p>
+      <p><code>npm run prod</code>: Thực thi tất cả các tác vụ mix và tối ưu
+        (minify) các file kết quả đầu ra, khi đó bạn có thể sử dụng các kết quả
+        để triển khai ứng dụng trên máy chủ.</p>
+      <h3>Compile CSS</h3>
+      <p>Laravel có các phương thức như <code>less()</code>, <code>sass()</code>
+        để hỗ trợ compile các CSS pre-prosessor ra các file CSS mà trình duyệt
+        có thể hiểu được. Cú pháp thực hiện như sau:</p>
+      <pre>mix.less('resources/assets/less/app.less', 'public/css');
+mix.sass('resources/assets/sass/app.scss', 'public/css');</pre>
+      <p><strong>Chú ý:</strong> nên sử dụng đường dẫn tuyệt đối với các CSS sử
+        dụng hàm <code>url()</code>, ví dụ thuộc tính <code>background-image</code>.</p>
+      <p>Để nối các file CSS thông thường thành một file ta dùng phương thức <code>styles()</code>:</p>
+      <pre>mix.styles([
+    'public/css/vendor/normalize.css',
+    'public/css/vendor/videojs.css'
+], 'public/css/all.css');</pre>
+      <p>Các file output sau khi đã được gộp và minify sẽ rất khó để debug.
+        Source map giúp chúng ta ánh xạ code đã biên dịch này với các mã nguồn
+        ban đầu, giúp cho trình duyệt có thể debug chính xác các file ban đầu.
+        Mặc định, source map được tắt đi nhưng có thể bật tính năng này bằng
+        cách thực hiện phương thức <code>mix.sourceMaps()</code> trong <code>webpack.mix.js</code>.
+        Tuy nhiên nó cũng làm tăng dung lượng và hiệu năng thực thi với các file
+        này.</p>
+      <pre>mix.js('resources/js/app.js', 'public/js')
+    .sourceMaps();</pre>
+      <h3>Minify, concat JS</h3>
+      <p>Thông thường, chúng ta có thể sử dụng phương thức <code>js()</code>:</p>
+      <pre>mix.js('resources/js/app.js', 'public/js');</pre>
+      <p>Với phương thức <code>js()</code>, chúng ta có các lợi ích sau:</p>
+      <ul>
+        <li>Sử dụng cú pháp ES6 ở file nguồn</li>
+        <li>Sử dụng kiểu module</li>
+        <li>Compile các file <code>.vue</code></li>
+        <li>Minify cho môi trường prod</li>
+      </ul>
+      <p>Nếu bạn chỉ muốn sử dụng JS thuần và chỉ cần minify, concat các file,
+        chúng ta có thể làm như sau:</p>
+      <pre>mix
+    //.js('resources/js/app.js', 'public/js')
+    //.scripts(['resources/js/app.js'], 'public/js/app.js')
+    .combine(['resources/js/app.js'], 'public/js/app.js')</pre>
+      <h3>Tách biệt các thư viện JS của bên thứ ba</h3>
+      <p>Có một vấn đề là các thư viện JS của bên thứ ba cũng được đóng gói cùng
+        thư viện do bạn viết ra. Trong hai loại thư viện này thì thư viện bên
+        thứ ba rất ít khi thay đổi, trong khi code bạn viết thì thay đổi thường
+        xuyên hơn, dẫn đến mỗi khi thay đổi, trình duyệt lại tải lại toàn bộ.
+        Việc tách thư viên bên thứ ba ra thành file riêng giúp trình duyệt chỉ
+        tải lại những gì cần thiết, giảm băng thông và tăng tốc độ xử lý file.
+        Mix cung cấp phương thức <code>extract()</code> cho việc này:</p>
+      <pre>mix.js('resources/assets/js/app.js', 'public/js')
+    .extract(['vue'])</pre>
+      <p>Phương thức <code>extract()</code> chấp nhận đầu vào là một mảng các
+        thư viện bên thứ ba mà bạn muốn đóng gói thành file <code>vendor.js</code>.
+        Với đoạn mã trên, Laravel mix sẽ sinh ra ba file:</p>
+      <ul>
+        <li><code>public/js/manifest.js</code>: webpack manifest runtime</li>
+        <li><code>public/js/vendor.js</code>: chứa các thư viện bên thứ ba</li>
+        <li><code>public/js/app.js</code>: chứa code do bạn viết</li>
+      </ul>
+      <p>Trong file HTML bạn cũng phải đưa vào các file Javascript này theo thứ
+        tự:</p>
+      <pre>&lt;script src="/js/manifest.js"&gt;&lt;/script&gt;
+&lt;script src="/js/vendor.js"&gt;&lt;/script&gt;
+&lt;script src="/js/app.js"&gt;&lt;/script&gt;</pre>
+      <h3>Copy</h3>
+      <p>Sử dụng <code>copyDirectory()</code> để copy thư mục hay <code>copy()</code>
+        để copy file:</p>
+      <pre>mix.copyDirectory('resources/assets/admin', 'public/admin');
+mix.copy('resources/assets/admin.js', 'public/admin.js');</pre>
+      <h3>Đánh dấu phiên bản</h3>
+      <p>Tính năng này khá hay. Thông thường các trình duyệt sẽ cache các file
+        css, js trong một khoảng thời gian. Để khắc phục điều này ta sẽ dùng
+        phương thức <code>version()</code>. Phương thức này sẽ ép trình duyệt
+        xóa cache và tải các file với phiên bản mới nhất. Phương thức này sẽ
+        thêm một mã hash tại thời điểm chạy.</p>
+      <pre>mix.js('resources/assets/js/app.js', 'public/js')
+    .version();</pre>
+      <p>Khi thực hiện build, các file đầu ra sẽ có dạng <code>app.hash_string.js</code>.
+        Mỗi lần <code>hash_string</code> sẽ thay đổi nếu nội dung file thay
+        đổi. Vậy làm cách nào để chèn vào mã HTML? Laravel hỗ trợ phương thức <code>mix()</code>
+        giúp bạn giải quyết việc đó.</p>
+      <pre>&lt;link rel="stylesheet" href="{{ mix('/css/app.css') }}"&gt;</pre>
+      <p>Bạn có thể chỉ định chỉ sử dụng đánh dấu phiên bản ở môi trường prod
+        như sau:</p>
+      <pre>mix.js('resources/js/app.js', 'public/js');
+
+if (mix.inProduction()) {
+    mix.version();
+}</pre>
+      <h3>Thông báo</h3>
+      <p>Mặc định, mỗi khi một tác vụ mix hoàn thành, một thông báo sẽ được hệ
+        điều hành đưa ra. Để tắt thông báo này bạn có thể thêm vào phương thức <code>disableNotifications()</code>
+        như sau:</p>
+      <pre>mix.disableNotifications();</pre>
+      <h3>Cấu hình alias</h3>
+      <p>Alias là đường dẫn tuyệt đối, thay thế cho đường dẫn tương đối khi
+        import các module. Ví dụ, thay vì dùng:</p>
+      <pre>import store from '../../../store';<br>import { SOURCES } from '../../../../helpers/constants';</pre>
+      <p>Thì có thể dùng:</p>
+      <pre>import store from '~/store';<br>import { SOURCES, SENTIMENTS } from '~/helpers/constants';</pre>
+      <p>Cách viết sau dễ hiểu, dễ bảo trì hơn.</p>
+      <p>Để Mix có thể compile được đùng, chúng ta thêm như sau:</p>
+      <pre>const mix = require('laravel-mix');<br>const path = require('path');<br><br><br>mix.webpackConfig({
+    resolve: {
+        alias: {
+            '~': path.join(__dirname, './resources/js')
+        }
+    },
+
+    // Cấu hình khác ...
+}</pre>
+      <p>Chú ý, chúng ta phải dùng <code>path.join</code>, không cộng xâu bình
+        thường được, để đảm bảo đường dẫn đúng trên các môi trường (Windows,
+        Linux).</p>
+      <p>Để IDE VSCode có thể auto-complete đường dẫn cũng như goto definition,
+        chúng ta thêm file <code>jsconfig.json</code> như sau:</p>
+      <pre>{
+    "allowJs": true,
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            "~/*": ["resources/js/*"]
+        }
+    },
+    "include": ["resources/js/**/*"],
+    "exclude": ["node_modules"]
+}</pre>
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://laravel.com/docs/master/mix">laravel.com/docs/master/mix</a></p>
+      <p><a target="_blank" href="https://laravel-mix.com/">laravel-mix.com</a>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

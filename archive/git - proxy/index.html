@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="git proxy">
+    <title>Sử dụng proxy trong git</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Sử dụng proxy trong git</h2>
+      <p>Giả sử mạng của bạn chặn GitHub. Làm thế nào bạn có thể làm việc với
+        git thông qua một proxy?</p>
+      <p>Sử dụng lệnh sau:</p>
+      <pre class="out-of-box">git config --global http.proxy http://proxyuser:proxypwd@proxy.server.com:8080</pre>
+      <p>Ví dụ:</p>
+      <pre>git config --global http.proxy http://192.168.103.31:22</pre>
+      <p>Bỏ không sử dụng proxy nữa:</p>
+      <pre>git config --global --unset http.proxy</pre>
+      <p>Lấy thông tin proxy hiện tại:</p>
+      <pre>git config --global --get http.proxy</pre>
+      <p>Bạn có thể thiết lập proxy riêng cho một URL cụ thể.</p>
+      <p>Tham khảo:</p>
+      <p><a href="https://gist.github.com/evantoli/f8c23a37eb3558ab8765" target="_blank">Configure
+          Git to use a proxy</a></p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Danweb.vn Drawing</title>
+		<link type="text/css" rel="stylesheet" href="style.css" />
+		<link type="text/css" rel="stylesheet" href="jquery.mobile-1.2.0/jquery.mobile-1.2.0.min.css">
+		
+		<script type="text/javascript" src="jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="jquery.mobile-1.2.0/jquery.mobile-1.2.0.min.js"></script>
+		<script type="text/javascript" src="dwdrawing.js"></script>
+	</head>
+	<body>
+		<div data-role="page" id="one">
+			<div data-role="header" data-theme="b">
+				<h3>Dânweb.vn Drawing</h3>
+				<a 	data-role="button" 
+					data-inline="true"
+					href="#info" 
+					data-rel="dialog" 
+					data-icon="info" 
+					data-iconpos="notext" 
+					class="ui-btn-right">Infomation</a>
+			</div>
+			<div id="wrapper">
+				<div id="tools">
+					<ul id="pens">
+						<li class="cycle"></li>
+						<li class="rect"></li>
+						<li class="path active"></li>
+					</ul>
+					<ul id="colors">
+						<li class="l030303"></li>
+						<li class="l077ff0 active"></li>
+						<li class="l0eee12"></li>
+						<li class="ld507e5"></li>
+						<li class="le86d06"></li>
+						<li class="led262b"></li>
+						<li class="lffae00"></li>
+					</ul>
+				</div>
+				<canvas data-role="dwdrawing" id="state" width="600" height="400">
+				</canvas>
+			</div>
+		</div>
+		<div data-role="page" id="info">
+			<div data-role="header" data-theme="b">
+				<h3>Dânweb.vn Drawing</h3>
+			</div>
+			<div data-role="content">
+				<p>Loạt bài hướng dẫn làm Web-App - danweb.vn</p>
+				<p><i>Mọi thắc mắc và góp ý hãy post lên facebook-group của Dânweb.vn tại http://facebook.com/groups/danweb</i></p>
+			</div>
+		</div>
+	</body>
+</html>

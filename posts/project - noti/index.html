@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="date" content="2020-02-24 22:06:00">
+    <meta name="description" content="Thay thế alert và confirm">
+    <title>Noti</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Noti</h2>
+      <p>Đây là một thư viện JS cho việc thông báo, thay thế cho hai hàm JS
+        thuần là <code>alert</code> và <code>confirm</code>.</p>
+      <p>Thay cho <code>alert</code>, chúng ta chia thành 4 loại sau:</p>
+      <ul>
+        <li>info</li>
+        <li>error</li>
+        <li>success</li>
+        <li>warning</li>
+      </ul>
+      <p>Thư viện này không phức tạp hóa vấn đề lên, mà chỉ là bổ sung thêm cho
+        hai hàm <code>alert</code> và <code>comfirm</code> về mặt giao diện:
+        giao diện thống nhất với ứng dụng, thống nhất giữa các trình duyệt, có
+        tiếng Việt,...</p>
+      <h3>Cách sử dụng</h3>
+      <pre class="text-pre-wrap">&lt;link rel="stylesheet" href="./css/noti.css" /&gt;
+
+&lt;script src="./js/noti.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+    noti.error('Bạn chưa được phân quyền thực hiện chức năng này!');
+    
+    noti.success('Thêm mới thành công người dùng', { autoClose: false });
+    
+    noti.info('Hệ thống đang tạm dừng. Vui lòng quay lại sau.');
+    
+    noti.warning('Hãy chắc chắn bạn có đẩy đủ quyền thực hiện');
+    
+    noti.confirm('Bạn có muốn xóa bản ghi?', () =&gt; {
+        noti.success('Xóa thành công');
+    });
+&lt;/script&gt;</pre>
+      <h3>Demo</h3>
+      <div class="mb-3">
+        
+          <button onclick="alert('Muộn rồi ngủ đi');" class="btn btn-primary">
+            Native Alert
+          </button>
+          <br>
+          <br>
+          <button onclick="confirm('Bạn có muốn xóa bản ghi?');" class="btn btn-secondary">
+            Native Confirm
+          </button>
+          <br>
+          <br>
+          <button onclick="noti.error('Bạn chưa được phân quyền thực hiện chức năng này!', { autoClose: false });"
+              class="btn btn-danger">
+            Error
+          </button>
+          <button onclick="noti.success('Thêm mới thành công <b>người dùng</b>', { autoClose: false });"
+              class="btn btn-success">
+            Success
+          </button>
+          <button onclick="noti.info('Hệ thống đang tạm dừng. Vui lòng quay lại sau.', { autoClose: false });"
+              class="btn btn-info">
+            Info
+          </button>
+          <button onclick="noti.warning('Hãy chắc chắn bạn có đẩy đủ quyền thực hiện', { autoClose: false });"
+              class="btn btn-warning">
+            Warning
+          </button>
+          <br>
+          <br>
+          <button onclick="noti.confirm('Bạn có muốn xóa bản ghi <b>ABC</b>?', () => { noti.success('Xóa thành công'); });"
+              class="btn btn-secondary">
+            Confirm
+          </button>
+      </div>
+
+      <h3>Tính năng</h3>
+      <p>Các tính năng hiện có:</p>
+      <ul>
+        <li>Hiển thị stack ở vị trí top right</li>
+        <li>Click vào thông báo thì đóng</li>
+        <li>Tự động đóng sau một khoảng thời gian</li>
+        <li>Tương thích với Bootstrap</li>
+        <li>Tích hợp Line Awesome</li>
+        <li>Pure JS</li>
+        <li>Icon ở phía trước</li>
+        <li>Responsive</li>
+        <li>Confirm HTML content</li>
+        <li>Click ra ngoài thì đóng confirm</li>
+      </ul>
+    </article>
+    
+    <!--
+      Bình thường, khi nào thực sự có ký tự dùng font được hiển thị thì font mới được load, dẫn đến việc chậm.
+      Ví dụ, khi noti thì một lúc sau mới hiển thị icon.
+      Preload font file để có trải nghiệm tốt hơn.
+      Preload với font, prefetch với ảnh.
+    -->    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/css/line-awesome.min.css"/>
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/fonts/la-solid-900.woff2"
+        as="font" type="font/woff2" crossorigin="anonymous"/>
+
+    <link rel="stylesheet" href="css/noti.css" />
+    <script src="js/noti.js"></script>
+
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+$viewport-width: 300px
+$viewport-height: 200px
+$perspective: 700px
+
+body
+	background: black
+
+#viewport
+	margin: 0 auto
+	width: $viewport-width
+	height: $viewport-height
+	border: white 1px solid
+	animation: idle-rotation 10s alternate infinite
+	transform-style: preserve-3d
+
+
+
+.threeDee
+	position: relative
+	display: block
+
+@keyframes idle-rotation
+	0%
+		transform: perspective($perspective) rotateY(0deg)
+	100%
+		transform: perspective($perspective) rotateY(360deg)

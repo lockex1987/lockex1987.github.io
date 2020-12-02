@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Cho phép chọn nhiều file, từng file một. Có thể bỏ bớt file. Submit sau đó cùng các thông tin khác."/>
+    
+    <title>Upload nhiều file</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body>
+    <article>
+        <h2>Upload nhiều file</h2>
+        
+        <p>Mục tiêu giống <a href="https://blueimp.github.io/jQuery-File-Upload/" target="_blank">blueimp.github.io</a>.</p>
+
+        <form id='frm'>
+            <div class="mb-3">
+                <input id='uploadFiles' type='file' multiple/>
+            </div>
+
+            <div class="mb-3">
+                <button type='submit' class="btn btn-primary">
+                    Submit
+                </button>
+            </div>
+        </form>
+        
+        <div id='selectedFiles'></div>
+    </article>
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/css/line-awesome.min.css"/>
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

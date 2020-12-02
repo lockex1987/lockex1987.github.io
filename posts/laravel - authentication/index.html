@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="date" content="2020-02-23 21:50:00">
+    <meta name="description" content="Đăng ký, đăng nhập, đăng xuất, quên mật khẩu">
+    <title>Xác thực với Laravel</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Xác thực với Laravel</h2>
+      <p>Xác thực (authentication) gồm các chức năng sau:</p>
+      <ul>
+        <li>Đăng ký</li>
+        <li>Xác nhận email</li>
+        <li>Đăng nhập</li>
+        <li>Gửi mail quên mật khẩu và reset mật khẩu</li>
+        <li>Nhớ đăng nhập</li>
+        <li>Trang chủ sau đăng nhập</li>
+        <li>Đăng xuất</li>
+      </ul>
+      <p>Laravel hỗ trợ cơ bản các chức năng trên.</p>
+      <h3>Khởi tạo</h3>
+      <p>Ở phiên bản Laravel 6 dùng lệnh sau:</p>
+      <pre>composer require laravel/ui --dev
+php artisan ui:auth</pre>
+      <p>Các thay đổi là:</p>
+      <pre>new file:   app/Http/Controllers/HomeController.php
+
+new file:   resources/views/auth/passwords/confirm.blade.php
+new file:   resources/views/auth/passwords/email.blade.php
+new file:   resources/views/auth/passwords/reset.blade.php
+
+new file:   resources/views/auth/login.blade.php
+new file:   resources/views/auth/register.blade.php
+new file:   resources/views/auth/verify.blade.php
+
+new file:   resources/views/home.blade.php
+
+new file:   resources/views/layouts/app.blade.php
+
+modified:   routes/web.php</pre>
+      <p>Ngoài ra còn có các file cũ cũng được sử dụng khi authentication:</p>
+      <pre>app/Http/Controllers/Auth/ConfirmPasswordController.php<br>app/Http/Controllers/Auth/ForgotPasswordController.php<br>app/Http/Controllers/Auth/LoginController.php<br>app/Http/Controllers/Auth/RegisterController.php<br>app/Http/Controllers/Auth/ResetPasswordController.php<br>app/Http/Controllers/Auth/VerificationController.php</pre>
+      <p>File <code>routes/web.php</code> thêm như sau:</p>
+      <pre>Auth::routes();<br>
+Route::get('/home', 'HomeController@index')-&gt;name('home');</pre>
+      <p><code>Auth::routes()</code> nó làm cái gì? Nó gọi đến phương thức
+        static <code>routes()</code> của class <code>Illuminate\Support\Facades\Auth</code>.</p>
+      <p>Chúng ta có thể tham khảo phương thức <code>auth()</code> của file <code>vendor/laravel/framework/src/Illuminate/Routing/Router.php</code>
+        như sau:</p>
+      <pre class="out-of-box text-pre-wrap">/**
+ * Register the typical authentication routes for an application.
+ *
+ * @return void
+ */
+public function auth()
+{
+    // Authentication Routes...
+    $this-&gt;get('login', 'Auth\LoginController@showLoginForm')-&gt;name('login');
+    $this-&gt;post('login', 'Auth\LoginController@login');
+    $this-&gt;post('logout', 'Auth\LoginController@logout')-&gt;name('logout');
+
+    // Registration Routes...
+    $this-&gt;get('register', 'Auth\RegisterController@showRegistrationForm')-&gt;name('register');
+    $this-&gt;post('register', 'Auth\RegisterController@register');
+
+    // Password Reset Routes...
+    $this-&gt;get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')-&gt;name('password.request');
+    $this-&gt;post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')-&gt;name('password.email');
+    $this-&gt;get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')-&gt;name('password.reset');
+    $this-&gt;post('password/reset', 'Auth\ResetPasswordController@reset');
+}</pre>
+      <p>Chúng ta tham khảo file <code>vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesUsers.php</code>.</p>
+      <pre>/**
+ * Show the application's login form.
+ *
+ * @return \Illuminate\Http\Response
+ */
+public function showLoginForm()
+{
+    return view('auth.login');
+}
+</pre>
+      <p>Nếu ứng dụng không có trang chủ hoặc landing page thì có thể chỉnh file
+        <code>routes/web.php</code> như sau:</p>
+      <pre>Route::get('/', function () {
+    // Nếu người dùng đã đăng nhập thì hiển thị trang home
+    // nếu không thì hiển thị trang đăng nhập
+    if (Auth::check()) {
+        return view('home');
+    } else {
+        return view('auth.login');
+    }
+});</pre>
+      <p>Mặc định sẽ vào luôn trang home đã đăng nhập hoặc trang form đăng nhập.</p>
+      <p>Để làm một cách cơ bản đầy đủ, chúng ta cần thêm trang đổi mật khẩu.</p>
+      <p>Để tương thích với các layout khác trong dự án, chúng ta có thể chuyển
+        <code>layouts/app.blade.php</code> thành <code>layout/authentication.blade.php</code>.
+        Sửa các file tương ứng ở thư mục auth cho extends đúng.</p>
+      <h3>Những chú ý về database</h3>
+      <p>Mặc định, Laravel thêm một <code>App\User</code> Eloquent model trong
+        thư mục app. Model này có thể sử dụng với Eloquent authentication driver
+        mặc định. Nếu ứng dụng của bạn không sử dụng Eloquent, bạn có thể dùng
+        database authentication driver sử dụng Laravel query builder.</p>
+      <p>Khi xây dựng database schema cho model <code>App\User</code> model,
+        đảm bảo rằng độ dài cột password tối thiểu là 60 kí tự. Mặc định với 255
+        kí tự sẽ là một lựa chọn tốt.</p>
+      <p>Ngoài ra, bạn cũng nên xác nhận table <code>users</code> (hoặc tương
+        đương) table chứa một nullable, cột&nbsp; <code>remember_token</code>
+        chứa 100 ký tự. Cột này sẽ được dùng để lưu một token cho session
+        "remember me" khi đang được duy trì bởi ứng dụng của bạn.</p>
+      <p>Đã có sẵn các file trong <code>database/migrations</code>.</p>
+      <p>Chúng ta sửa cấu hình CSDL ở file <code>.env</code> và chạy lệnh
+        migrate:</p>
+      <pre>php artisan migrate</pre>
+      <p>Có thể bị lỗi sau:</p>
+      <pre class="out-of-box text-pre-wrap">SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was too long; max key length is 767 bytes (SQL: alter table `users` add unique `users_email_unique`(`email`))</pre>
+      <p>https://laravel-news.com/laravel-5-4-key-too-long-error</p>
+      <p>Sửa file <code>AppServiceProvider.php</code> ở thư mục <code>app/Providers</code>,
+        thêm dòng sau vào phương thức boot.</p>
+      <pre>use Illuminate\Support\Facades\Schema;
+
+class AppServiceProvider extends ServiceProvider
+{
+    public function boot()
+    {
+        Schema::defaultStringLength(191);
+    }
+}</pre>
+      <p>Chú ý phải đúng là 191, không phải 255.</p>
+      <p>Các bảng sau sẽ được tạo: <code>users</code>, <code>password_resets</code>.
+      </p>
+      <pre class="out-of-box">CREATE TABLE users (
+    id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(191) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+    email VARCHAR(191) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+    password VARCHAR(191) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+    remember_token VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
+    created_at TIMESTAMP NULL DEFAULT NULL,
+    updated_at TIMESTAMP NULL DEFAULT NULL,
+    PRIMARY KEY (id),
+    UNIQUE INDEX users_email_unique (email)
+);</pre>
+      <p>Chú ý: độ dài các trường đang là 199.</p>
+      <h3>Thêm điều kiện được chỉ định</h3>
+      <p>Nếu muốn, bạn cũng có thể thêm những điều kiện mở rộng vào truy vấn xác
+        thực. Ví dụ, chúng ta có thể xác nhận xem user đã được đánh dấu như
+        "active":</p>
+      <pre class="out-of-box">if (Auth::attempt(['email' =&gt; $email, 'password' =&gt; $password, 'active' =&gt; 1])) {
+    // The user is active, not suspended, and exists.
+}</pre>
+      <p>Lấy giá trị một trường nào đó của người dùng sau khi đăng nhập.</p>
+      <p>Get other field (is_admin).</p>
+      <h3>Tùy chỉnh đường dẫn</h3>
+      <p>Khi một người dùng xác thực thành công, họ sẽ được chuyển đến trang <code>/home</code>.
+        Bạn có thể tùy chỉnh đường dẫn này bằng cách sửa thuộc tính <code>redirectTo</code>
+        của các lớp <code>LoginController</code>, <code>RegisterController</code>,
+        <code>ResetPasswordController</code>.</p>
+      <p>Tiếp theo, bạn sửa phương thức <code>handle</code> của lớp <code>RedirectIfAuthenticated</code>.</p>
+      <h3>Đăng xuất</h3>
+      <p>Để đăng xuất người dùng khỏi ứng dụng của bạn, bạn có thể sử dụng
+        phương thức logout trong&nbsp; Auth facade. Việc này sẽ xóa toàn bộ
+        thông tin xác thực trong session của user:</p>
+      <pre>Auth::logout();</pre>
+      <h3>Ghi nhớ người dùng</h3>
+      <p>Nếu bạn muốn cung cấp chức năng "remember me" ftrong ứng dụng, bạn có
+        thể truyền một giá trị boolean như tham số thứ 2 vào phương thức attempt
+        cái mà sẽ giữ cho người dùng đã được authentication vô thời hạn, hoặc
+        tới khi họ đăng xuất thủ công. Tất nhiện, bảng users phải có một cột
+        tring remember_token, cái mà sẽ được dùng để lưu "remember me" token.</p>
+      <pre class="out-of-box">if (Auth::attempt(['email' =&gt; $email, 'password' =&gt; $password], $remember)) {
+    // The user is being remembered...
+}</pre>
+      <p>Nếu bạn sử dụng controller <code>LoginController</code> cung cấp bởi
+        Laravel, tính năng "remember" đã được tích hợp bởi traits sử dụng trong
+        controller.</p>
+      <p>Nếu bạn đang "remembering" người dùng, bạn có thể sử dụng phương thức
+        viaRemember để xác định nếu người dùng đã authentication sử dụng cookie
+        "remember me":</p>
+      <pre>if (Auth::viaRemember()) {
+    //
+}</pre>
+      <h3>Đổi tên bảng users</h3>
+      <p>Đôi khi bạn có nhu cầu đổi tên bảng mặc định users thành một tên khác.
+        Ví dụ bạn có 2 bảng:</p>
+      <ul>
+        <li><code>users</code> để quản lý người dùng ngoài</li>
+        <li><code>admin_users</code> để quản lý người dùng trong</li>
+      </ul>
+      <p>Project admin sẽ cần sửa bảng users thành <code>admin_users</code>.</p>
+      <p>Cách đơn giản nhất là sửa file <code>User.php</code>.</p>
+      <pre>protected $table = 'admin_users';</pre>
+      <p>Có khi bạn muốn sửa cả tên lớp <code>User</code> thành <code>AdminUser</code>
+        thì sao?</p>
+      <p>Khi đó bạn sẽ cần sửa cả:</p>
+      <ul>
+        <li>File migrate</li>
+        <li>User.php</li>
+        <li>config/auth.php, sửa User::class thành AdminUser::class</li>
+        <li>RegisterController.php</li>
+      </ul>
+      <p>https://medium.com/@ZtuX/how-to-change-your-authentication-model-in-laravel-5-3-7a580a727d6f</p>
+      <h3>Đổi trường đăng nhập</h3>
+      <p>Mặc định Laravel đăng nhập bằng trường email.</p>
+      <p>Nếu muốn sửa sang trường khác, ví dụ name.</p>
+      <p>Sửa <code>LoginController.php</code>:</p>
+      <pre><code class="php">/**
+ * Đổi trường đăng nhập mặc định từ email thành name.
+ */
+public function username() {
+    return 'name';
+}</code></pre>
+      <p>Sửa <code>login.blade.php</code>:</p>
+      <pre class="out-of-box text-pre-wrap">&lt;div class="form-group{{ $errors-&gt;has('name') ? ' has-error' : '' }}"&gt;
+    &lt;label for="name" class="col-md-4 control-label"&gt;Tên đăng nhập&lt;/label&gt;
+
+    &lt;div class="col-md-6"&gt;
+        &lt;input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus&gt;
+
+        @if ($errors-&gt;has('name'))
+            &lt;span class="help-block"&gt;
+                &lt;strong&gt;{{ $errors-&gt;first('name') }}&lt;/strong&gt;
+            &lt;/span&gt;
+        @endif
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+      <h3>Đăng nhập với user active</h3>
+      <p>https://stackoverflow.com/questions/31015606/login-only-if-user-is-active-using-laravel</p>
+      <h3>Login throttle</h3>
+      <p>Nếu bạn sử dụng lớp <code>LoginController</code> có sẵn của Laravel
+        thì sẽ bao gồm luôn cả trait <code>Illuminate\Foundation\Auth\ThrottlesLogins</code>.
+        Mặc định, người dùng sẽ không thể đăng nhập trong 1 phút nếu họ cung cấp
+        thông tin sai sau một vài lần (tầm 6 lần). Việc giới hạn này là duy nhất
+        với tên/email của người dùng và địa chỉ IP.</p>
+      <figure> <img alt="" src="images/login%20throttle.png"> </figure>
+      <h3>Thêm trường cho form đăng ký</h3>
+      <p>Form đăng ký mặc định chỉ có các trường: họ tên, địa chỉ email và mật
+        khẩu. Tuy nhiên, có thể bạn muốn thêm các thông tin như tên đăng nhập,
+        số điện thoại, địa chỉ,...</p>
+      <p>Giả sử bạn cần thêm trường số điện thoại (phone_number).</p>
+      <p>Đầu tiên chúng ta phải thêm các trường vào trong DB. Ngoài ra bạn cũng
+        có thể cập nhật file migration của Laravel.</p>
+      <p>Sửa tiếp file <code>User.php</code>, thuộc tính <code>$fillable</code>
+        cho thêm trường <code>phone_number</code>.</p>
+      <p>Tiếp theo bạn sửa file <code>resources/views/auth/register.blade.php</code>,
+        thêm thẻ HTML để nhập giá trị.</p>
+      <pre>CODE</pre>
+      <p>Sửa tiếp file <code>RegisterController.php</code>, sửa hai hàm <code>validator</code>
+        và <code>create</code>.</p>
+      <pre>CODE</pre>
+      <p>Bạn cũng có thể chỉnh sửa, thêm một số logic như:</p>
+      <ul>
+        <li>Khởi tạo một số trường mặc định khác ở bảng users (is_active,...)</li>
+        <li>Validate thêm (không được trùng tên)</li>
+        <li>Xác thực địa chỉ email tồn tại</li>
+      </ul>
+      <h3>Ghi nhớ đăng nhập</h3>
+      <p>Trong hầu hết các form login của mọi hệ thống thì thường có chức năng
+        Remember Me, giúp người dùng khi quay lại hệ thống thì không cần đăng
+        nhập lại.</p>
+      <p><span>Bình thường sau khi đăng nhập, người dùng sẽ phải đăng nhập lại
+          sau khi session timeout (thường là 30 phút hoặc cài đặt trong file <em>web.xml</em><span>)
+            tuy nhiên với những trường hợp người dùng không muốn phải đăng nhập
+            nhiều lần thì ta thường thấy có chức năng ‘remember me’, khi sử dụng
+            chức năng này hệ thống sẽ ghi một cookie lên trình duyệt và người
+            dùng sẽ không phải login lại sau khi session timeout.</span></span></p>
+      <p>Ví dụ rất dễ hiểu (cách test chức năng Remember Me)</p>
+      <p>https://stackjava.com/spring/code-vi-du-spring-boot-remember-me-tu-dong-login.html</p>
+      <p>Đây là những gì mà doc của Laravel nói
+        (https://laravel.com/docs/master/authentication#remembering-users).</p>
+      <p>Nếu bạn muốn cung cấp chức năng "remember me" trong ứng dụng, bạn có
+        thể truyền một giá trị boolean như tham số thứ 2 vào phương thức <code>attempt</code>
+        cái mà sẽ giữ cho người dùng đã được authentication vô thời hạn, hoặc
+        tới khi họ đăng xuất thủ công. Tất nhiện, bảng <code>users</code> phải
+        có một cột tring <code>remember_token</code>, cái mà sẽ được dùng để
+        lưu "remember me" token.</p>
+      <pre class="out-of-box">if (Auth::attempt(['email' =&gt; $email, 'password' =&gt; $password], $remember)) {
+    // The user is being remembered...
+}</pre>
+      <p>Nếu bạn sử dụng controller <code>LoginController</code> cung cấp bởi
+        Laravel, tính năng "remember" đã được tích hợp bởi traits sử dụng trong
+        controller.</p>
+      <p>Nếu bạn đang "remembering" người dùng, bạn có thể sử dụng phương thức <code>viaRemember</code>
+        để xác định nếu người dùng đã authentication sử dụng cookie "remember
+        me":</p>
+      <pre><code>if (Auth::viaRemember()) {
+    //
+}</code></pre>
+      <p>----</p>
+      <p>Hãy thử làm case test như sau:</p>
+      <ul>
+        <li>Đăng nhập mà không tích vào checkbox Remember Me. Sau đó đóng trình
+          duyệt. Mở lại trình duyệt và vào ứng dụng. Bạn vẫn đang đăng nhập.</li>
+        <li>Đăng nhập mà CÓ tích vào Remember Me, đóng mở trình duyệt, kết quả
+          vẫn là đang đăng nhập.</li>
+      </ul>
+      <p>Vậy sự khác nhau là gì? Cơ chế ở đây như thế nào?</p>
+      <p>----</p>
+      <p>Mặc định Laravel sử dụng session trong 2 giờ. Do đó nếu bạn đăng nhập
+        và đóng trình duyệt rồi mở lại chính trình duyệt đó trong vòng 2 giờ thì
+        sẽ không có thay đổi gì. Nếu bạn không sử dụng Remember Me, bạn chỉ có
+        thể đăng nhập trong vòng 2 giờ mà không có hành động nào. Việc giữ
+        session này là tính năng của trình duyệt.</p>
+      <p>Nếu bạn sử dụng Remember Me, Laravel sẽ thêm vào trong cookie giá trị
+        token mà được sử dụng cho lần tiếp theo bạn vào trang. Laravel sẽ sử
+        dụng token đó thay cho username và password khi đăng nhập. Tiến trình là
+        ngầm so với người dùng.</p>
+      <p>Cookie này được mã hóa nên an toàn.</p>
+      <p>Nên dịch tiếng Việt tính năng này là "Giữ hoặc duy trì hoặc ghi nhớ
+        đăng nhập (trên trình duyệt này)" thay cho "Lưu mật khẩu", tránh gây
+        hiểu nhầm.</p>
+      <p>-----</p>
+      <p>Một vài ứng dụng web có thể cần chức năng ‘Remember Me’. Điều này có
+        nghĩa là sau khi người sử dụng đăng nhập, người sử dụng từ cùng một máy
+        có thể truy cập tới tất cả dữ liệu của mình thậm chí sau khi session hết
+        hạn. Việc truy cập này là có thể cho đến khi người sử dụng thoát ra khỏi
+        chương trình.<br>
+        Nếu bạn đang sử dụng Spring và form đăng nhập của nó, thì lúc đó bạn nên
+        sử dụng chức năng ‘Remember Me’ đã được triển khai sẵn trong framework.<br>
+        Nhưng trong tình huống bạn phải tự mình triển khai chức năng ‘Remember
+        Me’ , điều này có thể đạt được dễ dàng sử dụng Cookies. Java có một lớp
+        tên là <span>javax.servlet.http.Cookie<br>
+          Thuật toán đơn giản:</span></p>
+      <p>1. Form login của bạn phải có checkbox ‘Remember Me’<br>
+        2. Sau khi đăng nhập thành công với Remember Me được chọn, bạn có thể
+        tạo ra 2 cookies: một cái để giữ giá trị rememberMe(một dạng cờ
+        true/false) và một cái giữ token để xác định người đã đăng nhập. Để an
+        toàn, token này không bao giờ được chứa username hoặc password. Ý tưởng
+        là phải sinh một id ngẫu nhiên như là token. Và giá trị token này phải
+        được lưu trữ trong cơ sở dữ liệu.<br>
+        3. Bất cứ khi nào việc đăng nhập là cần thiết, bạn phải kiểm tra xem
+        liệu có bất cứ cookie nào được lưu trữ bởi bạn, và nếu như vậy và giá
+        trị rememberMe là true, bạn có thể lấy người sử dụng từ cơ sở dữ liệu
+        dựa trên giá trị token và thực hiện đăng nhập tự động.<br>
+        4. Khi người sử dụng thoát ra, bạn phải xóa cookie lưu trữ token.</p>
+      <div class="out-of-box text-center">
+      <img src="images/check%20cookie.png" alt="">  
+      </div>
+      
+      <p>check cookie.png</p>
+      <div class="out-of-box text-center">
+      <img src="images/find%20cookie.png" alt="">  
+      </div>
+      
+      <p>find cookie.png</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://lockex1987.github.io/archive/laravel%20-%20email%20verification/">Xác
+          nhận email</a></p>
+      <p><a href="https://lockex1987.github.io/archive/laravel%20-%20socialite/">Đăng
+          nhập với Facebook, Google</a></p>
+      <p><a href="https://lockex1987.github.io/archive/laravel%20-%20reset%20password/">Quên
+          mật khẩu</a></p>
+      <p><a href="https://laravel.com/docs/master/authentication" target="_blank">laravel.com/docs/master/authentication</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

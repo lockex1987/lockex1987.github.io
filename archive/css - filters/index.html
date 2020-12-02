@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="CSS Filters"/>
+    <meta name="keywords" content="css, filter"/>
+    <meta name="author" content="lockex1987"/>
+    
+    <title>CSS Filters</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css" rel="stylesheet"/>
+<link href="css/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body>
+    <article>
+        <h2>CSS Filters</h2>
+        
+
+<div style="margin: 0 auto; color: white; padding-top: 15px;">
+<center>
+<img src="https://images.unsplash.com/photo-1508557344244-0c3c025b92a3?ixlib=rb-0.3.5&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;s=f94c5fc58d29bb4fafd2312da8c02f84&amp;auto=format&amp;fit=crop&amp;w=1056&amp;q=80"/>
+</center>
+<div class="columns" style="max-width: 600px; margin: 0 auto;">
+<div class="column">
+<p>Blur <span class="filter-value"></span>px</p>
+<input class="control" id="blur" max="20" min="0" name="blur" type="range" value="0"/>
+</div>
+<div class="column">
+<p>Brightness <span class="filter-value"></span>%</p>
+<input class="control" id="brightness" max="500" min="0" name="brightness" type="range" value="100"/>
+</div>
+<div class="column">
+<p>Contrast <span class="filter-value"></span>%</p>
+<input class="control" id="contrast" max="300" min="0" name="contrast" type="range" value="100"/>
+</div>
+</div>
+<div class="columns" style="max-width: 600px; margin: 0 auto;">
+<div class="column">
+<p>Grayscale <span class="filter-value"></span>%</p>
+<input class="control" id="grayscale" max="100" min="0" name="grayscale" type="range" value="0"/>
+</div>
+<div class="column">
+<p>Hue Rotate <span class="filter-value"></span>deg</p>
+<input class="control" id="hue-rotate" max="360" min="0" name="hue-rotate" type="range" value="0"/>
+</div>
+<div class="column">
+<p>Invert <span class="filter-value"></span>%</p>
+<input class="control" id="invert" max="100" min="0" name="invert" type="range" value="0"/>
+</div>
+</div>
+<div class="columns" style="max-width: 600px; margin: 0 auto;">
+<div class="column">
+<p>Opacity <span class="filter-value"></span>%</p>
+<input class="control" id="opacity" max="100" min="0" name="opacity" type="range" value="100"/>
+</div>
+<div class="column">
+<p>Saturate <span class="filter-value"></span>%</p>
+<input class="control" id="saturate" max="500" min="0" name="saturate" type="range" value="100"/>
+</div>
+<div class="column">
+<p>Sepia <span class="filter-value"></span>%</p>
+<input class="control" id="sepia" max="100" min="0" name="sepia" type="range" value="0"/>
+</div>
+</div>
+<div style="padding: 15px; text-align: center;">
+<button class="button is-medium is-danger" onclick="reset();" type="button">RESET</button><br/><br/>
+<a href="https://awik.io/css-filters" target="_blank">awik.io/css-filters</a>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="js/index.js"></script>
+
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

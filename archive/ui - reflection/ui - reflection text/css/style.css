@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
+
+article {
+    position: relative;
+    background: radial-gradient(#900C3F, #581845);
+    height: 500px;
+}
+
+h2 {
+    margin: 0;
+    padding: 0;
+    position:absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Roboto Slab', serif;
+    text-transform: uppercase;
+    color:#f1c40f;
+    font-size: 8em;
+}
+
+h2:before {
+    content: attr(data-text);
+    position: absolute;
+    top: 16px;
+    left: 0;
+    transform-origin: bottom;
+    transform: rotateX(180deg);
+    line-height: 1em;
+    background: linear-gradient(0deg, #f1c40f 0, transparent 80%);
+    -webkit-background-clip: text;
+    color: transparent;
+    opacity: 0.6;
+}

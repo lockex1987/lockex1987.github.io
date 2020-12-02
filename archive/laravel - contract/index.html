@@ -1,0 +1,282 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Laravel Contract</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Laravel Contract">
+ </head> 
+ <body> 
+  <article> 
+   <h1>Contract</h1> 
+   <p>Contract của Laravel là một set các interfaces khai báo các core services cung cấp bởi framework. Ví dụ, một contract<code>Illuminate\Contracts\Queue\Queue</code> khai báo các phương thức cần thiết cho các queueing jobs, trong khi <code>Illuminate\Contracts\Mail\Mailer</code> khai báo các phương thức cần thiết để gửi email.</p> 
+   <p>Mỗi contract đều có sẵn một corresponding implementation bởi framework. Ví dụ, Laravel cung cấp một queue implementation với các drivers khác nhau, và một mailer implementation được cung cấp bởi <a href="http://swiftmailer.org/">SwiftMailer</a>.</p> 
+   <p>Tất cả các Contracts của Laravel đều nằm trong <a href="https://github.com/illuminate/contracts">their own GitHub repository</a>. Nó cung cấp tài liệu nhau cho tất cả những thứ của contracts, cũng như việc áp dụng để phát triển riêng bởi các nhà phát triển package.</p> 
+   <h3>Contract với Facade</h3> 
+   <p>Facade của Laravel và các hàm helper cung cấp một cách thuận tiện để sử dụng services của Laravel mà không cần type-hint và resolve contracts khỏi service container. Trong hầu hết các trường hợp, mỗi điểm của facade đều có điểm tương đồng với contract.</p> 
+   <p>Không giống với facade, contact không cần yêu cầu bạn phải thêm chúng trong class constructor, contract hầu cho phép bạn có thể khai báo các dependencies ngoài vào trong class. Một số nhà phát triển thích xác định rõ ràng các dependencies của họ theo cách này và do đó họ thích dùng contract hơn, trong khi những nhà phát triển khác lại thích sự tiện lợi của facade.</p> 
+   <p> Hầu hết ứng dụng đều ổn cả dù bạn sử dụng facade hoặc contract. Tuy nhiên, nếu bạn xây dựng một package,bạn nên cân nhắc sử dụng contracts vì nó dễ dàng cho việc test trong package context.</p> 
+   <h2>Khi nào sử dụng contract</h2> 
+   <p>Như đã thảo luận, có nhiều quyết định nên sử dụng contract hoặc facade sẽ trở thành sở thích cá nhân hoặc team. Cả contract và facade có thể sử dụng để tạo nên sức mạnh, được kiểm tra ứng dụng Laravel. Miễn là bạn đang sử dụng tập trung vào class' responsibilities, bạn sẽ chú ý vào đặc điểm khác biệt giữa sử dụng contract và facade.</p> 
+   <p>Tuy nhiên, bạn có thể vẫn có mội số câu hỏi liên quan đến contract. Ví dụ, tại sao sử dụng interface? Không phải là việc sử dụng interface làm cho mọi thứ trở nên phức tạp? Vậy hãy cùng nhau đi khai phá lý do để sử dụng interface theo hai tựa đề sau: loose coupling và simplicity.</p> 
+   <h3>Loose Coupling</h3> 
+   <p>Đầu tiên, cùng nhau review mã nguồn bị liên kết chặt cho một cache implementation. Xem đoạn code dưới đây:</p> 
+   <pre><code>&lt;?php
+
+namespace App\Orders;
+
+class Repository
+{
+    /**
+     * The cache instance.
+     */
+    protected $cache;
+
+    /**
+     * Create a new repository instance.
+     *
+     * @param    \SomePackage\Cache\Memcached  $cache
+     * @return  void
+     */
+    public function __construct(\SomePackage\Cache\Memcached $cache)
+    {
+        $this-&gt;cache = $cache;
+    }
+
+    /**
+     * Retrieve an Order by ID.
+     *
+     * @param    int  $id
+     * @return  Order
+     */
+    public function find($id)
+    {
+        if ($this-&gt;cache-&gt;has($id)) {
+            //
+        }
+    }
+}</code></pre> 
+   <p>Trong class này, mã nguồn bị liên kết khá chặt vào một phương thức cache implementation. Nó bị liên kết chặt là do chúng ta đang phụ thuộc vào lớp Cache từ một package. Nếu API của package này thay đổi, mã nguồn của chúng ta cũng bắt buộc phải thay đổi theo.</p> 
+   <p>Cũng như vậy, nếu chúng ta muốn thay đổi nền tảng cache ở phía dưới (Memcached) bằng một nền tảng khác (Redis), chúng ta lại phải thay đổi mã nguồn trong repository. Mã nguồn của repository không nên biết quá rõ về việc ai cung cấp dữ liệu và cung cấp như thế nào.</p> 
+   <p><strong>Thay vì làm như vậy, chúng ta có thể cải thiện mã nguồn bằng cách sử dụng interface.</strong></p> 
+   <pre><code>&lt;?php
+
+namespace App\Orders;
+
+use Illuminate\Contracts\Cache\Repository as Cache;
+
+class Repository
+{
+    /**
+     * The cache instance.
+     */
+    protected $cache;
+
+    /**
+     * Create a new repository instance.
+     *
+     * @param    Cache  $cache
+     * @return  void
+     */
+    public function __construct(Cache $cache)
+    {
+        $this-&gt;cache = $cache;
+    }
+}</code></pre> 
+   <p>Lúc này mã nguồn không bị phụ thuộc quá nhiều vào bất cứ package nào cả, thậm chí cả Laravel. Vì contract của package không có chứa bất kì implementation và dependency nào, bạn có thể dễ dàng viết một implementation của bất kì contract nào, điều này cho phép bạn thay đổi implementation cache mà không phải thay đổi mã nguồn của đoạn sử dụng cache nữa.</p> 
+   <h3>Simplicity</h3> 
+   <p>Khi mà tất cả services của Laravel đều được khai báo trong các interface đơn giản, mọi thứ sẽ trở nên rất dễ dàng khi tìm chức năng cung của một service. <strong>Contract được sử dụng như một bản tài liệu cho các chức năng của framework.</strong></p> 
+   <p>Thêm vào đó, khi bạn phụ thuộc vào các interface đơn giản, mã nguồn sẽ trở nên dễ hiểu và dễ bảo trì hơn. Thay vì theo dõi các phương thức nào có thể sử dụng trong một class lớn và phức tạp, bạn có thể tham khảo tới cấu trúc đơn giản của interface.</p> 
+   <h2>Sử dụng contracts như thế nào</h2> 
+   <p>Vậy thì làm thế nào để implementation một contract? Sự thực là rất đơn giản.</p> 
+   <p>Nhiều kiểu class trong Laravel được resolve qua các <a href="https://giaphiep.com/docs/5.3/container">service container</a>, gồm controllers, event listeners, middleware, queued jobs, và even route Closures. Vì thế, để lấy một implementation của một contract, bạn chỉ cần "type-hint" interface trong hàm khởi tạo của class đang được resolve.</p> 
+   <p>Xem ví dụ dưới đây về event listener:</p> 
+   <pre><code>&lt;?php
+
+namespace App\Listeners;
+
+use App\User;
+use App\Events\OrderWasPlaced;
+use Illuminate\Contracts\Redis\Database;
+
+class CacheOrderInformation
+{
+    /**
+     * The Redis database implementation.
+     */
+    protected $redis;
+
+    /**
+     * Create a new event handler instance.
+     *
+     * @param    Database  $redis
+     * @return  void
+     */
+    public function __construct(Database $redis)
+    {
+        $this-&gt;redis = $redis;
+    }
+
+    /**
+     * Handle the event.
+     *
+     * @param    OrderWasPlaced  $event
+     * @return  void
+     */
+    public function handle(OrderWasPlaced $event)
+    {
+        //
+    }
+}</code></pre> 
+   <p>Khi mà event listener được resolve, thì service container sẽ đọc phần type-hint trên hàm khởi tạo của class, và inject giá trị phù hợp vào. Để tìm hiểu thêm về đăng kí vào trong service container, hãy xem mục <a href="https://giaphiep.com/docs/5.3/container">its documentation</a>.</p> 
+   <h2>Tham khảo về contract</h2> 
+   <p>Đây là bản tham chiếu tới các Contract của Laravel cũng như các phần facade tương ứng:</p> 
+   <table> 
+    <thead> 
+     <tr> 
+      <th>Contract</th> 
+      <th>References Facade</th> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Auth/Factory.php">Illuminate\Contracts\Auth\Factory</a></td> 
+      <td>Auth</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Auth/PasswordBroker.php">Illuminate\Contracts\Auth\PasswordBroker</a></td> 
+      <td>Password</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Bus/Dispatcher.php">Illuminate\Contracts\Bus\Dispatcher</a></td> 
+      <td>Bus</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Broadcasting/Broadcaster.php">Illuminate\Contracts\Broadcasting\Broadcaster</a></td> 
+      <td> <br> </td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Cache/Repository.php">Illuminate\Contracts\Cache\Repository</a></td> 
+      <td>Cache</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Cache/Factory.php">Illuminate\Contracts\Cache\Factory</a></td> 
+      <td>Cache::driver()</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Config/Repository.php">Illuminate\Contracts\Config\Repository</a></td> 
+      <td>Config</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Container/Container.php">Illuminate\Contracts\Container\Container</a></td> 
+      <td>App</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Cookie/Factory.php">Illuminate\Contracts\Cookie\Factory</a></td> 
+      <td>Cookie</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Cookie/QueueingFactory.php">Illuminate\Contracts\Cookie\QueueingFactory</a></td> 
+      <td>Cookie::queue()</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Encryption/Encrypter.php">Illuminate\Contracts\Encryption\Encrypter</a></td> 
+      <td>Crypt</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Events/Dispatcher.php">Illuminate\Contracts\Events\Dispatcher</a></td> 
+      <td>Event</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Filesystem/Cloud.php">Illuminate\Contracts\Filesystem\Cloud</a></td> 
+      <td> <br> </td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Filesystem/Factory.php">Illuminate\Contracts\Filesystem\Factory</a></td> 
+      <td>File</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Filesystem/Filesystem.php">Illuminate\Contracts\Filesystem\Filesystem</a></td> 
+      <td>File</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Foundation/Application.php">Illuminate\Contracts\Foundation\Application</a></td> 
+      <td>App</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Hashing/Hasher.php">Illuminate\Contracts\Hashing\Hasher</a></td> 
+      <td>Hash</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Logging/Log.php">Illuminate\Contracts\Logging\Log</a></td> 
+      <td>Log</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Mail/MailQueue.php">Illuminate\Contracts\Mail\MailQueue</a></td> 
+      <td>Mail::queue()</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Mail/Mailer.php">Illuminate\Contracts\Mail\Mailer</a></td> 
+      <td>Mail</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Queue/Factory.php">Illuminate\Contracts\Queue\Factory</a></td> 
+      <td>Queue::driver()</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Queue/Queue.php">Illuminate\Contracts\Queue\Queue</a></td> 
+      <td>Queue</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Redis/Database.php">Illuminate\Contracts\Redis\Database</a></td> 
+      <td>Redis</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Routing/Registrar.php">Illuminate\Contracts\Routing\Registrar</a></td> 
+      <td>Route</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Routing/ResponseFactory.php">Illuminate\Contracts\Routing\ResponseFactory</a></td> 
+      <td>Response</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Routing/UrlGenerator.php">Illuminate\Contracts\Routing\UrlGenerator</a></td> 
+      <td>URL</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Support/Arrayable.php">Illuminate\Contracts\Support\Arrayable</a></td> 
+      <td> <br> </td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Support/Jsonable.php">Illuminate\Contracts\Support\Jsonable</a></td> 
+      <td> <br> </td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Support/Renderable.php">Illuminate\Contracts\Support\Renderable</a></td> 
+      <td> <br> </td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Validation/Factory.php">Illuminate\Contracts\Validation\Factory</a></td> 
+      <td>Validator::make()</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/Validation/Validator.php">Illuminate\Contracts\Validation\Validator</a></td> 
+      <td> <br> </td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/View/Factory.php">Illuminate\Contracts\View\Factory</a></td> 
+      <td>View::make()</td> 
+     </tr> 
+     <tr> 
+      <td><a href="https://github.com/illuminate/contracts/blob/master/View/View.php">Illuminate\Contracts\View\View</a></td> 
+      <td> <br> </td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <p>Nguồn: <a href="https://laravel.com/docs/5.3/contracts">https://laravel.com/docs/5.3/contracts</a></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

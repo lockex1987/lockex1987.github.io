@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hàm băm bcrypt">
+    <title>Hàm băm bcrypt</title>
+    <link rel="icon" href="../../../images/favicon.png">
+    <link rel="stylesheet" href="../../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>bcrypt</h2>
+      <p>bcrypt là một thuật toán mã hóa mật khẩu được thiết kế bởi Niels Provos
+        và David Mazières.</p>
+      <p>bcrypt được đánh giá là bảo mật và an toàn hơn so với MD5 và SHA bởi
+        mỗi lần thực hiện băm nó lại cho một giá trị khác nhau, việc này khiến
+        cho việc dò tìm mật khẩu trở nên khó hơn.</p>
+      <p>Ở đây mình sử dụng thư viện JBCrypt để thực hiện băm và so sánh giá
+        băm.</p>
+      <p>Maven:</p>
+      <pre class="">&lt;dependency&gt;
+    &lt;groupId&gt;org.mindrot&lt;/groupId&gt;
+    &lt;artifactId&gt;jbcrypt&lt;/artifactId&gt;
+    &lt;version&gt;0.4&lt;/version&gt;
+&lt;/dependency&gt;</pre>
+      <p>Ví dụ:</p>
+      <pre>String password = "123456a@";
+String hashed = BCrypt.hashpw(password, BCrypt.gensalt(12));
+</pre>
+      <p>Trong đó <code>BCrypt.gensalt()</code> xác định số vòng. Số vòng dao
+        động từ 4-30. Số vòng càng lớn thì thời gian thực hiện băm càng lâu.</p>
+      <p>Kết quả:</p>
+      <pre>$2a$12$hWa.AZxY/31OesIk5Wk8qOwo4haff28ueNXyJ5ybfJM.X2E7CxF5e</pre>
+      <p>Thực hiện chạy lại một lần nữa ta được một chuỗi khác:</p>
+      <pre>$2a$12$meORPYos7QBc8o2rFAsf.efeUuWm0P4vj22XBJXnxudVtA0veT5mq</pre>
+      <p>Ví dụ thực hiện xác nhận mật khẩu với một đoạn mã băm (BCrypt hash)</p>
+      <pre>String candidate = "123456a@";
+String hashed = "$2y$10$bTvm6wAADzfptlHuufxbDuF9QJMtX0W9ly.kb.FpottRB0tp5xeDu";
+boolean check = BCrypt.checkpw(candidate, hashed);
+System.out.println(check);</pre>
+      <p>Kết quả:</p>
+      <pre>true</pre>
+      <p>Tham khảo:</p>
+      <p><a href="https://stackjava.com/demo/bcrypt-la-gi-code-vi-du-bcrypt-bang-java-jbcrypt.html"
+          target="_blank">https://stackjava.com/demo/bcrypt-la-gi-code-vi-du-bcrypt-bang-java-jbcrypt.html</a></p>
+    </article>
+    <script src="../../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Làm rối code JS">
+    <title>Làm rối code JS</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Làm rối code JS</h2>
+      <p>Minimize và làm rối code JavaScript, không cho client đọc hiểu.
+        Minimize cũng khiến cho con người khó đọc hiểu code, vì các tên biến đã
+        bị rút gọn lại.</p>
+      <p>Làm rối chưa chắc đã giảm dung lượng file, thậm chí có khi còn tăng
+        dung lượng.</p>
+      <p><a href="https://grantwinney.com/minification-vs-obfuscation/">https://grantwinney.com/minification-vs-obfuscation/</a></p>
+      <p>Hai thư viện:</p>
+      <ul>
+        <li><a target="_blank" href="https://github.com/mishoo/UglifyJS2/tree/harmony">Uglify
+            JS</a></li>
+        <li><a target="_blank" href="https://github.com/javascript-obfuscator/javascript-obfuscator">JavaScript
+            Obfuscator</a></li>
+      </ul>
+      <p>Cài đặt và sử dụng:</p>
+      <pre>npm install uglify-es -g<br>uglifyjs sample1.js -o sample1.min.js<br>uglifyjs sample1.js -c -m -o sample1.min.js<br>
+npm install javascript-obfuscator -g<br>javascript-obfuscator sample1.js --output sample1.obfuscated.js --compact true --self-defending false</pre>
+      <p>Bạn cũng có thể sử dụng trong code:</p><pre>var fs = require('fs');
+var uglify = require('uglify-js');
+
+var result = uglify.minify(["file-1.js"]);
+
+fs.writeFile("output.min.js", result.code, function (err) {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log("File was successfully saved.");
+    }
+});</pre>
+      
+      <p>Có thể kết hợp với Gulp.</p><p>Tùy nhu cầu xem có cần sử dụng hay không.</p>
+      
+      
+      
+    </article>
+    <script src="../../js/docs.js"></script>
+</body></html>

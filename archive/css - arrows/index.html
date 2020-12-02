@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="description" content="CSS Arrows"/>
+	<meta name="keywords" content="css, arrows"/>
+	<meta name="author" content="lockex1987"/>
+	
+	<title>CSS Arrows</title>
+
+	<link rel="icon" href="../../images/favicon.png"/>
+	<link rel="stylesheet" href="../../css/style.css"/>
+
+<style>
+:root { --size: 3px; }
+.arrow { border: solid black; border-width: 0 var(--size) var(--size) 0; display: inline-block; padding: var(--size); }
+.right { transform: rotate(-45deg); }
+.left { transform: rotate(135deg); }
+.up { transform: rotate(-135deg); }
+.down { transform: rotate(45deg); }
+</style>
+</head>
+<body>
+	<article>
+		<h2>CSS Arrows</h2>
+
+        <p>Arrows with only borders and paddings.</p>
+        <p><i class="arrow"></i></p>
+        <p><i class="arrow right"></i></p>
+        <p><i class="arrow left"></i></p>
+        <p><i class="arrow up"></i></p>
+        <p><i class="arrow down"></i></p>
+	</article>
+
+	<script src="../../js/docs.js"></script>
+</body>
+</html>
+

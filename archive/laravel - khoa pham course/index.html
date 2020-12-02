@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Laravel Khoa Pham Videos"/>
+    <meta name="keywords" content="laravel, khoa pham"/>
+    <meta name="author" content="lockex1987"/>
+    
+    <title>Laravel Khoa Pham Videos</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body>
+<style>
+
+#videos { margin-top: 30px; }
+
+    </style>
+
+    <article>
+        <h2>Học lập trình Laravel tại KhoaPham.Vn</h2>
+        <img src="laravel-khoapham.jpg"/>
+        <table id="videos"></table>
+        <h3>Files</h3>
+        <ul id="files"></ul>
+    
+<script>
+// https://www.youtube.com/playlist?list=PLzrVYRai0riQ-K705397wDnlhhWu-gAUh
+/*
+document.querySelectorAll("ytd-playlist-video-renderer").forEach(div => {
+    console.log("{ name: '" + div.querySelector("#video-title").textContent.trim()
+            + "', link: '" + div.querySelector(".yt-simple-endpoint").href
+            + "', duration: '" + div.querySelector(".ytd-thumbnail-overlay-time-status-renderer").textContent.trim() + "' },");
+});
+*/
+var list = [
+    { name: 'Giới thiệu Laravel Framework - KhoaPham.Vn', link: 'https://www.youtube.com/watch?v=XJwhQumKCxU', duration: '15:56' },
+    { name: 'Bài 01: Cài đặt Sublime Text', link: 'https://www.youtube.com/watch?v=TFLBcYQGaEM', duration: '5:36' },
+    { name: 'Bài 02: Cài đặt Xampp', link: 'https://www.youtube.com/watch?v=g7hdB6f7Hv8', duration: '4:10' },
+    { name: 'Bài 03: Cài đặt Composer', link: 'https://www.youtube.com/watch?v=pbxI7I4iC2I', duration: '6:17' },
+    { name: 'Bài 04: Cài đặt Laravel', link: 'https://www.youtube.com/watch?v=AbCsV68Kzrg', duration: '5:51' },
+    { name: 'Bài 05: Cấu trúc của Route', link: 'https://www.youtube.com/watch?v=CjKYYTs8qGw', duration: '5:21' },
+    { name: 'Bài 06: Truyền tham số trên Route', link: 'https://www.youtube.com/watch?v=Iqy4GZwxFrw', duration: '8:11' },
+    { name: 'Bài 07: Định danh và nhóm Route', link: 'https://www.youtube.com/watch?v=MFRiean--2Y', duration: '9:13' },
+    { name: 'Bài 08: Cơ bản về Controller', link: 'https://www.youtube.com/watch?v=zSv3o4Nk_zo', duration: '5:51' },
+    { name: 'Bài 09: Truyền dữ liệu cho Controller', link: 'https://www.youtube.com/watch?v=ZeEVOzQ7Sgk', duration: '4:33' },
+    { name: 'Bài 10: Làm việc với URL trên Request', link: 'https://www.youtube.com/watch?v=lcR7JbKmZoo', duration: '9:02' },
+    { name: 'Bài 11: Gửi nhận tham số trên Request', link: 'https://www.youtube.com/watch?v=Y1RiJUMbZMY', duration: '14:35' },
+    { name: 'Bài 12: Sử dụng Cookie với request và response', link: 'https://www.youtube.com/watch?v=addNLqa3zfg', duration: '8:37' },
+    { name: 'Bài 13: Upload File', link: 'https://www.youtube.com/watch?v=LQdqs7Xlq8s', duration: '12:22' },
+    { name: 'Bài 14: Làm việc với các thành phần của File', link: 'https://www.youtube.com/watch?v=S4h_YzIupK0', duration: '6:41' },
+    { name: 'Bài 15: Xuất dữ liệu dạng JSON', link: 'https://www.youtube.com/watch?v=B-aOlOjPpfk', duration: '5:08' },
+    { name: 'Bài 16: Tìm hiểu về View', link: 'https://www.youtube.com/watch?v=O7kVIhq06JM', duration: '5:58' },
+    { name: 'Bài 17: Truyền dữ liệu trên View', link: 'https://www.youtube.com/watch?v=Tltein3-oTM', duration: '6:42' },
+    { name: 'Bài 18: Mô hình MVC trong Laravel', link: 'https://www.youtube.com/watch?v=30tzJhzC-vA', duration: '2:17' },
+    { name: 'Bài 19: Tìm hiểu về Blade Template', link: 'https://www.youtube.com/watch?v=9oRXc7iLT9E', duration: '11:48' },
+    { name: 'Bài 20: Nhúng CSS trong Blade Template', link: 'https://www.youtube.com/watch?v=yUg5wnPLePo', duration: '12:28' },
+    { name: 'Bài 21: Hiển thị dữ liệu trên trang giao diện', link: 'https://www.youtube.com/watch?v=w-eaG4X-AoA', duration: '6:22' },
+    { name: 'Bài 22: Câu lệnh điều kiện p1', link: 'https://www.youtube.com/watch?v=GVmu1G-bb7s', duration: '6:35' },
+    { name: 'Bài 23: Câu lệnh điều kiện p2', link: 'https://www.youtube.com/watch?v=XkELbyjM0Pk', duration: '8:46' },
+    { name: 'Bài 24: Cấu hình cơ sở dữ liệu', link: 'https://www.youtube.com/watch?v=ctus_bmtIs8', duration: '4:18' },
+    { name: 'Bài 25: Tạo bảng với Schema', link: 'https://www.youtube.com/watch?v=r9I4VOKtxmw', duration: '9:19' },
+    { name: 'Bài 26: Chỉnh sửa bảng với Schema', link: 'https://www.youtube.com/watch?v=AJgcRS7pIhg', duration: '20:30' },
+    { name: 'Bài 27: Quản lý cơ sở dữ liệu với Migrate', link: 'https://www.youtube.com/watch?v=jJAWC3pPhyM', duration: '8:55' },
+    { name: 'Bài 28: Sử dụng Migrate để rollback dữ liệu', link: 'https://www.youtube.com/watch?v=8ZDjfjgTEc4', duration: '17:40' },
+    { name: 'Bài 29: Tạo dữ liệu mẫu với Seed', link: 'https://www.youtube.com/watch?v=r8J2tRbEX6E', duration: '11:33' },
+    { name: 'Bài 30: Truy vấn dữ liệu với Query Builder - phần 1', link: 'https://www.youtube.com/watch?v=YC-_BRXmSS0', duration: '5:38' },
+    { name: 'Bài 31: Truy vấn dữ liệu với Query Builder - phần 2', link: 'https://www.youtube.com/watch?v=eVRnoQZv9_k', duration: '13:48' },
+    { name: 'Bài 32: Truy vấn dữ liệu với Query Builder - phần 3', link: 'https://www.youtube.com/watch?v=5sBTsSD0y6Y', duration: '8:13' },
+
+    { name: 'Bài 33: Tìm hiểu về Model', link: 'https://www.youtube.com/watch?v=3ZiFFiaw1gc', duration: '8:19' },
+    { name: 'Bài 34: Truy vấn dữ liệu với Model', link: 'https://www.youtube.com/watch?v=uGjJc5J243E', duration: '16:03' },
+    { name: 'Bài 35: Liên kết dữ liệu trong Model', link: 'https://www.youtube.com/watch?v=wg3uNHOrBqA', duration: '17:00' },
+
+    { name: 'Bài 36: Bảo mật với Middleware', link: 'https://www.youtube.com/watch?v=lsgABMED_x0', duration: '14:22' },
+    { name: 'Bài 37: Tìm hiểu về Auth', link: 'https://www.youtube.com/watch?v=W68brihdS4Q', duration: '10:31' },
+    { name: 'Bài 38: Quản lý đăng nhập với Auth', link: 'https://www.youtube.com/watch?v=eELwllmpqV0', duration: '22:44' },
+    { name: 'Bài 39: Làm việc cùng Session', link: 'https://www.youtube.com/watch?v=LaEq6Lh-YxM', duration: '18:52' },
+    { name: 'Bài 40: Phân trang với Pagination', link: 'https://www.youtube.com/watch?v=U7sUDqkY8iQ', duration: '11:31' },
+    { name: 'Bài 41: Chỉnh CSS trong Pagination', link: 'https://www.youtube.com/watch?v=LftakCndah4', duration: '11:57' }
+
+    /*
+    { name: 'Bài 01: Phân  tích database', link: 'https://www.youtube.com/watch?v=SmHttprYOn4', duration: '6:32' },
+    { name: 'Bài 02: Tạo database', link: 'https://www.youtube.com/watch?v=KlKJNLweHx8', duration: '9:50' },
+    { name: 'Bài 03: Tạo model', link: 'https://www.youtube.com/watch?v=Kmxq2FXhKSA', duration: '19:34' },
+    { name: 'Bài 04: Tạo giao diện admin', link: 'https://www.youtube.com/watch?v=chI2AYZRA-A', duration: '24:30' },
+    { name: 'Bài 05: Tạo route cho admin', link: 'https://www.youtube.com/watch?v=PbT8Nuhz5ks', duration: '11:29' },
+    { name: 'Bài 06: Tạo danh sách thể loại', link: 'https://www.youtube.com/watch?v=kqoiFHoYAUc', duration: '11:45' },
+    { name: 'Bài 07: Thêm thể loại', link: 'https://www.youtube.com/watch?v=S-QZJk_ms3s', duration: '20:28' },
+    { name: 'Bài 08: Sửa và xoá thể loại', link: 'https://www.youtube.com/watch?v=J_dmVQNknTY', duration: '26:21' },
+    { name: 'Bài 09: Danh sách loại tin', link: 'https://www.youtube.com/watch?v=5jJQjuWWBSI', duration: '9:42' },
+    { name: 'Bài 10: Thêm loại tin', link: 'https://www.youtube.com/watch?v=Kd60FOyPOFM', duration: '15:26' },
+    { name: 'Bài 11: Sửa loại tin', link: 'https://www.youtube.com/watch?v=ofHe4OsEBnE', duration: '18:56' },
+    { name: 'Bài 12: Danh sách tin tức', link: 'https://www.youtube.com/watch?v=eWmQLZlUzo0', duration: '16:05' },
+    { name: 'Bài 13: Tạo trang ajax loại tin', link: 'https://www.youtube.com/watch?v=N10I8-BaMos', duration: '21:39' },
+    { name: 'Bài 14: Nhúng trình soạn thảo văn bản', link: 'https://www.youtube.com/watch?v=_U49AAtYxaU', duration: '16:38' },
+    { name: 'Bài 15: Uploade hình tin tức', link: 'https://www.youtube.com/watch?v=BYuYxfBegDM', duration: '18:31' },
+    { name: 'Bài 16: Sửa và xoá tin tức', link: 'https://www.youtube.com/watch?v=NhxEb4PdcbQ', duration: '19:34' },
+    { name: 'Bài 17: Quản lý comment', link: 'https://www.youtube.com/watch?v=ngtiTBYWcyI', duration: '12:09' },
+    { name: 'Bài 18: Tạo trang danh sách và thêm Slide', link: 'https://www.youtube.com/watch?v=tR4uYI-GkdA', duration: '17:39' },
+    { name: 'Bài 19: Tạo trang sửa và xoá Slide', link: 'https://www.youtube.com/watch?v=cIuCYwliy20', duration: '9:24' },
+    { name: 'Bài 20: Tạo trang danh sách và thêm User', link: 'https://www.youtube.com/watch?v=MPacxflYbiQ', duration: '21:44' },
+    { name: 'Bài 21: Tạo trang sửa xoá User', link: 'https://www.youtube.com/watch?v=u8-5lLT4wsY', duration: '20:13' },
+    { name: 'Bài 22: Tạo trang đăng nhập', link: 'https://www.youtube.com/watch?v=B3x0ckQxj8I', duration: '23:57' },
+    { name: 'Bài 23: Bảo mật trang admin với middleware', link: 'https://www.youtube.com/watch?v=n7SZ5WHsxkA', duration: '7:53' },
+    { name: 'Bài 24: Cắt giao diện người dùng', link: 'https://www.youtube.com/watch?v=FO4RS_F0oIw', duration: '12:13' },
+    { name: 'Bài 25: Đổ dữ liệu ra menu', link: 'https://www.youtube.com/watch?v=x_pYKpxGZTA', duration: '20:07' },
+    { name: 'Bài 26: Đổ dữ liệu ra Slide', link: 'https://www.youtube.com/watch?v=wUWNUCGF_mM', duration: '12:51' },
+    { name: 'Bài 27: Đổ dữ liệu ra trang chủ', link: 'https://www.youtube.com/watch?v=UVfT9gHIyCw', duration: '18:11' },
+    { name: 'Bài 28: Xây dựng trang loại tin', link: 'https://www.youtube.com/watch?v=a8J9tVvm4a8', duration: '17:18' },
+    { name: 'Bài 29: Xây dựng trang chi tiết', link: 'https://www.youtube.com/watch?v=qJM_DavMZaU', duration: '23:37' },
+    { name: 'Bài 30: Tạo trang đăng nhập', link: 'https://www.youtube.com/watch?v=EAX03Oox5B0', duration: '14:45' },
+    { name: 'Bài 31: Hiển thị thông tin người dùng và đăng xuất', link: 'https://www.youtube.com/watch?v=Zpfy2tbrmgg', duration: '8:11' },
+    { name: 'Bài 32: Tạo chức năng viết bình luận', link: 'https://www.youtube.com/watch?v=_vo2ekBXi70', duration: '12:16' },
+    { name: 'Bài 33: Tạo trang người dùng', link: 'https://www.youtube.com/watch?v=X3NtehQ0ohI', duration: '11:46' },
+    { name: 'Bài 34: Sửa người dùng', link: 'https://www.youtube.com/watch?v=urGAK3_UVvI', duration: '8:09' },
+    { name: 'Bài 35: Tạo trang đăng ký người dùng', link: 'https://www.youtube.com/watch?v=tZIZj03jH40', duration: '10:20' },
+    { name: 'Bài 36: Tìm kiếm tin tức', link: 'https://www.youtube.com/watch?v=GNhRm_FwHr0', duration: '16:02' }
+    */
+];
+
+var html = `
+            ${list.map(v => `
+                <tr>
+                    <td>
+                        <a href="${v.link}" target="_blank">
+                            ${v.name}
+                        </a>
+                    </td>
+                    <td style="text-align: right">
+                        ${v.duration}
+                    </td>
+                </tr>
+            `).join('')}
+            `;
+
+document.querySelector("#videos").innerHTML = html;
+
+html = "";
+for (var i = 1; i <= 12; i++) {
+    html += `<li><a href="bai${i}.pdf">bai${i}.pdf</a></li>`;
+}
+
+document.querySelector("#files").innerHTML = html;
+    </script>
+
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

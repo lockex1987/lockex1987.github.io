@@ -1,0 +1,79 @@
+
+
+ <!DOCTYPE html>
+
+ <html>
+
+    <head>
+
+      <title>HTML5 JS Reflections</title>
+
+        <script>
+
+ 
+          function DrawImageWithReflection(currentContext, itemPath, xPos, yPos) {
+
+              var mainImage = new Image();
+
+              mainImage.src = itemPath;
+
+   
+
+              mainImage.onload = function () {
+
+                  var imgWidth = mainImage.width;
+
+                 var imgHeight = mainImage.height;
+
+                  // Draw main image
+
+                  currentContext.drawImage(mainImage, xPos, yPos, imgWidth, imgHeight);
+
+                  // Setup a reflection (via reversing scale in y-direction around an axis that is two times the height of the image)
+
+                  currentContext.translate(0, yPos + (2 * imgHeight));
+
+                  currentContext.scale(1, -1);
+
+                 currentContext.drawImage(mainImage, xPos, 0, imgWidth, imgHeight);
+
+                  // Revert transform and scale
+
+                  currentContext.translate(0, yPos + (2 * imgHeight));
+
+                 currentContext.scale(1, -1);
+
+                  // Reflection image overlay (to created fade out effect) 
+
+                  // Our gradient starts with 0.85 opacity, then goes to 1. 
+
+                  var alphaGradient = currentContext.createLinearGradient(xPos, yPos + imgHeight, xPos, yPos + (2 * imgHeight));
+
+                  alphaGradient.addColorStop(0, "rgba(255, 255, 255, 0.85)");
+
+                  alphaGradient.addColorStop(0.75, "rgba(255, 255, 255, 1)");
+
+                  currentContext.fillStyle = alphaGradient;
+
+                  currentContext.fillRect(xPos, yPos + imgHeight, imgWidth, imgHeight);
+
+              }
+
+          }
+
+          this.window.onload = function () {
+             var canvas = document.getElementById('myCanvas');
+             var context = canvas.getContext('2d');
+             DrawImageWithReflection(context, "matrix.jpg", 50, 50);
+             //DrawImageWithReflection(context, "images/image2.jpg", 200, 125);
+             //DrawImageWithReflection(context, "images/image3.jpg", 350, 200);
+         }
+</script>
+
+ </head>
+
+  <body>
+     <canvas id="myCanvas" width="800" height="800" style="border: 1px solid #000; background-color: #FFF" />
+   </body>
+ </html>
+

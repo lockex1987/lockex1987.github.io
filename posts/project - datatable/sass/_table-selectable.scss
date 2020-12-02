@@ -1,0 +1,17 @@
+.table-selectable {
+    td:first-child:before {
+        content: '✔';
+        margin-right: 10px;
+        visibility: hidden;
+        font-size: smaller;
+        color: #FF6700;
+    }
+
+    .selected-row {
+        background-color: #c8ffca;
+
+        td:first-child:before {
+            visibility: visible;
+        }
+    }
+}

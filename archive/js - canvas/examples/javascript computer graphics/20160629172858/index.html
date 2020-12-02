@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="en" class="client-js ve-not-available" dir="ltr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta charset="UTF-8">
+<title>Bresenham's line algorithm - Wikipedia, the free encyclopedia</title>
+
+
+
+<meta name="ResourceLoaderDynamicStyles" content="">
+
+
+<meta name="generator" content="MediaWiki 1.28.0-wmf.6">
+<meta name="referrer" content="origin-when-cross-origin">
+<link rel="alternate" href="android-app://org.wikipedia/http/en.m.wikipedia.org/wiki/Bresenham%27s_line_algorithm">
+<link rel="alternate" type="application/x-wiki" title="Edit this page" href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=edit">
+<link rel="edit" title="Edit this page" href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=edit">
+<link rel="apple-touch-icon" href="https://en.wikipedia.org/static/apple-touch/wikipedia.png">
+<link rel="shortcut icon" href="wikipedia.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="https://en.wikipedia.org/w/opensearch_desc.php" title="Wikipedia (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://en.wikipedia.org/w/api.php?action=rsd">
+<link rel="copyright" href="https://creativecommons.org/licenses/by-sa/3.0/">
+<link rel="canonical" href="https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm">
+<link rel="dns-prefetch" href="https://login.wikimedia.org/">
+<link rel="dns-prefetch" href="https://meta.wikimedia.org/">
+
+<link rel="stylesheet" type="text/css" href="index.css" media="all">
+</head>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-Bresenham_s_line_algorithm rootpage-Bresenham_s_line_algorithm skin-vector action-view">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<div id="content" class="mw-body" role="main">
+			<a id="top"></a>
+
+							<div id="siteNotice"><div id="centralNotice"></div><!-- CentralNotice --></div>
+						<div class="mw-indicators">
+</div>
+			<h1 id="firstHeading" class="firstHeading" lang="en">Bresenham's line algorithm</h1>
+									<div id="bodyContent" class="mw-body-content">
+									<div id="siteSub">From Wikipedia, the free encyclopedia</div>
+								<div id="contentSub"></div>
+												<div id="jump-to-nav" class="mw-jump">
+					Jump to:					<a href="#mw-head">navigation</a>, 					<a href="#p-search">search</a>
+				</div>
+				<div id="mw-content-text" dir="ltr" class="mw-content-ltr" lang="en"><table class="metadata plainlinks ambox ambox-content ambox-Refimprove" role="presentation">
+<tbody><tr>
+<td class="mbox-image">
+<div style="width: 52px;"><a href="https://en.wikipedia.org/wiki/File:Question_book-new.svg" class="image"><img alt="" src="50px-question_book-new.svg.png" srcset="//upload.wikimedia.org/wikipedia/en/thumb/9/99/Question_book-new.svg/75px-Question_book-new.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/9/99/Question_book-new.svg/100px-Question_book-new.svg.png 2x" data-file-width="512" data-file-height="399" height="39" width="50"></a></div>
+</td>
+<td class="mbox-text"><span class="mbox-text-span">This article <b>needs additional citations for <a href="https://en.wikipedia.org/wiki/Wikipedia:Verifiability" title="Wikipedia:Verifiability">verification</a></b>. <span class="hide-when-compact">Please help <a class="external text" href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=edit">improve this article</a> by <a href="https://en.wikipedia.org/wiki/Help:Introduction_to_referencing_with_Wiki_Markup/1" title="Help:Introduction to referencing with Wiki Markup/1">adding citations to reliable sources</a>. Unsourced material may be challenged and removed.</span> <small><i>(August 2012)</i></small> <small class="hide-when-compact"><i>(<a href="https://en.wikipedia.org/wiki/Help:Maintenance_template_removal" title="Help:Maintenance template removal">Learn how and when to remove this template message</a>)</i></small></span></td>
+</tr>
+</tbody></table>
+<p><b>Bresenham's line algorithm</b> is an <a href="https://en.wikipedia.org/wiki/Algorithm" title="Algorithm">algorithm</a> that determines the points of an <i>n</i>-dimensional <a href="https://en.wikipedia.org/wiki/Raster_graphics" title="Raster graphics">raster</a> that should be selected in order to form a close approximation to a <a href="https://en.wikipedia.org/wiki/Straight_line_between_two_points" class="mw-redirect" title="Straight line between two points">straight line between two points</a>. It is commonly used to draw line <a href="https://en.wikipedia.org/wiki/Primitives_(computer_graphics)" class="mw-redirect" title="Primitives (computer graphics)">primitives</a> in a <a href="https://en.wikipedia.org/wiki/Bitmap_image" class="mw-redirect" title="Bitmap image">bitmap image</a> (e.g. on a <a href="https://en.wikipedia.org/wiki/Computer_screen" class="mw-redirect" title="Computer screen">computer screen</a>), as it uses only integer addition, subtraction and <a href="https://en.wikipedia.org/wiki/Bitwise_operation" title="Bitwise operation">bit shifting</a>, all of which are very cheap operations in standard <a href="https://en.wikipedia.org/wiki/Computer_architecture" title="Computer architecture">computer architectures</a>. It is an <a href="https://en.wikipedia.org/wiki/Incremental_error_algorithm" class="mw-redirect" title="Incremental error algorithm">incremental error algorithm</a>. It is one of the earliest algorithms developed in the field of <a href="https://en.wikipedia.org/wiki/Computer_graphics" title="Computer graphics">computer graphics</a>. An extension to the original algorithm may be used for drawing <a href="https://en.wikipedia.org/wiki/Circles" class="mw-redirect" title="Circles">circles</a>.</p>
+<p>While algorithms such as <a href="https://en.wikipedia.org/wiki/Xiaolin_Wu%27s_line_algorithm" title="Xiaolin Wu's line algorithm">Wu's algorithm</a> are also frequently used in modern computer graphics because they can support <a href="https://en.wikipedia.org/wiki/Spatial_anti-aliasing" title="Spatial anti-aliasing">antialiasing</a>, the speed and simplicity of Bresenham's line algorithm means that it is still important. The algorithm is used in hardware such as <a href="https://en.wikipedia.org/wiki/Plotter" title="Plotter">plotters</a> and in the <a href="https://en.wikipedia.org/wiki/Graphics_processing_unit" title="Graphics processing unit">graphics chips</a> of modern <a href="https://en.wikipedia.org/wiki/Graphics_card" class="mw-redirect" title="Graphics card">graphics cards</a>. It can also be found in many software <a href="https://en.wikipedia.org/wiki/Graphics_library" title="Graphics library">graphics libraries</a>. Because the algorithm is very simple, it is often implemented in either the <a href="https://en.wikipedia.org/wiki/Firmware" title="Firmware">firmware</a> or the <a href="https://en.wikipedia.org/wiki/Graphics_hardware" title="Graphics hardware">graphics hardware</a> of modern graphics cards.</p>
+<p>The label "Bresenham" is used today for a family of algorithms extending or modifying Bresenham's original algorithm.</p>
+<p></p>
+<div id="toc" class="toc">
+<div id="toctitle">
+<h2>Contents</h2>
+<span class="toctoggle">&nbsp;[<a href="#" id="togglelink">hide</a>]&nbsp;</span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="#History"><span class="tocnumber">1</span> <span class="toctext">History</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="#Method"><span class="tocnumber">2</span> <span class="toctext">Method</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Derivation"><span class="tocnumber">3</span> <span class="toctext">Derivation</span></a>
+<ul>
+<li class="toclevel-2 tocsection-4"><a href="#Line_equation"><span class="tocnumber">3.1</span> <span class="toctext">Line equation</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="#Algorithm"><span class="tocnumber">3.2</span> <span class="toctext">Algorithm</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="#All_cases"><span class="tocnumber">3.3</span> <span class="toctext">All cases</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-7"><a href="#Similar_algorithms"><span class="tocnumber">4</span> <span class="toctext">Similar algorithms</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="#See_also"><span class="tocnumber">5</span> <span class="toctext">See also</span></a></li>
+<li class="toclevel-1 tocsection-9"><a href="#Notes"><span class="tocnumber">6</span> <span class="toctext">Notes</span></a></li>
+<li class="toclevel-1 tocsection-10"><a href="#References"><span class="tocnumber">7</span> <span class="toctext">References</span></a></li>
+<li class="toclevel-1 tocsection-11"><a href="#Further_reading"><span class="tocnumber">8</span> <span class="toctext">Further reading</span></a></li>
+<li class="toclevel-1 tocsection-12"><a href="#External_links"><span class="tocnumber">9</span> <span class="toctext">External links</span></a></li>
+</ul>
+</div>
+<p></p>
+<h2><span class="mw-headline" id="History">History</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=edit&amp;section=1" title="Edit section: History">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>Bresenham's line algorithm is named after <a href="https://en.wikipedia.org/wiki/Jack_Elton_Bresenham" title="Jack Elton Bresenham">Jack Elton Bresenham</a> who developed it in 1962 at <a href="https://en.wikipedia.org/wiki/International_Business_Machines" class="mw-redirect" title="International Business Machines">IBM</a>. In 2001 Bresenham wrote:<sup id="cite_ref-DADS_1-0" class="reference"><a href="#cite_note-DADS-1">[1]</a></sup></p>
+<blockquote>
+<p>I was working in the computation lab at IBM's San Jose development lab. A <a href="https://en.wikipedia.org/wiki/Calcomp_plotter" title="Calcomp plotter">Calcomp plotter</a> had been attached to an <a href="https://en.wikipedia.org/wiki/IBM_1401" title="IBM 1401">IBM 1401</a> via the 1407 typewriter console. [The algorithm] was in production use by summer 1962, possibly a month or so earlier. Programs in those days were freely exchanged among corporations so Calcomp (Jim Newland and Calvin Hefte) had copies. When I returned to Stanford in Fall 1962, I put a copy in the Stanford comp center library. A description of the line drawing routine was accepted for presentation at the 1963 <a href="https://en.wikipedia.org/wiki/Association_for_Computing_Machinery" title="Association for Computing Machinery">ACM</a> national convention in Denver, Colorado. It was a year in which no proceedings were published, only the agenda of speakers and topics in an issue of Communications of the ACM. A person from the IBM Systems Journal asked me after I made my presentation if they could publish the paper. I happily agreed, and they printed it in 1965.</p>
+</blockquote>
+<p>Bresenham's algorithm was later extended to produce circles, the resulting algorithm being sometimes known as either <i>Bresenham's circle algorithm</i> or <a href="https://en.wikipedia.org/wiki/Midpoint_circle_algorithm" title="Midpoint circle algorithm">midpoint circle algorithm</a>.</p>
+<h2><span class="mw-headline" id="Method">Method</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=edit&amp;section=2" title="Edit section: Method">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="thumb tright">
+<div class="thumbinner" style="width: 302px;"><a href="https://en.wikipedia.org/wiki/File:Bresenham.svg" class="image"><img alt="" src="300px-bresenham.svg.png" class="thumbimage" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Bresenham.svg/450px-Bresenham.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Bresenham.svg/600px-Bresenham.svg.png 2x" data-file-width="832" data-file-height="448" height="162" width="300"></a>
+<div class="thumbcaption">
+<div class="magnify"><a href="https://en.wikipedia.org/wiki/File:Bresenham.svg" class="internal" title="Enlarge"></a></div>
+Illustration of the result of Bresenham's line algorithm. (0,0) is at the top left corner of the grid, (1,1) is at the top left end of the line and (11, 5) is at the bottom right end of the line.</div>
+</div>
+</div>
+<p>The common conventions will be used:</p>
+<ul>
+<li>the top-left is (0,0) such that pixel coordinates increase in the right and down directions (e.g. that the pixel at (7,4) is directly above the pixel at (7,5)), and</li>
+<li>that the pixel centers have integer coordinates.</li>
+</ul>
+<p>The endpoints of the line are the pixels at <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>,</mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo stretchy="false">)</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle (x_{0},y_{0})}</annotation>
+  </semantics>
+</math></span><img src="29c296094af9a1c665425debeac5eaab99a37a04" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 7.488ex; height: 2.843ex;" alt="(x_{0},y_{0})"></span> and <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>1</mn>
+          </mrow>
+        </msub>
+        <mo>,</mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>1</mn>
+          </mrow>
+        </msub>
+        <mo stretchy="false">)</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle (x_{1},y_{1})}</annotation>
+  </semantics>
+</math></span><img src="7fc74086e56542bd28b46a84faaee3cebdd4a899" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 7.488ex; height: 2.843ex;" alt="(x_{1},y_{1})"></span>, where the first coordinate of the pair is the column and the second is the row.</p>
+<p>The algorithm will be initially presented only for the <a href="https://en.wikipedia.org/wiki/Octant_(plane_geometry)" title="Octant (plane geometry)">octant</a> in which the segment goes down and to the right (<span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>≤<!-- ≤ --></mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>1</mn>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle x_{0}\leq x_{1}}</annotation>
+  </semantics>
+</math></span><img src="df5414ab5b6adbf0239fe63fcdd6b1e62e62d679" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.671ex; width: 7.912ex; height: 2.509ex;" alt="x_{0}\leq x_{1}"></span> and <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>≤<!-- ≤ --></mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>1</mn>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle y_{0}\leq y_{1}}</annotation>
+  </semantics>
+</math></span><img src="b75bfc815fe0873b41a5caefb63b8ea3e62039e8" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.671ex; width: 7.532ex; height: 2.509ex;" alt="y_{0}\leq y_{1}"></span>), and its horizontal projection <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>1</mn>
+          </mrow>
+        </msub>
+        <mo>−<!-- − --></mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle x_{1}-x_{0}}</annotation>
+  </semantics>
+</math></span><img src="c2be377fc132914a5a9e9a747065b89768311e0b" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.671ex; width: 7.654ex; height: 2.009ex;" alt="x_{1}-x_{0}"></span> is longer than the vertical projection <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>1</mn>
+          </mrow>
+        </msub>
+        <mo>−<!-- − --></mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle y_{1}-y_{0}}</annotation>
+  </semantics>
+</math></span><img src="8d6bbb0999a44b785b893e8e31db9ac75332e368" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.671ex; width: 7.273ex; height: 2.009ex;" alt="y_{1}-y_{0}"></span> (the line has a negative <a href="https://en.wikipedia.org/wiki/Slope" title="Slope">slope</a> whose absolute value is less than 1). In this octant, for each column <i>x</i> between <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle x_{0}}</annotation>
+  </semantics>
+</math></span><img src="86f21d0e31751534cd6584264ecf864a6aa792cf" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.671ex; width: 2.402ex; height: 2.009ex;" alt="x_{0}"></span> and <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>1</mn>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle x_{1}}</annotation>
+  </semantics>
+</math></span><img src="a8788bf85d532fa88d1fb25eff6ae382a601c308" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.671ex; width: 2.402ex; height: 2.009ex;" alt="x_{1}"></span>, there is exactly one row <i>y</i> (computed by the algorithm) containing a pixel of the line, while each row between <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle y_{0}}</annotation>
+  </semantics>
+</math></span><img src="6d943dbbb0b56ca750c4d62c5b54b4ae29a773da" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.671ex; width: 2.211ex; height: 2.009ex;" alt="y_{0}"></span> and <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>1</mn>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle y_{1}}</annotation>
+  </semantics>
+</math></span><img src="eef4db76d658a98219aca14df06d9869d2b43c42" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.671ex; width: 2.211ex; height: 2.009ex;" alt="y_{1}"></span> may contain multiple rasterized pixels.</p>
+<p>Bresenham's algorithm chooses the integer <i>y</i> corresponding to the pixel center that is closest to the ideal (fractional) <i>y</i> for the same <i>x</i>; on successive columns <i>y</i> can remain the same or increase by 1. The general equation of the line through the endpoints is given by:</p>
+<dl>
+<dd><span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <mrow>
+              <mi>y</mi>
+              <mo>−<!-- − --></mo>
+              <msub>
+                <mi>y</mi>
+                <mrow class="MJX-TeXAtom-ORD">
+                  <mn>0</mn>
+                </mrow>
+              </msub>
+            </mrow>
+            <mrow>
+              <msub>
+                <mi>y</mi>
+                <mrow class="MJX-TeXAtom-ORD">
+                  <mn>1</mn>
+                </mrow>
+              </msub>
+              <mo>−<!-- − --></mo>
+              <msub>
+                <mi>y</mi>
+                <mrow class="MJX-TeXAtom-ORD">
+                  <mn>0</mn>
+                </mrow>
+              </msub>
+            </mrow>
+          </mfrac>
+        </mrow>
+        <mo>=</mo>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <mrow>
+              <mi>x</mi>
+              <mo>−<!-- − --></mo>
+              <msub>
+                <mi>x</mi>
+                <mrow class="MJX-TeXAtom-ORD">
+                  <mn>0</mn>
+                </mrow>
+              </msub>
+            </mrow>
+            <mrow>
+              <msub>
+                <mi>x</mi>
+                <mrow class="MJX-TeXAtom-ORD">
+                  <mn>1</mn>
+                </mrow>
+              </msub>
+              <mo>−<!-- − --></mo>
+              <msub>
+                <mi>x</mi>
+                <mrow class="MJX-TeXAtom-ORD">
+                  <mn>0</mn>
+                </mrow>
+              </msub>
+            </mrow>
+          </mfrac>
+        </mrow>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle {\frac {y-y_{0}}{y_{1}-y_{0}}}={\frac {x-x_{0}}{x_{1}-x_{0}}}}</annotation>
+  </semantics>
+</math></span><img src="a4970334be031f5bd1e2e0f60742ad0e8d0157f7" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -2.338ex; width: 19.709ex; height: 5.343ex;" alt="{\frac {y-y_{0}}{y_{1}-y_{0}}}={\frac {x-x_{0}}{x_{1}-x_{0}}}"></span>.</dd>
+</dl>
+<p>Since we know the column, <i>x</i>, the pixel's row, <i>y</i>, is given by rounding this quantity to the nearest integer:</p>
+<dl>
+<dd><span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>y</mi>
+        <mo>=</mo>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <mrow>
+              <msub>
+                <mi>y</mi>
+                <mrow class="MJX-TeXAtom-ORD">
+                  <mn>1</mn>
+                </mrow>
+              </msub>
+              <mo>−<!-- − --></mo>
+              <msub>
+                <mi>y</mi>
+                <mrow class="MJX-TeXAtom-ORD">
+                  <mn>0</mn>
+                </mrow>
+              </msub>
+            </mrow>
+            <mrow>
+              <msub>
+                <mi>x</mi>
+                <mrow class="MJX-TeXAtom-ORD">
+                  <mn>1</mn>
+                </mrow>
+              </msub>
+              <mo>−<!-- − --></mo>
+              <msub>
+                <mi>x</mi>
+                <mrow class="MJX-TeXAtom-ORD">
+                  <mn>0</mn>
+                </mrow>
+              </msub>
+            </mrow>
+          </mfrac>
+        </mrow>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo>−<!-- − --></mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo stretchy="false">)</mo>
+        <mo>+</mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle y={\frac {y_{1}-y_{0}}{x_{1}-x_{0}}}(x-x_{0})+y_{0}}</annotation>
+  </semantics>
+</math></span><img src="0da7a539c063858f0f176a176d2bad86a797d13a" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -2.171ex; width: 26.25ex; height: 5.176ex;" alt="y={\frac {y_{1}-y_{0}}{x_{1}-x_{0}}}(x-x_{0})+y_{0}"></span>.</dd>
+</dl>
+<p>The slope <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>1</mn>
+          </mrow>
+        </msub>
+        <mo>−<!-- − --></mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo stretchy="false">)</mo>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mo>/</mo>
+        </mrow>
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>1</mn>
+          </mrow>
+        </msub>
+        <mo>−<!-- − --></mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo stretchy="false">)</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle (y_{1}-y_{0})/(x_{1}-x_{0})}</annotation>
+  </semantics>
+</math></span><img src="6756618b3157d130e93ed1a8b06971f2d3ac5b64" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 19.761ex; height: 2.843ex;" alt="(y_{1}-y_{0})/(x_{1}-x_{0})"></span> depends on the endpoint coordinates only and can be precomputed, and the ideal <i>y</i> for successive integer values of <i>x</i> can be computed starting from <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle y_{0}}</annotation>
+  </semantics>
+</math></span><img src="6d943dbbb0b56ca750c4d62c5b54b4ae29a773da" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.671ex; width: 2.211ex; height: 2.009ex;" alt="y_{0}"></span> and repeatedly adding the slope.</p>
+<p>In practice, the algorithm keep track of the y coordinate (which increases by <i>m = ∆y/∆x</i>, each time the <i>x</i> increases by one), the algorithm keeps an error bound at each stage, which represents the negative of the distance from the point where the line exits the pixel to the top edge of the pixel. This value is first set to <i>m − 1</i>, and is incremented by <i>m</i> each time the <i>x</i> coordinate is incremented by one. If error becomes greater than zero, we know that the line has moved upwards one pixel, and that we must increment our <i>y</i> coordinate and readjust the error to represent the distance from the top of the new pixel – which is done by subtracting one from error.</p>
+<p><br>
+In the following <a href="https://en.wikipedia.org/wiki/Pseudocode" title="Pseudocode">pseudocode</a> sample <code>plot(x,y)</code> plots a point and <code>abs</code> returns <a href="https://en.wikipedia.org/wiki/Absolute_value" title="Absolute value">absolute value</a>:</p>
+<pre> <b>function</b> line(x0, y0, x1, y1)
+     <i>real</i> deltax := x1 - x0
+     <i>real</i> deltay := y1 - y0
+     <i>real</i> error := -1.0
+     <i>real</i> deltaerr := abs(deltay / deltax)    // Assume deltax != 0 (line is not vertical),
+           // note that this division needs to be done in a way that preserves the fractional part
+     <i>int</i> y := y0
+     <b>for</b> x <b>from</b> x0 <b>to</b> x1-1 
+         plot(x,y)
+         error := error + deltaerr
+         <b>if</b> error ≥ 0.0 <b>then</b>
+             y := y + 1
+             error := error - 1.0
+             
+</pre>
+<h2><span class="mw-headline" id="Derivation">Derivation</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=edit&amp;section=3" title="Edit section: Derivation">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>To derive Bresenham's algorithm, two steps must be taken. The first step is transforming the equation of a line from the typical slope-intercept form into something different; and then using this new equation for a line to draw a line based on the idea of accumulation of error.</p>
+<h3><span class="mw-headline" id="Line_equation">Line equation</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=edit&amp;section=4" title="Edit section: Line equation">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<div class="thumb tright">
+<div class="thumbinner" style="width: 302px;"><a href="https://en.wikipedia.org/wiki/File:Line_1.5x%2B1.svg" class="image"><img alt="" src="300px-line_1.5x@2b1.svg.png" class="thumbimage" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/b/be/Line_1.5x%2B1.svg/450px-Line_1.5x%2B1.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/b/be/Line_1.5x%2B1.svg/600px-Line_1.5x%2B1.svg.png 2x" data-file-width="300" data-file-height="300" height="300" width="300"></a>
+<div class="thumbcaption">
+<div class="magnify"><a href="https://en.wikipedia.org/wiki/File:Line_1.5x%2B1.svg" class="internal" title="Enlarge"></a></div>
+y=f(x)=.5x+1 or f(x,y)=x-2y+2</div>
+</div>
+</div>
+<div class="thumb tright">
+<div class="thumbinner" style="width: 302px;"><a href="https://en.wikipedia.org/wiki/File:Line_1.5x%2B1_--_planes.svg" class="image"><img alt="" src="300px-line_1.5x@2b1_--_planes.svg.png" class="thumbimage" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Line_1.5x%2B1_--_planes.svg/450px-Line_1.5x%2B1_--_planes.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Line_1.5x%2B1_--_planes.svg/600px-Line_1.5x%2B1_--_planes.svg.png 2x" data-file-width="300" data-file-height="300" height="300" width="300"></a>
+<div class="thumbcaption">
+<div class="magnify"><a href="https://en.wikipedia.org/wiki/File:Line_1.5x%2B1_--_planes.svg" class="internal" title="Enlarge"></a></div>
+Positive and negative half-planes</div>
+</div>
+</div>
+<p>The slope-intercept form of a line is written as</p>
+<dl>
+<dd><span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>y</mi>
+        <mo>=</mo>
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo stretchy="false">)</mo>
+        <mo>=</mo>
+        <mi>m</mi>
+        <mi>x</mi>
+        <mo>+</mo>
+        <mi>b</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle y=f(x)=mx+b}</annotation>
+  </semantics>
+</math></span><img src="af9880b15fdfd89cc583e3fde26f943d77708c2a" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 19.093ex; height: 2.843ex;" alt="y=f(x)=mx+b"></span></dd>
+</dl>
+<p>where m is the slope and b is the y-intercept. This is a function of only x and it would be useful to make this equation written as a function of both x and y. Using algebraic manipulation and recognition that the slope is the "rise over run" or <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi mathvariant="normal">Δ<!-- Δ --></mi>
+        <mi>y</mi>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mo>/</mo>
+        </mrow>
+        <mi mathvariant="normal">Δ<!-- Δ --></mi>
+        <mi>x</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle \Delta y/\Delta x}</annotation>
+  </semantics>
+</math></span><img src="4108c3558a8ddd281302f63bfd8e3fbdc4fb3940" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 7.572ex; height: 2.843ex;" alt="\Delta y/\Delta x"></span> then</p>
+<dl>
+<dd><span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mrow class="MJX-TeXAtom-ORD">
+          <mtable columnalign="right left right left right left right left right left right left" rowspacing="3pt" columnspacing="0em 2em 0em 2em 0em 2em 0em 2em 0em 2em 0em" displaystyle="true">
+            <mtr>
+              <mtd>
+                <mi>y</mi>
+              </mtd>
+              <mtd>
+                <mi></mi>
+                <mo>=</mo>
+                <mi>m</mi>
+                <mi>x</mi>
+                <mo>+</mo>
+                <mi>b</mi>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd>
+                <mi>y</mi>
+              </mtd>
+              <mtd>
+                <mi></mi>
+                <mo>=</mo>
+                <mrow class="MJX-TeXAtom-ORD">
+                  <mfrac>
+                    <mrow>
+                      <mo stretchy="false">(</mo>
+                      <mi mathvariant="normal">Δ<!-- Δ --></mi>
+                      <mi>y</mi>
+                      <mo stretchy="false">)</mo>
+                    </mrow>
+                    <mrow>
+                      <mo stretchy="false">(</mo>
+                      <mi mathvariant="normal">Δ<!-- Δ --></mi>
+                      <mi>x</mi>
+                      <mo stretchy="false">)</mo>
+                    </mrow>
+                  </mfrac>
+                </mrow>
+                <mi>x</mi>
+                <mo>+</mo>
+                <mi>b</mi>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd>
+                <mo stretchy="false">(</mo>
+                <mi mathvariant="normal">Δ<!-- Δ --></mi>
+                <mi>x</mi>
+                <mo stretchy="false">)</mo>
+                <mi>y</mi>
+              </mtd>
+              <mtd>
+                <mi></mi>
+                <mo>=</mo>
+                <mo stretchy="false">(</mo>
+                <mi mathvariant="normal">Δ<!-- Δ --></mi>
+                <mi>y</mi>
+                <mo stretchy="false">)</mo>
+                <mi>x</mi>
+                <mo>+</mo>
+                <mo stretchy="false">(</mo>
+                <mi mathvariant="normal">Δ<!-- Δ --></mi>
+                <mi>x</mi>
+                <mo stretchy="false">)</mo>
+                <mi>b</mi>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd>
+                <mn>0</mn>
+              </mtd>
+              <mtd>
+                <mi></mi>
+                <mo>=</mo>
+                <mo stretchy="false">(</mo>
+                <mi mathvariant="normal">Δ<!-- Δ --></mi>
+                <mi>y</mi>
+                <mo stretchy="false">)</mo>
+                <mi>x</mi>
+                <mo>−<!-- − --></mo>
+                <mo stretchy="false">(</mo>
+                <mi mathvariant="normal">Δ<!-- Δ --></mi>
+                <mi>x</mi>
+                <mo stretchy="false">)</mo>
+                <mi>y</mi>
+                <mo>+</mo>
+                <mo stretchy="false">(</mo>
+                <mi mathvariant="normal">Δ<!-- Δ --></mi>
+                <mi>x</mi>
+                <mo stretchy="false">)</mo>
+                <mi>b</mi>
+              </mtd>
+            </mtr>
+          </mtable>
+        </mrow>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle {\begin{aligned}y&amp;=mx+b\\y&amp;={\frac {(\Delta y)}{(\Delta x)}}x+b\\(\Delta x)y&amp;=(\Delta y)x+(\Delta x)b\\0&amp;=(\Delta y)x-(\Delta x)y+(\Delta x)b\end{aligned}}}</annotation>
+  </semantics>
+</math></span><img src="845a7240ddd8a1be179c284abb6e8e5b520dd51c" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -7.338ex; width: 34.535ex; height: 15.843ex;" alt="{\begin{aligned}y&amp;=mx+b\\y&amp;={\frac {(\Delta y)}{(\Delta x)}}x+b\\(\Delta x)y&amp;=(\Delta y)x+(\Delta x)b\\0&amp;=(\Delta y)x-(\Delta x)y+(\Delta x)b\end{aligned}}"></span></dd>
+</dl>
+<p>Letting this last equation be a function of x and y then it can be written as</p>
+<dl>
+<dd><span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo>,</mo>
+        <mi>y</mi>
+        <mo stretchy="false">)</mo>
+        <mo>=</mo>
+        <mn>0</mn>
+        <mo>=</mo>
+        <mi>A</mi>
+        <mi>x</mi>
+        <mo>+</mo>
+        <mi>B</mi>
+        <mi>y</mi>
+        <mo>+</mo>
+        <mi>C</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle f(x,y)=0=Ax+By+C}</annotation>
+  </semantics>
+</math></span><img src="57e968fc36dc1ec595122c0869d1ab61881d2b86" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 27.573ex; height: 2.843ex;" alt="f(x,y)=0=Ax+By+C"></span></dd>
+</dl>
+<p>where the constants are</p>
+<ul>
+<li><span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>A</mi>
+        <mo>=</mo>
+        <mi mathvariant="normal">Δ<!-- Δ --></mi>
+        <mi>y</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle A=\Delta y}</annotation>
+  </semantics>
+</math></span><img src="79b19e7f91fa504ded18ce18fc3e8eec1f2d2b07" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.671ex; width: 7.975ex; height: 2.676ex;" alt="A=\Delta y"></span></li>
+<li><span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>B</mi>
+        <mo>=</mo>
+        <mo>−<!-- − --></mo>
+        <mi mathvariant="normal">Δ<!-- Δ --></mi>
+        <mi>x</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle B=-\Delta x}</annotation>
+  </semantics>
+</math></span><img src="68d97360b3c017cdce9a898ed49c67c19bb7509b" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.338ex; width: 9.988ex; height: 2.343ex;" alt="B=-\Delta x"></span></li>
+<li><span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>C</mi>
+        <mo>=</mo>
+        <mo stretchy="false">(</mo>
+        <mi mathvariant="normal">Δ<!-- Δ --></mi>
+        <mi>x</mi>
+        <mo stretchy="false">)</mo>
+        <mi>b</mi>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle C=(\Delta x)b}</annotation>
+  </semantics>
+</math></span><img src="d3c7327836a8c1cfaaef3f9354d80bce4b8dd85a" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 11.01ex; height: 2.843ex;" alt="C=(\Delta x)b"></span></li>
+</ul>
+<p>The line is then defined for some constants A, B, and C and anywhere <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo>,</mo>
+        <mi>y</mi>
+        <mo stretchy="false">)</mo>
+        <mo>=</mo>
+        <mn>0</mn>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle f(x,y)=0}</annotation>
+  </semantics>
+</math></span><img src="01ede27471a9cc9a0c5eb6e1ebdc7afc8a086543" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 10.952ex; height: 2.843ex;" alt="f(x,y)=0"></span>. For any <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo>,</mo>
+        <mi>y</mi>
+        <mo stretchy="false">)</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle (x,y)}</annotation>
+  </semantics>
+</math></span><img src="41cf50e4a314ca8e2c30964baa8d26e5be7a9386" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 5.381ex; height: 2.843ex;" alt="(x,y)"></span> not on the line then <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo>,</mo>
+        <mi>y</mi>
+        <mo stretchy="false">)</mo>
+        <mo>≠<!-- ≠ --></mo>
+        <mn>0</mn>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle f(x,y)\neq 0}</annotation>
+  </semantics>
+</math></span><img src="5643d89f14ca705a892010af1bf37b3ccea56edf" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 10.952ex; height: 2.843ex;" alt="f(x,y)\neq 0"></span>. It should be noted that everything about this form involves only integers if x and y are integers since the constants are necessarily integers.</p>
+<p>As an example, the line <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>y</mi>
+        <mo>=</mo>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mfrac>
+            <mn>1</mn>
+            <mn>2</mn>
+          </mfrac>
+        </mrow>
+        <mi>x</mi>
+        <mo>+</mo>
+        <mn>1</mn>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle y={\frac {1}{2}}x+1}</annotation>
+  </semantics>
+</math></span><img src="6f7477c2201c3e79e2285f91392d959cc62f08b1" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -1.838ex; width: 11.648ex; height: 5.176ex;" alt="y={\frac {1}{2}}x+1"></span> then this could be written as <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo>,</mo>
+        <mi>y</mi>
+        <mo stretchy="false">)</mo>
+        <mo>=</mo>
+        <mi>x</mi>
+        <mo>−<!-- − --></mo>
+        <mn>2</mn>
+        <mi>y</mi>
+        <mo>+</mo>
+        <mn>2</mn>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle f(x,y)=x-2y+2}</annotation>
+  </semantics>
+</math></span><img src="6f995f04647fbc22a7ac5878e008ed39e6a14a82" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 20.332ex; height: 2.843ex;" alt="f(x,y)=x-2y+2"></span>. The point (2,2) is on the line</p>
+<dl>
+<dd><span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mn>2</mn>
+        <mo>,</mo>
+        <mn>2</mn>
+        <mo stretchy="false">)</mo>
+        <mo>=</mo>
+        <mi>x</mi>
+        <mo>−<!-- − --></mo>
+        <mn>2</mn>
+        <mi>y</mi>
+        <mo>+</mo>
+        <mn>2</mn>
+        <mo>=</mo>
+        <mo stretchy="false">(</mo>
+        <mn>2</mn>
+        <mo stretchy="false">)</mo>
+        <mo>−<!-- − --></mo>
+        <mn>2</mn>
+        <mo stretchy="false">(</mo>
+        <mn>2</mn>
+        <mo stretchy="false">)</mo>
+        <mo>+</mo>
+        <mn>2</mn>
+        <mo>=</mo>
+        <mn>2</mn>
+        <mo>−<!-- − --></mo>
+        <mn>4</mn>
+        <mo>+</mo>
+        <mn>2</mn>
+        <mo>=</mo>
+        <mn>0</mn>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle f(2,2)=x-2y+2=(2)-2(2)+2=2-4+2=0}</annotation>
+  </semantics>
+</math></span><img src="192ee277196efa48c269f5c9ce00509abdfba08b" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 53.946ex; height: 2.843ex;" alt="f(2,2)=x-2y+2=(2)-2(2)+2=2-4+2=0"></span></dd>
+</dl>
+<p>and the point (2,3) is not on the line</p>
+<dl>
+<dd><span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mn>2</mn>
+        <mo>,</mo>
+        <mn>3</mn>
+        <mo stretchy="false">)</mo>
+        <mo>=</mo>
+        <mo stretchy="false">(</mo>
+        <mn>2</mn>
+        <mo stretchy="false">)</mo>
+        <mo>−<!-- − --></mo>
+        <mn>2</mn>
+        <mo stretchy="false">(</mo>
+        <mn>3</mn>
+        <mo stretchy="false">)</mo>
+        <mo>+</mo>
+        <mn>2</mn>
+        <mo>=</mo>
+        <mn>2</mn>
+        <mo>−<!-- − --></mo>
+        <mn>6</mn>
+        <mo>+</mo>
+        <mn>2</mn>
+        <mo>=</mo>
+        <mo>−<!-- − --></mo>
+        <mn>2</mn>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle f(2,3)=(2)-2(3)+2=2-6+2=-2}</annotation>
+  </semantics>
+</math></span><img src="1c67eb43ca78e0d96d3bbda2621f3cd7ebe3beaa" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 42.102ex; height: 2.843ex;" alt="f(2,3)=(2)-2(3)+2=2-6+2=-2"></span></dd>
+</dl>
+<p>and neither is the point (2,1)</p>
+<dl>
+<dd><span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mn>2</mn>
+        <mo>,</mo>
+        <mn>1</mn>
+        <mo stretchy="false">)</mo>
+        <mo>=</mo>
+        <mo stretchy="false">(</mo>
+        <mn>2</mn>
+        <mo stretchy="false">)</mo>
+        <mo>−<!-- − --></mo>
+        <mn>2</mn>
+        <mo stretchy="false">(</mo>
+        <mn>1</mn>
+        <mo stretchy="false">)</mo>
+        <mo>+</mo>
+        <mn>2</mn>
+        <mo>=</mo>
+        <mn>2</mn>
+        <mo>−<!-- − --></mo>
+        <mn>2</mn>
+        <mo>+</mo>
+        <mn>2</mn>
+        <mo>=</mo>
+        <mn>2</mn>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle f(2,1)=(2)-2(1)+2=2-2+2=2}</annotation>
+  </semantics>
+</math></span><img src="41b660964b3012eeee06091a4560a984d11b7721" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 40.283ex; height: 2.843ex;" alt="f(2,1)=(2)-2(1)+2=2-2+2=2"></span></dd>
+</dl>
+<p>Notice that the points (2,1) and (2,3) are on opposite sides of the line and f(x,y) evaluates to positive or negative. A line splits a plane into halves and the half-plane that has a negative f(x,y) can be called the negative half-plane, and the other half can called the positive half-plane. This observation is very important in the remainder of the derivation.</p>
+<h3><span class="mw-headline" id="Algorithm">Algorithm</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=edit&amp;section=5" title="Edit section: Algorithm">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<p>Clearly, the starting point is on the line</p>
+<dl>
+<dd><span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>,</mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo stretchy="false">)</mo>
+        <mo>=</mo>
+        <mn>0</mn>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle f(x_{0},y_{0})=0}</annotation>
+  </semantics>
+</math></span><img src="e261c0fd465936f7a74f57fc1c16b7698a103473" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 13.059ex; height: 2.843ex;" alt="f(x_{0},y_{0})=0"></span></dd>
+</dl>
+<p>only because the line is defined to start and end on integer coordinates (though it is entirely reasonable to want to draw a line with non-integer end points).</p>
+<div class="thumb tright">
+<div class="thumbinner" style="width: 302px;"><a href="https://en.wikipedia.org/wiki/File:Line_1.5x%2B1_--_candidates.svg" class="image"><img alt="" src="300px-line_1.5x@2b1_--_candidates.svg.png" class="thumbimage" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/1/14/Line_1.5x%2B1_--_candidates.svg/450px-Line_1.5x%2B1_--_candidates.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/14/Line_1.5x%2B1_--_candidates.svg/600px-Line_1.5x%2B1_--_candidates.svg.png 2x" data-file-width="300" data-file-height="300" height="300" width="300"></a>
+<div class="thumbcaption">
+<div class="magnify"><a href="https://en.wikipedia.org/wiki/File:Line_1.5x%2B1_--_candidates.svg" class="internal" title="Enlarge"></a></div>
+Candidate point (2,2) in blue and two candidate points in green (3,2) and (3,3)</div>
+</div>
+</div>
+<p>Keeping in mind that the slope is less-than-or-equal-to zero, the problem now presents itself as to whether the next point should be at <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mn>1</mn>
+        <mo>,</mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo stretchy="false">)</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle (x_{0}+1,y_{0})}</annotation>
+  </semantics>
+</math></span><img src="1b96ae348314e637518b77ec425d8cd31db4b4ec" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 11.511ex; height: 2.843ex;" alt="(x_{0}+1,y_{0})"></span> or <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mn>1</mn>
+        <mo>,</mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mn>1</mn>
+        <mo stretchy="false">)</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle (x_{0}+1,y_{0}+1)}</annotation>
+  </semantics>
+</math></span><img src="b71c50a42505d807c4455f1623a9c2f1259adbc4" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 15.535ex; height: 2.843ex;" alt="(x_{0}+1,y_{0}+1)"></span>. Perhaps intuitively, the point should be chosen based upon which is closer to the line at <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mn>1</mn>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle x_{0}+1}</annotation>
+  </semantics>
+</math></span><img src="7588b7e888460567449389be731315e590c0d875" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.671ex; width: 6.426ex; height: 2.509ex;" alt="x_{0}+1"></span>. If it is closer to the former then include the former point on the line, if the latter then the latter. To answer this, evaluate the line function at the midpoint between these two points:</p>
+<dl>
+<dd><span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mn>1</mn>
+        <mo>,</mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mn>1</mn>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mo>/</mo>
+        </mrow>
+        <mn>2</mn>
+        <mo stretchy="false">)</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle f(x_{0}+1,y_{0}+1/2)}</annotation>
+  </semantics>
+</math></span><img src="d6f727fedca89cad96d9dbe65d6dabf5ed58c3ce" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 19.17ex; height: 2.843ex;" alt="f(x_{0}+1,y_{0}+1/2)"></span></dd>
+</dl>
+<p>If the value of this is positive then the ideal line is below the midpoint and closer to the candidate point <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mn>1</mn>
+        <mo>,</mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mn>1</mn>
+        <mo stretchy="false">)</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle (x_{0}+1,y_{0}+1)}</annotation>
+  </semantics>
+</math></span><img src="b71c50a42505d807c4455f1623a9c2f1259adbc4" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 15.535ex; height: 2.843ex;" alt="(x_{0}+1,y_{0}+1)"></span>; in effect the y coordinate has advanced. Otherwise, the ideal line passes through or above the midpoint, and the y coordinate has not advanced; in this case choose the point <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mn>1</mn>
+        <mo>,</mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo stretchy="false">)</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle (x_{0}+1,y_{0})}</annotation>
+  </semantics>
+</math></span><img src="1b96ae348314e637518b77ec425d8cd31db4b4ec" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 11.511ex; height: 2.843ex;" alt="(x_{0}+1,y_{0})"></span>. This observation is crucial to understand! The value of the line function at this midpoint is the sole determinant of which point should be chosen.</p>
+<p>The image to the right shows the blue point (2,2) chosen to be on the line with two candidate points in green (3,2) and (3,3). The black point (3, 2.5) is the midpoint between the two candidate points.</p>
+<dl>
+<dt>Algorithm for integer arithmetic</dt>
+</dl>
+<p>Alternatively, the difference between points can be used instead of evaluating f(x,y) at midpoints. This alternative method allows for integer-only arithmetic, which is generally faster than using floating-point arithmetic. To derive the alternative method, define the difference to be as follows:</p>
+<dl>
+<dd><span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>D</mi>
+        <mo>=</mo>
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mn>1</mn>
+        <mo>,</mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mn>1</mn>
+        <mrow class="MJX-TeXAtom-ORD">
+          <mo>/</mo>
+        </mrow>
+        <mn>2</mn>
+        <mo stretchy="false">)</mo>
+        <mo>−<!-- − --></mo>
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>,</mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo stretchy="false">)</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle D=f(x_{0}+1,y_{0}+1/2)-f(x_{0},y_{0})}</annotation>
+  </semantics>
+</math></span><img src="4b6b8631a818d60fbefb47d3e79e51104f019bcf" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 35.841ex; height: 2.843ex;" alt="D=f(x_{0}+1,y_{0}+1/2)-f(x_{0},y_{0})"></span></dd>
+</dl>
+<p>For the first decision, this formulation is equivalent to the midpoint method since <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>,</mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo stretchy="false">)</mo>
+        <mo>=</mo>
+        <mn>0</mn>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle f(x_{0},y_{0})=0}</annotation>
+  </semantics>
+</math></span><img src="e261c0fd465936f7a74f57fc1c16b7698a103473" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 13.059ex; height: 2.843ex;" alt="f(x_{0},y_{0})=0"></span> at the starting point. Simplifying this expression yields:</p>
+<dl>
+<dd><span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mrow class="MJX-TeXAtom-ORD">
+          <mtable columnalign="right center left center left" rowspacing="4pt" columnspacing="1em">
+            <mtr>
+              <mtd>
+                <mi>D</mi>
+              </mtd>
+              <mtd>
+                <mo>=</mo>
+              </mtd>
+              <mtd>
+                <mrow>
+                  <mo>[</mo>
+                  <mi>A</mi>
+                  <mo stretchy="false">(</mo>
+                  <msub>
+                    <mi>x</mi>
+                    <mrow class="MJX-TeXAtom-ORD">
+                      <mn>0</mn>
+                    </mrow>
+                  </msub>
+                  <mo>+</mo>
+                  <mn>1</mn>
+                  <mo stretchy="false">)</mo>
+                  <mo>+</mo>
+                  <mi>B</mi>
+                  <mrow>
+                    <mo>(</mo>
+                    <msub>
+                      <mi>y</mi>
+                      <mrow class="MJX-TeXAtom-ORD">
+                        <mn>0</mn>
+                      </mrow>
+                    </msub>
+                    <mo>+</mo>
+                    <mrow class="MJX-TeXAtom-ORD">
+                      <mfrac>
+                        <mn>1</mn>
+                        <mn>2</mn>
+                      </mfrac>
+                    </mrow>
+                    <mo>)</mo>
+                  </mrow>
+                  <mo>+</mo>
+                  <mi>C</mi>
+                  <mo>]</mo>
+                </mrow>
+              </mtd>
+              <mtd>
+                <mo>−<!-- − --></mo>
+              </mtd>
+              <mtd>
+                <mrow>
+                  <mo>[</mo>
+                  <mi>A</mi>
+                  <msub>
+                    <mi>x</mi>
+                    <mrow class="MJX-TeXAtom-ORD">
+                      <mn>0</mn>
+                    </mrow>
+                  </msub>
+                  <mo>+</mo>
+                  <mi>B</mi>
+                  <msub>
+                    <mi>y</mi>
+                    <mrow class="MJX-TeXAtom-ORD">
+                      <mn>0</mn>
+                    </mrow>
+                  </msub>
+                  <mo>+</mo>
+                  <mi>C</mi>
+                  <mo>]</mo>
+                </mrow>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd></mtd>
+              <mtd>
+                <mo>=</mo>
+              </mtd>
+              <mtd>
+                <mrow>
+                  <mo>[</mo>
+                  <mi>A</mi>
+                  <msub>
+                    <mi>x</mi>
+                    <mrow class="MJX-TeXAtom-ORD">
+                      <mn>0</mn>
+                    </mrow>
+                  </msub>
+                  <mo>+</mo>
+                  <mi>B</mi>
+                  <msub>
+                    <mi>y</mi>
+                    <mrow class="MJX-TeXAtom-ORD">
+                      <mn>0</mn>
+                    </mrow>
+                  </msub>
+                  <mo>+</mo>
+                  <mi>C</mi>
+                  <mo>+</mo>
+                  <mi>A</mi>
+                  <mo>+</mo>
+                  <mrow class="MJX-TeXAtom-ORD">
+                    <mfrac>
+                      <mn>1</mn>
+                      <mn>2</mn>
+                    </mfrac>
+                  </mrow>
+                  <mi>B</mi>
+                  <mo>]</mo>
+                </mrow>
+              </mtd>
+              <mtd>
+                <mo>−<!-- − --></mo>
+              </mtd>
+              <mtd>
+                <mrow>
+                  <mo>[</mo>
+                  <mi>A</mi>
+                  <msub>
+                    <mi>x</mi>
+                    <mrow class="MJX-TeXAtom-ORD">
+                      <mn>0</mn>
+                    </mrow>
+                  </msub>
+                  <mo>+</mo>
+                  <mi>B</mi>
+                  <msub>
+                    <mi>y</mi>
+                    <mrow class="MJX-TeXAtom-ORD">
+                      <mn>0</mn>
+                    </mrow>
+                  </msub>
+                  <mo>+</mo>
+                  <mi>C</mi>
+                  <mo>]</mo>
+                </mrow>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd></mtd>
+              <mtd>
+                <mo>=</mo>
+              </mtd>
+              <mtd>
+                <mi>A</mi>
+                <mo>+</mo>
+                <mrow class="MJX-TeXAtom-ORD">
+                  <mfrac>
+                    <mn>1</mn>
+                    <mn>2</mn>
+                  </mfrac>
+                </mrow>
+                <mi>B</mi>
+              </mtd>
+            </mtr>
+          </mtable>
+        </mrow>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle {\begin{array}{rclcl}D&amp;=&amp;\left[A(x_{0}+1)+B\left(y_{0}+{\frac {1}{2}}\right)+C\right]&amp;-&amp;\left[Ax_{0}+By_{0}+C\right]\\&amp;=&amp;\left[Ax_{0}+By_{0}+C+A+{\frac {1}{2}}B\right]&amp;-&amp;\left[Ax_{0}+By_{0}+C\right]\\&amp;=&amp;A+{\frac {1}{2}}B\end{array}}}</annotation>
+  </semantics>
+</math></span><img src="780438b85d0140a03f2c936d50d4c2838a6181c0" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -6.338ex; width: 63.937ex; height: 13.843ex;" alt="{\displaystyle {\begin{array}{rclcl}D&amp;=&amp;\left[A(x_{0}+1)+B\left(y_{0}+{\frac {1}{2}}\right)+C\right]&amp;-&amp;\left[Ax_{0}+By_{0}+C\right]\\&amp;=&amp;\left[Ax_{0}+By_{0}+C+A+{\frac {1}{2}}B\right]&amp;-&amp;\left[Ax_{0}+By_{0}+C\right]\\&amp;=&amp;A+{\frac {1}{2}}B\end{array}}}"></span></dd>
+</dl>
+<p>Just as with the midpoint method, if D is positive, then choose <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mn>1</mn>
+        <mo>,</mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mn>1</mn>
+        <mo stretchy="false">)</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle (x_{0}+1,y_{0}+1)}</annotation>
+  </semantics>
+</math></span><img src="b71c50a42505d807c4455f1623a9c2f1259adbc4" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 15.535ex; height: 2.843ex;" alt="(x_{0}+1,y_{0}+1)"></span>, otherwise choose <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mn>1</mn>
+        <mo>,</mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo stretchy="false">)</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle (x_{0}+1,y_{0})}</annotation>
+  </semantics>
+</math></span><img src="1b96ae348314e637518b77ec425d8cd31db4b4ec" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 11.511ex; height: 2.843ex;" alt="(x_{0}+1,y_{0})"></span>.</p>
+<p>The decision for the second point can be written as</p>
+<dl>
+<dd><span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mrow class="MJX-TeXAtom-ORD">
+          <mtable columnalign="left center left center left" rowspacing="4pt" columnspacing="1em">
+            <mtr>
+              <mtd>
+                <mi>f</mi>
+                <mo stretchy="false">(</mo>
+                <msub>
+                  <mi>x</mi>
+                  <mrow class="MJX-TeXAtom-ORD">
+                    <mn>0</mn>
+                  </mrow>
+                </msub>
+                <mo>+</mo>
+                <mn>2</mn>
+                <mo>,</mo>
+                <msub>
+                  <mi>y</mi>
+                  <mrow class="MJX-TeXAtom-ORD">
+                    <mn>0</mn>
+                  </mrow>
+                </msub>
+                <mo>+</mo>
+                <mn>1</mn>
+                <mrow class="MJX-TeXAtom-ORD">
+                  <mo>/</mo>
+                </mrow>
+                <mn>2</mn>
+                <mo stretchy="false">)</mo>
+                <mo>−<!-- − --></mo>
+                <mi>f</mi>
+                <mo stretchy="false">(</mo>
+                <msub>
+                  <mi>x</mi>
+                  <mrow class="MJX-TeXAtom-ORD">
+                    <mn>0</mn>
+                  </mrow>
+                </msub>
+                <mo>+</mo>
+                <mn>1</mn>
+                <mo>,</mo>
+                <msub>
+                  <mi>y</mi>
+                  <mrow class="MJX-TeXAtom-ORD">
+                    <mn>0</mn>
+                  </mrow>
+                </msub>
+                <mo>+</mo>
+                <mn>1</mn>
+                <mrow class="MJX-TeXAtom-ORD">
+                  <mo>/</mo>
+                </mrow>
+                <mn>2</mn>
+                <mo stretchy="false">)</mo>
+              </mtd>
+              <mtd>
+                <mo>=</mo>
+              </mtd>
+              <mtd>
+                <mi>A</mi>
+              </mtd>
+              <mtd>
+                <mo>=</mo>
+              </mtd>
+              <mtd>
+                <mi mathvariant="normal">Δ<!-- Δ --></mi>
+                <mi>y</mi>
+              </mtd>
+            </mtr>
+            <mtr>
+              <mtd>
+                <mi>f</mi>
+                <mo stretchy="false">(</mo>
+                <msub>
+                  <mi>x</mi>
+                  <mrow class="MJX-TeXAtom-ORD">
+                    <mn>0</mn>
+                  </mrow>
+                </msub>
+                <mo>+</mo>
+                <mn>2</mn>
+                <mo>,</mo>
+                <msub>
+                  <mi>y</mi>
+                  <mrow class="MJX-TeXAtom-ORD">
+                    <mn>0</mn>
+                  </mrow>
+                </msub>
+                <mo>+</mo>
+                <mn>3</mn>
+                <mrow class="MJX-TeXAtom-ORD">
+                  <mo>/</mo>
+                </mrow>
+                <mn>2</mn>
+                <mo stretchy="false">)</mo>
+                <mo>−<!-- − --></mo>
+                <mi>f</mi>
+                <mo stretchy="false">(</mo>
+                <msub>
+                  <mi>x</mi>
+                  <mrow class="MJX-TeXAtom-ORD">
+                    <mn>0</mn>
+                  </mrow>
+                </msub>
+                <mo>+</mo>
+                <mn>1</mn>
+                <mo>,</mo>
+                <msub>
+                  <mi>y</mi>
+                  <mrow class="MJX-TeXAtom-ORD">
+                    <mn>0</mn>
+                  </mrow>
+                </msub>
+                <mo>+</mo>
+                <mn>1</mn>
+                <mrow class="MJX-TeXAtom-ORD">
+                  <mo>/</mo>
+                </mrow>
+                <mn>2</mn>
+                <mo stretchy="false">)</mo>
+              </mtd>
+              <mtd>
+                <mo>=</mo>
+              </mtd>
+              <mtd>
+                <mi>A</mi>
+                <mo>+</mo>
+                <mi>B</mi>
+              </mtd>
+              <mtd>
+                <mo>=</mo>
+              </mtd>
+              <mtd>
+                <mi mathvariant="normal">Δ<!-- Δ --></mi>
+                <mi>y</mi>
+                <mo>−<!-- − --></mo>
+                <mi mathvariant="normal">Δ<!-- Δ --></mi>
+                <mi>x</mi>
+              </mtd>
+            </mtr>
+          </mtable>
+        </mrow>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle {\begin{array}{lclcl}f(x_{0}+2,y_{0}+1/2)-f(x_{0}+1,y_{0}+1/2)&amp;=&amp;A&amp;=&amp;\Delta y\\f(x_{0}+2,y_{0}+3/2)-f(x_{0}+1,y_{0}+1/2)&amp;=&amp;A+B&amp;=&amp;\Delta y-\Delta x\end{array}}}</annotation>
+  </semantics>
+</math></span><img src="d17271ad6e4c7259e06833176e8919b1428118d0" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -2.671ex; width: 70.498ex; height: 6.509ex;" alt="{\displaystyle {\begin{array}{lclcl}f(x_{0}+2,y_{0}+1/2)-f(x_{0}+1,y_{0}+1/2)&amp;=&amp;A&amp;=&amp;\Delta y\\f(x_{0}+2,y_{0}+3/2)-f(x_{0}+1,y_{0}+1/2)&amp;=&amp;A+B&amp;=&amp;\Delta y-\Delta x\end{array}}}"></span></dd>
+</dl>
+<p>If the difference is positive then <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mn>2</mn>
+        <mo>,</mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mn>1</mn>
+        <mo stretchy="false">)</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle (x_{0}+2,y_{0}+1)}</annotation>
+  </semantics>
+</math></span><img src="173d41653f967e888f78f96a7ebedca034240ad4" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 15.535ex; height: 2.843ex;" alt="(x_{0}+2,y_{0}+1)"></span> is chosen, otherwise <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>x</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo>+</mo>
+        <mn>2</mn>
+        <mo>,</mo>
+        <msub>
+          <mi>y</mi>
+          <mrow class="MJX-TeXAtom-ORD">
+            <mn>0</mn>
+          </mrow>
+        </msub>
+        <mo stretchy="false">)</mo>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle (x_{0}+2,y_{0})}</annotation>
+  </semantics>
+</math></span><img src="1037f9a3102b038179017305988c9486d7cf2412" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 11.511ex; height: 2.843ex;" alt="(x_{0}+2,y_{0})"></span>. This decision can be generalized by accumulating the error.</p>
+<div class="thumb tright">
+<div class="thumbinner" style="width: 302px;"><a href="https://en.wikipedia.org/wiki/File:Line_1.5x%2B1_--_points.svg" class="image"><img alt="" src="300px-line_1.5x@2b1_--_points.svg.png" class="thumbimage" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Line_1.5x%2B1_--_points.svg/450px-Line_1.5x%2B1_--_points.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Line_1.5x%2B1_--_points.svg/600px-Line_1.5x%2B1_--_points.svg.png 2x" data-file-width="300" data-file-height="300" height="300" width="300"></a>
+<div class="thumbcaption">
+<div class="magnify"><a href="https://en.wikipedia.org/wiki/File:Line_1.5x%2B1_--_points.svg" class="internal" title="Enlarge"></a></div>
+Plotting the line from (0,1) to (6,4) showing a plot of grid lines and pixels</div>
+</div>
+</div>
+<p>All of the derivation for the algorithm is done. One performance issue is the 1/2 factor in the initial value of D. Since all of this is about the sign of the accumulated difference, then everything can be multiplied by 2 with no consequence.</p>
+<p>This results in an algorithm that uses only integer arithmetic.</p>
+<pre>plotLine(x0,y0, x1,y1)
+  dx = x1 - x0
+  dy = y1 - y0
+  D = dy - dx
+  y = y0
+
+  for x from x0 to x1-1
+    plot(x,y)
+    if D ≥ 0
+       y = y + 1
+       D = D - dx
+       end if
+     D = D + dy
+</pre>
+<p>Running this algorithm for <span><span class="mwe-math-mathml-inline mwe-math-mathml-a11y" style="display: none;"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <semantics>
+    <mrow class="MJX-TeXAtom-ORD">
+      <mstyle displaystyle="true" scriptlevel="0">
+        <mi>f</mi>
+        <mo stretchy="false">(</mo>
+        <mi>x</mi>
+        <mo>,</mo>
+        <mi>y</mi>
+        <mo stretchy="false">)</mo>
+        <mo>=</mo>
+        <mi>x</mi>
+        <mo>−<!-- − --></mo>
+        <mn>2</mn>
+        <mi>y</mi>
+        <mo>+</mo>
+        <mn>2</mn>
+      </mstyle>
+    </mrow>
+    <annotation encoding="application/x-tex">{\displaystyle f(x,y)=x-2y+2}</annotation>
+  </semantics>
+</math></span><img src="6f995f04647fbc22a7ac5878e008ed39e6a14a82" class="mwe-math-fallback-image-inline" aria-hidden="true" style="vertical-align: -0.838ex; width: 20.332ex; height: 2.843ex;" alt="f(x,y)=x-2y+2"></span> from (0,1) to (6,4) yields the following differences with dx=6 and dy=3:</p>
+<ul>
+<li>D=2*3-6=0</li>
+<li><b>plot(0,1)</b></li>
+<li>Loop from 1 to 6
+<ul>
+<li>x=1: D≤0: <b>plot(1,1)</b>, D=6</li>
+<li>x=2: D&gt;0: y=2, <b>plot(2,2)</b>, D=6+(6-12)=0</li>
+<li>x=3: D≤0: <b>plot(3,2)</b>, D=6</li>
+<li>x=4: D&gt;0: y=3, <b>plot(4,3)</b>, D=6+(6-12)=0</li>
+<li>x=5: D≤0: <b>plot(5,3)</b>, D=6</li>
+<li>x=6: D&gt;0: y=4, <b>plot(6,4)</b>, D=6+(6-12)=0</li>
+</ul>
+</li>
+</ul>
+<p>The result of this plot is shown to the right. The plotting can be viewed by plotting at the intersection of lines (blue circles) or filling in pixel boxes (yellow squares). Regardless, the plotting is the same.</p>
+<h3><span class="mw-headline" id="All_cases">All cases</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=edit&amp;section=6" title="Edit section: All cases">edit</a><span class="mw-editsection-bracket">]</span></span></h3>
+<table class="metadata plainlinks ambox mbox-small-left ambox-content" role="presentation">
+<tbody><tr>
+<td class="mbox-image"><a href="https://en.wikipedia.org/wiki/File:Wiki_letter_w_cropped.svg" class="image"><img alt="[icon]" src="20px-wiki_letter_w_cropped.svg.png" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Wiki_letter_w_cropped.svg/30px-Wiki_letter_w_cropped.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Wiki_letter_w_cropped.svg/40px-Wiki_letter_w_cropped.svg.png 2x" data-file-width="44" data-file-height="31" height="14" width="20"></a></td>
+<td class="mbox-text"><span class="mbox-text-span">This section requires <a class="external text" href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=edit">expansion</a>. <small><i>(September 2011)</i></small></span></td>
+</tr>
+</tbody></table>
+<p>However, as mentioned above this is only for the first <a href="https://en.wikipedia.org/wiki/Octant_(plane_geometry)" title="Octant (plane geometry)">octant</a>. This means there are eight possible cases to consider. The simplest way to extend the same algorithm, if implemented in hardware, is to flip the co-ordinate system on the input and output of the single-octant drawer.</p>
+<pre> // Function to apply on the input
+ 
+ function switchToOctantZeroFrom(octant, x, y) 
+   switch(octant)  
+     case 0: return (x, y)
+     case 1: return (y, x)
+     case 2: return (y, -x)
+     case 3: return (-x, y)
+     case 4: return (-x, -y)
+     case 5: return (-y, -x)
+     case 6: return (-y, x)
+     case 7: return (x, -y)
+</pre>
+<pre> // Function to apply on the output (almost the same but cases 2 and 6 are swapped)
+ 
+ function switchFromOctantZeroTo(octant, x, y) 
+   switch(octant)  
+     case 0: return (x, y)
+     case 1: return (y, x)
+     case 2: return (-y, x)
+     case 3: return (-x, y)
+     case 4: return (-x, -y)
+     case 5: return (-y, -x)
+     case 6: return (y, -x)
+     case 7: return (x, -y)
+</pre>
+<pre> Octants:
+  \2|1/
+  3\|/0
+ ---+---
+  4/|\7
+  /5|6\
+</pre>
+<h2><span class="mw-headline" id="Similar_algorithms">Similar algorithms</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=edit&amp;section=7" title="Edit section: Similar algorithms">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<p>The Bresenham algorithm can be interpreted as slightly modified <a href="https://en.wikipedia.org/wiki/Digital_differential_analyzer_(graphics_algorithm)" title="Digital differential analyzer (graphics algorithm)">digital differential analyzer</a> (using 0.5 as error threshold instead of 0, which is required for non-overlapping polygon rasterizing).</p>
+<p>The principle of using an <a href="https://en.wikipedia.org/wiki/Incremental_error_algorithm" class="mw-redirect" title="Incremental error algorithm">incremental error</a> in place of division operations has other applications in graphics. It is possible to use this technique to calculate the <a href="https://en.wikipedia.org/wiki/Uv_mapping" class="mw-redirect" title="Uv mapping">U,V co-ordinates</a> during raster scan of texture mapped polygons<sup class="noprint Inline-Template Template-Fact" style="white-space: nowrap;">[<i><a href="https://en.wikipedia.org/wiki/Wikipedia:Citation_needed" title="Wikipedia:Citation needed"><span title="This claim needs references to reliable sources. (December 2010)">citation needed</span></a></i>]</sup>. The <a href="https://en.wikipedia.org/wiki/Voxel" title="Voxel">voxel</a> heightmap software-rendering engines seen in some PC games also used this principle.</p>
+<p>Bresenham also published a Run-Slice (as opposed to the Run-Length) computational algorithm.</p>
+<p>An extension to the algorithm that handles thick lines was created by Alan Murphy at IBM.</p>
+<h2><span class="mw-headline" id="See_also">See also</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=edit&amp;section=8" title="Edit section: See also">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Digital_differential_analyzer_(graphics_algorithm)" title="Digital differential analyzer (graphics algorithm)">Digital differential analyzer (graphics algorithm)</a>, a simple and general method for rasterizing lines and triangles</li>
+<li><a href="https://en.wikipedia.org/wiki/Xiaolin_Wu%27s_line_algorithm" title="Xiaolin Wu's line algorithm">Xiaolin Wu's line algorithm</a>, a similarly fast method of drawing lines with <a href="https://en.wikipedia.org/wiki/Spatial_anti-aliasing" title="Spatial anti-aliasing">antialiasing</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Midpoint_circle_algorithm" title="Midpoint circle algorithm">Midpoint circle algorithm</a>, a similar algorithm for drawing circles</li>
+</ul>
+<h2><span class="mw-headline" id="Notes">Notes</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=edit&amp;section=9" title="Edit section: Notes">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<div class="reflist" style="list-style-type: decimal;">
+<ol class="references">
+<li id="cite_note-DADS-1"><span class="mw-cite-backlink"><b><a href="#cite_ref-DADS_1-0"><span class="cite-accessibility-label">Jump up </span>^</a></b></span> <span class="reference-text">Paul E. Black. <i>Dictionary of Algorithms and Data Structures,</i> <a href="https://en.wikipedia.org/wiki/National_Institute_of_Standards_and_Technology" title="National Institute of Standards and Technology">NIST</a>. <a rel="nofollow" class="external free" href="http://www.nist.gov/dads/HTML/bresenham.html">http://www.nist.gov/dads/HTML/bresenham.html</a></span></li>
+</ol>
+</div>
+<h2><span class="mw-headline" id="References">References</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=edit&amp;section=10" title="Edit section: References">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul>
+<li><a rel="nofollow" class="external autonumber" href="https://www.cse.iitb.ac.in/~paragc/teaching/2011/cs475/papers/bresenham_line.pdf">[1]</a> Algorithm for computer control of a digital plotter</li>
+<li><a rel="nofollow" class="external text" href="http://www.cs.helsinki.fi/group/goa/mallinnus/lines/bresenh.html">"The Bresenham Line-Drawing Algorithm"</a>, by Colin Flanagan</li>
+<li><cite class="citation book">Abrash, Michael (1997). <a rel="nofollow" class="external text" href="http://www.gamedev.net/page/resources/_/technical/graphics-programming-and-theory/graphics-programming-black-book-r1698"><i>Michael Abrash's graphics programming black book</i></a>. Albany, NY: Coriolis. pp.&nbsp;654–678. <a href="https://en.wikipedia.org/wiki/International_Standard_Book_Number" title="International Standard Book Number">ISBN</a>&nbsp;<a href="https://en.wikipedia.org/wiki/Special:BookSources/978-1-57610-174-2" title="Special:BookSources/978-1-57610-174-2">978-1-57610-174-2</a>.</cite><span title="ctx_ver=Z39.88-2004&amp;rfr_id=info%3Asid%2Fen.wikipedia.org%3ABresenham%27s+line+algorithm&amp;rft.aufirst=Michael&amp;rft.aulast=Abrash&amp;rft.btitle=Michael+Abrash%27s+graphics+programming+black+book&amp;rft.date=1997&amp;rft.genre=book&amp;rft_id=http%3A%2F%2Fwww.gamedev.net%2Fpage%2Fresources%2F_%2Ftechnical%2Fgraphics-programming-and-theory%2Fgraphics-programming-black-book-r1698&amp;rft.isbn=978-1-57610-174-2&amp;rft.pages=654-678&amp;rft.place=Albany%2C+NY&amp;rft.pub=Coriolis&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Abook" class="Z3988"><span style="display: none;">&nbsp;</span></span> A very optimized version of the algorithm in C and assembly for use in video games with complete details of its inner workings</li>
+</ul>
+<h2><span class="mw-headline" id="Further_reading">Further reading</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=edit&amp;section=11" title="Edit section: Further reading">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<ul>
+<li><a rel="nofollow" class="external text" href="https://sites.google.com/site/patrickmaillot/english">Patrick-Gilles Maillot's Thesis</a> an extension of the Bresenham line drawing algorithm to perform 3D hidden lines removal; also published in MICAD '87 proceedings on CAD/CAM and Computer Graphics, page 591 - <a href="https://en.wikipedia.org/wiki/Special:BookSources/2866010841" class="internal mw-magiclink-isbn">ISBN 2-86601-084-1</a>.</li>
+<li><a rel="nofollow" class="external text" href="http://homepages.enterprise.net/murphy/thickline/index.html">Line Thickening by Modification To Bresenham's Algorithm</a>, A.S. Murphy, IBM Technical Disclosure Bulletin, Vol. 20, No. 12, May 1978.</li>
+</ul>
+<h2><span class="mw-headline" id="External_links">External links</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=edit&amp;section=12" title="Edit section: External links">edit</a><span class="mw-editsection-bracket">]</span></span></h2>
+<table class="mbox-small plainlinks sistersitebox" style="border: 1px solid rgb(170, 170, 170); background-color: rgb(249, 249, 249);">
+<tbody><tr>
+<td class="mbox-image"><img alt="" src="30px-commons-logo.svg.png" srcset="//upload.wikimedia.org/wikipedia/en/thumb/4/4a/Commons-logo.svg/45px-Commons-logo.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/4/4a/Commons-logo.svg/59px-Commons-logo.svg.png 2x" data-file-width="1024" data-file-height="1376" height="40" width="30"></td>
+<td class="mbox-text plainlist">Wikimedia Commons has media related to <i><b><a href="https://commons.wikimedia.org/wiki/Category:Bresenham_algorithm" class="extiw" title="commons:Category:Bresenham algorithm">Bresenham algorithm</a></b></i>.</td>
+</tr>
+</tbody></table>
+<ul>
+<li><a rel="nofollow" class="external text" href="http://gpolo.awardspace.info/">Didactical Javascript implementation</a></li>
+<li><a rel="nofollow" class="external text" href="http://www.cs.helsinki.fi/group/goa/mallinnus/lines/bresenh.html"><i>The Bresenham Line-Drawing Algorithm</i> by Colin Flanagan</a></li>
+<li><a rel="nofollow" class="external text" href="http://www.nist.gov/dads/HTML/bresenham.html">National Institute of Standards and Technology page on Bresenham's algorithm</a></li>
+<li><a rel="nofollow" class="external text" href="http://www.pdp8online.com/563/563.shtml">Calcomp 563 Incremental Plotter Information</a></li>
+<li><a rel="nofollow" class="external text" href="http://www.cobrabytes.com/index.php?topic=1150.0">3D extension</a></li>
+<li><a rel="nofollow" class="external text" href="http://sites.google.com/site/proyectosroboticos/bresenham-3d">Bresenham 2D, 3D up to 6D</a></li>
+<li><a rel="nofollow" class="external text" href="http://rosettacode.org/wiki/Bitmap/Bresenham's_line_algorithm">Bresenham Algorithm in several programming languages</a></li>
+<li><a rel="nofollow" class="external text" href="http://members.chello.at/~easyfilter/bresenham.html">The Beauty of Bresenham's Algorithm</a> – A simple implementation to plot lines, circles, ellipses and Bézier curves</li>
+<li><a rel="nofollow" class="external text" href="http://www.etechplanet.com/codesnippets/computer-graphics-draw-a-line-using-bresenham-algorithm.aspx">Draw a Line using Bresenham Algorithm</a></li>
+<li><a rel="nofollow" class="external text" href="https://github.com/fragkakis/bresenham">Java implementation</a></li>
+</ul>
+
+
+<!-- 
+NewPP limit report
+Parsed by mw1258
+Cached time: 20160612144008
+Cache expiry: 2592000
+Dynamic content: false
+CPU time usage: 0.194 seconds
+Real time usage: 0.697 seconds
+Preprocessor visited node count: 787/1000000
+Preprocessor generated node count: 0/1500000
+Post‐expand include size: 12644/2097152 bytes
+Template argument size: 801/2097152 bytes
+Highest expansion depth: 11/40
+Expensive parser function count: 3/500
+Lua time usage: 0.060/10.000 seconds
+Lua memory usage: 1.87 MB/50 MB
+Number of Wikibase entities loaded: 1-->
+
+<!-- 
+Transclusion expansion time report (%,ms,calls,template)
+100.00%  158.321      1 - -total
+ 34.44%   54.518      1 - Template:Refimprove
+ 26.09%   41.306      2 - Template:Ambox
+ 21.30%   33.717      1 - Template:Cite_book
+ 18.04%   28.569      1 - Template:Citation_needed
+ 15.96%   25.266      1 - Template:Fix
+ 14.47%   22.911      1 - Template:Commons_category
+  8.94%   14.158      1 - Template:Delink
+  5.97%    9.455      1 - Template:Commons
+  5.03%    7.960      1 - Template:Expand_section
+-->
+
+<!-- Saved in parser cache with key enwiki:pcache:idhash:64005-0!*!0!!en!4!*!math=5 and timestamp 20160612144007 and revision id 724325889
+ -->
+</div>					<div class="printfooter">
+						Retrieved from "<a dir="ltr" href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;oldid=724325889">https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;oldid=724325889</a>"					</div>
+				<div id="catlinks" class="catlinks" data-mw="interface"><div id="mw-normal-catlinks" class="mw-normal-catlinks"><a href="https://en.wikipedia.org/wiki/Help:Category" title="Help:Category">Categories</a>: <ul><li><a href="https://en.wikipedia.org/wiki/Category:Computer_graphics_algorithms" title="Category:Computer graphics algorithms">Computer graphics algorithms</a></li><li><a href="https://en.wikipedia.org/wiki/Category:Digital_geometry" title="Category:Digital geometry">Digital geometry</a></li></ul></div><div id="mw-hidden-catlinks" class="mw-hidden-catlinks mw-hidden-cats-hidden">Hidden categories: <ul><li><a href="https://en.wikipedia.org/wiki/Category:Articles_needing_additional_references_from_August_2012" title="Category:Articles needing additional references from August 2012">Articles needing additional references from August 2012</a></li><li><a href="https://en.wikipedia.org/wiki/Category:All_articles_needing_additional_references" title="Category:All articles needing additional references">All articles needing additional references</a></li><li><a href="https://en.wikipedia.org/wiki/Category:Articles_to_be_expanded_from_September_2011" title="Category:Articles to be expanded from September 2011">Articles to be expanded from September 2011</a></li><li><a href="https://en.wikipedia.org/wiki/Category:All_articles_to_be_expanded" title="Category:All articles to be expanded">All articles to be expanded</a></li><li><a href="https://en.wikipedia.org/wiki/Category:Articles_using_small_message_boxes" title="Category:Articles using small message boxes">Articles using small message boxes</a></li><li><a href="https://en.wikipedia.org/wiki/Category:All_articles_with_unsourced_statements" title="Category:All articles with unsourced statements">All articles with unsourced statements</a></li><li><a href="https://en.wikipedia.org/wiki/Category:Articles_with_unsourced_statements_from_December_2010" title="Category:Articles with unsourced statements from December 2010">Articles with unsourced statements from December 2010</a></li><li><a href="https://en.wikipedia.org/wiki/Category:Commons_category_with_local_link_same_as_on_Wikidata" title="Category:Commons category with local link same as on Wikidata">Commons category with local link same as on Wikidata</a></li><li><a href="https://en.wikipedia.org/wiki/Category:Articles_with_example_pseudocode" title="Category:Articles with example pseudocode">Articles with example pseudocode</a></li></ul></div></div>				<div class="visualClear"></div>
+							</div>
+		</div>
+		<div id="mw-navigation">
+			<h2>Navigation menu</h2>
+
+			<div id="mw-head">
+									<div id="p-personal" role="navigation" class="" aria-labelledby="p-personal-label">
+						<h3 id="p-personal-label">Personal tools</h3>
+						<ul>
+							<li id="pt-anonuserpage">Not logged in</li><li id="pt-anontalk"><a href="https://en.wikipedia.org/wiki/Special:MyTalk" title="Discussion about edits from this IP address [Alt+Shift+n]" accesskey="n">Talk</a></li><li id="pt-anoncontribs"><a href="https://en.wikipedia.org/wiki/Special:MyContributions" title="A list of edits made from this IP address [Alt+Shift+y]" accesskey="y">Contributions</a></li><li id="pt-createaccount"><a href="https://en.wikipedia.org/w/index.php?title=Special:CreateAccount&amp;returnto=Bresenham%27s+line+algorithm" title="You are encouraged to create an account and log in; however, it is not mandatory">Create account</a></li><li id="pt-login"><a href="https://en.wikipedia.org/w/index.php?title=Special:UserLogin&amp;returnto=Bresenham%27s+line+algorithm" title="You're encouraged to log in; however, it's not mandatory. [Alt+Shift+o]" accesskey="o">Log in</a></li>						</ul>
+					</div>
+									<div id="left-navigation">
+										<div id="p-namespaces" role="navigation" class="vectorTabs" aria-labelledby="p-namespaces-label">
+						<h3 id="p-namespaces-label">Namespaces</h3>
+						<ul>
+															<li id="ca-nstab-main" class="selected"><span><a href="https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm" title="View the content page [Alt+Shift+c]" accesskey="c">Article</a></span></li>
+															<li id="ca-talk"><span><a href="https://en.wikipedia.org/wiki/Talk:Bresenham%27s_line_algorithm" title="Discussion about the content page [Alt+Shift+t]" accesskey="t" rel="discussion">Talk</a></span></li>
+													</ul>
+					</div>
+										<div id="p-variants" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-variants-label">
+												<h3 tabindex="0" id="p-variants-label">
+							<span>Variants</span><a tabindex="-1" href="#"></a>
+						</h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+									</div>
+				<div id="right-navigation">
+										<div id="p-views" role="navigation" class="vectorTabs" aria-labelledby="p-views-label">
+						<h3 id="p-views-label">Views</h3>
+						<ul>
+															<li id="ca-view" class="selected"><span><a href="https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm">Read</a></span></li>
+															<li id="ca-edit"><span><a href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=edit" title="Edit this page [Alt+Shift+e]" accesskey="e">Edit</a></span></li>
+															<li id="ca-history" class="collapsible"><span><a href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=history" title="Past revisions of this page [Alt+Shift+h]" accesskey="h">View history</a></span></li>
+													</ul>
+					</div>
+										<div style="" id="p-cactions" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-cactions-label">
+						<h3 tabindex="0" id="p-cactions-label"><span>More</span><a tabindex="-1" href="#"></a></h3>
+
+						<div class="menu">
+							<ul>
+															</ul>
+						</div>
+					</div>
+										<div id="p-search" role="search">
+						<h3>
+							<label for="searchInput">Search</label>
+						</h3>
+
+						<form action="https://en.wikipedia.org/w/index.php" id="searchform">
+							<div id="simpleSearch">
+							<input autocomplete="off" tabindex="1" name="search" placeholder="Search" title="Search Wikipedia [Alt+Shift+f]" accesskey="f" id="searchInput" type="search"><input value="Special:Search" name="title" type="hidden"><input name="go" value="Go" title="Go to a page with this exact name if it exists" id="searchButton" class="searchButton" type="submit">							</div>
+						</form>
+					</div>
+									</div>
+			</div>
+			<div id="mw-panel">
+				<div id="p-logo" role="banner"><a class="mw-wiki-logo" href="https://en.wikipedia.org/wiki/Main_Page" title="Visit the main page"></a></div>
+						<div class="portal" role="navigation" id="p-navigation" aria-labelledby="p-navigation-label">
+			<h3 id="p-navigation-label">Navigation</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-mainpage-description"><a href="https://en.wikipedia.org/wiki/Main_Page" title="Visit the main page [Alt+Shift+z]" accesskey="z">Main page</a></li><li id="n-contents"><a href="https://en.wikipedia.org/wiki/Portal:Contents" title="Guides to browsing Wikipedia">Contents</a></li><li id="n-featuredcontent"><a href="https://en.wikipedia.org/wiki/Portal:Featured_content" title="Featured content – the best of Wikipedia">Featured content</a></li><li id="n-currentevents"><a href="https://en.wikipedia.org/wiki/Portal:Current_events" title="Find background information on current events">Current events</a></li><li id="n-randompage"><a href="https://en.wikipedia.org/wiki/Special:Random" title="Load a random article [Alt+Shift+x]" accesskey="x">Random article</a></li><li id="n-sitesupport"><a href="https://donate.wikimedia.org/wiki/Special:FundraiserRedirector?utm_source=donate&amp;utm_medium=sidebar&amp;utm_campaign=C13_en.wikipedia.org&amp;uselang=en" title="Support us">Donate to Wikipedia</a></li><li id="n-shoplink"><a href="https://shop.wikimedia.org/" title="Visit the Wikipedia store">Wikipedia store</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id="p-interaction" aria-labelledby="p-interaction-label">
+			<h3 id="p-interaction-label">Interaction</h3>
+
+			<div class="body">
+									<ul>
+						<li id="n-help"><a href="https://en.wikipedia.org/wiki/Help:Contents" title="Guidance on how to use and edit Wikipedia">Help</a></li><li id="n-aboutsite"><a href="https://en.wikipedia.org/wiki/Wikipedia:About" title="Find out about Wikipedia">About Wikipedia</a></li><li id="n-portal"><a href="https://en.wikipedia.org/wiki/Wikipedia:Community_portal" title="About the project, what you can do, where to find things">Community portal</a></li><li id="n-recentchanges"><a href="https://en.wikipedia.org/wiki/Special:RecentChanges" title="A list of recent changes in the wiki [Alt+Shift+r]" accesskey="r">Recent changes</a></li><li id="n-contactpage"><a href="https://en.wikipedia.org/wiki/Wikipedia:Contact_us" title="How to contact Wikipedia">Contact page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id="p-tb" aria-labelledby="p-tb-label">
+			<h3 id="p-tb-label">Tools</h3>
+
+			<div class="body">
+									<ul>
+						<li id="t-whatlinkshere"><a href="https://en.wikipedia.org/wiki/Special:WhatLinksHere/Bresenham%27s_line_algorithm" title="List of all English Wikipedia pages containing links to this page [Alt+Shift+j]" accesskey="j">What links here</a></li><li id="t-recentchangeslinked"><a href="https://en.wikipedia.org/wiki/Special:RecentChangesLinked/Bresenham%27s_line_algorithm" title="Recent changes in pages linked from this page [Alt+Shift+k]" accesskey="k">Related changes</a></li><li id="t-upload"><a href="https://en.wikipedia.org/wiki/Wikipedia:File_Upload_Wizard" title="Upload files [Alt+Shift+u]" accesskey="u">Upload file</a></li><li id="t-specialpages"><a href="https://en.wikipedia.org/wiki/Special:SpecialPages" title="A list of all special pages [Alt+Shift+q]" accesskey="q">Special pages</a></li><li id="t-permalink"><a href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;oldid=724325889" title="Permanent link to this revision of the page">Permanent link</a></li><li id="t-info"><a href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;action=info" title="More information about this page">Page information</a></li><li id="t-wikibase"><a href="https://www.wikidata.org/wiki/Q549860" title="Link to connected data repository item [Alt+Shift+g]" accesskey="g">Wikidata item</a></li><li id="t-cite"><a href="https://en.wikipedia.org/w/index.php?title=Special:CiteThisPage&amp;page=Bresenham%27s_line_algorithm&amp;id=724325889" title="Information on how to cite this page">Cite this page</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id="p-coll-print_export" aria-labelledby="p-coll-print_export-label">
+			<h3 id="p-coll-print_export-label">Print/export</h3>
+
+			<div class="body">
+									<ul>
+						<li id="coll-create_a_book"><a href="https://en.wikipedia.org/w/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Bresenham%27s+line+algorithm">Create a book</a></li><li id="coll-download-as-rdf2latex"><a href="https://en.wikipedia.org/w/index.php?title=Special:Book&amp;bookcmd=render_article&amp;arttitle=Bresenham%27s+line+algorithm&amp;returnto=Bresenham%27s+line+algorithm&amp;oldid=724325889&amp;writer=rdf2latex">Download as PDF</a></li><li id="t-print"><a href="https://en.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;printable=yes" title="Printable version of this page [Alt+Shift+p]" accesskey="p">Printable version</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id="p-wikibase-otherprojects" aria-labelledby="p-wikibase-otherprojects-label">
+			<h3 id="p-wikibase-otherprojects-label">In other projects</h3>
+
+			<div class="body">
+									<ul>
+						<li class="wb-otherproject-link wb-otherproject-commons"><a href="https://commons.wikimedia.org/wiki/Category:Bresenham_algorithm" hreflang="en">Wikimedia Commons</a></li>					</ul>
+							</div>
+		</div>
+			<div class="portal" role="navigation" id="p-lang" aria-labelledby="p-lang-label"><span aria-haspopup="true" role="button" tabindex="0" title="Language settings" class="uls-settings-trigger"></span>
+			<h3 id="p-lang-label">Languages</h3>
+
+			<div class="body">
+									<ul>
+						<li class="interlanguage-link interwiki-ar"><a href="https://ar.wikipedia.org/wiki/%D8%AE%D9%88%D8%A7%D8%B1%D8%B2%D9%85%D9%8A%D8%A9_%D8%A8%D8%B1%D9%8A%D8%B2%D9%86%D9%87%D8%A7%D9%85_%D9%84%D8%B1%D8%B3%D9%85_%D9%85%D8%B3%D8%AA%D9%82%D9%8A%D9%85" title="خوارزمية بريزنهام لرسم مستقيم – Arabic" hreflang="ar" lang="ar">العربية</a></li><li class="interlanguage-link interwiki-bg"><a href="https://bg.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D1%8A%D0%BC_%D0%BD%D0%B0_%D0%91%D1%80%D0%B5%D0%B7%D0%B5%D0%BD%D1%85%D0%B0%D0%BC" title="Алгоритъм на Брезенхам – Bulgarian" hreflang="bg" lang="bg">Български</a></li><li class="interlanguage-link interwiki-de"><a href="https://de.wikipedia.org/wiki/Bresenham-Algorithmus" title="Bresenham-Algorithmus – German" hreflang="de" lang="de">Deutsch</a></li><li class="interlanguage-link interwiki-es"><a href="https://es.wikipedia.org/wiki/Algoritmo_de_Bresenham" title="Algoritmo de Bresenham – Spanish" hreflang="es" lang="es">Español</a></li><li class="interlanguage-link interwiki-eo"><a href="https://eo.wikipedia.org/wiki/Algoritmo_de_Bresenham" title="Algoritmo de Bresenham – Esperanto" hreflang="eo" lang="eo">Esperanto</a></li><li class="interlanguage-link interwiki-fr"><a href="https://fr.wikipedia.org/wiki/Algorithme_de_trac%C3%A9_de_segment_de_Bresenham" title="Algorithme de tracé de segment de Bresenham – French" hreflang="fr" lang="fr">Français</a></li><li class="interlanguage-link interwiki-hy"><a href="https://hy.wikipedia.org/wiki/%D4%B2%D6%80%D5%A5%D5%A6%D5%A5%D5%B6%D5%B0%D5%A5%D5%B4%D5%AB_%D5%A1%D5%AC%D5%A3%D5%B8%D6%80%D5%AB%D5%A9%D5%B4" title="Բրեզենհեմի ալգորիթմ – Armenian" hreflang="hy" lang="hy">Հայերեն</a></li><li class="interlanguage-link interwiki-it"><a href="https://it.wikipedia.org/wiki/Algoritmo_della_linea_di_Bresenham" title="Algoritmo della linea di Bresenham – Italian" hreflang="it" lang="it">Italiano</a></li><li class="interlanguage-link interwiki-ka"><a href="https://ka.wikipedia.org/wiki/%E1%83%91%E1%83%A0%E1%83%94%E1%83%96%E1%83%94%E1%83%9C%E1%83%B0%E1%83%94%E1%83%9B%E1%83%98%E1%83%A1_%E1%83%90%E1%83%9A%E1%83%92%E1%83%9D%E1%83%A0%E1%83%98%E1%83%97%E1%83%9B%E1%83%98" title="ბრეზენჰემის ალგორითმი – Georgian" hreflang="ka" lang="ka">ქართული</a></li><li class="interlanguage-link interwiki-ms"><a href="https://ms.wikipedia.org/wiki/Algoritma_garisan_Bresenham" title="Algoritma garisan Bresenham – Malay" hreflang="ms" lang="ms">Bahasa Melayu</a></li><li class="interlanguage-link interwiki-nl"><a href="https://nl.wikipedia.org/wiki/Bresenham-algoritme" title="Bresenham-algoritme – Dutch" hreflang="nl" lang="nl">Nederlands</a></li><li class="interlanguage-link interwiki-ja"><a href="https://ja.wikipedia.org/wiki/%E3%83%96%E3%83%AC%E3%82%BC%E3%83%B3%E3%83%8F%E3%83%A0%E3%81%AE%E3%82%A2%E3%83%AB%E3%82%B4%E3%83%AA%E3%82%BA%E3%83%A0" title="ブレゼンハムのアルゴリズム – Japanese" hreflang="ja" lang="ja">日本語</a></li><li class="interlanguage-link interwiki-pl"><a href="https://pl.wikipedia.org/wiki/Algorytm_Bresenhama" title="Algorytm Bresenhama – Polish" hreflang="pl" lang="pl">Polski</a></li><li class="interlanguage-link interwiki-pt"><a href="https://pt.wikipedia.org/wiki/Algoritmo_de_Bresenham" title="Algoritmo de Bresenham – Portuguese" hreflang="pt" lang="pt">Português</a></li><li class="interlanguage-link interwiki-ru"><a href="https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%91%D1%80%D0%B5%D0%B7%D0%B5%D0%BD%D1%85%D1%8D%D0%BC%D0%B0" title="Алгоритм Брезенхэма – Russian" hreflang="ru" lang="ru">Русский</a></li><li class="interlanguage-link interwiki-sr"><a href="https://sr.wikipedia.org/wiki/%D0%91%D1%80%D0%B5%D0%B7%D0%B5%D0%BD%D1%85%D0%B0%D0%BC%D0%BE%D0%B2_%D0%BB%D0%B8%D0%BD%D0%B8%D1%98%D1%81%D0%BA%D0%B8_%D0%B0%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%B0%D0%BC" title="Брезенхамов линијски алгоритам – Serbian" hreflang="sr" lang="sr">Српски / srpski</a></li><li class="interlanguage-link interwiki-fi"><a href="https://fi.wikipedia.org/wiki/Bresenhamin_algoritmi" title="Bresenhamin algoritmi – Finnish" hreflang="fi" lang="fi">Suomi</a></li><li class="interlanguage-link interwiki-tr"><a href="https://tr.wikipedia.org/wiki/Bresenham%27%C4%B1n_%C3%A7izgi_algoritmas%C4%B1" title="Bresenham'ın çizgi algoritması – Turkish" hreflang="tr" lang="tr">Türkçe</a></li><li class="interlanguage-link interwiki-uk"><a href="https://uk.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%91%D1%80%D0%B5%D0%B7%D0%B5%D0%BD%D1%85%D0%B5%D0%B9%D0%BC%D0%B0" title="Алгоритм Брезенхейма – Ukrainian" hreflang="uk" lang="uk">Українська</a></li><li class="interlanguage-link interwiki-vi"><a href="https://vi.wikipedia.org/wiki/Gi%E1%BA%A3i_thu%E1%BA%ADt_Bresenham_v%E1%BA%BD_%C4%91o%E1%BA%A1n_th%E1%BA%B3ng" title="Giải thuật Bresenham vẽ đoạn thẳng – Vietnamese" hreflang="vi" lang="vi">Tiếng Việt</a></li><li class="interlanguage-link interwiki-zh"><a href="https://zh.wikipedia.org/wiki/%E5%B8%83%E9%9B%B7%E6%A3%AE%E6%BC%A2%E5%A7%86%E7%9B%B4%E7%B7%9A%E6%BC%94%E7%AE%97%E6%B3%95" title="布雷森漢姆直線演算法 – Chinese" hreflang="zh" lang="zh">中文</a></li>					</ul>
+				<div class="after-portlet after-portlet-lang"><span class="wb-langlinks-edit wb-langlinks-link"><a href="https://www.wikidata.org/wiki/Q549860#sitelinks-wikipedia" title="Edit interlanguage links" class="wbc-editpage">Edit links</a></span></div>			</div>
+		</div>
+				</div>
+		</div>
+		<div id="footer" role="contentinfo">
+							<ul id="footer-info">
+											<li id="footer-info-lastmod"> This page was last modified on 8 June 2016, at 14:29.</li>
+											<li id="footer-info-copyright">Text is available under the <a rel="license" href="https://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License">Creative Commons Attribution-ShareAlike License</a><a rel="license" href="https://creativecommons.org/licenses/by-sa/3.0/" style="display: none;"></a>;
+additional terms may apply.  By using this site, you agree to the <a href="https://wikimediafoundation.org/wiki/Terms_of_Use">Terms of Use</a> and <a href="https://wikimediafoundation.org/wiki/Privacy_policy">Privacy Policy</a>. Wikipedia® is a registered trademark of the <a href="https://www.wikimediafoundation.org/">Wikimedia Foundation, Inc.</a>, a non-profit organization.</li>
+									</ul>
+							<ul id="footer-places">
+											<li id="footer-places-privacy"><a href="https://wikimediafoundation.org/wiki/Privacy_policy" class="extiw" title="wmf:Privacy policy">Privacy policy</a></li>
+											<li id="footer-places-about"><a href="https://en.wikipedia.org/wiki/Wikipedia:About" title="Wikipedia:About">About Wikipedia</a></li>
+											<li id="footer-places-disclaimer"><a href="https://en.wikipedia.org/wiki/Wikipedia:General_disclaimer" title="Wikipedia:General disclaimer">Disclaimers</a></li>
+											<li id="footer-places-contact"><a href="https://en.wikipedia.org/wiki/Wikipedia:Contact_us">Contact Wikipedia</a></li>
+											<li id="footer-places-developers"><a href="https://www.mediawiki.org/wiki/Special:MyLanguage/How_to_contribute">Developers</a></li>
+											<li id="footer-places-cookiestatement"><a href="https://wikimediafoundation.org/wiki/Cookie_statement">Cookie statement</a></li>
+											<li id="footer-places-mobileview"><a href="https://en.m.wikipedia.org/w/index.php?title=Bresenham%27s_line_algorithm&amp;mobileaction=toggle_view_mobile" class="noprint stopMobileRedirectToggle">Mobile view</a></li>
+									</ul>
+										<ul id="footer-icons" class="noprint">
+											<li id="footer-copyrightico">
+							<a href="https://wikimediafoundation.org/"><img src="wikimedia-button.png" srcset="/static/images/wikimedia-button-1.5x.png 1.5x, /static/images/wikimedia-button-2x.png 2x" alt="Wikimedia Foundation" height="31" width="88"></a>						</li>
+											<li id="footer-poweredbyico">
+							<a href="https://www.mediawiki.org/"><img src="poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" srcset="/static/images/poweredby_mediawiki_132x47.png 1.5x, /static/images/poweredby_mediawiki_176x62.png 2x" height="31" width="88"></a>						</li>
+									</ul>
+						<div style="clear: both;"></div>
+		</div>
+		
+	
+
+<div class="suggestions" style="display: none; font-size: 13px;"><div class="suggestions-results"></div><div class="suggestions-special"></div></div></body>
+</html>

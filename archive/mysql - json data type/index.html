@@ -1,0 +1,408 @@
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="json, mariadb">
+    <title>Kiểu dữ liệu JSON</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Kiểu dữ liệu JSON</h2>
+      <p>Đến phiên bản 5.7.8, MySQL đã hỗ trợ kiểu dữ liệu JSON cho phép truy
+        cập hiệu quả với dữ liệu trong tài liệu JSON. Kiểu dữ liệu JSON cung cấp
+        những lợi thế hơn so với việc lưu trữ các chuỗi định dạng JSON trong một
+        cột dạng xâu:</p>
+      <ul>
+        <li>Tự động validation định dạng JSON được lưu trữ trong cột JSON. Các
+          xâu không hợp lệ sẽ sinh ra lỗi.</li>
+        <li>Định dạng lưu trữ được tối ưu hóa. Tài liệu JSON được lưu trữ trong
+          các cột JSON được chuyển đổi sang một định dạng nội bộ cho phép truy
+          cập nhanh chóng đến các phần tử tài liệu. Khi máy chủ phải đọc một giá
+          trị JSON được lưu trữ ở định dạng nhị phân này, giá trị không cần phải
+          được phân tích từ một đoạn text. Các định dạng nhị phân có cấu trúc
+          cho phép các máy chủ tìm kiếm subobject hoặc giá trị nested trực tiếp
+          bởi key hoặc mảng index mà không cần đọc tất cả các giá trị trước hoặc
+          sau chúng trong tài liệu.</li>
+      </ul>
+      <p>Kích thước của tài liệu JSON được lưu trữ trong các cột JSON được giới
+        hạn bằng giá trị của biến hệ thống max_allowed_packet. Trong khi các máy
+        chủ thao tác một giá trị JSON trong nội bộ bộ nhớ trong, nó có thể lớn
+        hơn; giới hạn được áp dụng khi các máy chủ lưu trữ nó. Các cột JSON
+        không thể có một giá trị mặc định.</p>
+      <p>Các cột JSON, giống như cột của các loại nhị phân khác, không được lập
+        chỉ mục trực tiếp; thay vào đó, bạn có thể tạo một chỉ mục trên một cột
+        được tạo ra bằng cách trích ra một giá trị vô hướng từ các cột JSON. Các
+        bộ tối ưu của MySQL cũng sẽ tìm kiếm các chỉ số tương thích trên các cột
+        ảo phù hợp với biểu thức JSON. MySQL Cluster NDB 7.5.2 và sau đó hỗ trợ
+        các cột JSON và các function MySQL JSON, bao gồm cả việc tạo ra các chỉ
+        mục trên một cột được tạo ra từ cột JSON như là một cách giải quyết khác
+        cho vấn đề không thể đánh index cột JSON. Tối đa 3 cột JSON cho mỗi bảng
+        NDB được hỗ trợ.</p>
+      <p>Thảo luận sau đây bao gồm các chủ đề:</p>
+      <ul>
+        <li>Tạo giá trị JSON</li>
+        <li>Normalization, Merging, và Autowrapping của các giá trị JSON</li>
+        <li>Tìm kiếm và sửa đổi giá trị JSON</li>
+      </ul>
+      <p>Cùng với các kiểu dữ liệu JSON, có sẵn một tập hợp các function SQL để
+        hoạt động trên các giá trị JSON, chẳng hạn như tạo, thao tác và tìm
+        kiếm. Một tập hợp các function không gian để hoạt động trên các giá trị
+        GeoJSON cũng có sẵn.</p>
+      <h3>Tạo giá trị JSON</h3>
+      <p>Có thể lưu dữ liệu là mảng hoặc đối tượng.</p>
+      <p>Một mảng JSON chứa một danh sách các giá trị cách nhau bởi dấu phẩy và
+        đặt trong cặp ký tự <code>[</code> và <code>]</code>, ví dụ <code>["abc",
+          10, null, true, false]</code>. Một đối tượng JSON chứa một bộ
+        key/value được phân cách bởi dấu phẩy và đặt trong cặp ký tự <code>{</code>
+        và <code>}</code>, ví dụ <code>{ "k1": "value", "k2": 10 }</code>.</p>
+      <p>Như các ví dụ minh họa, mảng JSON và các đối tượng có thể chứa các giá
+        trị vô hướng đó là chuỗi hoặc số, JSON null, hoặc JSON boolean true hay
+        false. Key trong đối tượng JSON phải là các chuỗi. Giá trị thời gian
+        (date, time, hoặc datetime) cũng được phép: <code>["12:18:29.000000",
+          "2015-07-29", "2015-07-29 12:18:29.000000"]</code>. Nesting được cho
+        phép trong các phần tử của mảng JSON và các giá trị của đối tượng JSON:</p>
+      <pre>[99, { "id": "HK500", "cost": 75.99 }, ["hot", "cold"]]<br><br>{ "k1": "value", "k2": [10, 20] }</pre>
+      <p>Bạn cũng có thể có được giá trị JSON từ một số function được cung cấp
+        bởi MySQL cho mục đích này cũng như bằng cách casting các giá trị của
+        các kiểu khác thành kiểu JSON sử dụng CAST(value AS JSON). Các phần tiếp
+        theo mô tả cách MySQL xử lý các giá trị JSON được cung cấp như là đầu
+        vào.</p>
+      <p>Trong MySQL, giá trị JSON đều là các chuỗi. MySQL phân tích bất kỳ
+        chuỗi được sử dụng trong một bối cảnh đòi hỏi một giá trị JSON, và sinh
+        ra một lỗi nếu nó không thỏa mãn chuỗi JSON. Những bối cảnh bao đó gồm
+        thêm một giá trị vào một cột có kiểu dữ liệu JSON và truyền một tham số
+        đến một function chờ đợi một giá trị JSON, như các ví dụ sau đây: Chèn
+        một giá trị vào cột JSON thành công nếu đó là một giá trị JSON hợp lệ,
+        nhưng không thành công nếu nó không phải:</p>
+      <pre><code>mysql&gt; CREATE TABLE t1 (jdoc JSON);
+Query OK, 0 rows affected (0.20 sec)
+
+mysql&gt; INSERT INTO t1 VALUES('{"key1": "value1", "key2": "value2"}');
+Query OK, 1 row affected (0.01 sec)
+
+mysql&gt; INSERT INTO t1 VALUES('[1, 2,');
+ERROR 3140 (22032) at line 2: Invalid JSON text: "Invalid value." at position 6 in value (or column) '[1, 2,'.
+</code></pre>
+      <p>Vị trí cho "at position N" trong các thông báo lỗi như vậy là bắt đầu
+        từ 0, nhưng cần được xem xét dấu hiệu gần đúng của nơi mà vấn đề ở một
+        giá trị thực sự xảy ra. Function JSON_TYPE() nhận một tham số JSON và cố
+        gắng để phân tích nó thành một giá trị JSON. Nó trả về kiểu JSON của giá
+        trị nếu nó là hợp lệ nếu không sẽ sinh ra một lỗi:</p>
+      <pre><code>mysql&gt; SELECT JSON_TYPE('["a", "b", 1]');
++----------------------------+
+| JSON_TYPE('["a", "b", 1]') |
++----------------------------+
+| ARRAY                      |
++----------------------------+
+
+mysql&gt; SELECT JSON_TYPE('"hello"');
++----------------------+
+| JSON_TYPE('"hello"') |
++----------------------+
+| STRING               |
++----------------------+
+
+mysql&gt; SELECT JSON_TYPE('hello');
+ERROR 3146 (22032): Invalid data type for JSON data in argument 1
+to function json_type; a JSON string or JSON type is required.
+</code></pre>
+      <p>MySQL xử lý chuỗi được sử dụng trong bối cảnh JSON bằng cách sử dụng
+        charset utf8mb4 và collation utf8mb4_bin. String ở charset khác được
+        chuyển đổi thành utf8mb4 khi cần thiết. Đối với các string ở charset
+        ascii hoặc utf8, không cần thiết chuyển đổi vì ascii và utf8 là tập con
+        của utf8mb4. Để thay thế cho các giá trị JSON sử dụng các chuỗi, tồn tại
+        các function để tạo giá trị JSON từ các phần tử thành phần. JSON_ARRAY()
+        nhận một danh sách (có thể rỗng) các giá trị và trả về một mảng JSON
+        chứa những giá trị đó:</p>
+      <pre><code>mysql&gt; SELECT JSON_ARRAY('a', 1, NOW());
++----------------------------------------+
+| JSON_ARRAY('a', 1, NOW())              |
++----------------------------------------+
+| ["a", 1, "2015-07-27 09:43:47.000000"] |
++----------------------------------------+
+</code></pre>
+      <p>JSON_OBJECT() nhận một danh sách (có thể rỗng) các cặp key/value và trả
+        về một đối tượng JSON chứa những cặp giá trị đó:</p>
+      <pre><code>mysql&gt; SELECT JSON_OBJECT('key1', 1, 'key2', 'abc');
++---------------------------------------+
+| JSON_OBJECT('key1', 1, 'key2', 'abc') |
++---------------------------------------+
+| {"key1": 1, "key2": "abc"}            |
++---------------------------------------+
+</code></pre>
+      <p>JSON_MERGE() nhận vào hai hoặc nhiều tài liệu JSON và trả về kết quả
+        kết hợp:</p>
+      <pre><code>mysql&gt; SELECT JSON_MERGE('["a", 1]', '{"key": "value"}');
++--------------------------------------------+
+| JSON_MERGE('["a", 1]', '{"key": "value"}') |
++--------------------------------------------+
+| ["a", 1, {"key": "value"}]                 |
++--------------------------------------------+
+</code></pre>
+      <p>giá trị JSON có thể được gán cho biến do người dùng định nghĩa:</p>
+      <pre><code>mysql&gt; SET @j = JSON_OBJECT('key', 'value');
+mysql&gt; SELECT @j;
++ ------------------ +
+| @j |
++ ------------------ +
+| { "Key": "value"} |
++ ------------------ +
+</code></pre>
+      <p>Tuy nhiên, biến do người dùng định nghĩa không thể là kiểu dữ liệu
+        JSON, vì vậy mặc dù <code>@j</code> trong ví dụ trước trông giống như
+        một giá trị JSON và có cùng một character set và collation như một giá
+        trị JSON, nó không có kiểu dữ liệu JSON. Thay vào đó, kết quả từ
+        JSON_OBJECT() được chuyển thành một chuỗi khi gán cho biến. String sản
+        xuất bằng cách chuyển đổi các giá trị JSON có bộ ký tự của utf8mb4 và
+        collation utf8mb4_bin:</p>
+      <pre><code>mysql&gt; SELECT CHARSET(@j), COLLATION(@j);
++-------------+---------------+
+| CHARSET(@j) | COLLATION(@j) |
++-------------+---------------+
+| utf8mb4     | utf8mb4_bin   |
++-------------+---------------+
+</code></pre>
+      <p>Bởi vì utf8mb4_bin là một collation nhị phân, so sánh các giá trị JSON
+        là trường hợp nhạy cảm.</p>
+      <pre><code>mysql&gt; SELECT JSON_ARRAY('x') = JSON_ARRAY('X');
++-----------------------------------+
+| JSON_ARRAY('x') = JSON_ARRAY('X') |
++-----------------------------------+
+|                                 0 |
++-----------------------------------+
+</code></pre>
+      <p>Trường hợp nhạy cảm cũng áp dụng cho các JSON null, true và false,
+        chúng luôn luôn phải được viết bằng chữ thường:</p>
+      <pre><code>mysql&gt; SELECT JSON_VALID('null'), JSON_VALID('Null'), JSON_VALID('NULL');
++--------------------+--------------------+--------------------+
+| JSON_VALID('null') | JSON_VALID('Null') | JSON_VALID('NULL') |
++--------------------+--------------------+--------------------+
+|                  1 |                  0 |                  0 |
++--------------------+--------------------+--------------------+
+
+mysql&gt; SELECT CAST('null' AS JSON);
++----------------------+
+| CAST('null' AS JSON) |
++----------------------+
+| null                 |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql&gt; SELECT CAST('NULL' AS JSON);
+ERROR 3141 (22032): Invalid JSON text in argument 1 to function cast_as_json:
+"Invalid value." at position 0 in 'NULL'.
+</code></pre>
+      <h3>Normalization, Merging, and Autowrapping of JSON Value</h3>
+      <p>Khi một chuỗi được phân tích và tìm thấy là một tài liệu JSON hợp lệ,
+        nó cũng thực hiện normalization: các thành phần với các key lặp với một
+        key được tìm thấy trước đó trong tài liệu được bỏ đi (thậm chí nếu các
+        giá trị khác nhau). Các giá trị object sinh ra bởi function
+        JSON_OBJECT() sau đây không bao gồm phần tử key1 thứ hai, vì rằng tên
+        key đã có trước đó:</p>
+      <pre><code>mysql&gt; SELECT JSON_OBJECT('key1', 1, 'key2', 'abc', 'key1', 'def');
++------------------------------------------------------+
+| JSON_OBJECT('key1', 1, 'key2', 'abc', 'key1', 'def') |
++------------------------------------------------------+
+| {"key1": 1, "key2": "abc"}                           |
++------------------------------------------------------+
+</code></pre>
+      <p>Việc normalization được thực hiện bởi MySQL cũng sắp xếp các key của
+        một đối tượng JSON (phục vụ mục đích làm cho tra cứu hiệu quả hơn). Kết
+        quả của việc sắp xếp này có thể thay đổi và không đảm bảo được ổn định
+        qua các phiên bản. Ngoài ra, khoảng trắng thêm giữa các key, value, hoặc
+        các element trong văn bản gốc được loại bỏ.</p>
+      <p>Function MySQL sinh giá trị JSON luôn luôn trả về giá trị normalized.
+        Trong bối cảnh kết hợp nhiều mảng, mảng được sáp nhập vào một mảng duy
+        nhất bằng cách kết hợp các mảng được đặt tên sau đó đến cuối mảng đầu
+        tiên. Trong ví dụ sau đây, JSON_MERGE()kết hợp các tham số của mình vào
+        một mảng duy nhất:</p>
+      <pre><code>mysql&gt; SELECT JSON_MERGE('[1, 2]', '["a", "b"]', '[true, false]');
++-----------------------------------------------------+
+| JSON_MERGE('[1, 2]', '["a", "b"]', '[true, false]') |
++-----------------------------------------------------+
+| [1, 2, "a", "b", true, false]                       |
++-----------------------------------------------------+
+</code></pre>
+      <p>Khi sáp nhập nhiều đối tượng tạo ra một đối tượng duy nhất. Nếu có
+        nhiều đối tượng có cùng key, giá trị cho key đó trong đối tượng kết quả
+        là một mảng chứa các giá trị:</p>
+      <pre><code>mysql&gt; SELECT JSON_MERGE('{"a": 1, "b": 2}', '{"c": 3, "a": 4}');
++----------------------------------------------------+
+| JSON_MERGE('{"a": 1, "b": 2}', '{"c": 3, "a": 4}') |
++----------------------------------------------------+
+| {"a": [1, 4], "b": 2, "c": 3}                      |
++----------------------------------------------------+
+</code></pre>
+      <p>Giá trị Nonarray sử dụng trong bối cảnh đòi hỏi một mảng giá trị được
+        autowrapped: Giá trị được bao bởi ký tự [ và ] để chuyển đổi nó vào một
+        mảng. Trong statement sau đây, mỗi đối số được autowrapped như là một
+        mảng ([1], [2]). Sau đó sáp nhập để tạo ra một mảng kết quả duy nhất:</p>
+      <pre><code>mysql&gt; SELECT JSON_MERGE('1', '2');
++----------------------+
+| JSON_MERGE('1', '2') |
++----------------------+
+| [1, 2]               |
++----------------------+
+</code></pre>
+      <p>Các giá trị mảng và đối tượng này được sáp nhập bởi autowrapping các
+        đối tượng như là một mảng và sáp nhập hai mảng:</p>
+      <pre><code>mysql&gt; SELECT JSON_MERGE('[10, 20]', '{"a": "x", "b": "y"}');
++------------------------------------------------+
+| JSON_MERGE('[10, 20]', '{"a": "x", "b": "y"}') |
++------------------------------------------------+
+| [10, 20, {"a": "x", "b": "y"}]                 |
++------------------------------------------------+
+</code></pre>
+      <h3>Searching and Modifying JSON Values</h3>
+      <p>Một biểu thức đường dẫn JSON chọn ra một giá trị trong một tài liệu
+        JSON. Biểu thức đường dẫn hữu ích với function trích xuất các bộ phận
+        hoặc chỉnh sửa tài liệu JSON, để chỉ định nơi trong tài liệu đó để hoạt
+        động. Ví dụ, truy vấn sau đây trích từ một tài liệu JSON các giá trị của
+        các thành phần với key là name:</p>
+      <pre><code>mysql&gt; SELECT JSON_EXTRACT('{"id": 14, "name": "Aztalan"}', '$.name');
++---------------------------------------------------------+
+| JSON_EXTRACT('{"id": 14, "name": "Aztalan"}', '$.name') |
++---------------------------------------------------------+
+| "Aztalan"                                               |
++---------------------------------------------------------+
+</code></pre>
+      <p>Cú pháp đường dẫn sử dụng ký tự <code>$</code> đại diện cho các tài
+        liệu JSON được xem xét, tùy chọn tiếp theo bởi selectors chỉ các phần
+        tiếp cụ thể hơn của tài liệu:</p>
+      <ul>
+        <li>Phần tiếp theo là một tên tên key các thành phần trong một đối tượng
+          với các key nhận được. Tên key phải được quy định trong dấu ngoặc kép
+          nếu tên không dấu là không hợp lệ trong các biểu thức đường dẫn (ví
+          dụ, nếu nó có chứa một dấu cách).</li>
+        <li>[N] nối vào một path sẽ lựa chọn một tên mảng giá trị tại vị trí N
+          trong mảng. Vị trí mảng là các số nguyên bắt đầu từ 0.</li>
+        <li>Path có thể chứa các kí hiệu * hoặc **:
+          <ul>
+            <li><code>.[*]</code> biểu thị cho giá trị của tất cả các thành phần
+              trong một đối tượng JSON.</li>
+            <li><code>[*]</code> biểu thị cho giá trị của tất cả các phần tử
+              trong một mảng JSON.</li>
+            <li><code>prefix**suffix</code> biểu thị cho tất cả các đường dẫn
+              bắt đầu với tiền tố prefix và kết thúc với hậu tố suffix.</li>
+          </ul>
+        </li>
+        <li>Một đường dẫn không tồn tại trong tài liệu biểu thị cho NULL.</li>
+      </ul>
+      <p>Bây giờ $ đại diện mảng JSON này với ba phần tử: <code>[3, { "a": [5,
+          6], "b": 10}, [99, 100]]</code></p>
+      <p>Khi đó:</p>
+      <ul>
+        <li>$[0] biểu thị cho 3.</li>
+        <li>$[1] biểu thị cho { "a": [5, 6], "b": 10 }.</li>
+        <li>$[2] biểu thị cho [99, 100].</li>
+        <li>$[3] biểu thị cho NULL (nó dùng để chỉ các phần tử mảng thứ tư,
+          không tồn tại).</li>
+      </ul>
+      <p>Vì $[1] và $[2] biểu thị cho các giá trị nonscalar, chúng có thể được
+        sử dụng làm cơ sở cho các đường dẫn biểu thức cụ thể hơn để chọn các giá
+        trị lồng nhau. Ví dụ:</p>
+      <ul>
+        <li>$[1].a biểu thị cho [5, 6].</li>
+        <li>$[1].a[1] biểu thị cho 6.</li>
+        <li>$[1].b biểu thị cho 10.</li>
+        <li>$[2][0] biểu thị cho 99.</li>
+      </ul>
+      <p>Như đã đề cập trước đó, các thành phần đường dẫn là tên các key phải
+        được đặt trong dấu nháy kép nếu tên key là không hợp pháp trong biểu
+        thức đường dẫn. Bây giờ $ đại diện giá trị này: <code>{ "a fish":
+          "shark", "a bird": "sparrow" }</code>. Các key đều chứa một dấu cách
+        và phải được trích dẫn:</p>
+      <ul>
+        <li>$."a fish" biểu thị cho shark.</li>
+        <li>$."a bird" biểu thị cho sparrow.</li>
+      </ul>
+      <p>Đường dẫn sử dụng các kí hiệu biểu thị cho một mảng có thể chứa nhiều
+        giá trị:</p>
+      <pre><code>mysql&gt; SELECT JSON_EXTRACT('{"a": 1, "b": 2, "c": [3, 4, 5]}', '$.*');
++---------------------------------------------------------+
+| JSON_EXTRACT('{"a": 1, "b": 2, "c": [3, 4, 5]}', '$.*') |
++---------------------------------------------------------+
+| [1, 2, [3, 4, 5]]                                       |
++---------------------------------------------------------+
+</code></pre>
+      <p>Trong ví dụ sau, đường dẫn <code>$**.b</code> để biểu thị cho nhiều
+        đường dẫn (<code>$.a.bvà $.c.b</code>) và tạo ra một mảng các giá trị
+        phù hợp với đường dẫn:</p>
+      <pre><code>mysql&gt; SELECT JSON_EXTRACT('{"a": {"b": 1}, "c": {"b": 2}}', '$**.b');
++---------------------------------------------------------+
+| JSON_EXTRACT('{"a": {"b": 1}, "c": {"b": 2}}', '$**.b') |
++---------------------------------------------------------+
+| [1, 2]                                                  |
++---------------------------------------------------------+
+</code></pre>
+      <p>Trong MySQL 5.7.9 trở lên, bạn có thể sử dụng <code>column-&gt;path</code>
+        với một cột JSON định danh và biểu thức đường dẫn JSON như là một từ
+        đồng nghĩa với <code>JSON_EXTRACT(column, path)</code>.</p>
+      <p>Một số function cần một tài liệu JSON tồn tại, sửa đổi nó bằng một cách
+        nào đó, và trả lại kết quả là tài liệu đã sửa đổi. Biểu thức đường dẫn
+        chỉ ra nơi trong văn bản để thực hiện thay đổi. Ví dụ, function <code>JSON_SET()</code>,
+        <code>JSON_INSERT()</code>, và <code>JSON_REPLACE()</code> cần một tài
+        liệu JSON, cộng với một hoặc nhiều cặp path/value mô tả nơi để sửa đổi
+        tài liệu và các giá trị sử dụng. Các function khác nhau trong cách xử lý
+        các giá trị tồn tại và không tồn tại trong tài liệu. Hãy xem xét tài
+        liệu này:</p>
+      <pre><code>mysql&gt; SET @j = '["a", {"b": [true, false]}, [10, 20]]';
+</code></pre>
+      <p>JSON_SET() thay thế các giá trị cho các đường tồn tại và bổ sung thêm
+        giá trị cho các đường dẫn không tồn tại :.</p>
+      <pre><code>mysql&gt; SELECT JSON_SET(@j, '$[1].b[0]', 1, '$[2][2]', 2);
++--------------------------------------------+
+| JSON_SET(@j, '$[1].b[0]', 1, '$[2][2]', 2) |
++--------------------------------------------+
+| ["a", {"b": [1, false]}, [10, 20, 2]]      |
++--------------------------------------------+
+</code></pre>
+      <p>Trong trường hợp này, đường dẫn [1].b[0] lựa chọn một giá trị tồn tại
+        (true), rồi được thay thế bằng giá trị sau đường dẫn (1). Đường dẫn
+        [2][2] không tồn tại, vì vậy giá trị tương ứng (2) sẽ được thêm vào giá
+        trị chọn bằng $[2].</p>
+      <p>JSON_INSERT() thêm giá trị mới nhưng không thay thế các giá trị hiện
+        tại:</p>
+      <pre><code>mysql&gt; SELECT JSON_INSERT(@j, '$[1].b[0]', 1, '$[2][2]', 2);
++-----------------------------------------------+
+| JSON_INSERT(@j, '$[1].b[0]', 1, '$[2][2]', 2) |
++-----------------------------------------------+
+| ["a", {"b": [true, false]}, [10, 20, 2]]      |
++-----------------------------------------------+
+</code></pre>
+      <p>JSON_REPLACE() thay thế giá trị hiện có và bỏ qua các giá trị mới:</p>
+      <pre><code>mysql&gt; SELECT JSON_REPLACE(@j, '$[1].b[0]', 1, '$[2][2]', 2);
++------------------------------------------------+
+| JSON_REPLACE(@j, '$[1].b[0]', 1, '$[2][2]', 2) |
++------------------------------------------------+
+| ["a", {"b": [1, false]}, [10, 20]]             |
++------------------------------------------------+.
+</code></pre>
+      <p>JSON_REMOVE() nhận một tài liệu JSON và một hoặc nhiều path xác định
+        giá trị cần được loại bỏ từ tài liệu. Giá trị trả về là tài liệu gốc trừ
+        đi giá trị của đường dẫn tồn tại trong tài liệu được lựa chọn:</p>
+      <pre><code>mysql&gt; SELECT JSON_REMOVE(@j, '$[2]', '$[1].b[1]', '$[1].b[1]');
++---------------------------------------------------+
+| JSON_REMOVE(@j, '$[2]', '$[1].b[1]', '$[1].b[1]') |
++---------------------------------------------------+
+| ["a", {"b": [true]}]                              |
++---------------------------------------------------+</code></pre>
+      <h3>JSON trong MariaDB</h3>
+      <p>MariaDB không hỗ trợ native JSON. Dữ liệu JSON trong MariaDB tương ứng
+        với TEXT trong MySQL.</p>
+      <p>Chúng ta không thể dụng dụng đường dẫn kiểu <code>column-&gt;path</code>
+        mà phải sử dụng hàm <code>json_extract(column, path)</code>.</p>
+      <p>Chúng ta nên sử dụng hàm <code>json_unquote</code> kết hợp với hàm <code>json_extract</code>
+        nếu kiểu dữ liệu trả về là xâu để loại bỏ ký tự <code>"</code>.</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://viblo.asia/p/json-trong-mysql-WrJeYXQaGVO" target="_blank">JSON
+          trong MySql - Viblo</a></p>
+      <p><a href="https://dev.mysql.com/doc/refman/8.0/en/json.html" target="_blank">MySQL
+          :: MySQL 8.0 Reference Manual :: 11.5 The JSON Data Type</a></p>
+      
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

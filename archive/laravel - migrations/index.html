@@ -1,0 +1,491 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Laravel Migrations</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Laravel Migrations">
+ </head> 
+ <body> 
+  <article> 
+   <h1>Cơ sở dữ liệu: Migrations</h1> 
+   <p><a></a></p> 
+   <h2>Giới thiệu</h2> 
+   <p>Migration được coi như là version control cho database, cho phép team có thể dễ dàng thay đổi và chia sẻ schema của database trong chương trình với nhau. Migratiom cơ bản được sử dụng cùng với schema builder để dễ dàng xây dựng cấu trúc cho database schema. Nếu bạn đã gặp vấn đề khi thêm một cột vào local của các đồng đội trong team, migration sẽ xử lý vấn đề này rất dễ dàng.</p> 
+   <p><code>Schema</code> facade hỗ trợ việc tạo và thao tác trên các bảng mà không cần biết về database, tương ứng và mạch lạc khi giao tiếp với các hệ thống database khác nhau mà Laravel hỗ trợ.</p> 
+   <h2>Tạo Migrations</h2> 
+   <p>Để tạo một migration, sử dụng câu lệnh <code>make:migration</code> Artisan:</p> 
+   <pre><code>php artisan make:migration create_users_table</code></pre> 
+   <p>File migration mới sẽ được đặt trong thư mục <code>database/migrations</code>. Mỗi file migration được đặt tên bao gồm timestamp để xác định thứ tự các migration với nhau.</p> 
+   <p>Tham số <code>--table</code> và <code>--create</code> có thể được sử dụng để cho biết table nào và migration có cần tạo table mới hay không. Hai tham số này đơn giản được dùng để cho mã stub được tạo ra sẽ thực hiện trên table nào:</p> 
+   <pre><code>php artisan make:migration create_users_table --create=users
+
+php artisan make:migration add_votes_to_users_table --table=users</code></pre> 
+   <p>Nếu bạn muốn đưa migration vào trong một thư mục khác, bạn có thể truyền vào tham số <code>--path</code>khi thực hiện lệnh <code>make:migration</code>. Đường dẫn đưa vào phải relative với đường dẫn cơ bản của chương trình.</p> 
+   <h2>Cấu trúc migration</h2> 
+   <p>Một migration class chứa hai hàm cơ bản là: <code>up</code> và <code>down</code>. Hàm <code>up</code> được dùng để tạo table, cột hay index mới vào trong database, trong khi hàm <code>down</code> đơn giản chỉ dùng để làm ngược lại những thao tác ở hàm <code>up</code>.</p> 
+   <p>Bên trong hai hàm này bạn có thể sử dụng schema builder để tạo và chỉnh sửa table rõ ràng hơn. Để tìm hiểu tất cả các hàm được cung cấp trong <code>Schema</code> builder, xem tại đây. Ví dụ, hãy cùng nhau làm một ví dụ về migration bằng việc tạo ra một bảng tên là <code>flights</code>:</p> 
+   <pre><code>&lt;?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateFlightsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return  void
+     */
+    public function up()
+    {
+        Schema::create('flights', function (Blueprint $table) {
+            $table-&gt;increments('id');
+            $table-&gt;string('name');
+            $table-&gt;string('airline');
+            $table-&gt;timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return  void
+     */
+    public function down()
+    {
+        Schema::drop('flights');
+    }
+}</code></pre> 
+   <h2>Thực thi Migrations</h2> 
+   <p>Để thực thi tất cả các migration trong chương trình, sử dụng lệnh <code>migrate</code> Artisan:</p> 
+   <pre><code>php artisan migrate</code></pre> 
+   <p> Nếu bạn đang sử dụng Homestead virtual machine, bạn cần chạy câu lệnh này bên trong đó.</p> 
+   <h4>Ép buộc thực thi migration chạy cho môi trường production</h4> 
+   <p>Một số thao tác migration khá là nguy hiểm, vì chúng có thể gây ra mất mát dữ liệu. Để tránh khỏi điều này khi thực thi các câu lệnh migration trong môi trường production, bạn sẽ nhận được yêu cầu xác nhận trước khi thực chi chúng. Để ép các câu lệnh này thực thi mà không cần xác nhận, sử dụng cờ <code>--force</code>:</p> 
+   <pre><code>php artisan migrate --force</code></pre> 
+   <h3>Rolling Back Migrations</h3> 
+   <p>Để rollback lại thao tác migration cuối cùng, bạn có thể sử dụng câu lệnh <code>rollback</code>. Lệnh sẽ rolls back lại row có "batch" lớn nhất của bảng migrations, có thể bao gồm một hoặc nhiều file migration:</p> 
+   <pre><code>php artisan migrate:rollback</code></pre> 
+   <p>Bạn có thế giới hạn số file migrations rollback bằng thêm <code>step</code> vào lệnh <code>rollback</code>. Ví dụ, lệnh sau sẽ rollback 5 file sau cùng của bảng migrations có "batch" lớn nhất:</p> 
+   <pre><code>php artisan migrate:rollback --step=5</code></pre> 
+   <p>Lệnh <code>migrate:reset</code> sẽ thực hiện rollback lại toàn bộ migration của chương trình:</p> 
+   <pre><code>php artisan migrate:reset</code></pre> 
+   <h4>Rollback &amp; Migrate trong một câu lệnh</h4> 
+   <p>Lệnh <code>migrate:refresh</code> sẽ đầu tiên rollback lại toàn bộ migration của chương trình, và thực hiện câu lệnh <code>migrate</code>. Câu lệnh sẽ thực hiện tái cấu trúc toàn bộ database:</p> 
+   <pre><code>php artisan migrate:refresh
+
+// Refresh the database and run all database seeds...
+php artisan migrate:refresh --seed</code></pre> 
+   <p>Bạn có thẻ rollback &amp; migrate lại với giới hạn migrations bởi cờ <code>step</code> vào lệnh <code>refresh</code>. Ví dụ, lệnh sau sẽ rollback &amp; migrate lại 5 file mới nhất của migrations:</p> 
+   <pre><code>php artisan migrate:refresh --step=5</code></pre> 
+   <h2>Bảng</h2> 
+   <h3>Tạo bảng</h3> 
+   <p>Để tạo một bảng mới, sử dụng hàm <code>create</code> trong <code>Schema</code> facade. Hàm <code>create</code> nhận hai tham số. Tham số đầu là tên của bảng, còn tham số thứ hai là một <code>Closure</code> mà sẽ nhận vào một <code>Blueprint</code>object để khai báo cấu trúc của bảng mới:</p> 
+   <pre><code>Schema::create('users', function (Blueprint $table) {
+    $table-&gt;increments('id');
+});</code></pre> 
+   <p>Tất nhiên, Khi tạo bảng mới, bạn có thể sử dụng bất cứ hàm tạo cột nào để tạo các trường cho bảng.</p> 
+   <h4>Kiểm tra xem bảng hay cột có tồn tại hay không</h4> 
+   <p>Bạn có thể dễ dàng kiểm tra sự tồn tại của một bảng hay cột sử dụng hàm <code>hasTable</code> and <code>hasColumn</code>:</p> 
+   <pre><code>if (Schema::hasTable('users')) {
+    //
+}
+
+if (Schema::hasColumn('users', 'email')) {
+    //
+}</code></pre> 
+   <h4>Connection &amp; Storage Engine</h4> 
+   <p>Nếu bạn muốn thực hiện thao tác schema trên một kết nối database không phải mặc định, sử dụng hàm <code>connection</code>:</p> 
+   <pre><code>Schema::connection('foo')-&gt;create('users', function ($table) {
+    $table-&gt;increments('id');
+});</code></pre> 
+   <p>Bạn có thể sử dụng thuộc tính <code>engine</code> trên schema builder để định nghĩa storage engine cho bảng:</p> 
+   <pre><code>Schema::create('users', function ($table) {
+    $table-&gt;engine = 'InnoDB';
+
+    $table-&gt;increments('id');
+});</code></pre> 
+   <h3>Đổi tên / xóa bảng</h3> 
+   <p>Để đổi tên một bảng đã tồn tại trong database, sử dụng hàm <code>rename</code>:</p> 
+   <pre><code>Schema::rename($from, $to);</code></pre> 
+   <p>Để drop một bảng trong database, bạn có thể sử dụng hàm <code>drop</code> hoặc <code>dropIfExists</code>:</p> 
+   <pre><code>Schema::drop('users');
+
+Schema::dropIfExists('users');</code></pre> 
+   <h4>Đổi tên bảng với foreign keys</h4> 
+   <p>Trước khi thay đổi tên bảng, bạn nên kiểm tra xem có foreign key constraints nào trên bảng có tên khác trong migration file hay không thay vì để Laravel tự gán tên. Nếu không, tên của foreign key constraint sẽ trỏ tới tên cũ của bảng.</p> 
+   <h2>Columns</h2> 
+   <h3>Tạo Columns</h3> 
+   <p>Hàm <code>table</code> trong <code>Schema</code> facade sử dụng để cập nhật một bảng đã tồn tại. Như hàm <code>create</code>, hàm <code>table</code> nhận hai tham số: tên của bảng và một <code>Closure</code> nhận một <code>Blueprint</code> object để thực hiện thao tác với table:</p> 
+   <pre><code>Schema::table('users', function ($table) {
+    $table-&gt;string('email');
+});</code></pre> 
+   <h4>Các kiểu Column</h4> 
+   <p>Tất nhiên, the schema builder chứa vài kểu column cho bạn có thể khi tạo bảng:</p> 
+   <table> 
+    <thead> 
+     <tr> 
+      <th>Command</th> 
+      <th>Description</th> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td><code>$table-&gt;bigIncrements('id');</code></td> 
+      <td>Tăng ID (primary key) sư dụng như "UNSIGNED BIG INTEGER".</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;bigInteger('votes');</code></td> 
+      <td>Tương đương với BIGINT.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;binary('data');</code></td> 
+      <td>Tương đương với BLOB.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;boolean('confirmed');</code></td> 
+      <td>Tương đương với BOOLEAN.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;char('name', 4);</code></td> 
+      <td>Tương đương với CHAR với độ dài cho trước.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;date('created_at');</code></td> 
+      <td>Tương đương với DATE.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;dateTime('created_at');</code></td> 
+      <td>Tương đương với DATETIME.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;dateTimeTz('created_at');</code></td> 
+      <td>Tương đương với DATETIME (with timezone).</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;decimal('amount', 5, 2);</code></td> 
+      <td>Tương đương với DECIMAL với độ chính sách và phần thập phân.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;double('column', 15, 8);</code></td> 
+      <td>Tương đương với DOUBLE với độ chính xác, 15 chữ số và 8 ký tự tính sau dấu phảy.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;enum('choices', ['foo', 'bar']);</code></td> 
+      <td>Tương đương với ENUM.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;float('amount', 8, 2);</code></td> 
+      <td>Tương đương với FLOAT, 8 chữ số and 2 chữ số tính sau dấu phẩy.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;increments('id');</code></td> 
+      <td>Tăng ID (primary key) sử dụng như "UNSIGNED INTEGER".</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;integer('votes');</code></td> 
+      <td>Tương đương với INTEGER.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;ipAddress('visitor');</code></td> 
+      <td>Tương đương với IP.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;json('options');</code></td> 
+      <td>Tương đương với JSON.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;jsonb('options');</code></td> 
+      <td>Tương đương với JSONB.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;longText('description');</code></td> 
+      <td>Tương đương với LONGTEXT.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;macAddress('device');</code></td> 
+      <td>Tương đương với MAC.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;mediumIncrements('id');</code></td> 
+      <td>Tăng ID (primary key) sử dụng như "UNSIGNED MEDIUM INTEGER".</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;mediumInteger('numbers');</code></td> 
+      <td>Tương đương với MEDIUMINT.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;mediumText('description');</code></td> 
+      <td>Tương đương với MEDIUMTEXT.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;morphs('taggable');</code></td> 
+      <td>Thêm unsigned INTEGER <code>taggable_id</code> và STRING <code>taggable_type</code>.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;nullableTimestamps();</code></td> 
+      <td>Giống như <code>timestamps()</code>.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;rememberToken();</code></td> 
+      <td>Thêm <code>remember_token</code> như VARCHAR(100) NULL.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;smallIncrements('id');</code></td> 
+      <td>Tăng ID (primary key) sử dụng như "UNSIGNED SMALL INTEGER".</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;smallInteger('votes');</code></td> 
+      <td>Tương đương với SMALLINT.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;softDeletes();</code></td> 
+      <td>Thêm nullable <code>deleted_at</code> column for soft deletes.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;string('email');</code></td> 
+      <td>Tương đương với VARCHAR .</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;string('name', 100);</code></td> 
+      <td>Tương đương với VARCHAR với độ dài.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;text('description');</code></td> 
+      <td>Tương đương với TEXT.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;time('sunrise');</code></td> 
+      <td>Tương đương với TIME.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;timeTz('sunrise');</code></td> 
+      <td>Tương đương với TIME (với timezone).</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;tinyInteger('numbers');</code></td> 
+      <td>Tương đương với TINYINT.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;timestamp('added_on');</code></td> 
+      <td>Tương đương với TIMESTAMP.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;timestampTz('added_on');</code></td> 
+      <td>Tương đương với TIMESTAMP (với timezone).</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;timestamps();</code></td> 
+      <td>Thêm nullable <code>created_at</code> và cột <code>updated_at</code>.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;timestampsTz();</code></td> 
+      <td>Thêm nullable <code>created_at</code> và <code>updated_at</code> (với timezone).</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;unsignedBigInteger('votes');</code></td> 
+      <td>Tương đương với Unsigned BIGINT.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;unsignedInteger('votes');</code></td> 
+      <td>Tương đương với Unsigned INT.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;unsignedMediumInteger('votes');</code></td> 
+      <td>Tương đương với Unsigned MEDIUMINT.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;unsignedSmallInteger('votes');</code></td> 
+      <td>Tương đương với Unsigned SMALLINT.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;unsignedTinyInteger('votes');</code></td> 
+      <td>Tương đương với Unsigned TINYINT.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;uuid('id');</code></td> 
+      <td>Tương đương với UUID.</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <h3>Column Modifiers</h3> 
+   <p>Ngoài các kiểu column liệt kê ở trên, có một số kiểu column "modifiers" khác mà bạn có thể sử dụng. Ví dụ để làm cho column "nullable", bạn có thể dùng hàm <code>nullable</code>:</p> 
+   <pre><code>Schema::table('users', function ($table) {
+    $table-&gt;string('email')-&gt;nullable();
+});</code></pre> 
+   <p>Dưới đây là một số column modifier mà bạn có thể sử dụng, không bao gồm các index modifiers:</p> 
+   <table> 
+    <thead> 
+     <tr> 
+      <th>Modifier</th> 
+      <th>Description</th> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td><code>-&gt;after('column')</code></td> 
+      <td>Đặt column "after" một column khác (MySQL Only)</td> 
+     </tr> 
+     <tr> 
+      <td><code>-&gt;comment('my comment')</code></td> 
+      <td>Thêm một comment cho column.</td> 
+     </tr> 
+     <tr> 
+      <td><code>-&gt;default($value)</code></td> 
+      <td>Đặt giá trị "mặc định" vào column</td> 
+     </tr> 
+     <tr> 
+      <td><code>-&gt;first()</code></td> 
+      <td>Đặt column "first" vào trong bảng (MySQL Only)</td> 
+     </tr> 
+     <tr> 
+      <td><code>-&gt;nullable()</code></td> 
+      <td>Cho phép dữ liệu kiểu NULL có thể chèn vào column.</td> 
+     </tr> 
+     <tr> 
+      <td><code>-&gt;storedAs($expression)</code></td> 
+      <td>Tạo một cột stored (MySQL Only)</td> 
+     </tr> 
+     <tr> 
+      <td><code>-&gt;unsigned()</code></td> 
+      <td>Đặt cột <code>integer</code> sang <code>UNSIGNED</code></td> 
+     </tr> 
+     <tr> 
+      <td><code>-&gt;virtualAs($expression)</code></td> 
+      <td>Tạo một cột virtual (MySQL Only)</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <h3>Modifying Columns</h3> 
+   <h4>Yêu cầu</h4> 
+   <p>Trước khi chỉnh sửa column, hãy chắc chắn là bạn thêm vào <code>doctrine/dbal</code> dependency vào trong file <code>composer.json</code>. Thư viện Doctrine DBAL được dùng để xác định trạng thái hiện tại của column và tạo câu SQL query cần thiết để chỉnh sửa column:</p> 
+   <pre><code>composer require doctrine/dbal</code></pre> 
+   <h4>Cập nhật thuộc tính của Column</h4> 
+   <p>Hàm <code>change</code> cho phép bạn thay đổi một column sang một kiểu mới, hoặc thay đổi thuộc tính của column. Ví dụ, bạn có thể muốn tăng kích thước của string. Xem ví dụ dưới đây trong việc sử dụng <code>change</code> để thay đổi kích thước của column <code>name</code> column từ 25 thành 50:</p> 
+   <pre><code>Schema::table('users', function ($table) {
+    $table-&gt;string('name', 50)-&gt;change();
+});</code></pre> 
+   <p>Chúng ta cũng có thể thay đổi một column sang nullable:</p> 
+   <pre><code>Schema::table('users', function ($table) {
+    $table-&gt;string('name', 50)-&gt;nullable()-&gt;change();
+});</code></pre> 
+   <p> Hiện tại chưa hỗ trợ thay đổi cột có kiểu là <code>enum</code>.</p> 
+   <h4>Đổi tên columns</h4> 
+   <p>Để thay đổi tên column, bạn có thể sử dụng hàm <code>renameColumn</code> trong Schema builder. Trước khi đổi tên một column, hãy chắc chắn rằng đã thêm <code>doctrine/dbal</code> dependency vào file <code>composer.json</code>:</p> 
+   <pre><code>Schema::table('users', function ($table) {
+    $table-&gt;renameColumn('from', 'to');
+});</code></pre> 
+   <p> Hiện tại chưa hỗ trợ đổi tên cột có kiểu là <code>enum</code>. </p> 
+   <h3>Dropping Columns</h3> 
+   <p>Để drop một column, sử dụng hàm <code>dropColumn</code> trong the Schema builder. Trước khi dropping columns từ SQLite database, bạn cần phải thêm <code>doctrine/dbal</code> dependency vào file <code>composer.json</code>và chạy lệnh <code>composer update</code> để cài thư viện:</p> 
+   <pre><code>Schema::table('users', function ($table) {
+    $table-&gt;dropColumn('votes');
+});</code></pre> 
+   <p>Bạn có thể drop nhiều columns từ một bảng bằng cách truyền một mảng các tên column vào hàm <code>dropColumn</code>:</p> 
+   <pre><code>Schema::table('users', function ($table) {
+    $table-&gt;dropColumn(['votes', 'avatar', 'location']);
+});</code></pre> 
+   <p> Drop hay thay đổi nhiều columns trong một file migration trong khi sử dụng SQLite chưa được hỗ trợ.</p> 
+   <h2>Indexes</h2> 
+   <p><a></a></p> 
+   <h3>Tạo Indexes</h3> 
+   <p>Schema builder hỗ trợ vài kiểu index. Đầu tiên, cùng xem một ví dụ tạo column có giá trị là unique. Để tạo index, chúng ta sẽ sử dụng hàm <code>unique</code> khi tạo column:</p> 
+   <pre><code>$table-&gt;string('email')-&gt;unique();</code></pre> 
+   <p>Ngoài ra bạn có thể tạo index ngay sau khi tạo column, ví dụ:</p> 
+   <pre><code>$table-&gt;unique('email');</code></pre> 
+   <p>Bạn có thể truyền vào một mảng column cho hàm :</p> 
+   <pre><code>$table-&gt;index(['account_id', 'created_at']);</code></pre> 
+   <p>Laravel sẽ tự thực hiện tạo tên phù hợp cho index, nhưng bạn có thể tự đặt tên cho index bằng cách truyền vào tham số thứ hai:</p> 
+   <pre><code>$table-&gt;index('email', 'my_index_name');</code></pre> 
+   <h4>Các kiểu Index</h4> 
+   <table> 
+    <thead> 
+     <tr> 
+      <th>Command</th> 
+      <th>Description</th> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td><code>$table-&gt;primary('id');</code></td> 
+      <td>Thêm vào một primary key.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;primary(['first', 'last']);</code></td> 
+      <td>Thêm vào một composite keys.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;unique('email');</code></td> 
+      <td>Thêm vào một unique index.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;unique('state', 'my_index_name');</code></td> 
+      <td>Thêm một index có tên.</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;index('state');</code></td> 
+      <td>Thêm vào một index.</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <p><a></a></p> 
+   <h3>Dropping Indexes</h3> 
+   <p>Để drop một index, bạn cần truyền vào tên của index. Về mặc định, Laravel sẽ tự động gán một tên phù hợp cho index. Đơn giản chỉ là nối tên bảng, tên của column được index và kiểu index. Dưới đây là một vài ví dụ:</p> 
+   <table> 
+    <thead> 
+     <tr> 
+      <th>Command</th> 
+      <th>Description</th> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td><code>$table-&gt;dropPrimary('users_id_primary');</code></td> 
+      <td>Drop một primary key khỏi bảng "users".</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;dropUnique('users_email_unique');</code></td> 
+      <td>Drop một unique key khỏi bảng "users".</td> 
+     </tr> 
+     <tr> 
+      <td><code>$table-&gt;dropIndex('geo_state_index');</code></td> 
+      <td>Drop một unique key khỏi bảng "geo".</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <p>Nếu bạn truyền vào một mảng các column, thì Laravel sẽ thực hiện tìm tên index tương ứng dựa theo quy tắc đặt để drop:</p> 
+   <pre><code>Schema::table('geo', function ($table) {
+    $table-&gt;dropIndex(['state']); // Drops index 'geo_state_index'
+});</code></pre> 
+   <p><a></a></p> 
+   <h3>Foreign Key Constraints</h3> 
+   <p>Laravel cũng hỗ trợ cung cấp việc tạo foreign key constraint một cách dễ dàng. Ví dụ, cùng tạo một column <code>user_id</code> trong bảng <code>posts</code> tham chiếu tới column <code>id</code> trong bảng <code>users</code>:</p> 
+   <pre><code>Schema::table('posts', function ($table) {
+    $table-&gt;integer('user_id')-&gt;unsigned();
+
+    $table-&gt;foreign('user_id')-&gt;references('id')-&gt;on('users');
+});</code></pre> 
+   <p>Bạn cũng có thể chỉ định thao tác cho thuộc tính "on delete" và "on update" của constraint:</p> 
+   <pre><code>$table-&gt;foreign('user_id')
+      -&gt;references('id')-&gt;on('users')
+      -&gt;onDelete('cascade');</code></pre> 
+   <p>Để drop một foreign key, bạn có thể sử dụng hàm <code>dropForeign</code>. Foreign key constraints sử dụng chung quy tắc đặt tên như index. Vì thế, chúng ta tên của foreign key constraints sẽ bao gồm tên bảng, tên cột và hậu tố là "_foreign":</p> 
+   <pre><code>$table-&gt;dropForeign('posts_user_id_foreign');</code></pre> 
+   <p>Hay bạn có thể truyền vào một mảng các giá trị để thực hiện drop theo quy tắc đặt tên:</p> 
+   <pre><code>$table-&gt;dropForeign(['user_id']);</code></pre> 
+   <p>Bạn có thể kích hoạt hay bỏ kích hoạt việc sử dụng foreign key constraint trong migration sử dụng hai hàm sau:</p> 
+   <pre><code>Schema::enableForeignKeyConstraints();
+
+Schema::disableForeignKeyConstraints();</code></pre> 
+   <div>
+     Nguồn: 
+    <a href="https://laravel.com/docs/5.3/migrations">https://laravel.com/docs/5.3/migrations</a> 
+   </div> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

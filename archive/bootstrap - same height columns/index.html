@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="flex, h-100" />
+
+    <title>Các cột có cùng chiều cao</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+    <article>
+        <h2>Các cột có cùng chiều cao</h2>
+        <p>Sử dụng <code>.row</code> với Bootstrap 4 thì mặc định đã <code>display: flex</code>, các phần tử
+            <code>.col</code> sẽ có chiều cao bằng nhau.</p>
+        <p>Để các phần tử con của <code>.col</code> cũng có độ cao bằng nhau thì cần thêm <code>.h-100</code>.</p>
+
+        <div class="row">
+            <div class="col-sm-6 col-md-4 mb-4">
+                <div class="h-100 p-2 bg-primary">
+                    <p>This one has a bit longer content</p>
+                    <p>This one has a bit longer content</p>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mb-4">
+                <div class="h-100 p-2 bg-secondary">
+                    <p>Normal content.</p>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mb-4">
+                <div class="h-100 p-2 bg-success">
+                    <p>Normal content.</p>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mb-4">
+                <div class="h-100 p-2 bg-danger">
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mb-4">
+                <div class="h-100 p-2 bg-warning">
+                    <p>Long content.</p>
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsum incidunt repellat, esse quia
+                        id distinctio blanditiis iusto veniam quis fuga, cumque voluptatibus beatae dolor eligendi
+                        consequatur quisquam commodi asperiores porro!</p>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mb-4">
+                <div class="h-100 p-2 bg-info">
+                    <p>Normal content.</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

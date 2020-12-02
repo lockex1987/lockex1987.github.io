@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>SVG Chart Test</title>
+    <style>
+* {margin: 0; padding: 0;}
+#container { position: relative; }
+.svg_pies { transform: rotate(-90deg); border-radius: 100%; display: block; position: absolute; top: 0; left: 0; }
+#placeholder {background: #ddd;}
+#output {margin-left: 200px;}
+.circle_pies { fill: transparent; stroke-width: 50; stroke-dasharray: 90 158; transition: stroke-dasharray 2.3s ease; }
+#pie1 { }
+#pie2 {stroke: green; }
+#pie3 {stroke: gold; }
+    </style>
+</head>
+<body>
+    <section id="container">
+        <svg width="100" height="100" class="svg_pies" id="placeholder">
+            <circle r="25" cx="50" cy="50" class="circle_pies" stroke="royalblue"/>
+        </svg>
+        <svg width="100" height="100" class="svg_pies">
+            <circle r="25" cx="50" cy="50" class="circle_pies" stroke="green"/>
+        </svg>
+        <svg width="100" height="100" class="svg_pies">
+            <circle r="25" cx="50" cy="50" class="circle_pies" stroke="gold"/>
+        </svg>
+    </section>
+
+
+    <script>
+var circle_pies = document.querySelectorAll('.circle_pies');
+var svg_pies = document.querySelectorAll('.svg_pies');
+
+var percentList = [50, 35, 15]; //percent values
+var total = 158; // 100% of the pie
+var angle = 90;
+for (var c = 0; c < circle_pies.length; c++) {
+    circle_pies[c].style.strokeDasharray = ((percentList[c] * total) / 100) + ' ' + 158;
+    svg_pies[c].style.transform = 'rotate(' + (angle) + 'deg)'; // rotate the pie slices
+    angle = (angle + percentList[c] / 100 * 360) % 360;
+}
+    </script>
+</body>
+</html>

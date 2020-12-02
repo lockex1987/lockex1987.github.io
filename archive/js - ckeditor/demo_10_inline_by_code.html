@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <title>Inline Editing by Code &mdash; CKEditor Sample</title>
+   <script src="../lib/ckeditor/ckeditor.js"></script>
+   <style>
+       #editable {
+           padding: 10px;
+           float: left;
+       }
+   </style>
+</head>
+<body>
+   <h1>Inline Editing by Code</h1>
+ 
+   <div id="editable" contenteditable="true" style="border:1px solid red;">
+        <p>Hello <strong>CKEditor</strong></p>
+   </div>
+ 
+   <script>
+       // Tắt chế độ tự động tạo CKEditor.
+       CKEDITOR.disableAutoInline = true;
+       var editor = CKEDITOR.inline('editable');
+   </script>
+</body>
+</html>

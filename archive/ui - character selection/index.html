@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Built by Vue and Bulma">
+    <title>Street Fighter - Character Selection</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/tkrotoff/famfamfam_flags/1047b3e5/famfamfam-flags.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="app">
+        <img class="logo" src="https://vignette2.wikia.nocookie.net/ssb/images/f/f6/SF_Logo.png/revision/latest?cb=20150614010256">
+
+        <div class="character">
+            <div class="columns">
+                <div class="column is-centered">
+                    <div class="parent columns">
+                        <div class="column">
+                            <div class="character__profile">
+                                <img :src="getActiveCharacter.largeImg">
+                            </div>
+                        </div>
+
+                        <div class="column has-text-left">
+                            <div class="character__stats">
+                                <div class="name">
+                                    {{ getActiveCharacter.name }}
+                                </div>
+                                <div class="stat">
+                                    <span class="tag">Height</span>
+                                    {{getActiveCharacter.height}}
+                                </div>
+                                <div class="stat">
+                                    <span class="tag">Birthplace</span>
+                                    <i v-if="getActiveCharacter.birth" class="flag" :class="`famfamfam-flag-${getActiveCharacter.birth}`"></i>
+                                    <span v-else>?</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="tag">Fighting Style</span>
+                                    {{ getActiveCharacter.fighting }}
+                                </div>
+                                <div class="stat">
+                                    <span class="tag">Skills</span>
+                                    {{ getActiveCharacter.skills }}
+                                </div>
+                                <div class="stat final">
+                                    <span class="tag">Alignment</span>
+                                    <span class="alignment" :class="getCharacterAlignment">
+                                        {{ getActiveCharacter.alignment }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="character-container">
+            <div class="columns is-centered is-mobile is-gapless">
+                <div class="column" v-for="character in characters.slice(0, 5)">
+                    <character-component :character="character" />
+                </div>
+            </div>
+
+            <div class="columns is-centered is-mobile is-gapless">
+                <div class="column" v-for="character in characters.slice(5, 10)">
+                    <character-component :character="character" />
+                </div>
+            </div>
+        </div>
+
+        <a href="https://twitter.com/djirdehh" target="_blank" class="twitter-section">
+            <i class="fa fa-twitter-square" aria-hidden="true"></i>
+        </a>
+    </div>
+
+    <!--  Prefetch large images -->
+    <link rel="prefetch" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1211695/ken-compressed.png">
+    <link rel="prefetch" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1211695/chun_li-compressed.png">
+    <link rel="prefetch" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1211695/dj-compressed.png">
+    <link rel="prefetch" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1211695/cammie-compressor.png">
+    <link rel="prefetch" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1211695/sagat-compressed.png">
+    <link rel="prefetch" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1211695/zangief-compressed.png">
+    <link rel="prefetch" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1211695/akuma_compressed.jpg">
+    <link rel="prefetch" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1211695/bison-compressor.png">
+    <link rel="prefetch" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1211695/blanka_compressed.png">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js"></script>
+    <script src="js/index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>WatchList</title>
+
+
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'>
+
+  <link rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+<body>
+
+  <div class="container-fluid">
+    <div class="row text-center ">
+      <nav class="navbar navbar-inverse">
+        <h1>Movie <span>DB</span></h1>
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+              aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav selection">
+              <li id="movie" class="lead custom"><a href="#">Movies</a></li>
+              <li id="tv" class="lead custom"><a href="#">TV Shows</a></li>
+              <li role="presentation" class="dropdown dropmovies">
+                <a class="dropdown-toggle lead" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                  Genre <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu ">
+                  <li><a href="#" onclick="sortMovies('action')">Action</a></li>
+                  <li><a href="#" onclick="sortMovies('adventure')">Adventure</a></li>
+                  <li><a href="#" onclick="sortMovies('animation')">Animation</a></li>
+                  <li><a href="#" onclick="sortMovies('comedy')">Comedy</a></li>
+                  <li><a href="#" onclick="sortMovies('crime')">Crime</a></li>
+                  <li><a href="#" onclick="sortMovies('documentary')">Documentary</a></li>
+                  <li><a href="#" onclick="sortMovies('drama')">Drama</a></li>
+                  <li><a href="#" onclick="sortMovies('family')">Family</a></li>
+                  <li><a href="#" onclick="sortMovies('fantasy')">Fantasy</a></li>
+                  <li><a href="#" onclick="sortMovies('foreign')">Foreign</a></li>
+                  <li><a href="#" onclick="sortMovies('history')">History</a></li>
+                  <li><a href="#" onclick="sortMovies('horror')">Horror</a></li>
+                  <li><a href="#" onclick="sortMovies('music')">Music</a></li>
+                  <li><a href="#" onclick="sortMovies('mystery')">Mystery</a></li>
+                  <li><a href="#" onclick="sortMovies('romance')">Romance</a></li>
+                  <li><a href="#" onclick="sortMovies('science fiction')">Science Fiction</a></li>
+                  <li><a href="#" onclick="sortMovies('tv movie')">TV Movie</a></li>
+                  <li><a href="#" onclick="sortMovies('thriller')">Thriller</a></li>
+                  <li><a href="#" onclick="sortMovies('war')">War</a></li>
+                  <li><a href="#" onclick="sortMovies('western')">Western</a></li>
+                </ul>
+              </li>
+              <li role="presentation" class="dropdown dropmovies">
+                <a class="dropdown-toggle lead dropmovies" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                  Sort by<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#" onclick="sortMovies('popularity')">Most Popular</a></li>
+                  <li><a href="#" onclick="sortMovies('rating')">Rating</a></li>
+                  <li><a href="#" onclick="sortMovies('grossing')">Grossing</a></li>
+                </ul>
+              </li>
+              <li role="presentation" class="dropdown droptv">
+                <a class="dropdown-toggle lead " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                  Genre <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#" onclick="sortTv('action')">Action</a></li>
+                  <li><a href="#" onclick="sortTv('adventure')">Adventure</a></li>
+                  <li><a href="#" onclick="sortTv('animation')">Animation</a></li>
+                  <li><a href="#" onclick="sortTv('comedy')">Comedy</a></li>
+                  <li><a href="#" onclick="sortTv('crime')">Crime</a></li>
+                  <li><a href="#" onclick="sortTv('documentary')">Documentary</a></li>
+                  <li><a href="#" onclick="sortTv('drama')">Drama</a></li>
+                  <li><a href="#" onclick="sortTv('family')">Family</a></li>
+                  <li><a href="#" onclick="sortTv('fantasy')">Fantasy</a></li>
+                  <li><a href="#" onclick="sortTv('foreign')">Foreign</a></li>
+                  <li><a href="#" onclick="sortTv('history')">History</a></li>
+                  <li><a href="#" onclick="sortTv('horror')">Horror</a></li>
+                  <li><a href="#" onclick="sortTv('music')">Music</a></li>
+                  <li><a href="#" onclick="sortTv('mystery')">Mystery</a></li>
+                  <li><a href="#" onclick="sortTv('romance')">Romance</a></li>
+                  <li><a href="#" onclick="sortTv('science fiction')">Science Fiction</a></li>
+                  <li><a href="#" onclick="sortTv('tv movie')">TV Movie</a></li>
+                  <li><a href="#" onclick="sortTv('thriller')">Thriller</a></li>
+                  <li><a href="#" onclick="sortTv('war')">War</a></li>
+                  <li><a href="#" onclick="sortTv('western')">Western</a></li>
+                </ul>
+              </li>
+              <li role="presentation" class="dropdown droptv">
+                <a class="dropdown-toggle lead " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                  Sort by<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#" onclick="sortTv('popularity')">Most Popular</a></li>
+                  <li><a href="#" onclick="sortTv('rating')">Rating</a></li>
+                  <li><a href="#" onclick="sortTv('grossing')">Grossing</a></li>
+                </ul>
+              </li>
+            </ul>
+            <form class="navbar-form navbar-right">
+              <div class="search">
+                <input type="text" id="search" placeholder="Search movie, tv show" onKeyPress="return checkSubmit(event)">
+              </div>
+            </form>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="row text-center main">
+    </div>
+    <div class="row text-center row-eq-height bottom">
+      <div class="col-sm-12">
+        <i class="fa fa-plus-circle more" aria-hidden="true"></i>
+      </div>
+      <div class="col-sm-12">
+        <i class="fa fa-plus-circle moreTV" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js'></script>
+  <script src='https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/waypoints/1.1.6/waypoints.min.js'></script>
+
+  <script src="js/index.js"></script>
+</body>
+</html>

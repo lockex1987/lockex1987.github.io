@@ -1,0 +1,69 @@
+<html>
+<head>
+<style>
+/* move to a new page after footnotes */
+.footnote { 
+  page-break-after: always; 
+}
+
+h2 {
+	page-break-before: always;
+}
+
+h1, h2, h3, h4, h5 {
+  page-break-after: avoid;
+}
+
+table, figure {
+  page-break-inside: avoid;
+}
+
+.page {
+	background-color: #8cffa0;
+  height: 90px;
+  width: 200px;
+  columns: 1;
+  column-width: 100px;
+}
+
+.list, ol, ul, p {
+  break-inside: avoid;
+}
+
+
+ol, ul, .list {
+  margin: 0.5em 0;
+  display: block;
+  background-color: orange;
+}
+</style>
+</head>
+
+<body>
+	<p>ABC</p>
+	<div class="footnote">
+		Sau footnote se la mot trang moi
+	</div>
+	<p>ABC</p>
+	<h2>Heading 2</h2>
+	<p>Heading phai o mot trang moi</p>
+	
+	<div class="page">
+		<p>This is the first paragraph.</p>
+		<section class="list">
+			<span>A list</span>
+			<ol>
+				<li>one</li>
+	<!--       <li>two</li> -->
+			</ol>
+		</section>
+		<ul>
+			<li>one</li>
+	<!--     <li>two</li> -->
+		</ul>
+		<p>This is the second paragraph.</p>
+		<p>This is the third paragraph, it contains more text.</p>
+		<p>This is the fourth paragraph. It has a little bit more text than the third one.</p>
+	</div>
+</body>
+</html>

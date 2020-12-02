@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css?family=Holtwood+One+SC|Source+Code+Pro:700&display=swap');
+
+@mixin circle($chars, $degs) {
+  $offset: $degs / $chars;
+  @for $i from 0 through ($chars) {
+    &:nth-of-type(#{$i + 1}) {
+      display: inline-block;
+      transform-origin: bottom center;
+      transform: rotate(#{$i * $offset}deg);
+    }
+  }
+}
+
+@mixin fill($offset:0) {
+  position: absolute;
+  top: $offset;
+  left: $offset;
+  right: $offset;
+  bottom: $offset;
+}
+
+:root {
+  --size: 90vmin;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  background: white;
+  height: 100%;
+}
+
+body {
+  background-image: url('https://st2.depositphotos.com/1103957/6076/i/950/depositphotos_60761371-stock-photo-burlap-texture-digital-paper-tileable.jpg');
+  background-size: 30vw 30vw;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:before {
+    content: '';
+    @include fill(-2.5vmin);
+    bottom: 0;
+    box-shadow: inset 0 0 5vmin 0 black;
+  }
+}
+
+.fill {
+  @include fill;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blend {
+  mix-blend-mode: overlay;
+}
+
+.stroke {
+  -webkit-text-stroke: .25vmin black;
+}
+
+.shade {
+  box-shadow: 0 0 0 1vmin black;
+}
+
+.border {
+  border: 3vmin double black;
+}
+
+.threesixty {
+  > span {
+    width: 2ch;
+    height: 50%;
+    position: absolute;
+    top: 0;
+    left: calc(50% - 1ch);
+    text-align: center;
+  }
+}
+
+.outer > .threesixty > span {
+  @include circle(22, 360);
+}
+
+.mid > .threesixty > span {
+  @include circle(24, 360);
+}
+
+.circle {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  
+  h1,
+  h1 * {
+    font-family: 'Holtwood One SC';
+    font-size: calc(var(--size) / 10);
+    line-height: 1.5;
+    text-transform: uppercase;
+    color: wheat;
+  }
+  
+  h2,
+  h2 * {
+    font-family: 'Source Code Pro';
+    font-size: calc(var(--size) / 20);
+    line-height: 2.75;
+    text-transform: uppercase;
+    color: black;
+  }
+}
+
+.outer {
+  width: var(--size);
+  height: var(--size);
+  
+  h1.threesixty {
+    transform: rotate(-90deg);
+  }
+}
+
+.mid {
+  width: calc(var(--size) * .6);
+  height: calc(var(--size) * .6);
+}
+
+.inner {
+  width: calc(var(--size) * .3);
+  height: calc(var(--size) * .3);
+  font-size: calc(var(--size) / 6);;
+  
+  .star {
+    position: relative;
+    top: calc(-1 * (var(--size) / 6) / 15);
+    color: wheat;
+    
+    &.stroke {
+      -webkit-text-stroke: 1vmin black;
+    }
+  }
+}
+
+.blue {
+  background: steelblue;
+}
+
+.red {
+  background: indianred;
+}
+
+.white {
+  background: white;
+}

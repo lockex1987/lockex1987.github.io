@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>ChartJS</title>
+</head>
+<body>
+    <canvas width="800" height="800" id="can">
+        Sorry, canvas not supported
+    </canvas>
+    <script src="chartjs.js"></script>
+    <script>
+        var elements = {
+            dogs: 0.3,
+            cats: 0.6,
+            dinosaurs: 0.1
+        };
+
+        var colors = {
+            dogs: 'green',
+            cats: 'blue',
+            dinosaurs: 'red'
+        };
+
+        var canvas = document.getElementById('can');
+        var chart = chartJS.PieChart(elements, colors, canvas);
+        chart.draw();
+    </script>
+</body>
+
+</html>

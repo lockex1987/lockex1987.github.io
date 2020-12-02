@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="logging">
+    <title>Quản lý log trong Laravel</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Quản lý log trong Laravel</h2>
+      <p>Định nghĩa cấu hình <code>LOG_CHANNEL</code> ở file <code>.env</code>.
+        Các giá trị có thể có là:</p>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Tên</th>
+            <th>Mô tả</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>stack</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>single</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>daily</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>slack</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>papertrail</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>syslog</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>errorlog</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>monolog</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>custom</td>
+            <td><br>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Xem chi tiết ở file <code>config/logging.php</code>.</p>
+      <p>Tách file log lỗi ra một file riêng?</p>
+      <p>Chỉ log ở các file thuộc namespace <code>App</code>?</p>
+      <p><a href="https://www.codewall.co.uk/how-to-log-like-a-pro-with-laravel-logviewer/"
+          target="_blank">How To Log Like A Pro With Laravel &amp; LogViewer |
+          Code Wall</a></p>
+      <p>----<br>
+      </p>
+      <p>Đối với logging, Laravel tích hợp thư viện <a href="https://github.com/Seldaek/monolog"
+          target="_blank">Monolog</a>, nó cung cấp rất một loạt các xử lý rất
+        hay. Laravel cấu hình một vài xử lý đó cho bạn, cho phép bạn chọn giữa
+        một hoặc nhiều file log, hoặc viết thông tin error vào hệ thống log.</p>
+      <p>Lựa chọn <code>debug</code> bên trong <code>config/app.php</code> cho
+        phép thông tin về error thực sự hiển thị cho người dùng. Mặc định, cấu
+        hình này thiết lập dựa trên biến môi trường <code>APP_DEBUG</code>, lưu
+        trong file <code>.env</code>. </p>
+      <p>Trong môi trường phát triển local, bạn nên đặt giá trị biến <code>APP_DEBUG</code>
+        thành <code>true</code>. Đối với môi trường production, giá trị này
+        phải luôn luôn là <code>false</code>. Nếu giá trị này là <code>true</code>
+        trên môi trường production, người dùng có thể sẽ thấy được tất cả các
+        giá trị cấu hình ứng dụng của bạn, kể cả thông tin nhạy cảm như kết nối
+        DB.</p>
+      <h3>Lưu trữ log</h3>
+      <p>Cơ bản, Laravel hỗ trợ các chế độ <code>single</code> file, <code>daily</code>
+        file, <code>syslog</code>, <code>errorlog</code>. Để cấu hình cơ chế
+        lưu trữ log của Laravel, bạn có thể chỉnh <code>log</code> trong file <code>config/app.php</code>.
+        Ví dụ, nếu bạn muốn sử dụng log file hàng ngày thay vì log một file, bạn
+        có thể đặt <code>log</code> trong file <code>app</code> thành <code>daily</code>:</p>
+      <pre><code>'log' =&gt; 'daily'</code></pre>
+      <h3>Giới hạn thời gian file daily log</h3>
+      <p>Khi bạn sử dụng chế độ <code>daily</code> log, mặc định Laravel chỉ để
+        lại files log năm ngày gần nhất. Nếu bạn muốn thay đổi số ngày đó, bạn
+        cần thêm 1 dòng <code>log_max_files</code> vào trong file <code>app</code>:</p>
+      <pre><code>'log_max_files' =&gt; 30</code></pre>
+      <h3>Các mức độ của log</h3>
+      <p>Khi sử dụng Monolog, nội dung tin nhắn log có thể khác cấp độ với nhau.
+        Mặc định, Laravel viết tất cả các cấp độ log được lưu trữ lại. Tuy
+        nhiên, trong môi trường production, bạn có thể giới hạn cấp độ bằng cách
+        thêm <code>log_level</code> trong file <code>app.php</code>.</p>
+      <p>Khi tùy biến đã được cấu hình, Laravel sẽ log tất cả những cấp độ cao
+        hơn hoặc bằng cấp độ tùy biến. Ví dụ, mặc định <code>log_level</code>
+        của <code>error</code> sẽ log nội dung <strong>error</strong>, <strong>critical</strong>,
+        <strong>alert</strong>, and <strong>emergency</strong>:</p>
+      <pre><code>'log_level' =&gt; env('APP_LOG_LEVEL', 'error'),</code></pre>
+      <p> Monolog quy định mức độ theo thứ tự từ nhỏ đến theo theo thứ tự sau:</p>
+      <ul>
+        <li><code>debug</code></li>
+        <li><code>info</code></li>
+        <li><code></code><code>notice</code></li>
+        <li><code></code><code>warning</code></li>
+        <li><code></code><code>error</code></li>
+        <li><code>critical</code></li>
+        <li><code>alert</code></li>
+        <li><code></code><code>emergency</code></li>
+      </ul>
+      <h3>Tùy biến cấu hình Monolog</h3>
+      <p>Nếu bạn muốn điều chỉnh toàn bộ quy trình Monolog trong ứng dụng của
+        bạn, bạn có thể sử dụng phương thức <code>configureMonologUsing</code>
+        method. Bạn nên gọi phương thức xử lý này trong file <code>bootstrap/app.php</code>
+        ngay trước biến <code>$app</code> được trả về:</p>
+      <pre>$app-&gt;configureMonologUsing(function ($monolog) {
+    $monolog-&gt;pushHandler(...);
+});
+
+return $app;</pre>
+      <h3>Logging</h3>
+      <p>Laravel cung cấp một lớp abstraction đơn giản ở trên thư viện <a href="http://github.com/seldaek/monolog">Monolog</a>.
+        Mặc định, Laravel cấu hình tạo ra file log cho ứng dụng cuản bạn trong
+        thư mục <code>storage/logs</code>. Bạn có thể viết thêm nội dung vào
+        trong logs sử dụng <code>Log</code> facade:</p>
+      <pre class="text-pre-wrap">&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\User;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+
+class UserController extends Controller
+{
+    /**
+     * Show the profile for the given user.
+     *
+     * @param    int  $id
+     * @return  Response
+     */
+    public function showProfile($id)
+    {
+        Log::info('Showing user profile for user: '.$id);
+
+        return view('user.profile', ['user' =&gt; User::findOrFail($id)]);
+    }
+}</pre>
+      <p>Logger cung cấp 8 cấp độ cơ bản theo định nghĩa <a href="http://tools.ietf.org/html/rfc5424"
+          target="_blank">RFC 5424</a>:</p>
+      <ul>
+        <li>emergency</li>
+        <li>alert</li>
+        <li>critical</li>
+        <li>error</li>
+        <li>warning</li>
+        <li>notice</li>
+        <li>info</li>
+        <li>debug</li>
+      </ul>
+      <h4>Thông tin theo ngữ cảnh</h4>
+      <p>Một mảng dữ liệu theo ngữ cảnh có thể được truyền vào trong phương thức
+        log. Các dữ liệu này sẽ được format và hiển thị cùng với nội dung log:</p>
+      <pre>Log::info('User failed to login.', ['id' =&gt; $user-&gt;id]);</pre>
+      <h4>Truy cập vào đối tượng phía dưới Monolog</h4>
+      <p>Monolog có một số hander bổ sung mà bạn có thể sử dụng nó cho việc log.
+        Nếu cần thiết, bạn có thể truy cập vào đối tường phía dưới của Monolog
+        bằng cách:</p>
+      <pre><code>$monolog = Log::getMonolog();</code></pre>
+      <h3>Ghi log cho tiến trình</h3>
+      <p>Nhiều lúc, bạn có nhu cầu ghi log cho các tiến trình. Bạn thiết lập
+        tiến trình bằng cách thêm crontab. Khi đó, file log sẽ được tạo ra bởi
+        user chạy crontab chứ không phải user chạy web (thường là nginx). Lúc đó
+        có thể gây ra lỗi.</p>
+      <p>Chúng ta có thể làm như sau:</p>
+      <ul>
+        <li>Phân quyền lại file log ghi ra</li>
+        <li>Tách riêng file log do web và file log do tiến trình</li>
+      </ul>
+      <p>Nếu sửa theo hướng thứ nhất, chúng ta có thể cấu hình file <code>config/logging.php</code>
+        như sau (sửa <code>permission</code>):</p>
+      <pre>'daily' =&gt; [
+    'driver' =&gt; 'daily',
+    'path' =&gt; storage_path('logs/laravel.log'),
+    'level' =&gt; 'debug',
+    'days' =&gt; 7,
+    'permission' =&gt; 0664
+]
+</pre>
+      <p>Với cấu hình trên thì bạn cần gán user chạy tiến trình và user chạy web
+        vào cùng group.</p>
+      <p>Nếu sửa theo hướng thứ hai, chúng ta sửa cấu hình như sau (sửa <code>path</code>):</p>
+      <pre>'daily' =&gt; [
+    'driver' =&gt; 'daily',
+    'path' =&gt; storage_path('logs/' . php_sapi_name() . '/laravel.log'),
+    'level' =&gt; 'debug',
+    'days' =&gt; 7
+]
+</pre>
+      <p>Các file do web tạo ra sẽ ở trong thư mục <code>cgi-fcgi</code> (hoặc
+        <code>fpm-fcgi</code>), owner là <code>nginx</code>.</p>
+      <p>Các file do tiến trình tạo ra sẽ ở trong thư mục <code>cli</code>,
+        owner là <code>root</code>.</p>
+      <p>Với phiên bản Laravel 5.5, không có file cấu hình <code>config/logging.php</code>,
+        bạn có thể thêm vào file <code>bootstrap/app.php</code> như sau:</p>
+      <pre>$app-&gt;configureMonologUsing(function (\Monolog\Logger $monolog) {
+    $filename = storage_path('logs/' . php_sapi_name() . '.log');
+    $handler = new \Monolog\Handler\RotatingFileHandler($filename, 30);
+    $handler-&gt;setFilenameFormat('laravel-{date}-{filename}', 'Y-m-d');
+    $formatter = new \Monolog\Formatter\LineFormatter(null, null, true, true);
+    $formatter-&gt;includeStacktraces();
+    $handler-&gt;setFormatter($formatter);
+    $monolog-&gt;pushHandler($handler);
+});</pre>
+      <h3>Tham khảo</h3>
+      <p> <a href="https://laravel.com/docs/master/logging" target="_blank">laravel.com/docs/master/logging</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Simple web server">
+    <title>Web server đơn giản</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Web server đơn giản</h2>
+      <p>Nhiều khi bạn cần một web server thực sự:</p>
+      <ul>
+        <li>Gọi AJAX sẽ không thể thực hiện ở <code>file://</code> do lỗi bảo
+          mật</li>
+        <li>Mock dữ liệu trả về từ server</li>
+        <li>Chia sẻ file giữa các máy</li>
+        <li>...</li>
+      </ul>
+      <p>Có nhiều cách thực hiện (Python, PHP, Node,...).</p>
+      <p>Chúng ta sẽ tạo một web server đơn giản ở địa chỉ <a target="_blank" href="http://localhost:8080">http://localhost:8080</a>
+        từ thư mục nào đó.</p>
+      <h3>Python</h3>
+      <p>Python 2.</p>
+      <pre>python -m SimpleHTTPServer 8080</pre>
+      <p>Python 3.</p>
+      <pre>python -m http.server 8080</pre>
+      <h3>PHP</h3>
+      <p>Sử dụng PHP built-in web server.</p>
+      <pre>php -S localhost:8080</pre>
+      <p>Để truy cập được từ máy khác thì thay <code>localhost</code> bằng <code>0.0.0.0</code>.</p>
+      <pre>php -S 0.0.0.0:8080</pre>
+      <p>Script:</p>
+      <p><a href="start_server.sh">start_server.sh</a></p>
+      <h3>Node</h3>
+      <p>Dùng package http-server.</p>
+      <p>Cài đặt:</p>
+      <pre>npm install http-server -g</pre>
+      <p>Sử dụng:</p>
+      <pre>http-server</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

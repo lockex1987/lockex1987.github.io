@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+ <head> 
+  <title>Bootstrap Example</title> 
+  <meta charset="utf-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script> 
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Bootstrap Example">
+ </head> 
+ <body> 
+  <article> 
+   <div class="container my-3"> 
+    <h2>Basic Progress Bar</h2> 
+    <p>To create a default progress bar, add a .progress class to a container element and add the progress-bar class to its child element. Use the CSS width property to set the width of the progress bar:</p> 
+    <div class="progress"> 
+     <div class="progress-bar" style="width:70%"></div> 
+    </div> 
+    <p>The height of the progress bar is 16px by default. Use the CSS height property to change it. Note that you must set the same height for the progress container and the progress bar:</p> 
+    <p>The height of the progress bar is 1rem (16px) by default. Use the CSS height property to change the height:</p> 
+    <div class="progress" style="height:10px"> 
+     <div class="progress-bar" style="width:40%;height:10px"></div> 
+    </div> 
+    <br> 
+    <div class="progress" style="height:20px"> 
+     <div class="progress-bar" style="width:50%;height:20px"></div> 
+    </div> 
+    <br> 
+    <div class="progress" style="height:30px"> 
+     <div class="progress-bar" style="width:60%;height:30px"></div> 
+    </div> 
+    <p>Add text inside the progress bar to show the visible percentage:</p> 
+    <div class="progress"> 
+     <div class="progress-bar" style="width:0%">
+       0% 
+     </div> 
+    </div> 
+    <br> 
+    <div class="progress"> 
+     <div class="progress-bar" style="width:70%">
+       70% 
+     </div> 
+    </div> 
+    <br> 
+    <div class="progress"> 
+     <div class="progress-bar" style="width:100%">
+       100% 
+     </div> 
+    </div> 
+    <p>By default, the progress bar is blue (primary). Use any of the Bootstrap 4 contextual background classes to its color:</p> 
+    <!-- Blue --> 
+    <div class="progress"> 
+     <div class="progress-bar" style="width:10%"></div> 
+    </div> 
+    <br> 
+    <!-- Green --> 
+    <div class="progress"> 
+     <div class="progress-bar bg-success" style="width:20%"></div> 
+    </div> 
+    <br> 
+    <!-- Turquoise --> 
+    <div class="progress"> 
+     <div class="progress-bar bg-info" style="width:30%"></div> 
+    </div> 
+    <br> 
+    <!-- Orange --> 
+    <div class="progress"> 
+     <div class="progress-bar bg-warning" style="width:40%"></div> 
+    </div> 
+    <br> 
+    <!-- Red --> 
+    <div class="progress"> 
+     <div class="progress-bar bg-danger" style="width:50%"></div> 
+    </div> 
+    <br> 
+    <!-- White --> 
+    <div class="progress border"> 
+     <div class="progress-bar bg-white" style="width:60%"></div> 
+    </div> 
+    <br> 
+    <!-- Grey --> 
+    <div class="progress"> 
+     <div class="progress-bar bg-secondary" style="width:70%"></div> 
+    </div> 
+    <br> 
+    <!-- Light Grey --> 
+    <div class="progress border"> 
+     <div class="progress-bar bg-light" style="width:80%"></div> 
+    </div> 
+    <br> 
+    <!-- Dark Grey --> 
+    <div class="progress"> 
+     <div class="progress-bar bg-dark" style="width:90%"></div> 
+    </div> 
+    <p>Use the .progress-bar-striped class to add stripes to the progress bars:</p> 
+    <p>The .progress-bar-striped class adds stripes to the progress bars:</p> 
+    <div class="progress"> 
+     <div class="progress-bar progress-bar-striped" style="width:30%"></div> 
+    </div> 
+    <br> 
+    <div class="progress"> 
+     <div class="progress-bar bg-success progress-bar-striped" style="width:40%"></div> 
+    </div> 
+    <br> 
+    <div class="progress"> 
+     <div class="progress-bar bg-info progress-bar-striped" style="width:50%"></div> 
+    </div> 
+    <br> 
+    <div class="progress"> 
+     <div class="progress-bar bg-warning progress-bar-striped" style="width:60%"></div> 
+    </div> 
+    <br> 
+    <div class="progress"> 
+     <div class="progress-bar bg-danger progress-bar-striped" style="width:70%"></div> 
+    </div> 
+    <p>Add the .progress-bar-animated class to animate the progress bar:</p> 
+    <p>Add the .progress-bar-animated class to animate the progress bar:</p> 
+    <div class="progress"> 
+     <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div> 
+    </div> 
+    <p>Progress bars can also be stacked:</p> 
+    <p>Create a stacked progress bar by placing multiple bars into the same div with class="progress":</p> 
+    <div class="progress"> 
+     <div class="progress-bar bg-success" style="width:40%">
+       Free Space 
+     </div> 
+     <div class="progress-bar bg-warning" style="width:10%">
+       Warning 
+     </div> 
+     <div class="progress-bar bg-danger" style="width:20%">
+       Danger 
+     </div> 
+    </div> 
+    <p>https://www.w3schools.com/bootstrap4/bootstrap_progressbars.asp</p> 
+   </div> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

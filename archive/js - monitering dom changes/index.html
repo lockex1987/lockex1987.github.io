@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Monitoring DOM changes</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Monitoring DOM changes">
+ </head> 
+ <body> 
+  <article> 
+   <h1>Monitoring DOM changes</h1> 
+   <p>Why do I have to do monitor a DOM change?</p> 
+   <p>In some situations, you have to do this. One beautiful day, I want to create a web extension to download YouTube subtitle (Closed Caption). I can inject my code if it is a video from a normal request (the user type in the browser's address). But if the user click a link (eg, from the search page or related links), I can detect the new video. YouTube use SPF framework to increase the performance, and call an AJAX request when the user click a link. If it is not difficult enough for you, the response of the AJAX request is JSON, not HTML.</p> 
+   <p>So, how do we detect and handle those AJAX requests?</p> 
+   <p>One solution is monitoring changes of the "video" element, technically, a DOM node.</p> 
+   <h2>1. DOM mutation events</h2> 
+   <p>The native (and naive) technique is using DOM mutation events.</p> 
+   <p>Unfortunately, DOM mutation events profoundly degrade performance.</p> 
+   <p>Actually, when I created the above web extension, I used this technique first, because it is simple (short code). However, Mozilla reviewed and the extension was disabled.</p> 
+   <h2>2. Mutation observers</h2> 
+   <p>Mutation observers are the more efficient replacement for the highly inefficient mutation events.</p> 
+   <h2>3. Non-mutation triggers</h2> 
+   <h3>3.1. hashchange and popstate events</h3> 
+   <h3>3.2. Network listeners</h3> 
+   <p>These ae not exceptionally efficient (they run for every HTTP request).</p> 
+   <h3>3.3. Pure CSS</h3> 
+   <p>Pure CSS can be more powerful than most people suspect. It is often possible to do things for which people have traditionally resorted to JavaScript with CSS alone. In particular, the ::before and ::after pseudo-elements, and pseudo-classes like :hover and :active can be used to achieve extremely complex dynamic behavior.</p> 
+   <p>Interesting, but it can be done really?</p> 
+   <h3>3.4. Late binding and event delegation</h3> 
+   <h3>3.5. Monkey patching</h3> 
+   <h3>3.6. CSS animation events</h3> 
+   <h3>3.7. XBL</h3> 
+   <h3>3.8. Monkey patching DOM methods</h3> 
+   <h2>4. References</h2> 
+   <p><a href="https://developer.mozilla.org/en/XUL_School/Appendix_F:_Monitoring_DOM_changes">Mozilla article</a></p> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p><br> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Các dạng ủy quyền trong Laravel Passport</title>
+  </head>
+  <body>
+    <h2>Các dạng ủy quyền trong Laravel Passport</h2>
+    <p>Chú ý: Bạn nên đọc <a href="https://allaravel.com/laravel-tutorials/gioi-thieu-oauth2/">Cơ
+        bản về OAuth 2</a> để nắm được các thuật ngữ, khái niệm sử dụng trong
+      bài.</p>
+    <h3>Cấp ủy quyền bằng mã ủy quyền</h3>
+    <p>Chúng ta cùng thực hiện các bước sử dụng trong cấp quyền bằng mã ủy
+      quyền. Ví dụ như sau:</p>
+    <p>Thực hiện một ví dụng giống như khi <a href="https://allaravel.com/laravel-tutorials/laravel-socialite-tich-hop-xac-thuc-facebook-vao-website/">Tích
+        hợp đăng nhập vào Facebook</a>, hay <a href="https://allaravel.com/laravel-tutorials/laravel-socialite-tich-hop-xac-thuc-google-vao-website/">Google</a>,
+      <a href="https://allaravel.com/laravel-tutorials/laravel-socialite-tich-hop-xac-thuc-twitter-vao-website/">Twiter</a>…,
+      ở project consumer sẽ thực hiện tích hợp đăng nhập cấp bởi project
+      passport.</p>
+    <p><strong>Bước 1:</strong> Vào <a target="_blank" href="http://passport.dev">passport.dev</a>
+      đăng ký ứng dụng (client bao gồm client_id và client_secret) giống như vào
+      <a href="https://developers.facebook.com/">trang dành cho nhà phát triển
+        của Facebook</a>.</p>
+    <p><img src="https://allaravel.com/wp-content/uploads/2017/05/tao-moi-client-trong-passport.png"></p>
+    <p>Nhập thông tin đăng ký bao gồm: application name, application website,
+      redirect uri (Giao diện xây dựng sẵn của Laravel bỏ qua application
+      website, bạn có thể tự thêm vào).</p>
+    <p><img src="https://allaravel.com/wp-content/uploads/2017/05/nhap-thong-tin-tao-moi-client-trong-passport.png"></p>
+    <p>Click vào Create, passport.dev sẽ tạo ra Client Id và Client Secret cho
+      ứng dụng consumer.</p>
+    <p><img src="https://allaravel.com/wp-content/uploads/2017/05/passport-tao-client-id-va-client-secret-cho-ung-dung.png"></p>
+    <p><strong>Bước 2:</strong> Xây dựng callback cho consumer.</p>
+    <p>Trong project Consumer, chúng ta tạo ra đường dẫn đăng nhập thông qua
+      Passport là http://consumer.dev/auth/passport.</p>
+    <p>Thêm route vào <code>routes/web.php</code>.</p>
+    <pre>use Illuminate\Http\Request;
+
+Route::get('/auth/passport', function () {
+     $query = http_build_query([
+        'client_id' =&gt; '4',
+        'redirect_uri' =&gt; 'http://consumer.dev/callback',
+        'response_type' =&gt; 'code',
+        'scope' =&gt; ''
+      ]);
+
+     return redirect('http://passport.dev/oauth/authorize?'.$query);
+});
+
+Route::get('/callback', function (Request $request) {
+    $http = new GuzzleHttp\Client;
+
+    $response = $http-&gt;post('http://passport.dev/oauth/token', [
+        'form_params' =&gt; [
+            'grant_type' =&gt; 'authorization_code',
+            'client_id' =&gt; '4',
+            'client_secret' =&gt; 'fuWkWtgITxQd0LqkrTFbZxkeCrtPoGnMndnp3kzJ',
+            'redirect_uri' =&gt; 'http://consumer.dev/callback',
+            'code' =&gt; $request-&gt;code
+        ],
+    ]);
+
+    return json_decode((string) $response-&gt;getBody(), true);
+});</pre>
+    <p><strong>Bước 3:</strong> Test</p>
+    <p>Bạn xem luồng thực hiện ủy quyền thông qua mã ủy quyền trong <a href="https://allaravel.com/laravel-tutorials/gioi-thieu-oauth2/">OAuth
+        2</a>, ở đây chúng ta sẽ kiểm tra theo đúng các bước được đưa ra (13
+      bước).</p>
+    <p>1) Người dùng truy nhập ứng dụng consumer.dev.</p>
+    <p>2) Consumer.dev hiển thị link “Đăng nhập bằng Passport” với đường dẫn là
+      http://consumer.dev/auth/passport.</p>
+    <p>3) Người dùng nhấn vào đây, nó sẽ chuyển hướng đến request</p>
+    <pre>https://passport.dev/oauth/authorize?response_type=code&amp;client_id=CLIENT_ID&amp;redirect_uri=CALLBACK_URL&amp;scope=</pre>
+    <p>Do yêu cầu này đòi hỏi phải xác thực nên nó chuyển hướng tiếp đến trang
+      đăng nhập của Passport (chú ý, đây là đăng nhập của passport.dev không
+      phải của consumer.dev do đó consumer.dev không có thông tin về tài khoản
+      người dùng). Giả sử chúng ta đã tạo tài khoản cho người dùng này là
+      user1@passport.com / 123456 (tạo ở đâu?).</p>
+    <p>4) Sau khi đăng nhập passport.dev sẽ chuyển hướng về request ở trên và
+      hiện ra thông báo người dùng cần ủy quyền cho ứng dụng consumer.dev (giống
+      như khi thực hiện với Facebook, Google…).</p>
+    <p><img src="https://allaravel.com/wp-content/uploads/2017/05/thong-bao-nguoi-dung-can-uy-quyen-cho-ung-dung-consumer.png"></p>
+    <p>5) Người dùng ủy quyền cho ứng dụng khi bấm vào Authorize và passport.dev
+      chuyển hướng tiếp đến đường dẫn:</p>
+    <pre>http://consumer.dev/callback?code=AUTHORIZATION_CODE</pre>
+    <p>6) Như vậy ứng dụng consumer.dev đã nhập được mã ủy quyền và thực hiện
+      POST đến đường dẫn:</p>
+    <pre>http://passport.dev/oauth/token?client_id=CLIENT_ID&amp;client_secret=CLIENT_SECRET&amp;
+grant_type=authorization_code&amp;code=AUTHORIZATION_CODE&amp;redirect_uri=CALLBACK_URL</pre>
+    <p>Chính là đoạn code này:</p>
+    <pre>    $response = $http-&gt;post('http://passport.dev/oauth/token', [
+        'form_params' =&gt; [
+            'grant_type' =&gt; 'authorization_code',
+            'client_id' =&gt; '4',
+            'client_secret' =&gt; 'fuWkWtgITxQd0LqkrTFbZxkeCrtPoGnMndnp3kzJ',
+            'redirect_uri' =&gt; 'http://consumer.dev/callback',
+            'code' =&gt; $request-&gt;code
+        ],
+    ]);</pre>
+    <p>7) passport.dev kiểm tra thông tin Client Id, Client Secret kèm theo mã
+      ủy quyền, nếu ok nó trả về access token và refresh token:</p>
+    <p><img src="https://allaravel.com/wp-content/uploads/2017/05/passport-tra-ve-access-token-va-refresh-token-cho-consumer.png"></p>
+    <p>8) Ở đây, consumer đã có được access token và refresh token do đó nó biết
+      được người dùng đã xác thực.</p>
+    <p>9 – 13) Consumer muốn lấy thông tin về người dùng có thể thực hiện gửi
+      GET đến http://passport.dev/api/user với header có dạng <code>Authorization:
+        Bearer AUTHORIZATION_CODE</code>.</p>
+    <p>Sửa lại <code>routes/web.php</code> trên Consumer như sau:</p>
+    <pre>&lt;?php
+
+use Illuminate\Http\Request;
+
+Route::get('/', function () {
+     $query = http_build_query([
+        'client_id' =&gt; '4',
+        'redirect_uri' =&gt; 'http://consumer.dev/callback',
+        'response_type' =&gt; 'code',
+        'scope' =&gt; ''
+      ]);
+
+     return redirect('http://passport.dev/oauth/authorize?'.$query);
+});
+
+Route::get('/callback', function (Request $request) {
+    $http = new GuzzleHttp\Client;
+
+    $response = $http-&gt;post('http://passport.dev/oauth/token', [
+        'form_params' =&gt; [
+            'grant_type' =&gt; 'authorization_code',
+            'client_id' =&gt; '4',
+            'client_secret' =&gt; 'fuWkWtgITxQd0LqkrTFbZxkeCrtPoGnMndnp3kzJ',
+            'redirect_uri' =&gt; 'http://consumer.dev/callback',
+            'code' =&gt; $request-&gt;code,
+        ],
+    ]);
+
+    $body = json_decode((string) $response-&gt;getBody(), true);
+
+    $response = $http-&gt;get('http://passport.dev/api/user', [
+    	'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer ' . $body['access_token'],
+        ],
+    ]);
+
+    return json_decode((string) $response-&gt;getBody(), true);
+});</pre>
+    <p>Chú ý, ở đây máy chủ ủy quyền và máy chủ tài nguyên cùng là một và chính
+      là passport.dev. Khi thực hiện lại bạn sẽ thấy consumer.dev đã lấy được
+      thông tin người dùng khi gửi access token đến máy chủ tài nguyên.</p>
+    <p><img src="https://allaravel.com/wp-content/uploads/2017/05/lay-thong-tin-tu-may-chu-tai-nguyen-khi-gui-access-token.png"></p>
+    <h3>4.2 Ủy quyền ngầm định (Implicit Grant Token)</h3>
+    <p>Ủy quyền ngầm định tương tự như ủy quyền thông qua mã ủy quyền, tuy nhiên
+      access token được gửi trực tiếp về client mà không thông qua mã ủy quyền.
+      Loại ủy quyền này thường được sử dụng trong JavaScript và các ứng dụng
+      mobile, nơi mà thông tin bí mật của client không thể lưu trữ bảo mật. Để
+      sử dụng loại ủy quyền này, cần gọi đến phương thức enableImplicitGrant
+      trong AuthServiceProvider:</p>
+    <pre>/**
+ * Register any authentication / authorization services.
+ *
+ * @return void
+ */
+public function boot()
+{
+    $this-&gt;registerPolicies();
+
+    Passport::routes();
+
+    Passport::enableImplicitGrant();
+}</pre>
+    <p>Khi loại ủy quyền này được kích hoạt, chúng ta có thể sử dụng client ID
+      để yêu cầu access token bằng cách gửi request đến /oauth/authorize như
+      sau:</p>
+    <pre>Route::get('/redirect', function () {
+    $query = http_build_query([
+        'client_id' =&gt; 'client-id',
+        'redirect_uri' =&gt; 'http://example.com/callback',
+        'response_type' =&gt; 'token',
+        'scope' =&gt; '',
+    ]);
+
+    return redirect('http://your-app.com/oauth/authorize?'.$query);
+});</pre>
+    <h3>4.3 Ủy quyền theo thông tin người dùng (Resource Owner Password
+      Credentials hay Password Grant)</h3>
+    <p>OAuth 2 Resource Owner Password Credential (ủy quyền theo thông tin người
+      dùng) cho phép các ứng dụng bên thứ nhất như các ứng dụng điện thoại có
+      thể lấy access token sử dụng username/password. Nó tạo ra trực tiếp access
+      token cho ứng dụng mà không cần sử dụng authorization code (mã ủy quyền).</p>
+    <p> </p>
+    <p>Trước khi ứng dụng có thể sinh ra access token thông qua ủy quyền theo
+      thông tin người dùng, bạn cần tạo ra một client (client id và client
+      secret). Sử dụng câu lệnh passport:client với tùy chọn –password. Nếu đã
+      thực hiện câu lệnh passport:install ở bước cài đặt, bạn không cần chạy
+      thêm lệnh trên.</p>
+    <pre>php artisan passport:client --password</pre>
+    <p>Khi đã tạo ra client, chúng ta có thể yêu cầu một access token thông qua
+      một request POST đến đường dẫn /oauth/token cùng với username và password.
+      Chú ý, route này đã được đăng ký bằng Passport::routes() trong
+      AuthServiceProvider.php trong bước cài đặt, do đó không cần thêm route vào
+      routes/api.php. Nếu request thành công, sẽ nhận được kết quả dạng JSON có
+      chứa access token và refresh token.</p>
+    <pre>$http = new GuzzleHttp\Client;
+
+$response = $http-&gt;post('http://your-app.com/oauth/token', [
+    'form_params' =&gt; [
+        'grant_type' =&gt; 'password',
+        'client_id' =&gt; 'client-id',
+        'client_secret' =&gt; 'client-secret',
+        'username' =&gt; 'taylor@laravel.com',
+        'password' =&gt; 'my-password',
+        'scope' =&gt; '',
+    ],
+]);
+
+return json_decode((string) $response-&gt;getBody(), true);</pre>
+    <p>Loại ủy quyền này thường sử dụng khi Consumer.dev là một thành viên trong
+      hệ thống trong đó Passport.dev cũng là thành viên, tức là consumer.dev đã
+      là người trong nhà cùng với passport.dev, do đó người dùng có thể gửi
+      username/password đến cho consumer.dev mà không ngần ngại. Thực tế, ví dụ
+      bạn đã có một website có CSDL khách hàng, khi bạn tạo một website khác mà
+      muốn sử dụng lại CSDL khách hàng này để đăng nhập bạn có thể sử dụng loại
+      ủy quyền này.</p>
+    <p>Bước 1: Để thực hành loại ủy quyền này, chúng ta tạo ra một form đăng
+      nhập trên consumer.dev.</p>
+    <p>Chú ý:</p>
+    <ol>
+      <li>Trên Passport cũng đã có form đăng nhập nhưng chúng ta muốn đăng nhập
+        từ Consumer)</li>
+      <li>Form đăng nhập trên Consumer không sử dụng <a href="https://allaravel.com/laravel-tutorials/laravel-authentication-xac-thuc-nguoi-dung-that-don-gian/">Laravel
+          Authentication</a> là các tính năng xây dựng sẵn cho xác thực trong
+        Laravel.</li>
+    </ol>
+    <p>Tạo view resources/view/normal-login.blade.php với nội dung.</p>
+    <pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Allaravel Test&lt;/title&gt;
+  &lt;!-- Latest compiled and minified CSS --&gt;
+&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="wrapper"&gt;
+    &lt;div class="row"&gt;
+      &lt;div class="col-md-6 col-md-push-3"&gt;
+        &lt;div class="panel panel-default"&gt;
+          &lt;div class="panel-heading"&gt;
+            &lt;strong&gt;Login&lt;/strong&gt;
+          &lt;/div&gt;
+          &lt;div class="panel-body"&gt;
+            &lt;form action="http://consumer.dev/auth/normal" method="GET"&gt;
+              &lt;div class="form-group"&gt;
+                &lt;label&gt;Email Address&lt;/label&gt;
+                &lt;input class="form-control" placeholder="Enter your email address" type="text" v-model="login.email"&gt;
+              &lt;/div&gt;
+              &lt;div class="form-group"&gt;
+                &lt;label&gt;Password&lt;/label&gt;
+                &lt;input class="form-control" placeholder="Enter your email address" type="password" v-model="login.password"&gt;
+              &lt;/div&gt;
+              &lt;button class="btn btn-primary" type="submit"&gt;Login&lt;/button&gt;
+            &lt;/form&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- Latest compiled and minified JavaScript --&gt;
+  &lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+    <p>Bước 2: Thêm route vào routes/web.php</p>
+    <pre>Route::get('/login', function () {
+	return view('normal-login');
+});
+
+Route::get('/auth/normal', function (Request $request) {
+	$http = new GuzzleHttp\Client;
+
+	$response = $http-&gt;post('http://passport.dev/oauth/token', [
+	    'form_params' =&gt; [
+	        'grant_type' =&gt; 'password',
+	        'client_id' =&gt; '2',
+	        'client_secret' =&gt; 'dWMEqIfKYZJHop71TxrnNs4EM1FOU3MSRUxNndPB',
+	        'username' =&gt; 'user1@gmail.com',
+	        'password' =&gt; '123456',
+	        'scope' =&gt; '',
+	    ],
+	]);
+
+	return json_decode((string) $response-&gt;getBody(), true);
+});</pre>
+    <p>Chú ý, form đăng nhập này sẽ GET đến http://consumer.dev/auth/normal và
+      xử lý tiếp bằng cách gửi POST đến passport.dev.</p>
+    <p>Bước 3: Test</p>
+    <p>Khi vào http://consumer.dev/login, chúng ta có trang login, cần nhắc lại
+      các chú ý để các bạn khỏi nhầm lẫn:</p>
+    <ol>
+      <li>Trên Passport cũng đã có form đăng nhập nhưng chúng ta muốn đăng nhập
+        từ Consumer)</li>
+      <li>Form đăng nhập trên Consumer không sử dụng <a href="https://allaravel.com/laravel-tutorials/laravel-authentication-xac-thuc-nguoi-dung-that-don-gian/">Laravel
+          Authentication</a> là các tính năng xây dựng sẵn cho xác thực trong
+        Laravel.</li>
+    </ol>
+    <p>Trên consumer.dev có thể có database lưu các thông tin người dùng đăng
+      nhập, tùy thuộc vào thiết kế ứng dụng của bạn. Thực hiện đăng nhập bằng
+      tài khoản ở trên user1@passport.com/123456. Kết quả chúng ta sẽ thấy</p>
+    <p><img src="https://allaravel.com/wp-content/uploads/2017/05/ket-qua-su-dung-uy-quyen-theo-thong-tin-nguoi-dung.png"></p>
+    <p>Như vậy, đã bỏ qua bước gửi mã ủy quyền đúng như <a href="https://allaravel.com/laravel-tutorials/gioi-thieu-oauth2/">luồng
+        thực hiện trong OAuth 2</a>.</p>
+    <h3>4.4 Ủy quyền theo thông tin ứng dụng (Client Credentials Grant Tokens)</h3>
+    <p>Loại ủy quyền này phù hợp với các xác thực từ máy chủ đến máy chủ, ví dụ
+      bạn sử dụng ủy quyền này trong các job được lập lịch, thực hiện các tác vụ
+      bảo trì thông qua API. Để lấy được access token, chỉ cần gửi một request
+      đến oauth/token:</p>
+    <pre>$guzzle = new GuzzleHttp\Client;
+
+$response = $guzzle-&gt;post('http://your-app.com/oauth/token', [
+    'form_params' =&gt; [
+        'grant_type' =&gt; 'client_credentials',
+        'client_id' =&gt; 'client-id',
+        'client_secret' =&gt; 'client-secret',
+        'scope' =&gt; 'your-scope',
+    ],
+]);
+
+echo json_decode((string) $response-&gt;getBody(), true);</pre>
+    <h2></h2>
+    <p></p>
+  </body>
+</html>

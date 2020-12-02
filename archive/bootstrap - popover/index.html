@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Popover">
+    <title>Popover</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Popover</h2>
+      <p> Popover là một thành phần giao diện, nó hiển thị để chú thích (hoặc
+        gợi ý) cho một thành phần nào đó trên giao diện. Nó tương tự như khái
+        niệm Tooltip trong các thư viện khác. The Popover component is similar
+        to tooltips; it is a pop-up box that appears when the user clicks on an
+        element. The difference is that the popover can contain much more
+        content.</p>
+      <p>Popover là một thư viện Javascript được phát triển bởi bên thứ ba (3rd
+        party), nó được tích hợp vào Bootstrap như một plugin. Có khi bạn phải
+        link đến đường dẫn file popper.js. Popovers rely on the 3rd party
+        library <a href="https://popper.js.org/">Popper.js</a> for
+        positioning. You must include <a href="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js">popper.min.js</a> before
+        bootstrap.js or use <code>bootstrap.bundle.min.js</code> / <code>bootstrap.bundle.js</code> which
+        contains Popper.js in order for popovers to work!</p>
+      <pre>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"&gt;&lt;/script&gt;</pre>
+      <p>Bạn có thể khai báo các thuộc tính <code>data-placement</code>, <code>title</code>,
+        <code>data-content</code>, <code>data-toggle</code>. To create a
+        popover, add the data-toggle="popover" attribute to an element. Use the
+        title attribute to specify the header text of the popover, and use the
+        data-content attribute to specify the text that should be displayed
+        inside the popover's body.</p>
+      <pre>&lt;button type="button" 
+        data-toggle="popover"
+        data-placement="right"<br>        title="Right Popover"
+        data-content="Popover show on Right"&gt;<br>    Tooltip on right<br>&lt;/button&gt;
+</pre>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td>Thuộc tính</td>
+              <td>Giá trị</td>
+              <td>Mô tả</td>
+            </tr>
+            <tr>
+              <td>data-toggle</td>
+              <td>popover</td>
+              <td> <br>
+              </td>
+            </tr>
+            <tr>
+              <td>data-placement</td>
+              <td>left, right, top, bottom,auto</td>
+              <td>Gợi ý vi trí mà popover sẽ hiển thị, mặc dù điều này không
+                được bảo đảm, chẳng hạn bạn muốn popover hiển thị bên trái,
+                nhưng vùng không gian bên trái không đủ popover sẽ hiển thị bên
+                phải.</td>
+            </tr>
+            <tr>
+              <td>data-trigger</td>
+              <td>click, focus, hover</td>
+              <td>
+                <ul>
+                  <li>click: (Giá trị mặc định) popover sẽ hiển thị khi người
+                    dùng nhấn vào phần tử (element), và ẩn khi người dùng nhấn
+                    thêm lần nữa.</li>
+                  <li>focus: popover sẽ hiển thị khi người dùng "focus" (tập
+                    trung) vào phần tử, và ẩn khi người dùng "focus" sang phần
+                    tử khác.</li>
+                  <li>hover: popover sẽ hiển thị khi con trỏ (pointer) di chuyển
+                    phía trên (over) phần tử, và ẩn khi con trỏ thoát ra khỏi
+                    phần tử.</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td>title</td>
+              <td> <br>
+              </td>
+              <td>Tiêu đề của popover.</td>
+            </tr>
+            <tr>
+              <td>data-content</td>
+              <td> <br>
+              </td>
+              <td>Nội dung của popover.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Bạn phải khởi tạo popover một cách tường minh:</p>
+      <pre>$(".myPopover").popover();<br>$('[data-toggle="popover"]').popover();</pre>
+      <h3>Demo</h3>
+      <h4>Demo 1: Popover via Data Attributes</h4>
+      <div class="container mb-1"> <button type="button" class="btn btn-warning myPopover mb-2"
+          data-toggle="popover" data-placement="right" title="Right Popover" data-content="Popover show on Right">Tooltip
+          on right</button> <button type="button" class="btn btn-danger myPopover mb-2"
+          data-toggle="popover" data-placement="top" title="Top Popover" data-content="Popover show on top.">Tooltip
+          on top</button> <button type="button" class="btn btn-info myPopover mb-2"
+          data-toggle="popover" data-placement="bottom" title="Bottom Popover" data-content="Popover show on Bottom.">Tooltip
+          on bottom</button> <button type="button" class="btn btn-success myPopover mb-2"
+          data-toggle="popover" data-placement="left" title="Left Popover" data-content="Popover show on Left">Tooltip
+          on left</button> </div>
+      <p> Một trong các hành vi của popover là hiển thị khi người dùng "focus"
+        (tập trung) vào phần tử sở hữu nó. Và tự động ẩn khi người dùng "focus"
+        sang phần tử khác. Chẳng hạn người dùng nhấn vào một phần tử và popover
+        của phần tử này sẽ hiển thị, khi người dùng nhấn sang một nơi khác
+        popover sẽ tự động ẩn đi. Điều này có được bằng cách thiết lập thuộc
+        tính <code>data-trigger="focus"</code> cho phần tử.</p>
+      <h4>Demo 2: Dismissiable PopOver</h4>
+      <div class="container mb-3"> <button type="button" class="btn btn-warning myPopover"
+          data-toggle="popover" data-placement="right" title="Dismissiabe Popover"
+          data-trigger="focus" data-content="I display when the button is focused!">Focus
+          Me</button> </div>
+      <p> Bằng cách thiết lập thuộc tính <code>data-trigger="hover"</code>, khi
+        con trỏ di chuyển trên (over) phần tử popover sẽ hiển thị, và khi con
+        trỏ thoát ra khỏi phần tử popover sẽ ẩn đi. Khi đó popover sẽ như là
+        tooltip.</p>
+      <h4>Demo 3: Popover (Hover)</h4>
+      <div class="container mb-3"> <button type="button" class="btn btn-danger myPopover"
+          data-toggle="popover" data-placement="right" title="Hover Popover" data-trigger="hover"
+          data-content="I display when pointer over the element">Hover over me</button>
+      </div>
+      <p> Theo mặc định popover hiển thị nội dung văn bản (text), mặc dù có thể
+        nội dung mà bạn cung cấp là HTML. Bởi vì jQuery đã chuyển đổi HTML thành
+        text trước khi hiển thị, vì vậy bạn cần thêm thuộc tính <code>data-html=true</code>
+        để nói với popover plugin rằng hãy hiển thị nội dung dưới dạng HTML.</p>
+      <p> Nếu bạn muốn có một popover với nội dung HTML dài, thì dưới đây là một
+        ví dụ tốt hơn:</p>
+      <h4>Demo 4: Popover (HTML Content)</h4>
+      <div class="container mb-3"> <button type="button" class="btn btn-info myPopover"
+          data-toggle="popover" data-placement="right" title="Popover with HTML content"
+          data-trigger="hover" data-html="true" data-content="This is &lt;b style='color:red;'&gt;Simple&lt;/b&gt; HTML Content.">Popover
+          HTML Content</button> <a href="#" id="htmlPopover" data-toggle="popover"
+          data-placement="right" title="Quick guide" data-trigger="hover" data-html="true"
+          data-popover-content="#myPopoverContent">Download Software</a>
+        <!-- Content for Popover: --> <br>
+        <div id="myPopoverContent" style="display:none"> <strong>Steps to do..</strong>
+          <ol style="padding:10px">
+            <li>Download this file</li>
+            <li>Install the software</li>
+            <li>Restart your computer</li>
+          </ol>
+        </div>
+      </div>
+      <h3>Tham khảo</h3>
+      <p>https://www.w3schools.com/bootstrap4/bootstrap_popover.asp</p>
+      <p>https://getbootstrap.com/docs/4.0/components/popovers/</p>
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+      <script>
+        $(".myPopover").popover();
+        
+         $('#htmlPopover').popover({
+         html : true,
+         content: function() {
+          var elementId = $(this).attr("data-popover-content");
+          return $(elementId).html();
+         }
+         });
+      </script> </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

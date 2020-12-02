@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wavesurfer.js Audio Element</title>
+    <style>
+        #waveform { background-color: #23587D; min-height: 50px; }
+		audio { width: 100%; }
+    </style>
+</head>
+
+<body>
+    <div id="waveform"></div>
+	<audio src="https://rawgit.com/trongnghia203/wavesurfer-example/master/audio/Nhu-Canh-Vac-Bay-Hong-Nhung.mp3"></audio>
+
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <script>
+        var wavesurfer = WaveSurfer.create({
+            container: '#waveform',
+			mediaControls: true,
+            responsive: true,
+            waveColor: '#42d2f4',
+            progressColor: '#fff',
+            barWidth: 0,
+            cursorColor: '#ffffff',
+            cursorWidth: 1,
+            height: 50,
+			backend: 'MediaElement'
+        });
+		
+		wavesurfer.on('ready', function() {
+            wavesurfer.play();
+        });
+
+		//wavesurfer.load('sample.mp3');
+		
+		// Load audio from existing media element
+		var mediaElt = document.querySelector('audio');
+		wavesurfer.load(mediaElt);
+
+		
+    </script>
+</body>
+</html>

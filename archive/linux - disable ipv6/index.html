@@ -1,0 +1,54 @@
+<html lang="vi">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Disable IPv6">
+    <meta name="keywords" content="linux, ipv6">
+    <meta name="author" content="lockex1987">
+    <title>Disable IPv6</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Disable IPv6</h2>
+      <p>IPv6 là một tính năng mới, nhưng không phải chương trình nào cũng hỗ
+        trợ. Việc sử dụng IPv6 có thể làm một số chương trình chạy chậm do cố
+        gắng kết nối đến server theo kiểu IPv6.</p>
+      <p>Trước khi disable IPv6:</p>
+      <p> <img src="images/ipv6-before.png" alt=""> </p>
+      <p>Kiểm tra bằng lệnh sysctl:</p>
+      <pre>sysctl net.ipv6.conf.all.disable_ipv6</pre>
+      <p>Trả về net.ipv6.conf.all.disable_ipv6 = 0 nghĩa là chưa được disable.</p>
+      <p>Để disable, sửa file /etc/sysctl.conf:</p>
+      <pre>sudo vi /etc/sysctl.conf</pre>
+      <p>Thêm dòng sau:</p>
+      <pre>net.ipv6.conf.all.disable_ipv6 = 1</pre>
+      <p>Để áp dụng thực hiện lệnh sau:</p>
+      <pre>sudo sysctl -p</pre>
+      <p>Kết quả:</p>
+      <p><img src="images/ipv6-after.png" alt=""> </p>
+<ul>
+                  <li><span class="text-muted mr-2">ipaddressguide.com</span><a
+                      href="https://www.ipaddressguide.com/ipv6-check" target="_blank">IPv6
+                      Compatibility Test For Website | IPAddressGuide</a></li>
+                  <li><span class="text-muted mr-2">ictnews.vn</span><a href="https://ictnews.vn/the-gioi-so/thu-thuat/3-cong-cu-kiem-tra-ipv6-da-san-sang-tren-may-chua-137988.ict"
+                      target="_blank">3 công cụ kiểm tra IPv6 đã sẵn sàng trên
+                      máy chưa - ICTNEWS</a></li>
+                  <li><span class="text-muted mr-2">quantrimang.com</span><a href="https://quantrimang.com/cach-kiem-tra-ke-noi-ipv6-139890"
+                      target="_blank">Cách kiểm tra kết nối IPv6 -
+                      Quantrimang.com</a></li>
+                  <li><span class="text-muted mr-2">hcmfpt.vn</span><a href="https://hcmfpt.vn/huong-dan-kiem-tra-ipv6-cua-nha-mang-va-may-tinh.html"
+                      target="_blank">Hướng dẫn kiểm tra IPv6 của nhà mạng và
+                      máy tính</a></li>
+                  <li><span class="text-muted mr-2">gitlab.icm-institute.org</span><a
+                      href="https://gitlab.icm-institute.org/mangwifi/ldink/issues/3"
+                      target="_blank">Hướng dẫn cách kiểm tra IPV6 của nhà mạng
+                      FPT và máy tính (#3) · Issues · Jon Han / ldink · GitLab</a></li>
+                </ul>
+
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

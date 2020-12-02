@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+  <link href="css/photobooth.css" rel="stylesheet"/>
+  <title>Photobooth</title>
+</head>
+
+<body>
+  <h1>CSS Filters Photobooth</h1>
+
+  <section id="app" hidden>
+    <div class="container">
+      <span id="live">LIVE</span>
+      <video id="monitor" autoplay onclick="changeFilter(this)"></video>
+    </div>
+    
+    <p>Click the video to see different CSS filters</p>
+  </section>
+  
+  <p><button onclick="init(this)">Start</button></p>
+
+  <div id="gallery"></div>
+  
+  <canvas id="photo" style="display:none"></canvas>
+  
+  <script src="js/mediastream.js"></script>
+  <script src="js/photobooth.js"></script>
+</body>
+</html>

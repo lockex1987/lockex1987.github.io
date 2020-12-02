@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+  body
+    .container
+      #sidebar
+        ul
+          -5.times do
+            li
+              a href="#" Menu
+      .main-content
+        .swipe-area
+        a#sidebar-toggle href="#" data-toggle=".container"
+          -3.times do
+            span.bar
+    

@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+<head> 
+<title>Have a Slice</title>
+<style type="text/css" media="screen">
+<!--
+body {
+	margin: 30px;
+	font: 62.5% 'Trebuchet MS',Arial,sans-serif;
+	background: #FFF;
+	color: #121212;
+}
+
+h1 {
+	font-size: 2.0em;
+	color: #8DC63F;
+}
+
+p {
+	font-size: 1.4em;
+	color: #292929;
+}
+
+.pie {
+	display: block;
+	float: left;
+	margin: 0;
+	padding: 0;
+	width: 30px;
+	height: 30px;
+	background-image: url('slices.gif');
+}
+
+.size30 {
+	background-position: -150px 0;
+}
+
+.size35 {
+	background-position: -180px 0;
+}
+
+.percent {
+	margin: 0.4em 0 0 2.4em;
+	font-size: 1.6em;
+	font-weight: 600;
+	color: #8DC63F;
+}
+
+.shadow {
+	float: left;
+	margin: 3px 0 0 3px;
+	background: #CCC;
+}
+
+#example {
+	float: left;
+	position: relative;
+	top: -3px;
+	left: -3px;
+	padding: 15px;
+	background: #FFF;
+	border: 1px solid #999;
+}
+-->
+</style>
+</head>
+
+<body>
+<h1>Dynamic Pie Chart with CSS</h1>
+<p>This is an example of creating a semi-dynamic pie chart
+without the use of server-side imaging libraries</p>
+<div class="shadow">
+	<div id="example">
+		<div class="pie size35"></div>
+		<p class="percent">37%</p>
+	</div>
+</div>
+<p style="clear: both;">This image powers the chart (image sprites):</p>
+<img src="slices.gif" alt="Pie Slices" width="600" height="30" />
+</body>
+
+</html>

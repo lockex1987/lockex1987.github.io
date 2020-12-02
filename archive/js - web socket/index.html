@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Web Socket client, chat">
+    <title>Web Socket</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Web Socket</h2>
+      <p>Web Socket là công nghệ giao tiếp hai chiều phiên bản tiếp theo cho các
+        ứng dụng web mà điều hành qua một Socket đơn và được tiếp xúc thông qua
+        một giao diện JS trong các trình duyệt tuân thủ HTML5.</p>
+      <p>Một khi bạn nhận một kết nối Web Socket với Server, bạn có thể gửi dữ
+        liệu từ trình duyệt tới Server bởi gọi một phương thức <code>send()</code>,
+        và nhận dữ liệu từ Server tới trình duyệt bằng một <code>onmessage</code>
+        event handler.</p>
+      <h3>Các thuộc tính Web Socket</h3>
+      <p>Giả sử chúng ta tạo một đối tượng Web Socket mới như sau:</p>
+      <pre class="">const ws = new WebSocket(url);</pre>
+      <p>Sau đây là thuộc tính của đối tượng Web Socket.</p>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th width="30%">Thuộc tính</th>
+              <th>Miêu tả</th>
+            </tr>
+            <tr>
+              <td><code>ws.readyState</code></td>
+              <td> Thuộc tính chỉ đọc <b>readyState</b> biểu diễn trạng thái
+                kết nối.<br>
+                Nó có các giá trị sau:
+                <ul>
+                  <li> Giá trị 0 chỉ rằng kết nối vẫn chưa được thành lập</li>
+                  <li> Giá trị 1 chỉ rằng kết nối đã thành lập và có thể giao
+                    tiếp</li>
+                  <li> Giá trị 2 chỉ rằng kết nối đang qua handshake đóng</li>
+                  <li> Giá trị 3 chỉ rằng kết nối đã được đóng hoặc không thể
+                    được mở</li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td><code>ws.bufferedAmount</code></td>
+              <td> Thuộc tính chỉ đọc <b>bufferedAmount</b> biểu diễn số byte
+                của UTF-8 mà đã được xếp hàng bởi sử dụng phương thức <code>send()</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Các sự kiện Web Socket</h3>
+      <p>Sau đây là các sự kiện được liên kết với đối tượng Web Socket.</p>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th width="25%">Sự kiện</th>
+              <th>Miêu tả</th>
+            </tr>
+            <tr>
+              <td><code>ws.onopen</code></td>
+              <td>Sự kiện này xảy ra khi kết nối Socket được thành lập</td>
+            </tr>
+            <tr>
+              <td><code>ws.onmessage</code></td>
+              <td>Sự kiện này xảy ra khi Client nhận dữ liệu từ Server</td>
+            </tr>
+            <tr>
+              <td><code>ws.onerror</code></td>
+              <td>Sự kiện này xảy ra khi có bất kỳ lỗi nào trong giao tiếp</td>
+            </tr>
+            <tr>
+              <td><code>ws.onclose</code></td>
+              <td>Sự kiện này xảy ra khi kết nối được đóng</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Các phương thức Web Socket</h3>
+      <p>Sau đây là các phương thức liên kết với đối tượng Web Socket.</p>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th width="30%">Phương thức</th>
+              <th>Miêu tả</th>
+            </tr>
+            <tr>
+              <td><code>ws.send()</code></td>
+              <td> Phương thức <code>send(data)</code> truyền tải dữ liệu sử
+                dụng kết nối đó</td>
+            </tr>
+            <tr>
+              <td><code>ws.close()</code></td>
+              <td> Phương thức <code>close()</code> sẽ được sử dụng để kết thúc
+                bất kỳ kết nối đang tồn tại</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Xác thực với Web Socket</h3>
+      <p>Chúng ta không thể thêm vào header khi kết nối, chỉ có thể thêm tham số
+        vào URL. Có thể sử dụng cookie.</p>
+      <p><strong>Cách 1</strong>: Client truyền thêm token khi kết nối. Như thế
+        thì hiển thị token trên URL.</p>
+      <p><strong>Cách 2</strong>: Client truyền ticket dùng một lần khi kết nối.</p>
+      <p><strong>Cách 3</strong>: Client truyền thêm token ở lần gọi đầu tiên (<code>onopen</code>).</p>
+      <p><strong>Cách 4</strong>: Thêm cookie trước khi khởi tạo. Xóa cookie sau
+        khi <code>open</code> hoặc <code>close</code> hoặc <code>error</code>.</p>
+      <h3>Demo</h3>
+      <p><a href="demo.html">demo.html</a></p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://github.com/websockets/ws" target="_blank">websockets/ws:
+          Simple to use, blazing fast WebSocket for Node.js</a></p>
+      <p><a href="https://phppot.com/php/simple-php-chat-using-websocket/" target="_blank">Simple
+          PHP Chat using WebSocket - Phppot</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

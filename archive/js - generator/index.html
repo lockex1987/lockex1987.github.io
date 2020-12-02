@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JS generator">
+    <title>JS generator</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>JS generator</h2>
+      <p>redux-saga có sử dụng.</p>
+      <p>Generators are functions which can be exited and later re-entered.
+        Their context (variable bindings) will be saved across re-entrances.</p>
+      <p>Generators in JavaScript -- especially when combined with Promises --
+        are a very powerful tool for asynchronous programming as they mitigate
+        -- if not entirely eliminate -- the problems with callbacks, such as
+        Callback Hell and Inversion of Control. However, an even simpler
+        solution to these problems can be achieved with async functions.</p>
+      <p>Calling a generator function does not execute its body immediately; an
+        iterator object for the function is returned instead. When the
+        iterator's next() method is called, the generator function's body is
+        executed until the first yield expression, which specifies the value to
+        be returned from the iterator or, with yield*, delegates to another
+        generator function. The next() method returns an object with a value
+        property containing the yielded value and a done property which
+        indicates whether the generator has yielded its last value, as a
+        boolean. Calling the next() method with an argument will resume the
+        generator function execution, replacing the yield expression where
+        execution was paused with the argument from next().</p>
+      <p>A return statement in a generator, when executed, will make the
+        generator finish (i.e. the done property of the object returned by it
+        will be set to true). If a value is returned, it will be set as the
+        value property of the object returned by the generator.</p>
+      <p>Much like a return statement, an error thrown inside the generator will
+        make the generator finished -- unless caught within the generator's
+        body.</p>
+      <p>When a generator is finished, subsequent next() calls will not execute
+        any of that generator's code, they will just return an object of this
+        form: {value: undefined, done: true}.</p>
+      <p>Tham khảo</p>
+      <p> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator"
+          target="_blank">Generator - JavaScript | MDN</a></p>
+      <p> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*">function*
+          - JavaScript | MDN</a></p>
+    </article>
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Kiểm thử với Laravel"/>
+    
+    <title>Kiểm thử với Laravel</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body>
+    <article>
+    <h2>Kiểm thử với Laravel</h2>
+    <p>Laravel được xây dựng có kèm theo testing. Thực tế, hỗ trợ cho testing
+      với PHPUnit đã được có sẵn và file <code>phpunit.xml</code> đã được thiệt
+      lập trong ứng dụng. Framework ngoài ra còn có một số hàm helper cho phép
+      bạn thực hiện test của ứng dụng.</p>
+    <p>By default, your application's tests directory contains two directories:
+      Feature and Unit. Unit tests are tests that focus on a very small,
+      isolated portion of your code. In fact, most unit tests probably focus on
+      a single method. Feature tests may test a larger portion of your code,
+      including how several objects interact with each other or even a full HTTP
+      request to a JSON endpoint.</p>
+    <p>Một file <code>ExampleTest.php</code> được cung cấp trong thư mục <code>tests</code>.
+      Sau khi tạo một ứng dụng Laravel mới, chỉ cần chạy <code>phpunit</code>
+      trên command line để test.</p>
+    <h3>Môi trường</h3>
+    <p>Khi chạy tests, Laravel sẽ tự động đặt cấu hình môi trường thành <code>testing</code>.
+      Laravel tự động cấu hình session và cache thành <code>array</code> driver
+      trong khi testing, nghĩa là không session hoặc cache tồn tại trong khi
+      testing.</p>
+    <p>Bạn thoải mái định nghĩa giá trị cấu hình môi trường testing khác nếu cần
+      thiết. Biến môi trường <code>testing</code> có thể được cấu hình trong
+      file <code>phpunit.xml</code>, nhưng hãy đảm bảo phải xóa cấu hình cache
+      bằng cách chạy <code>config:clear</code> Artisan command trước khi tests!</p>
+    <h3>Tạo &amp; chạy test</h3>
+    <p>Để tạo một test case, sử dụng lệnh Artisan <code>make:test</code>:</p>
+    <pre>// Create a test in the Feature directory...
+php artisan make:test UserTest
+
+// Create a test in the Unit directory...
+php artisan make:test UserTest --unit</pre>
+    <p>Lệnh này sẽ sinh ra class <code>UserTest</code> trong thư mục <code>tests</code>.
+      Bạn có thể định nghĩa phương thức test như bình thường sử dụng PHPUnit. Để
+      chạy tests, đơn giản chỉ cần chạy lệnh <code>phpunit</code> trong
+      terminal:</p>
+    <pre>&lt;?php
+
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+
+class UserTest extends TestCase
+{
+    /**
+     * A basic test example.
+     *
+     * @return  void
+     */
+    public function testExample()
+    {
+        $this-&gt;assertTrue(true);
+    }
+}</pre>
+    <p>Nếu bạn định nghĩa phương thức <code>setUp</code> trong class test, hãy
+      gọi <code>parent::setUp</code>.</p>
+    <p>Thực thi:</p>
+    <pre>vendor\bin\phpunit</pre>
+    <h3>Tham khảo</h3>
+    <p><a target="_blank" href="https://blog.pusher.com/tests-laravel-applications/">https://blog.pusher.com/tests-laravel-applications/</a></p>
+    <p><a href="https://laravel.com/docs/master/testing">https://laravel.com/docs/master/testing</a></p>
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="dimension">
+    <title>Lấy kích thước màn hình</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Lấy kích thước màn hình</h2>
+      <p>Và kích thước của phần tử bất kỳ.</p>
+      <h3>Demo</h3>
+      <table id="demoTable" style="width: 700px;">
+        <thead>
+          <tr>
+            <th> Hàm </th>
+            <th> Kết quả </th>
+          </tr>
+        </thead>
+
+        <tbody></tbody>
+      </table>
+      <h3>Ghi chú</h3>
+	  
+      <p>Nên sử dụng thuộc tính <code>clientWidth</code> của phần tử <code>document.documentElement</code>.</p>
+      <p>The Element.clientWidth property is zero for inline elements and elements with no CSS; otherwise, it's the inner width of an element in pixels. It includes padding but excludes borders, margins, and vertical scrollbars (if present).</p>
+      <p>Typically, offsetWidth is a measurement in pixels of the element's CSS width, including any borders, padding, and vertical scrollbars (if rendered). It does not include the width of pseudo-elements such as ::before or ::after.</p>
+      <p>If the element is hidden (for example, by setting style.display on the element or one of its ancestors to "none"), then 0 is returned.</p>
+
+      <h3>Tham khảo</h3>
+      <ul><li><span class="text-muted mr-2">developer.mozilla.org</span> <a href="https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/Determining_the_dimensions_of_elements" target="_blank">Determining the dimensions of elements - Web APIs | MDN</a></li><li><span class="text-muted mr-2">developer.mozilla.org</span> <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect" target="_blank">Element.getBoundingClientRect() - Web APIs | MDN</a></li><li><span class="text-muted mr-2">developer.mozilla.org</span> <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle" target="_blank">Window.getComputedStyle() - Web APIs | MDN</a></li><li><span class="text-muted mr-2">plainjs.com</span> <a href="https://plainjs.com/javascript/styles/getting-width-and-height-of-an-element-23/" target="_blank">Getting width and height of an element</a></li><li><span class="text-muted mr-2">usefulangle.com</span> <a href="http://usefulangle.com/post/40/javascript-client-height-vs-offset-height-vs-scroll-height" target="_blank">Understanding clientHeight, offsetHeight &amp; scrollHeight</a></li><li><span class="text-muted mr-2">javascript.info</span> <a href="https://javascript.info/size-and-scroll" target="_blank">Element size and scrolling</a></li><li><span class="text-muted mr-2">lockex1987.github.io</span> <a href="https://lockex1987.github.io/posts/js%20-%20relative%20mouse%20coordinate/" target="_blank">Get relative mouse coordinate</a></li></ul>
+    </article>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        function bindDemoTable() {
+            const methods = [
+                '$(window).width()',
+                '$(document).width()',
+                'window.screen.width',
+                'window.screen.availWidth',
+                'window.innerWidth',
+                'window.outerWidth',
+
+                'document.documentElement.clientWidth',
+                'document.documentElement.offsetWidth',
+                'document.documentElement.scrollWidth',
+
+                'document.body.clientWidth',		
+                'document.body.offsetWidth',
+                'document.body.scrollWidth',
+
+                /*
+                '$(window).height()',
+                '$(document).height()',
+                'window.screen.height',
+                'window.screen.availHeight',
+                'window.innerHeight',
+                'document.documentElement.clientHeight',
+                'document.body.clientHeight',
+                */
+            ];
+            let html = '';
+            methods.forEach(s => {
+                html += `
+                        <tr>
+                            <td><code>${s}</code></td>
+                            <td>${eval(s)}</td>
+                        </tr>`;
+            });
+            document.querySelector('#demoTable tbody').innerHTML = html;
+        }
+
+        bindDemoTable();
+
+        window.addEventListener('resize', bindDemoTable);
+    </script>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

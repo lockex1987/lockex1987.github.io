@@ -1,0 +1,62 @@
+h1 {
+	padding: 0 0;
+}
+h3  {
+	padding-bottom: 25px;
+	margin-bottom: 25px;
+	border-bottom: 1px dotted #ccc;
+	text-align: left;
+}
+h4	{
+	text-align: left;
+}
+pre	{
+	font-size: 12px;
+	margin-bottom: 25px;
+	overflow: scroll;
+	text-align: left;
+}
+section {
+	padding: 0;
+	text-align: center;
+	padding: 50px;
+}
+section:target {
+	background-color: #f9f9f9;
+	border: 1px dashed #999;
+}
+.wrapper {
+	width: 600px;
+	margin: 25px auto;
+}
+.reflect {
+	height: 850px;
+	margin-bottom: 50px;
+}
+.reflect.below img {
+    -webkit-box-reflect: below;
+}
+.reflect.offset img {
+    -webkit-box-reflect: below 10px;
+}
+.reflect.masking {
+	height: 750px
+}
+.reflect.masking img {
+	-webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, 0.1)));
+}
+.reflect.color-stop {
+	height: 750px
+}
+.reflect.color-stop img {
+	-webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent) , to(rgba(250, 250, 250, 0.1)));
+}
+#moz-reflect:after {
+	content: "";
+	display: block;
+	background: -moz-element(#moz-reflect) no-repeat;
+	width: auto;
+	height: 375px;
+	margin-bottom: 100px;
+	-moz-transform: scaleY(-1);
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Drag và sắp xếp</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+
+    <link rel="stylesheet" href="css/drag-sort.css">
+</head>
+
+<body>
+    <article>
+        <h2>Drag và sắp xếp</h2>
+
+        <div class="mb-3">
+            <div class="drag-sort__item bg-primary text-white border cursor-move rounded my-1 px-3 py-2">1. Application</div>
+            <div class="drag-sort__item bg-primary text-white border cursor-move rounded my-1 px-3 py-2">2. Blank</div>
+            <div class="drag-sort__item bg-primary text-white border cursor-move rounded my-1 px-3 py-2">3. Class</div>
+            <div class="drag-sort__item bg-primary text-white border cursor-move rounded my-1 px-3 py-2">4. Data</div>
+            <div class="drag-sort__item bg-primary text-white border cursor-move rounded my-1 px-3 py-2">5. Element</div>
+        </div>
+
+        <table class="table table-bordered"
+                id="sortableTable">
+            <thead>
+                <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr draggable="true" class="cursor-move">
+                    <td>John</td>
+                    <td>Doe</td>
+                    <td>john@website.com</td>
+                </tr>
+
+                <tr draggable="true" class="cursor-move">
+                    <td>Jane</td>
+                    <td>Roe</td>
+                    <td>jane@website.com</td>
+                </tr>
+
+                <tr draggable="true" class="cursor-move">
+                    <td>Bobby</td>
+                    <td>Tables</td>
+                    <td>bobby@example.com</td>
+                </tr>
+            </tbody>
+        </table>
+    </article>
+
+    <script src="js/drag-sort.js"></script>
+    
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

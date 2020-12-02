@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Drag and drop</title>
+</head>
+
+<body>
+	<h3>Drag and drop files</h3>
+	
+	<textarea id="editor" name="editor" cols="80" rows="10">
+		<p>Nội dung</p>
+	</textarea>
+	
+	<script src="../lib/ckeditor/ckeditor.js"></script>
+	<script>
+		var editorOptions = {
+				extraPlugins: "uploadfile",
+				uploadUrl: 'http://localhost:8080/spring-mvc-ckeditor/upload-drag-and-drop'
+		};
+		var myEditor = CKEDITOR.replace('editor', editorOptions);
+	</script>
+</body>
+</html>
+

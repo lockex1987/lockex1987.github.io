@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<title>11 - Zones with colors</title>
+	<style>
+		div {
+			width: 100%; height: 400px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="container"></div>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/highcharts.js"></script>
+	<script>
+
+	$('#container').highcharts({
+		series: [
+			{
+				data: [-10, -5, 0, 5, 10, 15, 10, 10, 5, 0, -5],
+				zones: [
+					{ value: 0, color: '#f7a35c' },
+					{ value: 10, color: '#7cb5ec' },
+					{ color: '#90ed7d' }
+				]
+			}
+		]
+	});
+	</script>
+</body>
+</html>

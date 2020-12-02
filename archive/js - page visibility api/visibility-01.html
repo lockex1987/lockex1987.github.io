@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Visible (unset)</title>
+</head>
+<body>
+The title of this page changes when the window is made visible or hidden.
+
+<script>
+// "librairie" de gestion de la visibilité
+// var visible = vis(); // gives current state
+// vis(aFunction);      // registers a handler for visibility changes
+var vis = (function() {
+	var stateKey;
+	var eventKey;
+	var keys = {
+		hidden: "visibilitychange",
+		webkitHidden: "webkitvisibilitychange",
+		mozHidden: "mozvisibilitychange",
+		msHidden: "msvisibilitychange"
+	};
+	for (stateKey in keys) {
+		if (stateKey in document) {
+			eventKey = keys[stateKey];
+			break;
+		}
+	}
+
+	return function(c) {
+		if (c) {
+			document.addEventListener(eventKey, c);
+		}
+		return !document[stateKey];
+	}
+})();
+
+function changePageTitle() {
+	document.title = vis() ? 'Visible' : 'Not visible';
+}
+
+vis(function() {
+	changePageTitle();
+});
+
+// to set the initial state
+changePageTitle();
+</script>
+</body>
+</html>

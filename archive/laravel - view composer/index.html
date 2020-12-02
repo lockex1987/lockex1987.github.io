@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Laravel View Composer</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Laravel View Composer">
+ </head> 
+ <body> 
+  <article> 
+   <h3>View Composers</h3> 
+   <p>View composers là callbacks hoặc class phương thức nó được gọi khi một view được render. Nếu bạn có dữ liệu và bạn muốn ràng buộc chúng với một view tại thời điểm view được render, một view composer có thể giúp bạn tổ chức các logic bên trong view đó.</p> 
+   <p>Đối với ví dụ bên dưới, chúng ta đăng ký một view composers trong service provider. Chúng ta sẽ sử dụng <code>View</code> facade để truy cập vào thể hiện <code>Illuminate\Contracts\View\Factory</code>. Ghi nhớ, Laravel không có thư mục mặc định cho view composers. Chúng ta có thể tự do tổ chức theo ý chúng ta muốn. Ví dụ, bạn có thể tạo một thư mục <code>App\Http\ViewComposers</code>:</p> 
+   <pre><code>&lt;?php
+
+namespace App\Providers;
+
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
+
+class ComposerServiceProvider extends ServiceProvider
+{
+    /**
+     * Register bindings in the container.
+     *
+     * @return  void
+     */
+    public function boot()
+    {
+        // Using class based composers...
+        View::composer(
+            'profile', 'App\Http\ViewComposers\ProfileComposer'
+        );
+
+        // Using Closure based composers...
+        View::composer('dashboard', function($view) {
+            //
+        });
+    }
+
+    /**
+     * Register the service provider.
+     *
+     * @return  void
+     */
+    public function register()
+    {
+        //
+    }
+}</code></pre> 
+   <p> </p> 
+   <p> </p> 
+   <p> Chú ý, nếu bạn tạo mới một service provider chứa những view composer, bạn sẽ cần phải thêm service provider vào trong mảng <code>providers</code> trong file cấu hình <code>config/app.php</code>.</p> 
+   <p> </p> 
+   <p>Bây giờ bạn đã đăng ký với composer, phương thức <code>ProfileComposer@compose</code> sẽ thực thi mỗi lần <code>profile</code> view được render. Vì vậy, hãy định nghĩa một class composer:</p> 
+   <pre><code>&lt;?php
+
+namespace App\Http\ViewComposers;
+
+use Illuminate\View\View;
+use App\Repositories\UserRepository;
+
+class ProfileComposer
+{
+    /**
+     * The user repository implementation.
+     *
+     * @var  UserRepository
+     */
+    protected $users;
+
+    /**
+     * Create a new profile composer.
+     *
+     * @param    UserRepository  $users
+     * @return  void
+     */
+    public function __construct(UserRepository $users)
+    {
+        // Dependencies automatically resolved by service container...
+        $this-&gt;users = $users;
+    }
+
+    /**
+     * Bind data to the view.
+     *
+     * @param    View  $view
+     * @return  void
+     */
+    public function compose(View $view)
+    {
+        $view-&gt;with('count', $this-&gt;users-&gt;count());
+    }
+}</code></pre> 
+   <p>Trước khi view được render, phương thức <code>compose</code> của composer được gọi với thể hiện <code>Illuminate\View\View</code>. Bạn có thể sử dụng phương thức <code>with</code> để ràng buộc dữ liệu vào view.</p> 
+   <p> </p> 
+   <p> </p> 
+   <p> Tất cả view composers được xử lý qua <a href="https://giaphiep.com/docs/5.3/container">service container</a>, vì vậy bạn có thể type-hint bất cứ dependencies bạn cần vào hàm constructor của composer.</p> 
+   <p> </p> 
+   <h4>Đính kèm Composer vào nhiều views</h4> 
+   <p>Bạn có thể gán một view composer vào nhiều views bằng cách truyền một mảng của các view như là tham số thứ nhất của phương thức <code>composer</code>:</p> 
+   <pre><code>View::composer(
+    ['profile', 'dashboard'],
+    'App\Http\ViewComposers\MyViewComposer'
+);</code></pre> 
+   <p>Phương thức <code>composer</code> ngoài ra còn chấp nhận ký tự <code>*</code> như một ký tự đại diện, cho phép bạn gán một composer vào tất cả các views:</p> 
+   <pre><code>View::composer('*', function($view) {
+    //
+});</code></pre> 
+   <h4>View Creators</h4> 
+   <p>View <strong>creators</strong> rất giống với view composer; tuy nhiên, chúng sẽ tác động trực tiếp vào các view thay vì chờ các view cho tới khi chúng được render. Để đăng ký một view creator, sử dụng phương thức <code>creator</code>:</p> 
+   <pre><code>View::creator('profile', 'App\Http\ViewCreators\ProfileCreator');</code></pre> 
+   <p></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

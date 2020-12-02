@@ -1,0 +1,33 @@
+<html>
+<head>
+<style>
+/* Selects the first page when printing */
+@page :first {
+  margin-left: 50%;
+  margin-top: 50%;
+}
+
+/* Selects any left-hand pages when printing */
+@page :left {
+  margin: 2in 3in;
+}
+
+@page :right {
+  margin: 3in 2in;
+}
+
+p {
+  page-break-after: always;
+}
+</style>
+</head>
+
+<body>
+	<p>First Page.</p>
+	<p>Second Page.</p>
+	<p>3</p>
+	<p>4</p>
+	<p>5</p>
+	<p>6</p>
+</body>
+</html>

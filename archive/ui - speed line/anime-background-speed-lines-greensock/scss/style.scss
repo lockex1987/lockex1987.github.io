@@ -1,0 +1,117 @@
+@import url(https://fonts.googleapis.com/css?family=Bangers);
+
+html {
+  height: 100%;
+}
+
+body {
+  background-color: #000;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'bangers', sans-serif;
+  position: relative;
+}
+
+button {
+  font-size: 5em;
+  text-shadow: 2px 2px 0 #F8E71C;
+  letter-spacing: 2px;
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  
+  
+  &:focus {
+    text-shadow: 0 0 0 #000;
+    outline: none;
+  }
+}
+
+#lineField {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(-180deg, #000317 0%, #192157 26%, #071151 49%, #192157 74%, #000317 100%);
+}
+
+#text {
+  font-size: 20vw;
+  color: #fff;
+  position: absolute;
+  z-index: 100;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0; 
+  letter-spacing: 2px;
+  text-shadow: 4px 4px 0 #F8E71C;
+}
+
+.line {
+  position: absolute;
+  
+  &--1 {
+    width: 100vw;
+    height: 3px;
+    background-image: radial-gradient(
+      50% 50%, 
+      #A6B2F1 50%, 
+      rgba(56,80,225,0.99) 83%, 
+      rgba(37,61,216,0.00) 100%
+    );
+  }
+  
+  &--2 {
+    height: 6px;
+    width: 80vw;
+    background-image: radial-gradient(
+      50% 50%, 
+      #A6B2F1 50%, 
+      rgba(56,80,225,0.99) 83%, 
+      rgba(37,61,216,0.00) 100%
+    );
+  }
+  
+  &--3 {
+    height: 10px;
+    width: 100vw;
+    background-image: radial-gradient(
+      50% 50%, 
+      #A6B2F1 50%, 
+      rgba(56,80,225,0.99) 83%, 
+      rgba(37,61,216,0.00) 100%
+    );
+  }
+  
+   &--4 {
+    height: 24px;
+    width: 100vw;
+    min-width:620px;
+    background-image: radial-gradient(
+      50% 50%, 
+      #A6B2F1 50%, 
+      rgba(56,80,225,0.99) 83%, 
+      rgba(37,61,216,0.00) 100%
+    );
+  }
+  
+  &--5 {
+    height: 14px;
+    width: 100vw;
+    background-image: radial-gradient(
+      50% 50%, 
+      #A6B2F1 50%, 
+      rgba(56,80,225,0.99) 83%, 
+      rgba(37,61,216,0.00) 100%
+    );
+  }
+}

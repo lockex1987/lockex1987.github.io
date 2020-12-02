@@ -1,0 +1,210 @@
+<html>
+<head>
+<meta name="keywords" content="web,web application,ajax,progress bar, percentage bar,Resources,Free,web design "/>
+<meta name="description" content="Only the Best and Free Resources for Web Application Developers"/>
+<title>Javascript Progress / Percentage Bar with CSS by WebAppers</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+
+<link href="lib/style.css" rel="stylesheet" type="text/css" media="screen" />
+<script language="javascript" type="text/javascript" src="lib/progress.js"></script>
+
+<style type = "text/css">
+/* General Links */
+a:link {
+	text-decoration:none;
+	color:#3366cc;
+	border:0px;
+}
+a:active {
+	text-decoration:underline;
+	color:#3366cc;
+	border:0px;
+}
+a:visited {
+	text-decoration:none;
+	color:#3366cc;
+	border:0px;
+}
+a:hover {
+	text-decoration:underline;
+	color:#ff5a00;
+	border:0px;
+}
+img {
+	padding:0px;
+	margin:0px;
+	border: none;
+}
+
+body {
+	margin : 0 auto;
+	width:100%;
+	font-family: 'Verdana';
+	color: #40454b;
+	font-size: 12px;
+	text-align:center;
+}
+
+.content {
+	margin:20px;
+	line-height:20px;
+}
+
+body h1 {
+	font-size:14px;
+	font-weight:bold;
+	color:#CC0000;
+	padding:5px;
+	margin-left:10px;
+	border-bottom:solid;
+	border-bottom-width:1px;
+	border-bottom-color:#333333;
+}
+
+#demo {
+	margin : 0 auto;
+	width:100%;
+	margin:20px;
+}
+
+#demo .extra {
+	padding-left:30px;
+}
+
+#demo .options {
+	padding-left:10px;
+}
+
+#demo .getOption {
+	padding-left:40px;
+}
+
+.document {
+	margin : 0 auto;
+	border-style:solid;
+	border-width:1px;
+	background:#f7f7f7;
+	border-color:#efefef;
+	margin:20px;
+}
+
+.document h2 {
+	padding:5px;
+	padding-bottom:0px;
+	color:#333333;
+	font-weight:bold;
+	font-size:12px;
+}
+
+.document h3 {
+	padding:5px;
+	padding-bottom:0px;
+	padding-top:0px;
+	font-weight:normal;
+	font-size:12px;
+}
+</style>
+</head>
+
+<body>
+<div style="width:540px; margin:0 auto; text-align:left;">
+	<div class="content">
+		<a href="http://www.webappers.com/">
+			<img src="images/logo.gif" alt="WebAppers"/>
+		</a>
+		<span style="padding-left:15px;font-weight:bold;"><a href="http://www.webappers.com">Home</a></span>
+	</div>
+	<h1>Introduction</h1>
+	<div class="content">Sometimes, when we are building websites and web applications, we need a percentage bar / progress bar to show the progress of a specific task.
+	However, it is very difficult to find a working and easy solution without using Flash. Therefore <a href="http://www.webappers.com">WebAppers</a>
+	have created a simple Javascript based Percentage Bar / Progress Bar which is inspired by <a href="http://www.barenakedapp.com/the-design/displaying-percentages">Bare Naked App</a>.
+	Bare Naked App taught us how to display Percentage Bar with 2 images only by using CSS. And then I used a little bit of Javascript to make it more
+	interactive. You can use it anywhere you can think of. Use your Imagination, I am sure you will find it useful somewhere.</div>
+	<div class="content" style="font-weight:bold"><a href="http://www.webappers.com/2007/07/31/webappers-simple-ajax-progress-bar-with-css/">Go Back to Original Article</a></div>
+	<h1>Demo</h1>
+	<div id="demo">
+		<span style="color:#006600;font-weight:bold;">Program Efficiency</span>
+		<br/>
+		<script>display ('element1',15,1);</script>
+		<span class="extra"><a href="#" onClick="emptyProgress ('element1');return false;"><img src="images/empty.gif" onMouseOver="document.getElementById('Text1').innerHTML ='Empty Bar'"/></a></span>
+		<span class="options"><a href="#" onClick="plus ('element1','5');return false;"><img src="images/add.gif" onMouseOver="document.getElementById('Text1').innerHTML ='Add 5%'"/></a></span>
+		<span class="options"><a href="#" onClick="minus ('element1','5');return false;"><img src="images/minus.gif" onMouseOver="document.getElementById('Text1').innerHTML ='Minus 5%'" /></a></span>
+		<span class="options"><a href="#" onClick="setProgress ('element1','15');return false;"><img src="images/set.gif" onMouseOver="document.getElementById('Text1').innerHTML ='Set 15%'"/></a></span>
+		<span class="options"><a href="#" onClick="fillProgress ('element1','100');return false;"><img src="images/fill.gif" onMouseOver="document.getElementById('Text1').innerHTML ='Fill 100%'" ></a></span>
+		<span class="getOption"><a href="#" onClick="alert(getProgress ('element1'));return false;"><img src="images/get.gif" onMouseOver="document.getElementById('Text1').innerHTML ='Get Current %'"/></a></span>
+		<span id="Text1" style="font-weight:bold">Select Options</span>
+		<br/><br/>
+
+
+		<span style="color:#FFCC00;font-weight:bold;">Website Projects Progress</span>
+		<br/>
+		<script>display ('element2',35,2);</script>
+		<span class="extra"><a href="#" onClick="emptyProgress ('element2');return false;"><img src="images/empty.gif" onMouseOver="document.getElementById('Text2').innerHTML ='Empty Bar'"/></a></span>
+		<span class="options"><a href="#" onClick="plus ('element2','10');return false;"><img src="images/add.gif" onMouseOver="document.getElementById('Text2').innerHTML ='Add 10%'"/></a></span>
+		<span class="options"><a href="#" onClick="minus ('element2','5');return false;"><img src="images/minus.gif" onMouseOver="document.getElementById('Text2').innerHTML ='Minus 5%'" /></a></span>
+		<span class="options"><a href="#" onClick="setProgress ('element2','35');return false;"><img src="images/set.gif" onMouseOver="document.getElementById('Text2').innerHTML ='Set 35%'"/></a></span>
+		<span class="options"><a href="#" onClick="fillProgress ('element2','80');return false;"><img src="images/fill.gif" onMouseOver="document.getElementById('Text2').innerHTML ='Fill 80%'" ></a></span>
+		<span class="getOption"><a href="#" onClick="alert(getProgress ('element2'));return false;"><img src="images/get.gif" onMouseOver="document.getElementById('Text2').innerHTML ='Get Current %'"/></a></span>
+		<span id="Text2" style="font-weight:bold">Select Options</span>
+		<br/><br/>
+
+		<span style="color:#FF6600;font-weight:bold;">Weight Lost Progress</span>
+		<br/>
+		<script>display ('element3',50,3);</script>
+		<span class="extra"><a href="#" onClick="emptyProgress ('element3');return false;"><img src="images/empty.gif" onMouseOver="document.getElementById('Text3').innerHTML ='Empty Bar'"/></a></span>
+		<span class="options"><a href="#" onClick="plus ('element3','25');return false;"><img src="images/add.gif" onMouseOver="document.getElementById('Text3').innerHTML ='Add 25%'"/></a></span>
+		<span class="options"><a href="#" onClick="minus ('element3','15');return false;"><img src="images/minus.gif" onMouseOver="document.getElementById('Text3').innerHTML ='Minus 15%'" /></a></span>
+		<span class="options"><a href="#" onClick="setProgress ('element3','50');return false;"><img src="images/set.gif" onMouseOver="document.getElementById('Text3').innerHTML ='Set 50%'"/></a></span>
+		<span class="options"><a href="#" onClick="fillProgress ('element3','65');return false;"><img src="images/fill.gif" onMouseOver="document.getElementById('Text3').innerHTML ='Fill 65%'" ></a></span>
+		<span class="getOption"><a href="#" onClick="alert(getProgress ('element3'));return false;"><img src="images/get.gif" onMouseOver="document.getElementById('Text3').innerHTML ='Get Current %'"/></a></span>
+		<span id="Text3" style="font-weight:bold">Select Options</span>
+		<br/><br/>
+
+		<span style="color:#CC3300;font-weight:bold;">Upload Progress Bar</span>
+		<br/>
+		<script>display ('element4',80,4);</script>
+		<span class="extra"><a href="#" onClick="emptyProgress ('element4');return false;"><img src="images/empty.gif" onMouseOver="document.getElementById('Text4').innerHTML ='Empty Bar'"/></a></span>
+		<span class="options"><a href="#" onClick="plus ('element4','45');return false;"><img src="images/add.gif" onMouseOver="document.getElementById('Text4').innerHTML ='Add 45%'"/></a></span>
+		<span class="options"><a href="#" onClick="minus ('element4','30');return false;"><img src="images/minus.gif" onMouseOver="document.getElementById('Text4').innerHTML ='Minus 30%'" /></a></span>
+		<span class="options"><a href="#" onClick="setProgress ('element4','80');return false;"><img src="images/set.gif" onMouseOver="document.getElementById('Text4').innerHTML ='Set 80%'"/></a></span>
+		<span class="options"><a href="#" onClick="fillProgress ('element4','50');return false;"><img src="images/fill.gif" onMouseOver="document.getElementById('Text4').innerHTML ='Fill 50%'" ></a></span>
+		<span class="getOption"><a href="#" onClick="alert(getProgress ('element4'));return false;"><img src="images/get.gif" onMouseOver="document.getElementById('Text4').innerHTML ='Get Current %'"/></a></span>
+		<span id="Text4" style="font-weight:bold">Select Options</span>
+		<br/><br/>
+	</div>
+	<h1>Documentation</h1>
+	<div class="document">
+		<h2>display(elementId, percentage, colorCode)</h2>
+		<h3>Display the Percentage Bar</h3>
+		<h3>int colorCode: 1 = Green</h3>
+		<h3>int colorCode: 2 = Yellow</h3>
+		<h3>int colorCode: 3 = Orange</h3>
+		<h3>int colorCode: 4 = Red</h3>
+	</div>
+	<div class="document">
+		<h2>emptyProgress(elementId)</h2>
+		<h3>Empty the Percentage Bar by setting 0%</h3>
+	</div>
+	<div class="document">
+		<h2>plus(elementId, percentage)</h2>
+		<h3>Increment the Percentage Bar by the specified percentage</h3>
+	</div>
+	<div class="document">
+		<h2>minus(elementId, percentage)</h2>
+		<h3>Decrement the Percentage Bar by the specified percentage</h3>
+	</div>
+	<div class="document">
+		<h2>setProgress(elementId, percentage)</h2>
+		<h3>Set the Percentage Bar with the specified percentage</h3>
+	</div>
+	<div class="document">
+		<h2>fillProgress(elementId, percentage)</h2>
+		<h3>Fill up the Percentage Bar with the specified percentage</h3>
+	</div>
+
+	<h1>License</h1>
+	<div class="content">This library is licensed under Creative Commons license, so you can use it for anything you like, as long as you
+	include the copyright notice.</div>
+</div>
+</body>
+</html>

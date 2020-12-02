@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Load file JS async và defer">
+    <title>Load file JS async và defer</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Load file JS async và defer</h2>
+      <h3>Vấn đề</h3>
+      <p>JavaScript là 1 trong những tài nguyên chặn trang, có nghĩa là việc
+        hiển thị HTML có thể bị chặn hay làm chậm bởi JavaScript. Khi parser đọc
+        đến thẻ <code>&lt;script&gt;</code>, bất kể là inline hay là external
+        file, quá trình parse sẽ tạm dừng để tải script đó về và thực thi. Việc
+        này có thể là vấn đề nếu chúng ta load nhiều file JavaScript trên trang,
+        làm tăng thời gian load trang mặc dù có thể việc hiển thị HTML ở trang
+        không thực sự phụ thuộc vào những file JavaScript đó. Và may mắn thay,
+        thẻ <code>&lt;script&gt;</code> có 2 thuộc tính, đó là <code>async</code>
+        và <code>defer</code>, cho phép chúng ta kiểm soát và load những file
+        này theo ý muốn, tránh chặn quá trình load trang.</p>
+      <p><img src="https://viblo.asia/uploads/c5905e76-d17e-41c8-a812-33c5f4688449.jpg"></p>
+      <h3>Dùng&nbsp;&lt;script&gt; bình thường</h3>
+      <pre>&lt;script src="script.js"&gt;&lt;/script&gt;</pre>
+      <p>Với thẻ script không có thuộc tính gì khác thì HTML file sẽ được parse
+        cho đến khi gặp phải thẻ script, đến lúc này thì quá trình parse sẽ tạm
+        dùng và để fetch script file về (nếu là external file), sau đó execute
+        những code script này, sau đó mới tiếp tục lại quá trình parse HTML.</p>
+      <p><img src="https://viblo.asia/uploads/5852381b-e5d4-4fe5-a047-3a0db777aa26.jpg"></p>
+      <h3>Dùng &lt;script async&gt;</h3>
+      <pre>&lt;script async src="script.js"&gt;&lt;/script&gt;</pre>
+      <p>Với thẻ script có thuộc tính async, khi quá trình parse HTML gặp phải
+        script này, nó sẽ vẫn tiếp tục parse HTML cho đến khi script này được
+        download xong, thì quá trình parse HTML mới tạm dừng để execute những
+        code script này, sau đó lại tiếp tiếp quá trình parse HTML.</p>
+      <p><img src="https://viblo.asia/uploads/2faa7c65-59e8-4d03-a28d-9a7e38ab7720.jpg"></p>
+      <h3>Dùng &lt;script defer&gt;</h3>
+      <pre>&lt;script defer src="script.js"&gt;&lt;/script&gt;</pre>
+      <p>Với thẻ script có thuộc tính defer, quá trình parse HTML sẽ không bị
+        dừng lại mà parse cho đến khi hoàn thành, quá trình download các script
+        file được tiến hành song song, và cuối cùng thì sẽ execute những script
+        code này khi HTML đã parse xong.</p>
+      <p><img src="https://viblo.asia/uploads/f266a70a-69b9-4196-a40a-691bc079c426.jpg"></p>
+      <h3>Vậy nên dùng khi nào?</h3>
+      <p>Nó phụ thuộc vào từng tình huống cụ thể.</p>
+      <p>Quy tắc như sau:</p>
+      <ul>
+        <li>Nếu script là 1 module tách biệt, không phụ thuộc vào script nào
+          khác thì nên sử dụng async cho load và execute với trang luôn</li>
+        <li>Nếu script phụ thuộc vào script khác, hoặc bị script khác phụ thuộc,
+          thì nên dùng defer, để load và execute theo thứ tự</li>
+        <li>Nếu script nhỏ và các script khác phụ thuộc vào nó, thì cho load
+          inline và không cần async hay defer</li>
+      </ul>
+      <p>Ngoài ra nên cân nhắc 1 số câu hỏi trước khi thêm các thuộc tính này.</p>
+      <h4>Thẻ script đang nằm ở đâu trong trang?</h4>
+      <p>Async và defer có thể rất cần thiết nếu thẻ script không nằm ở cuối
+        trang. HMTL document được parse theo thứ tự, từ thẻ mở &lt;html&gt; cho
+        đến thẻ đóng &lt;/html&gt;. Nếu script năm ngay gần cuối thẻ đóng
+        &lt;/body&gt; thì việc sử dụng async hay defer thì cũng không có ý nghĩa
+        lắm bởi vì việc parse HTML đã gần xong xuôi, và JavaScript không còn
+        block gì HTML nữa.</p>
+      <h4>Script đó có độc lập không?</h4>
+      <p>Với những file script không phụ thuộc vào những file khác, thì thuộc
+        tính async dùng cho script đó là việc nên làm, vì nó load và execute
+        script song song, giảm thời gian tải trang, kết quả cuối cùng nhanh hơn.</p>
+      <h4>Script có yêu cầu việc load DOM xong mới thực hiện?</h4>
+      <p>Trong nhiều trường hợp, các script chứa đựng code tương tác với DOM,
+        hoặc phụ thuộc vào các thành phần trên trang, yêu cầu trang phải parse
+        xong thì mới execute script. Thông thường thì những file như thế sẽ được
+        đặt ở cuối trang để chắc chắn mọi thử đã được parse. Tuy nhiên chúng ta
+        có thể dùng thuộc tính defer thay thế, đảm bảo script sẽ được execute
+        khi trang đã tải xong.</p>
+      <h4>Script nhỏ và các file khác phụ thuộc vào nó?</h4>
+      <p>Nếu script dung lượng nhỏ, và các file khác phụ thuộc vào nó, thì nên
+        để script đó inline. Mặc dù nó block quá trình parse HTML, nhưng nó
+        không đáng kể vì dung lượng nhỏ.</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://viblo.asia/p/javascript-async-va-defer-4dbZNDBy5YM" target="_blank">https://viblo.asia/p/javascript-async-va-defer-4dbZNDBy5YM</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,122 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:900,400);
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
+html, body {
+  min-height: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+body {
+  background: #f0f0f0;
+  color: #212121;
+  font-family: "Roboto", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+}
+
+#topbar {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  /*background-color: $topbar-bg;*/
+  background: #b33a57;
+  background: linear-gradient(to right, #b33a57 0%, #db5757 50%, #b33a57 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$colorDark, endColorstr=$colorDark,GradientType=1 );
+  /* filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$colorDark', endColorstr='$colorDark',GradientType=1 ); */
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+  height: 3em;
+  line-height: 3em;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+}
+#topbar a {
+  display: block;
+  color: #fff;
+}
+
+.active-nav {
+  position: relative;
+}
+.active-nav__bar {
+  background-color: #FF7B7C;
+  top: 2.5em;
+  position: absolute;
+  width: 33.33333%;
+  height: 0.5em;
+  transition: 0.3s ease-in-out;
+}
+.show-0 .active-nav__bar {
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+.show-1 .active-nav__bar {
+  -webkit-transform: translate3d(100%, 0, 0);
+          transform: translate3d(100%, 0, 0);
+}
+.show-2 .active-nav__bar {
+  -webkit-transform: translate3d(200%, 0, 0);
+          transform: translate3d(200%, 0, 0);
+}
+
+#carousel {
+  min-height: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  -webkit-transform-style: preserve-3d;
+  margin: 3em auto 0;
+  overflow: hidden;
+}
+#carousel > ul {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  height: 100%;
+  list-style: none outside;
+  margin: 0;
+  overflow: hidden;
+}
+#carousel > ul.animate {
+  -webkit-transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+          transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  transition: 0.3s ease-in-out;
+}
+#carousel > ul > li {
+  height: 100%;
+  float: left;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}
+
+.page {
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.page.centery {
+  background-image: url(http://i.ytimg.com/vi/CVX9Z3ZSj7g/maxresdefault.jpg);
+}
+.page.lefty {
+  background-image: url(http://kandyperaherabookings.com/images/02/04.jpg);
+  left: -100%;
+}
+.page.righty {
+  background-image: url(http://buddhistinternational.org/wp-content/uploads/2015/04/Adams-Peak-Sri-Pada-Sri-Lanka.-Misty-landscape-and-Buddhist-flags-Central-Highlands-of-Sri-Lanka-Asia-travel-photography-by-travel-photographer-Matthew-Williams-Ellis2.jpg);
+  left: 100%;
+}
+.page header {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 1em;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+.page header h1 {
+  font-size: 3em;
+}

@@ -1,0 +1,42 @@
+:root {
+    // Khoảng cách giữa hai phần tử
+    --carouselItemGap: 0rem;
+
+    // Số phần tử hiển thị đồng thời
+    --carouselItemNum: 1;
+}
+
+// Cần phân biệt với class carousel của Bootstrap
+.nat-carousel {
+    .nat-carousel-wrapper {
+        overflow: hidden;
+
+        .nat-carousel-inner {
+            display: flex;
+            user-select: none;
+            transition: transform 0.2s ease-out;
+    
+            .nat-carousel-item {
+                // Cần đảm bảo phép tính này là nguyên để không bị lỗi sub-pixel
+                width: calc((100% - (var(--carouselItemNum) - 1) * var(--carouselItemGap)) / var(--carouselItemNum));
+                margin-right: var(--carouselItemGap);
+                flex-shrink: 0;
+    
+                img {
+                    // Làm thế này thì không phải thiết lập draggable="false" cho ảnh
+                    pointer-events: none;
+                }
+            }
+        }
+    }
+
+    .nat-carousel-indicators {
+        [data-item-to] {
+            cursor: pointer;
+        }
+    }
+
+    .nat-carousel-control {
+        cursor: pointer;
+    }
+}

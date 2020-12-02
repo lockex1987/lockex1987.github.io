@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tìm hiểu Highcharts">
+    <title>Tìm hiểu Highcharts</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Tìm hiểu Highcharts</h2>
+      <h3>Khởi tạo biểu đồ</h3>
+      <p>Khai báo thẻ div chứa đồ thị:</p>
+      <pre>&lt;div id="container" style="width: 800px; height: 300px; margin: 0 auto;"&gt;&lt;/div&gt;</pre>
+      <p>Thêm các thư viện cần thiết:</p>
+      <pre>&lt;script src="https://code.highcharts.com/highcharts.js"&gt;&lt;/script&gt;</pre>
+      <p>Bạn không cần jQuery.</p>
+      <p>Script tạo đồ thị:</p>
+      <p>Cách 1:</p>
+      <pre>new Highcharts.Chart('container', options);</pre>
+      <p>Cách 2:</p>
+      <pre>Highchart.chart('container', options);</pre>
+      <p>Cách 3 (nếu bạn có jQuery):</p>
+      <pre>$('#container').highcharts(options);</pre>
+      <p>Cách 1 và cách 2 thì ta có thể đặt biến đồ thị và thay đổi sau này.</p>
+      <p>Nên dùng cách này để không phụ thuộc jQuery.</p>
+      <p>Chúng ta có thể truyền vào tham số thứ nhất là xâu ID của phần tử, hoặc
+        chính phần tử DOM.</p>
+      <p>Ví dụ:</p>
+      <pre>Highcharts.chart(document.querySelector('#container'), options);</pre>
+      <p>Dùng phần tử DOM này sẽ link động hơn. Chúng ta có thể dùng nó với một
+        đối tượng động được tạo bởi <code>document.createElement()</code>, hoặc
+        dùng với <code>$refs</code> của Vue.</p>
+      <p>Bạn cũng có thể chỉ truyền vào một tham số là options. Khi đó, bạn cần
+        thêm thuộc tính <code>renderTo</code> của <code>chart</code> của
+        options. renderTo cũng có thể là xâu ID hoặc là phần tử DOM.</p>
+      <p><a target="_blank" href="01%20-%20get%20started.html">Ví dụ 1: Get
+          started</a></p>
+      <h3>Code mẫu</h3>
+      <p>Bao gồm các thư viện, xử lý cơ bản hay gặp của Highcharts.</p>
+      <ul>
+        <li>Ẩn credit</li>
+        <li>...</li>
+      </ul>
+      <p><a target="_blank" href="02%20-%20template.html">Ví dụ 2: Template</a></p>
+      <h3>Cấu hình</h3>
+      <p>Bạn có thể cấu hình mặc định cho toàn bộ các đồ thị.</p>
+      <p>Sử dụng <code>Highcharts.setOptions()</code>.</p>
+      <p>Một số cấu hình cơ bản như ở template.</p>
+      <ul>
+        <li>Ẩn credit</li>
+        <li>Ẩn title (subtitle không truyền thì không hiện)</li>
+        <li>Background transparent</li>
+        <li>Font chữ, màu sắc,... (ở các vùng chú thích, tooltip,...)</li>
+        <li>Danh sách màu sắc</li>
+        <li>Ngôn ngữ</li>
+      </ul>
+      <p></p>
+      <p><br>
+      </p>
+      <p><a target="_blank" href="03%20-%20global%20options.html">Ví dụ 3:
+          Global options</a></p>
+      <h3>Các khái niệm cơ bản</h3>
+      <p><img alt="" src="images/understanding_highcharts.png" class="img-fluid"></p>
+      <h4>Title và subtitle</h4>
+      <pre>title: {
+    text: 'My custom title'
+},
+subtitle: {
+    text: 'My custom subtitle'
+}</pre>
+      <p>Để ẩn, chúng ta truyền text là xâu rỗng.</p>
+      <h4>Credit </h4>
+      <p>Ẩn credit đi:</p>
+      <pre>credits: {
+    enabled: false
+}</pre>
+      <h4>Chú thích </h4>
+      <p>legend</p>
+      <h4>Trục (xAxis, yAxis)</h4>
+      <p>Để ẩn các trục, cấu hình visible là false.</p>
+      <p>Không hiển thị số lẻ (số người đăng ký của SafeNet)</p>
+      <p>xAxis mà là categories thì series phải có data là mảng có độ dài tương
+        ứng </p>
+      <p>xAxis mà là datetime thì series có thể có dạng:</p>
+      <pre>{
+    data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+    pointStart: Date.UTC(2010, 0, 1),
+    pointInterval: 3600 * 1000 // one hour
+}</pre>
+      <h4>Tooltip</h4>
+      <p>x</p>
+      <h4>Series</h4>
+      <p>x</p>
+      <h3>Các loại đồ thị</h3>
+      <p>chart (type)</p>
+      <p>Loại đồ thị là gì? Mặc định là line? line, bar, column</p>
+      <p>Demo các đồ thị:</p>
+      <p>DANH SÁCH</p>
+      <h4>Đồ thị tròn (pie)</h4>
+      <p>Cấu trúc series như sau:</p>
+      <pre>series: [
+    {
+        data: [
+            {
+                name: 'Chrome',
+                y: 61.41
+            },
+            {
+                name: 'Internet Explorer',
+                y: 11.84
+            },
+            {
+                name: 'Firefox',
+                y: 10.85
+            },
+            {
+                name: 'Edge',
+                y: 4.67
+            },
+            {
+                name: 'Safari',
+                y: 4.18
+            },
+            {
+                name: 'Opera',
+                y: 1.6
+            },
+            {
+                name: 'Other',
+                y: 2.61
+            }
+        ]
+    }
+]</pre>
+      <p>Để hiển thị chú thích, cần thêm tùy chọn <code>plotOptions.pie.showInLegend</code>
+        là <code>true</code>.</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Kết hợp các đồ thị</h3>
+      <p>Hiển thị nhiều đồ thị một lúc.</p>
+      <br>
+      <h3>Update đồ thị</h3>
+      <p>Gọi lại khởi tạo</p>
+      <p>Sử dụng một biến options, cập nhật biến options này</p>
+      <p>Trước khi khởi tạo lại thì dùng hàm destroy</p>
+      <p>Dùng hàm set</p>
+      <h3>Responsive</h3>
+      <p>Voice AI hit stats.</p>
+      <p><br>
+      </p>
+      <h3>Tương tác với đồ thị</h3>
+      <p>Sự kiện click</p>
+      <p><br>
+      </p>
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://www.highcharts.com/docs/index">https://www.highcharts.com/docs/index</a></p>
+      <p><a target="_blank" href="https://www.highcharts.com/demo">https://www.highcharts.com/demo</a></p>
+      <p><a target="_blank" href="https://api.highcharts.com/highcharts/">https://api.highcharts.com/highcharts/</a></p>
+      <p><a target="_blank" href="https://api.highcharts.com/class-reference/">https://api.highcharts.com/class-reference/</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

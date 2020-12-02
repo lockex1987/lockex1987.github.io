@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dịch tiếng Anh sang tiếng Việt">
+    <title>Sử dụng Google Translate API</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Sử dụng Google Translate API</h2>
+      <h3>API</h3>
+      <p>Google có cơ chế riêng để bảo vệ API của mình.</p>
+      <p>Rất may, có extension sau có vẻ sử dụng API thoải mái.</p>
+      <p><a href="https://github.com/artemave/translate_onhover" target="_blank">GitHub
+          - artemave/translate_onhover: Google Chrome translation extension</a></p>
+      <p><br>
+      </p>
+      <h3>Selection</h3>
+      <p>Hiển thị popup ở ngay phía trên đoạn text bôi đen.</p>
+      <p><a href="http://vikku.info/programming/chrome-extension/get-selected-text-send-to-web-server-in-chrome-extension-communicate-between-content-script-and-background-page.htm"
+
+          target="_blank">Get selected text and send to a web service/server in
+          chrome extension. communicate between content script and background
+          page</a></p>
+      <pre>window.getSelection().toString();
+<br>
+chrome.tabs.executeScript({
+    code: "window.getSelection().toString();"
+}, function (selection) {
+    console.log(selection[0]);
+});
+
+
+chrome.extension.onRequest.addListener(function (request, sender, sendResponse) {
+    if (request.method == "getSelection") {
+        sendResponse({<br>            data: window.getSelection().toString()<br>        });<br>    } else {
+        sendResponse({});<br>    }
+});</pre>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="js/google-translate-api.js"></script>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

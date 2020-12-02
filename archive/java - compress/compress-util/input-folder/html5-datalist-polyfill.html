@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+	 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+<style>
+p {
+	margin: 0 0 40px 0;
+}
+p:last-child {
+	margin-bottom: 0;
+}
+.datalist {
+	list-style: none;
+	display: none;
+	background: white;
+	color: black;
+	box-shadow: 0 2px 2px #999;
+	position: absolute;
+	left: 0;
+	top: 0;
+	max-height: 300px;
+	overflow-y: auto;
+}
+.datalist:empty {
+	display: none !important;
+}
+.datalist li {
+	padding: 3px;
+	font: 13px "Lucida Grande", Sans-Serif;
+}
+.datalist li.active {
+	background: #3875d7;
+	color: white;
+}
+</style>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.7.1/modernizr.min.js" type="text/javascript"></script>
+
+<script>
+
+if(!Modernizr.input.list) {
+	alert('Your browser does not support HTML5 Datalist. We will now use Polyfill to add its support.');
+}
+
+// Safari reports success of list attribute, so doing ghetto detection instead
+yepnope({
+  test : (!Modernizr.input.list),
+  yep : [
+      'js/jquery.relevant-dropdown.js',
+      'js/load-fallbacks.js'
+  ]
+});
+</script>
+
+	<TITLE>HTML5 Datalist Example - viralpatel.net</TITLE>
+<STYLE>body,input{font-family:'Open Sans',Calibri,Arial;margin:0px;padding:0px}a{color:#0254eb}a:visited{color:#0254eb}#header h2{color:#fff;background-color:#3275a8;margin:0px;padding:5px;height:40px;padding:15px}html,body,#container{height:100%}body>#container{height:auto;min-height:100%}#footer{font-size:12px;clear:both;position:relative;z-index:10;height:3em;margin-top:-3em;text-align:center}#content{padding-bottom:3em;padding:10px}input{font-size:15px}.style1{border:3px solid #fa0;font-size:20px}.style2{border:2px solid #af7;font-size:18px}</STYLE>
+</HEAD>
+<BODY>
+
+<div id="container">
+<div id="header">
+<H2>
+	<a href="http://viralpatel.net"><img border="0px" src="http://viralpatel.net/blogs/wp-content/themes/vp/images/logo.gif" align="left"/></a>
+	HTML5 Datalist Example
+</H2>
+</div>
+<div id="content">
+
+<p>Read tutorial: <a href="http://viralpatel.net/blogs/html5-datalist-example/">HTML5 Datalist Tutorial</a></p>
+
+<br/>
+Enter Country name:
+<input type="text" list="countries" name="mycountry" />
+
+<datalist id="countries">
+	<select>
+		<option value="Afghanistan">Afghanistan</option>
+		<option value="Albania">Albania</option>
+		<option value="Algeria">Algeria</option>
+		<option value="Andorra">Andorra</option>
+		<option value="Angola">Angola</option>
+		<option value="Antigua &amp; Deps">Antigua &amp; Deps</option>
+		<option value="United Kingdom">United Kingdom</option>
+		<option value="United States">United States</option>
+		<option value="Uruguay">Uruguay</option>
+		<option value="Uzbekistan">Uzbekistan</option>
+		<option value="Vanuatu">Vanuatu</option>
+		<option value="Vatican City">Vatican City</option>
+		<option value="Venezuela">Venezuela</option>
+		<option value="Vietnam">Vietnam</option>
+		<option value="Yemen">Yemen</option>
+		<option value="Zambia">Zambia</option>
+		<option value="Zimbabwe">Zimbabwe</option>
+	</select>
+</datalist>
+
+
+</BODY>
+</HTML>
+
+
+

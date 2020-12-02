@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>CSS3 Reflection Effect - Demo</title>
+<link rel="stylesheet" href="normalize.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrapper">
+<h1>Reflection Effect with CSS - Demo</h1>
+<section id="basic">
+<div class="reflect below">
+<h3>Reflect image below</h3>
+<img src="images/eight_weeks_of_bruce.large.jpg">
+</div>
+<pre>
+img {
+	-webkit-box-reflect: below;
+}
+</pre>
+<div class="reflect offset">
+<h3>Reflection offset</h3>
+<img src="images/gabriel_garcia_marquez.large.jpg">
+</div>
+<pre>
+img {
+    -webkit-box-reflect: below 10px;
+}
+</pre>
+</section>
+<section id="masking">
+<div class="reflect masking">
+<h3>Masking with gradients</h3>
+<img src="images/whats_liberal_about_the_liberal_arts.large.jpg">
+</div>
+<pre>
+img {
+	-webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, 0.1)));
+}
+</pre>
+<div class="reflect color-stop">
+<h3>Using color-stop</h3>
+<img src="images/everything_matters.large.jpg">
+</div>
+<pre>
+img {
+	-webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent) , to(rgba(250, 250, 250, 0.1)));
+}
+</pre>
+</section>
+<section id="firefox">
+	<div class="reflect moz">
+		<h3>Alternative way for Firefox</h3>
+		<p><em>View this demo in Firefox, otherwise the effect will not be delivered.</em></p>
+		<div id="moz-reflect">
+			<img src="images/strange_bedfellows.large.jpg">
+		</div>
+	</div>
+</section>
+</div>
+</body>
+</html>

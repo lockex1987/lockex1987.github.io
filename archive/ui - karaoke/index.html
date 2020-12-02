@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+ <head> 
+  <title>Karaoke</title> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Karaoke">
+ </head> 
+ <body> 
+  <article> 
+   <style>
+	#text { font-size: 20px; }
+	#text .temp { color: yellow; }
+	</style> 
+   <h3>Audio</h3> 
+   <audio id="audio" src="media/audio.wav" controls="controls"></audio> 
+   <h3>Text</h3> 
+   <div id="text"></div> 
+   <script src="js/json.js"></script> 
+   <script>
+	function showText(json, timestamp) {
+		var text = "";
+		var tmp = "";
+		for (var i = 0; i < json.length; i++) {
+			row = json[i];
+			if (row['time'] < timestamp) {
+				var transcript = row['result']['hypotheses'][0]['transcript'];
+				if (row['result']['final']) {
+					tmp = "";
+					text += '<p>' + transcript + ".</p>";
+				} else {
+					tmp = '<span class="temp">' + transcript + '</span>';
+				}
+			} else {
+				break;
+			}
+		}
+		return text + tmp;
+	}
+
+	var audio = document.getElementById("audio");
+	audio.ontimeupdate = function() {
+		var text = showText(json, audio.currentTime);
+		document.getElementById("text").innerHTML = text;
+	};
+</script> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

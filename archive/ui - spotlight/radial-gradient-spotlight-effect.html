@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Radial Gradient Spotlight Effect</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:700">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <style>
+body { background:url(https://images.unsplash.com/photo-1519677100203-a0e668c92439) no-repeat center; background-size:cover; height:100vh; cursor:none; }
+h1 { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); z-index:1; font-family:"Roboto", Arial, sans-serif;
+    font-size:calc(20px + 2vw); font-weight:700; color:#fafafa; text-shadow:2px 2px 2px #000; pointer-events:none; user-select:none; white-space:nowrap; }
+.spotlight { position:absolute; height:100%; width:100%; background-image:radial-gradient( circle, transparent 160px, rgba(0, 0, 0, 0.85) 200px ); }
+  </style>
+</head>
+
+<body>
+  <h1>Hold left click to focus</h1>
+  <div class="spotlight"></div>
+  <script>
+window.addEventListener("DOMContentLoaded", function() {
+  var spotlight = document.querySelector('.spotlight');
+  var spotlightSize = 'transparent 160px, rgba(0, 0, 0, 0.85) 200px)';
+
+  window.addEventListener('mousemove', function(e) {
+    return updateSpotlight(e);
+  });
+
+  window.addEventListener('mousedown', function(e) {
+    spotlightSize = 'transparent 130px, rgba(0, 0, 0, 0.95) 150px)';
+    updateSpotlight(e);
+  });
+  
+  window.addEventListener('mouseup', function (e) {
+    spotlightSize = 'transparent 160px, rgba(0, 0, 0, 0.85) 200px)';
+    updateSpotlight(e);
+  });
+  
+  function updateSpotlight(e) {
+    spotlight.style.backgroundImage = 'radial-gradient(circle at ' + e.pageX / window.innerWidth * 100 + '% ' + e.pageY / window.innerHeight * 100 + '%, ' + spotlightSize;
+  }
+});
+  </script>
+</body>
+</html>

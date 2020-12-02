@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree view</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+    </style>
+</head>
+
+<body>
+    <h2>Tree view</h2>
+    <p>Example of a simple tree view implementation showcasing recursive usage of components.</p>
+
+    <!-- item template -->
+    <script type="text/x-template" id="item-template">
+        <li>
+            <div :class="{bold: isFolder}" @click="toggle" @dblclick="makeFolder">
+                {{ item.name }}
+                <span v-if="isFolder">[{{ isOpen ? '-' : '+' }}]</span>
+            </div>
+
+            <ul v-show="isOpen" v-if="isFolder">
+                <tree-item
+                        class="item"
+                        v-for="(child, index) in item.children"
+                        :key="index"
+                        :item="child"
+                        @make-folder="$emit('make-folder', $event)"
+                        @add-item="$emit('add-item', $event)">
+                </tree-item>
+
+                <li class="add" @click="$emit('add-item', item)">
+                    +
+                </li>
+            </ul>
+        </li>
+    </script>
+
+    <p>(You can double click on an item to turn it into a folder.)</p>
+
+    <!-- the demo root element -->
+    <ul id="demo">
+        <tree-item
+                class="item"
+                :item="treeData"
+                @make-folder="makeFolder"
+                @add-item="addItem">
+        </tree-item>
+    </ul>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

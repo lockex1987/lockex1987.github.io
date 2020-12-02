@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Phòng chống lỗi ATTT CSRF">
+    <title>Phòng chống lỗi ATTT CSRF</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Phòng chống lỗi ATTT CSRF</h2>
+      <p>Laravel rất dễ dàng để bảo vệ các ứng dụng của bạn từ tấn công giả mạo
+        <a href="http://en.wikipedia.org/wiki/Cross-site_request_forgery" target="_blank">cross-site
+          request forgery</a> (CSRF). Cross-site request forgery là một loại mã
+        độc, theo đó các lệnh trái phép được thực hiện thay cho một người dùng
+        đã xác thực.</p>
+      <p>Laravel tự động tạo ra một CSRF "token" cho mỗi người dùng hoạt động
+        quản lý bởi ứng dụng. Mã này dùng để xác minh rằng người dùng là một
+        trong những người dùng thực sự gửi yêu cầu đến ứng dụng.</p>
+      <p>Bất cứ khi nào bạn tạo một HTML form trong ứng dụng, bạn phải thêm
+        trường CSRF token vào trong form để bảo mật CSRF middleware có thể xác
+        nhận request. Bạn có thể sử dụng <code>csrf_field</code> để sinh ra
+        trường đấy:</p>
+      <pre>&lt;form method="POST" action="/profile"&gt;
+    @csrf
+    ...
+&lt;/form&gt;</pre>
+      <p>Class <code>VerifyCsrfToken</code> middleware, bao gồm nhóm <code>web</code>
+        middleware, sẽ tự động xác minh token từ request input giống với token
+        lưu trong session.</p>
+      <p>Middleware VerifyCsrfToken sẽ kiểm tra token ở:</p>
+      <ul>
+        <li>Tham số _token trong request</li>
+        <li>Giá trị của header X-CSRF-TOKEN (token này không được mã hóa)</li>
+        <li>Giá trị của header X-XSRF-TOKEN (token này được mã hóa)</li>
+      </ul>
+      <p>Cookie có thông tin XSRF-TOKEN (không có X- ở đầu tên) lưu token đã
+        được mã hóa. Cookie này vẫn được đẩy lên trong từng request, nhưng không
+        được sử dụng.</p>
+      <h3>Loại bỏ URI khỏi bảo mật CSRF</h3>
+      <p>Thỉnh thoảng bạn muốn loại bỏ một URI nào đó khỏi bảo mật CSRF. Ví dụ,
+        nếu bạn sử dụng <a href="https://stripe.com/" target="_blank">Stripe</a>
+        để xử lý thanh toán và được sử dụng hệ thống webhook của họ, bạn sẽ cần
+        loại bỏ các xử lý route từ bảo mật CSRF của Stripe webhook, khi đấy
+        Stripe sẽ không biết CSRF token gửi từ route của bạn.</p>
+      <p>Thông thường, bạn nên loại bỏ các loại routes từ bên ngoài nhóm
+        middleware <code>web</code> mà <code>RouteServiceProvider</code> áp
+        dụng cho tất cả các route trong <code>routes/web.php</code> file. Tuy
+        nhiên, bạn có thể loại bỏ route bằng cách thêm URI vào thuộc tính <code>$except</code>
+        trong middleware <code>VerifyCsrfToken</code>:</p>
+      <pre><code>&lt;?php
+
+namespace App\Http\Middleware;
+
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
+
+class VerifyCsrfToken extends BaseVerifier
+{
+    /**
+     * The URIs that should be excluded from CSRF verification.
+     *
+     * @var  array
+     */
+    protected $except = [
+        'stripe/*',
+    ];
+}</code></pre>
+      <h3>X-CSRF-TOKEN</h3>
+      <p>Ngoài việc kiểm tra CSRF token như một tham số POST, middleware <code>VerifyCsrfToken</code>
+        cũng kiểm tra các yêu cầu <code>X-CSRF-TOKEN</code> request header. Bạn
+        có thể, ví dụ, lưu token trong thẻ <code>meta</code>:</p>
+      <pre><code>&lt;meta name="csrf-token" content="TAoJ9p7uOI0xWTiHzY7m4u0LSPY0xSpDMwZcptNT"&gt;</code></pre>
+      <p>Sau đó, khi bạn đã tạo ra thẻ <code>meta</code>, bạn có thể chỉ định
+        một thư viện như jQuery để tự động thêm tất cả request header. Điều này
+        rất đơn giản, thuận tiện để bảo mật CSRF các ứng dụng AJAX của bạn:</p>
+      <pre>$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[]').attr('content')
+    }
+});</pre>
+      <h3>X-XSRF-TOKEN</h3>
+      <p>Laravel lưu CSRF token hiện tại trong <code>XSRF-TOKEN</code> cookie
+        mỗi khi có response tạo ra bởi framework. Bạn có thể sử dụng cookie để
+        đặt giá trị các yêu cầu <code>X-XSRF-TOKEN</code> request header.</p>
+      <p>Cookie này chủ yếu gửi như một tiện nghi, kể từ khi có JS framework,
+        như Angular, nó tự động thêm giá trị vào <code>X-XSRF-TOKEN</code>
+        header.</p>
+      <p>Thư viện Axios tự động thêm header <code>X-XSRF-TOKEN</code> với giá
+        trị ở <code>XSRF-TOKEN</code> cookie.</p>
+      <h3>Cookie SameSite</h3>
+      <p>Giờ đây, chúng ta có thể ngăn chặn lỗi CSRF một cách đơn giản bằng cách
+        thiết lập cookie là SameSite.</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://laravel.com/docs/master/csrf" target="_blank">https://laravel.com/docs/master/csrf</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

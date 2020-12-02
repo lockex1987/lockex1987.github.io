@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CSS tabs with sliding underline</title>
+</head>
+<body>
+	<style>
+body { background-color: #d9d9d9; }
+.Panel { width: 100%; max-width: 600px; margin: 30px auto; }
+.Panel__body { background-color: #f2f2f2; padding: 10px 20px; }
+.Tabs { position: relative; background-color: #fff; margin: 0; padding: 0; list-style: none; }
+.Tabs:after { content: ' '; display: table; clear: both; }
+.Tabs__tab { float: left; width: 33.333%; text-align: center; }
+.Tabs__tab:first-child.active ~ .Tabs__presentation-slider { left: 0; }
+.Tabs__tab:nth-child(2).active ~ .Tabs__presentation-slider { left: 33.333%; }
+.Tabs__tab:nth-child(3).active ~ .Tabs__presentation-slider { left: calc(33.333% * 2); }
+.Tabs__presentation-slider { position: absolute; bottom: 0; left: 0; width: 33.333%; height: 2px; background-color: #4A66F4; transition: left .25s; }
+.Tab > a { display: block; padding: 10px 12px; text-decoration: none; color: #666; transition: color .15s; }
+.Tab.active > a { color: blue; }
+.Tab:hover > a { color: red; }
+	</style>
+
+	<div class="Panel">
+		<nav>
+			<ul class="Tabs">
+				<li class="Tabs__tab Tab active"><a href="#">Tab item</a></li>
+				<li class="Tabs__tab Tab"><a href="#">Mega</a></li>
+				<li class="Tabs__tab Tab"><a href="#">Pane name</a></li>
+
+				<li class="Tabs__presentation-slider" role="presentation"></li>
+			</ul>
+		</nav>
+		<div class="Panel__body">
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis sint, facere aut, mollitia nihil tenetur sed vitae alias dolorum delectus.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, earum.</p>
+		</div>
+	</div>
+
+	<script>
+/*
+A Pen created at CodePen.io. You can find this one at https://codepen.io/everdimension/pen/xZLggo.
+
+When using horizontal tabs, often an underline (border-bottom) is used to display an active tab.
+When switching tabs, we often wish to animate the underline to slide to the tab which just became active.
+Since you can't just slide "border-bottom", I created a presentational "li" tag which is playing the role of the underline.
+
+Restrictions:
+1) Tabs have to be equal in width
+2) Depending on the amount of tabs, css should be manually updated.
+
+Both restrictions can be solved with javascript, but for now this is a pure-css demonstration
+*/
+var tabs = document.getElementsByClassName('Tab');
+
+Array.prototype.forEach.call(tabs, function(tab) {
+	tab.addEventListener('click', setActiveClass);
+});
+
+function setActiveClass(evt) {
+	Array.prototype.forEach.call(tabs, function(tab) {
+		tab.classList.remove('active');
+	});
+
+	evt.currentTarget.classList.add('active');
+
+	//TODO: Dùng JavaScript để tính left của .Tabs__presentation
+}
+	</script>
+</body>
+</html>

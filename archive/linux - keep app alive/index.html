@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Giữ tiến trình luôn chạy trên Linux">
+    <title>Giữ tiến trình luôn chạy</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Giữ tiến trình luôn chạy</h2>
+      <p>Linux crontab kiểm tra chương trình đang chạy hay không và start</p>
+      <p>keep.sh</p>
+      <pre>#!/bin/sh
+PROCESSFILE='process-log.jar'
+if ps ax | grep -v grep | grep $PROCESSFILE &gt; /dev/null
+then
+	echo "$PROESSFILE is running, everything is fine"
+else
+	echo "$PROCESSFILE is not running"
+	cd "/var/www/html/process-log/"
+	java -jar "process-log.jar" &gt;&gt; process-log.log &amp;
+fi</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

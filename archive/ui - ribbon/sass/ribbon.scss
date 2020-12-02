@@ -1,0 +1,50 @@
+.ribbon {
+	overflow: hidden;
+	position: relative;
+
+	.ribbon-content {
+		background: #f0ad4e;
+		color: #FFF;
+		text-align: center;
+		transform: rotate(-40deg) translate(-25px, -15px);
+		width: 100px;
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+}
+
+.simple-ribbon {
+    $height: 20px;
+    $color: #F47530;
+
+    top: 10px;
+    right: -6px;
+    height: $height;
+    line-height: $height;
+    background-color: $color;
+    border-bottom-right-radius: 3px;
+
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
+        height: 0;
+        width: 0;
+    }
+
+    &:before {
+        right: 0px;
+        top: -6px;
+        border-bottom: 6px solid #8D5A20;
+        border-right: 6px solid transparent;
+    }
+
+    &:after {
+        top: 0;
+        left: -$height / 2;
+        border-bottom: $height / 2 solid $color;
+        border-top: $height / 2 solid $color;
+        border-left: $height / 2 solid transparent;
+    }
+}

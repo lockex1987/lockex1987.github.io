@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Danh sách thẻ" />
+
+    <title>Vue tags input</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+    <article>
+        <h2>Vue tags input</h2>
+        <p>Trang chủ: <a target="_blank" href="http://www.vue-tags-input.com/#/">vue-tags-input.com</a>.</p>
+
+        <h3>Demo 1: Cơ bản</h3>
+        <div id="demo1">
+            <vue-tags-input v-model="tag" :tags="tags" :autocomplete-items="filteredItems"
+                @tags-changed="newTags => tags = newTags"
+                :max-tags="5">
+            </vue-tags-input>
+			
+			<p>Kết quả:</p>
+			<pre>{{ tags }}</pre>
+        </div>
+
+        <h3>Demo 2: Auto-complete với API</h3>
+        <div id="demo2">
+            <vue-tags-input v-model="tag" :tags="tags" :autocomplete-items="autocompleteItems"
+                :add-only-from-autocomplete="true" @tags-changed="update">
+            </vue-tags-input>
+        </div>
+
+        <h3>Demo 3: Hook</h3>
+
+        <div id="demo3">
+            <vue-tags-input v-model="tag" :tags="tags" @tags-changed="newTags => tags = newTags"
+                @before-adding-tag="checkTag">
+            </vue-tags-input>
+
+            <p v-if="handlers.length > 0">
+                <button @click="cancel">
+                    Cancel
+                </button>
+
+                <button @click="add">
+                    Add
+                </button>
+            </p>
+        </div>
+		
+		<h3>Demo 4: Hiển thị dữ liệu cũ</h3>
+		<div id="demo4">
+            <vue-tags-input v-model="tag" :tags="tags" @tags-changed="newTags => tags = newTags">
+            </vue-tags-input>
+			
+			<p>Kết quả:</p>
+			<pre>{{ tags }}</pre>
+        </div>
+    </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/@johmun/vue-tags-input/dist/vue-tags-input.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

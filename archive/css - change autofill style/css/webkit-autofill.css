@@ -1,0 +1,31 @@
+/* Change auto-complete styles in Chrome */
+:-webkit-autofill,
+:-webkit-autofill:hover, 
+:-webkit-autofill:focus {
+    /* Có thể thiết lập cả border */
+    /*border: 3px solid green;*/
+
+    /* Màu của chữ cũng bị thay đổi,  chuyển về màu khi bình thường */
+    /*-webkit-text-fill-color: #9ECCF8;*/
+
+    /* Thời gian đổi màu trong 5000s (một thời gian dài) */
+    /*transition: background-color 5s ease-in-out 0s;*/
+
+    /* Màu nền cùng màu nền của cha (nhưng sẽ bị nháy nháy nếu trình duyệt fill luôn, ví dụ ở màn hình đăng nhập) */
+    /*-webkit-box-shadow: 0 0 0px 1000px #002864 inset;*/
+
+    /* Dùng thế này không ăn */
+    /*background-color: transparent !important;*/
+}
+
+@-webkit-keyframes autofill {
+    to {
+        color: red;
+        background: transparent;
+    }
+}
+
+:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+}

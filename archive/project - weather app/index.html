@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta charset="utf-8"> 
+  <meta name="description" content=""> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <title> Dự báo thời tiết </title> 
+  <link rel="stylesheet" type="text/css" href="css/style.css"> 
+  <link rel="icon" href="../../images/favicon.png">
+  <link rel="stylesheet" href="../../css/style.css">
+ </head> 
+ <body>
+  <article>
+   <div id="app"> 
+    <!-- Ảnh thành phố --> 
+    <div id="d1" :style="{ backgroundImage: 'url(' + currentCity.image + ')' }"> 
+     <div class="title" style="background: rgba(0, 0, 0, 0.05);">
+       {{ currentCity.name }} 
+     </div> 
+    </div> 
+    <!-- Thời tiết ban ngày --> 
+    <div id="d2"> 
+     <div class="title">
+       Ngày 
+     </div> 
+     <!-- Hôm nay --> 
+     <div class="icon" v-if="todayWeatherInfo.iconDay"> 
+      <img :src="todayWeatherInfo.iconDay" alt=""> 
+     </div> 
+     <div class="description">
+       {{ todayWeatherInfo.weatherDay }} 
+     </div> 
+     <div class="temp">
+       {{ todayWeatherInfo.maxTemp }} °C 
+     </div> 
+     <!-- Các hôm tiếp theo --> 
+     <div class="next"> 
+     </div> 
+     <div class="list" v-if="days.length > 1"> 
+      <weather-day v-for="(day, index) in days" :key="index" v-if="index > 0" :day="day" :mode="'day'"></weather-day> 
+     </div> 
+    </div> 
+    <!-- Thời tiết ban đêm --> 
+    <div id="d3"> 
+     <div class="title">
+       Đêm 
+     </div> 
+     <!-- Hôm nay --> 
+     <div class="icon" v-if="todayWeatherInfo.iconNight"> 
+      <img :src="todayWeatherInfo.iconNight" alt=""> 
+     </div> 
+     <div class="description">
+       {{ todayWeatherInfo.weatherNight }} 
+     </div> 
+     <div class="temp">
+       {{ todayWeatherInfo.minTemp }} °C 
+     </div> 
+     <!-- Các hôm tiếp theo --> 
+     <div class="next"> 
+     </div> 
+     <div class="list" v-if="days.length > 1"> 
+      <weather-day v-for="(day, index) in days" :key="index" v-if="index > 0" :day="day" :mode="'night'"></weather-day> 
+     </div> 
+    </div> 
+    <!-- Chọn thành phố --> 
+    <div class="cities"> 
+     <div v-for="(city, index) in cities" :key="index" :class="{city: true, active_city: cityIndex == index}" @click="changeCity(index)">
+       {{ city.name }} 
+     </div> 
+    </div> 
+   </div> 
+   <script src="lib/vue/vue.min.js"></script> 
+   <script src="js/common.js"></script> 
+   <script src="js/accuWeatherApi.js"></script> 
+   <script src="js/weather-day.js"></script> 
+   <script src="js/index.js"></script>
+  </article>
+  <script src="../../js/docs.js"></script>
+ </body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Rest Parameter</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Rest Parameter">
+ </head> 
+ <body> 
+  <article> 
+   <h2>ES6 Rest Parameter</h2> 
+   <p>Rest parameter trong ES6 giúp chúng ta có thể định nghĩa một hàm với số lượng tham số có thể thay đổi tuỳ ý. Hay nói theo cách khác khi chúng ta không biết chắc chắn số lượng tham số cần có của một hàm chúng ta có thể sử dụng rest parameter.</p> 
+   <pre><code>function f(param_1, param_2, ...rest_parameter) {
+  // ...
+}</code></pre> 
+   <h3>Cú pháp Rest Parameter</h3> 
+   <p>Rest parameter được phân biệt với các parameter thông thường thông qua 3 dấu chấm <code>...</code> được đặt phía trước tên của parameter đặc biệt này:</p> 
+   <pre><code>function f(param_1, param_2, ...rest_parameter) {
+  // ...
+}</code></pre> 
+   <p>Ví dụ:</p> 
+   <pre><code>// Tham số "numbers" ở ví dụ dưới là một rest parameter
+function sumNumbers(...numbers) {  
+  console.log(numbers);
+}
+
+// Gọi hàm "sumNumbers()"
+sumNumbers(2, 3); // [2, 3]
+sumNumbers(2, 3, 100); // [2, 3, 100]</code></pre> 
+   <h3>Sử dụng Rest Parameter</h3> 
+   <p>Rest parameter nhóm tất cả các đối số truyền vào khi gọi hàm thành một array (bỏ qua các đối số truyền vào cho tham số thông thường của hàm).</p> 
+   <pre><code>function sumNumbers(message, ...numbers) {
+  let total = 0;
+  for (var i = 0; i &lt; numbers.length; i++) {
+    total += numbers[i];
+  }
+  console.log(message, total);
+}
+
+sumNumbers("Tổng là: ", 2, 3); // Tổng là:  5
+sumNumbers("Giá trị của tổng là: ", 2, 3, 100); // Giá trị của tổng là:  105</code></pre> 
+   <p>------------------------------------</p> 
+   <p><a href="rest-parameters.js">rest-parameters.js</a></p> 
+   <p><br> </p> 
+   <p></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

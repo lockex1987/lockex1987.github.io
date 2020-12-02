@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Export và import file Excel với JS">
+    <title>Export và import file Excel với JS</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+	
+  </head>
+  <body>
+    <article>
+      <h2>Export và import file Excel với JS</h2>
+      <p>Chúng ta sẽ chỉ thao tác với định dạng xlsx cho đơn giản. Định dạng
+        xlsx thực ra chỉ là file zip của các file xml.</p>
+      <ul>
+        <li>JSZip</li>
+        <li>Open Office XML</li>
+        <ul>
+          <li>WordprocessingML (docx)</li>
+          <li>SpreadsheetML (xlsx)</li>
+        </ul>
+      </ul>
+      <p>Sử dụng thư viện <a target="_blank" href="https://sheetjs.com/">SheetJS
+          js-xlsx</a> cho đầy đủ.</p>
+      <p>Không có format style, merge cell,... ở bản community.</p>
+      <p>Thử dùng exceljs xem.</p>
+      <h3>Demo export</h3>
+      <div class="mb-5"> <button id="buttonExport" class="btn btn-primary">
+          Export Excel </button> </div>
+      <h3>Demo export table</h3>
+      <table id="dataTable" class="table">
+        <tbody>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Company</th>
+          </tr>
+          <tr>
+            <td>Harry</td>
+            <td>Potter</td>
+            <td>WB</td>
+          </tr>
+          <tr>
+            <td>Captain</td>
+            <td>America</td>
+            <td>Marvel</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="mb-5"> <button id="buttonExportTable" class="btn btn-primary">
+          Export Excel </button> </div>
+      <h3>Demo import</h3>
+      <div class="mb-2"> <input id="inputExcel" type="file"> </div>
+      <div class="mb-5" id="importResult"></div>
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://github.com/SheetJS/sheetjs">SheetJS/sheetjs:
+          SheetJS Community Edition</a></p>
+      <p><a target="_blank" href="https://redstapler.co/category/excel/">Excel
+          Archives | Red Stapler</a></p>
+      <p><a target="_blank" href="https://github.com/exceljs/exceljs">exceljs/exceljs:
+          Excel Workbook Manager</a></p>
+      <p><a target="_blank" href="https://github.com/jmaister/excellentexport">jmaister/excellentexport:
+          Javascript export to Excel</a> </p>
+      <p><a target="_blank" href="https://github.com/egeriis/zipcelx">egeriis/zipcelx:
+          Turns JSON data into `.xlsx` files in the browser</a> </p>
+      <p><a target="_blank" href="https://medium.com/@Nopziiemoo/create-excel-files-using-javascript-without-all-the-fuss-2c4aa5377813">Create
+          Excel files using JavaScript without all the fuss</a></p>
+      <p><a target="_blank" href="https://docs.sheetjs.com/#sheetjs-js-xlsx">xlsx
+          · docs</a></p>
+      <p><a target="_blank" href="https://spin.atomicobject.com/2018/11/28/nodejs-excel-file-generation/">Automating
+          Excel File Generation using Node.js and ExcelJS</a></p>
+      <p>----</p>
+      <p><br>
+      </p>
+      <p><a href="https://lockex1987.github.io/posts/laravel%20-%20excel/">Laravel
+          Excel</a></p>
+      <p><a href="https://lockex1987.github.io/posts/php%20-%20excel/">Thao tác
+          file Excel với PHP</a></p>
+      <p><a href="https://lockex1987.github.io/posts/php%20-%20excel%20error/">Lỗi
+          xuất báo cáo Excel với PHP</a></p>
+      <p><a href="https://lockex1987.github.io/posts/java%20-%20excel/">Handle
+          Excel files with Java</a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <!--script src="libs/sheetjs/xlsx.full.min.js"></script>-->
+    <script src="libs/file-saver/FileSaver.js"></script>
+    <script src="js/demo-export.js"></script>
+    <script src="js/demo-export-table.js"></script>
+    <script src="js/demo-import.js"></script>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

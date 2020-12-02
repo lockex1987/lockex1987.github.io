@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sửa dụng Sass để tổ chức CSS">
+    <title>Sass</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Sass</h2>
+      <p>Sass là một cách viết CSS kiểu mới, giúp bạn quản lí code CSS một cách
+        khoa học hơn, dễ quản lí, sửa chữa, thích hợp khi làm các dự án lớn. Nhờ
+        các tính năng như biến, hàm, mixins... các mã CSS sẽ trở nên có tổ chức
+        cho phép các nhà phát triển web làm việc nhanh và ít gặp lỗi hơn.</p>
+      <p>Các bạn có thể tìm hiểu thêm về Sass tại trang chủ <a target="_blank"
+
+          href="http://sass-lang.com/">sass-lang.com</a>.</p>
+      <h3>Cài đặt</h3>
+      <p>Sass là một CSS processor có đuôi file là <code>.scss</code> khác với
+        CSS là <code>.css</code>. File Sass thì trình duyệt không hiểu được nên
+        bạn phải dùng cách nào đó để chuyển nó sang file CSS.</p>
+      <p>Có thể sử dụng phần mềm <a target="_blank" href="http://koala-app.com/">Koala</a>.
+        Phần mềm hỗ trợ Windows, Linux, Mac. Phần mềm hỗ trợ cả Less nữa.</p>
+      <p>Cách khác là sử dụng package sass của Node. Cài đặt bằng dòng lệnh như
+        sau:</p>
+      <pre>npm install -g sass</pre>
+      <p>Compile ra màn hình:</p>
+      <pre>sass demo.scss</pre>
+      <p>Compile ra file:</p>
+      <pre>sass demo.scss demo.css</pre>
+      <h3>Comment</h3>
+      <p>Bạn có thể sử dụng comment chuẩn của CSS <code>/* */</code> hoặc <code>//</code>
+        của Sass để comment một dòng.</p>
+      <h3>Các rule lồng nhau</h3>
+      <p>Rule lồng nhau cho phép viết các code CSS lồng vào nhau. Khi biên dịch,
+        Sass sẽ cho ra tập tin CSS với đầy đủ các selector theo đúng chuẩn. Kiểu
+        viết này giống với kiểu phân cấp trong HTML.</p>
+      <p>Ví dụ:</p>
+      <pre>ul.menu {
+    list-style: none;<br>
+    li {
+        float: left;<br>
+        a {
+            text-decoration: none;
+            color: #696969;
+        }
+    }
+}
+</pre>
+            <h3>Các thuộc tính lồng</h3><p> Kiểu viết này sẽ gom các thuộc tính có cùng namespaces giống nhau, ví dụ như <code>margin-left</code>, <code>margin-right</code>, <code>margin-top</code>, <code>margin-bottom</code>... Xem ví dụ ở dưới để hiểu cách viết:</p><pre>a {
+    border: {
+        left: 1px solid green;
+        right: 1px solid blue;                
+    }
+}</pre>
+   <p>Chú ý có dấu hai chấm ở sau tên thuộc tính.</p> 
+      <h3>Tham chiếu đến selector cha</h3>
+            <p>Sử dụng kí hiệu <code>&amp;</code> đứng trước hiệu ứng mà chúng ta muốn.
+      Ví dụ ta muốn khi hover vào thẻ a thì có gạch chân và đổi màu chữ thì viết
+      như sau:</p>
+            <pre>a {
+    text-decoration: none;
+    color: #696969;
+
+    &amp;:hover {
+        text-decoration: underline;
+        color: #999;                
+    }
+}
+</pre>
+            <p>Ta cũng có thể sử dụng với các cái khác như <code>::before</code>, <code>::after</code>,
+      khi thành phần đó có class nào đó (ví dụ <code>&amp;.active</code>).</p>
+      
+      <h3>Biến</h3>
+            <p>Giống với các ngôn ngữ lập trình ta khai báo biến để lưu trữ một giá trị
+      được sử dụng nhiều lần. Để khai báo một biến ta sử dụng kí tự <code>$</code>
+      đằng trước tên biến.</p>
+            <pre>$textSuccess: #3c763d;
+</pre>
+      <p>Để sử dụng ta chỉ gọi tên biến đó ra:</p>
+      <pre>h1.big-title {<br>    color: $textSuccess;<br>}
+</pre>
+      <h3>Biến toàn cục</h3><p> Ở ví dụ trên nếu ta khai báo biến 
+   <code>$textSuccess</code> ở bên ngoài không nằm trong bất kì bộ chọn nào thì ở chỗ nào ta cũng có thể gọi được đến biến đó. Nhưng nếu làm ngược lại tức là bạn khai báo biến ở bên trong 1 bộ chọn thì phạm vi của biến sẽ chỉ nằm trong bộ chọn đấy. Xem ví dụ sau sẽ dễ hiểu và giải thích hơn.</p><pre>h2 {
+    $textSuccess: #3c763d;<br>
+    span {
+        color: $textSuccess;
+    }
+}<br>
+h3 {
+    color: $textSuccess;
+}
+</pre> 
+   <p>Nhìn ví dụ trên bạn có thể hiểu được là biến <code>$textSuccess</code> được khai báo bên trong bộ chọn selector của <code>h2</code> nên thẻ <code>span</code> nằm trong <code>h2</code> có thế sử dụng được nhưng <code>h3</code> thì không. Để <code>h3</code> sử dụng được biến trên thì ta thêm <code>!global</code> như dưới đây là OK. </p> 
+   <pre>h2 {
+    $textSuccess: #3c763d !global;<br>
+    span {
+        color: $textSuccess;
+    }
+}<br>
+h3 {
+    color: $textSuccess;
+}</pre>
+            
+            <h3>Import</h3> 
+   <p>Trong thực tế khi lập trình Sass ta thường chia nhỏ ra các file đảm nhiệm các chức năng khác nhau như <code>_color.scss</code> hay <code>_variables.scss</code> rồi dùng từ khóa <code>@import</code> để gọi vào.</p>
+   <p>File <code>_colors.scss</code>:</p>
+   <pre>$primary-300 { #64B5F6 };
+$primary-400 { #42A5F5 };
+$primary-600 { #1E88E5 };
+$primary-700 { #1976D2 };
+$primary-800 { #1565C0 };
+</pre> 
+   <p>File <code>_variables.scss</code>:</p>
+   <pre>$font-size-base:          14px;
+$font-size-large:         ceil(($font-size-base * 1.25)); // ~18px
+$font-size-small:         ceil(($font-size-base * 0.85)); // ~12px
+</pre> 
+   <p>File <code>style.scss</code> để import 2 file ở trên ta viết code như sau</p>
+   <pre>@import "variables";
+@import "colors";
+
+.title {
+    font-size: $font-size-small;
+    color: $primary-300;
+}
+</pre> 
+   <p> Lưu ý:</p> 
+    
+   <ul> 
+    <li>3 file ở trên nằm cùng cấp ngang hàng với nhau</li> 
+    <li>Khi import việc ghi cả đuôi file <code>scss</code> là không cần thiết</li> 
+    <li>Ta thấy 2 file <code>_colors.scss</code> và <code>_variables.scss</code> có gạch dưới ở phía trước, đó là cách dùng của partial, điều này có nghĩa Sass sẽ không biên dịch các code bên trong ra CSS.</li> 
+   </ul> 
+    <h3>Extend</h3> 
+   <p> Kế thừa các thuộc tính của một selector khác. Sử dụng kí tự <code>@extend</code>.</p> 
+    
+   <pre>.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    // ...
+}<br>
+.btn-primary {
+    @extend .btn;
+<br>    color: #fff;
+    background-color: #2196F3;
+    border-color: #2196F3;
+}
+</pre> 
+   <p>Kết quả:</p> 
+    
+   <pre>.btn, .btn-primary {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+}<br>
+.btn-primary {
+    color: #fff;
+    background-color: #2196F3;
+    border-color: #2196F3; 
+}
+</pre> 
+   <p>Vùng chọn <code>%extend</code> sẽ chỉ kế thừa các thuộc tính mà không compile.</p> 
+    
+   <pre>%btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+}<br>
+.btn-primary {
+    @extend %btn;
+<br>    color: #fff;
+    background-color: #2196F3;
+    border-color: #2196F3;
+}
+</pre> 
+   <p> Kết quả:</p> 
+    
+   <pre>.btn-primary {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+}<br>
+.btn-primary {
+    color: #fff;
+    background-color: #2196F3;
+    border-color: #2196F3; 
+}</pre>
+            
+            <h3>Các kiểu dữ liệu</h3> 
+   <p> Sass hỗ trợ 8 kiểu dữ liệu khác nhau:</p> 
+    
+   <ul> 
+    <li>số: 1.2, 13, 10px</li> 
+    <li>xâu, có hoặc không có dấu nháy: "foo", 'foo', foo</li> 
+    <li>màu sắc: blue, green, #04a3f9, rgba(255, 0, 0, 0.5)</li> 
+    <li>boolean: true, false</li> 
+    <li>null: null</li> 
+    <li>danh sách các giá trị, ngăn cách nhau bởi dấu cách hoặc dấu phẩy: 1.5em 1em 0 2em, Helvetica, Arial, sans-serif</li> 
+    <li>map: (key1: value1, key2: value2)</li> 
+    <li>tham chiếu hàm</li> 
+   </ul> 
+   <h3>Các toán tử</h3> 
+   <p> Sass hỗ trợ các kiểu toán tử so sánh, tính toán cộng, trừ, nhân, chia, lấy dư. Ngoài ra còn dùng được khi nối chuỗi.</p> 
+   <h4>Các toán tử với dữ liệu số</h4> 
+   <p> Các kiểu hỗ trợ tính toán so sánh áp dụng với kiểu dữ liệu là số. Xem ví dụ dưới đây để hiểu cách làm việc của Sass (lưu ý đặc biệt giữa kí hiệu slash <code>/</code> và phép chia <code>/</code>).</p> 
+    
+   <pre>p {
+    font: 10px/8px;                // Plain CSS, no division
+    $width: 1000px;
+    width: $width/2;               // Uses a variable, does division
+    height: (500px/2);             // Uses parentheses, does division
+    line-height: round(1.5)/2;     // Uses a function, does division
+    margin-left: 5px + 8px/2px;    // Uses +, does division
+    font: (italic bold 10px/8px);  // In a list, parentheses don't count
+}
+</pre> 
+   <p>Khi biên dịch ra CSS:</p> 
+    
+   <pre>p {
+    font: 10px/8px;
+    width: 500px;
+    height: 250px;
+    line-height: 1;
+    margin-left: 9px;
+    font: italic bold 10px/8px;
+}
+</pre> 
+   <h4>Các toán tử với màu sắc</h4><p> Sass hỗ trợ việc tính toán các giá trị màu sắc lần lượt dựa trên 3 màu chính red, green, blue.</p><pre>.ex1 {
+    color: #010203 + #040506;
+}
+.ex2 {
+    color: #010203 * 2;
+}
+.ex3 {
+    color: rgba(255, 0, 0, 0.75) + rgba(0, 255, 0, 0.75);
+}
+</pre> 
+   <p>- Với ex1: 01 + 04 = 05, 02 + 05 = 07, 03 + 06 = 09</p> 
+   <p>- Với ex2: 01 * 2 = 02, 02 * 2 = 04, 03 * 2 = 06</p> 
+   <p>- Với ex3: cộng giá trị tương ứng với mỗi phần tử </p> 
+   <pre>.ex1 {
+    color: #050709;
+}
+.ex2 {
+    color: #020406;
+}
+.ex3 {
+    color: rgba(255, 255, 0, 0.75);
+}
+</pre> 
+   <h4>Các toán tử với xâu</h4> 
+   <p> Nối chuỗi lại với nhau sử dụng dấu <code>+</code>, lưu ý chỉ áp dụng với kiểu dữ liệu là xâu.</p> 
+    
+   <pre>p:before {
+    content: "Foo " + Bar;
+    font-family: sans- + "serif";
+    margin: 3px + 4px auto;
+}
+</pre> 
+   <p>Kết quả:</p> 
+    
+   <pre>p:before {
+    content: "Foo Bar";
+    font-family: "san-serif";
+    margin: 7px auto;
+}
+</pre> 
+   <h4>Interpolation</h4> 
+   <p> Sử dụng để lấy giá trị của một biến gán vào bộ chọn selector hoặc tên của thuộc tính sử dụng kí tự <code>#{ }</code>.</p> 
+    
+   <pre>$name: foo;
+$attr: border;
+$font-size: 12px;
+$line-height: 30px;<br>
+// Wrong
+p.$name {
+    $attr-color: blue;
+    font: $font-size/$line-height;
+}<br>
+// Correct
+p.#{$name} {
+    #{$attr}-color: blue;
+    font: #{$font-size}/#{$line-height};
+}
+</pre> 
+   <p>Kết quả:</p> 
+    
+   <pre>p.foo {
+    border-color: blue; 
+    font: 12px/30px;
+}</pre> 
+    
+    <h3>Các cú pháp điều khiển</h3> 
+    
+   <p>Phần này sẽ gồm 4 phần chính: <code>@if</code>, <code>@for</code>, <code>@each</code>, <code>@while</code>.</p> 
+   <h4>if</h4> 
+   <p>Kiểm tra một câu lệnh điều kiện và trả về một giá trị tương ứng.</p> 
+    
+   <pre>//  if(true, 1px, 2px) =&gt; 1px
+//  if(false, 1px, 2px) =&gt; 2px
+
+p {
+    @if 1 + 1 == 2 { border: 1px solid;  }
+    @if 5 &lt; 3      { border: 2px dotted; }
+    @if null       { border: 3px double; }
+}
+
+$type: monster;<br>
+h3 {
+    @if $type == ocean {
+        color: blue;
+    } @else if $type == matador {
+        color: red;
+    } @else if $type == monster {
+        color: green;
+    } @else {
+        color: black;
+    }
+}
+</pre> 
+   <p>Kết quả:</p> 
+    
+   <pre>p {
+    border: 1px solid;
+}
+
+h3 {
+    color: green;
+}
+</pre> 
+   <h4>for</h4> 
+   <p>Sử dụng vòng lặp <code>@for</code> cho các trường hợp biết trước số lần lặp lại khối lệnh.</p> 
+    
+   <pre>@for $i from 1 through 3 {
+    .item-#{$i} {<br>        width: 2em * $i;<br>    }
+}
+</pre> 
+   <p>Kết quả:</p> 
+    
+   <pre>.item-1 { width: 2em; }
+.item-2 { width: 4em; }
+.item-3 { width: 6em; }
+</pre> 
+   <h4>each</h4> 
+   <p>Vòng lặp <code>@each</code> dùng để lặp dữ liệu trong <code>list</code> hoặc <code>map</code>. Lưu ý trong Sass không có kiểu dữ liệu là mảng nhé.</p> 
+    
+   <pre>@each $name, $color in (item1, red), (item2, green), (item3, blue) {
+    .#{$name} {
+        background: url(../images/#{$name}.png);
+        color: #{$color};
+    }
+}
+</pre> 
+   <p>Kết quả khi compile:</p> 
+    
+   <pre>.item1 { 
+    background: url(../images/item1.png); 
+    color: red; 
+}
+.item2 { 
+    background: url(../images/item2.png); 
+    color: green; 
+}
+.item3 { 
+    background: url(../images/item3.png); 
+    color: blue; 
+}
+</pre> 
+   <h4>while</h4> 
+   <p>Vòng lặp <code>@while</code> sẽ thực hiện lặp đi lặp lại một khối công việc đến khi nào điều kiện đã cho còn là đúng.</p> 
+    
+   <pre>$i: 6;
+@while $i &gt; 0 {
+    .item-#{$i} { width: 2em * $i; }
+    $i: $i - 2;
+}
+</pre> 
+   <p>Kết quả:</p> 
+    
+   <pre>.item-6 { width: 12em; }
+.item-4 { width: 8em; }
+.item-2 { width: 4em; }</pre> 
+    
+    <h3>Hàm</h3> 
+   <p> Sử dụng kí tự <code>@function fname($params)</code> để khai báo một hàm.</p> 
+    
+   <p>Sử dụng <code>fname($params)</code> để gọi hàm. </p> 
+   <pre>$grid-width: 40px;
+
+@function grid-width($n) {
+    @return $n * $grid-width;
+}
+
+#sidebar {<br>    width: grid-width(5);<br>}
+</pre> 
+   <p>Kết quả khi compile CSS:</p> 
+    
+   <pre>#sidebar {<br>    width: 200px;<br>}
+</pre> 
+   <p>Lưu ý:</p> 
+    
+   <ul> 
+    <li>hàm có thể có tham số hoặc không có tham số</li> 
+    <li>hàm có thể truyền tham số mặc định vào trong param</li> 
+    <li>hàm cũng khá giống với mixin nên tùy vào mục đích sử dụng mà bạn lựa chọn loại nào để dùng</li> 
+    <li>thường ta dùng hàm khi muốn tính toán, so sánh giá trị rồi trả về một kết quả return</li> 
+   </ul> 
+            <h3>Mixin</h3> 
+   <p>Mixin cho phép bạn định nghĩa các thuộc tính CSS lại với nhau, về cơ bản nó mạnh hơn so với việc dùng biến chỉ lưu được một giá trị, cũng giống với <code>@extend</code> kế thừa các thuộc tính nhưng mixin còn hỗ trợ thêm cả tham số không khác gì một hàm.</p> 
+   <h4>Mixin không có tham số</h4> 
+   <p> Sử dụng <code>@mixin name</code> để khai báo.</p> 
+   <p>Sử dụng <code>@include name</code> để sử dụng. </p> 
+   <pre>@mixin BorderRadius {
+    border-radius: 50%;
+    -webkit-border-radius: 50%; 
+    -moz-border-radius: 50%;       
+    -o-border-radius: 50%;
+}<br>
+div.avatar {
+    width: 150px;
+    height: 150px;
+
+    @include BorderRadius;
+}
+</pre> 
+   <p>Kết quả CSS:</p> 
+    
+   <pre>div.avatar {
+    width: 150px;
+    height: 150px;
+
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+</pre> 
+   <h4>Mixin có tham số</h4> 
+   <p> Sử dụng <code>@mixin name($params)</code> để khai báo. Trong đó <code>$params</code> là các tham số truyền vào.</p> 
+   <p>Sử dụng <code>@include name($params)</code> để sử dụng.</p> 
+   <pre>@mixin BorderRadius($value){
+    border-radius: $value;
+    -webkit-border-radius: $value; 
+    -moz-border-radius: $value;       
+    -o-border-radius: $value;
+}<br>
+div.avatar {
+    width: 150px;
+    height: 150px;<br>
+    @include BorderRadius(10px);
+}
+</pre> 
+   <p> Kết quả CSS:</p> 
+    
+   <pre>div.avatar {
+    width: 150px;
+    height: 150px;<br>
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+</pre> 
+   <h4>Tham số mặc định</h4> 
+   <p>Một ví dụ sử dụng mixin với tham số mặc định.</p> 
+    
+   <pre>@mixin BorderRadius($value: 50%){
+    border-radius: $value;
+    -webkit-border-radius: $value; 
+    -moz-border-radius: $value;       
+    -o-border-radius: $value;
+}<br>
+div.avatar {
+    width: 150px;
+    height: 150px;
+
+    // khong co tham so, lay tham so mac dinh 50%
+    @include BorderRadius;<br>
+    // co tham so truyen vao 15px
+    @include BorderRadius(15px);
+}
+</pre> 
+   <p> Kết quả CSS:</p> 
+    
+   <pre>div.avatar {
+    width: 150px;
+    height: 150px;
+
+    // khong co tham so, lay tham so mac dinh 50%
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -o-border-radius: 50%;<br>
+    // co tham so truyen vao 15px
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -o-border-radius: 15px;
+}
+</pre> 
+   <h4>Keyword Arguments trong mixin</h4> 
+   <p>Keyword Arguments làm cho code của chúng ta dễ đọc hơn rất nhiều, ví dụ:</p> 
+   <pre>@mixin headline($size, $color: red) {
+    color: $color;
+    font-size: $size;
+}
+
+h1 {
+    @include headline($color: blue, $size: 12px);
+}
+</pre> 
+   <p>Và ta có kết quả ngay cả khi thứ tự biến truyền vào không đúng thứ tự:</p> 
+   <pre>h1 {
+    color: blue;
+    font-size: 12px;
+}
+</pre> 
+   <h4>Variable Arguments (tham số biến) trong mixin</h4> 
+   <p>Đôi khi ta cần mixin chấp nhận một số các tham số, ví dụ thuộc tính <code>padding</code> có thể có từ 1 đến 4 tham số. Trong trường hợp này, bạn có thể tạo ra một mixin sử dụng <code>Variable Arguments</code>, nó cho phép ta đóng gói các tham số như một danh sách. Các tham số biến giống như các tham số thông thường, ngoại trừ chúng thêm (...) vào cuối:</p> 
+   <pre>@mixin pad ($pads...) {
+    padding: $pads;
+}
+
+.one {
+    @include pad(20px);
+}<br>
+.two {
+    @include pad(10px 20px);
+}<br>
+.three {
+    @include pad(10px 20px 40px);
+}<br>
+.four {
+    @include pad(10px 20px 30px 20px);
+}
+</pre> 
+   <p>Kết quả của compile đoạn trên:</p> 
+   <pre>.one {
+    padding: 20px;
+}<br>
+.two {
+    padding: 10px 20px;
+}<br>
+.three {
+    padding: 10px 20px 40px;
+}<br>
+.four {
+    padding: 10px 20px 30px 20px;
+}</pre> 
+   <p>Ta cũng có thể thêm vào các tham số thông thường bên cạnh tham số biến:</p> 
+   <pre>@mixin pad ($color, $pads...) {
+    color: $color;
+    padding: $pads;
+}
+
+.four {
+    @include pad(orange, 10px 20px 30px 20px);
+}</pre> 
+   <p>Kết quả:</p> 
+   <pre>.four {
+    color: orange;
+    padding: 10px 20px 30px 20px;
+}
+</pre> 
+   <p>Giờ làm 1 đoạn code vui vẻ tổng hợp các thứ ở trên:</p> 
+   <pre>$box-style1: 5px, solid, red;
+$box-style2: (bStyle: dotted, bColor: blue, bWidth: medium);
+
+@mixin boxy ($bWidth, $bStyle, $bColor) {
+    border-width: $bWidth;
+    border-style: $bStyle;
+    border-color: $bColor;
+}
+
+.first {
+    @include boxy($box-style1...);
+}
+
+.second {
+    @include boxy($box-style2...);
+}
+</pre> 
+   <p>Nhìn là biết chúng ta sẽ có kết quả gì rồi đúng không?</p> 
+   <pre>.first {
+    border-width: 5px;
+    border-style: solid;
+    border-color: red;
+}
+
+.second {
+    border-width: medium;
+    border-style: dotted;
+    border-color: blue;
+}
+</pre> 
+   <h4>@content</h4> 
+   <p>Chúng ta có thể thêm vào mixin 1 khối style thông qua <code>@content</code>. Khối style thêm vào sẽ năm ở vị trí của <code>@content</code> trong mixin, ví dụ cho dễ hiểu:</p> 
+   <p>Viết mixin:</p> 
+   <pre>@mixin cont {
+    background-color: black;
+    color: white;<br>
+    @content;
+}
+
+div {
+    @include cont {
+        font-size: 12px;
+       font-style: italic;
+    }
+}
+</pre> 
+   <p>Kết quả:</p> 
+   <pre>div {
+    background-color: black;
+    color: white;
+    font-size: 12px;
+    font-style: italic;
+}
+</pre> 
+   <p><code>@content</code> hay được sử dụng với responsive.</p><h3>Responsive</h3><p>Giả sử chúng ta muốn có đoạn CSS responsive như sau:</p><pre>p {
+    font-size: 16px;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    p {
+        font-size: 18px;
+    }
+}
+
+@media (min-width: 1024px) {
+    p {
+        font-size: 20px;
+    }
+}</pre><p>Chúng ta có thể viết lại bằng Sass như sau:</p><pre>$tablet: "(min-width: 768px) and (max-width: 1023px)";
+$desktop: "(min-width: 1024px)";
+
+p {
+    font-size: 16px;
+}
+
+@media #{$tablet} {
+    p {
+        font-size: 18px;
+    }
+}
+
+@media #{$desktop} {
+    p {
+        font-size: 20px;
+    }
+}</pre><p>Chú ý:</p><ul><li>Giá trị khi khai báo biến phải để trong dấu nháy kép <code>"</code></li><li>Sử dụng biến bằng ở trong <code>#{ }</code></li></ul><p>Chúng ta cũng có thể cho @media vào trong từng phần tử:</p><pre>$tablet: "(min-width: 768px) and (max-width: 1023px)";
+$desktop: "(min-width: 1024px)";
+
+p {
+    font-size: 16px;
+
+    @media #{$tablet} {
+        font-size: 18px;
+    }
+
+    @media #{$desktop} {
+        font-size: 20px;
+    }
+}</pre><p>Sử dụng mixin và <code>@content</code>:</p><pre>$tablet-width: 768px;
+$desktop-width: 1024px;
+
+@mixin tablet {
+    @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: #{$desktop-width}) {
+        @content;
+    }
+}
+
+p {
+    font-size: 16px;
+
+    @include tablet {
+        font-size: 18px;
+    }
+
+    @include desktop {
+        font-size: 20px;
+    }
+}</pre><p>Nên làm theo cách sử dụng mixin.</p>
+      <p>Cách khác, khai báo mixin:</p>
+      <pre>// Giống $grid-breakpoints của Bootstrap
+$grid-breakpoints: (
+  "xs": 0,
+  "sm": 576px,
+  "md": 768px,
+  "lg": 992px,
+  "xl": 1200px
+);
+
+@mixin mq($width, $type: min) {
+    @if map_has_key($grid-breakpoints, $width) {
+        $width: map_get($grid-breakpoints, $width);
+        @if $type == max {
+            $width: $width - 1px;
+        }
+        @media only screen and (#{$type}-width: $width) {
+            @content;
+        }
+    }
+}</pre>
+      <p>Sử dụng:</p>
+      <pre>.number {
+    font-size: 24px;
+
+    @include mq('xl') {
+        font-size: 36px;
+    }
+}</pre>
+      
+      
+      <h3>Chuyển Less sang Sass</h3>
+      <p>Tên file từ <code>.less</code> sang <code>.scss</code>.</p>
+      <p>Tên biến từ @ sang $ (ví dụ @textBodyColor sang $textBodyColor).</p>
+      <p>.file-icon; trở thành @extend .file-icon;.</p>
+      <p>top: ~"calc(var(--header-height) * -1)"; thành top:  calc(var(--header-height) * -1);</p>
+      <p>Sử dụng mixin cho responsive</p>
+      
+    </article>
+    <script src="../../js/docs.js"></script>
+</body></html>

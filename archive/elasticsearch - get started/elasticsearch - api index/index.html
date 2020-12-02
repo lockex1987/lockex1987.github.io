@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>API index trong Elasticsearch</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="API index trong Elasticsearch">
+ </head> 
+ <body> 
+  <article> 
+   <h1>API liệt kê, hiển thị các Index trong Elasticsearch</h1> 
+   <p>Trong các ví dụ API Elasticsearch, mình sẽ dùng <a href="https://stackjava.com/install/postman-la-gi-cai-dat-gui-request-api-voi-postman.html">postman</a> để gửi request</p> 
+   <h2>API liệt kê, hiển thị các Index trong Elasticsearch</h2> 
+   <ul> 
+    <li>GET /_cat/indices</li> 
+   </ul> 
+   <p>Trong server Elasticsearch của mình hiện đang có 3 index là “customer”, “player” và “user”</p> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-list-index-0.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-list-index-0.png"></a></p> 
+   <ul> 
+    <li>Sử dụng thêm tham số <code>v</code> trong url để liệt kê tên các trường</li> 
+   </ul> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-list-index-1.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-list-index-1.png"></a></p> 
+   <ul> 
+    <li>Sử dụng thêm tham số <code>format=json</code> để hiển thị kết quả dưới dạng json</li> 
+   </ul> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-list-index-2.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-list-index-2.png"></a></p> 
+   <p> </p> 
+   <p>Okay, Done!</p> 
+   <p>References:</p> 
+   <p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/_list_all_indices.html" target="_blank">https://www.elastic.co/guide/…/_list_all_indices.html</a></p> 
+   <h1>API tạo Index trong Elasticsearch – Hướng dẫn tạo Index Elasticsearch</h1> 
+   <p>Trong các ví dụ API Elasticsearch, mình sẽ dùng <a href="https://stackjava.com/install/postman-la-gi-cai-dat-gui-request-api-voi-postman.html">postman</a> để gửi request</p> 
+   <h2>API tạo Index trong Elasticsearch</h2> 
+   <p>Để tạo Index trong Elasticsearch ta dùng method <code>PUT</code> với url <code>/</code></p> 
+   <ul> 
+    <li>PUT /{index_name}</li> 
+   </ul> 
+   <p>Ví dụ tạo index có tên là <code>customer</code> với các cài đặt mặc định</p> 
+   <ul> 
+    <li>PUT localhost:9200/customer</li> 
+   </ul> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-create-index.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-create-index.png"></a></p> 
+   <p>Trường hợp, index đã tồn tại thì nó sẽ báo lỗi:</p> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-create-2.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-create-2.png"></a></p> 
+   <p>Cài đặt các field, số replica set, số shard khi tạo Index</p> 
+   <p>Thiết lập số replica set, shard khi tạo Index:</p> 
+   <ul> 
+    <li>PUT /index_name</li> 
+    <li>{</li> 
+    <li> "settings" : {</li> 
+    <li> "index" : {</li> 
+    <li> "number_of_shards" : 3, </li> 
+    <li> "number_of_replicas" : 2 </li> 
+    <li> }</li> 
+    <li> }</li> 
+    <li>}</li> 
+   </ul> 
+   <p>Mặc định <code>number_of_shard = 5</code> và <code>number_of_replicas = 1</code></p> 
+   <p>Thiết lập các field khi tạo Index:</p> 
+   <ul> 
+    <li>PUT /index_name</li> 
+    <li>{</li> 
+    <li> "mappings" : {</li> 
+    <li> "type1" : {</li> 
+    <li> "properties" : {</li> 
+    <li> "name" : { "type" : "text" }</li> 
+    <li> }</li> 
+    <li> }</li> 
+    <li> }</li> 
+    <li>}</li> 
+   </ul> 
+   <p>Ví dụ: tạo index <code>user</code> với số shard là 3 và replica = 1</p> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-create-3.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-create-3.png"></a></p> 
+   <p>Lưu ý về quy tắc đặt tên Index:</p> 
+   <ul> 
+    <li>Chỉ được đặt tên index bằng chữ in thường</li> 
+    <li>Không bao gồm các ký tự <code>\</code>, <code>/</code>, <code>*</code>, <code>?</code>, <code>"</code>, <code>&lt;</code>, <code>&gt;</code>, <code>|</code>, ` ` (khoảng trắng / dấu cách), <code>,</code>, <code>#</code></li> 
+    <li>Từ Elasticsearch 7+ không được sử dụng ký tự <code>:</code></li> 
+    <li>Không được bắt đầu bằng các ký tự <code>-</code>, <code>_</code>, <code>+</code></li> 
+    <li>Không thể là <code>.</code> hoặc <code>..</code>, tuy nhiên có thể dùng ký tự <code>.</code> và kết hợp với các ký tự khác</li> 
+    <li>Không được dài hơn 255 bytes</li> 
+   </ul> 
+   <p>Okay, Done!</p> 
+   <p>References:</p> 
+   <p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html" target="_blank">https://www.elastic.co/guide/…/indices-create-index.html</a></p> 
+   <h1>API xóa Index trong Elasticsearch – Hướng dẫn xóa Index Elasticsearch</h1> 
+   <p>Trong các ví dụ API Elasticsearch, mình sẽ dùng <a href="https://stackjava.com/install/postman-la-gi-cai-dat-gui-request-api-voi-postman.html">postman</a> để gửi request</p> 
+   <h2>API xóa Index trong Elasticsearch</h2> 
+   <p>Để tạo Index trong Elasticsearch ta dùng method <code>DELETE</code> với url <code>/</code></p> 
+   <ul> 
+    <li>DELETE /index_name</li> 
+   </ul> 
+   <p>Ví dụ xóa index <code>"user"</code></p> 
+   <ul> 
+    <li>DELETE localhost:9200/user</li> 
+   </ul> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-delete-index-1.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-delete-index-1.png"></a></p> 
+   <p>Trường hợp index cần xóa không tồn tại thì sẽ trả về lỗi “index_not_found_exception”</p> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-delete-index-2.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-delete-index-2.png"></a></p> 
+   <h2>Xóa nhiều index trong cùng 1 request</h2> 
+   <p>Để xóa nhiều index trong cùng 1 request, ta nối các index cần xóa bằng dấu phẩy</p> 
+   <ul> 
+    <li>DELETE /index_name_1,index_name_2</li> 
+   </ul> 
+   <p>Ví dụ: xóa 2 index là <code>person</code> và <code>player</code></p> 
+   <ul> 
+    <li>DELETE localhost:9200/person,player</li> 
+   </ul> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-delete-index-3.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-delete-index-3.png"></a></p> 
+   <h2>Xóa tất cả Index trong 1 request</h2> 
+   <p>Trường hợp muốn xóa tất cả Index, ta thay index_name thành <code>_all</code></p> 
+   <ul> 
+    <li>DELETE /_all</li> 
+   </ul> 
+   <p>Ví dụ:</p> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-delete-index-4.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-delete-index-4.png"></a></p> 
+   <p>Việc xóa tất cả các index khá nguy hiểm, để tắt chức năng xóa tất cả index với thẻ <code>_all</code> ta cài đặt tham số</p> 
+   <p><code>action.destructive_requires_name = true</code> trong file cấu hình elasticseach</p> 
+   <p> </p> 
+   <p>Okay, Done!</p> 
+   <p>References:</p> 
+   <p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-index.html" target="_blank">https://www.elastic.co/…/indices-delete-index.html</a></p> 
+   <p></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

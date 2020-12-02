@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Liệt kê thư mục">
+    <title>Liệt kê thư mục</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Liệt kê thư mục</h2>
+      <p>Bài toán: tôi có chứa nhiều file truyện tranh định dạng cbz ở trên máy
+        tính. Tôi muốn có thể copy nhanh các file sang iPad để đọc.</p>
+      <p>Tôi không muốn tạo một trang web cho phức tạp, mà chỉ cần có thể duyệt
+        các thư mục và download file.</p>
+      <p>Cấu hình nginx như sau:</p>
+      <pre>location ^~ /comani {
+    alias   D:/sso;
+
+    # Enable indexes
+    autoindex on;
+
+    # Output human-readable file sizes
+    autoindex_exact_size off;
+}</pre>
+      <p>Vào địa chỉ <a href="http://localhost/comani" target="_blank">&lt;IP
+          máy tính&gt;/comani</a> để kiểm tra.</p>
+      <p>Chúng ta cũng có thể làm bằng cách tạo link <code>comani</code> ở thư
+        mục gốc.</p>
+      <pre>ln -s /media/lockex1987/data/comani /home/lockex1987/lockex1987.github.io/comani</pre>
+      <p>Cấu hình khi đó sẽ là:</p>
+      <pre>location / {
+    try_files $uri $uri/ =404;
+
+    # Enable indexes
+    autoindex on;
+
+    # Output human-readable file sizes
+    autoindex_exact_size off;
+}</pre>
+      <p>Để chạy nginx với user hiện tại, tránh một số lỗi phân quyền linh tinh,
+        sửa file <code>/etc/nginx/nginx.conf</code>, sửa cấu hình <code>user</code>
+        thành như sau:</p>
+      <pre># user www-data;<br>user lockex1987;</pre>
+      <p>Có thể sửa thêm file <code>/etc/php/7.2/fpm/pool.d/www.conf</code>,
+        sửa cấu hình <code>listen.owner</code>, <code>listen.group</code>, <code>user</code>, <code>group</code>.</p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

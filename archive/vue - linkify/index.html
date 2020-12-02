@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sử dụng thư viện Linkify với Vue">
+    <title>Sử dụng thư viện Linkify với Vue</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+        .demo {
+            background-color: #CCC;
+        }
+    </style>
+  </head>
+  <body>
+    <article>
+      <h2>Sử dụng thư viện Linkify với Vue</h2>
+      <p>Cần hiểu về Vue directive.</p>
+      <p>Chú ý: chúng ta vẫn cần hiển thị HTML (thẻ <code>&lt;a&gt;</code>),
+        nhưng vẫn cần chống lỗi XSS.</p>
+      <h3>Demo</h3>
+      <div id="app">
+            <p>Bind bình thường, sẽ escape tất cả.</p>
+            <p class="demo">
+                {{ message }}
+            </p>
+
+            <p>Hiển thị HTML, thẻ <code>script</code> bị loại bỏ. Các thẻ khác (<code>b</code>) vẫn được giữ lại.</p>
+            <p class="demo" v-html="message"></p>
+
+            <p>Vẫn hiển thị HTML, nhưng có directive <code>v-linkified</code>.</p>
+            <p class="demo" v-html="message" v-linkified></p>
+
+            <p>Bind bình thường và có directive <code>v-linkified</code>.</p>
+            <p class="demo" v-linkified="{ color: 'white', text: 'hello!' }">
+                {{ message }}
+            </p>
+
+            <p>Linkify xâu đầu vào bằng JS rồi mới hiển thị HTML.</p>
+            <p class="demo" v-html="other"></p>
+
+            <p>Sử dụng component.</p>
+            <linkify-component class="demo" :text="message"></linkify-component>
+      </div>
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://soapbox.github.io/linkifyjs/">Linkify:
+          a JS plugin by SoapBox</a><a href="https://soapbox.github.io/linkifyjs/"></a></p>
+      <p><a target="_blank" href="https://vuejs.org/v2/guide/custom-directive.html">Custom
+          Directives — Vue.js</a></p>
+      <p><a target="_blank" href="https://github.com/phanan/vue-linkify">phanan/vue-linkify:
+          A simple Vue directive to turn URL's and emails into clickable links</a></p>
+    </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+    <script src="lib/linkify/linkify.min.js"></script>
+    <script src="lib/linkify/linkify-html.min.js"></script>
+    <script src="lib/linkify/linkify-string.min.js"></script>
+    <script src="lib/linkify/linkify-element.min.js"></script>
+
+    <script src="js/script.js"></script>
+
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

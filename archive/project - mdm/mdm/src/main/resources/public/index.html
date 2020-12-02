@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>	
+	<title>My Download Manager</title>
+	<meta charset="utf-8">
+	
+	<script src="lib/jquery/js/jquery.min.js"></script>
+	
+	<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+	<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+	
+	<script src="lib/angular/js/angular.min.js"></script>
+	
+	<link rel="stylesheet" href="lib/common-validate/css/validate.css">
+	<script src="lib/common-validate/js/validate.js"></script>
+	
+	<link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="lib/noti/css/noti.css">
+	<script src="lib/noti/js/noti.js"></script>
+	
+	<style>
+	.mw {
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+	
+	a.link-action {
+		cursor: pointer;
+		margin: 5px;
+	}
+	
+	a.link-action:hover {
+		text-decoration: none;
+	}
+	
+	a.page-link {
+		cursor: pointer;
+	}
+	
+	a.page-link:hover {
+		text-decoration: none;
+	}
+	</style>
+
+	<link rel="stylesheet" href="css/mdm.css" />
+</head>
+
+<body>
+	<div id="processingContainer" style="display: none;">
+		<div id="processingContent">Processing...</div>
+	</div>
+
+	<div id="mainFrame">
+		<header>
+			<div>MDM</div>
+			<div>Setup cookie (Local Storage)</div>
+		</header>
+		<form id="frm">
+			<div>
+				Type <select id="type" name="type">
+					<option value="youtube">Youtube Video</option>
+					<option value="detective-conan">Detective Conan (kenhsinhvien)</option>
+					<option value="get-truyen-tranh-vang">Get Truyen tranh vang</option>
+					<option value="download-truyen-tranh-vang">Download Truyen tranh vang</option>
+					<option value="download-truyen-doc-info">Download truyendoc.info</option>
+					<option value="read-comic-online">Read Comic Online</option>
+					<option value="download-batch-images">Download Batch Images</option>
+					<option value="download-up-truyen">Download Uptruyen</option>
+				</select>
+			</div>
+			<div id="instructions"></div>
+			<div>
+				<textarea id="input" name="input" placeholder="Input"></textarea>
+			</div>
+			<div style="display: none">
+				<textarea id="cookie" name="cookie" placeholder="Cookie"></textarea>
+			</div>
+			<div>
+				<button id="btnGetLink" type="button">Get link</button>
+				<button id="btnDownload" type="button">Download</button>
+			</div>
+			<div id="result"></div>
+		</form>
+	</div>
+
+	<script src="js/mdm.js"></script>
+</body>
+</html>

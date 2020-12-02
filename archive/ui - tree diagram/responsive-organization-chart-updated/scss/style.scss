@@ -1,0 +1,284 @@
+/* Varaibles - config */
+$linePx: 2px; 
+$borderPx: 3px;
+$screen-sm: 767px;
+$color1: #92D4A8;
+$color2: green;
+$subcolor1: orange;
+$subcolor2: black;
+$pageBG:  #F5EEC9;
+/* SCSS*/
+body{
+  background:$pageBG;
+}
+.content{
+	font-family:Verdana;
+	font-size:14px;
+	* {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+	position: relative;
+}
+
+.org-chart{
+	display:block;
+	clear: both;
+	margin-bottom: 30px;
+	position: relative;
+	&.cf:before,
+	&.cf:after {
+		content: " "; /* 1 */
+		display: table; /* 2 */
+	}
+	&.cf:after {
+		clear: both;
+	}
+/**
+* For IE 6/7 only
+* Include this rule to trigger hasLayout and contain floats.
+*/
+&.cf {
+	*zoom: 1;
+}
+ul{
+	padding: 0;
+	margin: 0;
+	list-style: none;		
+}
+ul li{ position: relative;}
+ul li span{
+	display: block;
+	border:  $borderPx solid $subcolor1;
+	text-align: center;
+	overflow: hidden;
+	text-decoration: none;
+	color: $subcolor2;
+	font-size: 12px;
+	box-shadow: 4px 4px 9px -4px rgba(0,0,0,0.4);
+	-webkit-transition: all linear .1s;
+	-moz-transition: all linear .1s;
+	transition: all linear .1s;
+	background: $color1;
+	padding: 4px; 
+}
+
+/* Box colors */ 
+.lvl-b { background: $color2; color:$color1;  } 
+.board{
+	width:70%;
+	margin: 0 auto;
+
+	display: block;
+	position: relative;
+
+	&:before{
+		content: "";
+		display: block;
+		position: absolute;
+		height: 600px;
+		width: 0px;	
+		border-left:  $linePx solid $subcolor1;
+		margin-left: 49%;
+		top:  15px; 
+	}
+}
+/* 1 column */
+ul.columnOne{
+	height:90px;
+	position: relative;
+	width: 100%;
+	display: block;
+	clear: both;
+	li{
+		width:30%;
+		margin: 0px auto;
+		top:20px;
+	}
+}
+
+/* 2 column */
+ul.columnTwo{
+	position: relative;
+	width: 100%;
+	display: block;
+
+	height:90px;
+	clear: both;
+	li:first-child{
+		width:30%;
+		float: left;
+	}
+	li{
+		width:30%; 
+		float: right;
+	}
+	&:before{
+		content: "";
+		display: block;
+		position: relative;
+		width: 80%;
+		height: 10px;	
+		border-top:  $linePx solid $subcolor1;
+		margin: 0 auto;
+		top: 40px;  
+	}
+}
+/* 3 column */
+ul.columnThree{ 
+	position: relative;
+	width: 100%;
+	display: block;
+	clear: both;
+	li:first-child{
+		width:30%;
+		float: left;
+		margin-left:0;
+	}
+	li{  	 
+		width:30%; 
+		margin-left:5%;
+		float: left;
+	}
+	li:last-child{ 
+		width:30%;  
+		float: right;
+		margin-left:0;
+	}
+	&:before{
+		content: "";
+		display: block;
+		position: relative;
+		width: 80%;
+		height: 10px;	
+		border-top:  $linePx solid $subcolor1;
+		margin: 0 auto ;
+		top: 40px;  
+	}
+}
+/* DEPARTMENTS COLUMNs */
+.departments{ 
+	width: 100%;
+	display: block;
+	clear: both;
+	&:before{
+		content: "";
+		display: block; 
+		width: 85%;
+		height: 22px;	
+		border-top:  $linePx solid $subcolor1;
+		border-left:  $linePx solid $subcolor1;
+		border-right:  $linePx solid $subcolor1;
+		margin: 0 auto ;
+		top:  0px; 
+	}
+}
+.department{
+	border-left:  $linePx solid $subcolor1;
+	width: 13.2%;
+	float: left;  
+	margin: 0px 4px; 
+	&:after{
+		content: "";
+		position:absolute;
+		display: block; 
+		width: 10px;
+		height: 22px;	
+		border-left:  $linePx solid $subcolor1;
+		left:50%;
+		top:  -22px; 
+	}
+	&:first-child{
+		&:after{
+			display:none;
+		} 
+	}
+	&:last-child{
+		&:after{
+			display:none;
+		}
+	}
+	&.central{
+		background:$pageBG;
+		&:after{
+			display:none;
+		}
+	}
+	span{
+		border-left:  1px solid $subcolor1;
+	}
+	li{	
+		padding-left: 25px;
+		border-bottom:  $linePx solid $subcolor1;
+		height: 80px;
+	}
+	li span{
+		background: $color1;
+		top: 38px;	
+		position: absolute;
+		z-index: 1;
+		width: 95%;
+		height: auto;
+		vertical-align: middle;
+		right:0px; 
+		line-height: 14px;
+		border:  $borderPx solid $subcolor1;
+	}
+	.sections{
+		margin-top: -20px;
+	}
+}
+}
+
+@mixin responsiveClasses() {
+	.org-chart{
+		.board{
+			margin: 0px;
+			width:100%;
+		}
+		.departments{
+			&:before{
+				border:none;
+			}
+		}
+		.department{
+			float: none;
+			width: 100%;
+			margin-left: 0;
+			background:$pageBG;
+			margin-bottom: 40px;
+			&:before{
+				content: "";
+				display: block;
+				position: absolute;
+				width: 15px;
+				height: 60px;
+				border-left:  $linePx solid $subcolor1;
+				z-index: 1;
+				top: -45px;
+				left: 0%;
+				margin-left: -2px;
+			}
+			&:after{
+				display: none;
+			}
+		}
+		.department:first-child:before{	display: none;}
+	}
+}
+
+/* MEDIA QUERIES */
+@media all and (max-width: $screen-sm){
+	@include responsiveClasses();
+}
+
+
+/*--------- TO BE REMOVED FROM YOUR CSS --*/
+/* this is just to display the behaviour of responsive on codepen */
+.responsive-content{
+	width: $screen-sm;
+	margin:0px auto;
+	@include responsiveClasses();
+
+}

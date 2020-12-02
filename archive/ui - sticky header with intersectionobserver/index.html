@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+ <head> 
+  <meta charset="UTF-8"> 
+  <title>Sticky headers with IntersectionObserver</title> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"> 
+  <link rel="stylesheet" href="css/style.css"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Sticky headers with IntersectionObserver">
+ </head> 
+ <body> 
+  <header class="site-header"> 
+   <h1 id="logo">FooNewspaper</h1> 
+   <form action="#" id="search-form"> 
+    <input type="text" id="q" name="q"> 
+    <button type="submit">Search</button> 
+   </form> 
+  </header> 
+  <nav class="navigation-menu title-visible"> 
+   <ul> 
+    <li class="title"><a href="#">FooNewspaper</a></li> 
+    <li><a href="#">Local News</a></li> 
+    <li><a href="#">National</a></li> 
+    <li><a href="#">Europe</a></li> 
+    <li><a href="#">International</a></li> 
+    <li><a href="#">Sports</a></li> 
+    <li><a href="#">Culture</a></li> 
+    <li><a href="#">Technology</a></li> 
+   </ul> 
+  </nav> 
+  <main> 
+   <article> 
+    <header> 
+     <h1>This is the article title</h1> 
+    </header> 
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a commodo urna. Fusce in magna arcu. Donec ut euismod nisl. Morbi diam ante, imperdiet at mauris ut, sollicitudin accumsan nulla. Quisque viverra blandit massa nec posuere. Duis vel quam ac quam faucibus dignissim at ac massa. Pellentesque non sagittis elit. Pellentesque eget viverra dolor. Morbi imperdiet pellentesque rhoncus. Suspendisse ut ornare nisl, vitae ornare velit. Suspendisse non ipsum sit amet justo aliquam lobortis. Pellentesque tempus ante eget tristique tincidunt. Cras tempus lectus a pharetra sodales. Proin rhoncus metus eu eros imperdiet, id efficitur sem ullamcorper. Donec tincidunt, quam ut commodo aliquam, sapien ante finibus tellus, at consectetur lacus tortor ac enim.</p> 
+    <p>Duis vel elementum purus. Duis sed ex nec mauris gravida pretium. Quisque a turpis ornare, venenatis dui eget, cursus massa. Nulla pellentesque turpis a ullamcorper vestibulum. Praesent sem lacus, placerat vel ultricies a, tincidunt et odio. Praesent posuere feugiat tellus, non tincidunt turpis. Vivamus pharetra luctus arcu, eu tincidunt nisl luctus ut. Morbi non maximus nibh. Nulla non consequat leo, id posuere purus. Phasellus varius viverra ipsum vitae accumsan. Nullam mollis sem risus, at consequat risus scelerisque non. Nam quis ex maximus, gravida orci sit amet, ultrices lacus. Aliquam auctor eget dui vitae pretium. Etiam metus libero, aliquet a elit vel, pellentesque gravida nunc. Sed maximus, metus vel ullamcorper hendrerit, felis eros condimentum sem, non pretium erat nisl et sem.</p> 
+    <p>Curabitur leo ligula, faucibus eu tellus a, maximus viverra nunc. Vivamus convallis, magna eu venenatis finibus, metus justo rhoncus lectus, id efficitur tellus leo nec arcu. Proin fermentum urna arcu, quis ultricies dui congue nec. Integer ultricies auctor purus faucibus vehicula. Praesent rhoncus turpis eget arcu tempor, non scelerisque metus pellentesque. Proin tempus sem vel aliquet pharetra. Suspendisse eu hendrerit urna, ut venenatis quam.</p> 
+    <p>Nulla suscipit, sem in fermentum egestas, nisi enim tempor justo, mollis cursus felis turpis gravida tellus. Fusce nulla sapien, elementum non auctor sed, pellentesque non ipsum. Morbi at odio suscipit, consequat metus malesuada, ultrices risus. Nunc ac posuere nisl. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In vulputate nulla sed mauris blandit convallis. Sed eget molestie turpis. Suspendisse consectetur diam vitae faucibus fermentum. Donec aliquam lectus dolor, vitae tempus lacus feugiat sed. Aliquam congue tortor non ullamcorper luctus.</p> 
+    <p>Praesent eget hendrerit urna. Nullam at bibendum felis. Nam vehicula iaculis lorem eu egestas. Morbi quis iaculis arcu. Nullam gravida porta eleifend. Maecenas pulvinar vehicula dolor id porta. Etiam tristique diam magna, in fringilla odio rhoncus quis. Quisque id quam ut augue ornare venenatis. Donec sagittis nec ipsum at accumsan. </p> 
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a commodo urna. Fusce in magna arcu. Donec ut euismod nisl. Morbi diam ante, imperdiet at mauris ut, sollicitudin accumsan nulla. Quisque viverra blandit massa nec posuere. Duis vel quam ac quam faucibus dignissim at ac massa. Pellentesque non sagittis elit. Pellentesque eget viverra dolor. Morbi imperdiet pellentesque rhoncus. Suspendisse ut ornare nisl, vitae ornare velit. Suspendisse non ipsum sit amet justo aliquam lobortis. Pellentesque tempus ante eget tristique tincidunt. Cras tempus lectus a pharetra sodales. Proin rhoncus metus eu eros imperdiet, id efficitur sem ullamcorper. Donec tincidunt, quam ut commodo aliquam, sapien ante finibus tellus, at consectetur lacus tortor ac enim.</p> 
+    <p>Duis vel elementum purus. Duis sed ex nec mauris gravida pretium. Quisque a turpis ornare, venenatis dui eget, cursus massa. Nulla pellentesque turpis a ullamcorper vestibulum. Praesent sem lacus, placerat vel ultricies a, tincidunt et odio. Praesent posuere feugiat tellus, non tincidunt turpis. Vivamus pharetra luctus arcu, eu tincidunt nisl luctus ut. Morbi non maximus nibh. Nulla non consequat leo, id posuere purus. Phasellus varius viverra ipsum vitae accumsan. Nullam mollis sem risus, at consequat risus scelerisque non. Nam quis ex maximus, gravida orci sit amet, ultrices lacus. Aliquam auctor eget dui vitae pretium. Etiam metus libero, aliquet a elit vel, pellentesque gravida nunc. Sed maximus, metus vel ullamcorper hendrerit, felis eros condimentum sem, non pretium erat nisl et sem.</p> 
+    <p>Curabitur leo ligula, faucibus eu tellus a, maximus viverra nunc. Vivamus convallis, magna eu venenatis finibus, metus justo rhoncus lectus, id efficitur tellus leo nec arcu. Proin fermentum urna arcu, quis ultricies dui congue nec. Integer ultricies auctor purus faucibus vehicula. Praesent rhoncus turpis eget arcu tempor, non scelerisque metus pellentesque. Proin tempus sem vel aliquet pharetra. Suspendisse eu hendrerit urna, ut venenatis quam.</p> 
+    <p>Nulla suscipit, sem in fermentum egestas, nisi enim tempor justo, mollis cursus felis turpis gravida tellus. Fusce nulla sapien, elementum non auctor sed, pellentesque non ipsum. Morbi at odio suscipit, consequat metus malesuada, ultrices risus. Nunc ac posuere nisl. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In vulputate nulla sed mauris blandit convallis. Sed eget molestie turpis. Suspendisse consectetur diam vitae faucibus fermentum. Donec aliquam lectus dolor, vitae tempus lacus feugiat sed. Aliquam congue tortor non ullamcorper luctus.</p> 
+    <p>Praesent eget hendrerit urna. Nullam at bibendum felis. Nam vehicula iaculis lorem eu egestas. Morbi quis iaculis arcu. Nullam gravida porta eleifend. Maecenas pulvinar vehicula dolor id porta. Etiam tristique diam magna, in fringilla odio rhoncus quis. Quisque id quam ut augue ornare venenatis. Donec sagittis nec ipsum at accumsan. </p> 
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a commodo urna. Fusce in magna arcu. Donec ut euismod nisl. Morbi diam ante, imperdiet at mauris ut, sollicitudin accumsan nulla. Quisque viverra blandit massa nec posuere. Duis vel quam ac quam faucibus dignissim at ac massa. Pellentesque non sagittis elit. Pellentesque eget viverra dolor. Morbi imperdiet pellentesque rhoncus. Suspendisse ut ornare nisl, vitae ornare velit. Suspendisse non ipsum sit amet justo aliquam lobortis. Pellentesque tempus ante eget tristique tincidunt. Cras tempus lectus a pharetra sodales. Proin rhoncus metus eu eros imperdiet, id efficitur sem ullamcorper. Donec tincidunt, quam ut commodo aliquam, sapien ante finibus tellus, at consectetur lacus tortor ac enim.</p> 
+    <p>Duis vel elementum purus. Duis sed ex nec mauris gravida pretium. Quisque a turpis ornare, venenatis dui eget, cursus massa. Nulla pellentesque turpis a ullamcorper vestibulum. Praesent sem lacus, placerat vel ultricies a, tincidunt et odio. Praesent posuere feugiat tellus, non tincidunt turpis. Vivamus pharetra luctus arcu, eu tincidunt nisl luctus ut. Morbi non maximus nibh. Nulla non consequat leo, id posuere purus. Phasellus varius viverra ipsum vitae accumsan. Nullam mollis sem risus, at consequat risus scelerisque non. Nam quis ex maximus, gravida orci sit amet, ultrices lacus. Aliquam auctor eget dui vitae pretium. Etiam metus libero, aliquet a elit vel, pellentesque gravida nunc. Sed maximus, metus vel ullamcorper hendrerit, felis eros condimentum sem, non pretium erat nisl et sem.</p> 
+    <p>Curabitur leo ligula, faucibus eu tellus a, maximus viverra nunc. Vivamus convallis, magna eu venenatis finibus, metus justo rhoncus lectus, id efficitur tellus leo nec arcu. Proin fermentum urna arcu, quis ultricies dui congue nec. Integer ultricies auctor purus faucibus vehicula. Praesent rhoncus turpis eget arcu tempor, non scelerisque metus pellentesque. Proin tempus sem vel aliquet pharetra. Suspendisse eu hendrerit urna, ut venenatis quam.</p> 
+    <p>Nulla suscipit, sem in fermentum egestas, nisi enim tempor justo, mollis cursus felis turpis gravida tellus. Fusce nulla sapien, elementum non auctor sed, pellentesque non ipsum. Morbi at odio suscipit, consequat metus malesuada, ultrices risus. Nunc ac posuere nisl. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In vulputate nulla sed mauris blandit convallis. Sed eget molestie turpis. Suspendisse consectetur diam vitae faucibus fermentum. Donec aliquam lectus dolor, vitae tempus lacus feugiat sed. Aliquam congue tortor non ullamcorper luctus.</p> 
+    <p>Praesent eget hendrerit urna. Nullam at bibendum felis. Nam vehicula iaculis lorem eu egestas. Morbi quis iaculis arcu. Nullam gravida porta eleifend. Maecenas pulvinar vehicula dolor id porta. Etiam tristique diam magna, in fringilla odio rhoncus quis. Quisque id quam ut augue ornare venenatis. Donec sagittis nec ipsum at accumsan. </p> 
+   </article> 
+  </main> 
+  <script src="js/index.js"></script> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

@@ -1,0 +1,53 @@
+@keyframes fade {
+  to { opacity: 0; }
+}
+
+/* The faded background */
+.mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  mix-blend-mode: multiply;
+  background: black;
+  opacity: 0.8;
+  animation: fade 2s infinite alternate ease-in-out;
+}
+
+@keyframes zoom {
+  to { transform: scale(2); }
+}
+
+/* The highlighted area */
+.mask::before {
+  content: '';
+  position: absolute;
+  width: 25%;
+  height: 18%;
+  top: 45%;
+  left: 16%;
+  background: white;
+  border-radius: 100%;
+  filter: blur(10px);
+  animation: zoom 2s infinite alternate ease-in;
+}
+
+/* Unrealted layout stuff: */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background: #000;
+}
+
+.container {
+  position: relative;
+  height: 100%;
+  /* quick min-content hack */
+  float: left; 
+}
+
+img {
+  height: 100%;
+}

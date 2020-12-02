@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PSR-1">
+    <title>PSR-1</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>PSR-1 Tiêu chuẩn cơ bản khi viết code PHP</h2>
+      <p>PSR-1 trình bày những tiêu chuẩn nguyên tắc nên theo khi viết code PHP.</p>
+      <p>PRS-1 là các nguyên tắc mỗi lập trình viên PHP nên theo để đảm bảo code
+        dễ đọc, bảo trì, và dễ sử dụng lại cũng như chia sẻ.</p>
+      <h3>Nguyên tắc chung nhất khi code PHP</h3>
+      <ul>
+        <li>Các file code PHẢI sử dụng thẻ <code>&lt;?php</code> hoặc <code>&lt;?</code></li>
+        <li>File code PHP sử dụng encode: UTF-8 without BOOM</li>
+        <li>Các Files NÊN hoặc dùng để khai báo các thành phần PHP (các lớp,
+          hàm, hằng ...) hoặc dùng với mục đích làm hiệu ứng phụ (như include,
+          thiết lập ini cho PHP ...), nhưng KHÔNG NÊN dùng cả 2 cùng lúc trong 1
+          file (xem ví dụ này ở ví dụ 1)</li>
+        <li>Các namespace và classes PHẢI theo chuẩn "autoloading" PSR (PSR-0 và
+          PSR-4)</li>
+        <li>Tên lớp PHẢI có dạng NameClass (chữ không nameclass, Nameclass,
+          nameClass...)</li>
+        <li>Hằng số trong class tất cả PHẢI viết HOA và chia ra bởi dấu _ (ví
+          dụ: SOFT_MEMBER)</li>
+        <li>Tên phương thức của lớp PHẢI ở dạng camelCase (từ đầu viết thường,
+          ví dụ: helloWorld)</li>
+      </ul>
+      <p>Ví dụ 1:</p>
+      <p>File PHP viết không theo chuẩn, trộn lẫn lung tung hiệu ứng phụ và khai
+        báo các đối tượng ngôn ngữ PHP.</p>
+      <pre>&lt;?php
+// hiệu ứng phụ: đổi thiết lập ini
+ini_set('error_reporting', E_ALL);
+
+// hiệu ứng phụ: nạp file vào
+include "file.php";
+
+// hiệu ứng phụ: xuất dữ liệu
+echo "&lt;html&gt;\n";
+
+// khai báo hàm
+function foo()
+{
+    // function body
+}</pre>
+      <p>Đoạn mã PHP sau đúng chuẩn, đã khai báo thì không gồm hiệu ứng phụ</p>
+      <pre>&lt;?php
+// declaration
+function foo()
+{
+    // function body
+}
+
+if (! function_exists('bar')) {
+     //Khai báo hàm
+    function bar()
+    {
+        // function body
+    }
+}</pre>
+      <h3>Các namespace và tên class</h3>
+      <p>Namespace và class PHẢI theo chuẩn "autoloading" PSR (PSR-0, PSR-4). Có
+        nghĩa là mỗi lớp được khai báo trên mỗi file PHP riêng và namespace tối
+        thiểu có một cấp, cấp đầu là tên vendor.</p>
+      <p>Tên lớp lại PHẢI đúng dạng NameClass.</p>
+      <p>Ví dụ đúng chuẩn:</p>
+      <pre>&lt;?php
+namespace Vendor\Model;
+
+class Foo
+{
+}</pre>
+      <h3>Hằng, thuộc tính và phương thức của lớp</h3>
+      <p>Hằng theo chuẩn ở trên, tất cả PHẢI viết hoa, phân cách từ bởi _.</p>
+      <p>Ví dụ hằng đúng chuẩn:</p>
+      <pre>&lt;?php
+namespace Vendor\Model;
+
+class Foo
+{
+    const VERSION = '1.0';
+    const DATE_APPROVED = '2012-06-01';
+}</pre>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+    
+  </body>
+</html>

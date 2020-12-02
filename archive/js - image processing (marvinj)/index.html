@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="Xử lý ảnh" />
+
+	<title>Marvinj</title>
+
+	<link rel="icon" href="../../images/favicon.png" />
+	<link rel="stylesheet" href="../../css/style.css" />
+	<link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+	<article>
+		<h2>Marvinj</h2>
+
+		<p><a href="https://www.marvinj.org/en/index.html" target="_blank">marvinj.org</a></p>
+
+		<h3>Filters example</h3>
+
+		<div class="mb-3">
+			<div class="mb-3">
+				<canvas width="640" height="400" id="canvasExampleFilters" class="mx-auto"></canvas>
+			</div>
+
+			<div class="ml-n2 mb-n2">
+				<button class="btn btn-primary ml-2 mb-2" onclick="clickExampleFiltersGrayScale()">GrayScale</button>
+				<button class="btn btn-primary ml-2 mb-2" onclick="clickExampleFiltersBlackAndWhite()">Black and
+					White</button>
+				<button class="btn btn-primary ml-2 mb-2" onclick="clickExampleFiltersSepia()">Sepia</button>
+				<button class="btn btn-primary ml-2 mb-2" onclick="clickExampleFiltersEmboss()">Emboss</button>
+				<button class="btn btn-primary ml-2 mb-2" onclick="clickExampleFiltersHalftone()">Halftone</button>
+				<button class="btn btn-primary ml-2 mb-2" onclick="clickExampleFiltersInvertColors()">Invert</button>
+				<button class="btn btn-primary ml-2 mb-2" onclick="clickExampleFiltersEdge()">Edge Detection</button>
+				<button class="btn btn-primary ml-2 mb-2" onclick="clickExampleFiltersEdge2()">Edge Detection 2</button>
+				<button class="btn btn-primary ml-2 mb-2" onclick="clickExampleFiltersCrop()">Crop</button>
+				<button class="btn btn-primary ml-2 mb-2" onclick="clickExampleFiltersInvertScale()">Scale</button>
+				<button class="btn btn-primary ml-2 mb-2" onclick="clickExampleFiltersReset()">Reset</button>
+			</div>
+		</div>
+
+
+		<h3>Detect features</h3>
+
+		<div class="mb-3">
+			<div class="out-of-box mb-3">
+				<canvas width="1000" height="570" id="canvasAutoCrop"></canvas>
+			</div>
+
+			<div class="mb-3 ml-n2 mb-n2">
+				<button class="btn btn-primary ml-2 mb-2" onclick="clickDetectCorners()">Detect Corners</button>
+				<button class="btn btn-primary ml-2 mb-2" onclick="clickSelectCropArea()">Select Crop Area</button>
+				<button class="btn btn-primary ml-2 mb-2" onclick="clickAutoCropCrop()">Crop</button>
+				<button class="btn btn-primary ml-2 mb-2" onclick="clickAutoCropReset()">Reset</button>
+			</div>
+		</div>
+	</article>
+
+	<script src="libs/marvinj-1.0.min.js"></script>
+
+	<script src="js/filters.js"></script>
+	<script src="js/crop.js"></script>
+
+	<script src="../../js/docs.js"></script>
+</body>
+
+</html>

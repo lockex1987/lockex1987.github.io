@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="date" content="2020-02-18 22:47:00">
+    <meta name="description" content="Các công nghệ mà tôi sử dụng">
+    <title>Full-stack web developer</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+    .outer-table {
+      display: grid;
+      grid-template-columns: auto;
+      grid-gap: 1px;
+    }
+
+    @media (min-width: 1200px) {
+      .outer-table {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    .col-middle {
+      display: grid;
+      grid-template-columns: auto;
+      grid-gap: 1px;
+    }
+  </style>
+  </head>
+  <body>
+    <article>
+      <h2>Full-stack web developer</h2>
+      <p>Bài viết này mô tả các phần của một ứng dụng web và các công nghệ được
+        sử dụng trong từng phần. Các công nghệ bôi đậm là những cái mà tôi sẽ
+        tập trung sử dụng.</p>
+      <h3>Các khối phát triển</h3>
+      <div class="outer-table font-weight-500 font-size-1.25 out-of-box">
+        <div class="d-flex align-items-center justify-content-center p-3 text-white bg-orange">
+          Principles </div>
+        <div class="col-middle">
+          <div class="d-flex align-items-center justify-content-center p-3 text-white"
+            style="background-color: #a55eea;"> Frontend </div>
+          <div class="d-flex align-items-center justify-content-center p-3 text-white bg-primary">
+            Backend </div>
+          <div class="d-flex align-items-center justify-content-center p-3 text-white"
+            style="background-color: #778ca3;"> Web server</div>
+          <div class="d-flex align-items-center justify-content-center p-3 text-body bg-warning">
+            Database</div>
+          <div class="d-flex align-items-center justify-content-center p-3 text-white bg-danger">
+            OS </div>
+        </div>
+        <div class="d-flex align-items-center justify-content-center p-3 text-white bg-success">
+          Tool </div>
+      </div>
+      <h3>Principles</h3>
+      <ul>
+        <li><strong>Security</strong></li>
+        <li><strong>Clean code</strong></li>
+        <li>REST</li>
+        <li>Design pattern</li>
+        <li>KISS</li>
+        <li>SOLID</li>
+        <li>MVC</li>
+        <li>Template Engine</li>
+        <li>JWT</li>
+        <li>SSO</li>
+        <li>Message Broker (RabbitMQ)</li>
+        <li>SOAP</li>
+      </ul>
+      <h3>Frontend</h3>
+      <p>Cơ bản:</p>
+      <ul>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JS</li>
+      </ul>
+      <p>Nâng cao:</p>
+      <ul>
+        <li><a href="https://lockex1987.github.io/archive/web%20-%20pwa/"><strong>PWA</strong></a></li>
+        <li><a href="https://lockex1987.github.io/archive/js%20-%20webrtc/"><strong>WebRTC</strong></a></li>
+        <li><a href="https://lockex1987.github.io/archive/js%20-%20web%20socket/"><strong>Web
+              socket</strong></a></li>
+        <li><a href="https://lockex1987.github.io/archive/webext%20-%20get%20started/"><strong>Web
+              extension</strong></a></li>
+        <li>Responsive design</li>
+        <li>LESS</li>
+        <li>Sass</li>
+        <li>AJAX</li>
+        <li>Electron (đóng gói với pkg)</li>
+      </ul>
+      <p>Các thư viện, framework:</p>
+      <ul>
+        <li>Xem thêm: <a href="../project%20-%20frontend%20frameworks%20and%20libraries/index.html">Các
+            framework và thư viện frontend hay dùng</a></li>
+      </ul>
+      <ul>
+      </ul>
+      <h3>Backend</h3>
+      <p>Tùy ngôn ngữ.</p>
+      <p><strong><a href="https://lockex1987.github.io/archive/php%20-%20get%20started/">
+            PHP</a>:</strong></p>
+      <ul>
+        <li>Composer
+          <ul>
+            <li>Các Symphony component</li>
+            <li>packagist</li>
+          </ul>
+        </li>
+        <li><a href="https://lockex1987.github.io/archive/laravel%20-%20get%20started/"><strong>Laravel</strong></a>,
+          WordPress</li>
+        <li>Carbon, Laravel Excel, PHPSpeadsheet, Guzzle hoặc CUrl hoặc curl
+          thuần, Predis</li>
+        <li>File phar để chạy process</li>
+      </ul>
+      <p>Java, Scala, Kotlin:</p>
+      <ul>
+        <li>Maven</li>
+        <li>Play, Struts, Spring, Spark Java, Grails</li>
+        <li>Hibernate, Jsoup, Apache commons, GSON, Email, jxcell, JEP, jUnit,
+          lombok</li>
+      </ul>
+      <p>Node:</p>
+      <ul>
+        <li>npm</li>
+        <li>express</li>
+        <li>socket</li>
+      </ul>
+      <p>Python:</p>
+      <ul>
+        <li>pip</li>
+        <li>Django, Flask</li>
+        <li>BeautifulSoup</li>
+      </ul>
+      <h3>Web server</h3>
+      <p>Tomcat, Apache, <a href="https://lockex1987.github.io/archive/it%20-%20nginx/"><strong>nginx</strong></a>
+        (cùng với php-fpm) Netty, Glass Fish.</p>
+      <h3>Database</h3>
+      <p>Có thể là RDMS hoặc NoSQL.</p>
+      <p>Oracle, <strong>MySQL</strong>, MongoDB, <a href="https://lockex1987.github.io/archive/it%20-%20redis/"><strong>Redis</strong></a>,
+        SQLite, Cassandra, File, SQL Server, ElasticSearch.</p>
+      <h3>OS</h3>
+      <p>Windows, Linux (<strong>Ubuntu</strong>, Linux Mint, CentOS), macOS.</p>
+      <p>(install software, basic terminal command, permission, ssh, ftp)</p>
+      <h3>Tool</h3>
+      <p>Source control, IDE, Auto Process (Task runner):</p>
+      <ul>
+        <li><a href="https://lockex1987.github.io/archive/git%20-%20learning/"><strong>git</strong></a></li>
+        <li><strong>GitHub</strong></li>
+        <li>SVN</li>
+        <li>StarTeam</li>
+        <li>Jira</li>
+        <li>NetBeans</li>
+        <li>Eclipse</li>
+        <li>Android Studio</li>
+        <li>Notepad++</li>
+        <li><a href="https://lockex1987.github.io/archive/it%20-%20visual%20studio%20code/"><strong>Visual
+              Studio Code (VSCode)</strong></a></li>
+        <li>Scala SDK</li>
+        <li>Gulp</li>
+        <li>Bower</li>
+        <li>Jenkins</li>
+        <li>git-chain</li>
+        <li>Heroku</li>
+        <li>Docker?</li>
+        <li>vim</li>
+        <li><a href="https://lockex1987.github.io/archive/laravel%20-%20mix/"><strong>Laravel
+              mix</strong></a> (Webpack)</li>
+      </ul>
+      <h3>Tham khảo</h3>
+      <p><a href="https://github.com/kamranahmedse/developer-roadmap" target="_blank">kamranahmedse/developer-roadmap:
+          Roadmap to becoming a web developer in 2020</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

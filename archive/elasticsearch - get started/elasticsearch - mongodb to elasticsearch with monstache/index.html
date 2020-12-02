@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Đồng bộ MongoDB sang Elasticsearch với Monstache</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Đồng bộ MongoDB sang Elasticsearch với Monstache">
+ </head> 
+ <body> 
+  <article> 
+   <h1>Đồng bộ MongoDB sang Elasticsearch với Monstache</h1> 
+   <h2>Monstache là gì?</h2> 
+   <p>Monstache là một công cụ, phần mềm thực hiện đồng bộ dữ liệu từ MongoDB sang Elasticsearch.</p> 
+   <p>Monstache khá giống với <a href="https://stackjava.com/elasticsearch/dong-bo-du-lieu-giua-mongodb-voi-elasticsearch-bang-transporter.html">Transporter</a> tuy nhiên nó thực hiện đồng bộ dữ liệu một cách realtime, tức là khi có bất kỳ thay đổi dữ liệu nào trên MongoDB (thêm/sửa/xóa) nó sẽ tự động cập nhật tới Elasticsearch.</p> 
+   <p>Việc sử dụng Monstache được áp dụng khi bạn muốn kết hợp MongoDB với Elasticsearch. Ví dụ bạn dùng MongoDB để lưu dữ liệu nhưng khi thực hiện query thì query trên Elasticsearch vì Elasticsearch hỗ trợ search tốt hơn MongDB ở nhiều trường hợp khác nhau.</p> 
+   <h2>Cài đặt Monstache</h2> 
+   <p>Yêu cầu đã cài đặt <a href="https://stackjava.com/mongodb/huong-dan-cai-dat-mongodb-tren-linux-ubuntu-16-04.html">MongoDB</a> và <a href="https://stackjava.com/elasticsearch/huong-dan-cai-dat-elasticsearch-tren-ubuntu-16-04.html">Elasticsearch</a>. Vì Monstache được viết bằng ngôn ngữ lập trình Golang nên cần phải cài Golang nữa nhé.</p> 
+   <p>Ở ví dụ này mình sẽ cài đặt trên Ubuntu 16.04 (Các bạn có thể cài trên windows cũng được nhé)</p> 
+   <p>(Xem lại: <a href="https://stackjava.com/mongodb/huong-dan-cai-dat-mongodb-tren-linux-ubuntu-16-04.html">Cài đặt MongoDB trên Ubuntu</a>, <a href="https://stackjava.com/elasticsearch/huong-dan-cai-dat-elasticsearch-tren-ubuntu-16-04.html">Cài đặt Elasticsearch trên Ubuntu</a>, <a href="https://stackjava.com/uncategorized/go-golang-la-gi-cai-dat-golang-tren-ubuntu.html">Cài đặt Golang trên Ubuntu</a>)</p> 
+   <p>Lưu ý: phải bật chức năng oplog trên MongoDB lên, vì oplog sẽ chứa tất cả thông tin về các thay đổi của MongoDB và monstache sẽ dựa trên sự thay đổi đó để đồng bộ dữ liệu sang Elasticsearch, để bật chức năng oplog ta có 2 cách như sau:</p> 
+   <ul> 
+    <li>Cài đặt Replica Set (Xem lại: <a href="https://stackjava.com/mongodb/cai-dat-tao-replica-set-trong-mongodb.html">Cài đặt Replica Set trên MongoDB</a>)</li> 
+    <li>Thêm tham số <code>--master</code> vào sau lệnh <code>mongod</code> khi khởi động MongoDB</li> 
+   </ul> 
+   <p>Bước 1: Download Monstache tại <a href="https://github.com/rwynn/monstache/releases" target="_blank">https://github.com/rwynn/monstache/releases</a></p> 
+   <p>Lưu ý: phiên bản monstache từ 4.x mới hỗ trợ bản ES6+ (Elasticsearch phiên bản 6 trở nên) còn monstache 3.x chỉ hỗ trợ ES2-5.</p> 
+   <p>Trong ví dụ này mình download bản <a href="https://github-production-release-asset-2e65be.s3.amazonaws.com/58823481/c640a95a-81d9-11e8-9448-b496248bdddf?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20180831%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20180831T163058Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=b961bab81d944354a4b301c04fbcd61ab549f43dc0bd3d3a64330bc580417934&amp;X-Amz-SignedHeaders=host&amp;actor_id=41723270&amp;response-content-disposition=attachment%3B%20filename%3Dmonstache-5e645c6.zip&amp;response-content-type=application%2Foctet-stream">monstache-4.8.0.zip</a></p> 
+   <p>Download file trên và giải nén về, bạn sẽ thấy nó có cả 3 mục cho windows, linux và macOS</p> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/monstache-1.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/monstache-1.png"></a></p> 
+   <p>Mình sử dụng trên ubuntu nên sẽ vào folder linux-adm64, các bạn sẽ thấy file monstache (monstache là file binary nha) và file <code>conf.properties</code> dùng để cấu hình thông tin MongoDB và Elasticsearch, nếu chưa có file này thì bạn tự tạo mới nhé.</p> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/monstache-2.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/monstache-2.png"></a></p> 
+   <p>Thêm đường dẫn của thư mục chứa file monstache vào biến <code>PATH</code></p> 
+   <p>Ví dụ trong trường hợp của mình sẽ là:</p> 
+   <ul> 
+    <li>PATH="$HOME/bin:$HOME/.local/bin:$HOME/monstache/build/linux-amd64:$PATH"</li> 
+   </ul> 
+   <p>(Xem lại: <a href="https://stackjava.com/linux/cai-dat-tao-bien-moi-truong-tren-ubuntu.html">Cài đặt, tạo biến môi trường trên Ubuntu, biến $PATH</a>)</p> 
+   <p>Sau khi thêm vào biến <code>PATH</code> thành công chúng ta có thể chạy monstache với lệnh <code>monstache</code></p> 
+   <p>Ví dụ kiểm tra version monstache: bằng lệnh monstache -v</p> 
+   <h2>Cấu hình monstache bằng file <code>conf.properties</code></h2> 
+   <p>Thông tin file <code>conf.properties</code> có dạng như sau:</p> 
+   <ul> 
+    <li>conf.properties</li> 
+   </ul> 
+   <ul> 
+    <li># connection settings</li> 
+    <li><br> </li> 
+    <li># connect to MongoDB using the following URL</li> 
+    <li>mongo-url = "mongodb://someuser:password@localhost:40001"</li> 
+    <li># connect to the Elasticsearch REST API at the following node URLs</li> 
+    <li>elasticsearch-urls = ["https://es1:9200", "https://es2:9200"]</li> 
+    <li><br> </li> 
+    <li># frequently required settings</li> 
+    <li><br> </li> 
+    <li># if you don't want to listen for changes to all collections in MongoDB but only a few</li> 
+    <li># e.g. only listen for inserts, updates, deletes, and drops from mydb.mycollection</li> 
+    <li># this setting does not initiate a copy, it is a filter on the change listener only</li> 
+    <li>namespace-regex = '^mydb\.mycollection$'</li> 
+    <li># additionally, if you need to seed an index from a collection and not just listen for changes from the oplog</li> 
+    <li># you can copy entire collections from MongoDB to Elasticsearch</li> 
+    <li>direct-read-namespaces = ["mydb.mycollection", "db.collection", "test.test"]</li> 
+    <li><br> </li> 
+    <li># additional settings</li> 
+    <li><br> </li> 
+    <li># compress requests to Elasticsearch</li> 
+    <li>gzip = true</li> 
+    <li># generate indexing statistics</li> 
+    <li>stats = true</li> 
+    <li># index statistics into Elasticsearch</li> 
+    <li>index-stats = true</li> 
+    <li># use the following PEM file for connections to MongoDB</li> 
+    <li>mongo-pem-file = "/path/to/mongoCert.pem"</li> 
+    <li># disable PEM validation</li> 
+    <li>mongo-validate-pem-file = false</li> 
+    <li># use the following user name for Elasticsearch basic auth</li> 
+    <li>elasticsearch-user = "someuser"</li> 
+    <li># use the following password for Elasticsearch basic auth</li> 
+    <li>elasticsearch-password = "somepassword"</li> 
+    <li># use 4 go routines concurrently pushing documents to Elasticsearch</li> 
+    <li>elasticsearch-max-conns = 4 </li> 
+    <li># use the following PEM file to connections to Elasticsearch</li> 
+    <li>elasticsearch-pem-file = "/path/to/elasticCert.pem"</li> 
+    <li># validate connections to Elasticsearch</li> 
+    <li>elastic-validate-pem-file = true</li> 
+    <li># propogate dropped collections in MongoDB as index deletes in Elasticsearch</li> 
+    <li>dropped-collections = true</li> 
+    <li># propogate dropped databases in MongoDB as index deletes in Elasticsearch</li> 
+    <li>dropped-databases = true</li> 
+    <li># do not start processing at the beginning of the MongoDB oplog</li> 
+    <li># if you set the replay to true you may see version conflict messages</li> 
+    <li># in the log if you had synced previously. This just means that you are replaying old docs which are already</li> 
+    <li># in Elasticsearch with a newer version. Elasticsearch is preventing the old docs from overwriting new ones.</li> 
+    <li>replay = false</li> 
+    <li># resume processing from a timestamp saved in a previous run</li> 
+    <li>resume = true</li> 
+    <li># do not validate that progress timestamps have been saved</li> 
+    <li>resume-write-unsafe = false</li> 
+    <li># override the name under which resume state is saved</li> 
+    <li>resume-name = "default"</li> 
+    <li># exclude documents whose namespace matches the following pattern</li> 
+    <li>namespace-exclude-regex = '^mydb\.ignorecollection$'</li> 
+    <li># turn on indexing of GridFS file content</li> 
+    <li>index-files = true</li> 
+    <li># turn on search result highlighting of GridFS content</li> 
+    <li>file-highlighting = true</li> 
+    <li># index GridFS files inserted into the following collections</li> 
+    <li>file-namespaces = ["users.fs.files"]</li> 
+    <li># print detailed information including request traces</li> 
+    <li>verbose = true</li> 
+    <li># enable clustering mode</li> 
+    <li>cluster-name = 'apollo'</li> 
+    <li># do not exit after full-sync, rather continue tailing the oplog</li> 
+    <li>exit-after-direct-reads = false</li> 
+   </ul> 
+   <p>Trong đó:</p> 
+   <ul> 
+    <li><code>mongo-url</code> là url tới database MongoDB</li> 
+    <li><code>elasticsearch-urls</code> là url tới các server elasticsearch mà bạn muốn đồng bộ với MongoDB</li> 
+    <li><code>direct-read-namespaces</code> là các database, collection của MongoDB sẽ được đồng bộ hóa</li> 
+    <li>Ngoài ra ở dưới còn các thông tin khác như username/password của Elasticsearch…</li> 
+   </ul> 
+   <h2>Demo</h2> 
+   <p>Ở đây mình sử dụng luôn MongoDB và Elasticsearch trên local với url lần lượt là:</p> 
+   <ul> 
+    <li>mongo-url = "mongodb://localhost:27017"</li> 
+    <li><br> </li> 
+    <li>elasticsearch-urls = ["https://localhost:9200"]</li> 
+    <li><br> </li> 
+    <li>direct-read-namespaces = ["stackjava.player"]</li> 
+   </ul> 
+   <p>Mình sẽ tiến hành đồng bộ dữ liệu từ collection <code>player</code> của database <code>stackjava</code> sang Elasticsearch</p> 
+   <p>Khởi động elasticsearch bằng lệnh <code>sudo service elasticsearch start</code>và chạy monstache bằng lệnh <code>monstache</code></p> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/monstache-4.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/monstache-4.png"></a></p> 
+   <p>Nhớ giữ nguyên màn hình teminal chạy monstache nhé hoặc bạn cũng có thể tạo service để chạy ngầm monstache</p> 
+   <p>Insert dữ liệu vào <code>stackjava.player</code></p> 
+   <ul> 
+    <li>db.player.insert({'name':'ronaldo','country':'Portugal'})</li> 
+   </ul> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/monstache-5.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/monstache-5.png"></a></p> 
+   <p>Xem dữ liệu trên Elasticsearch:</p> 
+   <ul> 
+    <li>curl http://localhost:9200/stackjava.player/_search?pretty</li> 
+   </ul> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/monstache-6.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/monstache-6.png"></a></p> 
+   <p>Kết quả trên Elasticsearchsẽ có thêm bản ghi mà bạn vừa thêm ở MongoDB, tương tự bạn có thể thêm bản ghi mới, xóa hoặc chỉnh sửa bản ghi trên MongoDB nó cũng sẽ đều cập nhật luôn sang Elasticsearch.</p> 
+   <p> </p> 
+   <p>_____________________________________</p> 
+   <p>Như vậy là mình đã hướng dẫn xong Monstache là gì? Đồng bộ mongodb sang Elasticsearch với Monstache.</p> 
+   <p>Nếu bạn muốn sử dụng Monstache trên windows thì mình sẽ giới thiệu ở bài sau nhé.</p> 
+   <p>Okay, Done!</p> 
+   <p> </p> 
+   <p>References:</p> 
+   <p><a href="https://rwynn.github.io/monstache-site/" target="_blank">https://rwynn.github.io/monstache-site/</a></p> 
+   <p></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

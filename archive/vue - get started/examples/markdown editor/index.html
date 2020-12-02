@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown editor</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style></style>
+</head>
+
+<body>
+    <h2>Markdown editor</h2>
+    <p>Dead simple Markdown editor.</p>
+
+    <div id="editor">
+        <textarea :value="input" @input="update"></textarea>
+
+        <div v-html="compiledMarkdown"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/marked@0.3.6"></script>
+    <script src="https://unpkg.com/lodash@4.16.0"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

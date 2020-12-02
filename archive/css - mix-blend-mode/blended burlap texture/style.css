@@ -1,0 +1,377 @@
+@import url("https://fonts.googleapis.com/css?family=Holtwood+One+SC|Source+Code+Pro:700&display=swap");
+:root {
+  --size: 90vmin;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  background: white;
+  height: 100%;
+}
+
+body {
+  background-image: url("https://st2.depositphotos.com/1103957/6076/i/950/depositphotos_60761371-stock-photo-burlap-texture-digital-paper-tileable.jpg");
+  background-size: 30vw 30vw;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+body:before {
+  content: '';
+  position: absolute;
+  top: -2.5vmin;
+  left: -2.5vmin;
+  right: -2.5vmin;
+  bottom: -2.5vmin;
+  bottom: 0;
+  box-shadow: inset 0 0 5vmin 0 black;
+}
+
+.fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blend {
+  mix-blend-mode: overlay;
+}
+
+.stroke {
+  -webkit-text-stroke: .25vmin black;
+}
+
+.shade {
+  box-shadow: 0 0 0 1vmin black;
+}
+
+.border {
+  border: 3vmin double black;
+}
+
+.threesixty > span {
+  width: 2ch;
+  height: 50%;
+  position: absolute;
+  top: 0;
+  left: calc(50% - 1ch);
+  text-align: center;
+}
+
+.outer > .threesixty > span:nth-of-type(1) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(0deg);
+}
+.outer > .threesixty > span:nth-of-type(2) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(16.3636363636deg);
+}
+.outer > .threesixty > span:nth-of-type(3) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(32.7272727273deg);
+}
+.outer > .threesixty > span:nth-of-type(4) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(49.0909090909deg);
+}
+.outer > .threesixty > span:nth-of-type(5) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(65.4545454545deg);
+}
+.outer > .threesixty > span:nth-of-type(6) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(81.8181818182deg);
+}
+.outer > .threesixty > span:nth-of-type(7) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(98.1818181818deg);
+}
+.outer > .threesixty > span:nth-of-type(8) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(114.5454545455deg);
+}
+.outer > .threesixty > span:nth-of-type(9) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(130.9090909091deg);
+}
+.outer > .threesixty > span:nth-of-type(10) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(147.2727272727deg);
+}
+.outer > .threesixty > span:nth-of-type(11) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(163.6363636364deg);
+}
+.outer > .threesixty > span:nth-of-type(12) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(180deg);
+}
+.outer > .threesixty > span:nth-of-type(13) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(196.3636363636deg);
+}
+.outer > .threesixty > span:nth-of-type(14) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(212.7272727273deg);
+}
+.outer > .threesixty > span:nth-of-type(15) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(229.0909090909deg);
+}
+.outer > .threesixty > span:nth-of-type(16) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(245.4545454545deg);
+}
+.outer > .threesixty > span:nth-of-type(17) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(261.8181818182deg);
+}
+.outer > .threesixty > span:nth-of-type(18) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(278.1818181818deg);
+}
+.outer > .threesixty > span:nth-of-type(19) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(294.5454545455deg);
+}
+.outer > .threesixty > span:nth-of-type(20) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(310.9090909091deg);
+}
+.outer > .threesixty > span:nth-of-type(21) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(327.2727272727deg);
+}
+.outer > .threesixty > span:nth-of-type(22) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(343.6363636364deg);
+}
+.outer > .threesixty > span:nth-of-type(23) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(360deg);
+}
+
+.mid > .threesixty > span:nth-of-type(1) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(0deg);
+}
+.mid > .threesixty > span:nth-of-type(2) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(15deg);
+}
+.mid > .threesixty > span:nth-of-type(3) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(30deg);
+}
+.mid > .threesixty > span:nth-of-type(4) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(45deg);
+}
+.mid > .threesixty > span:nth-of-type(5) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(60deg);
+}
+.mid > .threesixty > span:nth-of-type(6) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(75deg);
+}
+.mid > .threesixty > span:nth-of-type(7) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(90deg);
+}
+.mid > .threesixty > span:nth-of-type(8) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(105deg);
+}
+.mid > .threesixty > span:nth-of-type(9) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(120deg);
+}
+.mid > .threesixty > span:nth-of-type(10) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(135deg);
+}
+.mid > .threesixty > span:nth-of-type(11) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(150deg);
+}
+.mid > .threesixty > span:nth-of-type(12) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(165deg);
+}
+.mid > .threesixty > span:nth-of-type(13) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(180deg);
+}
+.mid > .threesixty > span:nth-of-type(14) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(195deg);
+}
+.mid > .threesixty > span:nth-of-type(15) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(210deg);
+}
+.mid > .threesixty > span:nth-of-type(16) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(225deg);
+}
+.mid > .threesixty > span:nth-of-type(17) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(240deg);
+}
+.mid > .threesixty > span:nth-of-type(18) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(255deg);
+}
+.mid > .threesixty > span:nth-of-type(19) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(270deg);
+}
+.mid > .threesixty > span:nth-of-type(20) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(285deg);
+}
+.mid > .threesixty > span:nth-of-type(21) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(300deg);
+}
+.mid > .threesixty > span:nth-of-type(22) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(315deg);
+}
+.mid > .threesixty > span:nth-of-type(23) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(330deg);
+}
+.mid > .threesixty > span:nth-of-type(24) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(345deg);
+}
+.mid > .threesixty > span:nth-of-type(25) {
+  display: inline-block;
+  transform-origin: bottom center;
+  transform: rotate(360deg);
+}
+
+.circle {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+.circle h1,
+.circle h1 * {
+  font-family: 'Holtwood One SC';
+  font-size: calc(var(--size) / 10);
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: wheat;
+}
+.circle h2,
+.circle h2 * {
+  font-family: 'Source Code Pro';
+  font-size: calc(var(--size) / 20);
+  line-height: 2.75;
+  text-transform: uppercase;
+  color: black;
+}
+
+.outer {
+  width: var(--size);
+  height: var(--size);
+}
+.outer h1.threesixty {
+  transform: rotate(-90deg);
+}
+
+.mid {
+  width: calc(var(--size) * .6);
+  height: calc(var(--size) * .6);
+}
+
+.inner {
+  width: calc(var(--size) * .3);
+  height: calc(var(--size) * .3);
+  font-size: calc(var(--size) / 6);
+}
+.inner .star {
+  position: relative;
+  top: calc(-1 * (var(--size) / 6) / 15);
+  color: wheat;
+}
+.inner .star.stroke {
+  -webkit-text-stroke: 1vmin black;
+}
+
+.blue {
+  background: steelblue;
+}
+
+.red {
+  background: indianred;
+}
+
+.white {
+  background: white;
+}

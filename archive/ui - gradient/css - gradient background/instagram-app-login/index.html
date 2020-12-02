@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <title>instagram app login</title>
+  
+  
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+
+      <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+
+<body>
+
+   <div id="gradient" style="background:-moz-element(#backgroundElt);">
+<center>
+
+<a data-toggle="modal" data-target="#myModal" style="text-decoration:none; cursor:pointer;">
+  <div class="lang"><div class="small-text">
+  English (United States)&nbsp; <i class="fa fa-angle-down"></i> <!-- "chevron-down" can be used instead-->
+  </div></div>
+  </a>
+  
+<!--modal start-->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg"style="max-width:320px;">
+    
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">SELECT YOUR LANGUAGE</h4>
+        </div>
+		<div class="modal-header ">
+		 <div class="modal-search"><span style="font-size:15px;"><i class="fa fa-search"></i></span>
+         <input type="text" class="modal-input"/>
+		  </div>
+        </div>
+        <div class="modal-body" style="background:url('bg.png') no-repeat orange;">
+		  <span style="font-size:85px;"><i class="fa fa-gear fa-spin"></i></span>
+		<br><h4>This section is under development</h4><br>
+		<h4>&copy; Ayush Gupta</h4>
+		
+        </div>
+        <div class="modal-footer">
+          <button id="modal-close" data-dismiss="modal">CLOSE</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <!-- modal end -->
+  
+  <br>
+
+
+<!-- login start -->
+  <div class="container-login" id="login">
+     <Img class="logo" src="img/t-w.png" width="165">
+     <form class="form">
+      <input class="form-correction" type="text" placeholder="Username"/>
+      <input class="form-correction" type="password" placeholder="Password"/>
+      <button class="form-correction" type="submit"  id="load">Log In</button>
+    </form> 
+    <div class=ag> 
+    <p id="below-login">Forgot your login details? <span style="font-weight:500;">Get help signing in.</span></p></div>
+      <br>
+    <div class="separator">or</div>
+    <div class="login-fb" style="color:#fff;font-size:16px;font-weight:700;"><span style="font-size:20px;"><i class="fa fa-facebook-square"></i></span>
+      <!-- facebook-official can also be used-->
+      &nbsp; <span style="font-weight:700;">Log in with Facebook</span></div>
+	  </div>
+  <!-- login end -->
+  
+  
+  
+  <!-- Signup start (two sub-windows) -->
+  
+ <div class="container-signup" id="registration">
+  <!-- main signup window start -->
+  <div class="container-signup-main" id="registration-main">
+<Img class="logo" src="img/l-t-w.png" width="200">
+    <br><div class="small-text2">Sign up to see photos and videos<br> from your friends</div>
+	
+	<br>
+<button type="submit" class="button-white">
+<font size="2em" color="#008fdd"> <span style="font-size:22px;"><i class="fa fa-facebook-official"></i></span>
+      <!-- facebook-square can also be used-->
+      &nbsp; <span class="fb" style="font-size:15px; font-weight:700;">Log in with Facebook</span></font></button>
+      <br>
+   <div class="separator">or</div>
+ 	
+	<a onclick="div_swap()" style=" text-decoration:none">
+  
+  <p id="efgh" style="font-size="13px"; cursor: "pointer"; color:"#fff";"><span style="font-weight:"bold"; color:#fff;">Sign up with email or phone number</span></p>
+		
+		  
+		  </a><br><br><br>
+     <div class="small-text"><div class="privacy"> By signing up, you agree to our <br><a href="http://cybertechnick.blogspot.com" target="_blank">Terms </a>& <a href="http://onbeats.ml" target="_blank">Privacy Policy</a></div></div>
+      
+
+  </div>
+  
+  
+    <!-- main signup window end -->
+  
+<!--   signup using email or phone window start -->
+
+
+  <div class="container-sinup-inward" id="registration-inward">
+  
+  <img src="img/etc/reg_name.png" width="110px"><br>
+  <br>
+    <div id="tabs">
+<div class="tab">
+  <button class="tablinks" onclick="menu(event, 'PHONE')" id="defaultOpen"><span style="font-size:18px;">PHONE</span></button>
+  <button class="tablinks" onclick="menu(event, 'EMAIL')"><span style="font-size:18px;">EMAIL</span></button>
+</div>
+
+<div id="EMAIL" class="tabcontent">
+<form>
+      <input class="form-sms" type="text" placeholder="Your Email"/>
+	  
+      <button class="form-sms button-white" type="submit"  id="load">Next</button>
+    </form>
+</div>
+
+<div id="PHONE" class="tabcontent">
+  <form>
+      <input class="form-sms" type="text" placeholder="Your no."/>
+	  <div class="sms privacy">You may receive SMS updates from<br>
+	       instagram and can opt out at any time.
+		  </div>
+      <button class="form-sms" type="submit"  id="load">Next</button>
+    </form>
+</div>
+</div>
+</div>
+<!--  signup using email or phone window end -->
+
+
+
+</center>
+
+  
+  <!-- Signup end -->
+  
+  <a  onclick="myFunction()" style="text-decoration:none">
+  <div id="bottom"> 
+ <div class= "footer-text"><p id="abcd">Don't have an account? Sign up.</p></div>
+</div>
+	</a>
+</div>
+
+</body>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+
+  
+
+    <script  src="js/index.js"></script>
+
+
+
+
+</body>
+
+</html>

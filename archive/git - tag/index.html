@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hướng dẫn tag (đánh dấu)">
+    <title>Đánh tag với git</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Đánh tag với git</h2>
+      <p>Trong khi bạn commit các lần chỉnh sửa của mình thì mọi thứ sẽ được đều
+        lưu vào log mà mình đã hướng dẫn bạn cách xem <code>commit log</code>&nbsp;ở
+        <a href="http://thachpham.com/tools/git-git-log-va-undo-commit.html">phần
+          trước</a>. Tuy nhiên nếu bạn commit quá nhiều thì sẽ gây khó khăn cho
+        bạn về sau nếu cần xem lại thông tin của lần commit trước mà bạn có thể
+        gắn thẻ đánh dấu (tag) cho mỗi commit và khi cần xem bạn chỉ cần sử dụng
+        lệnh <code>git show tên_tag</code>&nbsp;là đã có thông tin rất rõ ràng,
+        ngoài ra nó còn giúp bạn dễ dàng diff (đối chiếu) sau này khi không cần
+        nhớ checksum (dù chỉ cần nhớ vài ký tự đầu tiên)&nbsp;của mỗi commit mà
+        chỉ cần nhớ tag, cũng như có thể tạo thêm branch từ tag để bạn thuận
+        tiện hơn trong việc phân nhánh.</p>
+      <h3>Xem danh sách tag</h3>
+      <p>Để xem danh sách tag, bạn dùng lệnh:</p>
+      <pre>git tag -n</pre>
+      <p>Để xem danh sách commit mà có thông tin tag, sử dụng lệnh:</p>
+      <pre>git log --pretty="%H %d" --decorate=short</pre>
+      <p><br>
+      </p>
+      <h3>Lightweight tag và annotated tag</h3>
+      <p>Trong Git có hai kiểu tag chính đó là:</p>
+      <ul>
+        <li>Lightweight tag: Các tag này chỉ đơn thuần là đánh dấu snapshot của
+          commit.</li>
+        <li>Annotated tag: Với tag này, bạn có thể đặt tiêu đề cho tag, và khi
+          xem nó sẽ có thông tin về người tag, ngày tag,….</li>
+      </ul>
+      <h3>Cách tạo lightweight tag</h3>
+      <p>Trước tiên, bạn có thể gõ <code>git tag</code>&nbsp;để xem danh sách
+        các tag có trong dự án của bạn. Sau đó để tạo thêm một tag, bạn có thể
+        gõ <code>git tag tên_tag</code>&nbsp;để tạo. Ví dụ như <code>v1.0</code>&nbsp;chẳng
+        hạn.</p>
+      <pre>$ git tag v1.0
+$ git tag
+v1.0</pre>
+      <p>Bây giờ bạn có thể xem thông tin của lần commit được gắn tag này bằng
+        lệnh <code>git show tên_tag</code>. Lưu ý rằng lệnh trên nó sẽ đánh dấu
+        lần commit cuối cùng của bạn vào tag <code>v1.0</code>.</p>
+      <pre>$ git show v1.0
+commit 05193375f7a7c1295fd26c6388d81e188f405b0b
+Author: Thach Pham &lt;contact@thachpham.com&gt;
+Date: Thu Apr 23 02:20:50 2015 -0700
+
+ Added a new tag
+
+diff --git a/tag.html b/tag.html
+new file mode 100644
+index 0000000..e69de29</pre>
+      <h3>Cách tạo annotated tag</h3>
+      <p>Để tạo annotated tag thì bạn cũng sử dụng lệnh <code>git tag</code>
+        nhưng sẽ có thêm tham số <code>-a</code>&nbsp;và tham số <code>-m</code>&nbsp;để
+        thiết lập lời nhắn cho tag này.</p>
+      <pre>$ git tag -a v1.0-an -m "Ra mat phien ban 1.0"
+$ git show v1.0-an
+tag v1.0-an
+Tagger: Thach Pham &lt;contact@thachpham.com&gt;
+Date: Thu Apr 23 02:41:11 2015 -0700
+
+Ra mat phien ban 1.0
+
+commit d5a599e3385a8fc7a65958ed50bc8b54666b45ad
+Author: Thach Pham &lt;contact@thachpham.com&gt;
+Date: Thu Apr 23 02:40:31 2015 -0700
+
+ Commit for Annotated Tag
+
+diff --git a/tag.html b/tag.html
+index e69de29..fea03c1 100644
+--- a/tag.html
++++ b/tag.html
+@@ -0,0 +1 @@
++Annotated Tag</pre>
+      <p>Bạn có thể thấy khi show ra, cái annotated tag sẽ có nhiều thông tin
+        hơn là so với cái tag thông thường, và đây cũng là kiểu tag bạn nên sử
+        dụng để có nhiều thông tin hơn.</p>
+      <h3>Thêm tag cho các commit cũ</h3>
+      <p>Ở lệnh trên thì bạn chỉ tạo ra tag cho commit cuối cùng của bạn. Còn
+        nếu bạn có rất nhiều commit trước đó mà cần gắn tag thì chỉ cần thêm mã
+        checksum (hoặc một đoạn mã checksum) của lần commit đó.</p>
+      <p>Để xem mã checksum của các lần commit trước đó thì bạn có thể sử dụng
+        git log với tham số <code>--pretty</code>&nbsp;với giá trị <code>oneline</code>&nbsp;để
+        lọc log nhé.</p>
+      <pre>$ git log --pretty=oneline
+d5a599e3385a8fc7a65958ed50bc8b54666b45ad Commit for Annotated Tag
+05193375f7a7c1295fd26c6388d81e188f405b0b Added a new tag
+435f642f951fbab1037fc2feef239ab26d6e6115 Added faq.html
+6904d5232bf90821068279311e205e3e1ff929f1 Initial commit</pre>
+      <p>Và bây giờ mình có thể đặt tag cho commit <em>Initial commit</em> thì
+        sẽ khai báo một đoạn mã checksum của nó vào lệnh <code>git tag</code>&nbsp;như
+        sau.</p>
+      <pre>$ git tag -a v0.0 6904d -m "Tag for inintial commit"
+$ git tag
+v0.0
+v1.0
+v1.0-an</pre>
+      <h3>Push tag</h3>
+      <p>Mặc định lệnh <code>git push</code>&nbsp;sẽ không push các tag đã tạo
+        lên repository mà bạn có thể dùng lệnh <code>git push --tags</code>&nbsp;để
+        đẩy toàn bộ tag lên repository.</p>
+      <pre>$ git push --tags
+Username for 'https://github.com': thachphamblog
+Password for 'https://thachphamblog@github.com': 
+Counting objects: 7, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (7/7), 775 bytes | 0 bytes/s, done.
+Total 7 (delta 1), reused 0 (delta 0)
+To https://github.com/thachphamblog/hoc-git.git
+ * [new tag] v0.0 -&gt; v0.0
+ * [new tag] v1.0 -&gt; v1.0
+ * [new tag] v1.0-an -&gt; v1.0-an</pre>
+      <p>Nếu bạn dùng GitHub hay các dịch vụ tương tự thì bây giờ bạn sẽ thấy
+        tag xuất hiện ở repository.</p>
+      <p><img src="images/7-git-tag-github.png" alt="git-tag-github"></p>
+      <h3>Nhập tag vào branch</h3>
+      <p>Mặc dù ở bài sau mình sẽ giải thích qua branch nhưng tạm thời bây giờ
+        bạn có thể hiểu branch là <strong>một phân nhánh trong một cây dự án</strong>
+        để bạn sửa mã nguồn mà không ảnh hưởng đến phân nhánh gốc (master).</p>
+      <p>Bây giờ bạn có thể&nbsp;truy cập vào dữ liệu mà bạn đã commit thông qua
+        tag kèm theo việc tạo một branch mới với lệnh <code>git checkout -b
+          tên_branch tên_tag</code>. Ví dụ mình muốn đưa cái tag<code> v1.0-an</code>
+        vào một branch mới tên <code>version1</code>&nbsp;thì sẽ viết như sau:</p>
+      <pre>$ git checkout -b version1 v1.0-an
+Switched to a new branch 'version1'</pre>
+      <p>Lúc này bạn đã tự động chuyển qua branch <code>version1</code>&nbsp;thay
+        vì <code>master</code>&nbsp;ban đầu, kèm theo đó là dữ liệu của lần
+        commit được gắn tag <code>v1.0-an</code>.</p>
+      <p>Bây giờ&nbsp;nếu bạn muốn làm việc thêm với branch này thì cứ làm việc
+        như khi bạn ở <code>master</code>. Để chuyển về lại master, bạn gõ lệnh
+        <code>git checkout master</code>.</p>
+      <p>Để push cái branch này lên bạn có thể sử dụng lệnh <code>git push
+          origin version1</code>. Nếu bạn&nbsp;quên thì mình nhắc lại nhé, <code>origin</code>&nbsp;chính
+        là tên địa chỉ remote của repository mặc định mà git tự đặt khi bạn
+        clone.</p>
+      <p><img src="images/7-git-push-branch.png" alt="git-push-branch"></p>
+      <p>Bây giờ bạn thử vào xem cái version1 và cái master xem có thấy sự khác
+        nhau của nó không? Ở bài nói về branch mình sẽ giải thích cho bạn kỹ
+        hơn. Đại loại là bạn tạo một phân nhánh khác để sửa code riêng mà không
+        ảnh hưởng đến code chính.</p>
+      <h3>Lời kết</h3>
+      <p>Trong bài này chắc bạn đã thấy được sức mạnh của git là như thế nào và
+        khi nó kết hợp với branch thì sẽ rất tuyệt vời trong việc phân chia
+        nhánh cho mã nguồn để bạn làm việc linh hoạt hơn, dễ dàng chuyển đổi qua
+        các phiên bản mà không cần làm gì nhiều. Bạn đừng lo lắng khi chưa hiểu
+        rõ về branch, mình sẽ giải thích ngay ở phần sau đây.</p>
+    </article>
+    
+  </body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Laravel authorization">
+    <title>Phân quyền trong Laravel</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Phân quyền trong Laravel</h2>
+      <p>Bất kể hệ thống website nào cũng có người dùng và đi kèm với nó là việc
+        xác thực (authentication) và phân quyền (authorization) với từng người
+        dùng. Xác thực trong Laravel là khá đơn giản với Laravel Authentication,
+        chúng ta cũng có thể tận dụng các hệ thống khác như mạng xã hội để xác
+        thực, ví dụ xác thực người dùng bằng Facebook, Google, Twitter… Bên cạnh
+        đó, chúng ta cũng rất cần phân quyền cho người dùng để đảm bảo các vấn
+        đề về bảo mật và tuân thủ các chính sách từng hệ thống. Ví dụ như có
+        những người dùng được phép chỉnh sửa hoặc xóa một tài nguyên nhưng cũng
+        có những người dùng chỉ được phép đọc thông tin. Từ phiên bản Laravel
+        5.1 trở về trước, công việc này phải thực hiện thông qua các gói ACL
+        (Access Control List) như Entrust, Sentinel hay Laravel-ACL thì hiện nay
+        Laravel đã có hỗ trợ trực tiếp trong core của framework.</p>
+      <p>Với việc sử dụng các gói ACL ở ngoài, các quyền cho người dùng chỉ là
+        các cờ, nếu muốn các nghiệp vụ phức tạp trong phân quyền, bạn sẽ rất khó
+        khăn và phải đưa vào Controller. Sử dụng Laravel Gate tránh được một số
+        các nhược điểm của việc sử dụng các gói ACL ngoài như sau:</p>
+      <ul>
+        <li>Sử dụng Laravel Gate cho bạn sự tự do, bạn có thể sử dụng cho các
+          trường hợp cực phức tạp tùy ý do nó không bắt buộc phải implement
+          trong các model.</li>
+        <li>Bạn có hoàn toàn tự chủ về các chính sách phân quyền, với Laravel
+          Gate các xử lý truy cập có thể tách biệt với các xử lý về nghiệp vụ,
+          loại bỏ sự phụ thuộc và code trong các controller dễ đọc hơn.</li>
+      </ul>
+      <p>Gate và Policy giống như Route với Controller, Gate cũng cấp một giải
+        pháp dựa trên Closure để phân quyền trong khi các policy giống với
+        controller nhóm các logic nghiệp vụ liên quan đến Model hoặc các tài
+        nguyên. Chúng ta cùng tìm hiểu về Gate trước khi tìm hiểu về Policy.
+        Phần lớn các ứng dụng sẽ sử dụng cả Gate và Policy, Gate được áp dụng
+        cho các hành động không liên quan đến Model hoặc các tài nguyên như việc
+        truy nhập vào trang quản trị dashboard. Ngược lại, policy được sử dụng
+        khi bạn muốn cho phép một hành động truy nhập vào một model hoặc nguồn
+        tài nguyên.</p>
+      <h3>Gate</h3>
+      <p>Gate là các <a href="https://allaravel.com/tutorials/khai-niem-lambda-va-closure-trong-php/">Closure</a>
+        được xác định nếu một người dùng được xác thực để thực hiện một hành
+        động, nó được định nghĩa trong <code>App\Providers\AuthServiceProvider</code>
+        sử dụng <a href="https://allaravel.com/laravel-tutorials/laravel-don-gian-dep-va-hieu-qua-hon-voi-laravel-facade/">facade</a>
+        Gate. Gate luôn nhận một thực thể user là tham số thứ nhất và có thể có
+        các tham số tùy chọn khác như Eloquent Model:</p>
+      <pre>/**
+ * Register any authentication / authorization services.
+ *
+ * @return void
+ */
+public function boot()
+{
+    $this-&gt;registerPolicies();
+
+    Gate::define('update-post', function ($user, $post) {
+        return $user-&gt;id == $post-&gt;user_id;
+    });
+}</pre>
+      <p>Gate cũng có thể định nghĩa sử dụng dạng callback string giống như
+        Controller:</p>
+      <pre>/**
+ * Register any authentication / authorization services.
+ *
+ * @return void
+ */
+public function boot()
+{
+    $this-&gt;registerPolicies();
+
+    Gate::define('update-post', 'PostPolicy@update');
+}</pre>
+      <p>Bạn có thể định nghĩa nhiều Gate sử dụng phương thức resource:</p>
+      <pre>Gate::resource('posts', 'PostPolicy');</pre>
+      <p>Với phương thức resource nó tương tự như định nghĩa thủ công các phương
+        thức sau:</p>
+      <pre>Gate::define('posts.view', 'PostPolicy@view');
+Gate::define('posts.create', 'PostPolicy@create');
+Gate::define('posts.update', 'PostPolicy@update');
+Gate::define('posts.delete', 'PostPolicy@delete');</pre>
+      <p>Mặc định view, create, update và delete được định nghĩa. Bạn có thể
+        override các khả năng này bằng cách truyền vào một mảng như là tham số
+        thứ 3 cho phương thức resource. Key của mảng này định nghĩa tên khả năng
+        trong khi giá trị định nghĩa tên phương thức.</p>
+      <pre>Gate::resource('posts', 'PostPolicy', [
+    'photo' =&gt; 'updatePhoto',
+    'image' =&gt; 'updateImage',
+]);</pre>
+      <p>Để phân quyền thực hiện một hành động, bạn có thể sử dụng các phương
+        thức allows và denies, chú ý rằng bạn không cần truyền người dùng đã
+        được xác thực vào các phương thức này. Laravel sẽ tự động xử lý việc đó
+        trong các gate Closure:</p>
+      <pre>if (Gate::allows('update-post', $post)) {
+    // The current user can update the post...
+}
+
+if (Gate::denies('update-post', $post)) {
+    // The current user can't update the post...
+}</pre>
+      <p>Nếu bạn muốn xác định một người dùng nào đó có được phân quyền để thực
+        hiện một hành động hay không, bạn có thể sử dụng phương thức forUser
+        trên facade Gate:</p>
+      <pre>if (Gate::forUser($user)-&gt;allows('update-post', $post)) {
+    // The user can update the post...
+}
+
+if (Gate::forUser($user)-&gt;denies('update-post', $post)) {
+    // The user can't update the post...
+}</pre>
+      <h3>Policy</h3>
+      <h4>Tạo Policy</h4>
+      <p>Policy là các class quản lý logic trong phân quyền liên quan đến một
+        Model hoặc tài nguyên nào đó. Ví dụ, nếu ứng dụng của bạn là một blog,
+        bạn có thể có một model Post và một policy là PostPolicy để phân quyền
+        các hành động người dùng như tạo hay cập nhật các bài viết. Bạn có thể
+        tạo ra một policy bằng cách sử dụng câu lệnh Artisan make:policy, các
+        policy được tạo ra sẽ được đặt trong thư mục app\Policies. Nếu thư mục
+        này không tồn tại trong project, Laravel sẽ tự động tạo nó cho bạn:</p>
+      <pre>php artisan make:policy PostPolicy</pre>
+      <p>Câu lệnh <code>make:policy</code> sẽ sinh ra một class policy rỗng,
+        nếu bạn muốn sinh ra một CRUD policy bạn cần thêm tham số –model khi
+        thực thi câu lệnh artisan:</p>
+      <pre>php artisan make:policy PostPolicy --model=Post</pre>
+      <h4>Đăng ký Policy</h4>
+      <p>Một policy muốn sử dụng cần được đăng ký, AuthServiceProvider được đưa
+        vào trong project Laravel chứa một thuộc tính policies để map Eloquent
+        model với các policy tương ứng. Đăng ký một policy sẽ chỉ dẫn cho
+        Laravel policy nào sẽ được sử dụng để phân quyền hành động cho model
+        nào:</p>
+      <pre>&lt;?php
+
+namespace App\Providers;
+
+use App\Post;
+use App\Policies\PostPolicy;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+
+class AuthServiceProvider extends ServiceProvider
+{
+    /**
+     * The policy mappings for the application.
+     *
+     * @var array
+     */
+    protected $policies = [
+        Post::class =&gt; PostPolicy::class,
+    ];
+
+    /**
+     * Register any application authentication / authorization services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this-&gt;registerPolicies();
+
+        //
+    }
+}</pre>
+      <h4>Write Policy</h4>
+      <p>Khi Policy được đăng ký, bạn có thể thêm các phương thức cho mỗi hành
+        động cần cấp quyền. Ví dụ, định nghĩa phương thức update trên PostPolicy
+        để xác định một user có thể cập nhật một thực thể Post. Phương thức
+        update sẽ nhận được một User và Post như là tham số và nó trả về true
+        hoặc false để nhận diện xem người dùng này có được phân quyền để cập
+        nhật Post không? Trong ví dụ dưới đây, chỉ có người dùng đã viết bài mới
+        có quyền cập nhật bài viết.</p>
+      <pre>&lt;?php
+
+namespace App\Policies;
+
+use App\User;
+use App\Post;
+
+class PostPolicy
+{
+    /**
+     * Determine if the given post can be updated by the user.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Post  $post
+     * @return bool
+     */
+    public function update(User $user, Post $post)
+    {
+        return $user-&gt;id === $post-&gt;user_id;
+    }
+}</pre>
+      <p>Bạn có thể tiếp tục định nghĩa các phương thức khác trên policy này nếu
+        cần phân quyền cho các hành động. Ví dụ, bạn có thể định nghĩa phương
+        thức view hoặc delete để phân quyền các hành động Post khác và nhớ rằng
+        tên các phương thức trong policy là hoàn toàn bạn có thể đặt thoải mái
+        nếu thích.</p>
+      <h4>Các phương thức không có Model</h4>
+      <p>Có những phương thức policy chỉ nhận người dùng được xác thực hiện tại
+        và không cần một thực thể của một Model. Tình huống này dùng khi phân
+        quyền một hành động create. Ví dụ, nếu bạn tạo một blog, bạn có thể muốn
+        kiểm tra nếu một người dùng có được phân quyền để tạo một post bất kỳ
+        không. Khi định nghĩa phương thức trong policy nó sẽ không nhận một thực
+        thể của Model, như phương thức create, nó sẽ không nhận một thực thể của
+        model. Thay vào đó, bạn nên định nghĩa phương thức chỉ với người dùng đã
+        được xác thực.</p>
+      <pre>/**
+ * Determine if the given user can create posts.
+ *
+ * @param  \App\User  $user
+ * @return bool
+ */
+public function create(User $user)
+{
+    //
+}</pre>
+      <h4>Policy Filter</h4>
+      <p>Với người dùng hiện tại, bạn muốn cấp quyền thực hiện các hành động
+        trong một chính sách, để thực hiện bạn định nghĩa phương thức before
+        trong policy. Phương thức before sẽ thực thi trước bất kỳ phương thức
+        nào trong policy, nó cho bạn cơ hội để cho phép thực hiện hành động
+        trước khi phương thức của policy mong muốn được gọi. Tính năng này rất
+        thông dụng để cho phép các administrator có thể thực hiện bất kỳ hành
+        động nào:</p>
+      <pre>public function before($user, $ability)
+{
+    if ($user-&gt;isSuperAdmin()) {
+        return true;
+    }
+}</pre>
+      <p>Nếu bạn muốn một user không được phép thực hiện bất kỳ gì bạn chỉ cần
+        trả về false trong phương thức before. Nếu null được trả về, việc cấp
+        quyền sẽ được tiếp tục trong phương thức policy.</p>
+      <h3>Cho phép thực hiện hành động sử dụng Policy</h3>
+      <p>Thông qua User Model Model User được tạo sẵn trong project Laravel chứa
+        hai phương thức có sẵn là can và cant. Phương thức can nhận hành động
+        bạn muốn cấp phép và model liên quan. Ví dụ, để xác định một người dùng
+        được phép cập nhật model Post không?</p>
+      <pre>if ($user-&gt;can('update', $post)) {
+    //
+}</pre>
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://laracasts.com/series/laravel-from-scratch-2018/episodes/27">https://laracasts.com/series/laravel-from-scratch-2018/episodes/27</a></p>
+      <p><a target="_blank" href="https://allaravel.com/laravel-tutorials/phan-quyen-nguoi-dung-voi-laravel-authorization/">https://allaravel.com/laravel-tutorials/phan-quyen-nguoi-dung-voi-laravel-authorization/</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

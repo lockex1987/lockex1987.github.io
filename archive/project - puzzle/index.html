@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="description" content="A puzzle game">
+<meta name="keywords" content="demo">
+<meta name="author" content="lockex1987">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Puzzle</title>
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+    <link rel="stylesheet" href="css/puzzle.css"/>
+</head>
+<body>
+	<article>
+    <div id="mainContent">
+        <div id="puzzle">
+            &nbsp;
+        </div>
+        <progress id="indicator" style="display: none;"></progress>
+        <input type="range" id="myRange" min="0" step="1" value="90">
+        <div id="control">
+            <input type="checkbox" id="sic" value="1" checked="checked"/> <span id="sit">Hiển thị ảnh</span>
+            <br />
+            <input type="checkbox" id="sac" value="1"/> <span id="sat">Hiển thị đáp án</span>
+            <button type="button" id="bn">NEXT</button>
+            <button type="button" id="bp">PRE</button>
+        </div>
+    </div>
+    </article>
+    
+    <script src="../../js/docs.js"></script>
+    
+    <script>
+        // Raw JSON data
+        var raw = [
+            { id: 1, q: "Từ nào trong tiếng Việt có chín chữ H?", a: "Chính (Chín-h)." },
+            { id: 2, q: "Tại sao người Trung Quốc ăn nhiều hơn người Nhật?", a: "Vì người Trung Quốc đông hơn." },
+            { id: 3, q: "Cái gì có thể chạm vào mọi thứ nhưng không thể chạm vào chính mình?", a: "Ngón tay." },
+            { id: 4, q: "Tại sao chim lại bay về phương Nam?", a: "Đơn giản vì nó quá xa để đi bộ." },
+            { id: 5, q: "Điều gì mỏng manh tới mức chỉ cần nhắc tên của nó đã phá vỡ nó?", a: "Sự im lặng." },
+						{ id: 6, q: 'Cái gì chỉ có tăng chứ không bao giờ giảm?', a: 'Tuổi.' },
+						{ id: 7, q: 'Một con khỉ, một con sóc và một con chim cùng đua xem ai lên đến ngọn dừa nhanh nhất. Hãy đoán xem con nào lấy được quả chuối đầu tiên: khỉ, sóc hay chim?', a: 'Không con nào cả vì trên cây dừa không có chuối.' },
+						{ id: 8, q: 'Cái gì bạn chỉ có thể nghe chứ không thể nào chạm vào hay nhìn thấy được?', a: 'Giọng nói.' },
+						{ id: 9, q: 'Thứ gì mà bạn không thể nào nhìn thấy lần nữa?', a: 'Ngày hôm qua.' },
+						{ id: 10, q: 'Còn nào sau đây không ăn được: Vịt, bò, sóc và gián?', a: 'Con nào cũng ăn được, không ăn thì làm sao sống.' }
+						/*
+						{ id: 11, q: 'Thứ gì có càng nhiều thì càng không thể nhìn thấy nó?', a: 'Bóng tối.' },
+						{ id: 12, q: 'Một phát minh từ thời cổ đại vẫn được sử dụng trong cuộc sống ngày nay. Nó cho phép con người nhìn xuyên qua tường.', a: 'Cửa sổ.' },
+						{ id: 13, q: 'Thứ gì to lớn hơn bạn nhưng chẳng nặng tẹo nào?', a: 'Cái bóng của bạn.' },
+						{ id: 14, q: 'Ở Mỹ, chồng của một người góa bụa có thể lấy em gái của vợ mình không?', a: 'Không, vì ông ta đã mất rồi.' },
+						{ id: 15, q: 'Nếu có 6 đứa trẻ và hai người lớn cùng đứng dưới một chiếc dù nhỏ. Phải làm thế nào để tất cả không bị ướt?', a: 'Không cần làm gì vì trời không có mưa.' },
+						{ id: 16, q: 'Làm cách nào để chia đều 20 quả cam cho 11 cô gái?', a: 'Ép nó và chia đều phần nước cam thôi.' },
+						{ id: 17, q: 'Bạn có thể ăn bao nhiêu quả chuối khi bụng rỗng?', a: 'Một, vì khi đó bụng không còn rỗng nữa.' },
+						{ id: 18, q: 'Thứ gì nếu muốn dùng phải ném đi, nếu không dùng thì giữ lại?', a: 'Mỏ neo.' },
+						{ id: 19, q: 'Cái gì chỉ có đi xuống chứ không bao giờ đi lên?', a: 'Mưa.' },
+						{ id: 20, q: 'Cái lều màu hồng, bên trong có người mặc quần áo hồng, con mèo màu hồng, con cá màu hồng, cái bàn màu hồng, cái ghế màu hồng,... Hỏi cầu thang màu gì?', a: 'Lều không có cầu thang.' },
+						{ id: 21, q: 'Tại sao chó không cắn được đuôi của mình?', a: 'Vì đuôi nó không đủ dài.' },
+						{ id: 22, q: 'Câu nào mà những người vui sướng khi nhìn thấy nó sẽ trở nên buồn bã và ngược lại, những người buồn bã u sầu khi thấy nó sẽ trở nên vui vẻ hơn?', a: 'Điều đó rồi cũng qua đi.' },
+						{ id: 23, q: 'Bệnh gì bác sỹ bó tay?', a: 'Đó là bệnh… gãy tay!' },
+						{ id: 24, q: 'Con chó đen người ta gọi là con chó mực. Con chó vàng, người ta gọi là con chó phèn. Vậy con chó đỏ, người ta gọi là con chó gì?', a: 'Con chó đỏ người ta gọi là con chó… đỏ.' },
+						{ id: 25, q: 'Bên trái đường có một căn nhà xanh, bên phải đường có một căn nhà đỏ. Vậy, nhà Trắng ở đâu ?', a: 'Ở Mỹ.' },
+						{ id: 26, q: 'Loại nước giải khát nào chứa sắt và canxi?', a: 'Cà phê hay Cafe (Ca: canxi, Fe: sắt).' },
+						{ id: 27, q: 'Con cua đỏ dài 10 centimet (cm) chạy đua với con cua xanh dài 15cm. Con nào về đích trước?', a: 'Con cua xanh, vì con cua đỏ đã bị luộc chín.' },
+						{ id: 28, q: 'Hãy chứng minh 4 : 3 = 2', a: '4 (tứ) 3 là (tam) nên 4 : 3 = tứ chia tam = tám chia tư = 8 : 4 = 2.' },
+						{ id: 29, q: 'Tại sao khi bắn súng người ta lại nhắm một mắt?', a: 'Nhắm 2 mắt thì sẽ không thấy đường để bắn.' },
+						{ id: 30, q: 'Làm sao để cái cân đồng hộ tự cân chính nó.', a: 'Lật ngược cái cân lại.' }
+						*/
+        ];
+    </script>
+    
+    
+    <script src="js/puzzle.js"></script>
+</body>
+</html>

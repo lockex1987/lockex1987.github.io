@@ -1,0 +1,23 @@
+.posts-page {
+    .query {
+        // https://meyerweb.com/eric/tools/dencoder/
+        background: url("data:image/svg+xml;charset=utf8,%3Csvg%20height%3D%2732px%27%20version%3D%271.1%27%20viewBox%3D%270%200%2032%2032%27%20width%3D%2732px%27%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%3E%3Cg%20fill%3D%27none%27%20fill-rule%3D%27evenodd%27%20id%3D%27Page-1%27%20stroke%3D%27none%27%20stroke-width%3D%271%27%3E%3Cg%20fill%3D%27%23E0B750%27%20id%3D%27icon-111-search%27%3E%3Cpath%20d%3D%27M19.4271164%2C21.4271164%20C18.0372495%2C22.4174803%2016.3366522%2C23%2014.5%2C23%20C9.80557939%2C23%206%2C19.1944206%206%2C14.5%20C6%2C9.80557939%209.80557939%2C6%2014.5%2C6%20C19.1944206%2C6%2023%2C9.80557939%2023%2C14.5%20C23%2C16.3366522%2022.4174803%2C18.0372495%2021.4271164%2C19.4271164%20L27.0119176%2C25.0119176%20C27.5621186%2C25.5621186%2027.5575313%2C26.4424687%2027.0117185%2C26.9882815%20L26.9882815%2C27.0117185%20C26.4438648%2C27.5561352%2025.5576204%2C27.5576204%2025.0119176%2C27.0119176%20L19.4271164%2C21.4271164%20L19.4271164%2C21.4271164%20Z%20M14.5%2C21%20C18.0898511%2C21%2021%2C18.0898511%2021%2C14.5%20C21%2C10.9101489%2018.0898511%2C8%2014.5%2C8%20C10.9101489%2C8%208%2C10.9101489%208%2C14.5%20C8%2C18.0898511%2010.9101489%2C21%2014.5%2C21%20L14.5%2C21%20Z%27%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E") no-repeat center left 0.41666667px;
+        padding: 12px 0px 12px 40px;
+        border: none;
+        // border-bottom: 1px solid $borderColor;
+        // Trên iPad có bo, có vẻ mặc định có border-radius khác 0
+        border-radius: 0;
+    
+        &:focus {
+            border-bottom-color: $blueColor;
+        }
+    }
+    
+    // Danh sách các bài viết
+    .list {
+        .thumb {
+            width: 2.5rem;
+            height: 2.5rem;
+        }
+    }
+}

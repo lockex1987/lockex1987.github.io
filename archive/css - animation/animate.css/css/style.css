@@ -1,0 +1,45 @@
+article {
+    overflow: hidden;
+    text-align: center;
+}
+
+.site__header {
+    animation: slideInRight 1s;
+}
+
+.site__title {
+    color: #f35626;
+    background-image: -webkit-linear-gradient(92deg, #f35626, #feab3a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: hue 60s infinite linear;
+
+    font-size: 4rem;
+    font-weight: 100;
+    line-height: 1;
+    letter-spacing: -.05em;
+}
+
+.site__subtitle {
+    color: #7b8993;
+    margin-bottom: 1.75rem;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.site__content {
+    -webkit-animation: bounceInUp 1s;
+    -webkit-animation-delay: .1s;
+}
+
+
+@-webkit-keyframes hue {
+    from {
+        -webkit-filter: hue-rotate(0deg);
+    }
+
+    to {
+        -webkit-filter: hue-rotate(-360deg);
+    }
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+
+    <title>Tích hợp carousel với Highcharts</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/css/line-awesome.min.css"/>
+    <link rel="stylesheet" href="../../css/style.css" />
+    
+    <link rel="stylesheet" href="https://code.highcharts.com/css/highcharts.css" />
+    <link rel="stylesheet" href="css/highcharts-carousel.css" />
+</head>
+
+<body class="no-float-button">
+    <article id="app" class="mw-none">
+        <h2>Tích hợp carousel với Highcharts</h2>
+        <p>Làm như bình thường.</p>
+
+        <div id="gallery" class="nat-carousel mx-auto">
+            <div class="d-flex">
+                <a class="nat-carousel-control" href="#" data-direction="prev">
+                    <span class="la la-angle-left text-muted"></span>
+                </a>
+    
+                <div class="nat-carousel-wrapper">
+                    <div class="nat-carousel-inner">
+                        <div class="nat-carousel-item"
+                                v-for="(e, idx) in list">
+                            <div class="border p-2">
+                                <div class="text-info font-weight-500 mb-3 text-center">
+                                    Usage {{e.id}}
+                                </div>
+                                <div :id="'lineChart' + (idx + 1)" class="chart mx-n2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <a class="nat-carousel-control" href="#" data-direction="next">
+                    <span class="la la-angle-right text-muted"></span>
+                </a>
+            </div>
+        </div>
+    </article>
+
+    <link rel="stylesheet" href="css/nat-carousel.css" />
+    <script src="js/nat-carousel.js"></script>
+
+    <script src="https://code.highcharts.com/js/highcharts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+
+    <script src="js/highcharts-carousel.js"></script>
+
+    <!--script src="../../js/docs.js"></script-->
+</body>
+
+</html>

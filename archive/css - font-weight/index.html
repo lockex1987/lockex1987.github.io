@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>CSS font-weight</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="CSS font-weight">
+ </head> 
+ <body> 
+  <article> 
+   <p>The <code>font-weight</code> CSS property specifies the weight (or boldness) of the font. The font weights available to you will depend on the <code>font-family</code> you are using. Some fonts are only available in <code>normal</code> and <code>bold</code>.</p> 
+   <p>The <code>font-weight</code> property is specified using any one of the values listed below. </p> 
+   <dl> 
+    <dt> 
+     <code>normal</code> 
+    </dt> 
+    <dd>
+      Normal font weight. Same as 
+     <code>400</code>. 
+    </dd> 
+    <dt> 
+     <code>bold</code> 
+    </dt> 
+    <dd>
+      Bold font weight. Same as 
+     <code>700</code>. 
+    </dd> 
+    <dt> 
+     <code>lighter</code> 
+    </dt> 
+    <dd>
+      One font weight lighter than the parent element (among the available weights of the font). 
+    </dd> 
+    <dt> 
+     <code>bolder</code> 
+    </dt> 
+    <dd>
+      One font weight heavier than the parent element (among the available weights of the font). 
+    </dd> 
+    <dt> 
+     <code>&lt;number&gt;</code> 
+    </dt> 
+    <dd>
+      A 
+     <code>&lt;number&gt;</code> value between 1 and 1000, inclusive. Higher numbers represent weights that are bolder than (or as bold as) lower numbers. Certain commonly used values correspond to common weight names, as described in the Common weight name mapping section below. 
+    </dd> 
+   </dl> 
+   <p>In earlier versions of the <code>font-weight</code> specification, the property accepts only keyword values and the numeric values 100, 200, 300, 400, 500, 600, 700, 800, and 900. CSS Fonts Level 4 extends the syntax to accept any number between 1 and 1000. This enables variable fonts to provide a much finer-grained range of font weights. Note that this is not yet supported by all browsers.</p> 
+   <h3>Common weight name mapping</h3> 
+   <p>The numerical values <code>100</code> to <code>900</code> roughly correspond to the following common weight names:</p> 
+   <table> 
+    <thead> 
+     <tr> 
+      <th>Value</th> 
+      <th>Common weight name</th> 
+     </tr> 
+    </thead> 
+    <tbody> 
+     <tr> 
+      <td>100</td> 
+      <td>Thin (Hairline)</td> 
+     </tr> 
+     <tr> 
+      <td>200</td> 
+      <td>Extra Light (Ultra Light)</td> 
+     </tr> 
+     <tr> 
+      <td>300</td> 
+      <td>Light</td> 
+     </tr> 
+     <tr> 
+      <td>400</td> 
+      <td>Normal (Regular)</td> 
+     </tr> 
+     <tr> 
+      <td>500</td> 
+      <td>Medium</td> 
+     </tr> 
+     <tr> 
+      <td>600</td> 
+      <td>Semi Bold (Demi Bold)</td> 
+     </tr> 
+     <tr> 
+      <td>700</td> 
+      <td>Bold</td> 
+     </tr> 
+     <tr> 
+      <td>800</td> 
+      <td>Extra Bold (Ultra Bold)</td> 
+     </tr> 
+     <tr> 
+      <td>900</td> 
+      <td>Black (Heavy)</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <p>The CSS “font-weight” property is used to define the weight of a font, such as regular or bold. This article describes how to best use font families that have extended weights that may range from Extra Light all the way to Extra Black.</p> 
+   <p>Here is how a regular and bold weight would be defined:</p> 
+   <pre>font-weight:normal
+font-weight:bold</pre> 
+   <p>But for all other weights a numerical range from 100 to 900 is used. One of the challenges with web fonts is that most web browsers do not properly support font weights other than normal &amp; bold. The following chart describes the possible mappings of weights to the numeric definitions:</p> 
+   <ul> 
+    <li>100 Extra Light or Ultra Light</li> 
+    <li>200 Light or Thin</li> 
+    <li>300 Book or Demi</li> 
+    <li>800 Black, Extra Bold or Heavy</li> 
+    <li>900 Extra Black, Fat, Poster or Ultra Black</li> 
+   </ul> 
+   <p>Tham khảo</p> 
+   <p>https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight</p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

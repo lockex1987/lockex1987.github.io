@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="mysql, import, export">
+    <title>Import và export MySQL</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Import và export MySQL</h2>
+      <h3>Export</h3>
+      <p>Export tất cả database:</p>
+      <pre>mysqldump -u [user_name] -p[pass] --all-databases &gt; all_db_backup.sql</pre>
+      <p>Export một database (<code>db_name</code>) nào đó:</p>
+      <pre>mysqldump -u [user_name] -p[pass] db_name &gt; db_backup.sql</pre>
+      <p>Chỉ định bảng cụ thể (<code>table1</code>, <code>table2</code>):</p>
+      <pre>mysqldump -u [user_name] -p[pass] db_name table1 table2 &gt; table_backup.sql</pre>
+      <p>Tự động nén đầu ra với gzip (nếu dữ liệu lớn):</p>
+      <pre>mysqldump -u [user_name] -p[pass] db_name | gzip &gt; db_backup.sql.gz</pre>
+      <p>Export từ remote server:</p>
+      <pre>mysqldump -P 3306 -h [ip_address] -u [user_name] -p[pass] db_name &gt; db_backup.sql</pre>
+      <h3>Import</h3>
+      <p>Chú ý bạn phải tạo DB trước:</p>
+      <pre>CREATE DATABASE db_name CHARACTER SET=utf8 COLLATE=utf8_vietnamese_ci;</pre>
+      <p>Câu lệnh:</p>
+      <pre>mysql -u [user_name] -p[pass] db_name &lt; db_backup.sql</pre>
+      <p>Import vào remote server:</p>
+      <pre>mysql -u [user_name] -p[pass] -h [ip_address] db_name &lt; db_backup.sql</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

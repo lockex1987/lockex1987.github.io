@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>request animation frame</title>
+  </head>
+  <body>
+    <h1>window<wbr>.request<wbr>Animation<wbr>Frame()</h1>
+    <p>The <strong><code>window.requestAnimationFrame()</code></strong> method
+      tells the browser that you wish to perform an animation and requests that
+      the browser call a specified function to update an animation before the
+      next repaint. The method takes as an argument a callback to be invoked
+      before the repaint.</p>
+    <p><strong>Note:</strong> Your callback routine must itself call <code>requestAnimationFrame()</code>
+      if you want to animate another frame at the next repaint.</p>
+    <p>You should call this method whenever you're ready to update your
+      animation onscreen. This will request that your animation function be
+      called before the browser performs the next repaint. The number of
+      callbacks is usually 60 times per second, but will generally match the
+      display refresh rate in most web browsers as per W3C recommendation. The
+      callback rate may be reduced to a lower rate when running in background
+      tabs or in hidden <a title="The HTML Inline Frame Element &lt;iframe&gt; represents a nested browsing context, effectively embedding another HTML page into the current page. In HTML 4.01, a document may contain a head and a body or a head and a frameset, but not both a body and a frameset. However, an &lt;iframe&gt; can be used within a normal document body. Each browsing context has its own session history and active document. The browsing context that contains the embedded content is called the parent browsing context. The top-level browsing context (which has no parent) is typically the browser window."
+        href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe"><code>&lt;iframe&gt;</code></a>s
+      in order to improve performance and battery life.</p>
+    <p>The callback method is passed a single argument, a <a title="The DOMHighResTimeStamp type is a double and is used to store a time value. The value could be a discrete point in time or the difference in time between two discrete points in time. The unit is milliseconds and should be accurate to 5 µs (microseconds). However, if the browser is unable to provide a time value accurate to 5 microseconds (due, for example, to hardware or software constraints), the browser can represent the value as a time in milliseconds accurate to a millisecond."
+        href="https://developer.mozilla.org/en-US/docs/Web/API/DOMHighResTimeStamp"><code>DOMHighResTimeStamp</code></a>,
+      which indicates the current time when callbacks queued by <code>requestAnimationFrame</code>
+      begin to fire. Multiple callbacks in a single frame, therefore, each
+      receive the same timestamp even though time has passed during the
+      computation of every previous callback's workload. This timestamp is a
+      decimal number, in milliseconds, but with a minimal precision of 1ms (1000
+      µs).</p>
+    <p>Syntax</p>
+    <pre class="syntaxbox">window.requestAnimationFrame(callback);</pre>
+    <h3 name="Parameters" id="Parameters">Parameters</h3>
+    <dl>
+      <dt><code>callback</code></dt>
+      <dd>A parameter specifying a function to call when it's time to update
+        your animation for the next repaint. The callback has one single
+        argument, a <a title="The DOMHighResTimeStamp type is a double and is used to store a time value. The value could be a discrete point in time or the difference in time between two discrete points in time. The unit is milliseconds and should be accurate to 5 µs (microseconds). However, if the browser is unable to provide a time value accurate to 5 microseconds (due, for example, to hardware or software constraints), the browser can represent the value as a time in milliseconds accurate to a millisecond."
+          href="https://developer.mozilla.org/en-US/docs/Web/API/DOMHighResTimeStamp"><code>DOMHighResTimeStamp</code></a>,
+        which indicates the current time (the time returned from <a title="The performance.now() method returns a DOMHighResTimeStamp, measured in milliseconds, accurate to five thousandths of a millisecond (5 microseconds)."
+          href="https://developer.mozilla.org/en-US/docs/Web/API/Performance/now"><code>Performance.now()</code></a>
+        ) for when <code>requestAnimationFrame</code> starts to fire callbacks.</dd>
+    </dl>
+    <h3 id="Return_value">Return value</h3>
+    <p>A <code>long</code> integer value, the request id, that uniquely
+      identifies the entry in the callback list. This is a non-zero value, but
+      you may not make any other assumptions about its value. You can pass this
+      value to <a title="Cancels an animation frame request previously scheduled through a call to window.requestAnimationFrame()."
+        href="https://developer.mozilla.org/en-US/docs/Web/API/Window/cancelAnimationFrame"><code>window.cancelAnimationFrame()</code></a>
+      to cancel the refresh callback request.</p>
+    <p>Example</p>
+    <pre class="brush: js line-numbers  language-js"><code class=" language-js"><span
+class="token keyword">var</span> start <span class="token operator">=</span> <span
+class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> element <span class="token operator">=</span> document<span
+class="token punctuation">.</span><span class="token function">getElementById</span><span
+class="token punctuation">(</span><span class="token string">'SomeElementYouWantToAnimate'</span><span
+class="token punctuation">)</span><span class="token punctuation">;</span>
+element<span class="token punctuation">.</span>style<span class="token punctuation">.</span>position <span
+class="token operator">=</span> <span class="token string">'absolute'</span><span
+class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">step</span><span
+class="token punctuation">(</span>timestamp<span class="token punctuation">)</span> <span
+class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span
+class="token operator">!</span>start<span class="token punctuation">)</span> start <span
+class="token operator">=</span> timestamp<span class="token punctuation">;</span>
+  <span class="token keyword">var</span> progress <span class="token operator">=</span> timestamp <span
+class="token operator">-</span> start<span class="token punctuation">;</span>
+  element<span class="token punctuation">.</span>style<span class="token punctuation">.</span>left <span
+class="token operator">=</span> Math<span class="token punctuation">.</span><span
+class="token function">min</span><span class="token punctuation">(</span>progress <span
+class="token operator">/</span> <span class="token number">10</span><span class="token punctuation">,</span> <span
+class="token number">200</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span
+class="token string">'px'</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>progress <span
+class="token operator">&lt;</span> <span class="token number">2000</span><span class="token punctuation">)</span> <span
+class="token punctuation">{</span>
+    window<span class="token punctuation">.</span><span class="token function">requestAnimationFrame</span><span
+class="token punctuation">(</span>step<span class="token punctuation">)</span><span
+class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+window<span class="token punctuation">.</span><span class="token function">requestAnimationFrame</span><span
+class="token punctuation">(</span>step<span class="token punctuation">)</span><span
+class="token punctuation">;</span></code></pre>
+    <h3>Why better?</h3>
+    <p>As Paul explained:</p>
+    <ul>
+      <li>The browser can optimize it, so animations will be smoother</li>
+      <li>Animations in inactive tabs will stop, allowing the CPU to chill</li>
+      <li>More battery-friendly</li>
+    </ul>
+    <p>Cancel</p>
+    <pre rel="jQuery"><code class="language-javascript">var globalID;
+
+function repeatOften() {
+  $("&lt;div /&gt;").appendTo("body");
+  globalID = requestAnimationFrame(repeatOften);
+}
+
+$("#start").on("click", function() {
+  globalID = requestAnimationFrame(repeatOften);
+});
+
+$("#stop").on("click", function() {
+  cancelAnimationFrame(globalID);
+});</code></pre>
+    <p><br>
+    </p>
+    <p>How</p>
+    <pre><code class="javascript"><span class="line"><span class="c1">// shim layer with setTimeout fallback</span>
+</span><span class="line"><span class="nb">window</span><span class="p">.</span><span
+class="nx">requestAnimFrame</span> <span class="o">=</span> <span class="p">(</span><span
+class="kd">function</span><span class="p">(){</span>
+</span><span class="line">  <span class="k">return</span>  <span class="nb">window</span><span
+class="p">.</span><span class="nx">requestAnimationFrame</span>       <span class="o">||</span>
+</span><span class="line">          <span class="nb">window</span><span class="p">.</span><span
+class="nx">webkitRequestAnimationFrame</span> <span class="o">||</span>
+</span><span class="line">          <span class="nb">window</span><span class="p">.</span><span
+class="nx">mozRequestAnimationFrame</span>    <span class="o">||</span>
+</span><span class="line">          <span class="kd">function</span><span class="p">(</span> <span
+class="nx">callback</span> <span class="p">){</span>
+</span><span class="line">            <span class="nb">window</span><span class="p">.</span><span
+class="nx">setTimeout</span><span class="p">(</span><span class="nx">callback</span><span
+class="p">,</span> <span class="mi">1000</span> <span class="o">/</span> <span class="mi">60</span><span
+class="p">);</span>
+</span><span class="line">          <span class="p">};</span>
+</span><span class="line"><span class="p">})();</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line"><span class="c1">// usage:</span>
+</span><span class="line"><span class="c1">// instead of setInterval(render, 16) ....</span>
+</span><span class="line">
+</span><span class="line"><span class="p">(</span><span class="kd">function</span> <span
+class="nx">animloop</span><span class="p">(){</span>
+</span><span class="line">  <span class="nx">requestAnimFrame</span><span class="p">(</span><span
+class="nx">animloop</span><span class="p">);</span>
+</span><span class="line">  <span class="nx">render</span><span class="p">();</span>
+</span><span class="line"><span class="p">})();</span>
+</span><span class="line"><span class="c1">// place the rAF *before* the render() to assure as close to</span>
+</span><span class="line"><span class="c1">// 60fps with the setTimeout fallback.</span>
+</span></code></pre>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+  </body>
+</html>

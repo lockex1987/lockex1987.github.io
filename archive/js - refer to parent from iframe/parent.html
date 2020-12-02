@@ -1,0 +1,16 @@
+<html>
+<head>
+<script type="text/javascript">
+function parentFunction() {
+		alert("Alert from parent");
+}
+</script>
+</head>
+
+<body>
+<input type="text" value="5" id="parentTextbox" />
+<button type="button" onclick="alert(document.getElementById('parentTextbox').value);">Click</button>
+<br />
+<iframe src="child.html" />
+</body>
+</html>

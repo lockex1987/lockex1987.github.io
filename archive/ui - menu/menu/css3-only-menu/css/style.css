@@ -1,0 +1,134 @@
+.HiddenCheckbox {
+  display: none;
+}
+.MenuContainer {
+  display: inline-block;
+  margin: 20px;
+}
+.MenuHeader {
+  color: #999;
+  display: inline-block;
+  float: left;
+  font-weight: 100;
+  line-height: 30px;
+  margin: 0 0 0 15px;
+  opacity: 0;
+  position: relative;
+  -webkit-transform: translate3d(0, -15px, 0);
+          transform: translate3d(0, -15px, 0);
+  -webkit-transition: opacity 0.5s, -webkit-transform 0.6s;
+  transition: opacity 0.5s, -webkit-transform 0.6s;
+  transition: transform 0.6s, opacity 0.5s;
+  transition: transform 0.6s, opacity 0.5s, -webkit-transform 0.6s;
+  z-index: 2;
+}
+.MenuIcon {
+  cursor: pointer;
+  display: block;
+  float: left;
+  height: 30px;
+  position: relative;
+  width: 30px;
+  z-index: 2;
+}
+.MenuIcon::before {
+  box-shadow: #999 0 12px 0;
+  height: 6px;
+  -webkit-transform-origin: left top;
+          transform-origin: left top;
+  width: 30px;
+}
+.MenuIcon::after {
+  bottom: 0;
+  height: 6px;
+  -webkit-transform-origin: left bottom;
+          transform-origin: left bottom;
+  width: 30px;
+}
+.MenuIcon::before,
+.MenuIcon::after {
+  background: #999;
+  display: block;
+  content: '';
+  position: absolute;
+  -webkit-transition: box-shadow 0.2s linear, -webkit-transform 0.4s 0.2s;
+  transition: box-shadow 0.2s linear, -webkit-transform 0.4s 0.2s;
+  transition: box-shadow 0.2s linear, transform 0.4s 0.2s;
+  transition: box-shadow 0.2s linear, transform 0.4s 0.2s, -webkit-transform 0.4s 0.2s;
+}
+.Menu {
+  background: #333;
+  bottom: 0;
+  left: -90%;
+  position: absolute;
+  top: 0;
+  width: 90%;
+  -webkit-transition: left 0.4s;
+  transition: left 0.4s;
+}
+.HiddenCheckbox:checked ~ .MenuHeader {
+  opacity: 1;
+  -webkit-transform: none;
+          transform: none;
+}
+.HiddenCheckbox:checked ~ .MenuIcon::before {
+  box-shadow: transparent 0 0 0;
+  -webkit-transform: rotate(45deg) translate3d(6px, -3px, 0);
+          transform: rotate(45deg) translate3d(6px, -3px, 0);
+}
+.HiddenCheckbox:checked ~ .MenuIcon::after {
+  -webkit-transform: rotate(-45deg) translate3d(6px, 3px, 0);
+          transform: rotate(-45deg) translate3d(6px, 3px, 0);
+}
+.HiddenCheckbox:checked ~ .Menu {
+  left: 0;
+}
+.Menu-list {
+  list-style-type: none;
+  margin: 60px 0 0;
+  padding: 0;
+}
+.Menu-item {
+  margin: 0;
+}
+.Menu-link {
+  color: #fff;
+  display: block;
+  overflow: hidden;
+  padding: 8px 22px;
+  position: relative;
+  text-decoration: none;
+  z-index: 1;
+}
+.Menu-link::before {
+  background: #444;
+  bottom: 0;
+  content: '';
+  left: 0;
+  position: absolute;
+  right: 100%;
+  top: 0;
+  -webkit-transition: right 0.4s;
+  transition: right 0.4s;
+  z-index: -1;
+}
+.Menu-link::after {
+  content: attr(href);
+  color: #fff;
+  float: right;
+  opacity: 0;
+  -webkit-transition: opacity 0.8s, -webkit-transform 0.4s;
+  transition: opacity 0.8s, -webkit-transform 0.4s;
+  transition: opacity 0.8s, transform 0.4s;
+  transition: opacity 0.8s, transform 0.4s, -webkit-transform 0.4s;
+  -webkit-transform: translate3d(100%, 0, 0);
+          transform: translate3d(100%, 0, 0);
+}
+.Menu-link:hover::before {
+  right: 0;
+}
+.Menu-link:hover::after {
+  opacity: 0.5;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+}

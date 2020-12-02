@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="description" content="Keyboard input handler"/>
+	<meta name="keywords" content="keyboard"/>
+	<meta name="author" content="lockex1987"/>
+	
+	<title>Keyboard input handler</title>
+
+	<link rel="icon" href="../../images/favicon.png"/>
+	<link rel="stylesheet" href="../../css/style.css"/>
+
+  <style>
+    #wrap { font-family: monospace; line-height: 1.4; font-size: 25px; display: flex; align-items: center; justify-content: center;
+            flex-direction: column; height: 500px; background: #FFCC80; display: none; }
+  </style>
+</head>
+<body>
+	<article>
+    <div id="wrap">
+    Click in here<br>
+    and press a key
+  </div>
+
+    <textarea id="myText" style="width: 300px; height: 200px;" placeholder="Press Ctrl+S to save"></textarea>
+
+    <p><a href="keycodes.js" target="_blank">Key codes</a></p>
+
+	</article>
+
+	<script src="../../js/docs.js"></script>
+
+  <script>
+
+var wrap = document.querySelector("#wrap");
+
+function showInfo(e) {
+  e.preventDefault();
+  console.log(e);
+
+  var html = `
+      <p><b>which:</b> ${e.which}</p>
+      <p><b>keyCode:</b> ${e.keyCode}</p>
+      <p><b>key:</b> ${e.key}</p>
+      <p><b>code:</b> ${e.code}</p>
+      <p><b>shiftKey:</b> ${e.shiftKey}</p>
+      <p><b>altKey:</b> ${e.altKey}</p>
+      <p><b>ctrlKey:</b> ${e.ctrlKey}</p>
+      <p><b>metaKey:</b> ${e.metaKey}</p>`;
+  
+  wrap.innerHTML = html;
+}
+
+//document.addEventListener("keydown", showInfo);
+
+function saveShortcut(e) {
+  // 83: 's'
+  if (e.keyCode === 83 && e.ctrlKey) {
+    e.preventDefault();
+    console.log("Saved");
+    //alert("Saved");
+  }
+}
+
+document.querySelector("#myText").addEventListener("keydown", saveShortcut);
+  </script>
+</body>
+</html>
+

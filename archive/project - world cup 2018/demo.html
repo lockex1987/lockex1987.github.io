@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>World Cup 2018</title>
+    <link rel="icon" href="../../images/favicon.png"/>
+	<link rel="stylesheet" href="css/tournament.css"/>
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+	<style>
+		.team-detail { padding: 5px; }
+		.team-detail img { width: 105px; height: auto; border-radius: 3px; }
+		.team-detail h2 img { width: 32px; height: auto; }
+		.player-list { list-style-type: none; }
+		h3 { margin-top: 10px; margin-bottom: 10px; }
+		.coach { display: grid; grid-template-columns: 120px auto; margin-bottom: 10px; }
+		.player { display: grid; grid-template-columns: 120px auto; margin-bottom: 10px; }
+		.number { color: #FFF; }
+		.position { color: #999; }
+
+		.player .image { grid-row: 1 / 5; }
+		.player .club img { width: 24px; height: auto; border-radius: 0; margin-left: 10px; }
+	</style>
+</head>
+
+<body>
+	<div id="worldCup" v-cloak>
+		<section v-show="screen == 'main-menu'">
+			<div class="main-menu">
+				<div>
+					<img src="images/logo.png"/>
+					<a href="#team-list" v-on:click="changeScreen('team-list', $event)">Teams</a>
+					<a href="#group-list" v-on:click="changeScreen('group-list', $event)">Groups</a>
+					<a href="#match-list" v-on:click="changeScreen('match-list', $event)">Matches</a>
+					<a href="#credit" v-on:click="changeScreen('credit', $event)">Credit</a>
+				</div>
+			</div>
+		</section>
+
+		<section v-show="screen == 'team-list'">
+			<h2 v-on:click="screen = 'main-menu'">Teams</h2>
+			<ul class="team-list">
+				<li v-for="t in teams" class="team" v-on:click="viewTeam(t)">
+					<img :src="t.flag"/>
+					{{ t.name }}
+					<span class="rank">({{ t.rank }})</span>
+				</li>
+			</ul>
+		</section>
+		
+		<section v-show="screen == 'group-list'">
+			<h2 v-on:click="screen = 'main-menu'">Groups</h2>
+			<div class="group-list">
+				<table v-for="g in groups" class="group">
+					<tbody>
+						<tr>
+							<th>Group {{ g.name }}</th>
+							<th><abbr title="Played">Pld</abbr></th>
+							<th><abbr title="Won">W</abbr></th>
+							<th><abbr title="Drawn">D</abbr></th>
+							<th><abbr title="Lost">L</abbr></th>
+							<th><abbr title="Goals for">GF</abbr></th>
+							<th><abbr title="Goals against">GA</abbr></th>
+							<th><abbr title="Goal difference">GD</abbr></th>
+							<th><abbr title="Points">Pts</abbr></th>
+						</tr>
+						<tr>
+							<td><img :src="g.teams_more[0].flag"/> {{ g.teams_more[0].name }}</td>
+							<td>{{ g.teams_more[0].played }}</td>
+							<td>{{ g.teams_more[0].won }}</td>
+							<td>{{ g.teams_more[0].drawn }}</td>
+							<td>{{ g.teams_more[0].lost }}</td>
+							<td>{{ g.teams_more[0].gf }}</td>
+							<td>{{ g.teams_more[0].ga }}</td>
+							<td>{{ g.teams_more[0].gd }}</td>
+							<td>{{ g.teams_more[0].point }}</td>
+						</tr>
+						<tr>
+							<td><img :src="g.teams_more[1].flag"/> {{ g.teams_more[1].name }}</td>
+							<td>{{ g.teams_more[1].played }}</td>
+							<td>{{ g.teams_more[1].won }}</td>
+							<td>{{ g.teams_more[1].drawn }}</td>
+							<td>{{ g.teams_more[1].lost }}</td>
+							<td>{{ g.teams_more[1].gf }}</td>
+							<td>{{ g.teams_more[1].ga }}</td>
+							<td>{{ g.teams_more[1].gd }}</td>
+							<td>{{ g.teams_more[1].point }}</td>
+						</tr>
+						<tr>
+							<td><img :src="g.teams_more[2].flag"/> {{ g.teams_more[2].name }}</td>
+							<td>{{ g.teams_more[2].played }}</td>
+							<td>{{ g.teams_more[2].won }}</td>
+							<td>{{ g.teams_more[2].drawn }}</td>
+							<td>{{ g.teams_more[2].lost }}</td>
+							<td>{{ g.teams_more[2].gf }}</td>
+							<td>{{ g.teams_more[2].ga }}</td>
+							<td>{{ g.teams_more[2].gd }}</td>
+							<td>{{ g.teams_more[2].point }}</td>
+						</tr>
+						<tr>
+							<td><img :src="g.teams_more[3].flag"/> {{ g.teams_more[3].name }}</td>
+							<td>{{ g.teams_more[3].played }}</td>
+							<td>{{ g.teams_more[3].won }}</td>
+							<td>{{ g.teams_more[3].drawn }}</td>
+							<td>{{ g.teams_more[3].lost }}</td>
+							<td>{{ g.teams_more[3].gf }}</td>
+							<td>{{ g.teams_more[3].ga }}</td>
+							<td>{{ g.teams_more[3].gd }}</td>
+							<td>{{ g.teams_more[3].point }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+		
+		<section v-show="screen == 'match-list'">
+			<h2 v-on:click="screen = 'main-menu'">Matches</h2>
+			<div class="match-list">
+				<div v-for="m in matches" class="match" :class="m.round">
+					<div class="left">
+						<span v-if="m.team_1_obj"><img :src="m.team_1_obj.flag"/><br />{{ m.team_1_obj.name }}</span>
+						<span v-else>{{ m.team_1_desc }}</span>
+					</div>
+					<div class="center">
+						<span style="display: none">{{ m.score_1 }}:{{ m.score_2 }}</span>
+                        {{ m.score }}
+						<br />
+						{{ m.time }}
+					</div>
+					<div class="right">
+						<span v-if="m.team_2_obj"><img :src="m.team_2_obj.flag"/><br />{{ m.team_2_obj.name }}</span>
+						<span v-else>{{ m.team_2_desc }}</span>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<section v-show="screen == 'credit'">
+			<h2 v-on:click="screen = 'main-menu'">Credit</h2>
+			<div class="credit">
+				<svg class="credit-bg" viewBox="0 0 612 700">
+					<defs>
+						<linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+						<stop stop-color="rgb(13,108,181)" offset="5%"></stop>
+						<stop stop-color="rgb(4, 34, 99)" offset="95%"></stop>
+						</linearGradient>
+					</defs>
+					<path d="M306.762 11.818H305.075C75.47 11.818-22.661 320.351 36.85 435.575c46.85 90.745 180.012 81.882 268.436 171.36.422.422.422.633.422.633s0-.211.422-.633c88.634-89.479 221.796-80.615 268.435-171.36 59.934-115.224-38.198-423.757-267.803-423.757m20.259 539.827c-11.185 2.321-19.626 10.974-20.26 21.314 0 .422-.421.844-.843.844s-.844-.422-.844-.844c-.844-10.341-9.074-18.993-20.259-21.314-.422 0-.633-.423-.633-.845s.211-.844.633-.844c11.185-2.321 19.626-10.974 20.259-21.314 0-.422.422-.845.844-.845s.843.423.843.845c.845 10.13 9.075 18.993 20.26 21.314.422 0 .633.422.633.844s-.211.845-.633.845" fill="url(#gradient)" width="612" height="792"></path>
+				</svg>
+				<div class="credit-content">
+					<p>Special thanks to:</p>
+					<ul>
+						<li>excely.com</li>
+						<li>wikipedia.org</li>
+						<li>fifa.com</li>
+					</ul>
+				</div>	
+			</div>
+		</section>
+
+		<section v-show="screen == 'team-detail'" class="team-detail">
+			<template v-if="currentTeam">
+				<h2 v-on:click="screen = 'team-list'">{{currentTeam.name}} <img :src="currentTeam.flag"/></h2>
+				<h3>Coach</h3>
+				<div class="coach">
+					<div class="image">
+						<img :src="'images/coaches/' + currentTeam.name + ' - ' + currentTeam.coachName + '.png'"/>
+					</div>
+					<div class="info">{{currentTeam.coachName}}</div>
+				</div>
+				<!--div>Fifa rank: {{currentTeam.rank }}</div-->
+				<h3>Players</h3>
+				<ul class="player-list">
+					<li v-for="p in teamPlayers" class="player">
+						<div class="image">
+							<img :src="'images/players/' + (currentTeam.name == 'South Korea' ? 'Korea Republic' : currentTeam.name) + ' - ' + p.number + '.png'"/>
+						</div>
+						<div class="info">
+							<span class="name">{{p.name}}</span>
+						</div>
+						<div class="sub">
+							<span class="number">#{{p.number}}</span>
+							<span class="position">({{p.position}})</span>
+						</div>
+						<div class="dob">
+							{{p.dob}}
+						</div>
+						<div class="club">
+							{{p.clubName}}
+							<img :src="'images/clubs/' + p.clubCountry + '.png'" :title="p.clubCountry"/>
+						</div>
+					</li>
+				</ul>
+			</template>
+		</section>
+	</div>
+
+	<script src="js/data.js"></script>
+	<script src="js/tournament.js"></script>
+</body>
+</html>

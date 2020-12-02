@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CV của tôi, riot">
+    <title>My CV</title>
+    <link rel="icon" href="../images/favicon.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/timeline.css">
+    <link rel="stylesheet/less" type="text/css" href="less/style.less">
+</head>
+
+<body class="pt-0">
+    <article class="border-left-0">
+        <!-- Khai báo các tag mới -->
+        <cv-header></cv-header>
+        <general-info></general-info>
+        <change-language></change-language>
+        <timeline></timeline>
+        <skills></skills>
+        <portfolio></portfolio>
+    </article>
+
+    <!-- Định nghĩa các tag mới -->
+    <script data-src="components/cv-header.tag" type="riot/tag"></script>
+    <script data-src="components/general-info.tag" type="riot/tag"></script>
+    <script data-src="components/change-language.tag" type="riot/tag"></script>
+    <script data-src="components/timeline.tag" type="riot/tag"></script>
+    <script data-src="components/skills.tag" type="riot/tag"></script>
+    <script data-src="components/portfolio.tag" type="riot/tag"></script>
+
+    <!-- Thư viện Riot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/riot/3.13.2/riot+compiler.min.js"></script>
+
+    <!-- Thư viện LESS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
+
+    <script>
+        // Sử dụng LESS với Riot
+        riot.parsers.css.less = (tagName, style) => {
+            let css = '';
+            less.render(style, {}, (error, output) => {
+                css = output.css;
+            });
+            return css;
+        };
+
+        // Mount để bắt đầu
+        riot.mount('*');
+    </script>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

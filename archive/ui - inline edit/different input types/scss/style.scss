@@ -1,0 +1,40 @@
+.list-group-item {
+	a {
+		display:block;
+	}
+}
+
+.list-group-item .editable+form {
+	display:none;
+	margin:-0.45rem -0.8rem;
+}
+
+textarea + .input-group-append {
+	margin-top:0.5rem;
+	float:right;
+	
+	button+button {
+		margin-left:0.5rem !important;
+	}
+}
+
+.material-icons {
+	font-size:1em;
+	line-height:1em;
+	display: inline;
+  vertical-align: middle;
+}
+
+.editable {
+	&:after{
+		font-family:"Material Icons";
+		font-size:0.8rem;
+		content:"edit";
+		display:inline-block;
+		margin-left:0.5rem;
+		opacity:0.3;
+	}
+	&:hover:after {
+		opacity:1;
+	}
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="php-fpm, FastCGI, CGI, PHP_FCGI_CHILDREN">
+    <title>Block request PHP trên Windows</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Block request PHP trên Windows</h2>
+      <h3>Vấn đề</h3>
+      <p>Tình hình là tôi có hai ứng dụng PHP, một ứng dụng này có gọi API của
+        ứng dụng kia. Mọi chuyện diễn ra bình thường ở máy Linux. Tuy nhiên, nó
+        cứ quay mãi và không có log gì trên máy Windows.</p>
+      <p>Tôi thử một script PHP <code>test_http.php</code> như sau:</p>
+      <pre>$resource = fopen('http://sso-passport.cttd.tk/', 'r');
+echo stream_get_contents($resource);</pre>
+      <p>Nếu tôi chạy bằng cách <code>php test_http.php</code> thì vẫn trả về
+        kết quả bình thường.</p>
+      <p>Tuy nhiên, nếu tôi copy y đoạn code trên vào ứng dụng Laravel thì vẫn
+        không chạy được.</p>
+      <p>Tại sao?</p>
+      <h3>Điều tra</h3>
+      <p>Tôi đã thử search trên Google nhưng mãi không ra. Có thể do tôi không
+        biết từ khóa đúng.</p>
+      <p>Tôi đã nghĩ đến các nguyên nhân sau:</p>
+      <ul>
+        <li>Mạng của công ty chặn (Tôi thử bỏ proxy ở thư viện Guzzle nhưng cũng
+          không được)</li>
+        <li>Thiết lập IPv6 cho nginx</li>
+        <li>Thread Safe của PHP</li>
+        <li>...</li>
+      </ul>
+      <p>Rồi bỗng dưng tôi cảm thấy, khi tôi đang thực hiện một đoạn code PHP
+        thì đoạn code PHP khác có vẻ đang bị block lại.</p>
+      <p>Tôi tạo hai script sau để chạy thử trên server.</p>
+      <p><code>test_sleep.php</code></p>
+      <pre>&lt;?php
+sleep(10);
+echo 'Wake up';
+</pre>
+      <p><code>test_request.php</code></p>
+      <pre>&lt;?php
+echo 'Hello world';
+</pre>
+      <p>Kết quả đúng là bị block thật. Khi đang gọi <code>test_sleep.php</code>
+        mà gọi tiếp <code>test_request.php</code> thì <code>test_request.php</code>
+        sẽ bị block. Có vẻ sắp ra rồi.</p>
+      <h3>Nguyên nhân</h3>
+      <p>Nguyên nhân là do khi tôi thực hiện PHP ở ứng dụng thứ nhất thì PHP API
+        ở ứng dụng thứ hai sẽ bị block không thực hiện được, nên không thể trả
+        về kết quả của API.</p>
+      <p>Ở máy Windows, tôi sử dụng FastCGI. Ở máy Linux, tôi sử dụng php-fpm.</p>
+      <p>FastCGI là các PHP handler mà web server sử dụng để xử lý code PHP. Có
+        nhiều handler cho PHP hiện nay như: DSO, CGI, SuPHP, FastCGI. FastCGI là
+        phiên bản kế tiếp của CGI, ít tốn tài nguyên CPU và cho tốc độ tải trang
+        php cao, với điều kiện cần một lượng RAM đủ lớn. FastCGI cho phép máy
+        chủ xử lý được nhiều web page hơn tại cùng một thời điểm.</p>
+      <p>PHP-FPM giúp quản lý tiến trình PHP FastCGI. php-fpm là daemon do đó
+        chúng ta có thể cài nó độc lập trên một server, default port là 9000.
+        php-fpm không có trên Windows.</p>
+      <p>PHP-FPM là FastCGI Process Manager.</p>
+      <p>CGI là Common Gateway Interface.</p>
+      <h3>Giải pháp</h3>
+      <p>Thiết lập <code>PHP_FCGI_CHILDREN</code> khi start <code>php-cgi</code>.</p>
+      <p><code>PHP_FCGI_CHILDREN</code> cấu hình số tiến trình PHP
+        xử lý đồng thời.</p>
+      <p><code>PHP_FCGI_MAX_REQUESTS</code> cấu hình số request PHP tối đa xử
+        lý. Sau khi đạt tối đa thì sẽ không xử lý nữa. Thiết lập bằng 0 để không
+        giới hạn.</p>
+      <p>Script:</p>
+      <pre>set PHP_FCGI_MAX_REQUESTS=0
+set PHP_FCGI_CHILDREN=5
+php-cgi.exe -b 127.0.0.1:9000</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

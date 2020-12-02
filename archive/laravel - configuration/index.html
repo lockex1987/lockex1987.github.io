@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="env">
+    <title>Cấu hình Laravel</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Cấu hình Laravel</h2>
+      <p>Tất cả các files cấu hình của Laravel framework nó sẽ được đặt trong
+        thư mục <code>config</code>. Với mỗi file trong thư mục đó, bạn có thể
+        chỉnh sửa cấu hình theo ý bạn muốn.</p>
+      <h3>Truy cập các giá trị cấu hình</h3>
+      <p>Bạn có thể sễ dàng lấy được giá trị cấu hình ở bất cứ đâu trong ứng
+        dụng của bạn bằng cách sử dụng hàm toàn cục <code>config</code>. Để lấy
+        giá trị cấu hình bạn sử dụng "dấu chấm", bắt đầu bằng tên của file và
+        giá trị bạn muốn lấy. Giá trị mặc định có thể được trả về nếu thông số
+        về biến cấu hình đó không tồn tại:</p>
+      <pre>$value = config('app.timezone');</pre>
+      <p>Để thiết lập giá trị cấu hình lúc thực thi, bạn truyền vào một mảng <code>config</code>
+        như sau:</p>
+      <pre>config(['app.timezone' =&gt; 'America/Chicago']);</pre>
+      <h3>Cấu hình môi trường</h3>
+      <p>Thông thường, nó khá là hữu ích khi ứng dụng của bạn có giá trị cấu
+        hình khác nhau trên các môi trường khác nhau. Giả sử, bạn cấu hình giá
+        trị cache trên local của bạn và trên production của bạn khác nhau.</p>
+      <p>Để làm việc đó, Laravel tận dụng thư viện PHP <a href="https://github.com/vlucas/phpdotenv">DotEnv</a>
+        được phát triển bởi Vance Lucas. Khi một ứng dụng mới được cài đặt, tại
+        thư mục gốc sẽ có file <code>.env.example</code> file. Nếu bạn cài bằng
+        Laravel Composer, file đấy sẽ tự động đổi tên thành <code>.env</code>.
+        Nếu không thì bạn cần đổi tên file.</p>
+      <h3>Lấy lại cấu hình môi trường</h3>
+      <p>Tất cả các biến cấu hình sẽ được nạp bởi hàm PHP toàn cục <code>$_ENV</code>
+        khi ứng dụng của bạn nhận request. Tuy nhiên, bạn có thể sử dụng hàm <code>env</code>
+        để nhận giá trị cấu hình của bạn. Thực tế, nếu bạn xem lại các file cấu
+        hình, bạn sẽ thấy một vài biến đã được sử dụng nó rồi:</p>
+      <pre>'debug' =&gt; env('APP_DEBUG', false)</pre>
+      <p>Giá trị thứ 2 truyền vào hàm <code>env</code> là "giá trị mặc định".
+        Giá trị truyền vào sẽ được sử dụng nếu không có biến môi trường nào ứng
+        với key đó.</p>
+      <p>File <code>.env</code> không nên đẩy lên source code ứng dụng của bạn,
+        mỗi một developer / server sử dụng ứng dụng của bạn có thể có các cấu
+        hình khác nhau.</p>
+      <p>Nếu ứng dụng của bạn phát triển bởi một nhóm, bạn có thể tiếp tục lưu
+        lại file <code>.env.example</code> trong ứng dụng. Bằng cách đặt các
+        giá trị vào file này, các thành viên khác của nhóm có thể nhìn thấy được
+        các biến môi trường cần thiết để chạy ứng dụng của bạn.</p>
+      <h3>Xác định môi trường hiện tại</h3>
+      <p>Môi trường hiện tại được xác định thông qua biến <code>APP_ENV</code>
+        trong file <code>.env</code>. Bạn có thể lấy biến này thông qua hàm <code>environment</code>
+        trong <code>App</code> facade:</p>
+      <pre>$environment = App::environment();</pre>
+      <p>Ngoài ra bạn có thể truyền tham số vào hàm <code>environment</code> để
+        kiểm tra xem môi trường có giống hay không. Hàm này sẽ trả về <code>true</code>
+        nếu tham số truyền vào giống với biến môi trường:</p>
+      <pre>if (App::environment('local')) {
+    // Môi trường local
+}
+
+if (App::environment('local', 'staging')) {
+    // Môi trường là  local hoặc staging...
+}</pre>
+      <h3>Cấu hình Caching</h3>
+      <p>Để tăng hiệu năng cho ứng dụng của bạn, bạn nên cache tất cả các file
+        cấu hình bằng cách sử dụng lệnh <code>config:cache</code> Artisan
+        command. Lệnh này sẽ gộp tất cả các file cấu hình trong ứng dụng của bạn
+        thành một file duy nhất để tăng tốc độ tải của framework.</p>
+      <p>Bạn nên chạy lệnh <code>php artisan config:cache</code> trên con
+        production của ứng dụng của bạn. Bạn không nên chạy nó ở môi trường phát
+        triển nó vì các thông số cấu hình liên tục thay đổi khi phát triển ứng
+        dụng.</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://laravel.com/docs/master/configuration" target="_blank">laravel.com/docs/master/configuration</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

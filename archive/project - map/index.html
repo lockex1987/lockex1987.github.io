@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width,initial-scale=1"> 
+  <title>View Position</title> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+  <link rel="stylesheet" href="css/map.css"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="View Position">
+ </head> 
+ <body> 
+  <article> 
+   <!-- Bản đồ --> 
+   <div id="map-container"> 
+    <div id="map">
+      The map 
+    </div> 
+    <div id="resize-button"> 
+     <a href="#" onclick="displayFullscreenMap()" title="Click chuột vào đây để hiện thị toàn bản đồ" id="displayFullscreenLink"> 
+      <!--span class="fa fa-arrows-alt"></span--> <span class="fa fa-expand"></span> </a> 
+     <a href="#" onclick="escapeFullscreenMap()" title="Thoát hiển thị toàn bản đồ" style="display: none" id="escapeFullscreenLink"> <span class="fa fa-compress"></span> </a> 
+     <a href="#" onclick="showPanel('list-panel')" title="Danh sách địa điểm"> <span class="fa fa-list"></span> </a> 
+     <a href="#" onclick="showPanel('add-form-panel')" title="Thêm mới địa điểm"> <span class="fa fa-plus"></span> </a> 
+     <a href="#" onclick="showPanel('route-panel')" title="Chỉ đường"> <span class="fa fa-road"></span> </a> 
+    </div> 
+   </div> 
+   <!-- TODO: Bản đồ width 100%, cho vùng này ẩn hiện bên phải --> 
+   <div id="list" class="p5"> 
+    <div id="list-panel" class="side-panel" style="display: none"> 
+     <!-- Danh sách --> 
+     <p> # Danh sách địa điểm <a href="#" onclick="listInfo()" title="Refresh"> <span class="fa fa-refresh"></span> </a> </p> 
+     <ul id="listTable"></ul> 
+    </div> 
+    <div id="add-form-panel" class="side-panel" style="display: none"> 
+     <!-- Form thêm mới --> 
+     <form id="frm"> 
+      <p># Form thêm địa điểm</p> 
+      <div class="form-group"> 
+       <label>Tên</label> 
+       <input id="nameInput" class="form-control" placeholder="Bắt buộc"> 
+      </div> 
+      <div class="text-danger" id="empty-name" style="display: none">
+        Bạn phải nhập tên 
+      </div> 
+      <div class="form-group"> 
+       <label>Địa chỉ</label> 
+       <input id="addressInput" class="form-control"> 
+      </div> 
+      <p> Vị trí <a href="#" onclick="getCurrentPosition()"> Lấy vị trí hiện tại <span id="gettingCurrentPositionSpan" class="fa fa-spinner fa-spin" style="display: none"></span> </a> </p> 
+      <div class="text-danger" id="empty-coordinates" style="display: none">
+        Bạn phải chọn vị trí trên bản đồ hoặc lấy vị trí hiện tại 
+      </div> 
+      <div class="form-group"> 
+       <label>Kinh độ</label> 
+       <span id="latitudeSpan" class="coordinate">...</span> 
+      </div> 
+      <div class="form-group"> 
+       <label>Vĩ độ</label> 
+       <span id="longitudeSpan" class="coordinate">...</span> 
+      </div> 
+      <div> 
+       <button type="submit" class="btn btn-primary" onclick="addInfo()"> Thêm </button> 
+      </div> 
+     </form> 
+    </div> 
+    <div id="route-panel" class="side-panel" style="display: none"> 
+     <!-- Chỉ đường --> 
+     <form id="frmRoute"> 
+      <p># Chỉ đường</p> 
+      <div class="form-group"> 
+       <label>Từ</label> 
+       <select id="startPointSelect" class="form-control"></select> 
+      </div> 
+      <div class="text-danger" id="empty-startPointSelect" style="display: none">
+        Bạn phải chọn địa điểm bắt đầu 
+      </div> 
+      <div class="form-group"> 
+       <label>Đến</label> 
+       <!-- Format lai select cho dep --> 
+       <select id="destPointSelect" class="form-control"></select> 
+      </div> 
+      <div class="text-danger" id="empty-destPointSelect" style="display: none">
+        Bạn phải chọn địa điểm kết thúc 
+      </div> 
+      <div class="text-danger" id="different-point" style="display: none">
+        Địa điểm kết thúc phải khác bắt đầu 
+      </div> 
+      <div> 
+       <button type="submit" class="btn btn-primary" onclick="clickShowRoute()"> Chỉ đường <span id="gettingRouteSpan" class="fa fa-spinner fa-spin" style="display: none"></span> </button> 
+      </div> 
+      <div id="routeResult" class="p5"></div> 
+     </form> 
+    </div> 
+   </div> 
+   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script> 
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBzryFPNnMMtTyRsYQOJfvrX3dic70qEUA"></script> 
+   <!--script src="https://maps.googleapis.com/maps/api/js"></script--> 
+   <!--script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script--> 
+   <script src="js/common.js"></script> 
+   <script src="js/map.js"></script> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

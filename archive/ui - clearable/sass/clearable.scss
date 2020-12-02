@@ -1,0 +1,34 @@
+.clearable {
+    $iconWidth: 25px;
+
+    position: relative;
+	overflow-x: hidden;
+
+    input {
+        padding-right: $iconWidth;
+    }
+
+    .x {
+        cursor: pointer;
+        font-weight: bold;
+        color: #E06950;
+        display: inline-block;
+        transition: all 0.2s;
+        font-size: 20px;
+        position: absolute;
+        width: $iconWidth;
+        right: 0;
+        top: 0;
+        height: 100%;
+        text-align: center;
+        
+        transform: translateX($iconWidth);
+        opacity: 0;
+    }
+
+    // Nếu input không có giá trị thì ẩn clear
+    input:not(:placeholder-shown) ~ .x {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}

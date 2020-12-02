@@ -1,0 +1,21 @@
+{
+	"manifest_version": 2,
+	"name": "Pin video",
+	"version": "1.0.0",
+	"description": "Make any video picture-in-picture",
+	"icons": {
+		"48": "images/pin.png"
+	},
+	"background": {
+		"scripts": ["js/background.js"],
+		"persistent": false
+	},
+	"browser_action": {
+		"default_title": "Pin video",
+		"default_icon": "images/pin.png"
+	},
+	"permissions": [
+		"activeTab",
+		"tabs"
+	]
+}

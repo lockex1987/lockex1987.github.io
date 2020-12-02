@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Test</title>
+	<style>
+		.box {
+			display: inline-block;
+			position: relative;
+			width: 20%;
+			margin: 10px;
+			background: red;
+		}
+		.before {
+			content: " ";
+			display: block;
+			padding-top: 100%;
+		}
+		.content {
+			position:  absolute; top: 0; left: 0; width: 50%; height: 50%;
+			background: black;
+		}
+	</style>
+</head>
+<body>
+	
+	<div class="box">
+		<div class="before"></div>
+		<div class="content">A</div>
+	</div>
+	<p>Pseudo class is added to CONTENT</p>
+	<p>Padding in percent: Specifies the padding in percent of the width of the containing element</p>
+	<p>Non-breaking space affect height</p>
+</body>
+</html>

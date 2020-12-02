@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Pedigree Css</title>
+	<link rel="icon" href="../../images/favicon.png"/>
+	<link rel="stylesheet" href="../../css/style.css"/>
+	<link rel="stylesheet" href="css/pedigree-css.css" />
+	<style>
+		article { max-width: none; }
+	</style>
+</head>
+
+<body>
+	<article>
+		<p>Vẽ phả hệ bằng cách format CSS và cấu trúc list.</p>
+		<div class="tree">
+			<ul id="pedigreeChart2"></ul>
+		</div>
+	</article>
+
+	<script src="../../js/docs.js"></script>
+
+	<!-- Dữ liệu thô -->
+	<script src="js/people.js"></script>
+    <script src="js/marriages.js"></script>
+
+    <script src="js/personMap.js"></script>
+
+	<script src="js/raw-data-processing.js"></script>
+
+    <script src="js/pedigree-css.js"></script>
+    
+    <script>
+		PedigreeCss.buildPedigreeChart(document.querySelector("#pedigreeChart2"));
+    </script>
+</body>
+</html>

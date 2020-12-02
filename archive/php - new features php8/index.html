@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="php8">
+    <title>Những cái mới trong PHP 8</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Những cái mới trong PHP 8</h2>
+      <p>PHP 8 will be released on <a target="_blank" href="https://wiki.php.net/todo/php80">November
+          26, 2020</a>. It's a new major version, which means that it will
+        introduce some breaking changes, as well as lots of new features and
+        performance improvements. Right now PHP 8 is in feature freeze, meaning
+        no new features can be added anymore.</p>
+      <p>Because of the breaking changes, there's a higher chance you'll need to
+        make some changes in your code to get it running on PHP 8. If you've
+        kept up to date with the latest releases though, the upgrade shouldn't
+        be too hard, since most breaking changes were deprecated before in the
+        7.* versions. And don't worry, all these deprecations are listed in this
+        post.</p>
+      <p>Besides breaking changes, PHP 8 also brings a nice set of new features
+        such as <a href="https://stitcher.io/blog/new-in-php-8#jit-rfc">the JIT
+          compiler</a>, <a href="https://stitcher.io/blog/new-in-php-8#union-types-rfc">union
+          types</a>, <a href="https://stitcher.io/blog/new-in-php-8#attributes-rfc">attributes</a>,
+        and more.</p>
+      <h3>Tính năng mới</h3>
+      <p>Let's start with all new features, it's quite a list!</p>
+      <h4>Union types</h4>
+      <p>Given the dynamically typed nature of PHP, there are lots of cases
+        where union types can be useful. Union types are a collection of two or
+        more types which indicate that either one of those can be used.</p>
+      <pre>public function foo(Foo|Bar $input): int|float;</pre>
+      <p>Note that <code>void</code> can never be part of a union type, since
+        it indicates "no return value at all". Furthermore, <code>nullable</code>
+        unions can be written using <code>|null</code>, or by using the
+        existing <code>?</code> notation:</p>
+      <pre>public function foo(Foo|null $foo): void;
+public function bar(?Bar $bar): void;</pre>
+      <h4>JIT</h4>
+      <p>The JIT - just in time - compiler promises significant performance
+        improvements, albeit not always within the context of web requests. I've
+        done my <a href="https://stitcher.io/blog/jit-in-real-life-web-applications">own
+          benchmarks</a> on real-life web applications, and it seems like the
+        JIT doesn't make that much of a difference, if any, on those kinds of
+        PHP projects.</p>
+      <p>If you want to know more about what the JIT can do for PHP, you can
+        read another post I wrote about it <a href="https://stitcher.io/blog/php-jit">here</a>.</p>
+      <h4>The nullsafe operator</h4>
+      <p>If you're familiar with the <a href="https://stitcher.io/blog/shorthand-comparisons-in-php#null-coalescing-operator">null
+          coalescing operator</a> you're already familiar with its shortcomings:
+        it doesn't work on method calls. Instead you need intermediate checks,
+        or rely on <code>optional</code> helpers provided by some frameworks:</p>
+      <pre>$startDate = $booking-&gt;getStartDate();<br>$dateAsString = $startDate ? $startDate-&gt;asDateTimeString() : null;</pre>
+      <p>With the addition of the nullsafe operator, we can now have null
+        coalescing-like behaviour on methods!</p>
+      <pre>$dateAsString = $booking-&gt;getStartDate()?-&gt;asDateTimeString();</pre>
+      <h4>Named arguments</h4>
+      <p><a href="https://stitcher.io/blog/php-8-named-arguments">Named
+          arguments</a> allow you to pass in values to a function, by specifying
+        the value name, so that you don't have to take their order into
+        consideration, and you can also skip optional parameters!</p>
+      <pre>function foo(string $a, string $b, ?string $c = null, ?string $d = null) 
+{
+    /* … */
+}
+
+foo(
+    b: 'value b', 
+    a: 'value a', 
+    d: 'value d',
+);</pre>
+      <p>You can read about them in-depth <a href="https://stitcher.io/blog/php-8-named-arguments">in
+          this post</a>.</p>
+      <h4>Attributes</h4>
+      <p><a href="https://stitcher.io/blog/attributes-in-php-8">Attributes</a>,
+        commonly known as annotations in other languages, offers a way to add
+        meta data to classes, without having to parse docblocks.</p>
+      <p>As for a quick look, here's an example of what attributes look like,
+        from the RFC:</p>
+      <pre>use App\Attributes\ExampleAttribute;
+
+#[ExampleAttribute]
+class Foo
+{
+    #[ExampleAttribute]
+    public const FOO = 'foo';
+ 
+    #[ExampleAttribute]
+    public $x;
+ 
+    #[ExampleAttribute]
+    public function foo(#[ExampleAttribute] $bar) { }
+}</pre>
+      <pre>#[Attribute]
+class ExampleAttribute
+{
+    public $value;
+ 
+    public function __construct($value)
+    {
+        $this-&gt;value = $value;
+    }
+}</pre>
+      <p>Note that this base <code>Attribute</code> used to be called <code>PhpAttribute</code>
+        in the original RFC, but was changed with <a target="_blank" href="https://wiki.php.net/rfc/attribute_amendments">another
+          RFC</a> afterwards. If you want to take a deep dive in how attributes
+        work, and how you can build your own; you can read about <a href="https://stitcher.io/blog/attributes-in-php-8">attributes
+          in depth</a> on this blog.</p>
+      <h4>Match expression</h4>
+      <p>You could call it the big brother of the switch expresion: match can
+        return values, doesn't require break statements, can combine conditions,
+        uses strict type comparisons and doesn't do any type coercion.</p>
+      <p>It looks like this:</p>
+      <pre>$result = match($input) {
+    0 =&gt; "hello",
+    '1', '2', '3' =&gt; "world",
+};</pre>
+      <p>You can read up on the match expression in detail, <a href="https://stitcher.io/blog/php-8-match-or-switch">over
+          here</a>.</p>
+      <h4>Constructor property promotion</h4>
+      <p>This RFC adds syntactic sugar to create value objects or data transfer
+        objects. Instead of specifying class properties and a constructor for
+        them, PHP can now combine them into one.</p>
+      <p>Instead of doing this:</p>
+      <pre>class Money 
+{
+    public Currency $currency;
+ 
+    public int $amount;
+ 
+    public function __construct(
+        Currency $currency,
+        int $amount,
+    ) {
+        $this-&gt;currency = $currency;
+        $this-&gt;amount = $amount;
+    }
+}</pre>
+      <p>You can now do this:</p>
+      <pre>class Money 
+{
+    public function __construct(
+        public Currency $currency,
+        public int $amount,
+    ) {}
+}</pre>
+      <p>There's a lot more to tell about property promotion, you can read about
+        them <a href="https://stitcher.io/blog/constructor-promotion-in-php-8">in
+          this dedicated post</a>.</p>
+      <h4>New static return type</h4>
+      <p>While it was already possible to return <code>self</code>, <code>static</code>
+        wasn't a valid return type until PHP 8. Given PHP's dynamically typed
+        nature, it's a feature that will be useful to many developers.</p>
+      <pre>class Foo
+{
+    public function test(): static
+    {
+        return new static();
+    }
+}</pre>
+      <h4>New mixed type</h4>
+      <p>Some might call it a necessary evil: the <code>mixed</code> type
+        causes many to have mixed feelings. There's a very good argument to make
+        for it though: a missing type can mean lots of things in PHP:</p>
+      <ul>
+        <li>A function returns nothing or null</li>
+        <li>We're expecting one of several types</li>
+        <li>We're expecting a type that can't be type hinted in PHP</li>
+      </ul>
+      <p>Because of the reasons above, it's a good thing the <code>mixed</code>
+        type is added. <code>mixed</code> itself means one of these types:</p>
+      <ul>
+        <li><code>array</code></li>
+        <li><code>bool</code></li>
+        <li><code>callable</code></li>
+        <li><code>int</code></li>
+        <li><code>float</code></li>
+        <li><code>null</code></li>
+        <li><code>object</code></li>
+        <li><code>resource</code></li>
+        <li><code>string</code></li>
+      </ul>
+      <p>Note that <code>mixed</code> can also be used as a parameter or
+        property type, not just as a return type.</p>
+      <p>Also note that since <code>mixed</code> already includes <code>null</code>,
+        it's not allowed to make it nullable. The following will trigger an
+        error:</p>
+      <pre>// Fatal error: Mixed types cannot be nullable, null is already part of the mixed type.
+function bar(): ?mixed {}</pre>
+      <h4>Throw expression</h4>
+      <p>This RFC changes <code>throw</code> from being a statement to being an
+        expression, which makes it possible to throw exception in many new
+        places:</p>
+      <pre>$triggerError = fn () =&gt; throw new MyError();
+
+$foo = $bar['offset'] ?? throw new OffsetDoesNotExist('offset');</pre>
+      <h4>Inheritance with private methods</h4>
+      <p>Previously, PHP used to apply the same inheritance checks on public,
+        protected and private methods. In other words: private methods should
+        follow the same method signature rules as protected and public methods.
+        This doesn't make sense, since private methods won't be accessible by
+        child classes.</p>
+      <p>This RFC changed that behaviour, so that these inheritance checks are
+        not performed on private methods anymore. Furthermore, the use of <code>final
+          private function</code> also didn't make sense, so doing so will now
+        trigger a warning:</p>
+      <pre>Warning: Private methods cannot be final as they are never overridden by other classes</pre>
+      <h4>Weak maps</h4>
+      <p>Built upon the <a target="_blank" href="https://wiki.php.net/rfc/weakrefs">weakrefs
+          RFC</a> that was added in PHP 7.4, a <code>WeakMap</code>
+        implementation is added in PHP 8. <code>WeakMap</code> holds references
+        to objects, which don't prevent those objects from being garbage
+        collected.</p>
+      <p>Take the example of ORMs, they often implement caches which hold
+        references to entity classes to improve the performance of relations
+        between entities. These entity objects can not be garbage collected, as
+        long as this cache has a reference to them, even if the cache is the
+        only thing referencing them.</p>
+      <p>If this caching layer uses weak references and maps instead, PHP will
+        garbage collect these objects when nothing else references them anymore.
+        Especially in the case of ORMs, which can manage several hundreds, if
+        not thousands of entities within a request; weak maps can offer a
+        better, more resource friendly way of dealing with these objects.</p>
+      <p>Here's what weak maps look like, an example from the RFC:</p>
+      <pre>class Foo 
+{
+    private WeakMap $cache;
+ 
+    public function getSomethingWithCaching(object $obj): object
+    {
+        return $this-&gt;cache[$obj]
+           ??= $this-&gt;computeSomethingExpensive($obj);
+    }
+}</pre>
+      <h4>Allowing ::class on objects</h4>
+      <p>A small, yet useful, new feature: it's now possible to use <code>::class</code>
+        on objects, instead of having to use <code>get_class()</code> on them.
+        It works the same way as <code>get_class()</code>.</p>
+      <pre>$foo = new Foo();
+
+var_dump($foo::class);</pre>
+      <h4>Non-capturing catches</h4>
+      <p>Whenever you wanted to catch an exception before PHP 8, you had to
+        store it in a variable, regardless whether you used that variable or
+        not. With non-capturing catches, you can omit the variable, so instead
+        of this:</p>
+      <pre>try {
+    // Something goes wrong
+} catch (MySpecialException $exception) {
+    Log::error("Something went wrong");
+}</pre>
+      <p>You can now do this:</p>
+      <pre>try {
+    // Something goes wrong
+} catch (MySpecialException) {
+    Log::error("Something went wrong");
+}</pre>
+      <p>Note that it's required to always specify the type, you're not allowed
+        to have an empty <code>catch</code>. If you want to catch all
+        exceptions and errors, you can use <code>Throwable</code> as the
+        catching type.</p>
+      <h4>Trailing comma in parameter lists</h4>
+      <p>Already possible when calling a function, trailing comma support was
+        still lacking in parameter lists. It's now allowed in PHP 8, meaning you
+        can do the following:</p>
+      <pre>public function(
+    string $parameterA,
+    int $parameterB,
+    Foo $objectfoo,
+) {
+    // …
+}</pre>
+      <p>As a sidenote: trailing commas are also supported in the <code>use</code>
+        list of closures, this was an oversight and now added via a <a href="https://wiki.php.net/rfc/trailing_comma_in_closure_use_list">separate
+          RFC</a>.</p>
+      <h4>Create DateTime objects from interface</h4>
+      <p>You can already create a <code>DateTime</code> object from a <code>DateTimeImmutable</code>
+        object using <code>DateTime::createFromImmutable($immutableDateTime)</code>,
+        but the other way around was tricky. By adding <code>DateTime::createFromInterface()</code>
+        and <code>DatetimeImmutable::createFromInterface()</code> there's now a
+        generalised way to convert <code>DateTime</code> and <code>DateTimeImmutable</code>
+        objects to each other.</p>
+      <pre>DateTime::createFromInterface(DateTimeInterface $other);
+
+DateTimeImmutable::createFromInterface(DateTimeInterface $other);</pre>
+      <h4>New Stringable interface</h4>
+      <p>The <code>Stringable</code> interface can be used to type hint
+        anything that implements <code>__toString()</code>. Whenever a class
+        implements <code>__toString()</code>, it automatically implements the
+        interface behind the scenes and there's no need to manually implement
+        it.</p>
+      <pre>class Foo
+{
+    public function __toString(): string
+    {
+        return 'foo';
+    }
+}
+
+function bar(string|Stringable $stringable) { /* … */ }
+
+bar(new Foo());
+bar('abc');</pre>
+      <h4>New str_contains() function</h4>
+      <p>Some might say it's long overdue, but we finally don't have to rely on
+        <code>strpos()</code> anymore to know whether a string contains another
+        string.</p>
+      <p>Instead of doing this:</p>
+      <pre>if (strpos('string with lots of words', 'words') !== false) { /* … */ }</pre>
+      <p>You can now do this:</p>
+      <pre>if (str_contains('string with lots of words', 'words')) { /* … */ }</pre>
+      <h4>New str_starts_with() and str_ends_with() functions</h4>
+      <p>Two other ones long overdue, these two functions are now added in the
+        core.</p>
+      <pre>str_starts_with('haystack', 'hay'); // true
+str_ends_with('haystack', 'stack'); // true</pre>
+      <h4>New fdiv() function</h4>
+      <p>The new <code>fdiv()</code> function does something similar as the <code>fmod()</code>
+        and <code>intdiv()</code> functions, which allows for division by 0.
+        Instead of errors you'll get <code>INF</code>, <code>-INF</code> or <code>NAN</code>,
+        depending on the case.</p>
+      <h4>New get_debug_type() function</h4>
+      <p><code>get_debug_type()</code> returns the type of a variable. Sounds
+        like something <code> gettype()</code> would do? <code>get_debug_type()</code>
+        returns more useful output for arrays, strings, anonymous classes and
+        objects.</p>
+      <p>For example, calling <code>gettype()</code> on a class <code>\Foo\Bar</code>
+        would return <code>object</code>. Using <code>get_debug_type()</code>
+        will return the class name.</p>
+      <p>A full list of differences between <code>get_debug_type()</code> and <code>gettype()</code>
+        can be found in the RFC.</p>
+      <h4>New get_resource_id() function</h4>
+      <p>Resources are special variables in PHP, referring to external
+        resources. One example is a MySQL connection, another one a file handle.</p>
+      <p>Each one of those resources gets assigned an ID, though previously the
+        only way to know that id was to cast the resource to <code>int</code>:</p>
+      <pre>$resourceId = (int) $resource;</pre>
+      <p>PHP 8 adds the <code>get_resource_id()</code> functions, making this
+        operation more obvious and type-safe:</p>
+      <pre>$resourceId = get_resource_id($resource);</pre>
+      <h4>Abstract methods in traits improvements</h4>
+      <p>Traits can specify abstract methods which must be implemented by the
+        classes using them. There's a caveat though: before PHP 8 the signature
+        of these method implementations weren't validated. The following was
+        valid:</p>
+      <pre>trait Test {
+    abstract public function test(int $input): int;
+}
+
+class UsesTrait
+{
+    use Test;
+
+    public function test($input)
+    {
+        return $input;
+    }
+}</pre>
+      <p>PHP 8 will perform proper method signature validation when using a
+        trait and implementing its abstract methods. This means you'll need to
+        write this instead:</p>
+      <pre>class UsesTrait
+{
+    use Test;
+
+    public function test(int $input): int
+    {
+        return $input;
+    }
+}</pre>
+      <h4>Object implementation of token_get_all()</h4>
+      <p>The <code>token_get_all()</code> function returns an array of values.
+        This RFC adds a <code>PhpToken</code> class with a <code>PhpToken::getAll()</code>
+        method. This implementation works with objects instead of plain values.
+        It consumes less memory and is easier to read.</p>
+      <h4>Variable syntax tweaks</h4>
+      <p>From the RFC: "the Uniform Variable Syntax RFC resolved a number of
+        inconsistencies in PHP's variable syntax. This RFC intends to address a
+        small handful of cases that were overlooked."</p>
+      <h4>Type annotations for internal functions</h4>
+      <p>Lots of people <a target="_blank" href="https://github.com/php/php-src/pulls?q=is%3Apr+label%3AStubs+is%3Aclosed">pitched
+          in</a> to add proper type annotations to all internal functions. This
+        was a long standing issue, and finally solvable with all the changes
+        made to PHP in previous versions. This means that internal functions and
+        methods will have complete type information in reflection.</p>
+      <h4>ext-json always available</h4>
+      <p>Previously it was possible to compile PHP without the JSON extension
+        enabled, this is not possible anymore. Since JSON is so widely used,
+        it's best developers can always rely on it being there, instead of
+        having to ensure the extension exist first.</p>
+      <h3> Breaking changes</h3>
+      <p>As mentioned before: this is a major update and thus there will be
+        breaking changes. The best thing to do is take a look at the full list
+        of breaking changes over at the <a target="_blank" href="https://github.com/php/php-src/blob/master/UPGRADING#L20">UPGRADING</a>
+        document.</p>
+      <p>Many of these breaking changes have been deprecated in previous 7.*
+        versions though, so if you've been staying up-to-date over the years, it
+        shouldn't be all that hard to upgrade to PHP 8.</p>
+      <h4>Consistent type errors</h4>
+      <p>User-defined functions in PHP will already throw <code>TypeError</code>,
+        but internal functions did not, they rather emitted warnings and
+        returned <code>null</code>. As of PHP 8 the behaviour of internal
+        functions have been made consistent.</p>
+      <h4>Reclassified engine warnings</h4>
+      <p>Lots of errors that previously only triggered warnings or notices, have
+        been converted to proper errors. The following warnings were changed.</p>
+      <ul>
+        <li>Undefined variable: <code>Error</code> exception instead of notice</li>
+        <li>Undefined array index: warning instead of notice</li>
+        <li>Division by zero: <code>DivisionByZeroError</code> exception
+          instead of warning</li>
+        <li>Attempt to increment/decrement property '%s' of non-object: <code>Error</code>
+          exception instead of warning</li>
+        <li>Attempt to modify property '%s' of non-object: <code>Error</code>
+          exception instead of warning</li>
+        <li>Attempt to assign property '%s' of non-object: <code>Error</code>
+          exception instead of warning</li>
+        <li>Creating default object from empty value: <code>Error</code>
+          exception instead of warning</li>
+        <li>Trying to get property '%s' of non-object: warning instead of notice</li>
+        <li>Undefined property: %s::$%s: warning instead of notice</li>
+        <li>Cannot add element to the array as the next element is already
+          occupied: <code>Error</code> exception instead of warning</li>
+        <li>Cannot unset offset in a non-array variable: <code>Error</code>
+          exception instead of warning</li>
+        <li>Cannot use a scalar value as an array: <code>Error</code> exception
+          instead of warning</li>
+        <li>Only arrays and <code>Traversables</code> can be unpacked: <code>TypeError</code>
+          exception instead of warning</li>
+        <li>Invalid argument supplied for foreach(): <code>TypeError</code>
+          exception instead of warning</li>
+        <li>Illegal offset type: <code>TypeError</code> exception instead of
+          warning</li>
+        <li>Illegal offset type in isset or empty: <code>TypeError</code>
+          exception instead of warning</li>
+        <li>Illegal offset type in unset: <code>TypeError</code> exception
+          instead of warning</li>
+        <li>Array to string conversion: warning instead of notice</li>
+        <li>Resource ID#%d used as offset, casting to integer (%d): warning
+          instead of notice</li>
+        <li>String offset cast occurred: warning instead of notice</li>
+        <li>Uninitialized string offset: %d: warning instead of notice</li>
+        <li>Cannot assign an empty string to a string offset: <code>Error</code>
+          exception instead of warning</li>
+        <li>Supplied resource is not a valid stream resource: <code>TypeError</code>
+          exception instead of warning</li>
+      </ul>
+      <h4>The @ operator no longer silences fatal errors</h4>
+      <p>It's possible that this change might reveal errors that again were
+        hidden before PHP 8. Make sure to set display_errors=Off on your
+        production servers!</p>
+      <h4>Default error reporting level</h4>
+      <p>It's now E_ALL instead of everything but E_NOTICE and E_DEPRECATED.
+        This means that many errors might pop up which were previously silently
+        ignored, though probably already existent before PHP 8.</p>
+      <h4>Default PDO error mode</h4>
+      <p>From the RFC: The current default error mode for PDO is silent. This
+        means that when an SQL error occurs, no errors or warnings may be
+        emitted and no exceptions thrown unless the developer implements their
+        own explicit error handling.</p>
+      <p>This RFC changes the default error will change to
+        PDO::ERRMODE_EXCEPTION in PHP 8.</p>
+      <h4>Concatenation precedence</h4>
+      <p>While already deprecated in PHP 7.4, this change is now taken into
+        effect. If you'd write something like this:</p>
+      <pre>echo "sum: " . $a + $b;</pre>
+      <p>PHP would previously interpret it like this:</p>
+      <pre>echo ("sum: " . $a) + $b;</pre>
+      <p>PHP 8 will make it so that it's interpreted like this:</p>
+      <pre>echo "sum: " . ($a + $b);</pre>
+      <h4>Stricter type checks for arithmetic and bitwise operators</h4>
+      <p>Before PHP 8, it was possible to apply arithmetic or bitwise operators
+        on arrays, resources or objects. This isn't possible anymore, and will
+        throw a <code>TypeError</code>:</p>
+      <pre>[] % [42];
+$object + 4;</pre>
+      <h4>Namespaced names being a single token</h4>
+      <p>PHP used to interpret each part of a namespace (separated by a
+        backslash <code>\</code>) as a sequence of tokens. This RFC changed
+        that behaviour, meaning reserved names can now be used in namespaces.</p>
+      <h4>Saner numeric strings</h4>
+      <p>PHP's type system tries to do a lot of smart things when it encounters
+        numbers in strings. This RFC makes that behaviour more consistent and
+        clear.</p>
+      <h4>Saner string to number comparisons</h4>
+      <p>This RFC fixes the very strange case in PHP where <code>0 == "foo"</code>
+        results in <code>true</code>. There are some other edge cases like that
+        one, and this RFC fixes them.</p>
+      <h4>Reflection method signature changes</h4>
+      <p>Three method signatures of reflection classes have been changed:</p>
+      <pre>ReflectionClass::newInstance($args);
+ReflectionFunction::invoke($args);
+ReflectionMethod::invoke($object, $args);</pre>
+      <p>Have now become:</p>
+      <pre>ReflectionClass::newInstance(...$args);
+ReflectionFunction::invoke(...$args);
+ReflectionMethod::invoke($object, ...$args);</pre>
+      <p>The upgrading guide specifies that if you extend these classes, and
+        still want to support both PHP 7 and PHP 8, the following signatures are
+        allowed:</p>
+      <pre>ReflectionClass::newInstance($arg = null, ...$args);
+ReflectionFunction::invoke($arg = null, ...$args);
+ReflectionMethod::invoke($object, $arg = null, ...$args);</pre>
+      <h4>Stable sorting</h4>
+      <p>Before PHP 8, sorting algorithms were unstable. This means that the
+        order of equal elements wasn't guaranteed. PHP 8 changes the behaviour
+        of all sorting functions to stable sorting.</p>
+      <h4>Fatal error for incompatible method signatures</h4>
+      <p>From the RFC: Inheritance errors due to incompatible method signatures
+        currently either throw a fatal error or a warning depending on the cause
+        of the error and the inheritance hierarchy.</p>
+      <h4>Other deprecations and changes</h4>
+      <p>During the PHP 7.* development, several deprecations were added that
+        are now finalised in PHP 8.</p>
+      <ul>
+        <li>Deprecations in <a target="_blank" href="https://wiki.php.net/rfc/deprecations_php_7_2">PHP
+            7.2</a></li>
+        <li>Deprecations in <a target="_blank" href="https://wiki.php.net/rfc/deprecations_php_7_3">PHP
+            7.3</a></li>
+        <li>Deprecations in <a target="_blank" href="https://wiki.php.net/rfc/deprecations_php_7_4">PHP
+            7.4</a></li>
+        <li>Locale-independent <a target="_blank" href="https://wiki.php.net/rfc/locale_independent_float_to_string">float
+            to string cast</a></li>
+      </ul>
+      <h3>Tham khảo</h3>
+      <p><a href="https://stitcher.io/blog/new-in-php-8" target="_blank">What's
+          new in PHP 8 - stitcher.io</a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <br>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

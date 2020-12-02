@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Demo 1: Thực hiện trên một tab</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+    <article>
+        <h2>Demo 1: Thực hiện trên một tab.</h2>
+
+        <div id="app">
+            <div class="d-flex justify-content-between mb-3">
+                <button class="btn btn-success"
+                        :disabled="isConnected"
+                        @click="connectPeers()">
+                    Kết nối
+                </button>
+
+                <button class="btn btn-danger"
+                        :disabled="!isConnected"
+                        @click="disconnectPeers()">
+                    Ngắt kết nối
+                </button>
+            </div>
+
+            <form class="mb-3" @submit.prevent="sendMessage()">
+                <input type="text"
+                        placeholder="Nội dung tin nhắn"
+                        class="form-control"
+                        :disabled="!isConnected"
+                        ref="messageInputBox"
+                        v-model.trim="message">
+            </form>
+
+            <div class="mb-3">Các tin nhắn đã nhận:</div>
+            <div class="bg-light px-3 pt-3 pb-3" ref="receiveBox"></div>
+        </div>
+    </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="js/demo1.js"></script>
+</body>
+
+</html>

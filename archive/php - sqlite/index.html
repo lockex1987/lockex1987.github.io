@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="sqlite">
+    <title>Sử dụng SQLite với PHP</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Sử dụng SQLite với PHP</h2>
+      <h3>Enable extension</h3>
+      <p>Bạn phải enable SQLite extension ở file <code>php.ini</code>.</p>
+      <pre>extension=pdo_sqlite<br><br>extension=sqlite3</pre>
+      <h3>Cài đặt SQLite trên Windows</h3>
+      <p>Trên hệ điều hành Linux, bạn đã có sẵn lệnh sqlite3.</p>
+      <p>Trên hệ điều hành Windows, bạn cần download các tool <a href="https://www.sqlite.org/download.html"
+          target="_blank">ở đây</a>. Ví dụ bạn download file <code>sqlite-tools-win32-x86-3330000.zip</code>.</p>
+      <p>Giải nén file zip, bạn sẽ có 3 file thực thi sau:</p>
+      <ul>
+        <li><code>sqldiff.exe</code></li>
+        <li><code>sqlite3.exe</code></li>
+        <li><code>sqlite3_analyzer.exe</code></li>
+      </ul>
+      <p>Bạn mở màn hình cmd, di chuyển đến thư mục giải nén, sau đó thực hiện
+        lệnh:</p>
+      <pre>sqlite3.exe</pre>
+      <h3>Demo</h3>
+      <p><a href="demo.php">demo.php</a></p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

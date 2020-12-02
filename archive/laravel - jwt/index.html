@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="jwt, laravel">
+    <title>JWT (JSON Web Token) trong Laravel</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>JWT (JSON Web Token) trong Laravel</h2>
+      <h3>Cài đặt</h3>
+      <p>Khởi tạo dự án:</p>
+      <pre>composer create-project --prefer-dist laravel/laravel sso<br>cd sso</pre><p>Phiên bản Laravel sử dụng là 5.8.</p><p>Thêm thư viện <code>jwt-auth</code> (cái này lại sử dụng <code>lcobucci/jwt</code>):</p><pre>composer require tymon/jwt-auth:^1.0.0-rc.4.1<br>composer require tymon/jwt-auth "1.0.*"<br>composer require tymon/jwt-auth:dev-develop --prefer-source</pre><p>Sử dụng phiên bản <code>"tymon/jwt-auth": "^1.0.0-rc.4.1"</code>.</p><p>Publish provider:</p><pre>php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"</pre><p>Câu lệnh trên sẽ tạo file <code>config/jwt.php</code>.</p><p>Generate khóa secret ở file <code>.env</code>:</p><pre>php artisan jwt:secret</pre><p>Sửa cấu hình DB ở file <code>.env</code>. Chúng ta vẫn phải đăng nhập qua DB.</p><p>Migrate DB:</p><pre>php artisan migrate</pre>Câu lệnh trên sẽ tạo bảng <code>users</code> và <code>password_resets</code>.<h3>Cấu hình</h3><h4>Sửa model User</h4><p>Chỉnh sửa file model User, thêm implements <code>JWTSubject</code> và khai báo 2 phương thức <code>getJWTIdentifier</code>, <code>getJWTCustomClaims</code>. Ví dụ:</p><pre
+style="color: #d4d4d4;background-color: #1e1e1e;font-family: Consolas, 'Courier New', monospace;font-weight: normal;font-size: 14px;line-height: 19px;white-space: pre;"><div><span
+style="color: #569cd6;">&lt;?php</span></div><br><div><span style="color: #569cd6;">namespace</span><span
+style="color: #d4d4d4;"> </span><span style="color: #4ec9b0;">App</span><span style="color: #d4d4d4;">;</span></div><br><div><span
+style="color: #569cd6;">use</span><span style="color: #d4d4d4;"> Illuminate\Notifications\Notifiable;</span></div><div><span
+style="color: #569cd6;">use</span><span style="color: #d4d4d4;"> Illuminate\Contracts\Auth\MustVerifyEmail;</span></div><div><span
+style="color: #569cd6;">use</span><span style="color: #d4d4d4;"> Illuminate\Foundation\Auth\User </span><span
+style="color: #569cd6;">as</span><span style="color: #d4d4d4;"> Authenticatable;</span></div><div><span
+style="color: #569cd6;">use</span><span style="color: #d4d4d4;"> Tymon\JWTAuth\Contracts\JWTSubject;</span></div><br><br><div><span
+style="color: #569cd6;">class</span><span style="color: #d4d4d4;"> </span><span
+style="color: #4ec9b0;">User</span><span style="color: #d4d4d4;"> </span><span style="color: #569cd6;">extends</span><span
+style="color: #d4d4d4;"> </span><span style="color: #4ec9b0;">Authenticatable</span><span
+style="color: #d4d4d4;"> </span><span style="color: #569cd6;">implements</span><span
+style="color: #d4d4d4;"> </span><span style="color: #4ec9b0;">JWTSubject</span></div><div><span
+style="color: #d4d4d4;">{</span></div><div><span style="color: #d4d4d4;">    </span><span
+style="color: #569cd6;">use</span><span style="color: #d4d4d4;"> Notifiable;</span></div><br><div><span
+style="color: #d4d4d4;">    </span><span style="color: #608b4e;">/**</span></div><div><span
+style="color: #608b4e;">     * The attributes that are mass assignable.</span></div><div><span
+style="color: #608b4e;">     *</span></div><div><span style="color: #608b4e;">     * </span><span
+style="color: #569cd6;">@var</span><span style="color: #608b4e;"> array</span></div><div><span
+style="color: #608b4e;">     */</span></div><div><span style="color: #d4d4d4;">    </span><span
+style="color: #569cd6;">protected</span><span style="color: #d4d4d4;"> </span><span
+style="color: #9cdcfe;">$fillable</span><span style="color: #d4d4d4;"> = [</span></div><div><span
+style="color: #d4d4d4;">        </span><span style="color: #ce9178;">'name'</span><span
+style="color: #d4d4d4;">, </span><span style="color: #ce9178;">'email'</span><span
+style="color: #d4d4d4;">, </span><span style="color: #ce9178;">'password'</span><span
+style="color: #d4d4d4;">,</span></div><div><span style="color: #d4d4d4;">    ];</span></div><br><div><span
+style="color: #d4d4d4;">    </span><span style="color: #608b4e;">/**</span></div><div><span
+style="color: #608b4e;">     * The attributes that should be hidden for arrays.</span></div><div><span
+style="color: #608b4e;">     *</span></div><div><span style="color: #608b4e;">     * </span><span
+style="color: #569cd6;">@var</span><span style="color: #608b4e;"> array</span></div><div><span
+style="color: #608b4e;">     */</span></div><div><span style="color: #d4d4d4;">    </span><span
+style="color: #569cd6;">protected</span><span style="color: #d4d4d4;"> </span><span
+style="color: #9cdcfe;">$hidden</span><span style="color: #d4d4d4;"> = [</span></div><div><span
+style="color: #d4d4d4;">        </span><span style="color: #ce9178;">'password'</span><span
+style="color: #d4d4d4;">, </span><span style="color: #ce9178;">'remember_token'</span><span
+style="color: #d4d4d4;">,</span></div><div><span style="color: #d4d4d4;">    ];</span></div><br><div><span
+style="color: #d4d4d4;">    </span><span style="color: #608b4e;">/**</span></div><div><span
+style="color: #608b4e;">     * The attributes that should be cast to native types.</span></div><div><span
+style="color: #608b4e;">     *</span></div><div><span style="color: #608b4e;">     * </span><span
+style="color: #569cd6;">@var</span><span style="color: #608b4e;"> array</span></div><div><span
+style="color: #608b4e;">     */</span></div><div><span style="color: #d4d4d4;">    </span><span
+style="color: #569cd6;">protected</span><span style="color: #d4d4d4;"> </span><span
+style="color: #9cdcfe;">$casts</span><span style="color: #d4d4d4;"> = [</span></div><div><span
+style="color: #d4d4d4;">        </span><span style="color: #ce9178;">'email_verified_at'</span><span
+style="color: #d4d4d4;"> =&gt; </span><span style="color: #ce9178;">'datetime'</span><span
+style="color: #d4d4d4;">,</span></div><div><span style="color: #d4d4d4;">    ];</span></div><br><div><span
+style="color: #d4d4d4;">    </span><span style="color: #608b4e;">/**</span></div><div><span
+style="color: #608b4e;">     * Get the identifier that will be stored in the subject claim of the JWT.</span></div><div><span
+style="color: #608b4e;">     *</span></div><div><span style="color: #608b4e;">     * </span><span
+style="color: #569cd6;">@return</span><span style="color: #608b4e;"> mixed</span></div><div><span
+style="color: #608b4e;">     */</span></div><div><span style="color: #d4d4d4;">    </span><span
+style="color: #569cd6;">public</span><span style="color: #d4d4d4;"> </span><span
+style="color: #569cd6;">function</span><span style="color: #d4d4d4;"> </span><span
+style="color: #dcdcaa;">getJWTIdentifier</span><span style="color: #d4d4d4;">()</span></div><div><span
+style="color: #d4d4d4;">    {</span></div><div><span style="color: #d4d4d4;">        </span><span
+style="color: #c586c0;">return</span><span style="color: #d4d4d4;"> </span><span
+style="color: #9cdcfe;">$this</span><span style="color: #d4d4d4;">-&gt;getKey();</span></div><div><span
+style="color: #d4d4d4;">    }</span></div><br><div><span style="color: #d4d4d4;">    </span><span
+style="color: #608b4e;">/**</span></div><div><span style="color: #608b4e;">     * Return a key value array, containing any custom claims to be added to the JWT.</span></div><div><span
+style="color: #608b4e;">     *</span></div><div><span style="color: #608b4e;">     * </span><span
+style="color: #569cd6;">@return</span><span style="color: #608b4e;"> array</span></div><div><span
+style="color: #608b4e;">     */</span></div><div><span style="color: #d4d4d4;">    </span><span
+style="color: #569cd6;">public</span><span style="color: #d4d4d4;"> </span><span
+style="color: #569cd6;">function</span><span style="color: #d4d4d4;"> </span><span
+style="color: #dcdcaa;">getJWTCustomClaims</span><span style="color: #d4d4d4;">()</span></div><div><span
+style="color: #d4d4d4;">    {</span></div><div><span style="color: #d4d4d4;">        </span><span
+style="color: #c586c0;">return</span><span style="color: #d4d4d4;"> [];</span></div><div><span
+style="color: #d4d4d4;">    }</span></div><div><span style="color: #d4d4d4;">}</span></div></pre><p></p><h4>Cấu hình Auth guard</h4><p>Sửa file <code>config/auth.php</code>:</p><pre>'defaults' =&gt; [
+    'guard' =&gt; 'api',
+    'passwords' =&gt; 'users',
+],
+
+// ...
+
+'guards' =&gt; [
+    'api' =&gt; [
+        'driver' =&gt; 'jwt',
+        'provider' =&gt; 'users',
+    ],
+],</pre><p>Chúng ta cấu hình <code>api</code> guard sử dụng <code>jwt</code> driver, mà thiết lập <code>api</code> guard là mặc định.</p><h4>Khai báo route</h4><p>Khai báo route ở <code>routes/api.php</code>:</p><pre>Route::post('register', 'AuthController@register');
+Route::post('login', 'AuthController@login');
+Route::post('logout', 'AuthController@logout');
+Route::post('refresh', 'AuthController@refresh');
+Route::get('user', 'AuthController@user');                        </pre><p></p>(Đọc trang web, tự động thấy có code cần highlight thì thêm thư viện highlight.js)<h4>Tạo các file Form, Controller</h4><pre>php artisan make:controller AuthController</pre><p>Ví dụ:</p><p>AuthController.php</p><pre>x</pre><h3>Test</h3><p>Test bằng <code>curl</code>.</p><p>Đăng ký:</p><pre>curl -X POST \
+  http://sso.cttd.tk/api/register \
+  -H 'content-type: multipart/form-data;' \
+  -F 'name=Nguyen Van Huyen' \
+  -F email=lockex1987@gmail.com \
+  -F password=abc123a@</pre><p>Đăng nhập</p>
+      <pre>curl -X POST \
+  http://sso.cttd.tk/api/login \
+  -H 'content-type: multipart/form-data;' \
+  -F email=lockex1987@gmail.com \
+  -F password=abc123a@</pre><p>Giả sử token trả về sau khi đăng nhập là <code>JWT_TOKEN</code>.</p><p>Lấy thông tin người dùng:</p><pre>curl -X GET \
+  http://sso.cttd.tk/api/user \
+  -H 'authorization: Bearer JWT_TOKEN'</pre><p>Kiểm tra token hợp lệ hay không:</p><p>x</p><p>Refresh token:</p><pre>curl -X POST \
+  http://sso.cttd.tk/api/refresh \
+  -H 'authorization: Bearer JWT_TOKEN'</pre><p>Đăng xuất:</p><pre>curl -X POST \
+  http://sso.cttd.tk/api/logout \
+  -H 'authorization: Bearer JWT_TOKEN'</pre><p>Khi token không hợp lệ nó cứ trả về trang login, mã 200. Đó là do middleware <code>auth:api</code>. Hãy chuyển sang middleware <code>jwt.auth</code>. Khi đó mã trả về là 401.</p><p><br></p><p><br></p><h3>Tham khảo</h3><p><a
+href="https://viblo.asia/p/api-authentication-su-dung-jwt-trong-laravel-1VgZvxRY5Aw">https://viblo.asia/p/api-authentication-su-dung-jwt-trong-laravel-1VgZvxRY5Aw</a></p><p>Hướng dẫn chính thức của thư viện:</p><p><a
+href="https://jwt-auth.readthedocs.io/en/develop/">https://jwt-auth.readthedocs.io/en/develop/</a></p><p><a
+href="https://medium.com/employbl/build-authentication-into-your-laravel-api-with-json-web-tokens-jwt-cd223ace8d1a">https://medium.com/employbl/build-authentication-into-your-laravel-api-with-json-web-tokens-jwt-cd223ace8d1a</a><a
+href="https://jwt-auth.readthedocs.io/en/develop/"></a></p><p>Project mẫu mà bao gồm các thư viện; có đầy đủ sẵn các API (nên sử dụng cái này):</p><p><a
+href="https://github.com/francescomalatesta/laravel-api-boilerplate-jwt">https://github.com/francescomalatesta/laravel-api-boilerplate-jwt</a></p><p>Tìm hiểu về JWT nói chung<br>
+      </p>
+      <p><a href="https://lockex1987.github.io/posts/cryptography%20-%20json%20web%20token/">https://lockex1987.github.io/posts/cryptography%20-%20json%20web%20token/</a></p>
+      <p>Cơ chế SSO</p><p><a href="https://lockex1987.github.io/posts/web%20-%20single%20sign-on/">https://lockex1987.github.io/posts/web%20-%20single%20sign-on/</a></p>
+      <p>Tại sao có thể invalidate token trong khi nó là stateless?</p><p><a href="https://auth0.com/blog/blacklist-json-web-token-api-keys/">https://auth0.com/blog/blacklist-json-web-token-api-keys/</a></p><p><a
+href="https://auth0.com/blog/using-json-web-tokens-as-api-keys/">https://auth0.com/blog/using-json-web-tokens-as-api-keys/</a>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+</body></html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="date" content="2020-02-18 22:48:00">
+    <meta name="description" content="From zero to deployment">
+    <title>Web development roadmap</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Web development roadmap</h2>
+      <p>From zero to deployment.</p>
+      <p>Bài viết này mô tả các bước để phát triển một ứng dụng web.</p>
+      <p>Solve problems use programming language (tool). Không chạy theo language, framework.</p>
+      <h3>Bước 1: Setup</h3>
+      <p>Các bước nhỏ:</p>
+      <ul>
+        <li><a href="../it%20-%20virtualbox/index.html">Sử dụng VirtualBox</a></li>
+        <li><a href="../linux%20-%20setup%20lab%20environment/index.html">Tạo
+            môi trường lab</a></li>
+        <li><a href="../linux%20-%20install%20ubuntu%20server/index.html">Cài
+            đặt Ubuntu server</a></li>
+        <li><a href="../linux%20-%20ssh/index.html">Sử dụng SSH để kểt nối đến
+            server</a></li>
+        <li><a href="../linux%20-%20install%20php/index.html">Cài đặt PHP</a></li>
+        <li><a href="../linux%20-%20install%20nginx/index.html">Cài đặt nginx</a></li>
+        <li><a href="../linux%20-%20run%20php%20with%20nginx/index.html">Chạy
+            PHP với nginx</a></li>
+        <li><a href="../linux%20-%20install%20node/index.html">Cài đặt Node</a></li>
+        <li><a href="../linux%20-%20install%20mysql/index.html">Cài đặt MySQL</a></li>
+        <li><a href="../redis%20-%20installation/index.html">Cài đặt Redis</a></li>
+        <li><a href="../linux%20-%20install%20glusterfs/index.html">Cài đặt
+            GlusterFS</a></li>
+      </ul>
+      <h3>Bước 2: Development</h3>
+      <h4>sso-passport</h4>
+      <p>Quản lý người dùng, đăng nhập tập trung.</p>
+      <ul>
+        <li>Setup project mới</li>
+        <li>Đăng nhập</li>
+        <li>Đăng xuất</li>
+        <li>Thêm throttle</li>
+        <li>Đổi thông tin (mật khẩu, tên, số điện thoại, email, avatar)</li>
+        <li>Lịch sử đăng nhập (OS, Browser, IP, time)</li>
+        <li>Danh sách các ứng dụng được phân quyền</li>
+        <li>Email đổi mật khẩu thành công</li>
+        <li>Quên mật khẩu</li>
+        <li>Đăng ký, TODO:
+          <ul>
+            <li>Đăng ký qua Facebook, Google</li>
+            <li>Thêm số điện thoại</li>
+          </ul>
+        </li>
+        <li>Gửi mail xác nhận khi đăng ký</li>
+      </ul>
+      
+      <h4>sso-admin</h4>
+      <ul>
+        <li>Đăng nhập qua <strong>sso-passport</strong> (người dùng phải được
+          gán cho ứng dụng sso-admin)</li>
+        <li>Quản lý người dùng</li>
+        <li>Quản lý ứng dụng
+          <ul>
+            <li>TODO: secret của ứng dụng, để gọi API từ ứng dụng, tự generate
+              secret</li>
+          </ul>
+        </li>
+        <li>Gán ứng dụng cho người dùng</li>
+      </ul>
+      
+      
+      <h4>uw-admin (sso-admin)</h4>
+      <p>Không mất công làm lại các bài toán cũ.</p>
+      <p>Làm luôn trên project <strong>sso-admin</strong>.</p>
+      <p>Tham khảo Voyager.</p>
+      <ul>
+        <li>Web Socket chat, TODO:
+          <ul>
+            <li>Avatar</li>
+            <li>Emoticon, formated HTML (strong, emphasize, underline,
+              font-family, font-size)</li>
+            <li>buzzes and image posting</li>
+            <li>Offline message</li>
+            <li>Send file (drag and drop, progress bar)</li>
+            <li>Group chat</li>
+            <li>Clear message</li>
+            <li>compress data bandwidth</li>
+            <li>Tham khảo: <a href="https://github.com/wayou/HiChat" target="_blank">github.com/wayou/HiChat</a></li>
+            <li>Dạng service để nhúng như Subiz</li>
+          </ul>
+        </li>
+        <li>View as (impersonate): đăng nhập với tài khoản người khác</li>
+        <li>Quản lý quyền, vai trò</li>
+        <li>Kiểm tra quyền</li>
+        <li>Kiểm tra đăng nhập</li>
+        <li>WebRTC
+          <ul>
+            <li>Text chat</li>
+            <li>Stream (share screen, audio chat, video chat)</li>
+            <li>Send file</li>
+          </ul>
+        </li>
+        <li>Notification</li>
+        <ul>
+          <li>TODO: Notification dạng hệ thống, k phải là noti.info</li>
+          <li>TODO: Khi đánh dấu đã đọc thì cập nhật lại số thông báo mới</li>
+        </ul>
+        
+        
+        <li>Múi giờ Việt Nam (lưu DB không bị lệch với trường timestamp)</li>
+        <ul>
+          <li>Thiết lập <code>'timezone' => 'Asia/Ho_Chi_Minh'</code> ở file <code>config/app.php</code>, mặc định đang là <code>UTC</code></li>
+        </ul>
+        
+        <li>i18n: tiếng Việt (các thông báo lỗi validate)</li>
+        
+        <li>Danh mục dùng chung (tham khảo Voyage)</li>
+        <ul>
+          <li>Quốc gia, thể loại phim (dùng để quản lý movie)</li>
+        </ul>
+        <li>Tham số hệ thống:</li>
+        <ul>
+          <li>Động (thêm, sửa, xóa)</li>
+        </ul>
+        
+        <li>Import Excel</li>
+        <li>Export Excel</li>
+
+        <li>Tổ chức (dữ liệu dạng cây)</li>
+        <ul>
+          <li>Ở form người dùng có chọn tổ chức</li>
+        </ul>
+
+        <li>Quản lý nội dung</li>
+        <ul>
+          <li>Dùng editor Summernote</li>
+          <li>HTML purify chống lỗi XSS</li>
+          <li>Nội dung chứa ảnh</li>
+        </ul>
+        
+        <li>Upload đính kèm file</li>
+        <ul>
+          <li>Giới hạn dung lượng</li>
+          <li>Giới hạn định dạng file</li>
+          <li>TODO: file service, CDN, có HA</li>
+        </ul>
+        <li>Log hệ thống (log tác động)</li>
+        <ul>
+          <li>Response log</li>
+        </ul>
+        
+        <li>Logging: cấu hình log Laravel theo ngày, tách log lỗi ra file riêng, đẩy log lỗi vào DB, liệt kê và download file log</li>
+        <ul>
+          <li>Log service: Xem log ở các server có load balancer (không biết lỗi ở server nào), cảnh báo log lỗi</li>
+          <li>Xem log lỗi nginx</li>
+		  <li>Log lỗi hệ thống đẩy vào DB, có chức năng view (https://laravel.com/docs/master/errors)</li>
+        </ul>
+       
+        
+        
+        
+        
+        <li>Components demo:
+          <ul>
+            <li>Week picker</li>
+            <li>Month picker</li>
+            <li>Year picker</li>
+            <li>...</li>
+          </ul>
+        </li>
+        
+
+        
+      </ul>
+      
+      <p>Ứng dụng thật:</p>
+      <ul>
+        <li>Mail</li>
+        <ul>
+          
+          <li>Mail cảnh báo hoạt động</li>
+          <li>Mail truyền thông</li>
+          <li>Mail báo cáo tuần, báo cáo ngày</li>
+          <li>Mail service: Gửi mail tập trung, gọi REST POST với các tham số
+            (app, secret, to, title, body)</li>
+        </ul>
+        
+        <li>Quản lý movie</li>
+        <li>English common words</li>
+        <li>My family (có DB)</li>
+        <li>Monitor service: Ứng dụng alive; định kỳ đọc log lỗi, nếu có thì
+          cảnh báo</li>
+        
+        <li>ElasticSearch
+          <ul>
+            <li>Tìm kiếm dữ liệu lớn (khách hàng Viettel)</li>
+            <li>Tìm kiếm dữ liệu post</li>
+          </ul>
+        </li>
+        <li>Hỗ trợ PWA</li>
+        <ul>
+          <li>Notification?</li>
+        </ul>
+      </ul>
+      
+      <h4>uw-frontend</h4>
+      <p>Server render, hỗ trợ SEO.</p>
+      <ul>
+        <li>Trang landing page (đối tượng hướng tới là doanh nghiệp nhỏ)</li>
+        <ul>
+          <li>Giới thiệu thông tin chung, liên hệ, đội ngũ, bản đồ địa chỉ</li>
+          <li>Chuyên môn, ảnh sản phẩm</li>
+          <li>Link chat với chúng tôi (FB Messenger)</li>
+          <li>Link tin tức</li>
+          <li>Link đăng nhập (sso-admin)</li>
+        </ul>
+        <li>Trang danh sách tin tức</li>
+        <ul>
+          <li>Có phân trang</li>
+        </ul>
+        <li>Trang chi tiết tin tức</li>
+        <ul>
+          <li>Các bài liên quan</li>
+          <li>FB comment</li>
+          <li>Dùng Share API để share link</li>
+        </ul>
+      </ul>
+      
+      <h4>websocket-server</h4>
+      <ul>
+        <li>Điều hướng chat</li>
+        <li>Điều hướng WebRTC</li>
+        <li>Chat</li>
+        <li>Notification thông báo mới</li>
+      </ul>
+      <h3>Bước 3: Deployment</h3>
+      <p><a href="https://lockex1987.github.io/archive/it%20-%20auto%20deploy/">Deploy
+          tự động</a></p>
+      <p><a href="https://lockex1987.github.io/archive/it%20-%20check%20application%20alive/">Theo
+          dõi tiến trình luôn chạy</a></p>
+      <p><a href="https://lockex1987.github.io/archive/web%20-%20ngrok/">Publish
+          ứng dụng lên internet</a></p>
+      <p><a href="https://lockex1987.github.io/archive/web%20-%20security%20checklist/">Checklist
+          an toàn thông tin</a></p>
+      <p><a href="https://lockex1987.github.io/archive/web%20-%20load%20balancer/">HA
+          (load balancer)</a></p>
+      <p><a href="https://lockex1987.github.io/archive/web%20-%20config%20https/">Cấu
+          hình HTTPS</a></p>
+      <p><a href="https://lockex1987.github.io/archive/docker%20-%20laravel%20container/">Tạo
+          Docker container</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<settings>
+    <!--	<preScript>{ call delete_old_data() }</preScript>-->
+
+    <business>
+        <process>
+            <selectStatement>
+                select DF_PRIME_VARIABLE_ID, CODE, NAME, OUTPUT_COLUMN, TYPE, IS_NOT_USED
+                from DF_PRIME_VARIABLE
+                WHERE type IN (20, 21)
+            </selectStatement>
+            <storedProcedure>
+                insert into DF_PRIME_VARIABLE ( DF_PRIME_VARIABLE_ID, CODE, NAME, OUTPUT_COLUMN, TYPE, IS_NOT_USED  )
+                values ( ?, ?, ?, ?, ?, ? )
+            </storedProcedure>
+            <types>
+                _, _, _, varchar, int, int
+            </types>
+        </process>
+
+        <process>
+            <selectStatement>
+                select DF_FORMULA_ID, NAME, TYPE, IS_ACTIVE, CREATED_TIME, MODIFIED_TIME, CREATED_BY, MODIFIED_BY
+                from DF_FORMULA
+                where DF_FORMULA_ID IN ( 1003, 1021 )
+            </selectStatement>
+            <storedProcedure>
+                insert into DF_FORMULA ( DF_FORMULA_ID, NAME, TYPE, IS_ACTIVE, CREATED_TIME, MODIFIED_TIME, CREATED_BY, MODIFIED_BY )
+                values ( ?, ?, ?, ?, ?, ?, ?, ? )
+            </storedProcedure>
+            <types>
+                int, nvarchar, int, int, date, date, varchar, varchar
+            </types>
+        </process>
+
+        <process>
+            <selectStatement>
+                select de.DF_EXPRESSION_ID, de.VARIABLE_NAME, de.EXPRESSION, de.OUTPUT_COLUMN, de.DESCRIPTION, de.DF_FORMULA_ID
+                from DF_EXPRESSION de, DF_FORMULA df
+                where df.DF_FORMULA_ID IN ( 1003, 1021 )
+                AND df.DF_FORMULA_ID = de.DF_FORMULA_ID
+            </selectStatement>
+            <storedProcedure>
+                insert into DF_EXPRESSION ( DF_EXPRESSION_ID, VARIABLE_NAME, EXPRESSION, OUTPUT_COLUMN, DESCRIPTION, DF_FORMULA_ID )
+                values ( ?, ?, ?, ?, ?, ? )
+            </storedProcedure>
+            <types>
+                _, _, _, varchar, nvarchar, _
+            </types>
+        </process>
+    </business>
+</settings>

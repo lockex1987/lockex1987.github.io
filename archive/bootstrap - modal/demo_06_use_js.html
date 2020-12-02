@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Modal Example</h2>
+        <p>
+            <button type="button" class="btn btn-primary" onclick="openModal()">
+                Mở modal
+            </button>
+        </p>
+
+
+        <!-- The Modal -->
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Modal Heading</h4>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        Modal body..
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" onclick="closeModal()">Đóng modal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        function openModal() {
+            $("#myModal").modal("show");
+        }
+
+        function closeModal() {
+            $("#myModal").modal("hide");
+        }
+
+        $("#myModal").on('show.bs.modal', function () {
+            console.log('The modal is about to be shown.');
+        });
+
+        $("#myModal").on('shown.bs.modal', function () {
+            console.log('The modal is fully shown.');
+        });
+
+        $("#myModal").on('hide.bs.modal', function () {
+            console.log('The modal is about to be hidden.');
+        });
+
+        $("#myModal").on('hidden.bs.modal', function () {
+            console.log('The modal is now hidden.');
+        });
+    </script>
+</body>
+
+</html>

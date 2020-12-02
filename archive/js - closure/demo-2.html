@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Use let keyword</title>
+</head>
+<body>
+
+	<h2>JavaScript Closures</h2>
+
+	<p>Counting with a local variable.</p>
+
+	<button type="button" onclick="myFunction()">
+		Count
+	</button>
+
+	<p id="demo">0</p>
+
+	<script>
+		{
+			let counter = 0;
+			
+			function add() {
+				counter += 1;
+				return counter;
+			}
+		}
+
+		function myFunction() {
+			document.getElementById("demo").innerHTML = add();
+			console.log(counter); // bị lỗi "Uncaught ReferenceError" ở dòng này
+		}
+	</script>
+</body>
+</html>

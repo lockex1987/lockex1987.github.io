@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="git">
+    <title>Giới thiệu serie git cơ bản</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Giới thiệu serie git cơ bản</h2>
+      <p>Cách đây mấy hôm mình có đăng một status lên fanpage Thach Pham dot Com
+        để hỏi ý kiến về việc phát hành một serie <strong>hướng dẫn sử dụng Git
+          cơ bản</strong> thì nhận được khá nhiều sự đồng tình hưởng ứng của
+        nhiều người. Do vậy nên mình cũng đã tiến hành viết ngay một serie nhằm
+        hướng dẫn các bạn sơ bộ về việc sử dụng Git vì đối với dân lập trình nói
+        chung và lập trình/thiết kế website nói riêng thì Git có thể sẽ rất có
+        ích để quy trình làm việc của bạn tối ưu hơn.</p>
+      <p><img src="images/1-git-logo.png" alt="git-logo" height="380" width="910"></p>
+      <p class="alert alert-warning">Đây là một serie nâng cao. Nếu bạn là người
+        mới học làm website thì đừng nên tìm hiểu vội mà hãy chắc chắn rằng bạn
+        đã nắm kha khá các kiến thức về lập trình hoặc thiết kế website, đồng
+        thời bạn cũng cần phải biết sử dụng các dòng lệnh Linux.</p>
+      <h3>Tổng quan serie Git cơ bản</h3>
+      <p>Trong serie này, bạn sẽ được làm quen với hệ thống Git và cách sử dụng
+        nó theo hướng dễ hiểu nhất. Bạn sẽ hiểu được các khái niệm và thuật ngữ
+        trong Git như <em>Clone, Branch, Stage, Commit, Tracking, Merge, Pull,
+          Push,</em>… và nó sẽ là câu trả lời cho bạn để hiểu Git là cái gì và
+        cách sử dụng nó, tại sao nên sử dụng nó.</p>
+      <h3>Kiến thức yêu cầu</h3>
+      <p>Đây là một serie về Git nên mình cần các bạn có sẵn các kiến thức như
+        sau:</p>
+      <ul>
+        <li>Biết rõ bạn đang tìm hiểu về cái gì.</li>
+        <li>Đã từng sử dụng Linux trên máy tính cá nhân hoặc Server.</li>
+        <li>Đã biết lập trình.</li>
+      </ul>
+      <p>Nếu bạn chưa có kinh nghiệm sử dụng Linux, mình khuyến khích bạn đi
+        thẳng vào serie Học VPS/Máy chủ cơ bản để làm quen với các lệnh và khái
+        niệm cần thiết.</p>
+      <h3>Tài nguyên về Git</h3>
+      <p>Nếu bạn cảm thấy serie này mình hướng dẫn chưa được chi tiết mà bạn cần
+        tìm hiểu thêm thì dưới đây là một số tài nguyên bạn nên tham khảo qua về
+        Git.</p>
+      <ul>
+        <li><a href="http://git-scm.com/book/vi/v1/B%E1%BA%AFt-%C4%90%E1%BA%A7u"
+
+            onclick="__gaTracker('send', 'event', 'outbound-article', 'http://git-scm.com/book/vi/v1/B%E1%BA%AFt-%C4%90%E1%BA%A7u', 'Ebook về Git tiếng Việt');"
+
+            rel="external nofollow" title="" target="_blank">Ebook về Git tiếng
+            Việt</a></li>
+        <li><a href="http://git-scm.com/book/en/v2/Getting-Started-About-Version-Control"
+
+            onclick="__gaTracker('send', 'event', 'outbound-article', 'http://git-scm.com/book/en/v2/Getting-Started-About-Version-Control', 'Ebook về Git tiếng Anh');"
+
+            rel="external nofollow" title="" target="_blank">Ebook về Git tiếng
+            Anh</a> (nên đọc)</li>
+        <li><a href="http://gitimmersion.com/" onclick="__gaTracker('send', 'event', 'outbound-article', 'http://gitimmersion.com/', 'Git Immersion');"
+
+            title="Git Immersion" rel="external nofollow" target="_blank">Git
+            Immersion</a></li>
+        <li><a href="http://rogerdudler.github.io/git-guide/" onclick="__gaTracker('send', 'event', 'outbound-article', 'http://rogerdudler.github.io/git-guide/', 'Git – The Simple Guide');"
+
+            title="Git Guide" rel="external nofollow" target="_blank">Git – The
+            Simple Guide</a></li>
+        <li><a href="https://vimeo.com/17118008" onclick="__gaTracker('send', 'event', 'outbound-article', 'https://vimeo.com/17118008', 'Master Git Basic');"
+
+            title="Master Git Basic" rel="external nofollow" target="_blank">Master
+            Git Basic</a> (video)</li>
+      </ul>
+      <h3>Công cụ chuẩn bị</h3>
+      <p>Để sử dụng Git thì hầu như không cần chuẩn bị công cụ gì, ngoài việc
+        mình khuyến khích các bạn nên thực hành trên hệ điều hành Linux như
+        Ubuntu, Mac,… Bạn có thể dùng phần mềm <em>VMWare Workstation</em>&nbsp;tạo
+        ra một máy ảo và cài Ubuntu Desktop vào. Tuy nhiên nếu bạn vẫn muốn sử
+        dụng Git trên Windows thì cũng được thôi nhưng do Git là một hệ thống
+        phát triển trên nền Linux nên bạn dùng Linux sẽ tiện hơn.</p>
+      <p>Chỉ cần như vậy thôi, nếu bạn đã sẵn sàng thì chúng ta sẽ bắt đầu với
+        Git trong bài viết tiếp theo.</p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

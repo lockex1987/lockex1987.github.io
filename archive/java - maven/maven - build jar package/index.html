@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Đóng gói file jar thông thường, file jar uber">
+    <title>Đóng gói file jar</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Đóng gói file jar</h2>
+      <p>Chúng ta sẽ sử dụng Maven để compile project và output thành 1 file
+        jar.</p>
+      <p>Trong file <code>pom.xml</code>, nếu packaging là jar, nó sẽ đóng gói
+        project thành file jar và đặt trong thưc mục target. Nếu packaging là
+        war, nó sẽ đóng gói project thành file war và đặt trong thư mục target.</p>
+      <h3>Cách 1: Tạo 1 file jar bình thường</h3>
+      <p>Bạn không phải cấu hình thêm gì. Build bằng câu lệnh:</p>
+      <pre>mvn clean package -Dmaven.test.skip=true</pre>
+      <p>Khi chạy phải chỉ định classpath. Để thực thi file, thực hiện lệnh:</p>
+      <pre>java -cp target/build-jar.jar cttd.maven.HelloWorld</pre>
+      <p>Nếu có dependency thì chúng ta cần trỏ classpath đến cả dependency đó:<code><br>
+        </code></p>
+      <pre>java -cp target/build-jar.jar:target/joda-time-2.9.6.jar cttd.maven.Main</pre>
+      <h3>Cách 2: Tạo 1 file jar và ánh xạ đến các dependency (Các dependency
+        trong thư mục lib)</h3>
+      <p>Sử dụng plugin maven-jar-plugin và maven-dependency-plugin.</p>
+      <p>Thêm vào file pom 2 cấu hình sau:</p>
+      <pre><code class="xml">&lt;!-- Make this jar executable --&gt;
+&lt;plugin&gt;
+	&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+	&lt;artifactId&gt;maven-jar-plugin&lt;/artifactId&gt;
+	&lt;version&gt;3.0.2&lt;/version&gt;
+	&lt;configuration&gt;
+		&lt;!-- DO NOT include config.properties file in your Jar --&gt;
+		&lt;excludes&gt;
+			&lt;exclude&gt;**/config.properties&lt;/exclude&gt;
+		&lt;/excludes&gt;
+		&lt;archive&gt;
+			&lt;!-- Ignore files pom.xml, pom.properties in the jar file --&gt;
+			&lt;addMavenDescriptor&gt;false&lt;/addMavenDescriptor&gt;
+			&lt;manifest&gt;
+				&lt;!-- Jar file entry point --&gt;
+				&lt;mainClass&gt;cttd.maven.Main&lt;/mainClass&gt;
+				&lt;addClasspath&gt;true&lt;/addClasspath&gt;
+				&lt;classpathPrefix&gt;lib/&lt;/classpathPrefix&gt;
+			&lt;/manifest&gt;
+		&lt;/archive&gt;
+	&lt;/configuration&gt;
+&lt;/plugin&gt;
+
+&lt;!-- Copy project dependency --&gt;
+&lt;plugin&gt;
+	&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+	&lt;artifactId&gt;maven-dependency-plugin&lt;/artifactId&gt;
+	&lt;version&gt;2.10&lt;/version&gt;
+	&lt;executions&gt;
+		&lt;execution&gt;
+			&lt;id&gt;copy-dependencies&lt;/id&gt;
+			&lt;phase&gt;package&lt;/phase&gt;
+			&lt;goals&gt;
+				&lt;goal&gt;copy-dependencies&lt;/goal&gt;
+			&lt;/goals&gt;
+			&lt;configuration&gt;
+				&lt;!-- exclude junit, we need runtime dependency only --&gt;
+				&lt;includeScope&gt;runtime&lt;/includeScope&gt;
+				&lt;outputDirectory&gt;${project.build.directory}/lib/&lt;/outputDirectory&gt;
+			&lt;/configuration&gt;
+		&lt;/execution&gt;
+	&lt;/executions&gt;
+&lt;/plugin&gt;
+</code></pre>
+      <p>Khi chạy thì dùng lệnh:</p>
+      <pre>java -jar &lt;File jar đặc biệt&gt;<br>java -jar target/build-jar.jar</pre>
+      <p>Các cấu hình thì để thư mục nào? conf?</p>
+      <p>Bạn có thể xem file MANIFEST.MF trong thư mục META-INF của file jar:</p>
+      <pre>Manifest-Version: 1.0
+Built-By: locke
+Class-Path: lib/joda-time-2.9.6.jar
+Created-By: Apache Maven 3.3.9
+Build-Jdk: 1.8.0_60
+Main-Class: cttd.maven.Main</pre>
+      <h3>Cách 3: Tạo 1 file jar cho gọn (Uber jar)<br>
+      </h3>
+      <p>Có 2 cách: sử dụng maven-assembly-plugin hoặc maven-shade-plugin.</p>
+      <h4>Cách 3.1: Sử dụng Maven Assembly Plugin</h4>
+      <p>Thêm plugin vào file pom (ở mục build/plugins):</p>
+      <pre><code class="xml">&lt;!-- Maven Assembly Plugin --&gt;
+&lt;plugin&gt;
+	&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+	&lt;artifactId&gt;maven-assembly-plugin&lt;/artifactId&gt;
+	&lt;version&gt;3.0.0&lt;/version&gt;
+	
+	&lt;configuration&gt;
+		&lt;!-- Get all project dependencies --&gt;
+		&lt;descriptorRefs&gt;
+			&lt;descriptorRef&gt;jar-with-dependencies&lt;/descriptorRef&gt;
+		&lt;/descriptorRefs&gt;
+		
+		&lt;!-- MainClass in mainfest make a executable jar --&gt;
+		&lt;archive&gt;
+			&lt;manifest&gt;
+				&lt;mainClass&gt;cttd.maven.Main&lt;/mainClass&gt;
+			&lt;/manifest&gt;
+		&lt;/archive&gt;
+	&lt;/configuration&gt;
+	
+	&lt;executions&gt;
+		&lt;execution&gt;
+			&lt;id&gt;make-assembly&lt;/id&gt;
+			&lt;!-- bind to the packaging phase --&gt;
+			&lt;phase&gt;package&lt;/phase&gt;
+			&lt;goals&gt;
+				&lt;goal&gt;single&lt;/goal&gt;
+			&lt;/goals&gt;
+		&lt;/execution&gt;
+	&lt;/executions&gt;
+&lt;/plugin&gt;</code></pre>
+      <p>Plugin trên đã được gắn vào bước package nên để đóng gói thì bạn chỉ
+        cần đánh lệnh maven package bình thường.</p>
+      <p>Có 2 file jar ở thư mục package:</p>
+      <ul>
+        <li>build-jar.jar – Chỉ chứa các class của dự án của bạn</li>
+        <li>build-jar-jar-with-dependencies.jar - Đây là cái bạn muốn</li>
+      </ul>
+      Chạy file:
+      <p><code>java -jar target/build-jar-jar-with-dependencies.jar</code></p>
+      <h3>Cách 3.2: Sử dụng Mave Shade Plugin (tốt hơn Maven Assembly Plugin
+        theo Mkyong)</h3>
+      <p>Thêm plugin vào file pom:</p>
+      <pre><code class="xml">&lt;!-- Maven Shade Plugin --&gt;
+&lt;!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-shade-plugin --&gt;
+&lt;plugin&gt;
+	&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+	&lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;
+	&lt;version&gt;2.4.3&lt;/version&gt;
+	
+	&lt;executions&gt;
+		&lt;!-- Run shade goal on package phase --&gt;
+		&lt;execution&gt;
+			&lt;phase&gt;package&lt;/phase&gt;
+			&lt;goals&gt;
+				&lt;goal&gt;shade&lt;/goal&gt;
+			&lt;/goals&gt;
+			&lt;configuration&gt;
+				&lt;transformers&gt;
+					&lt;!-- Add Main-Class to manifest file --&gt;
+					&lt;transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"&gt;
+						&lt;mainClass&gt;cttd.maven.Main&lt;/mainClass&gt;
+					&lt;/transformer&gt;
+				&lt;/transformers&gt;
+			&lt;/configuration&gt;
+		&lt;/execution&gt;
+	&lt;/executions&gt;
+&lt;/plugin&gt;</code></pre>
+      <p>Package bình thường. P.S The generated dependency-reduced-pom.xml is
+        for reference only, just ignore it.</p>
+      <p>Trong thư mục target có 2 file jar:</p>
+      <ul>
+        <li>build-jar - Đây là file bạn muốn</li>
+        <li>original-build-jar</li>
+      </ul>
+      <p>Chạy file:</p>
+      <p><code>java -jar target/build-jar.jar</code></p>
+      <h3>Thực hiện với Eclipse</h3>
+      <p>Làm thế nào để package với Eclipse</p>
+      <p>Maven build ...</p>
+      <p>Đánh vào clean package</p>
+      <p>Lần sau thì chọn Maven build thôi.</p>
+      <h3>Lỗi khi sử dụng plugin maven-jar-plugin trong Eclipse</h3>
+      <p>Để đóng gói file jar với Maven, tôi sử dụng plugin maven-jar-plugin
+        phiên bản 3.0.2.</p>
+      <p>Khi sử dụng trên Eclipse Neon 4.6.0, file pom.xml bị báo đỏ với thông
+        báo:</p>
+      <p><code>org.codehaus.plexus.archiver.jar.Manifest.write(java.io.PrintWriter)</code></p>
+      <p>Tôi vẫn có thể package file jar cũng như làm các thứ khác bình thường,
+        tuy nhiên thông báo lỗi kia thật annoying.</p>
+      <p>Sau khi search Google thì cách giải quyết là hãy cài đặt
+        m2eclipse-mavenarchiver (0.17.2) phiên bản mới nhất cho Eclipse.</p>
+      <p>Cách cài đặt:</p>
+      <p>Go to Help -&gt; Install new softwares -&gt; Add repository</p>
+      <p>https://otto.takari.io/content/sites/m2e.extras/m2eclipse-mavenarchiver/0.17.2/N/LATEST/</p>
+      <p>Restart Eclipse and update project.</p>
+      <p>Hy vọng Eclipse sẽ tự giải quyết vấn đề này.</p>
+      <h3>Tham khảo</h3>
+      <p>https://www.mkyong.com/maven/create-a-fat-jar-file-maven-shade-plugin/</p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

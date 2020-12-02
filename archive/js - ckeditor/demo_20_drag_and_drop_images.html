@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Drag and drop</title>
+</head>
+
+<body>
+	<h3>Drag and drop images</h3>
+	
+	<textarea id="editor" name="editor" cols="80" rows="10">
+		<p>Nội dung</p>
+	</textarea>
+	
+	<script src="../lib/ckeditor/ckeditor.js"></script>
+	<script>
+		var editorOptions = {
+				extraPlugins: "uploadimage",
+				//uploadUrl: 'http://localhost:8080/spring-mvc-ckeditor/upload-drag-and-drop',
+				uploadUrl: 'server/upload-drag-and-drop.json',
+				filebrowserImageUploadUrl: 'http://localhost:8080/spring-mvc-ckeditor/upload-by-dialog'
+		};
+		var myEditor = CKEDITOR.replace('editor', editorOptions);
+	</script>
+</body>
+</html>
+

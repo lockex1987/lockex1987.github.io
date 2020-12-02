@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>SafeNet Options</title>
+    <link rel="stylesheet" href="css/options.css"/>
+</head>
+
+<body id="browser">
+    <header>
+        <img src="images/16x16.png"/> SafeNet
+    </header>
+
+    <h3>Kiểm tra kết quả search của Google</h3>
+    <div>
+        <label>
+            <input type="checkbox" id="googleSafeSearch"/>
+            Bật kiểm tra kết quả
+        </label>
+    </div>
+
+    <h3>Kiểm tra kết quả search của YouTube</h3>
+    <div>
+        <label>
+            <input type="radio" name="youtubeStrictMode" value="Off"/>
+            Tắt
+        </label>
+        <br />
+        <label>
+            <input type="radio" name="youtubeStrictMode" value="Moderate"/>
+            Mức độ vừa
+        </label>
+        <br />
+        <label>
+            <input type="radio" name="youtubeStrictMode" value="Strict"/>
+            Mức độ cao
+        </label>
+    </div>
+
+    <h3>Lọc theo nội dung</h3>
+    <div>
+        <label>
+            <input type="checkbox" id="checkBlockedWords"/>
+            Chặn những trang web chứa nội dung không tốt
+        </label>
+        <br />
+        <label>
+            <input type="checkbox" id="checkProfanityWords"/>
+            Không hiển thị những từ ngữ thô tục
+        </label>
+    </div>
+
+    <div id="open_cookies_div" style="display: none">
+        <h3>Kiểm tra mở</h3>
+        <p id="open_cookies_time"></p>
+        <div>
+            <button id="delete_open_cookies">Chặn lại</button>
+        </div>
+    </div>
+
+    <h3>Thêm trang chặn</h3>
+    <div>
+        <form id="addForm">
+			<input type="text" id="url"/>
+			<button type="submit">Thêm</button>
+			<p id="responseText"></p>
+		</form>
+    </div>
+
+    <p>
+        <a href="" id="moreOptionsLink">Các tùy chọn khác</a>
+    </p>
+
+    <script src="js/config.js"></script>
+    <script src="js/open_cookie.js"></script>
+    <script src="js/options.js"></script>
+</body>
+</html>

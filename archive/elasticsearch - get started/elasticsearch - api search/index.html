@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>API search trong Elasticsearch</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="API search trong Elasticsearch">
+ </head> 
+ <body> 
+  <article> 
+   <h2>API search (tìm kiếm dữ liệu) trong Elasticsearch</h2> 
+   <p>Để search document trong Elasticsearch ta dùng method <code>GET</code> với path <code>_search</code></p> 
+   <p>Tìm tất cả document trong tất cả các index</p> 
+   <ul> 
+    <li>GET /_search</li> 
+   </ul> 
+   <p>Hoặc</p> 
+   <ul> 
+    <li>GET /_all/_search</li> 
+   </ul> 
+   <p>Tìm tất cả document trong 1 index</p> 
+   <ul> 
+    <li>GET /index_name/_search</li> 
+   </ul> 
+   <p>Tìm tất cả document trong 1 type</p> 
+   <ul> 
+    <li>GET /index_name/type_name/_search</li> 
+   </ul> 
+   <h3>Search theo tham số</h3> 
+   <p>Để search dữ liệu theo tham số đầu vào ta dùng biến <code>q=tham_so</code></p> 
+   <p>Ví dụ tìm tất cả các document có chứa từ <code>man</code></p> 
+   <ul> 
+    <li>GET /_search?q=man</li> 
+   </ul> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-search-document-1.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-search-document-1.png"></a></p> 
+   <p>Trường hợp muốn search theo field chỉ rõ thì ta dùng <code>?q=field_name:query</code></p> 
+   <p>Ví dụ tìm tất cả các document có chứa từ <code>man</code> trong field <code>name</code></p> 
+   <ul> 
+    <li>GET /_search?q=name:man</li> 
+   </ul> 
+   <p>Trường hợp truy vấn theo nhiều điều kiện phức tạp:</p> 
+   <p>Ví dụ tìm tất cả các document thỏa mãn các điều kiện sau:</p> 
+   <ul> 
+    <li>có từ man hoặc woman trong field name</li> 
+    <li>có từ marvel trong field studio</li> 
+   </ul> 
+   <p>Câu truy vấn sẽ là:</p> 
+   <ul> 
+    <li>+name:(man woman) +studio:(marvel)</li> 
+   </ul> 
+   <p>Tuy nhiên trong url sẽ không hiểu các ký tự như dấu cách, <code>+</code> <code>(</code> <code>)</code></p> 
+   <p>Ta cần phải chuyển nó sang dạng URL encode:</p> 
+   <ul> 
+    <li>%2Bname%3A%28man+woman%29+%2Bstudio%3A%28marvel%29</li> 
+   </ul> 
+   <p>Các bạn có thể chuyển encode online tại <a href="https://www.url-encode-decode.com/" target="_blank">url-encode-decode.com/</a></p> 
+   <p>Demo:</p> 
+   <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-search-document-2.png"><img src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-search-document-2.png"></a></p> 
+   <p>Okay, Done!</p> 
+   <p>References:</p> 
+   <p><a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/search-lite.html" target="_blank">https://www.elastic.co/guide/…/search-lite.html</a></p> 
+   <p></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

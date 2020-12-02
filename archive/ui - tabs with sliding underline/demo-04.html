@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Sliding underline navigation</title>
+  <style>
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7f9fb;
+}
+
+nav {
+  /*display: inline-block;*/
+  /*position: relative;*/
+}
+
+nav a {
+  transition: color 0.3s ease;
+
+  margin: 0 20px;
+  font-size: 30px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #999;
+}
+
+.underline {
+  position: absolute;
+  transition: all 0.5s ease-out;
+  /*left: 0;*/
+  background-color: #999;
+  width: 100px;
+
+  height: 5px;
+}
+
+
+nav a:hover, nav a:active {
+  color: #333;
+}
+  </style>
+</head>
+
+<body>
+  <nav>
+    <a href="#">About</a>
+    <a href="#">Portfolio</a>
+    <a href="#">Contact</a>
+
+    <div class="underline"></div>
+  </nav>
+
+  <script>
+const slidingUnderline = () => {
+
+  const navLinks = document.querySelectorAll('nav a');
+  const underline = document.querySelector('nav .underline');
+
+  function setEvent(item) {
+    item.addEventListener('mouseover', () => {
+      setUnderlineStyle(underline, item);
+    });
+
+    item.addEventListener('mouseleave', () => {
+      underline.style.backgroundColor = '#999';
+    });
+  }
+
+  function setUnderlineStyle(underline, item) {
+    const elementWidth = item.offsetWidth;
+    const elementPosition = item.getBoundingClientRect();
+    const offset = elementPosition.left;
+
+    underline.style.width = `${elementWidth}px`;
+    underline.style.left = `${offset}px`;
+    underline.style.backgroundColor = '#333';
+  }
+
+  for (let item of navLinks) {
+    setEvent(item);
+  }
+
+  setUnderlineStyle(underline, navLinks[0]);
+}
+
+slidingUnderline();
+  </script>
+</body>
+</html>

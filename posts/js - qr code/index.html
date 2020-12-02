@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Generator, scanner, quick">
+    <meta name="date" content="2020-02-12 22:00:00">
+    <title>QR code</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>QR code</h2>
+      <p>Sử dụng QR code để nhập nhanh thông tin.</p>
+
+
+      <h3>Generator</h3>
+      <p>Sử dụng thư viện <a target="_blank" href="https://github.com/neocotic/qrious">qrious</a>.</p>
+      <div class="text-center my-4">
+        <canvas id="qr"></canvas>
+      </div>
+      <h3>Scanner</h3>
+      
+      <p>Sử dụng thư viện <a target="_blank" href="https://github.com/cozmo/jsQR">jsQR</a>.</p>
+
+      <p>
+        <button class="btn btn-primary" id="btnStartScan">
+          Bắt đầu quét
+        </button>
+      </p>
+
+      <div id="loadingMessage" hidden>🎥 Unable to access video stream (please make sure you have a webcam enabled)</div>
+      <canvas id="canvas" hidden class="w-100"></canvas>
+      <div id="output" hidden>
+        <div id="outputMessage">No QR code detected.</div>
+        <div hidden>
+          <b>Data:</b>
+          <span id="outputData"></span>
+        </div>
+      </div>
+      
+    </article>
+
+    <script src="libs/qrious.min.js"></script>
+    <script src="js/generator.js"></script>
+
+    <script src="libs/jsQR.js"></script>
+    <script src="js/scanner.js"></script>
+
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

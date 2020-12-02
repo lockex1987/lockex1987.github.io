@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1">
+  <title>Free SVG Maps - amCharts</title>
+</head>
+
+<body>
+  <style>
+    .demo-block { background: #3f3f4f; color: #fff; }
+  </style>
+
+    <div class="demo-block" id="chartdiv" style="height: 500px;"></div>
+
+    <script type='text/javascript' src='https://www.amcharts.com/wp-includes/js/jquery/jquery.js'></script>
+    <script type='text/javascript' src='https://www.amcharts.com/lib/3/ammap.js?ver=20180522-01'></script>
+    <script type='text/javascript' src='https://www.amcharts.com/lib/3/themes/dark.js?ver=20180522-01'></script>
+
+    <script>
+      AmCharts.makeChart("chartdiv", {
+        "type": "map",
+        "theme": "dark",
+        "dataProvider": {
+          "mapURL": "vietnamHigh.svg", // https://www.amcharts.com/lib/3/maps/svg/vietnamHigh.svg
+          "getAreasFromMap": true
+        },
+        "areasSettings": {
+          "autoZoom": true,
+          "selectedColor": "#CC0000"
+        }
+      });
+    </script>
+</body>
+</html>

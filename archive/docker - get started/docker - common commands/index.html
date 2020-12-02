@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Các lệnh thường dùng">
+    <meta name="keywords" content="docker, common, command">
+    <meta name="author" content="lockex1987">
+    <title>Các lệnh thường dùng</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Các lệnh thường dùng</h2>
+      <h3> Hiển thị danh sách các image</h3>
+      <pre>docker images</pre>
+      <h3> Tải image về local</h3>
+      <pre>docker pull &lt;name_image:tag&gt;</pre>
+      <p> Phần <code> :tag </code> là tùy chọn, nếu để trống thì mặc định
+        download bản <code> latest</code>. </p>
+      <p> Ví dụ:</p>
+      <pre>docker pull ubuntu</pre>
+      <p> Download Ubuntu phiên bản mới nhất.</p>
+      <pre>docker pull ubuntu:14.04</pre>
+      <p> Download Ubuntu phiên bản 14.04.</p>
+      <p> Truy cập trang <a href="https://hub.docker.com/" target="_blank">
+          hub.docker.com</a>, nơi lưu trữ các image tập trung để tìm image cần
+        dùng.</p>
+      <h3>Xóa image</h3>
+      <pre>docker rmi &lt;image name:tag&gt;</pre>
+      <h3> Chạy một image</h3>
+      <pre>docker run –-name &lt;tên_container&gt; -v &lt;thư mục trên máy tính&gt;:&lt;thư mục trong container&gt; -p &lt;port_máy tính&gt;:&lt;port_container&gt; &lt;image name&gt; bash</pre>
+      <p> Ví dụ: </p>
+      <pre>docker run –-name eva_nginx -p 80:80 -d nginx</pre>
+      <p> Trong đó: </p>
+      <ul>
+        <li> docker run: lệnh chạy của Docker. </li>
+        <li> –-name: đặt tên cho container ở đây là <code> eva_nginx </code> .
+          Tên này là duy nhất, không thể tạo trùng, nếu không đặt thì Docker sẽ
+          tự sinh. </li>
+        <li> -p: mở port container ra ngoài IP public 192.168.99.100. </li>
+        <li> -d: bật chế độ chạy background. </li>
+        <li> nginx: tên image </li>
+      </ul>
+      <p> Ví dụ khác: </p>
+      <pre>docker run -it ubuntu</pre>
+      <ul>
+      </ul>
+      <h3> Liệt kê các container </h3>
+      <pre>docker ps -a</pre>
+      <p> Liệt kê tất cả các container. </p>
+      <pre>docker ps</pre>
+      <p> Chỉ liệt kê các container đang chạy background. </p>
+      <h3> Dừng container đang chạy </h3>
+      <pre>docker stop &lt;container_id hoặc name_container&gt;</pre>
+      <p> Dừng theo container nào đó.</p>
+      <pre>docker stop $(docker ps –a –q)</pre>
+      <p> Dừng tất cả các container đang dùng.</p>
+      <h3> Khởi động lại container đã dừng</h3>
+      <pre>docker start &lt;container_id hoặc name_container&gt;</pre>
+      <h3> Xóa container không còn sử dụng </h3>
+      <pre>docker rm &lt;container_id hoặc name_container&gt;</pre>
+      <p> Xóa container nào đó. </p>
+      <pre>docker rm $(docker ps -a -q)</pre>
+      <p> Xóa tất cả các container. </p>
+      <h3> Truy cập vào 1 container đang chạy </h3>
+      <pre>docker exec -it &lt;container_id hoặc name_container&gt; bash</pre>
+      <h3> Export bản container</h3>
+      <pre>docker export &lt;container_id hoặc name_container&gt; | gzip &gt; file_export.tar.gz</pre>
+      <h3> Import container =&gt; image</h3>
+      <pre>zcat file_export.tar.gz | docker &lt;new_name_image&gt;</pre>
+      <p> Sau khi chạy xong. Chạy lệnh <code> docker images </code> để kiểm
+        tra lại trong danh sách image.</p>
+      <p> Ngoài ra còn nhiều lệnh khác. Sử dụng lệnh <code> docker -h </code>
+        để xem chi tiết.</p>
+      <h3> Lấy IP của máy ảo Docker trên môi trường Windows</h3>
+      <pre>docker-machine ip</pre>
+      <p> Khi máy tính bạn không có mạng, bạn có thể pull image từ một máy tính
+        có mạng khác: </p>
+      <pre>docker pull ubuntu</pre>
+      <p> Sau đó lưu image thành một file tar. </p>
+      <pre>docker save ubuntu --output ubuntu.tar.gz</pre>
+      <p> Copy file tar đó đến máy bất kỳ và load vào Docker như sau: </p>
+      <pre>docker load --input ubuntu.tar.gz</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

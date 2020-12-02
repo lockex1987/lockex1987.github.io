@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="VeeValidate" />
+
+    <title>VeeValidate</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+    <article>
+        <h2>VeeValidate</h2>
+<p>Trang chủ <a target="_blank" href="https://logaretm.github.io/vee-validate/">logaretm.github.io</a></p>
+
+        <p>Chú ý sử dụng version 2.</p>
+
+        <h3>Demo</h3>
+        <div id="demo1">
+            <input v-validate="'required|email'" name="email" type="text">
+            <span style="color: orange">{{ errors.first('email') }}</span>
+        </div>
+
+
+
+    </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vee-validate@2.2.15/dist/vee-validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vee-validate@2.2.15/dist/locale/vi.js"></script>
+
+    <script>
+        Vue.use(VeeValidate, {
+            locale: 'vi'
+        });
+
+        new Vue({
+            el: '#demo1',
+
+            data: {
+
+            }
+        });
+    </script>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

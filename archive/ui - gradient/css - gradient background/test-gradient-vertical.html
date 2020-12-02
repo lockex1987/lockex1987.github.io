@@ -1,0 +1,67 @@
+<!-- HTML5 -->
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>Speaking In Styles | The Lab | Gradients Vertical </title>
+		
+		
+		<style type="text/css">
+			.element {
+				position: absolute;
+				display: block;
+				width: 150px;
+				height: 150px;
+				padding: 10px;
+				color: rgb(255,255,255);
+				font-size: 2em;
+				border: 3px solid rgb(255,255,255) }
+			#element1 {
+				top: 10px;
+				left: 10px;
+				/* For Webkit */
+				background: -webkit-gradient(linear, left top, left bottom, from(rgba(255,0,0,1)), to(rgba(0,255,0,.25)));
+				/* For Mozilla */
+				background: -moz-linear-gradient(top,  rgba(255,0,0,1),  rgba(0,255,0,.25));
+				/* For lt IE8 */
+				filter: progid:DXImageTransform.Microsoft.gradient(gradientyype=0,startColorstr='#88ff0000', endColorstr='#3300ff00');
+				/* For gt IE8 */
+				-moz-filter: progid:DXImageTransform.Microsoft.gradient(gradientyype=0,startColorstr='#88ff0000', endColorstr='#3300ff00');
+			}
+			#element2 {
+				top: 50px;
+				left: 50px;
+				background: transparent;
+				/* For Webkit */
+				background: -webkit-gradient(linear, left top, left bottom, from(rgba(0,255,0,1)), to(rgba(0,0,255,.25)));
+				/* For Mozilla */
+				background: -moz-linear-gradient(top,  rgba(0,255,0,1),  rgba(0,0,255,.25));
+				/* For lt IE8 */
+				filter: progid:DXImageTransform.Microsoft.gradient(gradientyype=0,startColorstr='#8800ff00', endColorstr='#330000ff');
+				/* For gt IE8 */
+				-moz-filter: progid:DXImageTransform.Microsoft.gradient(gradientyype=0,startColorstr='#8800ff00', endColorstr='#330000ff');
+			}
+			#element3 {
+				top: 90px;
+				left: 90px;
+				/* For Webkit */
+				background: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,255,1)), to(rgba(255,0,0,.25)));
+				/* For Mozilla */
+				background: -moz-linear-gradient(top,  rgba(0,0,255,1),  rgba(255,0,0,.25));
+				/* For lt IE8 */
+				filter: progid:DXImageTransform.Microsoft.gradient(gradientyype=0,startColorstr='#880000ff', endColorstr='#33ff0000');
+				/* For gt IE8 */
+				-moz-filter: progid:DXImageTransform.Microsoft.gradient(gradientyype=0,startColorstr='#880000ff', endColorstr='#33ff0000');
+			}
+		</style>
+		
+	</head>
+	<body>
+		
+		<div id="element1" class="element">1</div>
+		<div id="element2" class="element">2</div>
+		<div id="element3" class="element">3</div>
+		
+	
+
+</body></html>

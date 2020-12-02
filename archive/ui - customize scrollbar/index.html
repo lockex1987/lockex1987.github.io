@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tùy chỉnh style cho thanh scrollbar">
+    <title>Tùy chỉnh style cho thanh scrollbar</title>
+
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="css/my-scrollbar.css">
+</head>
+
+<body class="my-scrollbar">
+    <article>
+
+        <h2>Tùy chỉnh style cho thanh scrollbar</h2>
+
+        <p>Tùy chỉnh thanh cuộn trình duyệt đang trở nên phổ biến, và bạn có thể gặp những trang web có thanh cuộn độc
+            đáo.</p>
+        <p>Hiện tại không hỗ trợ Firefox và IE/Edge.</p>
+        <h3>Demo</h3>
+
+        <div>
+            <p>Mặc định</p>
+            <div class="scrollbar-wrapper">
+                <div class="scrollbar">
+                    <div class="force-overflow">
+                        Nguyễn Anh Tuấn
+                    </div>
+                </div>
+            </div>
+            <p>Tùy chỉnh</p>
+            <div class="scrollbar-wrapper">
+                <div class="scrollbar my-scrollbar">
+                    <div class="force-overflow">
+                        Cao Thị Thùy Dương
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+        <h3>Thuật ngữ</h3>
+        <p><code>-webkit-scrollbar</code> bao gồm 7 phần tử khác nhau và cùng bao gồm một phần tử giao diện thanh cuộn
+            đầy đủ:</p>
+        <ul>
+            <li><code>::-webkit-scrollbar</code> <sup>[1]</sup>: hình nền của chính thanh cuộn đó</li>
+            <li><code>::-webkit-scrollbar-button</code> <sup>[2]</sup>: các nút định hướng trên thanh cuộn</li>
+            <li><code>::-webkit-scrollbar-track</code> <sup>[3]</sup>: không gian trống bên dưới thanh tiến trình</li>
+            <li><code>::-webkit-scrollbar-track-piece</code> <sup>[4]</sup>: phần trên cùng của thanh tiến trình không
+                bị che bởi ảnh thumb</li>
+            <li><code>::-webkit-scrollbar-thumb</code> <sup>[5]</sup>: phần tử cuộn có thể kéo để thay đổi kích cỡ</li>
+            <li><code>::-webkit-scrollbar-corner</code> <sup>[6]</sup>: góc dưới cùng của phần tử cuộn, nơi hai thanh
+                cuộn gặp nhau</li>
+            <li><code>::-webkit-resizer</code> <sup>[7]</sup>: chỉnh sửa lại kích thước có thể kéo được xuất hiện phía
+                trên thanh cuộn ở góc dưới cùng của một số phần tử</li>
+        </ul>
+        <p><img src="images/scrollbarparts.webp" /></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

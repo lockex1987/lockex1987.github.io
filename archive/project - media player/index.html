@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="audio, video, subtitle, karaoke">
+  <title>Media player</title>
+  <link rel="icon" href="../../images/favicon.png">
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <article>
+    <h2>Media player</h2>
+
+    <h3>Icon</h3>
+
+<svg xmlns="http://www.w3.org/2000/svg" class="equilizer" viewBox="0 0 128 128">
+        <g>
+            <title>Audio Equilizer</title>
+            <rect class="bar" transform="translate(0,0)" y="15"></rect>
+            <rect class="bar" transform="translate(25,0)" y="15"></rect>
+            <rect class="bar" transform="translate(50,0)" y="15"></rect>
+            <rect class="bar" transform="translate(75,0)" y="15"></rect>
+            <rect class="bar" transform="translate(100,0)" y="15"></rect>
+        </g>
+    </svg>
+
+    <h3>Simple audio</h3>
+    <div class="media-container mb-3">
+      <!-- Thẻ audio không có thuộc tính controls sẽ tự động ẩn -->
+      <audio id="audioTag" preload="auto" src="data/na-ge.mp3" data-karaoke="false">
+        <!--track label="Vietnamese" kind="lyric" data-type="lrc" srclang="vi" src="data/na-ge.lrc" default-->
+      </audio>
+    </div>
+
+    <h3>Karaoke audio</h3>
+    <div class="media-container mb-3">
+      <audio id="myAudio" src='data/christmas-in-my-heart.mp3' controls>
+        <track label="Vietnamese" kind="lyric" data-type="lrc" srclang="vi" src="data/christmas-in-my-heart.lrc"
+          default>
+      </audio>
+    </div>
+
+
+    <h3>Video</h3>
+    <div class="media-container mb-3">
+      <video id="myVideo" controls preload="metadata">
+        <source src="http://iandevlin.github.io/mdn/video-player-with-captions/video/sintel-short.mp4" type="video/mp4">
+        <track label="English" kind="subtitles" srclang="en-US" src="data/sintel-en.srt" data-type="srt" default>
+      </video>
+    </div>
+
+    <h3> Tham khảo</h3>
+
+    <p> https://www.mediaelementjs.com/ </p>
+    <p>https://kolber.github.io/audiojs/</p>
+    <p> http://www.jplayer.org/ </p>
+    <p> https://521dimensions.com/open-source/amplitudejs </p>
+    <ul>
+      <li><span class="text-muted mr-2">codepen.io</span> <a href="https://codepen.io/tuannvbg-the-flexboxer/pen/jppZxe"
+          target="_blank">H5Aplayer HTML5 Music LRC</a></li>
+      <li><span class="text-muted mr-2">codepen.io</span> <a
+          href="https://codepen.io/tuannvbg-the-flexboxer/pens/public/" target="_blank">tuannvbg on CodePen</a></li>
+      <li><span class="text-muted mr-2">codepen.io</span> <a href="https://codepen.io/tuannvbg-the-flexboxer/pen/YjjYLm"
+          target="_blank">HTML5 Music Player LRC 2018</a></li>
+      <li><span class="text-muted mr-2">codepen.io</span> <a href="https://codepen.io/tuannvbg-the-flexboxer/pen/GLZYjG"
+          target="_blank">HTML5 SMusic Player LRC 2019</a></li>
+      <li><span class="text-muted mr-2">s-mohan.github.io</span> <a href="https://s-mohan.github.io/demo/smusic/"
+          target="_blank">Smuisc - 水墨寒的博客</a></li>
+    </ul>
+    <h3>Các trình duyệt hiển thị khác nhau</h3>
+    <p>In Chrome:</p>
+    <p>
+      <img src="https://i0.wp.com/blogs.perficient.com/files/2017/12/2-2-1.png?resize=379%2C63&amp;ssl=1">
+    </p>
+    <p>In Firefox:</p>
+    <p>
+      <img src="https://i2.wp.com/blogs.perficient.com/files/2017/12/3-2-1.png?resize=355%2C69&amp;ssl=1">
+    </p>
+    
+  </article>
+
+  <link rel="stylesheet" href="css/media-player.css" />
+  <script src="js/media-player-utils.js"></script>
+  <script src="js/media-player.js"></script>
+
+  <script>
+    createMediaPlayer('#audioTag');
+    createMediaPlayer('#myAudio');
+    createMediaPlayer('#myVideo');
+  </script>
+
+  <script src="../../js/docs.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,261 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="border, sizing, overflow, float, spacing">
+  <title>Các class tiện ích Bootstrap</title>
+  <link rel="icon" href="../../images/favicon.png">
+  <link rel="stylesheet" href="../../css/style.css">
+  <style>
+    .border-demo div {
+      display: inline-block;
+      width: 10rem;
+      height: 10rem;
+      padding-top: 4rem;
+      margin: 0.5rem;
+      background: #fbfcfc;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <article>
+    <h2>Các class tiện ích Bootstrap</h2>
+    <h3>Border</h3>
+
+    <h4>Cơ bản</h4>
+
+    <div class="border-demo mb-3">
+      <div class="border">
+        .border
+      </div>
+      <div class="border border-0">
+        .border-0
+      </div>
+      <div class="border border-top-0">
+        .border-top-0
+      </div>
+      <div class="border border-right-0">
+        .border-right-0
+      </div>
+      <div class="border border-bottom-0">
+        .border-bottom-0
+      </div>
+      <div class="border border-left-0">
+        .border-left-0
+      </div>
+    </div>
+
+    <div class="border-demo mb-3">
+      <div class="border">
+        .border
+      </div>
+      <div class="border-left">
+        .border-left
+      </div>
+      <div class="border-right">
+        .border-right
+      </div>
+      <div class="border-top">
+        .border-top
+      </div>
+      <div class="border-bottom">
+        .border-bottom
+      </div>
+    </div>
+
+    <h4>Màu border</h4>
+    <div class="border-demo mb-3">
+      <div class="border border-primary">
+        .border-primary
+      </div>
+      <div class="border-left border-danger">
+        .border-danger
+      </div>
+      <div class="border-right border-warning">
+        border-warning
+      </div>
+      <div class="border-top border-success">
+        .border-success
+      </div>
+      <div class="border-bottom border-info">
+        .border-info
+      </div>
+    </div>
+
+    <h4>Border radius</h4>
+    <div class="border-demo mb-3">
+      <div class="border rounded">
+        .rounded
+      </div>
+      <div class="border rounded-left">
+        .rounded-left
+      </div>
+      <div class="border rounded-right">
+        .rounded-right
+      </div>
+      <div class="border rounded-top">
+        .rounded-top
+      </div>
+      <div class="border rounded-bottom">
+        .rounded-bottom
+      </div>
+      <div class="border rounded-circle">
+        .rounded-circle
+      </div>
+      <div class="border rounded-0">
+        .rounded-0
+      </div>
+    </div>
+
+    <h4>Chiều rộng border</h4>
+    <p>Bootstrap không định nghĩa lớp nào để thiết lập chiều rộng (width) của border.</p>
+
+    <h3>Sizing</h3>
+
+    <h4>Width utilities</h4>
+    <p>Set the width of an element with the <code>w-*</code> classes:</p>
+
+    <div class="container mb-3">
+      <div class="w-25 p-3 bg-primary">
+        w-25
+      </div>
+      <div class="w-50 p-3 bg-secondary">
+        w-50
+      </div>
+      <div class="w-75 p-3 bg-info">
+        w-75
+      </div>
+      <div class="w-100 p-3 bg-danger">
+        w-100
+      </div>
+      <div class="w-auto p-3 bg-success">
+        w-auto
+      </div>
+      <div class="mw-100 p-3 bg-warning">
+        mw-100
+      </div>
+    </div>
+
+    <h4>Height utilities</h4>
+    <p>Set the height of an element with the <code>h-*</code> classes:</p>
+
+    <div class="container mb-3">
+      <div style="height:200px;" class="bg-secondary">
+        <div class="h-25 d-inline-block p-2 bg-warning">
+          h-25
+        </div>
+        <div class="h-50 d-inline-block p-2 bg-warning">
+          h-50
+        </div>
+        <div class="h-75 d-inline-block p-2 bg-warning">
+          h-75
+        </div>
+        <div class="h-100 d-inline-block p-2 bg-warning">
+          h-100
+        </div>
+        <div class="h-auto d-inline-block p-2 bg-warning">
+          h-auto
+        </div>
+        <div class="mh-100 d-inline-block p-2 bg-warning" style="height:500px">
+          mh-100
+        </div>
+      </div>
+    </div>
+
+    <h3>Overflow</h3>
+    <p>Barebones overflow functionality is provided for two values by default, and they are not responsive.</p>
+
+    <div class="d-flex mb-3">
+      <div class="overflow-auto p-3 mr-3 bg-light" style="max-width: 260px; max-height: 100px;">
+        This is an example of using
+        <code>.overflow-auto</code> on an element with set width and height dimensions. By design, this content will
+        vertically scroll.
+      </div>
+      <div class="overflow-hidden p-3 bg-light" style="max-width: 260px; max-height: 100px;">
+        This is an example of using
+        <code>.overflow-hidden</code> on an element with set width and height dimensions.
+      </div>
+    </div>
+
+    <h3>Float and Clearfix</h3>
+
+    <p>Float an element to the right with the <code>.float-right</code> class or to the left with
+      <code>.float-left</code>, and clear floats with the <code>.clearfix</code> class.</p>
+    <div class="clearfix border p-4 mb-3">
+      <span class="float-left border border-info p-2">Float left</span>
+      <span class="float-right border border-info p-2">Float right</span>
+    </div>
+
+    <h4>Responsive Floats</h4>
+    <p>Float an element to the left or to the right depending on screen width, with the responsive float classes
+      <code>.float-*-left|right</code> (where * is sm, md, lg or xl).</p>
+    <p>Resize the browser window to see the effect.</p>
+    <div class="clearfix mb-3">
+      <div class="float-sm-right">
+        Float right on small screens or wider
+      </div>
+      <br>
+      <div class="float-md-right">
+        Float right on medium screens or wider
+      </div>
+      <br>
+      <div class="float-lg-right">
+        Float right on large screens or wider
+      </div>
+      <br>
+      <div class="float-xl-right">
+        Float right on extra large screens or wider
+      </div>
+      <br>
+      <div class="float-none">
+        Float none
+      </div>
+    </div>
+
+    <h3>Spacing</h3>
+    <p>Bootstrap 4 has a wide range of responsive margin and padding utility classes.</p> 
+    <p>They work for all breakpoints: <code>xs</code> (&lt;=576px), <code>sm</code> (&gt;=576px), <code>md</code> (&gt;=768px), <code>lg</code> (&gt;=992px) or <code>xl</code> (&gt;=1200px)):</p> 
+    <p>The classes are used in the format: <code>{property}{sides}-{size}</code> for <code>xs</code> and <code>{property}{sides}-{breakpoint}-{size}</code> for <code>sm</code>, <code>md</code>, <code>lg</code>, and <code>xl</code>.</p> 
+    <p>Where property is one of:</p> 
+    <ul> 
+     <li><code>m</code> - sets <code>margin</code></li> 
+     <li><code>p</code> - sets <code>padding</code></li> 
+    </ul> 
+    <p>Where sides is one of:</p> 
+    <ul> 
+     <li><code>t</code> - sets <code>margin-top</code> or <code>padding-top</code></li> 
+     <li><code>b</code> - sets <code>margin-bottom</code> or <code>padding-bottom</code></li> 
+     <li><code>l</code> - sets <code>margin-left</code> or <code>padding-left</code></li> 
+     <li><code>r</code> - sets <code>margin-right</code> or <code>padding-right</code></li> 
+     <li><code>x</code> - sets both <code>padding-left</code> and <code>padding-right</code> or <code>margin-left</code> and <code>margin-right</code></li> 
+     <li><code>y</code> - sets both <code>padding-top</code> and <code>padding-bottom</code> or <code>margin-top</code> and <code>margin-bottom</code></li> 
+     <li>blank - sets a <code>margin</code> or <code>padding</code> on all 4 sides of the element</li> 
+    </ul> 
+    <p>Where size is one of:</p> 
+    <ul> 
+     <li><code>0</code> - sets <code>margin</code> or <code>padding</code> to <code>0</code></li> 
+     <li><code>1</code> - sets <code>margin</code> or <code>padding</code> to <code>.25rem</code> (4px if font-size is 16px)</li> 
+     <li><code>2</code> - sets <code>margin</code> or <code>padding</code> to <code>.5rem</code> (8px if font-size is 16px)</li> 
+     <li><code>3</code> - sets <code>margin</code> or <code>padding</code> to <code>1rem</code> (16px if font-size is 16px)</li> 
+     <li><code>4</code> - sets <code>margin</code> or <code>padding</code> to <code>1.5rem</code> (24px if font-size is 16px)</li> 
+     <li><code>5</code> - sets <code>margin</code> or <code>padding</code> to <code>3rem</code> (48px if font-size is 16px)</li> 
+     <li><code>auto</code> - sets <code>margin</code> to auto</li> 
+    </ul> 
+
+    <h4>Horizontal Centering</h4> 
+    <p>Center an element with the <code>.mx-auto</code> class:</p> 
+    <div class="mx-auto bg-warning text-center p-3 mb-3" style="width:150px">
+      Centered 
+    </div> 
+
+    <h3>Tham khảo</h3>
+    <p>https://getbootstrap.com/docs/4.3/utilities/overflow/</p>
+  </article>
+  <script src="../../js/docs.js"></script>
+</body>
+
+</html>

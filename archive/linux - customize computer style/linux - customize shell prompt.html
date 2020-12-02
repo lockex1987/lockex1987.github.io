@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=utf-8" http-equiv="content-type"> 
+  <title>Customize Shell Prompt</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Customize Shell Prompt">
+ </head> 
+ <body> 
+  <article> 
+   <div class="post-text" itemprop="text"> 
+    <p>Just to expand on Oli's answer (and so that I have a bookmark for those short-hand symbols):</p> 
+    <p>The bash prompt (<code>stefano@linux:~$</code>) is only the first of a couple of prompts you might see,:</p> 
+    <ul> 
+     <li> <p><strong>PS1</strong>: The default promt you see when you open a shell</p> <p>It's value is stored in an environment variable called <code>PS1</code>. To see its value, type</p> <p><code>echo $PS1</code></p> <p>This will give you something like</p> <pre style="" class="lang-bsh prettyprint prettyprinted"><code><span class="pln">\[\e</span><span class="pun">]</span><span class="lit">0</span><span class="pun">;</span><span class="pln">\u</span><span class="pun">@</span><span class="pln">\h</span><span class="pun">:</span><span class="pln"> \w\a\]$</span><span class="pun">{</span><span class="pln">debian_chroot</span><span class="pun">:+(</span><span class="pln">$debian_chroot</span><span class="pun">)}</span><span class="pln">\u</span><span class="pun">@</span><span class="pln">\h</span><span class="pun">:</span><span class="pln">\w\$</span></code></pre> <p>To change it, you can set a new value for the variable:</p> <pre style="" class="lang-bsh prettyprint prettyprinted"><code><span class="pln">export PS1</span><span class="pun">=</span><span class="str">"\u &gt; "</span></code></pre> <p>This will result in a prompt like this:</p> <pre style="" class="lang-bsh prettyprint prettyprinted"><code><span class="pln">stefano </span><span class="pun">&gt;</span><span class="pln"> </span></code></pre> </li> 
+     <li> <p><strong>PS2</strong>: is your secondary prompt. This get's shown when a command is not finished. Type <code>echo "asd</code> and hit enter, the secondary prompt will let you enter more lines until you close the inverted commas.</p> </li> 
+     <li> <p><strong>PS3</strong> is the prompt used for <a href="http://www.cl.cam.ac.uk/cgi-bin/manpage?2+select"><code>select</code>(2)</a></p> </li> 
+     <li> <p><strong>PS4</strong> is the prompt used for <img src="Udq1r.png" alt="alt text"> <a href="http://en.wikipedia.org/wiki/Stack_trace">stack traces</a> (default: <code>+</code>)</p> </li> 
+    </ul> 
+    <p>To make the changes permanent, you append them to the end of <code>.bash_profile</code> (or <code>.bashrc</code>, see <a href="http://askubuntu.com/questions/1528/bashrc-or-bash-profile">this question</a>) in your home directory.</p> 
+    <p>Here's a more or less complete list of shorthand that you can use when composing these:</p> 
+    <ul> 
+     <li><strong><code>\a</code></strong> &nbsp;&nbsp;&nbsp; The 'bell' charakter</li> 
+     <li><strong><code>\A</code></strong> &nbsp;&nbsp;&nbsp; 24h Time</li> 
+     <li><strong><code>\d</code></strong> &nbsp;&nbsp;&nbsp; Date (e.g. Tue Dec 21)</li> 
+     <li><strong><code>\e</code></strong> &nbsp;&nbsp;&nbsp; The 'escape' charakter</li> 
+     <li><strong><code>\h</code></strong> &nbsp;&nbsp;&nbsp; Hostname (up to the first ".")</li> 
+     <li><strong><code>\H</code></strong> &nbsp;&nbsp;&nbsp; Hostname</li> 
+     <li><strong><code>\j</code></strong> &nbsp;&nbsp;&nbsp; No. of jobs currently running (ps)</li> 
+     <li><strong><code>\l</code></strong> &nbsp;&nbsp;&nbsp; Current tty</li> 
+     <li><strong><code>\n</code></strong> &nbsp;&nbsp;&nbsp; Line feed</li> 
+     <li><strong><code>\t</code></strong> &nbsp;&nbsp;&nbsp; Time (hh:mm:ss)</li> 
+     <li><strong><code>\T</code></strong> &nbsp;&nbsp;&nbsp; Time (hh:mm:ss, 12h format)</li> 
+     <li><strong><code>\r</code></strong> &nbsp;&nbsp;&nbsp; Carriage return</li> 
+     <li><strong><code>\s</code></strong> &nbsp;&nbsp;&nbsp; Shell (i.e. bash, zsh, ksh..)</li> 
+     <li><strong><code>\u</code></strong> &nbsp;&nbsp;&nbsp; Username</li> 
+     <li><strong><code>\v</code></strong> &nbsp;&nbsp;&nbsp; Bash version</li> 
+     <li><strong><code>\V</code></strong> &nbsp;&nbsp;&nbsp; Full Bash release string</li> 
+     <li><strong><code>\w</code></strong> &nbsp;&nbsp;&nbsp; Current working directory</li> 
+     <li><strong><code>\W</code></strong> &nbsp;&nbsp;&nbsp; Last part of the current working directory</li> 
+     <li><strong><code>\!</code></strong> &nbsp;&nbsp;&nbsp; Current index in history</li> 
+     <li><strong><code>\#</code></strong> &nbsp;&nbsp;&nbsp; Command index</li> 
+     <li><strong><code>\$</code></strong> &nbsp;&nbsp;&nbsp; A "#" if you're root, else "$"</li> 
+     <li><strong><code>\\</code></strong> &nbsp;&nbsp;&nbsp; Literal Backslash</li> 
+     <li><strong><code>\@</code></strong> &nbsp;&nbsp;&nbsp; Time (12h format with am/pm)</li> 
+    </ul> 
+    <p>You can of course insert any literal string, and any command:</p> 
+    <pre style="" class="lang-bsh prettyprint prettyprinted"><code><span class="pln">export PS1</span><span class="pun">=</span><span class="str">"\u \$(pwd) &gt; "</span></code></pre> 
+    <p>Where <code>$(pwd)</code> stands in place of "the output of" pwd.</p> 
+    <ul> 
+     <li>If the command substitution is escaped, as in <code>\$(pwd)</code>, it's evaluated every time the prompt is displayed, otherwise, as in <code>$(pwd)</code>, it's only evaluated once when bash is started.</li> 
+    </ul> 
+    <p>If you want your prompt to feature colours, you can use bash's colour codes to do it. The code consists of three parts:</p> 
+    <pre style="" class="lang-bsh prettyprint prettyprinted"><code><span class="lit">40</span><span class="pun">;</span><span class="lit">33</span><span class="pun">;</span><span class="lit">01</span></code></pre> 
+    <ul> 
+     <li> <p>The first part before the semicolon represents the text style.</p> 
+      <ul> 
+       <li>00=none</li> 
+       <li>01=bold</li> 
+       <li>04=underscore</li> 
+       <li>05=blink</li> 
+       <li>07=reverse</li> 
+       <li>08=concealed</li> 
+      </ul> </li> 
+     <li> <p>The second and third part are the colour and the background color:</p> 
+      <ul> 
+       <li>30=black</li> 
+       <li>31=red</li> 
+       <li>32=green</li> 
+       <li>33=yellow</li> 
+       <li>34=blue</li> 
+       <li>35=magenta</li> 
+       <li>36=cyan</li> 
+       <li>37=white</li> 
+      </ul> </li> 
+    </ul> 
+    <p>Each part can be omitted, assuming starting on the left. i.e. "1" means bold, "1;31" means bold and red. And you would get your terminal to print in colour by escaping the instruction with <code>\33[</code> and ending it with an <code>m</code>. 33, or 1B in hexadecimal, is the ascii sign "ESCAPE" (a special character in the ascii character set). Example:</p> 
+    <pre style="" class="lang-bsh prettyprint prettyprinted"><code><span class="str">"\33[1;31mHello World\33[m"</span></code></pre> 
+    <p>Prints "Hello World" in bright red.</p> 
+    <p>------------</p> 
+    <p>Most of us work with a shell prompt. By default most Linux distro displays hostname and current working directory. You can easily customize your prompt to display information important to you. You change look and feel by adding colors. In this small howto I will explain howto setup:<br> a] Howto customizing a bash shell to get a good looking prompt<br> b] Configure the appearance of the terminal.<br> c] Apply themes using bashish<br> d] Howto pimp out your shell prompt</p> 
+    <p>Prompt is control via a special shell variable. You need to set PS1, PS2, PS3 and PS4 variable. If set, the value is executed as a command prior to issuing each primary prompt.</p> 
+    <ul> 
+     <li><strong>PS1</strong> - The value of this parameter is expanded (see PROMPTING below) and used as the primary prompt string. The default value is <strong>\s-\v\$</strong> .</li> 
+     <li><strong>PS2 </strong>- The value of this parameter is expanded as with PS1 and used as the secondary prompt string. The default is <strong>&gt;</strong></li> 
+     <li><strong>PS3</strong> - The value of this parameter is used as the prompt for the select command</li> 
+     <li><strong>PS4</strong> - The value of this parameter is expanded as with PS1 and the value is printed before each command bash displays during an execution trace. The first character of PS4 is replicated multiple times, as necessary, to indicate multiple levels of indirection. The default is <strong>+</strong></li> 
+    </ul> 
+    <h3>How do I display current prompt setting?</h3> 
+    <p>Simply use echo command, enter:<br> <code>$ echo $PS1</code><br> Output:</p> 
+    <pre>\\u@\h \\W]\\$</pre> 
+    <h3>How do I modify or change the prompt?</h3> 
+    <p>Modifying the prompt is easy task. Just assign a new value to PS1 and hit enter key:<br> My old prompt --&gt; [vivek@105r2 ~]$<br> <code> PS1="touch me : "</code><br> Output: My new prompt</p> 
+    <pre>touch me : </pre> 
+    <p>So when executing interactively, bash displays the primary prompt PS1 when it is ready to read a command, and the secondary prompt PS2 when it needs more input to complete a command. Bash allows these prompt strings to be customized by inserting a number of backslash-escaped special characters that are decoded as follows:</p> 
+    <ul> 
+     <li><b>\a</b> : an ASCII bell character (07)</li> 
+     <li><b>\d</b> : the date in "Weekday Month Date" format (e.g., "Tue May 26")</li> 
+     <li><b>\D{format}</b> : the format is passed to strftime(3) and the result is inserted into the prompt string; an empty format results in a locale-specific time representation. The braces are required</li> 
+     <li><b>\e</b> : an ASCII escape character (033)</li> 
+     <li><b>\h</b> : the hostname up to the first '.'</li> 
+     <li><b>\H</b> : the hostname</li> 
+     <li><b>\j</b> : the number of jobs currently managed by the shell</li> 
+     <li><b>\l</b> : the basename of the shell’s terminal device name</li> 
+     <li><b>\n</b> : newline</li> 
+     <li><b>\r</b> : carriage return</li> 
+     <li><b>\s</b> : the name of the shell, the basename of $0 (the portion following the final slash)</li> 
+     <li><b>\t</b> : the current time in 24-hour HH:MM:SS format</li> 
+     <li><b>\T</b> : the current time in 12-hour HH:MM:SS format</li> 
+     <li><b>\@</b> : the current time in 12-hour am/pm format</li> 
+     <li><b>\A</b> : the current time in 24-hour HH:MM format</li> 
+     <li><b>\u</b> : the username of the current user</li> 
+     <li><b>\v</b> : the version of bash (e.g., 2.00)</li> 
+     <li><b>\V</b> : the release of bash, version + patch level (e.g., 2.00.0)</li> 
+     <li><b>\w</b> : the current working directory, with $HOME abbreviated with a tilde</li> 
+     <li><b>\W</b> : the basename of the current working directory, with $HOME abbreviated with a tilde</li> 
+     <li><b>\!</b> : the history number of this command</li> 
+     <li><b>\#</b> : the command number of this command</li> 
+     <li><b>\$</b> : if the effective UID is 0, a #, otherwise a $</li> 
+     <li><b>\nnn</b> : the character corresponding to the octal number nnn</li> 
+     <li><b>\\</b> : a backslash</li> 
+     <li><b>\[</b> : begin a sequence of non-printing characters, which could be used to embed a terminal control sequence into the prompt</li> 
+     <li><b>\]</b> : end a sequence of non-printing characters</li> 
+    </ul> 
+    <p>Let us try to set the prompt so that it can display today’d date and hostname:<br> <code><strong>PS1="\d \h $ </strong>"</code><br> Output:</p> 
+    <pre>Sat Jun 02 server $ </pre> 
+    <p>Now setup prompt to display date/time, hostname and current directory:<br> <code>$ <strong>PS1="[\d \t \u@\h:\w ] $</strong> "</code><br> Output:</p> 
+    <pre>[Sat Jun 02 14:24:12 vivek@server:~ ] $</pre> 
+    <h3>How do I add colors to my prompt?</h3> 
+    <p>You can change the <a href="http://www.cyberciti.biz/faq/bash-shell-change-the-color-of-my-shell-prompt-under-linux-or-unix/">color of your shell prompt</a> to impress your friend or to make your own life quite easy while working at command prompt.</p> 
+    <h3>Putting it all together</h3> 
+    <p>Let us say when you login as root/superuser, you want to get visual confirmation using red color prompt. To distinguish between superuser and normal user you use last character in the prompt, if it changes from $ to #, you have superuser privileges. So let us set your prompt color to RED when you login as root, otherwise display normal prompt.</p> 
+    <p>Open /etc/bashrc (Redhat and friends) / or /etc/bash.bashrc (Debian/Ubuntu) or /etc/bash.bashrc.local (Suse and others) file and append following code:<br> <code># vi /etc/bashrc</code><br> or<br> <code>$ sudo gedit /etc/bashrc</code><br> Append the code as follows</p> 
+    <pre># If id command returns zero, you’ve root access.
+if [ $(id -u) -eq 0 ];
+then # you are root, set red colour prompt
+  PS1="\\[$(tput setaf 1)\\]\\u@\\h:\\w #\\[$(tput sgr0)\\]"
+else # normal
+  PS1="[\\u@\\h:\\w] $"
+fi</pre> 
+    <p>Close and save the file.</p> 
+    <h3>My firepower prompt</h3> 
+    <p>Check this out:<br> <a href="http://www.cyberciti.biz/tips/wp-content/uploads/2007/06/firepower-prompt.jpg"><img src="firepower-prompt.jpg" alt="Firepower shell prompt using bashish" width="499"></a><br> (click to enlarge)</p> 
+    <p>You can also create complex themes for your bash shell using bashish. <a href="http://bashish.sourceforge.net/">Bashish</a> is a theme enviroment for text terminals. It can change colors, font, transparency and background image on a per-application basis. Additionally Bashish supports prompt changing on common shells such as bash, zsh and tcsh. Install bashish using rpm or apt-get command:<br> <code># rpm -ivh bashish*</code><br> OR<br> <code># dpkg -i bashish*</code><br> Now start bashish for installing user configuration files:<br> <code>$ bashish</code><br> Next you must restart your shell by typing the following command:<br> <code>$ exec bash</code><br> To configure the Bashish theme engine, run<br> <code>$ bashishtheme</code></p> 
+    <p>basish in action (screenshots from official site):<br> <a href="http://www.cyberciti.biz/tips/wp-content/uploads/2007/06/flower.png" title="flower.png"><img src="flower.png" alt="flower.png"></a></p> 
+    <p><a href="http://www.cyberciti.biz/tips/wp-content/uploads/2007/06/urbandawn.png" title="urbandawn - based on an artwork by grevenlx"><img src="urbandawn.png" alt="urbandawn - based on an artwork by grevenlx"></a><br> Finally, you can always use <a href="http://www.afterstep.org/aterm.php">aterm</a> or other terminal program such as rxvt. It supports nice visual effect , like transparency, tinting and much more by visiting profile menu. Select your terminal &gt; click on Edit menu bar &gt; Profiles &gt; Select Profile &gt; Click on Edit button &gt; Select Effects tab &gt; Select transparent background &gt; Close</p> 
+    <p><a href="http://www.cyberciti.biz/tips/wp-content/uploads/2007/06/mydesktop.png"><img src="mydesktop-thumb-desltop-transparency.png" alt="Linux desktop nice visual effect , like transparency, tinting etc"></a><br> (click to enlarge)</p> 
+    <h3>Further readings:</h3> 
+    <ul> 
+     <li><a href="http://www.cyberciti.biz/faq/bash-shell-change-the-color-of-my-shell-prompt-under-linux-or-unix/">Coloring your prompt with tput and shell escape code</a></li> 
+     <li><a href="http://tldp.org/HOWTO/Bash-Prompt-HOWTO/">How-to reference guide to customizing the BASH command-line prompt.</a></li> 
+     <li>Download <a href="http://bashish.sourceforge.net/">Bashish</a> theme enviroment for text terminals.</li> 
+    </ul> 
+    <p><br> </p> 
+    <p>MY: PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\W \$\[\033[00m\] '</p> 
+    <p><br> </p> 
+    <p>--------------------</p> 
+    <p>sudo gedit /etc/bash.bashrc</p> 
+    <p>export PS1='\[\033[01;32m\]\W $\[\033[00m\] '</p> 
+    <p>export PS1='$\[\033[01;32m\]\u \w &gt;\[\033[00m\] '<br> export PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\W \$\[\033[00m\] '<br> export PS1='\[\033[01;32m\] \u@\h \[\033[01;34m\] \w \$\[\033[00m\] '<br> <br> </p> 
+   </div> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

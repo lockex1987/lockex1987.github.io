@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Nối file với Gulp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta name="description" content="Nối file với Gulp">
+  </head>
+  <body>
+    <article>
+      <h2>Nối file với Gulp</h2>
+      <p>Cài đặt:</p>
+      <pre>npm install --save-dev gulp-concat</pre>
+      <p>Kế tiếp, chúng ta sẽ muốn bắt đầu viết content cho <code>gulpfile.js</code>.</p>
+      <pre>const gulp = require('gulp');
+const concat = require('gulp-concat');<br><br><br>gulp.task('pack-js', function () {
+    gulp.src(['app/js/vendor/*.js', 'app/js/main.js', 'app/js/module*.js'])
+            .pipe(concat('bundle.js'))
+            .pipe(gulp.dest('dist/js'));
+});
+<br>gulp.task('pack-css', function () {
+    gulp.src(['app/css/main.css', 'app/css/custom.css'])
+            .pipe(concat('stylesheet.css'))
+            .pipe(gulp.dest('dist/css'));
+});
+<br>gulp.task('default', ['pack-js', 'pack-css']);</pre><p>TODO: Cập nhật lại code</p><p></p></article> 
+  <script src="../../js/docs.js"></script>
+</body></html>

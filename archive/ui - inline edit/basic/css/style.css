@@ -1,0 +1,59 @@
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  background: url(https://subtlepatterns.com/patterns/wood_pattern.png);
+}
+
+.box {
+  position: relative;
+  margin: 20px;
+  padding: 30px 10px 5px;
+  width: 400px;
+  min-height: 150px;
+  border: 1px solid grey;
+  border-radius: 3px;
+  background: #fff;
+}
+
+.editable {
+  border-color: #bd0f18;
+  box-shadow: inset 0 0 10px #555;
+  background: #f2f2f2;
+}
+
+.text {
+  outline: none;
+}
+
+.edit, .save {
+  width: 30px;
+  display: block;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: 4px 10px;
+  border-top-right-radius: 2px;
+  border-bottom-left-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: -1px 1px 4px rgba(0,0,0,0.5);
+}
+
+.edit { 
+  background: #557a11;
+  color: #f0f0f0;
+  /* Mặc định không hiển thị nút edit */
+  opacity: 0;
+  transition: opacity .2s ease-in-out;
+}
+
+.save {
+  /* Mặc định ẩn nút save */
+  display: none;
+  background: #bd0f18;
+  color: #f0f0f0;
+}
+
+.box:hover .edit {
+  /* Khi hover thì hiển thị nút edit */
+  opacity: 1;
+}

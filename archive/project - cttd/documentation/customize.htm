@@ -1,0 +1,225 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <title>Tùy biến framework</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+        <link href="theme.css" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+        <div id="main">
+            <h2 id="div4">Tùy biến framework</h2>
+            <div>
+                Có một code đầy đủ, sau đó khi cần thì sẽ biến đổi, không chia thành nhiều nhánh khó kiểm soát.<br />
+                Chuyển đổi giữa: prototype, sử dụng CAS, sử dụng VSA3, sử dụng VPS.<br />
+
+                <h3>Prototype</h3>
+                <div>
+                    Chúng ta hãy bắt đầu bằng một cái đơn giản nhất là prototype.<br />
+                    Không cần xóa thư viện jar, để thừa cũng được.<br />
+                    Người làm prototype sẽ khai báo ở struts-config.xml, tiles-defs.xml, thêm menu ở baseLayout.jsp.<br />
+                    Chỉnh ServiceAction.java (bỏ đoạn kết nối CSDL), thay thư viện viettelLibrary.jar.<br />
+                    Xóa các code thừa (package BO, hbm, DAO).<br />
+                    Package bean chỉ giữ lại UserBean.java.<br />
+                    Package util chỉ giữ lại Constants.java.<br />
+                    Package form chỉ giữ lại AuthenticateForm.java.<br />
+                    Package controller chỉ giữ lại AuthenticateController.java.<br />
+                    Chỉnh index.jsp trỏ đến AuthenticateController.actionStartPrototype.<br />
+                    Có thể xóa cas, config, displaytag, hibernate, messages, permission,... chỉ giữ ApplicationResources.<br />
+                    web.xml, struts-config, tiles-defs chỉ giữ lại AuthenticateAction và error.<br />
+                    Xóa các thư mục JSP.<br />
+                    web.xml chuẩn:<br />
+                    <div class="myCode">
+                        &lt;?xml version="1.0" encoding="UTF-8"?&gt;<br />
+                        &lt;web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"&gt;<br />
+                        &lt;listener&gt;<br />
+                        &lt;listener-class&gt;com.guhesan.querycrypt.listener.QueryCryptSessionListener&lt;/listener-class&gt;<br />
+                        &lt;/listener&gt;<br />
+                        &lt;servlet&gt;<br />
+                        &lt;servlet-name&gt;QueryCryptServlet&lt;/servlet-name&gt;<br />
+                        &lt;servlet-class&gt;com.guhesan.querycrypt.servlet.QueryCryptInitServlet&lt;/servlet-class&gt;<br />
+                        &lt;init-param&gt;<br />
+                        &lt;param-name&gt;queryName&lt;/param-name&gt;<br />
+                        &lt;param-value&gt;_vt&lt;/param-value&gt;<br />
+                        &lt;/init-param&gt;<br />
+                        &lt;init-param&gt;<br />
+                        &lt;param-name&gt;debug&lt;/param-name&gt;<br />
+                        &lt;param-value&gt;false&lt;/param-value&gt;<br />
+                        &lt;/init-param&gt;<br />
+                        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;<br />
+                        &lt;/servlet&gt;<br />
+                        <br />
+                        &lt;servlet&gt;<br />
+                        &lt;servlet-name&gt;action&lt;/servlet-name&gt;<br />
+                        &lt;servlet-class&gt;org.apache.struts.action.ActionServlet&lt;/servlet-class&gt;<br />
+                        &lt;init-param&gt;<br />
+                        &lt;param-name&gt;config&lt;/param-name&gt;<br />
+                        &lt;param-value&gt;<br />
+                        /WEB-INF/config/struts-config.xml,<br />
+                        /WEB-INF/config/struts-config-admin.xml<br />
+                        &lt;/param-value&gt;<br />
+                        &lt;/init-param&gt;<br />
+                        &lt;init-param&gt;<br />
+                        &lt;param-name&gt;debug&lt;/param-name&gt;<br />
+                        &lt;param-value&gt;2&lt;/param-value&gt;<br />
+                        &lt;/init-param&gt;<br />
+                        &lt;init-param&gt;<br />
+                        &lt;param-name&gt;detail&lt;/param-name&gt;<br />
+                        &lt;param-value&gt;2&lt;/param-value&gt;<br />
+                        &lt;/init-param&gt;<br />
+                        &lt;load-on-startup&gt;2&lt;/load-on-startup&gt;<br />
+                        &lt;/servlet&gt;<br />
+                        &lt;servlet-mapping&gt;<br />
+                        &lt;servlet-name&gt;action&lt;/servlet-name&gt;<br />
+                        &lt;url-pattern&gt;*.do&lt;/url-pattern&gt;<br />
+                        &lt;/servlet-mapping&gt;<br />
+                        <br />
+                        &lt;session-config&gt;<br />
+                        &lt;session-timeout&gt;300&lt;/session-timeout&gt;<br />
+                        &lt;/session-config&gt;<br />
+                        &lt;welcome-file-list&gt;<br />
+                        &lt;welcome-file&gt;/WEB-INF/jsp/index.jsp&lt;/welcome-file&gt;<br />
+                        &lt;/welcome-file-list&gt;<br />
+                        <br />
+                        &lt;filter&gt;<br />
+                        &lt;filter-name&gt;Character Encoding&lt;/filter-name&gt;<br />
+                        &lt;filter-class&gt;com.viettel.common.util.CharsetFilter&lt;/filter-class&gt;<br />
+                        &lt;/filter&gt;<br />
+                        &lt;filter-mapping&gt;<br />
+                        &lt;filter-name&gt;Character Encoding&lt;/filter-name&gt;<br />
+                        &lt;servlet-name&gt;action&lt;/servlet-name&gt;<br />
+                        &lt;/filter-mapping&gt;<br />
+                        &lt;/web-app&gt;<br />
+                    </div>
+                </div>
+
+                <h3>Sử dụng CAS</h3>
+                <div>
+                    Sử dụng CAS nghĩa là chúng ta sử dụng hệ thống quản lý đăng nhập tập trung. Nó có lợi ích là single sign-on.<br />
+                    Cần các thư viện: cas-client-core-3.2.1.jar.<br />
+                    Thêm filter vào web.xml:<br />
+                    <div class="myCode">
+                        &lt;filter&gt;<br />
+                        &lt;filter-name&gt;CAS Authentication Filter&lt;/filter-name&gt;<br />
+                        &lt;filter-class&gt;org.jasig.cas.client.authentication.AuthenticationFilter&lt;/filter-class&gt;<br />
+                        &lt;init-param&gt;<br />
+                        &lt;param-name&gt;casServerLoginUrl&lt;/param-name&gt;<br />
+                        &lt;param-value&gt;http://192.168.174.55:8690/cas/login&lt;/param-value&gt;<br />
+                        &lt;/init-param&gt;<br />
+                        &lt;init-param&gt;<br />
+                        &lt;param-name&gt;serverName&lt;/param-name&gt;<br />
+                        &lt;param-value&gt;http://localhost:8084&lt;/param-value&gt;<br />
+                        &lt;/init-param&gt;<br />
+                        &lt;init-param&gt;<br />
+                        &lt;param-name&gt;renew&lt;/param-name&gt;<br />
+                        &lt;param-value&gt;false&lt;/param-value&gt;<br />
+                        &lt;/init-param&gt;<br />
+                        &lt;init-param&gt;<br />
+                        &lt;param-name&gt;gateway&lt;/param-name&gt;<br />
+                        &lt;param-value&gt;false&lt;/param-value&gt;<br />
+                        &lt;/init-param&gt;<br />
+                        &lt;/filter&gt;<br />
+                        &lt;filter&gt;<br />
+                        &lt;filter-name&gt;CAS Validation Filter&lt;/filter-name&gt;<br />
+                        &lt;filter-class&gt;org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter&lt;/filter-class&gt;<br />
+                        &lt;init-param&gt;<br />
+                        &lt;param-name&gt;casServerUrlPrefix&lt;/param-name&gt;<br />
+                        &lt;param-value&gt;http://192.168.174.55:8690/cas/&lt;/param-value&gt;<br />
+                        &lt;/init-param&gt;<br />
+                        &lt;init-param&gt;<br />
+                        &lt;param-name&gt;serverName&lt;/param-name&gt;<br />
+                        &lt;param-value&gt;http://localhost:8084&lt;/param-value&gt;<br />
+                        &lt;/init-param&gt;<br />
+                        &lt;/filter&gt;<br />
+                        &lt;filter&gt;<br />
+                        &lt;filter-name&gt;CAS HttpServletRequest Wrapper Filter&lt;/filter-name&gt;<br />
+                        &lt;filter-class&gt;org.jasig.cas.client.util.HttpServletRequestWrapperFilter&lt;/filter-class&gt;<br />
+                        &lt;/filter&gt;<br />
+                        &lt;filter&gt;<br />
+                        &lt;filter-name&gt;CAS Assertion Thread Local Filter&lt;/filter-name&gt;<br />
+                        &lt;filter-class&gt;org.jasig.cas.client.util.AssertionThreadLocalFilter&lt;/filter-class&gt;<br />
+                        &lt;/filter&gt;<br />
+                        &lt;filter-mapping&gt;<br />
+                        &lt;filter-name&gt;CAS Authentication Filter&lt;/filter-name&gt;<br />
+                        &lt;url-pattern&gt;/login&lt;/url-pattern&gt;<br />
+                        &lt;/filter-mapping&gt;<br />
+                        &lt;filter-mapping&gt;<br />
+                        &lt;filter-name&gt;CAS Authentication Filter&lt;/filter-name&gt;<br />
+                        &lt;url-pattern&gt;*.do&lt;/url-pattern&gt;<br />
+                        &lt;/filter-mapping&gt;<br />
+                        &lt;filter-mapping&gt;<br />
+                        &lt;filter-name&gt;CAS Validation Filter&lt;/filter-name&gt;<br />
+                        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;<br />
+                        &lt;/filter-mapping&gt;<br />
+                        &lt;filter-mapping&gt;<br />
+                        &lt;filter-name&gt;CAS HttpServletRequest Wrapper Filter&lt;/filter-name&gt;<br />
+                        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;<br />
+                        &lt;/filter-mapping&gt;<br />
+                        &lt;filter-mapping&gt;<br />
+                        &lt;filter-name&gt;CAS Assertion Thread Local Filter&lt;/filter-name&gt;<br />
+                        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;<br />
+                        &lt;/filter-mapping&gt;<br />
+                    </div>
+                    Chỉnh logout.jsp:<br />
+                    <div class="myCode">
+                        &lt;%@page contentType="text/html" pageEncoding="UTF-8"%&gt;<br />
+                        <br />
+                        &lt;%@ page import="java.util.ResourceBundle"%&gt;<br />
+                        &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"<br />
+                        "http://www.w3.org/TR/html4/loose.dtd"&gt;<br />
+                        &lt;%@ taglib uri="http://www.yale.edu/its/tp/cas/version2" prefix="cas" %&gt;<br />
+                        <br />
+                        &lt;cas:logout var="netID" scope="session" logoutUrl="http://192.168.174.55:8690/cas/logout?service=http://localhost:8084/vps" /&gt;<br />
+                    </div>
+                    Chú ý phải chỉnh địa chỉ IP cho đúng.<br />
+                </div>
+
+                <h3>Sử dụng VSA3</h3>
+                <div>
+                    VSA3 được phòng R&amp;D phát triển dựa trên CAS. Nó quản lý đăng nhập và trả về cho mình một danh sách menu mà người dùng được quyền truy cập.<br />
+                    Cần các thư viện: vpclientv3.jar, (vpclient-ws.jar?), vptoken.jar.<br />
+                    Thêm filter vào web.xml:<br />
+                    <div class="myCode">
+                        &lt;filter&gt;<br />
+                        &lt;filter-name&gt;VSA Filter&lt;/filter-name&gt;<br />
+                        &lt;filter-class&gt;viettel.passport.util.VsaFilter&lt;/filter-class&gt;<br />
+                        &lt;/filter&gt;<br />
+                        &lt;filter-mapping&gt;<br />
+                        &lt;filter-name&gt;VSA Filter&lt;/filter-name&gt;<br />
+                        &lt;url-pattern&gt;*.jsp&lt;/url-pattern&gt;<br />
+                        &lt;/filter-mapping&gt;<br />
+                        &lt;filter-mapping&gt;<br />
+                        &lt;filter-name&gt;VSA Filter&lt;/filter-name&gt;<br />
+                        &lt;url-pattern&gt;*.do&lt;/url-pattern&gt;<br />
+                        &lt;/filter-mapping&gt;<br />
+                    </div>
+                    Chỉnh logout.jsp:<br />
+                    <div class="myCode">
+                        &lt;%@page contentType="text/html" pageEncoding="UTF-8"%&gt;<br />
+                        <br />
+                        &lt;%@ page import="java.util.ResourceBundle"%&gt;<br />
+                        &lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"<br />
+                        "http://www.w3.org/TR/html4/loose.dtd"&gt;<br />
+                        &lt;%@ taglib uri="/WEB-INF/config/vsa-defs.tld" prefix="vp" %&gt;<br />
+                        <br />
+                        <br />
+                        &lt;%<br />
+                        ResourceBundle bundle = ResourceBundle.getBundle("cas");<br />
+                        String address = bundle.getString("logoutUrl") + "?service=" + bundle.getString("service");<br />
+                        request.setAttribute("address", address);<br />
+                        %&gt;<br />
+                        <br />
+                        &lt;vp:logout var='netID' scope='session' logoutUrl="${address}" /&gt;<br />
+                    </div>
+                    Chú ý phải khai báo các cấu hình trong cas.properties.
+                </div>
+
+                <h3>Sử dụng VPS</h3>
+                <div>
+                    Không nên sử dụng!<br />
+                    Nếu sử dụng thì cần làm gì: thêm thư viện vpsclient.jar, thêm cấu hình vpsclient.properties, chỉnh thư viện viettelLibrary.jar.<br />
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+

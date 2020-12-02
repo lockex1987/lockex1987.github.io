@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Thực hiện các tiến trình đặt lịch với Laravel">
+    <title>Laravel Scheduling</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h1>Task Scheduling</h1>
+      <p>Trước đây, lập trình viên phải tạo ra các dòng cron cho mỗi task cần
+        được schedule. Tuy nhiên, việc này khá đau đầu. Việc đặt lịch cho task
+        không nằm trong source control, và bạn phải SSH vào trong server và thêm
+        vào các nội dung cron.</p>
+      <p>Bộ lệnh đặt lịch của Laravel cho phép bạn định nghĩa các lệnh đặt lịch
+        một cách liền mạch và rõ ràng, và bạn chỉ cần thực hiện thêm đúng một
+        dòng Cron cần thiết vào trong server. Việc đặt lịch task được định nghĩa
+        bên trong file <code>app/Console/Kernel.php</code> và trong hàm <code>schedule</code>.
+        Để giúp bạn bắt đầu, một ví đụ đơn giản được ghi sẵn bên trong hàm đó.
+        Bạn tuỳ ý thêm bao nhiêu task tuỳ thích vào trong đối tượng.</p>
+      <h2>Khởi động Scheduler</h2>
+      <p>Khi dùng scheduler, bạn chỉ cần thêm dòng Cron duy nhất mà bạn cần thêm
+        vào trong server. Nếu bạn không biết thêm Cron vào server, xem tại <a href="https://forge.laravel.com/">Laravel
+          Forge</a> nó có thể giúp bạn biết cách thêm Cron:</p>
+      <pre><code>* * * * * php /path/to/artisan schedule:run &gt;&gt; /dev/null 2&gt;&amp;1</code></pre>
+      <p>Dòng Cron này sẽ gọi tới bộ lệnh thực hiện lịch của Laravel mỗi phút.
+        Khi <code>schedule:run</code> được thực thi, Laravel sẽ kiểm tra các
+        task đã được lên lịch và thực thi các task cần thực hiện.</p>
+      <h2>Định nghĩa Schedule</h2>
+      <p>Bạn có thể định nghĩa các task bên trong hàm <code>schedule</code> của
+        class <code>App\Console\Kernel</code>. Để bắt đầu, hãy cùng nhìn vào ví
+        dụ sau về lên lịch cho một task. Trong ví dụ này, chúng ta sẽ lên lịch
+        cho một <code>Closure</code> được gọi mỗi ngày vào lúc nửa đêm. Bên
+        trong <code>Closure</code> chúng ta sẽ thực thi một database query để
+        xoá một bảng:</p>
+      <pre><code>&lt;?php
+
+namespace App\Console;
+
+use DB;
+use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+
+class Kernel extends ConsoleKernel
+{
+    /**
+     * The Artisan commands provided by your application.
+     *
+     * @var  array
+     */
+    protected $commands = [
+        \App\Console\Commands\Inspire::class,
+    ];
+
+    /**
+     * Define the application's command schedule.
+     *
+     * @param    \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @return  void
+     */
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule-&gt;call(function () {
+            DB::table('recent_users')-&gt;delete();
+        })-&gt;daily();
+    }
+}</code></pre>
+      <p>Ngoài việc đặt lịch cho <code>Closure</code>, bạn cũng có thể đặt lịch
+        cho <a href="https://giaphiep.com/docs/5.3/artisan">Artisan commands</a>
+        và các lệnh hệ thống. Ví dụ, bạn có thể sử dụng hàm <code>command</code>
+        để đặt lịch cho một câu lệnh Artisan như sau:</p>
+      <pre><code>$schedule-&gt;command('emails:send --force')-&gt;daily();
+
+$schedule-&gt;command(EmailsCommand::class, ['--force'])-&gt;daily();</code></pre>
+      <p>Lệnh <code>exec</code> có thể được sử dụng để thực thi một câu lệnh
+        trong hệ điều hành:</p>
+      <pre><code>$schedule-&gt;exec('node /home/forge/script.js')-&gt;daily();</code></pre>
+      <h2>Tuỳ chọn tần suất Schedule</h2>
+      <p>Tất nhiên, có vài kiểu đặt lịch bạn có thể thiết lập cho task:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Phương thức</th>
+            <th>Miêu tả</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>-&gt;cron('* * * * * *');</code></td>
+            <td>Chạy task với lịch Cron tuỳ chọn</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;everyMinute();</code></td>
+            <td>Chạy từng phút</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;everyFiveMinutes();</code></td>
+            <td>Cứ 5 phút chạy một lần</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;everyTenMinutes();</code></td>
+            <td>Cứ 10 phút chạy một lần</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;everyThirtyMinutes();</code></td>
+            <td>Cứ 30 phút chạy một lần</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;hourly();</code></td>
+            <td>Cứ mỗi tiếng chạy một lần</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;daily();</code></td>
+            <td>Chạy hàng ngày lúc nửa đêm</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;dailyAt('13:00');</code></td>
+            <td>Chạy hàng ngày lúc 13:00</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;twiceDaily(1, 13);</code></td>
+            <td>Chạy hàng ngày tại 1:00 &amp; 13:00</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;weekly();</code></td>
+            <td>Chạy hàng tuần</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;monthly();</code></td>
+            <td>Chạy hàng tháng</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;monthlyOn(4, '15:00');</code></td>
+            <td>Chạy vào ngày mùng 4 hàng tháng lúc 15:00</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;quarterly();</code></td>
+            <td>Cứ mỗi quý chạy một lần</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;yearly();</code></td>
+            <td>Mỗi năm chạy một lần</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;timezone('America/New_York');</code></td>
+            <td>Thiết lập timezone</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Các hàm này có thể phối hợp nhau để tạo ràng buộc chạy các kiểu lịch
+        phức tạp hơn. Ví dụ như chạy một câu lệnh hàng tuần vào thứ hai:</p>
+      <pre><code>// Run once per week on Monday at 1 PM...
+$schedule-&gt;call(function () {
+    //
+})-&gt;weekly()-&gt;mondays()-&gt;at('13:00');
+
+// Run hourly from 8 AM to 5 PM on weekdays...
+$schedule-&gt;command('foo')
+          -&gt;weekdays()
+          -&gt;hourly()
+          -&gt;timezone('America/Chicago')
+          -&gt;between('8:00', '17:00');</code></pre>
+      <p>Dưới đây là danh sách các ràng buộc đặt lịch bổ sung:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Phương thức</th>
+            <th>Miêu tả</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>-&gt;weekdays();</code></td>
+            <td>Chỉ chạy vào ngày thường</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;sundays();</code></td>
+            <td>Chỉ chạy vào Chủ Nhật</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;mondays();</code></td>
+            <td>Chỉ chạy vào thứ Hai</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;tuesdays();</code></td>
+            <td>Chỉ chạy vào thứ Ba</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;wednesdays();</code></td>
+            <td>Chỉ chạy vào thứ Tư</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;thursdays();</code></td>
+            <td>Chỉ chạy vào thứ Năm</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;fridays();</code></td>
+            <td>Chỉ chạy vào thứ Sáu</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;saturdays();</code></td>
+            <td>Chỉ chạy vào thứ Bảy</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;between($start, $end);</code></td>
+            <td>Chỉ chạy trong khoảng start và end</td>
+          </tr>
+          <tr>
+            <td><code>-&gt;when(Closure);</code></td>
+            <td>Chạy phụ thuộc vào điều kiện trong</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Ràng buộc khoảng thời gian</h3>
+      <p>Hàm <code>between</code> có thể sử dụng để giới hạn thời gian thực thi
+        task trong ngày:</p>
+      <pre><code>$schedule-&gt;command('reminders:send')
+                    -&gt;hourly()
+                    -&gt;between('7:00', '22:00');</code></pre>
+      <p>Tương tự, hàm <code>unlessBetween</code> có thể dùng để loại trừ thực
+        thi một task trong khoảng thời gian:</p>
+      <pre><code>$schedule-&gt;command('reminders:send')
+                    -&gt;hourly()
+                    -&gt;unlessBetween('23:00', '4:00');</code></pre>
+      <h3>Kiểm tra ràng buộc</h3>
+      <p>Hàm <code>when</code> có thể được sử dụng để giới hạn thực thi của một
+        task dựa trên kết quả kiểm tra mệnh đề trong <code>Closure</code> trả
+        về <code>true</code>, task sẽ thực thi nếu như không có điều kiện ràng
+        buộc nào ngăn chặn:</p>
+      <pre><code>$schedule-&gt;command('emails:send')-&gt;daily()-&gt;when(function () {
+    return true;
+});</code></pre>
+      <p>Hàm <code>skip</code> có thể coi là ngược lại đối với <code>when</code>.
+        Nếu hàm <code>skip</code>trả về <code>true</code>, ttask sẽ không được
+        thực thi:</p>
+      <pre><code>$schedule-&gt;command('emails:send')-&gt;daily()-&gt;skip(function () {
+    return true;
+});</code></pre>
+      <p>Khi sử dụng phối hợp với <code>when</code>, câu lệnh đặt lịch sẽ chỉ
+        thực thi khi mà các điều kiện <code>when</code> trả về <code>true</code>.</p>
+      <h3>Ngăn chặn task chồng chéo</h3>
+      <p>Mặc định, task được đặt lịch sẽ thực hiện thậm chí khi mà lần thực thi
+        trước vẫn còn đang thực hiện. Để chặn việc này, bạn có thể sử dụng hàm <code>withoutOverlapping</code>:</p>
+      <pre><code>$schedule-&gt;command('emails:send')-&gt;withoutOverlapping();</code></pre>
+      <p>Trong ví dụ này, <code>emails:send</code> <a href="https://giaphiep.com/docs/5.3/artisan">Artisan
+          command</a> sẽ được thực hiện mỗi phút nếu như chưa được chạy. Hàm <code>withoutOverlapping</code>
+        đặc biệt hữu dụng nếu bạn có task thực hiện không đồng đều về thời gian,
+        hạn chế việc bạn phải tính toán xem một task tốn mất bao nhiêu thời gian
+        để thực hiện tiếp lần sau.</p>
+      <h2>Task Output</h2>
+      <p>Bộ đặt lịch của Laravel cung cấp vài hàm tiện tích để làm việc với
+        output sinh ra bởi các task. Đầu tiên là hàm <code>sendOutputTo</code>,
+        bạn có thể đẩy output tới một file để tìm hiểu sau:</p>
+      <pre><code>$schedule-&gt;command('emails:send')
+         -&gt;daily()
+         -&gt;sendOutputTo($filePath);</code></pre>
+      <p>Nếu bạn muốn chèn thêm output vào một file, bạn có thể sử dụng <code>appendOutputTo</code>:</p>
+      <pre><code>$schedule-&gt;command('emails:send')
+         -&gt;daily()
+         -&gt;appendOutputTo($filePath);</code></pre>
+      <p>Sử dụng hàm <code>emailOutputTo</code>, bạn có thể gửi email về output
+        tới địa chỉ bạn muốn. Chú ý là output phải được lưu vào một file sử dụng
+        <code>sendOutputTo</code> trước. Thêm nữa, trước khi gửi mail, bạn phải
+        cấu hình <a href="https://giaphiep.com/docs/5.3/mail">e-mail services</a>:</p>
+      <pre><code>$schedule-&gt;command('foo')
+         -&gt;daily()
+         -&gt;sendOutputTo($filePath)
+         -&gt;emailOutputTo('foo@example.com');</code></pre>
+      <p> Hàm <code>emailOutputTo</code>, <code>sendOutputTo</code> và <code>appendOutputTo</code>
+        không sử dụng được với hàm <code>command</code> và không hỗ trợ cho hàm
+        <code>call</code>.</p>
+      <h2>Task Hooks</h2>
+      <p>Sử dụng hàm <code>before</code> và <code>after</code>, bạn có thể chỉ
+        định đoạn code cần thực hiện trước vào sau khi task hoàn thiện:</p>
+      <pre><code>$schedule-&gt;command('emails:send')
+         -&gt;daily()
+         -&gt;before(function () {
+             // Task is about to start...
+         })
+         -&gt;after(function () {
+             // Task is complete...
+         });</code></pre>
+      <h3>Pinging URLs</h3>
+      <p>Sử dụng hàm <code>pingBefore</code> và <code>thenPing</code> , bộ đặt
+        lịch có thể tự động gửi ping tới một URL trước và sau khi một task hoàn
+        thiện. Hàm này khá hữu ích cho việc gửi thông báo tới một dịch vụ bên
+        ngoài, ví dụ như <a href="https://envoyer.io/">Laravel Envoyer</a>, để
+        cho biết là task của bạn đã bắt đầu hay hoàn thiện:</p>
+      <pre><code>$schedule-&gt;command('emails:send')
+         -&gt;daily()
+         -&gt;pingBefore($url)
+         -&gt;thenPing($url);</code></pre>
+      <p>Sử dụng <code>pingBefore($url)</code> hoặc <code>thenPing($url)</code>
+        yêu cầu thư viện Guzzle HTTP. Vì thế, bạn cần thêm Guzzle vào trong
+        project bằng cách thêm dòng sau vào trong:</p>
+      <pre><code>composer require guzzlehttp/guzzle</code></pre>
+      <h2>Tham khảo</h2>
+      <p><a href="https://laravel.com/docs/5.8/scheduling">https://laravel.com/docs/5.8/scheduling</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

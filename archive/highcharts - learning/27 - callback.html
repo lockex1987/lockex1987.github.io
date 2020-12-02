@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+</head>
+
+<body>
+    <p>Accessing chart after it has loaded using load() callback function.</p>
+    <div id="container" style="height: 400px"></div>
+
+    <script>
+        // create the chart
+        var chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                events: {
+                    load: function (event) {
+                        console.log('Chart loaded with series: ' + this.series[0].name);
+                        console.log(this);
+                    }
+                }
+            },
+            xAxis: {
+            },
+
+            series: [{
+                animation: false,
+                name: 'TestSeries',
+                data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+            }]
+        });
+
+        console.log("Highcharts is asynchonous?");
+
+        chart.title = "hello";
+    </script>
+</body>
+
+</html>

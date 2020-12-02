@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Responsive src của ảnh" />
+
+    <title>Thẻ picture</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+    <article>
+        <h2>Thẻ picture</h2>
+
+        <div>
+            <picture>
+                <source media="(min-width: 650px)" srcset="images/img_pink_flowers.jpg">
+                <source media="(min-width: 465px)" srcset="images/img_white_flower.jpg">
+                <img src="images/img_orange_flowers.jpg" style="width:auto;">
+            </picture>
+        </div>
+
+        <figure>
+            <picture>
+                <source srcset="images/person-xsmall.jpg" media="(max-width: 480px)">
+                <source srcset="images/person-small.jpg" media="(max-width: 640px)">
+                <source srcset="images/person-med.jpg">
+                <img srcset="images/person-med.jpg" alt="">
+            </picture>
+        </figure>
+
+        <p>Resize trình duyệt để thấy các ảnh khác nhau tùy theo kích thước viewport.</p>
+        <p>Trình duyệt sẽ tìm phần tử <code>source</code> đầu tiên mà media query khớp với chiều rộng viewport, sau đó
+            lấy ảnh bằng thuộc tính <code>srcset</code>.</p>
+        <p>Phần tử <code>img</code> là bắt buộc là phần tử con cuối cùng trong khối <code>picture</code>. Phần tử
+            <code>img</code> sẽ được sử dụng nếu trình duyệt không hỗ trợ <code>picture</code>,
+            hoặc là không tìm thấy phần tử <code>source</code> nào khớp.</p>
+
+        <p>Không hỗ trợ video.</p>
+
+        <div>
+            <video controls>
+                <!-- Bear -->
+                <source type="video/mp4" src="https://www.w3schools.com/tags/movie.mp4" media="all and (max-width: 640px)">
+                <!-- Bunny -->
+                <source type="video/mp4" src="https://www.w3schools.com/html/mov_bbb.mp4">
+            </video>
+        </div>
+
+        
+
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

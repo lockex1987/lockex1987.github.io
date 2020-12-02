@@ -1,0 +1,247 @@
+@import url(https://fonts.googleapis.com/css?family=Coustard);
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+ header {
+  position: relative;
+  text-align: center; 
+} 
+
+h1 {
+  font-family: 'Coustard';
+  margin-top: 40px;
+  color: #444;
+}
+.main {
+  width: 100%;
+}
+
+.game-list {
+  list-style: none;
+  position: relative;
+  margin-top: 50px;  
+  z-index: 9;
+}
+
+.game-list li {
+  position: relative;
+  width: 298px;
+  margin: 0 auto;
+  z-index: 1;
+  -webkit-perspective: 1800px;
+  -moz-perspective: 1800px;
+  perspective: 1800px;
+ 
+}
+
+.game-list li .game-box {
+  position: absolute;
+  width: 100%;
+  height: 379px;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transition: -webkit-transform .5s;
+  -moz-transition: -moz-transform .5s;
+  transition: transform .5s;
+}
+
+.game-list li .game-box.game-boxdefault:hover {
+  -webkit-transform: rotate3d(0,1,0,35deg);
+  -moz-transform: rotate3d(0,1,0,35deg);
+  transform: rotate3d(0,1,0,35deg);
+}
+
+.game-list li .game-box > div,
+.game-list li .game-front > div {
+  display: block;
+  position: absolute;
+  /*box-shadow: 10px 10px 30px rgba(0,0,0,0.3);*/
+}
+
+.game-list li .game-front {
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform-origin: 0% 50%;
+  -moz-transform-origin: 0% 50%;
+  transform-origin: 0% 50%;
+  -webkit-transition: -webkit-transform .5s;
+  -moz-transition: -moz-transform .5s;
+  transition: transform .5s;
+  -webkit-transform: translate3d(0,0,20px);
+  -moz-transform: translate3d(0,0,20px);
+  transform: translate3d(0,0,20px);
+  z-index: 10;
+}
+
+.game-list li .game-front,
+.game-list li .game-front > div {
+  width: 296px;
+  height: 378px;
+  border-radius: 3px 0 0 7px;
+}
+
+.game-list li .game-side,
+.game-list li .game-right {
+  width: 40px;
+  left: -18px;
+  border-radius: 3px 7px 0 7px;
+
+}
+
+.game-list li .game-right {
+  height: 390px;
+  top: 5px;
+  -webkit-transform: rotate3d(0,1,0,90deg) translate3d(0,0,295px);
+  -moz-transform: rotate3d(0,1,0,90deg) translate3d(0,0,295px);
+  transform: rotate3d(0,1,0,90deg) translate3d(0,0,295px);
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.game-list li .game-side {
+  background-image: url(http://sinclair.work/wp-content/uploads/2016/06/side.jpg);	
+  background-position:0px 0px;
+  height: 376px;
+  -webkit-transform: rotate3d(0,1,0,-90deg);
+  -moz-transform: rotate3d(0,1,0,-90deg);
+  transform: rotate3d(0,1,0,-90deg);
+}
+
+
+/* Individual box styles & imames */
+
+/* box 1 */
+.box-1 .game-front > div,
+.box-1 .game-side,
+.box-1 .game-front:after {
+	  background-color: #1C62D6;
+}
+
+.box-1 .game-cover {
+  background-image: url(http://sinclair.work/wp-content/uploads/2016/06/front.jpg);	
+  background-repeat: no-repeat;
+  background-position: 0px 0px;
+  overflow:hidden;
+}
+
+.box-1 .game-cover h2 {
+  display:none;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 30px;
+  /* background: #90cf07; */
+	/*color: #fff;*/
+}
+
+
+/* box 2 */
+
+.box-2 .game-front > div,
+.box-2 .game-back,
+.box-2 .game-side,
+.box-2 .game-front:after {
+	  background-color: #1C62D6;
+}
+
+/*.box-2 .game-cover {
+	background-image: url(../images/front2.png);	
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	overflow:hidden;
+
+}
+
+.game-list li .box-2 .game-side {
+	background-image: url(../images/side2.png);	
+}*/
+
+.specular{
+  position: absolute;
+  top: -50px;
+  left: -17px;
+  z-index: 10000;
+  width:796px;
+  height: 714px;
+  overflow:hidden;
+
+  -webkit-transform: rotate(-15deg);
+  -moz-transform: rotate(-15deg);
+  -o-transform: rotate(-15deg);
+  -ms-transform: rotate(-15deg);
+  transform: rotate(-15deg);
+
+
+background: -moz-linear-gradient(270deg, rgba(255, 255, 255, .7), rgba(255, 255, 255, .4) 50%, rgba(255, 255, 255, 0) 50.1%) no-repeat;
+background: -webkit-linear-gradient(200deg, rgba(255, 255, 255, .7), rgba(255, 255, 255, .4) 50%, rgba(255, 255, 255, 0) 50.1%) no-repeat;
+background: linear-gradient(270deg, rgba(255, 255, 255, .7), rgba(255, 255, 255, .4) 50%, rgba(255, 255, 255, 0) 50.1%) no-repeat;
+background-position: 00px 0px;
+background-size: 500px 500px;
+-webkit-background-size:500px 500px;
+-moz-background-size:500px 500px;
+
+-moz-mask: -moz-linear-gradient(top, #fff, transparent 50%); /*This doesn't work in Firefox..needs SVG or something*/
+-webkit-mask: -webkit-linear-gradient(top, #fff, transparent 50%);
+mask: linear-gradient(top, #fff, transparent 50%);
+
+-webkit-transition: left 0.3s linear;
+-moz-transition: left 0.3s linear;
+transition: left 0.3s linear;
+}
+
+.game-box:hover .specular {
+   left: -120px;
+}
+
+.specular-left {
+  position: absolute;
+  top: 0px;
+  left: 20px;
+  z-index: 10000;
+  width:41px;
+  height: 416px;
+
+  overflow:hidden;
+
+background: -moz-linear-gradient( rgba(255, 255, 255, .7), rgba(255, 255, 255, .4) 50%, rgba(255, 255, 255, 0.4) 50.1%) no-repeat;
+background: -webkit-linear-gradient( rgba(255, 255, 255, .7), rgba(255, 255, 255, .4) 50%, rgba(255, 255, 255, 0.4) 50.1%) no-repeat;
+background: linear-gradient( rgba(255, 255, 255, .7), rgba(255, 255, 255, .4) 50%, rgba(255, 255, 255, 0.4) 50.1%) no-repeat;
+background-position: 00px 0px;
+background-size: 41px 500px;
+-webkit-background-size:41px 500px;
+-moz-background-size:41px 500px;
+
+-moz-mask: -moz-linear-gradient(left, #fff, transparent 50%); /*This doesn't work in Firefox..needs SVG or something*/
+-webkit-mask: -webkit-linear-gradient(left, #fff, transparent 50%);
+mask: linear-gradient(left, #fff, transparent 50%);
+
+  -webkit-transition: left 0.25s linear;
+  -moz-transition: left 0.25s linear;
+  transition: left 0.25s linear;
+
+}
+
+.game-box:hover .specular-left {
+  left: 0px;
+}
+
+
+.game-list li .game-cover:after,
+.game-list li .game-back:after {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left:0px;
+    bottom:0px;
+    width: 3px;
+    height:379px;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 1px 0 3px rgba(255, 255, 255, 0.2);
+}

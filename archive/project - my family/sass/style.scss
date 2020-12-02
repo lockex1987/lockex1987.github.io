@@ -1,0 +1,194 @@
+// Bước 1: Các block cơ bản
+.tree {
+    // Phải thêm các thuộc tính này thì mới scale đúng được
+    // Không bị mất nội dung
+    /*
+    top: 0%;
+    left: 0%;
+    transform-origin: top left;
+    */
+    transform-origin: 0px 0px;
+
+    cursor: move;
+    user-select: none;
+
+    ul {
+        padding: 20px 0 0 0;
+        position: relative;
+        white-space: nowrap;
+        display: flex;
+        justify-content: center;
+
+        li {
+            // float: left;
+            display: inline-block;
+            text-align: center;
+            list-style-type: none;
+            position: relative;
+            padding: 20px 5px 0px 5px;
+
+            span {
+                border: 1px solid #ccc;
+                text-decoration: none;
+                color: #666;
+                font-family: arial, verdana, tahoma;
+                font-size: 11px;
+                // background: white;
+                border-radius: 5px;
+                height: 5rem;
+                width: 5rem;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                z-index: 10;
+                white-space: normal;
+                vertical-align: top;
+                padding: 0.5rem;
+
+                &+span {
+                    margin-left: 20px;
+                    // position: relative;
+
+                    // Đường nối ngang giữa hai vợ chồng
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        border-top: 1px solid #ccc;
+                        top: 50%;
+                        left: -21px;
+                        width: 21px;
+                    }
+                }
+            }
+
+            // Với con duy nhất
+            &:only-child {
+                // Remove space from the top of single children
+                padding-top: 0;
+
+                // Căn giữa con duy nhất
+                & > span:only-child {
+                    // transform: translateX(40px);
+                }
+            }
+        }
+    }
+}
+
+
+
+// Bước 2: Sử dụng các phần tử ::before và ::after để vẽ các kết nối
+.tree {
+    ul {
+        li {
+            // Đường kẻ trên bên trái
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                border-top: 1px solid #ccc;
+                width: 51%; // thêm 1% để không có khe hở
+                height: 65px;
+                // z-index: -1;
+                top: 0;
+                right: 50%;
+            }
+
+            // Đường kẻ trên bên phải
+            // Và đường kẻ dọc bên trái
+            &::after {
+                right: auto;
+                left: 50%;
+                border-left: 1px solid #ccc;
+            }
+
+            // Loại bỏ các đường kẻ nếu không có anh chị em
+            &:only-child {
+                &::before,
+                &::after {
+                    display: none;
+                }
+            }
+
+            // Loại bỏ đường kẻ trên bên trái của phần tử con đầu tiên
+            &:first-child {
+                &::before {
+                    border: 0 none;
+                }
+            }
+
+            // Loại bỏ đường kẻ trên bên phải của phần tử con cuối cùng
+            // Đường kẻ dọc cũng bị mất đi
+            &:last-child {
+                &::after {
+                    border: 0 none;
+                }
+            }
+
+            // Thêm lại đường kẻ dọc vào phần tử con cuối cùng
+            &:last-child {
+                &::before {
+                    border-right: 1px solid #ccc;
+                    transform: translateX(1px);
+                    border-radius: 0 5px 0 0;
+                }
+            }
+
+            // Bẻ cong đường kẻ dọc của phần tử đầu tiên
+            &:first-child {
+                &::after {
+                    border-radius: 5px 0 0 0;
+                }
+            }
+        }
+
+        // Thêm đường kẻ dọc từ cha xuống dưới
+        ul {
+            &::before {
+                content: "";
+                position: absolute;
+                top: -60px;
+                left: 50%;
+                border-left: 1px solid #ccc;
+                width: 0;
+                height: 80px;
+                // z-index: -1;
+            }
+        }
+    }
+}
+
+// Đường kẻ dọc từ cha xuống dưới đầu tiên
+.tree > ul > li > ul:before {
+    top: -40px;
+}
+
+
+
+
+// Bước 3: Hover effect
+/*
+.tree {
+    li {
+        span {
+            &:hover {
+                &,
+                &~ul li a {
+                    background: #c8e4f8;
+                    color: #000;
+                    border-color: #94a0b4;
+                }
+
+                // Connector styles on hover
+                &~ul li::after,
+                &~ul li::before,
+                &~ul::before,
+                &~ul ul::before {
+                    border-color: #94a0b4;
+                }
+            }
+        }
+    }
+}
+*/

@@ -1,0 +1,42 @@
+<html>
+<head>
+<style>
+@page {
+  @footnote {
+    /*float: bottom;*/
+    border-top: 1pt solid black;
+  }
+}
+
+
+
+.fn { float: footnote; }
+
+.fn {
+  counter-increment: footnote;
+}
+
+h1 {
+  counter-reset: footnote;
+}
+
+.fn::footnote-call {
+  content: counter(footnote);
+  font-size: 9pt;
+  vertical-align: super;
+  line-height: none;
+}
+
+.fn::footnote-marker {
+  font-weight: bold;
+}
+
+
+</style>
+</head>
+
+<body>
+	<p>Though the body was erect, the head was thrown back so that the closed eyes were pointed towards the needle of the tell-tale that swung from a beam in the ceiling.<span class="fn">The cabin-compass is called the tell-tale, because without going to the compass at the helm, the Captain, while below, can inform himself of the course of the ship.</span></p>
+	<p>Footnotes<span class="fn">Footnotes and notes placed in the footer of a document to reference the text. The footnote will be removed from the flow when the page is created.</span> are useful in books and printed documents.</p>
+</body>
+</html>

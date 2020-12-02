@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="laravel, admin, voyager">
+    <title>Giới thiệu Voyager</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Giới thiệu Voyager</h2>
+      <p>Có những chức năng làm đi làm lại nhiều lần.</p>
+      <p>Những chức năng phần admin chủ yếu là thêm - sửa - xóa dữ liệu.</p>
+      <p>Những chức năng phần admin thì không cần giao diện đặc biệt.</p>
+      <h3>Bắt đầu</h3>
+      <p>Tạo project Laravel mới:</p>
+      <pre>composer create-project --prefer-dist laravel/laravel my-admin</pre>
+      <p>Thêm package voyager:</p>
+      <pre>composer require tcg/voyager</pre>
+      <p>Tiếp theo, chỉnh sửa cấu hình kết nối đến DB trong file <code>.env</code>:</p>
+      <pre>DB_HOST=localhost
+DB_DATABASE=homestead
+DB_USERNAME=homestead
+DB_PASSWORD=secret</pre>
+      <p>Cập nhật URL của trang web với cấu hình APP_URL trong file <code>.env</code>:</p>
+      <pre>APP_URL=http://localhost:8000</pre>
+      <p>Cuối cùng, chúng ta cài đặt Voyager. Bạn có thể cài đặt cùng với việc
+        khởi tạo dữ liệu hoặc không. Dữ liệu khởi tạo sẽ bao gồm 1 tài khoản
+        admin, 1 demo page, 4 demo post, 2 categorie và 7 setting.</p>
+      <p>Cài đặt Voyager không có dữ liệu:</p>
+      <pre>php artisan voyager:install</pre>
+      <p>Cài đặt Voyager có dữ liệu luôn:</p>
+      <pre>php artisan voyager:install --with-dummy</pre>
+      <p>Start server:</p>
+      <pre>php artisan serve</pre>
+      <p>Mở trình duyệt kiểm tra:</p>
+      <p><a target="_blank" href="http://localhost:8000/admin">http://localhost:8000/admin</a></p>
+      <h3>Tạo tài khoản admin</h3>
+      <p>Nếu bạn cài đặt Voyager với dữ liệu khởi tạo, bạn có thể đăng nhập với
+        thông tin như sau:</p>
+      <ul>
+        <li>email: <code>admin@admin.com</code></li>
+        <li>password: <code>password</code></li>
+      </ul>
+      <p>Chú ý: user chỉ được tạo nếu không có user nào trong database.</p>
+      <p>Bạn có thể gán quyền admin với người dùng đang có:</p>
+      <pre>php artisan voyager:admin your@email.com</pre>
+      <p>Bạn cũng có thể tạo mới user với tùy chọn <code>--create</code>.</p>
+      <pre>php artisan voyager:admin your@email.com --create</pre>
+      <p>Bạn sẽ được nhắc nhập tên và password.</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://laravelvoyager.com/" target="_blank">Trang chủ</a></p>
+      <p><a href="https://github.com/the-control-group/voyager" target="_blank">Github</a></p>
+      <p><a href="https://voyager.readme.io/docs/getting-started" target="_blank">Documentation</a></p>
+      <p><a href="https://www.youtube.com/watch?v=cbFYqwzxGwY&amp;list=PL_UnIDIwT95NureFNedKN9_GA6UOiS2ox&amp;index=1"
+
+          target="_blank">YouTube video</a></p>
+      <p><a href="https://laravelvoyager.com/academy/" target="_blank">Voyager
+          academy</a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Save git password so you don't have to keep typing it when you pull/push something">
+    <title>Lưu mật khẩu git</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Lưu mật khẩu git</h2>
+      <p>When I push sources from local to GitHub, it keep asking me for the
+        username and password. It is very tedious.</p>
+      <p>This tutorial will guide you to skip typing git password.</p>
+      <p>Fortunately, from version 1.7.9 (released in late January 2012), git
+        has a credentials system that can help with this. git has a few options
+        provided in the box:</p>
+      <ul>
+        <li>The default is not to cache at all. Every connection will prompt you
+          for your username and password.</li>
+        <li>The “cache” mode keeps credentials in memory for a certain period of
+          time. None of the passwords are ever stored on disk, and they are
+          purged from the cache after 15 minutes.</li>
+        <li>The “store” mode saves the credentials to a plain-text file on disk,
+          and they never expire. This means that until you change your password
+          for the git host, you won’t ever have to type in your credentials
+          again.</li>
+      </ul>
+      <p>Find a helper:</p>
+      <pre>git help -a | grep credential</pre>
+      <p>Read its description:</p>
+      <pre>git help credential-store</pre>
+      <p>Tell git to use it:</p>
+      <pre>git config --global credential.helper store</pre>
+      <h3>Cache mode</h3>
+      <p>Command:</p>
+      <pre>git config --global credential.helper cache</pre>
+      <p>Git will save your password in memory for some time. By default, git
+        will cache your password for 15 minutes.</p>
+      <p>Set the cache to timeout after 1 hour (setting is in seconds):</p>
+      <pre>git config --global credential.helper 'cache --timeout=3600'</pre>
+      <h3>Store mode</h3>
+      <p>Command:</p>
+      <pre>git config --global credential.helper store</pre>
+      The point of this helper is to reduce the number of times you must type
+      your username or password. For example:
+      <pre>$ git config --global credential.helper store<br>$ git push http://example.com/repo.git<br>Username: &lt;type your username&gt;<br>Password: &lt;type your password&gt;<br><br>[several days later]<br><br>$ git push http://example.com/repo.git<br>[your credentials are used automatically]</pre>
+      <p>Your passwords are stored in a plain file in your home directory. The
+        default is <code>~/.git-credentials</code>.</p>
+      <p>The content of the file:</p>
+      <p><code>https://lockex1987:PLAIN_PASSWORD@github.com</code></p>
+      <p><strong>IMPORTANT</strong>: The password is not encrypted. It's just
+        encoded by HTML URL Encoding, and can be decoded easily. Therefore, keep
+        the file securely.</p>
+    </article>
+    
+  </body>
+</html>

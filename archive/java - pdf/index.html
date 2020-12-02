@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+  <title>PDF &amp; DOC</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="PDF &amp; DOC">
+ </head> 
+ <body> 
+  <article> 
+   <h2>PDF &amp; DOC</h2> 
+   <p>Có nhiều định dạng khác nhau:</p> 
+   <ul> 
+    <li>text: XML, (x)HTML, JSON, TXT, Markdown, RTF</li> 
+    <li>binary: DOC, XLS, PPT, PDF</li> 
+   </ul> 
+   <p>Mỗi định dạng lại đều có điểm mạnh, đặc trưng riêng.</p> 
+   <p>Các định dạng text thì dễ chỉnh sửa.</p> 
+   <p>Các định dạng binary thì để tiết kiệm dung lượng truyền, hay dùng làm đầu ra hiển thị.</p> 
+   <p>Làm thế nào để qua lại giữa các định dạng với nhau (convert)? Làm thế nào để xuất báo cáo ra các định dạng đó (export)?</p> 
+   <h3>Thư viện</h3> 
+   <p>Một số thư viện hay được sử dụng là:</p> 
+   <table> 
+    <tbody> 
+     <tr> 
+      <td>JOD Converter</td> 
+      <td>Convert qua lại giữa các định dạng. Việc convert được dựa trên Open Office, tương tự như chúng ta mở file ra và <code>Save as</code> thành một định dạng khác. Chất lượng tốt.</td> 
+     </tr> 
+     <tr> 
+      <td>Flying Saucer</td> 
+      <td>Convert HTML sang PDF. Chúng ta có thể thêm các tính năng như trang bìa, header, footer, TOC dễ dàng bằng cách sử dụng CSS Paged Media.<br> https://github.com/flyingsaucerproject/flyingsaucer<br> https://tuhrig.de/generating-pdfs-with-java-flying-saucer-and-thymeleaf/<br> https://tuhrig.de/generating-pdfs-with-java-flying-saucer-and-thymeleaf-part-2/<br> https://andreldm.com/2017/04/15/flying-saucer-handlebars.html</td> 
+     </tr> 
+     <tr> 
+      <td>iText</td> 
+      <td>Export, chỉnh sửa file PDF.</td> 
+     </tr> 
+     <tr> 
+      <td>jSoup</td> 
+      <td>Parse, chỉnh sửa file HTML. Chúng ta có thể chuẩn hóa code HTML thành XHTML, loại bỏ các tag nguy hiểm để tránh lỗi ATTT.</td> 
+     </tr> 
+     <tr> 
+      <td>docx4j</td> 
+      <td>Export, chỉnh sửa file DOCX.</td> 
+     </tr> 
+     <tr> 
+      <td>cttd-doc</td> 
+      <td>Export ra file DOCX qua file template.</td> 
+     </tr> 
+    </tbody> 
+   </table> 
+   <h3>Lưu ý</h3> 
+   <p>Khi tìm hiểu trên mạng, chúng ta thường chỉ gặp các ví dụ đơn giản. Tuy nhiên khi vào thực tế chúng ta hay gặp các khó khăn sau:</p> 
+   <ul> 
+    <li>Hiển thị tiếng Việt (nhiều khi phải cài thêm font)<br> </li> 
+   </ul> 
+   <p>Docx2PdfConverter</p> 
+   <p>ExportDocx<br> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

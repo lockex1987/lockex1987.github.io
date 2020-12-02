@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>Replace Textarea with Inline Editor</title>
+      <script src="../lib/ckeditor/ckeditor.js"></script>
+      <style>
+         /* Style the CKEditor element to look like a textfield */
+         .cke_textarea_inline {
+           margin-top: 100px;
+         padding: 10px;
+         height: 200px;
+         overflow: auto;
+         border: 1px solid gray;
+         -webkit-appearance: textfield;
+         }
+      </style>
+   </head>
+   <body>   
+      <h1>Replace Textarea with Inline Editor (An hien icon toolbar)</h1>
+      <p>Inline cũng hay vì chỉ hiển thị toolbar khi được focus.</p>
+      <textarea name="article-body" style="height: 200px">
+               <p>Hello <strong>CKEditor</strong></p>
+      </textarea>
+      <script>
+         CKEDITOR.inline('article-body');
+      </script>
+   </body>
+</html>

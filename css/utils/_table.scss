@@ -1,0 +1,27 @@
+/**
+ * Ở màn hình nhỏ thì hiển thị kiểu block.
+ */
+@media (max-width: 767px) {
+    .table-bordered {
+        border: none;
+
+        thead {
+            th, td {
+                border-bottom-width: 0;
+            }
+        }
+    }
+
+    .table {
+        tr {
+            display: block;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        th, td {
+            display: block;
+            border-bottom: none;
+        }
+    }
+}

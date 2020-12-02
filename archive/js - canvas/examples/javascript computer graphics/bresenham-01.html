@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bresenham 01</title>
+</head>
+<body>
+<script>
+    function BresenhamLineTest() {
+        this.main = function () {
+            var view = new View(
+                    Color.Instances.BlueHalf,
+                    new Coords(320, 240)
+            );
+
+            document.body.appendChild(
+                    view.htmlElementBuild()
+            );
+
+            view.drawLine(
+                    Color.Instances.Red,
+                    new Coords(40, 30),
+                    new Coords(220, 150)
+            );
+            view.drawLine(
+                    Color.Instances.Green,
+                    new Coords(50, 90),
+                    new Coords(200, 50)
+            );
+            view.drawLine(
+                    Color.Instances.Purple,
+                    new Coords(200, 60),
+                    new Coords(50, 100)
+            );
+            view.drawLine(
+                    Color.Instances.Cyan,
+                    new Coords(100, 100),
+                    new Coords(300, 100)
+            );
+            view.drawLine(
+                    Color.Instances.Yellow,
+                    new Coords(240, 50),
+                    new Coords(240, 210)
+            );
+        }
+    }
+
+    // classes
+    function Color(name, systemColor) {
+        this.name = name;
+        this.systemColor = systemColor;
+    }
+    {
+        Color.Instances = new (function() {
+            this.Blue = new Color("Blue", "#0000ff");
+            this.BlueHalf = new Color("BlueDark", "#000080");
+            this.Cyan = new Color("Cyan", "#00ffff");
+            this.Green = new Color("Green", "#00ff00");
+            this.Purple = new Color("Purple", "#ff00ff");
+            this.Red = new Color("Red", "#ff0000");
+            this.Yellow = new Color("Yellow", "#ffff00");
+        })();
+    }
+
+    function Coords(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+    {
+        // constants
+        Coords.NumberOfDimensions = 2;
+
+        // instance methods
+        Coords.prototype.absolute = function() {
+            this.x = Math.abs(this.x);
+            this.y = Math.abs(this.y);
+            return this;
+        }
+
+        Coords.prototype.clone = function() {
+            return new Coords(this.x, this.y);
+        }
+
+        Coords.prototype.divide = function(other) {
+            this.x /= other.x;
+            this.y /= other.y;
+            return this;
+        }
+
+        Coords.prototype.equals = function(other) {
+            return (this.x == other.x && this.y == other.y);
+        }
+
+        Coords.prototype.subtract = function(other) {
+            this.x -= other.x;
+            this.y -= other.y;
+            return this;
+        }
+    }
+
+    function View(colorBackground, sizeInPixels) {
+        this.colorBackground = colorBackground;
+        this.sizeInPixels = sizeInPixels;
+    }
+    {
+        // instance methods
+        View.prototype.htmlElementBuild = function(sceneToRender) {
+            var canvas = document.createElement("canvas");
+            canvas.id = "cameraViewCanvas";
+            canvas.width = this.sizeInPixels.x;
+            canvas.height = this.sizeInPixels.y;
+            canvas.style.position = "absolute";
+            canvas.style.cursor = "crosshair";
+            canvas.style.background = this.colorBackground.systemColor;
+            this.graphics = canvas.getContext("2d");
+            return canvas;
+        }
+
+        View.prototype.drawLine = function(color, startPos, endPos) {
+            var displacement = endPos.clone().subtract(startPos);
+            var displacementAbsolute = displacement.clone().absolute();
+            var step = displacement.divide(displacementAbsolute);
+            var error = displacementAbsolute.x - displacementAbsolute.y;
+            var currentPos = startPos.clone();
+            while (true) {
+                this.drawPixel(color, currentPos);
+
+                if (currentPos.equals(endPos)) {
+                    break;
+                }
+
+                var errorTimesTwo = error * 2;
+                if (errorTimesTwo > 0 - displacementAbsolute.y) {
+                    error = error - displacementAbsolute.y;
+                    currentPos.x += step.x;
+                }
+                if (errorTimesTwo < displacementAbsolute.x) {
+                    error += displacementAbsolute.x;
+                    currentPos.y += step.y;
+                }
+            }
+        }
+
+        View.prototype.drawPixel = function(color, pos) {
+            this.graphics.fillStyle = color.systemColor;
+            this.graphics.fillRect(pos.x, pos.y, 1, 1);
+        }
+    }
+
+    // run
+    new BresenhamLineTest().main();
+</script>
+</body>
+</html>

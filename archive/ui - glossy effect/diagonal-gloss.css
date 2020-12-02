@@ -1,0 +1,40 @@
+html {
+  min-height: 100%;
+  background: #92c7d6 radial-gradient(circle farthest-corner at center top, #97d0e1, #427388 80%) repeat scroll 0 0;
+}
+body {
+  text-align: center;
+  padding-top: 50px;
+  color: #FFF;
+}
+.glossImage {
+  padding: 0;
+  margin: 0;
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+.glossImage img {
+  max-width: 100%;
+  display: block;
+}
+.glossImage::after {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(95deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 20%, transparent 21%);
+}
+.glossImage:hover::after {
+  background-image: none;
+}
+.fixedWidth {
+  width: 250px;
+  border: 1px solid #404040;
+  box-shadow: 0 2px 5px #404040;
+}
+.fixedWidth:hover {
+  box-shadow: 0 2px 5px yellow;
+}

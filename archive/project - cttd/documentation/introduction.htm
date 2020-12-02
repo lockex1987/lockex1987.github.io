@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Giới thiệu chung</title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<link href="theme.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div id="main">
+		<h2 id="div1">1. Giới thiệu chung</h2>
+		<div>
+			Framework được theo mô hình MVC, dựa trên Struts 1.
+			<br/> Framework sử dụng Hibernate để giao tiếp với CSDL. Hibernate là dùng để kết nối CSDL, mapping các bảng với các class.
+			<br/> Framework sử dụng JQuery để thao tác JavaScript. Phiên bản cũ sử dụng Prototype. Prototype là Javascript mà framework
+			mình sử dụng. Nói phạm vi sử dụng (core, effect, Ajax). Có thể so sánh các framework khác như Javascript.
+			<br/> Vòng đời của mỗi yêu cầu gửi tới server. Dựa vào đường dẫn url, nó sẽ thực hiện className nào, methodName nào. Dựa vào
+			actionName chúng ta sẽ có form ra sao để lấy tham số. Trang trả về sẽ qua struts-config.xml, tiles-defs.xml như thế nào
+			để tới trang JSP cuối cùng.
+			<br/> Một đặc điểm chính của mô hình hiện tại là chỉ sử dụng 1 Action duy nhất là ServiceAction. Mục đích của Service Action
+			để gộp tất cả các Action trong mô hình struts vào trong một class duy nhất. Tất cả các request và reponse đến hoặc đi
+			từ JSP đều sẽ đi qua Service Action đồng thời sẽ được mã hóa. Sau đó request sẽ được đưa thẳng đến function của Class
+			DAO để xử lý. Ví dụ mẫu về cách xây dựng một chức năng (TaiLieu Dao tao MSS.doc).
+		</div>
+	</div>
+</body>
+
+</html>

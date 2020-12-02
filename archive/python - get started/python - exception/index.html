@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="description" content="Exception trong Python"/>
+	<meta name="keywords" content="python, exception"/>
+	<meta name="author" content="lockex1987"/>
+	
+	<title>Exception trong Python</title>
+
+	<link rel="icon" href="../../images/favicon.png"/>
+	<link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body>
+	<article>
+    <h2>Exception trong Python</h2>
+    <p>Exception trong Python khá giống như trong Java. Cấu trúc của nó như sau:</p>
+    <pre><code class="python">try:<br>    # Statements<br>except Exception_1 as ex:<br>    # Process or pass<br>except Exception_2 as ex:<br>    # Process or pass<br>finally:<br>    # Optional<br>    # Always executed<br>    # Process or pass<br></code></pre><h3>Tại sao bạn cần đến Exception</h3><p>Nếu bạn không xử lý Exception thì khi chương trình gặp Exception nó sẽ dừng lại luôn.</p><p>Nhiều khi cái bạn muốn đó là chương trình luôn trong tình trạng sống, ví dụ một chương trình chạy các job theo lịch chẳng hạn. Các job có thể lỗi ở một thời điểm nào đó, nhưng chương trình vẫn phải sống để chạy job tiếp theo.</p><div
+
+style="color: #d4d4d4;background-color: #1e1e1e;font-family: Consolas, 'Courier New', monospace;font-weight: normal;font-size: 14px;line-height: 19px;white-space: pre;"><div><span
+
+style="color: #569cd6;">def</span><span style="color: #d4d4d4;"> </span><span style="color: #dcdcaa;">demo_1</span><span
+
+style="color: #d4d4d4;">():</span></div><div><span style="color: #d4d4d4;">    </span><span
+
+style="color: #c586c0;">for</span><span style="color: #d4d4d4;"> i in </span><span
+
+style="color: #dcdcaa;">range</span><span style="color: #d4d4d4;">(</span><span
+
+style="color: #b5cea8;">10</span><span style="color: #d4d4d4;">):</span></div><div><span
+
+style="color: #d4d4d4;">        </span><span style="color: #dcdcaa;">print</span><span
+
+style="color: #d4d4d4;">(i)</span></div><div><span style="color: #d4d4d4;">        x = </span><span
+
+style="color: #b5cea8;">10</span><span style="color: #d4d4d4;"> / </span><span style="color: #b5cea8;">0</span></div><br><div><span
+
+style="color: #d4d4d4;">demo_1()</span></div></div><p></p><p></p><p>Đoạn code trên chỉ in được một lần i = 0 do gặp <code>ZeroDivisionError: devision by zero</code>.</p><p>Chúng ta chỉnh lại như sau:</p><div
+
+style="color: #d4d4d4;background-color: #1e1e1e;font-family: Consolas, 'Courier New', monospace;font-weight: normal;font-size: 14px;line-height: 19px;white-space: pre;"><div><span
+
+style="color: #569cd6;"></span><span style="color: #d4d4d4;"></span><span style="color: #569cd6;">def</span><span
+
+style="color: #d4d4d4;"> </span><span style="color: #dcdcaa;">demo_2</span><span
+
+style="color: #d4d4d4;">():</span></div><div><span style="color: #d4d4d4;">    </span><span
+
+style="color: #c586c0;">for</span><span style="color: #d4d4d4;"> i in </span><span
+
+style="color: #dcdcaa;">range</span><span style="color: #d4d4d4;">(</span><span
+
+style="color: #b5cea8;">10</span><span style="color: #d4d4d4;">):</span></div><div><span
+
+style="color: #d4d4d4;">        </span><span style="color: #dcdcaa;">print</span><span
+
+style="color: #d4d4d4;">(i)</span></div><div><span style="color: #d4d4d4;">        </span><span
+
+style="color: #c586c0;">try</span><span style="color: #d4d4d4;">:</span></div><div><span
+
+style="color: #d4d4d4;">            x = </span><span style="color: #b5cea8;">10</span><span
+
+style="color: #d4d4d4;"> / </span><span style="color: #b5cea8;">0</span></div><div><span
+
+style="color: #d4d4d4;">        </span><span style="color: #c586c0;">except</span><span
+
+style="color: #d4d4d4;"> </span><span style="color: #4ec9b0;">Exception</span><span
+
+style="color: #d4d4d4;"> </span><span style="color: #c586c0;">as</span><span style="color: #d4d4d4;"> ex:</span></div><div><span
+
+style="color: #d4d4d4;">            </span><span style="color: #c586c0;">pass</span></div><br><div><span
+
+style="color: #d4d4d4;">demo_2()</span></div></div><p></p><p>Giờ thì chương trình sẽ chạy hết từ đầu đến cuối.</p>
+	</article>
+
+	<script src="../../js/docs.js"></script>
+</body>
+</html>
+

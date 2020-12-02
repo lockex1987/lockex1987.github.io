@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="description" content="Disable CRLF warning">
+    <title>Tắt cảnh báo CRLF</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Tắt cảnh báo CRLF</h2>
+      <p>Khi commit git, chúng ta hay gặp cảnh báo sau:</p>
+      <pre>warning: LF will be replaced by CRLF in ...
+The file will have its original line endings in your working directory.</pre>
+      <p>Ở Windows, ký tự xuống dòng là <code>CRLF</code>.</p>
+      <p>Ở Linux, Mac, ký tự xuống dòng là <code>LF</code>.</p>
+      <p>Có thể khó chịu nếu project gồm nhiều dev, có dev dùng Windows, có dev
+        dùng Linux.</p>
+      <p>Git có thể xử lý việc này bằng cách tự động chuyển ký tự xuống dòng <code>CRLF</code>
+        thành <code>LF</code> khi bạn thêm một file vào index, và ngược lại khi
+        file đó được checkout về filesystem của bạn. Bạn có thể bật tính năng
+        này với cấu hình <code>core.autocrlf</code>. Nếu bạn ở một máy Windows,
+        thiết lập cấu hình này thành <code>true</code>. Cái này sẽ tự động
+        chuyển <code>LF</code> thành <code>CRLF</code> khi check out.</p>
+      <pre>git config --global core.autocrlf true</pre>
+      <p>Nếu bạn là một lập trình viên Windows và làm một dự án chỉ cho Windows
+        thì bạn có thể tắt tính năng này.</p>
+      <pre>git config --global core.autocrlf false</pre>
+    </article>
+  </body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>21 - Không có dữ liệu</title>
+</head>
+
+<body>
+    <p>Hiển thị mặc định.</p>
+    <div id="containerPie" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <p>
+        <button id="addPie">Add data</button>
+        <button id="removePie">Remove data</button>
+    </p>
+
+
+    <p>Cấu hình với tùy chọn <code>lang.noData</code>, style với tùy chọn <code>noData.style</code>.</p>
+    <p>Ngoài ra, cũng có thể dùng các phương thức <code>hasNoData()</code>, <code>hideNoData()</code>,
+        <code>showNoData()</code>.</p>
+    <div id="containerLine" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <p>
+        <button id="addLine">Add data</button>
+        <button id="removeLine">Remove data</button>
+        <button id="showCustomLine">Show custom message manually</button>
+    </p>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/no-data-to-display.js"></script>
+
+    <script>
+        var chartPie = Highcharts.chart('containerPie', {
+            chart: {
+
+                type: 'pie',
+            },
+            title: {
+                text: ''
+            },
+            tooltip: {
+                enabled: false
+            },
+            series: [
+                {
+                    name: 'Random', // Hiển thị ở tooltip
+                    data: []
+                }
+            ]
+        });
+
+        document.querySelector('#addPie').addEventListener('click', () => {
+            chartPie.series[0].addPoint(Math.floor(Math.random() * 10 + 1)); // Return random integer between 1 and 10.
+        });
+
+        document.querySelector('#removePie').addEventListener('click', () => {
+            if (chartPie.series[0].points[0]) {
+                chartPie.series[0].points[0].remove();
+            }
+        });
+
+
+
+        var chartLine = Highcharts.chart('containerLine', {
+            chart: {
+                type: 'line',
+            },
+            title: {
+                text: 'No data in line chart - with custom options'
+            },
+            series: [
+                {
+                    name: 'Random data',
+                    data: []
+                }
+            ],
+            lang: {
+                noData: 'Không có dữ liệu'
+            },
+            noData: {
+                style: {
+                    fontWeight: 'bold',
+                    fontSize: '15px',
+                    color: '#303030'
+                }
+            }
+        });
+
+        document.querySelector('#addLine').addEventListener('click', () => {
+            chartLine.series[0].addPoint(Math.floor(Math.random() * 10 + 1)); // Return random integer between 1 and 10.
+        });
+
+        document.querySelector('#removeLine').addEventListener('click', () => {
+            if (chartLine.series[0].points[0]) {
+                chartLine.series[0].points[0].remove();
+            }
+        });
+
+        document.querySelector('#showCustomLine').addEventListener('click', () => {
+            if (!chartLine.hasData()) {
+                chartLine.hideNoData();
+                chartLine.showNoData("Your custom error message");
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Format date</title>
+    <style>
+        div {
+            width: 600px;
+            height: 400px;
+        }
+    </style>
+  </head>
+  <body>
+    <h2>Format date</h2>
+    <p>Highcharts will automatically try to find the best format for the current
+      zoom-range. This is done if the xAxis has the type 'datetime'. Next the
+      unit of the current zoom is calculated, it could be one of:</p>
+    <ul>
+      <li>second</li>
+      <li>minute</li>
+      <li>hour</li>
+      <li>day</li>
+      <li>week</li>
+      <li>month</li>
+      <li>year</li>
+    </ul>
+    <p>This unit is then used find a format for the axis labels. The default
+      patterns are:</p>
+    <pre>second: '%H:%M:%S',
+minute: '%H:%M',
+hour: '%H:%M',
+day: '%e. %b',
+week: '%e. %b',
+month: '%b \'%y',
+year: '%Y'</pre>
+    <p>If you want the day to be part of the "hour"-level labels you should
+      change the dateTimeLabelFormats option for that level include %d or %e.
+      These are the available patters:</p>
+    <ul>
+      <li>%a: Short weekday, like 'Mon'.</li>
+      <li>%A: Long weekday, like 'Monday'.</li>
+      <li>%d: Two digit day of the month, 01 to 31.</li>
+      <li>%e: Day of the month, 1 through 31.</li>
+      <li>%b: Short month, like 'Jan'.</li>
+      <li>%B: Long month, like 'January'.</li>
+      <li>%m: Two digit month number, 01 through 12.</li>
+      <li>%y: Two digits year, like 09 for 2009.</li>
+      <li>%Y: Four digits year, like 2009.</li>
+      <li>%H: Two digits hours in 24h format, 00 through 23.</li>
+      <li>%I: Two digits hours in 12h format, 00 through 11.</li>
+      <li>%l (Lower case L): Hours in 12h format, 1 through 11.</li>
+      <li>%M: Two digits minutes, 00 through 59.</li>
+      <li>%p: Upper case AM or PM.</li>
+      <li>%P: Lower case AM or PM.</li>
+      <li>%S: Two digits seconds, 00 through 59</li>
+    </ul>
+    <p><a target="_blank" href="http://api.highcharts.com/highcharts#xAxis.dateTimeLabelFormats">http://api.highcharts.com/highcharts#xAxis.dateTimeLabelFormats</a></p>
+    <p><br>
+    </p>
+    <h3>Demo</h3>
+    <div id="container"></div>
+    <script src="js/highcharts.js"></script>
+    <script>
+        new Highcharts.Chart({
+            chart: {
+                renderTo: 'container'
+            },
+            tooltip: {
+                pointFormat: "Value: {point.y:,.1f} mm"
+            },
+            xAxis: {
+                type: 'datetime',
+                labels: {
+                    format: '{value:%d-%m-%Y}',
+                    rotation: 60,
+                    align: 'left'
+                }
+            },
+            series: [
+                {
+                    data: [1029.9, 1071.5, 1106.4, 1129.2, 1144.0, 1176.0, 1135.6, 1148.5, 1216.4, 1194.1, 1095.6, 1054.4],
+                    pointStart: Date.UTC(2013, 0, 1),
+                    pointInterval: 24 * 36e5
+                }
+            ],
+            credits: {
+                enabled: false
+            }
+        });
+    </script>
+  </body>
+</html>

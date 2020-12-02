@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hướng dẫn sử dụng vi">
+    <title>Hướng dẫn sử dụng vi</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Hướng dẫn sử dụng vi</h2>
+      <p><code>vi</code> là trình soạn thảo văn bản được sử dụng phổ biến trên
+        HDH Linux. Ngoài ra có một phiên bản mở rộng là <code>vim</code> với
+        nhiều chức năng hơn. Để cài đặt <code>vim</code>, sử dụng command sau:</p>
+      <pre>sudo apt install vim</pre>
+      <h3>Mở file</h3>
+      <pre>vi &lt;duong_dan_file&gt;</pre>
+      <h3>Chế độ Visual và Insert</h3>
+      <p>Bình thường khi mở một file bằng lệnh <code>vi</code> thì chế độ mặc
+        định là chế độ Visual, ở chế độ này bạn có thể sử dụng các lệnh của <code>vi</code>.
+        Nhưng để nhập liệu thì cần chuyển sang chế độ Insert. Để chuyển sang chế
+        độ Insert thì các bạn bấm phím <strong>&lt;I&gt;</strong> trên bàn
+        phím.</p>
+      <p>Để quay trở lại chế độ Visual các bạn sử dụng phím <strong>&lt;Escape&gt;</strong>.</p>
+      <h3>Hiển thị và ẩn số dòng (line number)</h3>
+      <p>Ở chế độ Visual nhập <strong>:set nu</strong> hoặc <strong>:set
+          number</strong> để hiển số dòng.</p>
+      <p>Để ẩn số dòng nhập <strong>:set nonu</strong> hoặc <strong>:set
+          nonumber</strong>.</p>
+      <h3>Di chuyển tới một dòng (line) bất kỳ</h3>
+      <p>Ở chế độ Visual nhập <strong>:&lt;line_number&gt;</strong> cần di
+        chuyển đến.</p>
+      <p>VD <strong>:20</strong> thì <code>vi</code> sẽ đưa bạn tới dòng 20.</p>
+      <h3>Di chuyển tới đầu file và cuối file</h3>
+      <p>Để di chuyển lên đầu file bấm phím <strong>&lt;G&gt;</strong> hai lần.</p>
+      <p>Để di chuyển tới cuối file bấm tổ hợp phím <strong>&lt;Shift&gt; +
+          &lt;G&gt;</strong>.</p>
+      <h3>Tìm kiếm chuỗi ký tự</h3>
+      <p>Ở chế độ Visual nhập <strong>/&lt;chuoi_ky_tu&gt;</strong> để tìm
+        kiếm.</p>
+      <p>Để đi đến kết quả tìm kiếm tiếp theo, nhấn phím <strong>&lt;n&gt;</strong>.</p>
+      <p>Để đi đến kết quả tìm kiếm trước đó, nhấn phím <strong>&lt;Shift&gt; +
+          &lt;n&gt;</strong>.</p>
+      <h3>Copy, paste và xóa 1 dòng (Line)</h3>
+      <p>Bấm 2 lần phím <strong>&lt;Y&gt;</strong> để copy dòng.</p>
+      <p>Bấm phím <strong>&lt;P&gt;</strong> để paste dòng.</p>
+      <p>Bấm 2 lần phím <strong>&lt;D&gt;</strong> để xóa dòng.</p>
+      <h3>Undo sửa file</h3>
+      <p>Bấm phím <strong>&lt;U&gt;</strong> để undo thao tác lỗi.</p>
+      <h3>Lưu file</h3>
+      <p>Lưu file đã chỉnh sửa, nhập <strong>:w</strong>.</p>
+      <p>Lưu file đã chỉnh sửa và thoát ra ngoài <strong>:wq</strong>.</p>
+      <p>Thoát file và không lưu lại chỉnh sửa nhập <strong>:q!</strong>.</p>
+      <h3>Tham khảo</h3>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <a href="https://vinasupport.com/huong-dan-su-dung-co-ban-lenh-vi-editor-tren-linux/"
+          target="_blank">Hướng dẫn sử dụng cơ bản lệnh vi editor trên Linux -
+          VinaSupport</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

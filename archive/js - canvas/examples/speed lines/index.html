@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Speed lines</title>
+	<style>
+body {
+  background-color: rgb(27, 27, 27);
+}
+
+canvas {
+  background-color: hsl(0, 0%, 10%);
+}
+	</style>
+</head>
+
+<body>
+	<center>
+		<canvas id="canvas"></canvas>
+	</center>
+	<script>
+var size = 500;
+var c = document.getElementById("canvas");
+c.width = size;
+c.height = size;
+var ctx = c.getContext("2d");
+
+var color = "hsl(180, 80%, 80%)";
+ctx.strokeStyle = color;
+
+// linear gradient from start to end of line
+var grad = ctx.createLinearGradient(0, 0, size, 0);
+grad.addColorStop(0, "black");
+grad.addColorStop(1, "white");
+
+ctx.strokeStyle = grad;
+
+var cx = 0;
+var cy = 75;
+var radius = 50;
+
+function render() {
+	ctx.fillStyle = "#000";
+  ctx.fillRect(0, 0, size, size);
+  
+	for (var i = 0; i < 50; i++) {
+		var y = Math.random() * 4 + i * 10;
+		ctx.beginPath();
+		ctx.moveTo(0, y);
+		ctx.lineTo(size, y);
+		ctx.stroke();
+	}
+
+	//ctx.fillStyle = ="#F00";
+	ctx.fillStyle ="#FFF";
+	
+	ctx.beginPath();
+	ctx.arc(cx, cy, radius, 0, 2*Math.PI);
+	ctx.fill();
+	
+	cx++;
+	if (cx > size + radius) {
+		cx = -radius;
+	}
+	
+	requestAnimationFrame(render);
+}
+
+render();
+	</script>
+</body>
+</html>

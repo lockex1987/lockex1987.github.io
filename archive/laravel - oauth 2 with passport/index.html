@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Xác thực OAuth 2 với Laravel</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Xác thực OAuth 2 với Laravel">
+ </head> 
+ <body> 
+  <article> 
+   <h2 itemprop="headline">Xác thực API bằng OAuth 2 với Laravel Passport</h2> 
+   <p></p> 
+   <p>Trong các ứng dụng phần mềm hiện đại, các web API là không thể thiếu, có rất nhiều các mô hình ứng dụng sử dụng web API như mô hình server-to-server, hay mô hình SPA (Single Page Application). Trong quá trình phát triển các API, rất cần thiết phải bảo vệ dữ liệu khỏi những con mắt tò mò, điều này với các hệ thống truyền thống rất đơn giản còn với API thì sao? Laravel tạo ra một gói thư viện Passport giúp thực hiện xác thực trong API đơn giản đơn giản hơn, nó cung cấp đầy đủ OAuth2. Laravel Passport được xây dựng dựa trên <a href="https://oauth2.thephpleague.com/">League OAuth2 server</a> được phát triển bởi Alex Bilbie.</p> 
+   <p>Gợi ý:</p> 
+   <p><a href="https://allaravel.com/laravel-tutorials/gioi-thieu-oauth2/">Cơ bản về OAuth 2</a>, bạn nên đọc trước khi bắt đầu với Laravel Passport.</p> 
+   <p>Phương châm bài viết này cũng như các bài viết khác, chúng ta sẽ vừa học lý thuyết và thực hành cùng các ví dụ luôn, như vậy sẽ Hiểu sâu và nhớ lâu, vần vãi :)).</p> 
+   <h3>Cài đặt Laravel Passport</h3> 
+   <p>Đầu tiên chúng ta tạo 1 project Laravel:</p> 
+   <pre>$ composer create-project --prefer-dist laravel/laravel passport<br>$ cd passport/</pre> 
+   <p>Tiếp theo chúng ta bắt đầu với việc cài đặt Laravel Passport thông qua <a href="https://allaravel.com/laravel-tutorials/composer-cong-cu-quan-ly-thu-vien-php-tuyet-voi/">Composer</a> do gói thư viện này không được tích hợp sẵn cùng với framework Laravel.</p> 
+   <pre>$ composer require laravel/passport
+</pre> 
+   <p>Tiếp theo là những công việc chúng ta thường làm khi cài đặt một gói thư viện mới: Đăng ký provider trong <code>config/app.php</code>.</p> 
+   <pre>'providers' =&gt; [
+    ...
+    Laravel\Passport\PassportServiceProvider::class,
+    ...
+],</pre> 
+   <p>Laravel Passport được thiết kế với một số các bảng trong cơ sở dữ liệu, bạn chỉ cần thực hiện lệnh <code>artisan migrate</code>. Passport đã đăng ký sẵn các bảng này trong framework, do đó bạn sẽ không tìm thấy các file tạo bảng trong thư mục <code>database/migrates</code> đâu.</p> 
+   <pre>$ php artisan migrate
+Migrating: 2016_06_01_000001_create_oauth_auth_codes_table
+Migrated:  2016_06_01_000001_create_oauth_auth_codes_table
+Migrating: 2016_06_01_000002_create_oauth_access_tokens_table
+Migrated:  2016_06_01_000002_create_oauth_access_tokens_table
+Migrating: 2016_06_01_000003_create_oauth_refresh_tokens_table
+Migrated:  2016_06_01_000003_create_oauth_refresh_tokens_table
+Migrating: 2016_06_01_000004_create_oauth_clients_table
+Migrated:  2016_06_01_000004_create_oauth_clients_table
+Migrating: 2016_06_01_000005_create_oauth_personal_access_clients_table
+Migrated:  2016_06_01_000005_create_oauth_personal_access_clients_table</pre> 
+   <p>Ok, bước tiếp theo với câu lệnh <code>artisan passport:install</code>, sẽ tạo ra các khóa mã hóa dùng trong việc sinh ra các thẻ truy nhập (access token). Nó tạo ra hai khóa mã hóa là personal access và password grant.</p> 
+   <pre>$ php artisan passport:install
+Encryption keys generated successfully.
+Personal access client created successfully.
+Client ID: 1
+Client Secret: erCzNy1k4G9rgHIc71xY9oyDfAoiEFX06w29audt
+Password grant client created successfully.
+Client ID: 2
+Client Secret: xYedgLyFXXDuPXiZneBRqXW07nbHnLAGuvyoftfi</pre> 
+   <p>Các thông tin này bạn có thể lưu để dùng lại hoặc có thể lấy lại trong bảng <code>oauth_clients</code> trong database. Sau khi thực hiện câu lệnh này cần thêm trait <code>Laravel\Passport\HasApiTokens</code> vào model <code>App\User.php</code>.</p> 
+   <pre>&lt;?php
+
+namespace App;
+
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class User extends Authenticatable
+{
+    use HasApiTokens, Notifiable;</pre> 
+   <p>Tiếp đó gọi phương thức <code>Passport::routes()</code> trong phương thức <code>boot()</code> của <code>app\Providers\AuthServiceProvider.php</code>.</p> 
+   <pre>&lt;?php
+
+namespace App\Providers;
+
+use Laravel\Passport\Passport;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+
+
+class AuthServiceProvider extends ServiceProvider {
+
+    /**
+     * The policy mappings for the application.
+     *
+     * @var array
+     */
+    protected $policies = [
+        'App\Model' =&gt; 'App\Policies\ModelPolicy',
+    ];
+
+    /**
+     * Register any authentication / authorization services.
+     *
+     * @return void
+     */
+    public function boot() {
+        $this-&gt;registerPolicies();
+
+        Passport::routes();
+    }
+}</pre> 
+   <p>Cuối cùng là driver cho api trong <code>config/auth.php</code>.</p> 
+   <pre>'guards' =&gt; [
+    'web' =&gt; [
+        'driver' =&gt; 'session',
+        'provider' =&gt; 'users',
+    ],
+
+    'api' =&gt; [
+        'driver' =&gt; 'passport',
+        'provider' =&gt; 'users',
+    ],
+],</pre> 
+   <h3>Frontend được xây dựng sẵn trong Laravel Passport</h3> 
+   <p>Passport có sẵn các JSON API cho việc tạo các client (client id và client secret) và access token, tuy nhiên nó cũng hỗ trợ các giao diện fontend để làm việc này. Laravel Passport đã xây dựng sẵn một số Vue component sử dụng cho các công việc trong OAuth 2. Thưc hiện publish các component này bằng câu lệnh vendor:publish như sau:</p> 
+   <pre>$ php artisan vendor:publish --tag=passport-components
+</pre> 
+   <p>Các Vue component được publish sẽ nằm trong thư mục <code> resources/js/components/passport</code>. Muốn sử dụng chúng cần khai báo trong <code> resources/js/app.js</code> là điểm bắt đầu của ứng dụng Vue.js như sau:</p> 
+   <pre>Vue.component(
+    'passport-clients',
+    require('./components/passport/Clients.vue')
+);
+
+Vue.component(
+    'passport-authorized-clients',
+    require('./components/passport/AuthorizedClients.vue')
+);
+
+Vue.component(
+    'passport-personal-access-tokens',
+    require('./components/passport/PersonalAccessTokens.vue')
+);</pre> 
+   <p>Sau khi đăng ký, thực hiện biên dịch lại bằng <a href="https://allaravel.com/laravel-tutorials/laravel-mix-cong-cu-xay-dung-tong-hop-cho-du-an-laravel/">Laravel Mix</a> với câu lệnh <code>npm run dev</code>.</p> 
+   <pre>$ npm run dev</pre> 
+   <p>Tiếp đó, đưa các template vào bất kỳ đâu bạn muốn hiển thị các chức năng này.</p> 
+   <pre>&lt;passport-clients&gt;&lt;/passport-clients&gt;
+&lt;passport-authorized-clients&gt;&lt;/passport-authorized-clients&gt;
+&lt;passport-personal-access-tokens&gt;&lt;/passport-personal-access-tokens&gt;</pre> 
+   <h3>Deploying Passport</h3> 
+   <p>When deploying Passport to your production servers for the first time, you will likely need to run the passport:keys command. This command generates the encryption keys Passport needs in order to generate access token. The generated keys are not typically kept in source control:</p> 
+   <pre>php artisan passport:keys</pre> 
+   <p><br></p> 
+   <p><br></p> 
+   <p><br></p> 
+   <br> 
+   <h2>6. Lời kết</h2> 
+   <p>Cuối cùng thì cũng đã kết thúc, tổng kết lại bạn nắm được hai vấn đề chính là hiểu chi tiết hơn về OAuth 2 sau khi học <a href="https://allaravel.com/laravel-tutorials/gioi-thieu-oauth2/">Lý thuyết OAuth 2</a> và cách sử dụng Laravel Passport để tạo ra các hệ thống hỗ trợ OAuth 2. Bài viết được tổng hợp từ nhiều nguồn kết hợp với kinh nghiệm thực tế, nhưng không tránh khỏi thiếu sót, bạn hãy cùng thảo luận với chúng tôi ở comment dưới đây nhá.</p> 
+   <p>Tham khảo</p> 
+   <p></p> 
+   <p>https://allaravel.com/laravel-tutorials/xac-thuc-api-bang-oauth-2-voi-laravel-passport/</p> 
+   <p>https://laravel.com/docs/master/passport</p> 
+   <p><br> </p> 
+   <p><br> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

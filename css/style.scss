@@ -1,0 +1,26 @@
+/**
+ * Nhiều khi cần sử dụng thư viện, không làm từ đầu.
+ * Để sau này có thể maintain dễ dàng.
+ * Công sức maintain là quan trọng. Nhiều khi đọc lại code không hiểu mình đã làm thế nào.
+ * File CSS, JS nặng một tý cũng không sao.
+ * Việc giảm dung lượng từ 2KB xuống 1KB là không đáng để đầu tư so với code ngắn gọn, dễ hiểu.
+ */
+@import "mixins";
+
+// Include và ghi đè các file thư viện
+@import 'bootstrap-extended';
+// @import 'vendors/vue-tags-input';
+// @import 'vendors/line-awesome';
+
+
+@import "toc";
+@import "heading";
+@import "layout";
+
+// Chỉnh lại các style
+@import "custom";
+
+@import "pages/home-page";
+@import "pages/posts";
+
+@import "facebook_comment";

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wavesurfer.js Demo</title>
+    <style>
+        #waveform { background-color: #23587D; }
+    </style>
+</head>
+
+<body>
+	<div id="progress">0%</div>
+    <div id="waveform"></div>
+
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <script>
+        var wavesurfer = WaveSurfer.create({
+            container: '#waveform',
+            responsive: true,
+            waveColor: '#42d2f4',
+            progressColor: '#fff',
+            barWidth: 3,
+            cursorColor: '#ffffff',
+            cursorWidth: 1,
+            height: 50
+        });
+
+		
+		
+        wavesurfer.on('ready', function() {
+			document.getElementById('progress').style.display = 'none';
+            wavesurfer.play();
+        });
+		
+		wavesurfer.on('loading', function(percent) {
+			document.getElementById('progress').value = percent + '%';
+		});
+		
+		wavesurfer.load('https://rawgit.com/trongnghia203/wavesurfer-example/master/audio/Nhu-Canh-Vac-Bay-Hong-Nhung.mp3');
+    </script>
+</body>
+</html>

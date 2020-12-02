@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Compare Revisions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta name="description" content="Compare Revisions">
+  </head>
+  <body>
+    <article>
+      <h2>Xem lịch sử</h2>
+      <p>So sánh các phiên bản.</p>
+      <h3>git log</h3>
+      <p>Xem lịch sử các lần commit:</p>
+      <pre>git log</pre>
+      <p>Xem lịch sử các lần commit của 2 commit gần nhất (hoặc một số bất kỳ):</p>
+      <pre>git log -2</pre>
+      <p>Xem lịch sử commit bao gồm cả thông tin các thay đổi:</p>
+      <pre>git log -p</pre>
+      <p>Xem lịch sử commit dưới dạng một dòng cho dễ nhìn:</p>
+      <pre>git log --pretty=oneline</pre>
+      <h3>gitk</h3>
+      <p>Bạn có thể sử dụng công cụ đồ họa gitk được xuất bản kèm với git. Nếu
+        bạn gõ <code>gitk</code> trên thư mục của dự án, bạn sẽ thấy giống như
+        hình dưới.</p>
+      <p></p>
+      <p> <img src="https://git-scm.com/figures/18333fig0202-tn.png"> </p>
+      <p></p>
+      <p>Bạn có thể xem lịch sử commit ở phần nửa trên của cửa sổ cùng cùng một
+        biểu đồ "cây" (ancestry) trực quan. Phần xem diff ở nửa dưới của cửa sổ
+        hiện thị các thay đổi trong bất kỳ commit nào bạn click ở trên.</p>
+      <p></p>
+      <h3>git diff</h3>
+      <p>Xem thay đổi (chưa đc add) của những file hiện tại:</p>
+      <pre>git diff</pre>
+      <p>Xem thay đổi giữa local mà master:</p>
+      <pre>git diff origin/master</pre>
+      <p>Xem thay đổi (đã được add, chưa commit):</p>
+      <pre>git diff --cached</pre>
+      <p>Xem thay đổi trước khi push:</p>
+      <pre>git diff --cached origin/master</pre>
+      <p>Xem thay đổi giữa 2 commit:</p>
+      <pre>git diff COMMIT1_ID COMMIT2_ID</pre>
+      <p>Xem thay đổi của 1 lần commit (so với trước đó):</p>
+      <pre>git diff COMMIT_ID</pre>
+      <p>Hiển thị các thay đổi từ cách đây 1 commit:</p>
+      <pre>git diff HEAD~1 HEAD</pre>
+      <p>Chỉ hiển thị danh sách file và trạng thái, thêm tùy chọn <code>--name-status</code>,
+        ví dụ:</p>
+      <pre>git diff --name-status HEAD~1 HEAD</pre>
+      <p>How to list only the file names that changed between two commits?</p>
+      <pre>git diff --name-only SHA1 SHA2</pre>
+      <p>where you only need to include enough of the SHA to identify the
+        commits. You can also do, for example</p>
+      <pre>git diff --name-only HEAD~10 HEAD~5</pre>
+      <p>to see the differences between the tenth latest commit and the fifth
+        latest (or so).</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    
+  </body>
+</html>

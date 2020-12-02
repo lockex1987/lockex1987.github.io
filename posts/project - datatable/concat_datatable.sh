@@ -1,0 +1,1 @@
+cat "libs/libs.js" "src/datatable.js" > "js/datatable.js"

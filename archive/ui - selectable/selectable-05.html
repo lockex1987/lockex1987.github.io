@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>jQuery UI Selectable</title>
+      <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+      <style>
+         #selectable-2 .ui-selecting,#selectable-3 .ui-selecting { 
+            background: #707070 ; }
+         #selectable-2 .ui-selected,#selectable-3 .ui-selected { 
+            background: #EEEEEE; color: #000000; }
+         #selectable-2,#selectable-3 { list-style-type: none; margin: 0; 
+            padding: 0; width: 20%; }
+         #selectable-2 li,#selectable-3 li { margin: 3px; padding: 0.4em; 
+            font-size: 16px; height: 18px; }
+         .ui-widget-content {
+            background: #cedc98;
+            border: 1px solid #DDDDDD;
+            color: #333333;
+         }
+      </style>
+      <script>
+         $(function() {
+            $( "#selectable-2" ).selectable({
+               delay : 1000
+            });
+            $( "#selectable-3" ).selectable({
+               distance : 100
+            });
+         });
+      </script>
+   </head>
+   <body>
+      <h3>Starts after delay of 1000ms</h3>
+      <ol id="selectable-2">
+         <li class="ui-widget-content">Product 1</li>
+         <li class="ui-widget-content">Product 2</li>
+         <li class="ui-widget-content">Product 3</li>
+      </ol>
+      <h3>Starts after mouse moves distance of 100px</h3>
+      <ol  id="selectable-3">
+         <li class="ui-widget-content">Product 4</li>
+         <li class="ui-widget-content">Product 5</li>
+         <li class="ui-widget-content">Product 6</li>
+         <li class="ui-widget-content">Product 7</li>
+      </ol>
+   </body>
+</html>

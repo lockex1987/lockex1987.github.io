@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Text to speech, speech synthesis">
+    <title>Tổng hợp tiếng nói</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Tổng hợp tiếng nói</h2>
+      <h3>Dữ liệu demo</h3>
+      <div class="mb-3">
+        <textarea id="demoText" class="form-control"></textarea>
+      </div>
+      <pre id="text1">Hôm nay ăn gì?
+Cao Thị Thùy Dương là vợ của Nguyễn Văn Huyên.
+Nguyễn Anh Tuấn.</pre>
+      <pre id="text2">Hôm nay em làm chân gà sả tắc và chân gà xốt Thái, món siêu ghiền cho các anh xem bóng đá, anh chị nào muốn dùng cho em xin order luôn ạ.
+Em cũng có mấy món bánh chọn lọc và ngon,
+- Gía: 90k/hộp 15 chân ạ
+- Chân gà và các nguyên liệu nấu em mua từ siêu thị (BigC hoặc AEON), nói không với gà lạnh, gà chợ. Vị vừa ăn, điều chỉnh theo yêu cầu riêng.
+- Chân gà giòn, béo, vừa vị, nước mắm dùng nước mắm ở quê nên yên tâm ạ
+Em cám ơn.</pre>
+      <pre id="text3">Tin sốc: HLV sam-pao-li xin ý kiến Messi về việc đưa a-ghuê-rô vào sân.</pre>
+      <pre id="text4">Đá pê-nan-ti, Đức vô địch guôn-cúp</pre>
+      <pre id="text5">Hãy nói thật xì tin</pre>
+      <pre id="text6">How are you? I'm fine. Thank you. And you?</pre>
+      <h3>Native</h3>
+      <p>Hỗ trợ native của trình duyệt. Ít giọng đọc; giọng không chất lượng,
+        còn thô cứng.</p>
+      <div id="demoNative"></div>
+      <h3>Read Aloud</h3>
+      <p>API do Read Aloud cung cấp.</p>
+      <div id="demoReadAloud"></div>
+      <h3>VTCC TTS</h3>
+      <p>API do VTCC cung cấp.</p>
+      <div id="demoVtcc"></div>
+      <h3>Tham khảo</h3>
+      <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis"
+          target="_blank">SpeechSynthesis - Web APIs | MDN</a></p>
+      <p><a href="https://github.com/ken107/read-aloud" target="_blank">GitHub -
+          ken107/read-aloud: An awesome browser extension that reads aloud
+          webpage content with one click</a></p>
+      <p><a href="http://lsdsoftware.com/" target="_blank">LSD Software</a></p>
+      <p><a href="https://lockex1987.github.io/archive/project%20-%20tts%20audio%20book/"
+          target="_blank">Đọc truyện audio bằng tổng hợp tiếng nói</a></p>
+      <p><a href="https://lockex1987.github.io/archive/js%20-%20speech%20recognition/"
+          target="_blank">Nhận dạng tiếng nói</a></p>
+      <p><a href="https://viettelgroup.ai/" target="_blank">Viettel AI - Kiến
+          tạo tương lai</a></p>
+    </article>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <!-- readaloud.js yêu cầu jQuery -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/readaloud.js"></script>
+    <script src="js/demo-native.js"></script>
+    <script src="js/demo-read-aloud.js"></script>
+    <script src="js/demo-vtcc.js"></script>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

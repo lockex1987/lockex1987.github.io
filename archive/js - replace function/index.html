@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="str.replace()">
+    <title>Phương thức String replace trong JS</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+        .demo {
+            background-color: #EEE;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <article>
+        <h2>Phương thức String replace trong JS</h2>
+        <p>Phương thức <code>replace</code> của String trả về một xâu mới với một, một số,
+            hoặc tất cả các pattern tìm được với một sự thay thế nào đó. Pattern có
+            thể là một xâu hoặc một biểu thức chính quy. Sự thay thế có thể là một xâu
+            hoặc một hàm.</p>
+
+
+        <h3>Ví dụ đơn giản</h3>
+        <p>Replace xâu "Microsoft" với "W3Schools":</p>
+        <p id="demo" class="demo">Visit Microsoft!</p>
+        <p> <button onclick="myFunction()">Try it</button> </p>
+        <script>
+            function myFunction() {
+                var str = document.getElementById("demo").textContent;
+                var res = str.replace("Microsoft", "W3Schools");
+                document.getElementById("demo").textContent = res;
+            }
+        </script>
+
+
+        <h3>Replace tất cả</h3>
+        <p>Replace tất cả xâu "blue" với "red":</p>
+        <p id="demo1" class="demo">Mr Blue has a blue house and a blue car.</p>
+        <p> <button onclick="myFunction1()">Try it</button> </p>
+        <script>
+            function myFunction1() {
+                var str = document.getElementById("demo1").textContent;
+                var res = str.replace(/blue/g, "red");
+                document.getElementById("demo1").textContent = res;
+            }
+        </script>
+
+
+        <h3>Không phân biệt chữ hoa chữ thường</h3>
+        <p>Replace xâu "blue" với "red":</p>
+        <p id="demo2" class="demo">Mr Blue has a blue house and a blue car.</p>
+        <p> <button onclick="myFunction2()">Try it</button> </p>
+        <script>
+            function myFunction2() {
+                var str = document.getElementById("demo2").textContent;
+                var res = str.replace(/blue/gi, "red");
+                document.getElementById("demo2").textContent = res;
+            }
+        </script>
+
+
+        <h3>Sử dụng hàm thay thế</h3>
+        <p>Chuyển "blue", "house", "car" thành chữ hoa:</p>
+        <p id="demo3" class="demo">Mr Blue has a blue house and a blue car.</p>
+        <p> <button onclick="myFunction3()">Try it</button> </p>
+        <script>
+            function myFunction3() {
+                var str = document.getElementById("demo3").textContent;
+                var res = str.replace(/blue|house|car/gi, function myFunction(x) {
+                    return x.toUpperCase();
+                });
+                document.getElementById("demo3").textContent = res;
+            }
+        </script>
+
+
+        <h3>Replacement pattern</h3>
+        <p>Xâu thay thế có thể chứa các replacement pattern đặc biệt sau:</p>
+        <table>
+            <tbody>
+                <tr>
+                    <th>Pattern</th>
+                    <th>Inserts</th>
+                </tr>
+                <tr>
+                    <td>$$</td>
+                    <td>Inserts a ‘$’</td>
+                </tr>
+                <tr>
+                    <td>$&amp;</td>
+                    <td>Inserts the matched string</td>
+                </tr>
+                <tr>
+                    <td>$`</td>
+                    <td>Inserts the portion of the string that PRECEDES the matched
+                        substring</td>
+                </tr>
+                <tr>
+                    <td>$'</td>
+                    <td>Inserts the portion of the string that FOLLOWS the matched
+                        substring</td>
+                </tr>
+                <tr>
+                    <td>$<code>n</code></td>
+                    <td>Where <code>n</code> is a non-negative integer less than 100,
+                        inserts the <code>n</code><sup>th</sup> parenthesized submatch
+                        string</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Đảo các từ trong xâu:</p>
+        <p id="demo4a" class="demo">John Smith</p>
+        <p> <button onclick="myFunction4a()">Try it</button> </p>
+        <script>
+            function myFunction4a() {
+                var str = document.getElementById("demo4a").textContent;
+                var res = str.replace(/(\w+)\s(\w+)/, '$2, $1');
+                document.getElementById("demo4a").textContent = res;
+            }
+        </script>
+
+        <p>Chuyển dạng camel case sang dạng kebab case:</p>
+        <p id="demo4b" class="demo">borderTop</p>
+        <p> <button onclick="myFunction4b()">Try it</button> </p>
+        <script>
+            function myFunction4b() {
+                var str = document.getElementById("demo4b").textContent;
+                var res = str.replace(/[A-Z]/g, function (match) {
+                    return '-' + match.toLowerCase();
+                });
+                document.getElementById("demo4b").textContent = res;
+            }
+        </script>
+
+        <p>This won't work because <code>'$&amp;'.toLowerCase()</code> would be
+            evaluated first as a string literal.</p>
+
+        <p id="demo4c" class="demo">borderTop</p>
+        <p> <button onclick="myFunction4c()">Try it</button> </p>
+        <script>
+            function myFunction4c() {
+                var str = document.getElementById("demo4c").textContent;
+                var res = str.replace(/[A-Z]/g, '-' + '$&'.toLowerCase());
+                document.getElementById("demo4c").textContent = res;
+            }
+        </script>
+
+        <p>Highlight các xâu tìm thấy:</p>
+        <p id="demo4d" class="demo">Nguyen Van Huyen loves Cao Thi Thuy Duong</p>
+        <p> <button onclick="myFunction4d()">Try it</button> </p>
+        <script>
+            function myFunction4d() {
+                var str = document.getElementById("demo4d").textContent;
+                var res = str.replace(/Huyen|Duong/g, '<span style="background-color: yellow;">$&</span>');
+                document.getElementById("demo4d").innerHTML = res;
+            }
+        </script>
+
+
+        <h3>Chỉ định một hàm như là một tham số</h3>
+        <p id="demo5" class="demo">abc12345#$*%</p>
+        <p> <button onclick="myFunction5()">Try it</button> </p>
+        <script>
+            function myFunction5() {
+                var div = document.getElementById("demo5");
+                var str = div.textContent;
+                function replacer(match, p1, p2, p3, offset, string) {
+                    // p1 is nondigits, p2 digits, and p3 non-alphanumerics
+                    return [p1, p2, p3].join(' - ');
+                }
+                var res = str.replace(/([^\d]*)(\d*)([^\w]*)/, replacer);
+                div.textContent = res;
+            }
+        </script>
+
+
+        <h3>Đổi từ đơn vị nhiệt độ Fahrenheit sang Celcius</h3>
+        <p id="demo6" class="demo">Water freezes at 32F and boils at 212F.</p>
+        <p> <button onclick="myFunction6()">Try it</button> </p>
+        <script>
+            function myFunction6() {
+                var div = document.getElementById("demo6");
+                var str = div.textContent;
+                var res = str.replace(/(-?\d+(?:\.\d*)?)F\b/g, function (match, p1) {
+                    return ((p1 - 32) * 5 / 9) + 'C';
+                });
+                div.textContent = res;
+            }
+        </script>
+
+
+        <h3>Sử dụng hàm inline để tránh vòng lặp</h3>
+        <p>The followiing example takes a string pattern and convert it into an
+            array of object</p>
+        <p id="demo7" class="demo">x-x_</p>
+        <p> <button onclick="myFunction7()">Try it</button> </p>
+        <script>
+            function myFunction7() {
+                var div = document.getElementById("demo7");
+                var str = div.textContent;
+                var retArr = [];
+                str.replace(/(x_*)|(-)/g, function (match, p1, p2) {
+                    if (p1) {
+                        retArr.push({ on: true, length: p1.length });
+                    }
+                    if (p2) {
+                        retArr.push({ on: false, length: 1 });
+                    }
+                });
+
+                var html = "";
+                for (var i = 0; i < retArr.length; i++) {
+                    var e = retArr[i];
+                    html += `<div>{ on: ${e.on}, length: ${e.length} }`;
+                }
+                div.innerHTML = html;
+            }
+        </script>
+
+
+        <h3>Inject template</h3>
+        <p id="template" class="demo">{husband} loves {wife}</p>
+        <p> <button onclick="injectTemplate()">Try it</button> </p>
+        <script>
+            function injectTemplate() {
+                var div = document.getElementById("template");
+                var str = div.textContent;
+                var config = { husband: 'Huyen', wife: 'Duong' };
+                var res = str.replace(/{(\w+)}/g, function (match, p1) {
+                    return config[p1];
+                });
+                div.textContent = res;
+            }
+        </script>
+
+
+        <p>The <code>replace</code> function is a more powerful mechanism than
+            most developers expect.</p>
+        <h3>Escape HTML</h3>
+        <p id="demoXss" class="demo">
+            <em>Hello</em>
+            <strong>World</strong>
+        </p>
+        <p> <button onclick="processEscapeHtml()">Try it</button> </p>
+        <script>
+            function escapeHtml(str) {
+                var replacements = {
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '&': '&amp;',
+                    '"': '&quot;'
+                };
+                return str.replace(/[<>&"]/g, function (c) {
+                    return replacements[c];
+                });
+            }
+
+            function processEscapeHtml() {
+                var div = document.getElementById('demoXss');
+                var str = div.innerHTML;
+                var escapedCode = escapeHtml(str);
+                div.innerHTML = escapedCode;
+            }
+        </script>
+
+
+
+        <h3>Phương thức String format</h3>
+        <p id="demoFormat" class="demo">
+            Hello <strong>{0}</strong>
+        </p>
+        <p> <button onclick="demoStringFormat()">Try it</button> </p>
+        <script>
+            if (!String.prototype.format) {
+                String.prototype.format = function () {
+                    // The text
+                    var text = this;
+
+                    // Get argument (array) object
+                    // The arguments object is not an Array.
+                    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments
+                    // https://www.w3schools.com/js/js_function_parameters.asp
+                    var args = arguments;
+
+                    // JavaScript replace function: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace
+                    // If text is "Hello {0}", match will be "{0}" and submatchIdx will be "0"
+                    return text.replace(/{(\d+)}/g, function (match, submatchIdx) {
+                        // typeof operator
+                        // https://www.w3schools.com/js/js_datatypes.asp
+                        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof
+                        // http://stackoverflow.com/questions/2703102/typeof-undefined-vs-null
+
+                        //console.log(match + " - " + (typeof match));
+                        //console.log(submatchIdx + " - " + (typeof submatchIdx));
+                        return (typeof args[submatchIdx] != "undefined") ? args[submatchIdx] : match;
+                    });
+                }
+            }
+
+            function demoStringFormat() {
+                var div = document.querySelector("#demoFormat");
+                var str = div.innerHTML.trim();
+                str = str.format("World");
+                div.innerHTML = str;
+            }
+        </script>
+    </article>
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

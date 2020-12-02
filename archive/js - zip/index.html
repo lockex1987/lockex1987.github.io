@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="zip" />
+
+    <title>Nén và giải nén ZIP file</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+    <article>
+        <h2>Nén và giải nén ZIP file</h2>
+
+        <section>
+            <h3>Liệt kê và đọc file text</h3>
+
+            <div class="mb-3">
+                <label for="inputFile">Chọn file ZIP:</label>
+                <input type="file" id="inputFile" />
+            </div>
+
+            <div>
+                Danh sách file bên trong
+            </div>
+            <div class="mb-3 text-muted font-size-0.875">
+                Click để xem nội dung file text trong file ZIP
+            </div>
+            <ul id="ulFilesContained"></ul>
+
+            <div class="mb-3">Nội dung file text:</div>
+            <textarea id="textAreaFileSelectedAsText" rows="8" class="form-control mb-3"></textarea>
+        </section>
+
+        <section>
+            <h3>Hiển thị HTML</h3>
+            <div class="mb-3">
+                <label for="zipFile">Chọn file ZIP:</label>
+                <input type="file" id="zipFile" />
+            </div>
+            <div id="htmlResult"></div>
+        </section>
+
+        <h3>Tham khảo</h3>
+        <p><a href="https://stuk.github.io/jszip/" target="_blank">JSZip</a></p>
+    </article>
+
+    <script src="libs/jszip.js"></script>
+    <!--script src="libs/jszip-utils.js"></script-->
+
+    <script src="js/script.js"></script>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

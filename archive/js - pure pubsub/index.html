@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <meta name="description" content="Pure JS PubSub System">
+  <title>Pure JS PubSub System</title> 
+
+
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+
+ </head> 
+ <body> 
+  <article> 
+   <p>If you've not used pub/sub before, the gist is that you publish to a topic and anyone can subscribe, much like the way a radio works: a radio station broadcasts (publishes) and anyone can listen (subscribes). This is excellent for highly modular web applications; it's a license to globally communicate without attaching to any specific object.</p> 
+   <p>I use pub/sub religiously on this website and this object has done me a world of good. I have one topic that fires upon each AJAX page load, and several subscriptions fire during that event (ad re-rendering, comment re-rendering, social button population, etc.). Evaluate your application and see where you might be able to use pub/sub!</p> 
+   <p>Pub/Sub pattern giúp chúng ta decouple trang web to thành các component con nhưng vẫn có thể liên lạc giữa các component con.</p> 
+   <p>https://davidwalsh.name/pubsub-javascript</p> 
+   <p>https://paul.kinlan.me/building-a-pubsub-api-in-javascript/</p> 
+   <p><a target="_blank" href="demo.html">Demo</a></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

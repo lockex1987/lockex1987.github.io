@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Docker Compose Flask</title>
+  </head>
+  <body>
+    <p>------</p>
+    <p><img src="https://viblo.asia/uploads/5ba6eabc-db92-41c5-b8b7-71b40b2e7a8b.jpg"></p>
+    <p>Compose là công cụ giúp định nghĩa và khởi chạy multi-container Docker
+      applications. Trong Compose, chúng ta sử dụng Compose file để cấu hình
+      application’s services. Chỉ với một câu lệnh, lập trình viên có thể dễ
+      dàng create và start toàn bộ các services phục vụ cho việc chạy ứng dụng.</p>
+    <p>Compose là một công cụ tuyệt với không chỉ dùng cho development, testing,
+      staging environments, mà còn ứng dụng trong CI workflows. Việc sử dụng
+      Docker Compose được tóm lược trong 3 bước cơ bản sau:</p>
+    <ul>
+      <li>Khai báo app’s environment với Dockerfile.</li>
+      <li>Khai báo các services cần thiết để chạy app trong docker-compose.yml.</li>
+      <li>Run docker-compose up và Compose sẽ start và run app.</li>
+    </ul>
+    <p>Dưới đây là một ví dụ về file <code>docker-compose.yml</code>:</p>
+    <pre>version: '2'
+services:
+  web:
+    build: .
+    ports:
+    - "5000:5000"
+    volumes:
+    - .:/code
+    - logvolume01:/var/log
+    links:
+    - redis
+  redis:
+    image: redis
+volumes:
+  logvolume01: {}
+</pre>
+    <p>Trong bài viết này chúng ta sẽ thử xây dựng một ứng dụng web Python chạy
+      trên Docker Compose. Ứng dụng này sử dụng Flask framework và lưu trữ hit
+      counter trên Redis. Demo này tương đối dễ hiểu và giúp người đọc làm quen
+      nhanh chóng với Docker compose.</p>
+    <p>Trước khi bắt tay vào thử hãy đảm bảo bạn đã cài đặt cả Docker Engine
+      &amp; Docker Compose trên máy tính.</p>
+    <h3>Step 1: Setup</h3>
+    <h4>1. Tạo thư mục cho project</h4>
+    <pre>$ mkdir composetest
+$ cd composetest
+</pre>
+    <h4>2. Tạo file app.py trong thư mục project với nội dung sau</h4>
+    <pre><code>from flask import Flask
+from redis import Redis
+
+app = Flask(__name__)
+redis = Redis(host='redis', port=6379)
+
+@app.route('/')
+def hello():
+    count = redis.incr('hits')
+    return 'Hello World! I have been seen {} times.\n'.format(count)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", debug=True)
+</code></pre>
+    <h4>3. Tạo 1 file requirements.txt trong project directory với nội dung sau</h4>
+    <pre><code>flask
+redis
+</code></pre>
+    <p>Khai báo các application’s dependencies.</p>
+    <h3>Step 2: Tạo Dockerfile</h3>
+    <p>Trong bước này chúng ta tiến hành viết Dockerfile để build ra Docker
+      image. Image này chứa toàn bộ các dependencies mà app Python require, bao
+      gồm cả chính Python.</p>
+    <p>Trong thư mục project, tạo file name <code>Dockerfile</code> và paste
+      nội dung sau vào:</p>
+    <pre><code>FROM python:3.4-alpine
+ADD . /code
+WORKDIR /code
+RUN pip install -r requirements.txt
+CMD ["python", "app.py"]
+</code></pre>
+    <p>Chúng ta có thể hiểu đơn giản thành các bước sau:</p>
+    <ul>
+      <li>Build một image từ image Python 3.4 có sẵn trên Docker hub.</li>
+      <li>Thêm thư mục hiện tại . vào thư mục <code>/code</code> bên trong
+        image.</li>
+      <li>Thiết lập thư mục làm việc với Docker thành <code>/code</code>.</li>
+      <li>Install các Python dependencies.</li>
+      <li>Set default command của container là <code>python app.py</code>.</li>
+    </ul>
+    <h3>Step 3: Khai báo các services bên trong Compose file</h3>
+    <p>Create một file tên là <code>docker-compose.yml</code> trong thư mục
+      project với nội dung sau:</p>
+    <pre><code>version: '2'
+services:
+  web:
+    build: .
+    ports:
+     - "5000:5000"
+    volumes:
+     - .:/code
+  redis:
+    image: "redis:alpine"
+</code></pre>
+    <p>Compose file khai báo 2 service là web và redis:</p>
+    <ul>
+      <li>Sử dụng image được build từ Dockerfile trong thư mục project.</li>
+      <li>Forward cổng expose 5000 của container sang cổng 5000 trên host
+        machine.</li>
+      <li>Mount thư mục project trên host sang /code bên trong container, cho
+        phép bạn chỉnh sửa code mà ko cần rebuild image.</li>
+    </ul>
+    <p>Redis service thì sử dụng public Redis image trên Docker Hub registry.</p>
+    <h3>Step 4: Build và run ứng dụng với Compose</h3>
+    <h4>1. Start ứng dụng từ thư mục project</h4>
+    <pre><code>$ docker-compose up
+ Pulling image redis...
+ Building web...
+ Starting composetest_redis_1...
+ Starting composetest_web_1...
+ redis_1 | [8] 02 Jan 18:43:35.576 # Server started, Redis version 2.8.3
+ web_1   |  * Running on http://0.0.0.0:5000/
+ web_1   |  * Restarting with stat
+</code></pre>
+    <p>Compose kéo Redis image về host và tiến hành build một image cho code,
+      sau đó start services bạn đã khai báo.</p>
+    <h4>2. Vào địa chỉ <a href="http://0.0.0.0:5000/" target="_blank">http://0.0.0.0:5000/</a>
+      trên trình duyệt sẽ thấy ứng dụng đang chạy</h4>
+    <p>Nếu bạn sử dụng Docker trên Linux, bạn cũng có thể thử vào bằng đường dẫn
+      sau: <a href="http://localhost:5000/" target="_blank">http://localhost:5000</a>.</p>
+    <p>Nếu bạn sử dụng Docker Machine trên Mac, hãy dùng lệnh <code>docker-machine
+        ip MACHINE_VM</code> để lấy IP address của Docker host. Sau đó vào bằng
+      đường dẫn sau: http://MACHINE_VM_IP:5000.</p>
+    <p>Bạn sẽ thấy message sau trên trình duyệt:</p>
+    <pre>Hello World! I have been seen 1 times.
+</pre>
+    <h4>3. Refresh lại web page</h4>
+    <p>Số lượng view sẽ tăng lên.</p>
+    <h3>Step 5: Update the application</h3>
+    <p>Như đã đề cập trong step 3, application code đã được mount vào trong
+      container <code>volume</code>, chính vì thế lập trình viên có thể chỉnh
+      sửa code và thấy sự thay đổi này diễn ra tức thì mà không cần rebuild the
+      image.</p>
+    <h4>1. Sửa code file <a href="http://app.py/" target="_blank">app.py</a> và
+      save lại</h4>
+    <pre><code>return 'Hello from Docker! I have been seen {} times.\n'.format(count)
+</code></pre>
+    <h4>2. Refresh lại page và mọi thứ đã được cập nhật</h4>
+    <h3>Step 6: Một vài câu lệnh thông dụng trong Docker compose</h3>
+    <p>Nếu bạn muộn khởi chạy các services bên trong background, hãy thêm flag <code>-d</code>
+      (for “detached” mode) vào lệnh <code>docker-compose up</code> và sử dụng
+      lệnh <code>docker-compose ps</code> để thẩy những gì đang chạy trên host:</p>
+    <pre><code>$ docker-compose up -d
+Starting composetest_redis_1...
+Starting composetest_web_1...
+
+$ docker-compose ps
+Name                 Command            State       Ports
+-------------------------------------------------------------------
+composetest_redis_1   /usr/local/bin/run         Up
+composetest_web_1     /bin/sh -c python app.py   Up      5000-&gt;5000/tcp
+</code></pre>
+    <p>Câu lệnh <code>docker-compose run</code> cho phép ta chạy 1 lần nhiều
+      câu lệnh cho các service. Ví dụ để thấy các biến môi trường trên web
+      service:</p>
+    <pre><code>$ docker-compose run web env
+</code></pre>
+    <p>Dùng <code>docker-compose --help</code> để xem các câu lệnh có sẵn khác.</p>
+    <p>Nếu bạn started Compose với <code>docker-compose up -d</code> bạn có thể
+      sẽ cần stop các services, khi đó hãy dùng lệnh:</p>
+    <pre><code>$ docker-compose stop
+</code></pre>
+    <p>Bạn có thể xóa tất cả các container. Truyền vào --volumes để remove data
+      volume được dùng bởi Redis container:</p>
+    <pre><code>$ docker-compose down --volumes
+</code></pre>
+    <p>Tới đây, chắc hẳn là việc sử dụng Docker compose đã quá dễ dàng rồi.</p>
+  </body>
+</html>

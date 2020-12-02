@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>jquery.drawPieChart.js</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="pieChart" class="chart"></div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="jquery.drawPieChart.js"></script>
+  <script>
+    $(function() {
+      $("#pieChart").drawPieChart([
+        { title: "Tokyo", value: 120, color: "#FFD300" },
+        { title: "San Francisco", value: 80, color: "#C1BA35" },
+        { title: "New York", value: 70, color: "#034E53" },
+        { title: "London", value: 50, color: "#FC7C93" },
+        { title: "Sydney", value: 30, color: "#D1092E" },
+        { title: "Berlin", value: 20, color: "#333" }
+      ]);
+    });
+  </script>
+</body>
+</html>

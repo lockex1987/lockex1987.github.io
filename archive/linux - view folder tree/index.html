@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ls, directory">
+    <title>Hiển thị cây thư mục</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Hiển thị cây thư mục</h2>
+      <p>Lệnh <code>ls</code> chỉ hiển thị dữ liệu của một cấp. Để hiển thị dữ
+        liệu tất cả các cấp dạng cây, sử dụng lệnh <code>tree</code>.</p>
+      <p>Lệnh tree không được cài đặt mặc định. Bạn có thể cài như sau:</p>
+      <pre>sudo apt install tree</pre>
+      <p>Cấu trúc câu lệnh như sau:</p>
+      <pre>tree /path/to/folder</pre>
+      <p>Đầu ra dạng như sau:</p>
+      <pre>/usr/local/nginx/
+├── client_body_temp
+├── conf
+│&nbsp;&nbsp; ├── fastcgi.conf
+│&nbsp;&nbsp; ├── fastcgi.conf.default
+│&nbsp;&nbsp; ├── fastcgi_params
+│&nbsp;&nbsp; ├── fastcgi_params.default
+│&nbsp;&nbsp; ├── koi-utf
+│&nbsp;&nbsp; ├── koi-win
+│&nbsp;&nbsp; ├── mime.types
+│&nbsp;&nbsp; ├── mime.types.default
+│&nbsp;&nbsp; ├── nginx.conf
+│&nbsp;&nbsp; ├── nginx.conf.default
+│&nbsp;&nbsp; ├── scgi_params
+│&nbsp;&nbsp; ├── scgi_params.default
+│&nbsp;&nbsp; ├── uwsgi_params
+│&nbsp;&nbsp; ├── uwsgi_params.default
+│&nbsp;&nbsp; └── win-utf
+├── fastcgi_temp
+├── html
+│&nbsp;&nbsp; ├── 50x.html
+│&nbsp;&nbsp; └── index.html
+├── logs
+│&nbsp;&nbsp; ├── access.log
+│&nbsp;&nbsp; └── error.log
+├── proxy_temp
+├── sbin
+│&nbsp;&nbsp; ├── nginx
+│&nbsp;&nbsp; └── nginx.old
+├── scgi_temp
+└── uwsgi_temp
+
+9 directories, 21 files</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

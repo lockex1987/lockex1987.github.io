@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>CSS3 Perspective Demo 1</title>
+
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/demo.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <main>
+      <div class="container">
+
+        <h1 class="title">Square Moved Along z-Axis</h1>
+
+        <div class="row clearfix">
+          <div class="item">
+            <h2 class="item__title">No Perspective</h2>
+            <div class="perspective-container perspective--none">
+              <span class="surface">square</span>
+            </div>
+          </div>
+          <div class="item">
+            <h2 class="item__title">200px perspective, default origin</h2>
+            <div class="perspective-container perspective--200">
+              <span class="surface">square</span>
+            </div>
+          </div>
+          <div class="item">
+            <h2 class="item__title">100px perspective, [0 0] origin</h2>
+            <div class="perspective-container perspective--100 perspective-origin--00">
+              <span class="surface">square</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+</body>
+</html>

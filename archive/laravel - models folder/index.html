@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Thêm thư mục Models trong Laravel">
+    <title>Thêm thư mục Models trong Laravel</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Thêm thư mục Models trong Laravel</h2>
+      <h3>Tạo thư mục Models</h3>
+      <p>Mặc định khi vừa khởi tạo một project Laravel, chúng ta có luôn một
+        model là User. File <code>User.php</code> ở ngay ngoài thư mục app.</p>
+      <p>Sau này, khi chúng ta có nhiều bảng hơn, nhiều file model hơn, chả nhẽ
+        chúng ta cũng để hết các file ở ngoài thư mục app? Cần góp các file đó
+        vào một thư mục riêng (<code>Models</code>).</p>
+      <h3>Chuyển model mặc định User vào trong thư mục Models</h3>
+      <p>Đầu tiên, chúng ta phải tạo thư mục mới <code>app/Models</code>. Tiếp
+        theo chúng ta di chuyển file <code>User.php</code>, đổi namespace thành
+        <code>App\Models</code>.</p>
+      <p>Chúng ta phải sửa các file:</p>
+      <ul>
+        <li>config/auth.php</li>
+        <li>config/services.php</li>
+        <li>database/factories/UserFactory.php</li>
+        <li>app/Http/Controller/Auth/RegisterController.php</li>
+      </ul>
+      <p> </p>
+      <p><code>config/auth.php</code></p>
+      <pre>'providers' =&gt; [
+    'users' =&gt; [
+        'driver' =&gt; 'eloquent',
+        'model' =&gt; App\Models\User::class,
+    ],
+],
+</pre>
+      <p><code>config/services.php</code></p>
+      <pre>'stripe' =&gt; [
+    'model' =&gt; App\Models\User::class,
+    'key' =&gt; env('STRIPE_KEY'),
+    'secret' =&gt; env('STRIPE_SECRET'),
+    'webhook' =&gt; [
+        'secret' =&gt; env('STRIPE_WEBHOOK_SECRET'),
+        'tolerance' =&gt; env('STRIPE_WEBHOOK_TOLERANCE', 300),
+    ],
+],</pre>
+      <p><code>database/factories/UserFactory.php</code></p>
+      <pre>use App\Models\User;</pre>
+      <p><code>app/Http/Controller/Auth/RegisterController.php</code></p>
+      <pre>use App\Models\User;
+
+/**
+ * Create a new user instance after a valid registration.
+ *
+ * @param  array  $data
+ * @return \App\Models\User
+ */
+protected function create(array $data)
+{
+    return User::create([
+        'name' =&gt; $data['name'],
+        'email' =&gt; $data['email'],
+        'password' =&gt; Hash::make($data['password']),
+    ]);
+}</pre>
+      <h3>Câu lệnh generate model mới</h3>
+      <p>Mặc định câu lệnh <code>php artisan make:model</code> vẫn tạo file ở
+        ngoài thư mục <code>app</code>. Để tạo file vào trong thư mục <code>app/Models</code>,
+        chúng ta làm theo ví dụ sau:</p>
+      <pre>php artisan make:model Models/Foo</pre>
+      <h3>Thêm class BaseModel</h3>
+      <p>Có class BaseModel để làm các việc sau:</p>
+      <ul>
+        <li>Mặc định không timestamp</li>
+        <li>Tên bảng là số ít</li>
+        <li>Hỗ trợ camelCase các thuộc tính</li>
+      </ul>
+      <p>Chúng ta ít khi sử dụng các trường <code>created_at</code>, <code>updated_at</code>.</p>
+      <p>Tên bảng không nên là số nhiều. Số nhiều tiếng Anh không chỉ là thêm s
+        ở cuối, có khi là es, có khi là bất quy tắc.</p>
+      <p>Chúng ta có thể chỉnh từng Model như sau:</p>
+      <pre>protected $table = 'user';</pre>
+      <p>Nhưng làm thế sẽ rất thủ công.</p>
+      <p><br>
+      </p>
+      <p>Hỗ trợ camelCase các thuộc tính để xử lý với JS ở frontend. Chuẩn PHP
+        cũng là các thuộc tính dạng camelCase.</p>
+      <p><a target="_blank" href="https://github.com/kirkbushell/eloquence">https://github.com/kirkbushell/eloquence</a></p>
+      <p>Sử dụng thư viện vì thư viện được test, maintain kỹ.</p>
+      <p>Riêng class <code>User</code> đang extends class ở trong vendor <code>Illuminate\Foundation\Auth\User</code>,
+        chúng ta cần sửa lại:</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

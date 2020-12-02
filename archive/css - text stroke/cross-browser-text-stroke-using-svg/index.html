@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Cross-browser text stroke using SVG</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Alfa+Slab+One|Open+Sans:400,700'>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <h1>Cross-browser text stroke using SVG</h1>
+  <p>This is how browsers with SVG support will see it:</p>
+  <h1 class="stroke">
+    <svg xmlns="http://www.w3.org/2000/svg" width="640" height="72" viewBox="0 0 640 72">
+      <text x="0" y="64">Stroke of Genius</text>
+    </svg>
+  </h1>
+
+  <p>This is how older browsers will see it:</p>
+
+  <!-- Note you can use the same code as before, I just removed the SVG parts to simulate the effect of not supporting SVG -->
+  <h1 class="stroke">Stroke of Genius</h1>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tùy chỉnh Scrollbar">
+    <title>Tùy chỉnh scrollbar</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Tùy chỉnh Scrollbar</h2>
+      <p>Scrollbar là một thành phần hay gặp. Tuy nhiên, mỗi trình duyệt lại
+        hiển thị nó khác nhau. Làm thế nào để nó hiển thị đẹp và giống nhau ở
+        các trình duyệt khác nhau?</p>
+      <p><img src="images/customized-scrollbar-styles.png"></p>
+      <p>IE có các thuộc tính CSS riêng để chúng ta có thể đổi màu scrollbar.
+        WebKit (Chrome, Safari) thì có các thuộc tính CSS về thành phần và các
+        trạng thái của scrollbar, giúp chúng ta có thể điều chỉnh nhiều hơn.
+        Firefox thì không có thuộc tính CSS gì liên quan đến scrollbar.</p>
+      <p>Để làm cross-browser, chúng ta phải chọn giải pháp là dùng JS. Các thư
+        viện JS sẽ tạo một cái khung (các thẻ div), bắt sự kiện của chuột để mô
+        phỏng lại điều khiển giống như scrollbar.</p>
+      <p>Có các thư viện:</p>
+      <ul>
+        <li><a target="_blank" href="https://github.com/mdbootstrap/perfect-scrollbar">Perfect
+            scrollbar</a></li>
+        <li><a target="_blank" href="https://github.com/rochal/jQuery-slimScroll">Slim
+            scroll</a></li>
+        <li><a target="_blank" href="https://github.com/malihu/malihu-custom-scrollbar-plugin">Malihu
+            custom scrollbar</a></li>
+        <li><a target="_blank" href="https://github.com/vitch/jScrollPane">jScrollPane</a></li>
+      </ul>
+      <p>Tập trung vào jScrollPane.</p>
+      <h3>WebKit CSS</h3>
+      <p><a target="_blank" href="https://lockex1987.github.io/posts/ui%20-%20customize%20scrollbar/">Demo</a></p>
+      <h3>Perfect scrollbar</h3>
+      <p><a target="_blank" href="https://lockex1987.github.io/posts/javascript%20-%20perfect%20scrollbar/">Demo</a></p>
+      <h3>Slim scroll</h3>
+      <p><a target="_blank" href="jquery.slimscroll/index.html">Demo</a></p>
+      <h3>jScrollPane</h3>
+      <p><a target="_blank" href="jscrollpane/jscrollpane%20demo.html">Demo</a></p>
+      <p>Thư viện JS chuyển vùng div ban đầu của chúng ta về cấu trúc sau:</p>
+      <ul>
+        <li>jspScrollable (thẻ div ban đầu)</li>
+        <ul>
+          <li>jspContainer</li>
+          <ul>
+            <li>jspPane (nội dung của thẻ div ban đầu giờ sẽ chuyển vào đây)</li>
+            <li>jspVerticalBar</li>
+            <ul>
+              <li>jspCapTop</li>
+              <li>jspTrack</li>
+              <ul>
+                <li>jspDrag</li>
+              </ul>
+              <li>jspCapBottom</li>
+            </ul>
+          </ul>
+        </ul>
+      </ul>
+      <p>Khi nội dung trong thẻ div ngắn sẽ không hiển thị scrollbar.</p>
+      <p>Khi chúng ta resize lại trình duyệt, cần điều chỉnh lại cho chính xác.</p>
+      <p>Khi nội dung thay đổi (ngắn hơn hay dài hơn) thì chúng ta cũng cần điều
+        chỉnh lại.</p>
+      <p>Một scrollbar đẹp, độc đáo:</p>
+      <p><a target="_blank" href="http://dotroe.com/subpage.html">http://dotroe.com/subpage.html</a></p>
+      <h3>Malihu custom scrollbar</h3>
+      <p><a target="_blank" href="jquery.mcustomscrollbar/index.html">Demo</a></p>
+      <p>Các ví dụ khác:</p>
+      <p><a target="_blank" href="http://manos.malihu.gr/repository/custom-scrollbar/demo/examples/complete_examples.html">http://manos.malihu.gr/repository/custom-scrollbar/demo/examples/complete_examples.html</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

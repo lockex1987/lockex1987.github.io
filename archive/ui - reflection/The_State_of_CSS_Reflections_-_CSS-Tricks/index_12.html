@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html class=" -moz-">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico">
+  <link rel="mask-icon" type="" href="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111">
+  <title>CodePen - distribute n points on 100% interval (interactive)</title>
+  
+  
+  
+  
+      
+
+  
+
+  
+
+  
+  
+
+
+<link media="all" href="index_12.css" type="text/css" rel="stylesheet">
+</head>
+<body translate="no">
+
+  
+<svg viewBox="-2000 -1000 4000 2000" preserveAspectRatio="xMidYMid">
+  <defs>
+    <g id="pgraph">
+      <line y2="400"></line>
+      <circle r="40"></circle>
+    </g>
+    <text id="gpv">11.1%</text>
+  </defs>
+  <g class="pg" transform="translate(#{~~cfv})">
+    <use xlink:href="#pgraph"></use>
+    <text class="gcpv" y="-200">0%</text>
+    <text y="-400">0</text>
+  </g>
+  <g class="ig" transform="translate(#{~~cfv})">
+    <use xlink:href="#gpv" y="200"></use>
+    <text y="400">0</text>
+  </g>
+  <g class="pg" transform="translate(#{~~cfv})">
+    <use xlink:href="#pgraph"></use>
+    <text class="gcpv" y="-200">11.1%</text>
+    <text y="-400">1</text>
+  </g>
+  <g class="ig" transform="translate(#{~~cfv})">
+    <use xlink:href="#gpv" y="200"></use>
+    <text y="400">1</text>
+  </g>
+  <g class="pg" transform="translate(#{~~cfv})">
+    <use xlink:href="#pgraph"></use>
+    <text class="gcpv" y="-200">22.2%</text>
+    <text y="-400">2</text>
+  </g>
+  <g class="ig" transform="translate(#{~~cfv})">
+    <use xlink:href="#gpv" y="200"></use>
+    <text y="400">2</text>
+  </g>
+  <g class="pg" transform="translate(#{~~cfv})">
+    <use xlink:href="#pgraph"></use>
+    <text class="gcpv" y="-200">33.3%</text>
+    <text y="-400">3</text>
+  </g>
+  <g class="ig" transform="translate(#{~~cfv})">
+    <use xlink:href="#gpv" y="200"></use>
+    <text y="400">3</text>
+  </g>
+  <g class="pg" transform="translate(#{~~cfv})">
+    <use xlink:href="#pgraph"></use>
+    <text class="gcpv" y="-200">44.4%</text>
+    <text y="-400">4</text>
+  </g>
+  <g class="ig" transform="translate(#{~~cfv})">
+    <use xlink:href="#gpv" y="200"></use>
+    <text y="400">4</text>
+  </g>
+  <g class="pg" transform="translate(#{~~cfv})">
+    <use xlink:href="#pgraph"></use>
+    <text class="gcpv" y="-200">55.5%</text>
+    <text y="-400">5</text>
+  </g>
+  <g class="ig" transform="translate(#{~~cfv})">
+    <use xlink:href="#gpv" y="200"></use>
+    <text y="400">5</text>
+  </g>
+  <g class="pg" transform="translate(#{~~cfv})">
+    <use xlink:href="#pgraph"></use>
+    <text class="gcpv" y="-200">66.6%</text>
+    <text y="-400">6</text>
+  </g>
+  <g class="ig" transform="translate(#{~~cfv})">
+    <use xlink:href="#gpv" y="200"></use>
+    <text y="400">6</text>
+  </g>
+  <g class="pg" transform="translate(#{~~cfv})">
+    <use xlink:href="#pgraph"></use>
+    <text class="gcpv" y="-200">77.7%</text>
+    <text y="-400">7</text>
+  </g>
+  <g class="ig" transform="translate(#{~~cfv})">
+    <use xlink:href="#gpv" y="200"></use>
+    <text y="400">7</text>
+  </g>
+  <g class="pg" transform="translate(#{~~cfv})">
+    <use xlink:href="#pgraph"></use>
+    <text class="gcpv" y="-200">88.8%</text>
+    <text y="-400">8</text>
+  </g>
+  <g class="ig" transform="translate(#{~~cfv})">
+    <use xlink:href="#gpv" y="200"></use>
+    <text y="400">8</text>
+  </g>
+  <g class="pg" transform="translate(#{~~cfv})">
+    <use xlink:href="#pgraph"></use>
+    <text class="gcpv" y="-200">100%</text>
+    <text y="-400">9</text>
+  </g>
+  <polyline id="cline" points="-1640,560 -1600,640 1600,640 1640,560"></polyline>
+  <text id="gni" y="840">9 intervals</text>
+  <use xlink:href="#cline" transform="scale(1 -1)"></use>
+  <text id="gnp" y="-840">10 points</text>
+</svg>
+<form action="https://s.codepen.io/thebabydino/fullembedgrid/qNKWay?type=embed&amp;animations=run">
+  <label for="n">pick a number of points:</label>
+  <input id="n" min="3" max="10" value="10" type="range">
+  <output for="n"><code id="cnp">10</code> points, <code id="cni">9</code> intervals of <code><span id="cpv">11.1</span>%</code> each</output>
+</form>
+    
+
+  
+
+    
+
+  
+  
+
+
+
+ </body>
+</html>

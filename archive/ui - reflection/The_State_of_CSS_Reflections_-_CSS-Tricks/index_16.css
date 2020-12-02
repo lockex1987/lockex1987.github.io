@@ -1,0 +1,28 @@
+* { margin: 0px; padding: 0px; font: inherit; }
+html { overflow: hidden; min-width: 160px; height: 100vh; background: transparent repeating-linear-gradient(45deg, khaki 0px, khaki 3px, tan 4px, tan 7px, khaki 8px) repeat scroll 0% 0%; font: 0.625em/1.5 courier,monospace; }
+body { display: flex; flex-direction: column; height: 100vh; }
+svg { flex-grow: 1; }
+image { filter: grayscale(1); }
+pre { padding: 0.25em; background: rgba(0, 0, 0, 0.9) none repeat scroll 0% 0%; color: rgb(238, 238, 238); }
+[class*="token"]:not(.trigger), .curr { display: inline-block; padding: 0px 0.25em; border-radius: 3px; }
+.br { color: transparent; }
+.br::before { content: "\a _0"; }
+.br:nth-of-type(-n+2)::before { content: "\a _"; }
+.trigger { position: relative; }
+.curr { cursor: pointer; }
+:hover > .curr { background: rgb(225, 135, 40) none repeat scroll 0% 0%; }
+.popup { position: absolute; top: 100%; left: 50%; margin-top: 0.375em; padding: 0.5em; border-radius: 3px; transform: translate(-50%); background: rgba(0, 0, 0, 0.9) none repeat scroll 0% 0%; white-space: normal; }
+.popup * { display: block; }
+.hidden { opacity: 0.001; pointer-events: none; }
+input[type="radio"] { position: absolute; opacity: 0.001; pointer-events: none; }
+input[type="radio"] + label { margin: 0.25em 0px; padding: 0px 0.25em 0.25em 0px; white-space: nowrap; cursor: pointer; }
+input[type="radio"] + label::before { box-sizing: border-box; display: inline-block; margin: 0px 0.5em 0px 0.25em; border: 2px solid rgb(238, 238, 238); padding: 3px; width: 1.25em; height: 1.25em; border-radius: 50%; background: transparent none repeat scroll 0% 0% content-box; vertical-align: middle; content: ""; }
+input[type="radio"]:focus + label { outline: 2px solid rgb(225, 135, 40); }
+input[type="radio"]:checked + label { color: rgb(225, 135, 40); }
+input[type="radio"]:checked + label::before { background-color: rgb(225, 135, 40); }
+input[type="range"] { border: 0.5em solid transparent; width: 8em; height: 1.5em; background: transparent none repeat scroll 0% 0%; cursor: pointer; }
+input[type="range"]::-moz-range-track { width: 8em; height: 0.25em; background: rgb(238, 238, 238) none repeat scroll 0% 0%; }
+input[type="range"]::-moz-range-progress { background: rgb(225, 135, 40) none repeat scroll 0% 0%; }
+input[type="range"]::-moz-range-thumb { border: medium none; width: 1.25em; height: 1.25em; border-radius: 50%; background: rgb(225, 135, 40) none repeat scroll 0% 0%; }
+input[type="range"]:focus { outline: 2px solid rgb(225, 135, 40); }
+input[type="range"] + label { margin-top: 0.375em; text-align: center; }

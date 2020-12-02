@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo</title>
+
+    <style>
+*, *::before, *::after {
+    box-sizing: border-box; margin: 0; padding: 0;
+}
+
+
+:root {
+    --left-range-color: dodgerblue;
+    --right-range-color: #d3d3d3;
+    --thumb-color: #333;
+}
+
+
+
+body {
+    max-width: 500px;
+    margin: 30px auto;
+}
+
+.container {
+    padding: 10px;
+}
+
+
+/* The slider itself */
+input[type=range].slider {
+    /* Removes default webkit styles */
+    -webkit-appearance: none;
+    appearance: none;
+    
+    /* Fix for FF unable to apply focus style bug */
+    border: 1px solid white;
+    
+    /* Required for proper track sizing in FF */
+    width: 100%; /* Full-width */
+
+    /*height: 10px;*/ /* Specified height */
+    /*background: #d3d3d3;*/ /* Grey background */
+
+    outline: none; /* Remove outline */
+
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+
+    /* To create a round slider handle, use the border-radius property.
+    Tip: Set the height of the slider to a different value than the slider thumbs if you want unequal heights (15px vs. 25px in this example): */
+    border-radius: 5px;
+
+    color: #1aafff;
+}
+
+input[type=range].no-thumb {
+    height: 16px;
+}
+
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */ 
+input[type=range].slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    border: none;
+    height: 16px; /* Slider handle height */
+    width: 16px; /* Set a specific slider handle width */
+    border-radius: 50%;
+    background: var(--thumb-color);
+    margin-top: -4px;
+    cursor: pointer; /* Cursor on hover */
+}
+
+input[type=range].no-thumb::-webkit-slider-thumb {
+    background: var(--left-range-color);
+}
+
+
+input[type=range].slider::-moz-range-thumb {
+    border: none;
+    height: 16px; /* Slider handle height */
+    width: 16px; /* Set a specific slider handle width */
+    border-radius: 50%;
+    background: var(--thumb-color); /* Green background */
+    cursor: pointer; /* Cursor on hover (ew-resize) */
+}
+
+input[type=range].no-thumb::-moz-range-thumb {
+    background: var(--left-range-color);
+    box-shadow: -100vw 0 0 100vw dodgerblue;
+}
+
+input[type=range].slider::-ms-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: var(--thumb-color);
+}
+
+
+ input[type=range].white-thumb::-webkit-slider-thumb {
+    background: #fff;
+    border: 2px solid #999;
+    border-radius: 0;
+    box-sizing: border-box;
+}
+
+input[type=range].white-thumb::-moz-range-thumb {
+    background: #fff;
+    border: 2px solid #999;
+    border-radius: 0;
+    box-sizing: border-box;
+}
+
+input[type=range].white-thumb::-ms-thumb { 
+    background: #fff;
+    border: 2px solid #999;
+    border-radius: 0;
+    box-sizing: border-box;
+}
+
+
+
+input[type=range].slider:focus {
+    outline: none;
+}
+
+
+
+input[type=range].slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 5px;
+    background: #ddd;
+    border: none;
+    border-radius: 3px;
+}
+
+input[type=range].no-thumb::-webkit-slider-runnable-track {
+    height: 16px;
+}
+
+input[type=range].slider:focus::-webkit-slider-runnable-track {
+    background: var(--right-range-color);
+}
+
+
+input[type=range].slider::-moz-range-track {
+    /*width: 100%;*/
+    height: 5px;
+    background: var(--right-range-color);
+    border: none;
+    border-radius: 3px;
+}
+
+input[type=range].no-thumb::-moz-range-track {
+    height: 16px;
+}
+
+input[type=range].slider::-ms-track {
+    width: 100%;
+    height: 5px;
+    
+    /* Remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+    background: var(--right-range-color);
+    
+    /* Leave room for the larger thumb to overflow with a transparent border */
+    border-color: transparent;
+    border-width: 6px 0;
+
+    /* Remove default tick marks */
+    color: transparent;
+}
+
+
+/* Hide the outline behind the border */
+input[type=range].slider:-moz-focusring{
+    outline: 1px solid white;
+    outline-offset: -1px;
+}
+
+
+
+
+/* IE*/
+input[type=range].diff-colors::-ms-fill-lower {
+    background: var(--left-range-color);
+}
+
+input[type=range].diff-colors::-ms-fill-upper {
+    background: var(--right-range-color);
+}
+
+input[type=range].diff-colors:focus::-ms-fill-lower {
+    background: #888;
+}
+
+input[type=range].diff-colors:focus::-ms-fill-upper {
+    background: #ccc;
+}
+
+/** FF*/
+input[type=range].diff-colors { 
+    overflow: hidden;
+}
+
+input[type="range"].diff-colors::-moz-range-progress {
+  background-color: var(--left-range-color);
+  height: 16px;
+}
+input[type="range"].diff-colors::-moz-range-track {  
+  background-color: var(--right-range-color);
+  height: 16px;
+}
+
+/*Chrome*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    input[type='range'].diff-colors {
+      overflow: hidden;
+      background-color: var(--right-range-color);
+    }
+
+    input[type='range'].diff-colors::-webkit-slider-thumb {
+        box-shadow: -100vw 0 0 100vw var(--left-range-color);
+    }
+}
+
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <input type="range" class="slider">
+    </div>
+
+    <div class="container">
+        <input type="range" min="0" max="100" value="50" class="slider" id="myRange">
+    </div>
+    
+    <div class="container">
+        Value: <span id="demo"></span>
+    </div>
+
+    <div class="container">
+        <input type="range" class="slider diff-colors">
+    </div>
+
+    <div class="container">
+        <input type="range" value="25" class="slider diff-colors no-thumb">
+    </div>
+
+    <div class="container">
+            <input type="range" value="25" class="slider diff-colors no-thumb white-thumb">
+        </div>
+    
+    <script>
+    </script>
+
+    <script>
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("demo");
+        
+        // Display the default slider value
+        output.textContent = slider.value;
+        
+        
+        
+        
+        // Update the current slider value (each time you drag the slider handle)
+        slider.oninput = function() {
+          output.textContent = this.value;
+        }
+    </script>
+</body>
+</html>

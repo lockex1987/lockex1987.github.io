@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+	<title>Street</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        #div1 {
+            position: relative;
+            height: 530px;
+            width: 900px;
+
+            margin: 10px;
+            border: 1px solid black;
+            background-image: url("images/street.jpg");
+
+            perspective: 200px;
+            perspective-origin: 212px 270px;
+        }
+        
+        #div2 {
+            position: absolute;
+            top: 133px;
+            left: 195px;
+            height: 264px;
+            width: 300px;
+
+            font-size: 63px;
+            font-weight: bold;
+            padding-top: 187px;
+
+            transform: translateY(90px) rotateX(90deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div1">
+        <div id="div2">CTTD</div>
+    </div>
+
+    <script src="file:///data/cdn/js/jquery.js"></script>
+    <script>
+        var offset = $("#div1").offset();
+        $(document).click(function(e) {
+            alert("left: " + (e.pageX - offset.left) + ", top: " + (e.pageY - offset.top));
+        });
+    </script>
+</body>
+</html>

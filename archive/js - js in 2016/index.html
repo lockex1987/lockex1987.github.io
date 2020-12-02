@@ -1,0 +1,375 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  
+  <meta name="description" content="Bức tranh toàn cảnh JS năm 2016">
+  <title>JS năm 2016</title> 
+
+<link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+
+
+
+ </head> 
+ <body> 
+  <article> 
+   <h2>Bức tranh toàn cảnh JS năm 2016</h2>
+   <p><img alt="" src="images/js-2016.png"></p>
+   <p>Bức tranh lập trình là một bức tranh muôn màu muôn vẻ, với sự thay đổi sôi động không bao giờ có dấu hiệu dừng. Đoạn hội thoại dí dởm dưới đây hy vọng sẽ thể thiện phần nào sự sôi nổi trong bức tranh đó, và giúp bạn nắm bắt được những “mô đen” mới nhất dạo gần đây.</p> 
+   <p>Hey, tôi vừa nhận một web project mới, nhưng thật sự thì mấy năm gần đây tôi chưa đụng vào web nhiều lắm, và có vẻ như thị trường web đã có nhiều sự thay đổi rồi. Anh là một trong những web dev nổi danh nhất dạo gần đây đúng không nhỉ?</p> 
+   <ul> 
+    <li>Thuật ngữ chính xác là Front End engineer, và cậu tìm đến tôi là đúng người rồi đấy. Tôi làm đủ thứ về web năm 2016. Đồ họa hóa, chơi nhạc. chạy máy bay không người lái chơi đá banh được, đủ thứ trên đời hết. Tôi vừa mới tham dự JsConf và ReactConf, nên tôi biết rõ những công nghệ mới nhất đề làm ra ứng dụng web tốt nhất.</li> 
+   </ul> 
+   <p>Tuyệt. Tôi cần tạo một trang web hiển thị những hoạt động mới nhất từ người dùng, nên tôi chỉ cần lấy dữ liệu từ REST endpoint và hiển thị theo dạng table lọc được, và cập nhật nếu có thay đổi trên server. Nếu tôi dùng jQuery để truy xuất và hiển thị dữ liệu thì sao nhỉ?</p> 
+   <ul> 
+    <li>Lạy chúa, đừng, chả ai dùng jQuery nữa đâu. Dùng thử React đi, năm 2016 rồi.</li> 
+   </ul> 
+   <p>Ồ, vậy hả. React là cái gì vậy?</p> 
+   <ul> 
+    <li>Thư viện cực hay do mấy gã bên Facebook chế ra, với khả năng kiếm soát và hiệu năng rất cao đến ứng dụng, bằng cách cho phép cậu xử lý dễ dàng bất cứ view change nào.</li> 
+   </ul> 
+   <p>Nghe hay đấy. Tôi dùng React để hiển thị dữ liệu từ server được không?</p> 
+   <ul> 
+    <li>Được chứ, nhưng trước hết cậu cần phải thêm React và React DOM làm thư viện trong webpage.</li> 
+   </ul> 
+   <p>Khoan đã, đến hai thư viện luôn hả?</p> 
+   <ul> 
+    <li>Một cái là thư viện, còn cái kia là để điều khiển DOM, mà giờ ta cũng có thể mô tả DOM trong JSX được rồi.</li> 
+   </ul> 
+   <p>JSX? JSX là cái gì vậy?</p> 
+   <ul> 
+    <li>JSX chỉ là một bộ cú pháp JavaScript mở rộng mà thôi, khá giống XML. Đây cũng là một cách mô tả DOM, cứ xem nó là phiên bản HTML tốt hơn đi.</li> 
+   </ul> 
+   <p>HTML giờ sao rồi?</p> 
+   <ul> 
+    <li>Năm 2016 rồi đó. Chả ai code HTML trực tiếp nữa đâu.</li> 
+   </ul> 
+   <p>À. Mà đúng rồi, nếu tôi thêm hai thư viện này rồi thì sẽ dùng được React đúng không?</p> 
+   <ul> 
+    <li>Chưa đâu. Còn phải thêm Babel nữa mới dùng được.</li> 
+   </ul> 
+   <p>Một thư viện nữa à? Babel là cái gì?</p> 
+   <ul> 
+    <li>Babel là transpiler cho phép ta nhắm vào từng phiên bản cụ thể của JavaScript. Cậu không phải thêm Babel để sử dụng ReactJS, nhưng nếu không thêm vào, cậu sẽ buộc phải dùng ES5. Thành thật mà nói, năm 2016 rồi thì chuyên qua code bằng ES2016+ cho nó mô-đen.</li> 
+   </ul> 
+   <p>ES5? ES2016+? Anh đang nói về cái gì vậy. ES5 với ES2016+ là sao?</p> 
+   <ul> 
+    <li>ES5 là viết tắt của ECMAScript5. Đây là phiên bản hầu hết mọi người nhắm vào kể từ khi được đa số trình duyệt tích hợp.</li> 
+   </ul> 
+   <p>ECMAScript?</p> 
+   <ul> 
+    <li>Đúng rồi, như cậu biết đấy, đây là nền tảng cho chuẩn scripting JavaScript vào 1999, sau lần ra mắt ban đầu năm 1995, hồi đấy JavaScript có tên Livescript và chỉ chạy trên Netscape Navigator. Lúc đó vẫn còn rất lộn xộn, nhưng giờ mọi thứ đã cải thiện nhiều rồi, và ta có đến, khoảng tận 7 phiên bản.</li> 
+   </ul> 
+   <p>Bảy phiên bản luôn à. Thật chứ. ES5 và ES2016+ là phiên bản thứ mấy vậy?</p> 
+   <ul> 
+    <li>Một cái là thứ 5, và cái kia là thứ 7.</li> 
+   </ul> 
+   <p>Khoan đã, còn phiên bản thứ sáu thì sao?</p> 
+   <ul> 
+    <li>Ý cậu là ES6 hả? Mỗi phiên bản là phần rộng hơn của phiên bản trước, nên nếu cậu dùng ES2016+, cậu đã có tất cả các tính năng của những phiên bản trước đó rồi đấy.</li> 
+   </ul> 
+   <p>Ồ. Vậy thì ES2016+ có gì hơn ES6 nhỉ?</p> 
+   <ul> 
+    <li>Nói chung cậu dùng ES6 cũng không sao. Nhưng với những tính năng hay như async và await, cậu cần phải dùng ES2016+ mới được. Còn không bạn sẽ phải kẹt với ES6 generator với coroutines giúp block asynchronous call, cho ta control flow phù hợp.</li> 
+   </ul> 
+   <p>Tôi chả hiêu anh vừa nói cái mô tê gì cả, toàn những cái tên kỳ lạ thôi. Tôi vừa tải một đống dữ liệu từ server, hổi trước tôi chỉ việc thêm jQuery từ một CDN và chỉ lấy dữ liệu với AJAX call, giờ tôi làm vậy được không?</p> 
+   <ul> 
+    <li>Năm 2016 rồi ông tướng, ai mà xài jQuery nữa, cậu sẽ có một mớ code spaghetti trên tay đấy. Ai cũng biết hết.</li> 
+   </ul> 
+   <p>Được rồi. Vậy thay vào đó, tôi sẽ tải ba thư viện để truy xuất dữ liệu và hiển thị HTML table.</p> 
+   <ul> 
+    <li>À, cậu có thể thêm ba thư viện này nhưng phải gói lại bằng module manager để chỉ load một file duy nhất.</li> 
+   </ul> 
+   <p>Tôi hiểu rồi. module manager là gì thế?</p> 
+   <ul> 
+    <li>Cũng tùy môi trường nữa, nhưng với web, thì thường để chi bất cứ thứ gì hỗ trợ AMD hoặc CommonJS module thông thường.</li> 
+   </ul> 
+   <p>Àaaaa. Và AMD và CommonJS là…?</p> 
+   <ul> 
+    <li>Có nhiều cách mô tả cách tương tác giữa nhiều thư viện và class JavaScript. Cậu biết đấy, export và require? Cậu có thể viết nhiều file JavaScript xác định AMD hoặc CommonJS và bạn có thể dùng các công cụ như Browserify để gói lại.</li> 
+   </ul> 
+   <p>OK, nghe hợp lý đấy. Browserify là gì?</p> 
+   <ul> 
+    <li>Đây là công cụ cho phép cậu gói dependencies được mô tả CommonJS với các file có thể chạy trong trình duyệt. Công cụ này ra đời vì đa số mọi người xuất những dependencies này trong npm registry.</li> 
+   </ul> 
+   <p>Npm registry?</p> 
+   <ul> 
+    <li>Đây là một public repo rất lớn, nơi các chuyên gia bỏ code và dependencies thành module vào đây.</li> 
+   </ul> 
+   <p>Như CDN vậy hả?</p> 
+   <ul> 
+    <li>Không hẳn. Giống như database tập trung hơn, tại đây mọi người có thể publish và download thư viện, cậu có thể sử dụng chúng để lập trình cục bộ hoặc upload lên CDN nếu muốn.</li> 
+   </ul> 
+   <p>Ồ, vậy là giống Bower rồi!</p> 
+   <ul> 
+    <li>Đúng vậy, nhưng năm 2016 rồi, ai dùng Bower nữa.</li> 
+   </ul> 
+   <p>À, vậy… tôi phải download thư viện npm từ npm đúng không?</p> 
+   <ul> 
+    <li>Đúng rồi. Ví dụ, nếu bạn muốn dùng React, bạn phải download React module và import vào code. Bạn có thể làm tương tự với hầu hết các thư viện JavaScript phổ biến.</li> 
+   </ul> 
+   <p>Ồ, giống Angular!</p> 
+   <ul> 
+    <li>Angular là từ 2015 rồi. Nhưng cũng tạm được. Angular, rồi VueJS hay RxJS và những thư viện 2016 hay ho khác. Cậu muốn nghe thêm về các thư viện này không?</li> 
+   </ul> 
+   <p>Thôi mình quay lại React đi, tôi cũng học nhiều quá rồi. Vậy, nếu tôi cần dùng React, tôi phải truy xuất từ npm này vè sau đó cùng cái Browerify đúng không?</p> 
+   <ul> 
+    <li>Chính xác.</li> 
+   </ul> 
+   <p>Gói một đống dependencies lại với nhau, sao phức tạo quá vậy?</p> 
+   <ul> 
+    <li>Tất nhiên là phức tạp rồi. Đó là lý do tại sao ta phải dùng thêm task manager như Grunt hay Gulp hay Broccoli để chạy tự động Browertify. Bằng không, cậu xài Mimosa cũng được.</li> 
+   </ul> 
+   <p>Grunt? Gulp? Broccoli? Mimosa? Anh đang nói cái giống gì vậy?</p> 
+   <ul> 
+    <li>Task managers. Nhưng bọn này hết thời rồi, năm 2015 thì còn tạm được, rồi thì chúng tôi chuyển sang Makefiles, nhưng giờ tất tần tật đền dùng Webpack.</li> 
+   </ul> 
+   <p>Makefiles? Tôi nhớ cái này dùng chủ yếu trong mấy project C với C++ mà?</p> 
+   <ul> 
+    <li>Không sai. Nhưng thực ra trong web chúng tôi thích phức tạp hóa hơn là quay lại cơ bản. Cứ vài năm là chúng tôi “quậy” một lần, cứ chờ mà xem, chúng tôi sắp sửa lấu assembly làm web liên ngay đây.</li> 
+   </ul> 
+   <p>*Thở dài*. Anh có nhắc tới Webpack đúng không?</p> 
+   <ul> 
+    <li>Đây là một module manager nữa cho trình duyệt, còn làm được task runner nữa. Giống Browserify, nhưng tốt hơn.</li> 
+   </ul> 
+   <p>Oh, Ok. Tốt hơn chỗ nào ý nhỉ?</p> 
+   <ul> 
+    <li>À, không thể nói là tốt hơn hoàn toàn, cái này dựa trên chủ quan nhiều hơn, tùy cậu thích gói dependencies như thế nào. Weback cho phép bạn sử dụng nhiều module manager khác nhày, mà không chỉ mấy cái CommonJS không thôi, như native ES6 cũng có hỗ trợ module nữa.</li> 
+   </ul> 
+   <p>Mớ CommonJS/ES6 này làm tôi chóng mặt quá.</p> 
+   <ul> 
+    <li>Ai cũng vậy thôi, nhưng cậu đừng nên quan tâm về SystemJS nữa.</li> 
+   </ul> 
+   <p>Lạy chúa. Thêm một ông -js nữa. Được rồi, vậy thì SystemJS là gì?</p> 
+   <ul> 
+    <li>À, không giống Browserify và Webpack 1.x, SystemJS là một dynamic module loader cho phép cậu gói nhiều module trong nhiều file thay vì gói lại thành một file lớn.</li> 
+   </ul> 
+   <p>Khoan đã, nhưng tôi tưởng ta đang muốn build thư viện trong một file lớn và load file đó!</p> 
+   <ul> 
+    <li>Đúng, nhưng vì sự xuất hiện của HTTP/2 trong tương lai, nhiều HTTP request vẫn tốt hơn.</li> 
+   </ul> 
+   <p>Đợi nào, vậy thì ta không thể chỉ thêm ba thư viện trên để dùng được React đúng không??</p> 
+   <ul> 
+    <li>Không hoàn toàn như vậy. Ý tôi là, cậu có thể thêm chúng dưới dạng external script từ một CDN, nhưng bạn sẽ vẫn phải thêm cả Babel nữa.</li> 
+   </ul> 
+   <p>*Thở dài*. Lại thêm một mớ công đoạn nữa đúng không?</p> 
+   <ul> 
+    <li>Chứ còn gì nữa, bạn sẽ phải bao hết toàn bộ babel-core, mà vẫn chưa tối ưu cho production. Trong production, bạn cần phải thực hiện một loạt pre-task siêu rối rắm để chuẩn bị cho project. Bạn cần phải giảm thiểu asset, làm xấu chúng đi, inline css trên fold, defer scripts, rồi còn….</li> 
+   </ul> 
+   <p>Được rồi, được rồi. Nên nếu tôi muốn thêm thư viện trực tiếp trong CDN, tôi sẽ làm thế nào đây?</p> 
+   <ul> 
+    <li>Tôi sẽ transpile nó từ Typescript bằng combo Webpack + SystemJS + Babel.</li> 
+   </ul> 
+   <p>Typrescript? Tôi tưởng mình đang code bằng JavaScript cơ mà!</p> 
+   <ul> 
+    <li>Typescript cũng là JavaScript, hoặc rõ hơn, là superset của JavaScript, hoặc JavaScript đặc biệt trên phiên bản ES6. Cậu biết rồi đó, sáu phiên bản hồi nãy tôi mới nói đó?</li> 
+   </ul> 
+   <p>Tôi thưởng ES2016+ đã là superset của ES6 rồi mà! TẠI SAO giờ lại cần thêm cái Typescript này nữa?</p> 
+   <ul> 
+    <li>À, vì nó cho phép chúng ta sử dụng JavaScript làm typed language, và giảm run-time errors. Năm 2016 rồi, cậu nên thêm một số types vào JavaScript code của mình đi.</li> 
+   </ul> 
+   <p>Và hiển nhiên là Typescrip làm được điều đó rồi.</p> 
+   <ul> 
+    <li>Flow cũng được, dù nó chỉ kiểm soát typing, trong khi Typescript lại là superset của JavaScript và cần phải được compile.</li> 
+   </ul> 
+   <p>*Thở dài*… Còn Flow là?</p> 
+   <ul> 
+    <li>Type checker tĩnh do gã nào đó ở Facebook chế ra, được viết trên nền OCaml, vì lập trình hàm là đỉnh nhất.</li> 
+   </ul> 
+   <p>OcCaml? Lập trình hàm?</p> 
+   <ul> 
+    <li>Cậu chả biết gì cả, mô đen mới 2016 cả đấy, Lập trình hàm, Hàm cấp cao, currying, Pure function,…</li> 
+   </ul> 
+   <p>Tôi chả hiểu anh vừa nói cái quỷ gì cả.</p> 
+   <ul> 
+    <li>Mới đầu chả ai hiểu đâu. Nghe này, cậu chỉ cần biết rằng, lập trình hàm tốt hơn cả ÔP và đó là thứ ta nên dùng ở năm 2016 này.</li> 
+   </ul> 
+   <p>Khoan đã, tôi từng học OOP ở trường, OOP dùng tốt lắm mà?</p> 
+   <ul> 
+    <li>Java hồi mới được Oracle mua lại cũng tốt thôi. Ý tôi là, hồi đó OOP vẫn còn tốt, và vẫn có chỗ đứng ngày nay, nhưng giờ đây mọi người đang nhận ra rằng modifying states dùng khá khó chịu.. nên đã chuyển sang immutable object với lập trình hàm hết cả rồi. Và may mắn hơn nữa là web giờ có thêm nhiều thư viện như Ramda cho phép chúng ta lập trình hàm trong JavaScript thuần.</li> 
+   </ul> 
+   <p>Cái gì đủ thứ tên tây tàu vậy? Còn Ramnda là gì nữa?</p> 
+   <ul> 
+    <li>Không phải. Ramda. Như Lambda ấy. Cái thư viện của ông David Chamber đấy cậu biết chứ?</li> 
+   </ul> 
+   <p>David nào cơ?</p> 
+   <ul> 
+    <li>David Chambers. Giỏi lắm. Một trong những người có đóng gớp lớn cho Ramda. Cậu cũng nên tìm hiểu thử Erik Meijer nếu cậu thực sự muốn học lập trình hàm.</li> 
+   </ul> 
+   <p>Và Erick Meijer là…?</p> 
+   <ul> 
+    <li>Cũng một gã trong lập trình hàm nữa. Gã này đi diễn thuyết cả chục lần rồi, ổng hay mặc ba cái áo màu mè, rồi bash Agile quá trời. Mấy gã Tj, Jash Kenas, Sindre Sorhus, Paul Irish, Addy Osmani cũng giỏi lắm đấy-</li> 
+   </ul> 
+   <p>Từ từ đã nào. Chỉ truy xuất và hiển thị dữ liệu thôi mà khó khăn vậy à. Tôi khá chắc là chỉ tạo table với dynamic data. Hãy quay lại React nào. Tồi lấy dữ liệu từ server với React thế nào đây?</p> 
+   <ul> 
+    <li>À, cậu thực ra không truy xuất dữ liệu bằng React đâu, React chỉ hiển thị được dữ liệu thôi.</li> 
+   </ul> 
+   <p>Oh, chết tôi rồi. Vậy anh sẽ làm gì để truy xuất dữ liệu?</p> 
+   <ul> 
+    <li>Cậu nên dùng Fetch?</li> 
+   </ul> 
+   <p>Fetch là gì nữa? Đặt tên gì kỳ quá vậy?</p> 
+   <ul> 
+    <li>Nghe kỳ đúng không? Fetch là tên của native implementation dùng để thực hiện XMLHttpRequests với server.</li> 
+   </ul> 
+   <p>Ồ, vậy AJAX?</p> 
+   <ul> 
+    <li>AJAX chỉ là công dụng của XMLHttpRequest thôi. Nhưng tất nhiên rồi, Fetch cho phép cậu thực hiện AJAX nằm trong promise, sau này cậu có thể phân tách promise ra để tránh địa ngục callback.</li> 
+   </ul> 
+   <p>Địa ngục callback?</p> 
+   <ul> 
+    <li>Đúng vậy. Mỗi khi cậu thực hiện request không đồng bộ với server, cậu cần phải chờ phản hồi của server, khiến cậu phải thêm hàm lồng vào hàm, gọi là “kim tự tháp callback” từ địa ngục.</li> 
+   </ul> 
+   <p>Oh, OK. Và thứ “promise” này giải quyết được vấn đề này đúng không?</p> 
+   <ul> 
+    <li>Đúng rồi. Bằng cách điền khiển callback thông qua promise, cậu có thể viết code dễ dàng hơn, dễ hiểu hơn, dễ mock và test hơn, đồng thời còn thực hiện được các request song song cùng một lúc và đợi cho đến khi tất cả đã load xong.</li> 
+   </ul> 
+   <p>Và Fetch làm được hết đúng không?</p> 
+   <ul> 
+    <li>Chuẩn rồi đấy. Nhưng chỉ khi người dùng của cậu dùng trình duyệt mới nhất thôi, bằng không cậu vẫn phải thêm Fetch polyfill hoặc dùng Request, Bluebird hay Axios.</li> 
+   </ul> 
+   <p>Lạy chúa, tôi phải biết bao nhiêu thứ thư viện đây chứ? Bao nhiêu đây?</p> 
+   <ul> 
+    <li>JavaScipt mà. Có cả nghìn thư viện làm những thứ giống nhau. Chúng tôi biết rõ về thư viện, thực ra, chúng tôi dùng những thư viện tốt nhất. Mấy thư viện này siêu lớn, và đôi khi chúng tôi thêm cả hình của Guy Fieri trong đó nữa.</li> 
+   </ul> 
+   <p>Anh vừa mới nhắc Guy Fiery đúng không? Xử hết luôn đi. Mấy thứ viện Bluebird, Request, Axios gì đấy có thể làm được gì?</p> 
+   <ul> 
+    <li>Chúng là các thư viện thực hiện XMLHttpRequests trả kết quả là promise.</li> 
+   </ul> 
+   <p>Không phải là phương thức AJAX của jQuert cũng bắt đầu trả promise rồi à?</p> 
+   <ul> 
+    <li>Năm 2016 rồi, bỏ mấy cái chữ “j” đi. Cứ việc dùng Fetch, và polyfill nó khi không trong trình duyệt, còn không thì cứ dùng Bluebird, Request, hoặc Axios. Rồi thì quản lý promise với await trong hàm async, và bùm chéo, cậu đã có trong tay control flow phù hợp rồi đấy.</li> 
+   </ul> 
+   <p>Anh nhắc await chắc cũng ba lần rồi nhưng tôi chả biết nó là gì cả.</p> 
+   <ul> 
+    <li>Await cho phép cậu block asynchronous call, từ đó cậu có thể quản lý thời gian truy xuất dữ liệu tốt hơn, đồng thời làm code dễ đọc hơn nữa. Hay tuyệt cú mèo luôn đấy, cậu chỉ phải đản bảo được là đã thêm stage-3 preset trong Babel, hoặc dùng plugin syntax-async-functions và transform-async-to-generator.</li> 
+   </ul> 
+   <p>Chắc tôi điên mất rồi.</p> 
+   <ul> 
+    <li>Không, chưa điên đâu. Tới lúc phải precompile Typescript code và transpile bằng Babel để dùng await mới điên kìa.</li> 
+   </ul> 
+   <p>Ế? Trong Typescript không có sẵn hả?</p> 
+   <ul> 
+    <li>Phiên bản kế tiếp thì có, nhưng 1.7 chỉ nhắm vào ES6 thôi, vậy nên nếu muốn dùng await trong trình duyệt, trước hết cậu phải compile Typescript code nhắm vào ES6, và sau đó tới Babel thì mới ổn.</li> 
+   </ul> 
+   <p>Cạn lời.</p> 
+   <ul> 
+    <li>Trời ơi, dễ như ăn cháo ý mà. Code hết bằng Typescript. Tất cả module sử dụng Fetch compile để nhắm vào ES6, transpile chúng với Babel trên stage-3 cài sẵn, và load bằng SystemJS. Nếu cậu không có Fetch, polyfill, hoặc dùng Bluebird, Request hay Axios, và xử lý tất cả promise với await.</li> 
+   </ul> 
+   <p>Có vẻ nhưng hai người chúng ta có quan niệm về “dễ” rất khác nhau thì phải. Vậy thì, làm xong “nghi thức” trên thì tôi đã truy xuất được data và có thể hiển thị bằng React rồi đúng không?</p> 
+   <ul> 
+    <li>Ứng dụng của cậu có định xử lý state change không?</li> 
+   </ul> 
+   <p>Err, chắc không đâu. Tôi chỉ cần hiển thị dữ liệu là được rồi.</p> 
+   <ul> 
+    <li>Oh, ơn giời. Bằng không tôi lại phải giải thích đến Flux, rồi các implementation như Flummox, Alt, Fluxible. Dù thật sự thì cậu nên dùng Redux vẫn hơn.</li> 
+   </ul> 
+   <p>Tôi sẽ giả bộ chưa bao giờ nghe đến mấy cái tên đó. Quay lại vấn đề, Tôi chỉ cần hiển thị dữ liệu thôi.</p> 
+   <ul> 
+    <li>Ồ, nếu cậu chỉ cần hiển thị dữ liệu thì ngay từ đầu đã không cần đến React nữa rồi. Cậu chỉ cần templating engine.</li> 
+   </ul> 
+   <p>Anh giỡn hay thiệt vậy? Bộ chọc tôi vui lắm hả? Đây là cách anh đổi xử với những người anh yêu thương ư?</p> 
+   <ul> 
+    <li>Tôi chỉ giải thích những công cụ cậu có thể dùng được thôi mà.</li> 
+   </ul> 
+   <p>Ngưng! Anh dừng lại cái đi!</p> 
+   <ul> 
+    <li>Ý tôi là, ngay cả khi chỉ dùng đến templating engine, tôi sẽ vẫn phải nhờ đến combo &nbsp;Typescript + SystemJS + Babel nếu tôi là cậu đấy.</li> 
+   </ul> 
+   <p>Tôi cần hiển thị dữ liệu lên page, chứ phải hái trăng sao trên trời đâu. Anh chỉ cần cho tôi biết phải dùng templating engine nào thôi, còn lại tôi tự lo.</p> 
+   <ul> 
+    <li>Nhiều lắm nha, cậu quen dùng cái nào?</li> 
+   </ul> 
+   <p>Ugh, tôi chả nhớ tên nữa, lâu lắm rồi chưa động đến.</p> 
+   <ul> 
+    <li>jTemplates? jQote? PURE?</li> 
+   </ul> 
+   <p>Err, chịu, chả rõ. Có cái nào khác không?</p> 
+   <ul> 
+    <li>Transparency? JSRender? MarkupJS? KnockoutJS? Cái này có two-way binding.</li> 
+   </ul> 
+   <p>Còn nữa không?</p> 
+   <ul> 
+    <li>PlatesJS? jQuery-tmpl? Handlebars? vẫn có người dùng đấy.</li> 
+   </ul> 
+   <p>Chắc vậy. Có cái nào tương tự như cái cuối anh vừa nhắc không?</p> 
+   <ul> 
+    <li>Mustache, underscore? Tôi nghĩ đến giờ lodash cũng có hay sao ấy, nhưng mấy cái này từ hồi 2014 cả rồi.</li> 
+   </ul> 
+   <p>Err… hình như là mới hơn thì phải.</p> 
+   <ul> 
+    <li>Jade? DustJS?</li> 
+   </ul> 
+   <p>Không.</p> 
+   <p>&nbsp;</p> 
+   <ul> 
+    <li>DotJS? EJS?</li> 
+   </ul> 
+   <p>&nbsp;</p> 
+   <p>Không.</p> 
+   <ul> 
+    <li>Nunjucks? ECT?</li> 
+   </ul> 
+   <p>Không.</p> 
+   <ul> 
+    <li>Mah, dù gì thì chả thích ai thích dùng Coffeescript nữa. Jade thì sao?</li> 
+   </ul> 
+   <p>Không, anh vừa mới nhắc Jade đúng không?</p> 
+   <ul> 
+    <li>Pug… à mà Jade. Đúng rồi, Jade giờ đổi tên thành Pug rồi.</li> 
+   </ul> 
+   <p>*Thở dài* Chịu, chả nhớ được. Thế anh dùng cái nào?</p> 
+   <ul> 
+    <li>Chắc là chỉ có ES6 native template strings thôi.</li> 
+   </ul> 
+   <p>Để tôi đoán xem. Cái đó có cần thêm ES6 nữa chứ gì.</p> 
+   <ul> 
+    <li>Chuẩn rồi.</li> 
+   </ul> 
+   <p>Và dựa trên trình duyệt tôi đang dùng, phải cần thêm Babel chứ gì.</p> 
+   <ul> 
+    <li>Đúng luôn.</li> 
+   </ul> 
+   <p>Và nếu tôi muốn tích hợp mà không phải thêm cả một thư viện lõi, tôi cần phải load dưới dạng module từ npm nữa ha.</p> 
+   <ul> 
+    <li>Không sai.</li> 
+   </ul> 
+   <p>Rồi phải cần thêm Browserify, hoặc Webpack, hay chắc là cái SystemJS gì gì đó phải không?</p> 
+   <ul> 
+    <li>Sau cậu biết hay quá vậy.</li> 
+   </ul> 
+   <p>Nếu không dùng Webpack, thì phải quản lý bằng task runner mới lý tưởng?</p> 
+   <ul> 
+    <li>Lại đúng nữa.</li> 
+   </ul> 
+   <p>Nhưng vì tôi nên dùng lập trình hàm và typed languages nên tôi trước hết cần phải pre-compile Typescript hoặc thêm thứ Flow này.</p> 
+   <ul> 
+    <li>Cậu đang dần thuộc bài rồi đấy.</li> 
+   </ul> 
+   <p>Và rồi gửi mớ đó đến Babel nếu tôi muốn dùng await.</p> 
+   <ul> 
+    <li>Điểm 10 cho chất lượng.</li> 
+   </ul> 
+   <p>Vậy sau đó tôi có thể dùng được Fetch, promise, và control flow và tất cả phép màu của chúng.</p> 
+   <ul> 
+    <li>À đừng quên polyfill Fetch nếu không có hỗ trợ nhá, Safari vẫn chưa tự xử lý được đâu.</li> 
+   </ul> 
+   <p>Hiểu rồi, chắc buổi nói chuyện đến đây là hết được rồi. Mà, anh biết gì không, tôi cũng chấm hết luôn, hết làm web, hết JavaScript gì gì đấy luôn.</p> 
+   <ul> 
+    <li>Tốt thôi, vài năm nữa người ta lại chuyển sang code bằng Elm hay WebAssembly chứ gì.</li> 
+   </ul> 
+   <p>Tôi quyết định chia tay backend luôn rồi. Thay đổi, rồi version mới, rồi phiên bản mới, rồi compiler với transpiler gì mà quá chừng nhiều. Cộng đồng JavaScript đều là mấy gã điên khùng nếu cứ quay mòng mòng liên tục thế này.</p> 
+   <ul> 
+    <li>Vậy tôi đã hiểu ý cậu rồi. Thế thì cậu nên thử nhảy vào cộng đồng Python xem.</li> 
+   </ul> 
+   <p>Sao vậy?</p> 
+   <ul> 
+    <li>Có nghe về Python 3 chưa?</li> 
+   </ul> 
+   <p>…</p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

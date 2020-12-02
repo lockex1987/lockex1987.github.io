@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Sử dụng MySQL với Docker"/>
+    <meta name="keywords" content="docker, mysql"/>
+    <meta name="author" content="lockex1987"/>
+    
+    <title>Sử dụng MySQL với Docker</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body>
+    <article>
+        <h2>Sử dụng MySQL với Docker</h2>
+        
+ <p>
+  Có 2 bản MySQL trên Docker Hub.
+ </p>
+ <ul>
+  <li>
+   Một bản là official, địa chỉ ở
+   <a href="https://hub.docker.com/_/mysql/" target="_blank">
+    https://hub.docker.com/_/mysql/
+   </a>
+   .
+  </li>
+  <li>
+   Một bản thì lại có owner là chính MySQL, địa chỉ ở
+   <a href="https://hub.docker.com/r/mysql/mysql-server/" target="_blank">
+    https://hub.docker.com/r/mysql/mysql-server/
+   </a>
+   .
+  </li>
+ </ul>
+ <p>
+  Chúng ta hãy thử với bản thứ 2 (không phải official, nhưng owner là MySQL)
+      trước.
+ </p>
+ <p>
+  Pull image:
+ </p>
+ <pre>docker pull mysql/mysql-server</pre>
+ <p>
+  Chạy:
+ </p>
+ <pre>docker run --name=mysql-1 -d mysql/mysql-server</pre>
+ <p>
+  Có thể thêm tham số cổng:
+ </p>
+ <pre>docker run --name=mysql-1 -d -p 3308:3306 mysql/mysql-server</pre>
+ <p>
+  Để cổng 3308 để tránh trùng.
+ </p>
+ <p>
+  Lấy password tự sinh:
+ </p>
+ <pre>docker logs mysql-1 2&gt;&amp;1 | grep GENERATED</pre>
+ <p>
+  Truy cập thử và đổi password:
+ </p>
+ <pre>docker exec -it mysql-1 mysql -uroot -p</pre>
+ <p>
+  Đổi password trong MySQL:
+ </p>
+ <pre>ALTER USER 'root'@'localhost' IDENTIFIED BY '123456';</pre>
+ <p>
+  Các thao tác liên quan đến container:
+ </p>
+ <pre>docker stop mysql-1<br/>docker start mysql-1<br/>docker restart mysql-1<br/>docker rm mysql-1<br/>docker exec -it mysql-1 bash</pre>
+ <p>
+  Hướng dẫn của bản này bạn có thể xem tiếp hướng dẫn ở đây:
+ </p>
+ <p>
+  <a href="https://dev.mysql.com/doc/mysql-installation-excerpt/5.5/en/docker-mysql-getting-started.html" target="_blank">
+   https://dev.mysql.com/doc/mysql-installation-excerpt/5.5/en/docker-mysql-getting-started.html
+  </a>
+ </p>
+ <p>
+  <a href="https://dev.mysql.com/doc/mysql-installation-excerpt/5.5/en/docker-mysql-more-topics.html" target="_blank">
+   https://dev.mysql.com/doc/mysql-installation-excerpt/5.5/en/docker-mysql-more-topics.html
+  </a>
+ </p>
+ <p>
+  Xem tiếp hướng dẫn với bản official <a href="official-image.html">ở đây</a>.
+ </p>
+
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

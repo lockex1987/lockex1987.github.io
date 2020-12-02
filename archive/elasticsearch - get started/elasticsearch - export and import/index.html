@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Export và Import trong Elasticsearch</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Export và Import trong Elasticsearch">
+ </head> 
+ <body> 
+  <article> 
+   <p>Cách mà Elasticsearch hỗ trợ luôn:</p> 
+   <p>https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html</p> 
+   <p>Cách này có vẻ phức tạp.</p> 
+   <p>Các khác đơn giản hơn là sử dụng tool sau:</p> 
+   <p>https://github.com/taskrabbit/elasticsearch-dump</p> 
+   <p>Ví dụ, để export:</p> 
+   <pre>elasticdump --input=http://10.30.153.186:9200/voice2text_bca --output=D:\home\voice2text_bca.json</pre> 
+   <p>Để import:</p> 
+   <pre>elasticdump --output=http://localhost:9200/voice2text_bca --input=D:\home\voice2text_bca.json</pre> 
+   <p>File dữ liệu mẫu ở <a href="voice2text_bca.zip">đây</a>.</p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

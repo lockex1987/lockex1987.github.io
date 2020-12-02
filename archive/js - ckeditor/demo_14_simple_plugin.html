@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Timestamp plugin</title>
+	<script src="../lib/ckeditor/ckeditor.js"></script>
+</head>
+
+<body>
+	<textarea cols="80" id="editor1" name="editor1" rows="10">
+		&lt;p&gt;This is some sample text. You are using &lt;a href="http://ckeditor.com"&gt;CKEditor&lt;/a&gt;.&lt;/p&gt;
+	</textarea>
+
+	<script>
+		// Nếu không copy code vào thư mục plugins của ckeditor thì có thể làm như sau:
+		//CKEDITOR.plugins.addExternal( 'timestamp', 'https://sdk.ckeditor.com/samples/assets/plugins/timestamp/', 'plugin.js' );
+
+		CKEDITOR.replace('editor1', {
+			extraPlugins: 'timestamp'
+		});
+	</script>
+</body>
+</html>

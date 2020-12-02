@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="php">
+    <title>Ghi đè file thư viện PHP với Composer</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Ghi đè file thư viện PHP với Composer</h2>
+      <p>Bạn có nhu cầu sửa file thư viện. Ví dụ hiện tại chức năng quên mật
+        khẩu của Laravel đang gửi mail với token dài 64 ký tự. Tôi muốn chỉnh
+        token chỉ còn dài 6 ký tự.</p>
+      <p>Sửa file <code>composer.json</code> như sau:</p>
+      <pre class="out-of-box">"autoload": {
+    "classmap": [
+        "database"
+    ],
+    "exclude-from-classmap": [
+        "vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Passwords\\DatabaseTokenRepository.php"
+    ],
+    "psr-4": {
+        "App\\": "app/",
+        "Illuminate\\": "app/Illuminate/"
+    }
+},
+</pre>
+      <p>Tham khảo:</p>
+      <p><a target="_blank" href="https://stackoverflow.com/questions/46543379/laravel-5-4-password-reset-token-custom-length">Laravel:
+          Password reset token custom length</a></p>
+      <p><a target="_blank" href="http://shyammakwana.me/php/laravel-override-vendor-classes.html">Laravel:
+          How to override vendor classes using composer</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

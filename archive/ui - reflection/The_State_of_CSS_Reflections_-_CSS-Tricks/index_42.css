@@ -1,0 +1,39 @@
+* { margin: 0px; padding: 0px; font: inherit; }
+html { overflow: hidden; min-width: 160px; height: 100vh; font: 0.625em/1.5 trebuchet ms,verdana,century gothic,arial,sans-serif; }
+body { display: flex; flex-direction: column; height: 100vh; }
+section { display: flex; flex-direction: column; flex: 1 1 0%; }
+div > svg { width: 100%; height: 100%; }
+.case { display: flex; flex: 1 1 0%; justify-content: center; }
+.case:first-child .panel::after { content: "CSS"; }
+.case:last-child .panel::after { content: "SVG"; }
+.panel { align-self: center; position: relative; width: 100vw; height: 100vw; box-shadow: 0px 0px 2px; }
+.panel * { position: absolute; }
+.panel::after { position: absolute; top: 0.25em; left: 0.25em; }
+.box { top: 50%; left: 50%; width: 69%; height: 20%; transform: translate(-50%, -50%); }
+[id="css"] { background: transparent linear-gradient(0deg, rgb(225, 135, 40) 50%, rgb(209, 71, 48) 0px) repeat scroll 0% 0%; }
+[id="svg"] rect { fill: url('pbvdpx') none; }
+line { stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.tick { color: rgb(187, 187, 187); }
+.tick use { stroke: currentcolor; }
+.tick text { display: none; fill: currentcolor; font-size: 8em; }
+.tick:nth-child(2n+1) { color: rgb(139, 139, 139); }
+.tick:nth-child(2n+1) use { stroke-width: 2px; }
+.tick:nth-child(3n+1) { color: rgb(113, 113, 113); }
+.tick:nth-child(3n+1) use { stroke-width: 3px; }
+.tick:nth-child(6n+1) { color: rgb(88, 88, 88); }
+.tick:nth-child(6n+1) use { stroke-width: 4px; }
+.tick:nth-child(9n+1) { color: rgb(62, 62, 62); }
+.tick:nth-child(9n+1) text { display: block; }
+.tick:nth-child(9n+1) use { stroke-width: 5px; }
+text { text-anchor: middle; dominant-baseline: middle; font: 5vmin trebuchet ms,sans-serif; }
+[id="a"] { fill: rgb(160, 72, 185); }
+[id="gl"] { stroke: rgb(160, 72, 185); stroke-width: 3px; marker-end: url('pbvdpx_001.dat'); }
+form { padding: 0.5em; background: rgb(34, 34, 34) none repeat scroll 0% 0%; color: rgb(255, 255, 255); text-align: center; }
+form * { display: inline-block; vertical-align: middle; }
+input[type="range"] { border: 0.5em solid transparent; width: 8em; height: 1.5em; background: transparent none repeat scroll 0% 0%; color: rgb(174, 174, 174); cursor: pointer; }
+input[type="range"]::-moz-range-track { width: 8em; height: 0.25em; background: rgb(238, 238, 238) none repeat scroll 0% 0%; }
+input[type="range"]::-moz-range-progress { background: currentcolor none repeat scroll 0% 0%; }
+input[type="range"]::-moz-range-thumb { border: medium none; width: 1.25em; height: 1.25em; border-radius: 50%; background: currentcolor none repeat scroll 0% 0%; }
+input[type="range"]:focus { outline: medium none; }
+input[type="range"]:focus, input[type="range"]:focus + output { color: rgb(225, 135, 40); }
+output::after { content: "°"; }

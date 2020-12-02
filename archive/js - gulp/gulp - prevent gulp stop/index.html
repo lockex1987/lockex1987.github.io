@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <title>Prevent Gulp stop when there're errors</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta name="description" content="Prevent Gulp stop when there're errors">
+  </head>
+  <body>
+    <article>
+      <p>Prevent gulp stop running when there're errors</p>
+      <p>Khi có lỗi, Gulp sẽ dừng lại. Phải khởi động lại.</p>
+      <p>Sử dụng plumber.</p>
+      <pre>npm install --save-dev gulp-plumber</pre>
+      <p>Thêm <code>pipe(plumber())</code> sau hàm src, trước các hàm chính của
+        task.</p>
+      <p>Ví dụ:</p>
+      <pre>gulp.task('less', function () {
+&nbsp; &nbsp; gulp.src(lessFiles)
+          &nbsp; .pipe(plumber())
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .pipe(less())
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .pipe(gulp.dest('css'));
+});</pre>
+      <p>Có thể không sử dụng plumber.</p>
+      <p>Thêm đoạn sau phía sau các hàm chính của task.</p>
+      <p>Ví dụ:</p>
+      <pre>gulp.task('sass', function () {
+    gulp.src(sassFiles)
+            .pipe(sass({ style: 'compressed' }))
+            .on('error', console.error.bind(console))
+            .pipe(gulp.dest('css'));
+});</pre>
+      <p>Bạn cũng có thể định nghĩa hàm chung:</p>
+      <pre>function errorLog(error) {
+    console.error.bind(error);
+    this.emit('end');
+}
+
+gulp.task('uglify', function () {
+    gulp.src(jsFiles)
+            .pipe(uglify())
+            .on('error', errorLog)
+            .pipe(gulp.dest('minjs'));
+});</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

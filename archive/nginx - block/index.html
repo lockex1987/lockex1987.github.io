@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Block với nginx</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta name="description" content="Block với nginx">
+  </head>
+  <body>
+    <article>
+      <h2>Block</h2>
+      <p>Khi sử dụng Nginx, bạn có thể dễ dàng block request GET / POST bất kỳ
+        dựa theo User Agent.</p>
+      <p><img src="https://hocvps.com/wp-content/uploads/2016/05/gun-665x442.jpg"></p>
+      <p>Mình tìm hiểu phương pháp này khi website thường xuyên bị spam mail với
+        nhiều IP khác nhau, tuy nhiên điểm chung là header của chúng giống hệt
+        nhau. Nginx block rất hiệu quả.</p>
+      <p>Ngoài ra, bạn có thể ứng dụng để block Bot, Spider, chống crawl…</p>
+      <h3>Hướng dẫn block User Agent với Nginx</h3>
+      <p>Mở file cấu hình tên miền (nếu dùng<span>&nbsp;</span><a href="https://hocvps.com/script/">HocVPS
+          Script</a><span>&nbsp;</span>file cấu hình ở đường dẫn<span>&nbsp;</span><code>/etc/nginx/conf.d/</code>),
+        trong section server, hãy thêm đoạn code<span>&nbsp;</span><code>if</code><span>&nbsp;</span>sau:</p>
+      <pre>server {
+    listen       80 default_server;
+
+    root         /home/hocvps.com/public_html;
+    index index.php index.html index.htm;
+    server_name hocvps.com;
+
+    <b># case sensitive matching
+    if ($http_user_agent ~ (Antivirx|Arian)) {
+        return 403;
+    }</b>
+
+    <b># case insensitive matching
+    if ($http_user_agent ~* (netcrawl|npbot|malicious)) {
+        return 403;
+    }</b>
+
+    ....
+}</pre>
+      <p>Sau đó nhớ restart lại nginx.</p>
+      <p>Tùy bạn lựa chọn:</p>
+      <ul>
+        <li><em>case sensitive matching</em>: phân biệt chữ in hoa, chữ in
+          thường</li>
+        <li><em>case insensitive matching</em>: không phân biệt in hoa, in
+          thường</li>
+      </ul>
+      <p>Để tìm được header cần filter, tất nhiên bạn sẽ phải phân tích file
+        access.log trước.</p>
+      <p>Để test kết quả bạn có thể dùng lệnh<span>&nbsp;</span><code>wget</code><span>&nbsp;</span>kèm
+        theo option&nbsp;<code>--user-agent</code>, ví dụ:</p>
+      <pre>wget --spider --user-agent "malicious bot" http://domain.com</pre>
+      <p>Đây là đoạn code mình dùng để block request spam comment các bạn có
+        &nbsp;thể tham khảo thêm:</p>
+      <pre># Block Spam comment
+location ~* /wp-comments-post\.php$ {
+    if ($http_user_agent ~* "x11; linux i686; rv:17" ) {
+        return 403;
+    }
+}</pre>
+      <p>Chúc bạn thành công.</p>
+      <p>https://hocvps.com/block-user-agent-nginx/</p>
+      <p>https://hocvps.com/rule-nginx/</p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,0 +1,177 @@
+*,
+*:focus,
+*:active {
+    outline: none;
+    // box-shadow: none;
+}
+
+html {
+    // font-size: 18px;
+}
+
+/**
+ * Chỉnh sửa lại các thẻ cơ bản.
+ */
+body {
+    color: #373a3c;
+    //font-size: 1.25rem;
+
+    // Pattern SVG dạng gạch
+    //background-image: url('data:image/svg+xml,%3Csvg%20width%3D%2242%22%20height%3D%2244%22%20viewBox%3D%220%200%2042%2044%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20id%3D%22Page-1%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20id%3D%22brick-wall%22%20fill%3D%22%23000000%22%20fill-opacity%3D%220.4%22%3E%3Cpath%20d%3D%22M0%200h42v44H0V0zm1%201h40v20H1V1zM0%2023h20v20H0V23zm22%200h20v20H22V23z%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+
+    // Blueprint
+    /*
+    background-color:#115EBB;
+    background-repeat:repeat;
+    background-size:150px 150px;
+    background-image:
+        repeating-linear-gradient(0deg, 
+        transparent, 
+        rgba( 255,255,255, .1 ) 1px, 
+        transparent 2px,
+        transparent 50px,
+        rgba( 255,255,255, .3 ) 50px,
+        rgba( 255,255,255, .3 ) 51px,
+        transparent 52px,
+        transparent 100px,
+        rgba( 255,255,255, .1 ) 100px,
+        rgba( 255,255,255, .1 ) 101px,
+        transparent 102px,
+        transparent 150px
+        ),
+        repeating-linear-gradient(90deg, 
+        rgba( 255,255,255, .1 ), 
+        rgba( 255,255,255, .1 ) 1px, 
+        transparent 2px,
+        transparent 50px,
+        rgba( 255,255,255, .3 ) 50px,
+        rgba( 255,255,255, .3 ) 51px,
+        transparent 51px,
+        transparent 100px,
+        rgba( 255,255,255, .1 ) 100px,
+        rgba( 255,255,255, .1 ) 101px,
+        transparent 101px,
+        transparent 150px
+    );
+    */
+
+    // Gradient
+    /*
+    background: linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);
+    background: #5E5EFB;
+    background: #25252D;
+    background: linear-gradient(60deg, #5E5EFB 0%, #25252D 100%);
+    background-size: 100% 100vh;
+    background-attachment: fixed;
+    */
+
+    // Pattern image
+    @include media-breakpoint-up(md) {
+        //background: url(../images/pattern.png);
+        
+        // Background đầu tiên ở phía trên, gần người dùng hơn
+        /*
+        background:
+                url(../images/banner/banner-tet-left.png) left top no-repeat fixed,
+                url(../images/banner/banner-tet-right.png) right top no-repeat fixed,
+                url(../images/layout/body-decoration.png) right top no-repeat fixed,
+                linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%) 100% 100vh fixed;
+        */
+    }
+}
+
+// Tất cả các bài viết đều ở trong một thẻ article
+article {
+    margin: 10px auto 20px;
+    background-color: rgba(255, 255, 255, 1);
+    padding: 0.5rem;
+    max-width: 570px;
+    //font-family: Cambria, Cochin, Georgia, 'Times New Roman', Times, serif;
+    //font-family: Verdana, sans-serif;
+
+    @include media-breakpoint-up(md) {
+        //box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+        //border-radius: 5px;
+        padding: 1rem;
+        //border: 0.5rem solid rgba(0, 0, 0, 0.1);
+        //background-clip: padding-box;
+        
+    }
+
+    @include media-breakpoint-up(xl) {
+        //border-left: 1px solid rgba(0, 0, 0, 0.1);
+    }
+}
+
+
+p {
+    text-align: justify;
+    text-indent: 0.75rem;
+    line-height: 1.725;
+}
+
+h2, h3, h4 {
+    margin-bottom: 1rem; // như thẻ p
+    font-weight: 400;
+}
+
+h2 {
+    text-align: center;
+
+    @include media-breakpoint-up(md) {
+        font-size: 3rem;
+        font-weight: 100;
+    }
+}
+
+h3 {
+    color: $redColor;
+}
+
+h4 {
+    color: $greenColor;
+}
+
+pre {
+    background: #fafafa;
+    padding: 10px;
+}
+
+// Đổi màu cho selected text
+::selection{
+    background: $selectColor;
+}
+
+p, a, li {
+    word-wrap: break-word;
+}
+
+img {
+    height: auto;
+    max-width: 100%;
+}
+
+figure {
+    margin-bottom: 1rem;
+    text-align: center;
+
+    @include media-breakpoint-up(md) {
+        margin-left: -4rem;
+        margin-right: -4rem;
+    }
+    
+    @include media-breakpoint-up(xl) {
+        margin-left: -8rem;
+        margin-right: -8rem;
+    }
+
+    figcaption {
+        text-align: center; // left
+        font-style: italic;
+        color: $mutedColor;
+        font-size: 1rem;
+        margin-top: 0.5rem;
+    }
+}
+
+

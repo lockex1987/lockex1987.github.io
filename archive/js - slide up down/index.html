@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Slide up and down">
+    <title>Slide up and down</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+	
+    <style>
+        /* Nên có 2 cấp, cấp ngoài không có margin và padding */
+        .panel {
+            margin: 0;
+            padding: 0;
+        }
+
+        .content {
+            background: lightgrey;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <article>
+        <h2>Slide up and down</h2>
+
+        <p>
+            <button id="slideUp" class="btn btn-primary">Slide up</button>
+            <button id="slideDown" class="btn btn-secondary">Slide down</button>
+            <button id="slideToggle" class="btn btn-success">Slide toggle</button>
+        </p>
+
+        <div class="panel">
+            <div class="content">
+                <p>Some content here</p>
+                <p>Lorem ipsum...</p>
+            </div>
+        </div>
+    </article>
+
+    <script src="js/slide.js"></script>
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

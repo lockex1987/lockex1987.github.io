@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"> 
+  <title>Inline Edit</title> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Inline Edit">
+ </head> 
+ <body> 
+  <article> 
+   <style>
+body { font: 20px serif; }
+.inline-edit { font: 20px serif;  border: 0; overflow: hidden; resize: none; margin: 0; padding: 10px; }
+.inline-edit:hover, .inline-edit:focus { background-color:#EEFF88; }
+textarea.inline-edit { max-width: 300px; }
+.demo { border: 1px solid #AAA; border-radius: 5px; padding: 10px; }
+    </style> 
+   <p>Yêu cầu:</p> 
+   <ul> 
+    <li>Dễ dàng, tiện</li> 
+    <li>Phải đẹp</li> 
+    <li>Phải wrap text được trên nhiều dòng</li> 
+    <li>Phải tự động tăng chiều cao khi text dài được</li> 
+   </ul> 
+   <p>Có 3 cách:</p> 
+   <ul> 
+    <li> Cách 1: Sử dụng <code>contenteditable</code>, toggle trạng thái. <a href="basic/index.html" target="_blank">Demo</a></li> 
+    <li> Cách 2: Sử dụng thẻ text và thẻ input, ẩn hiện giữa 2 thẻ. <a href="different input types/index.html" target="_blank">Demo</a> </li> 
+    <li> Cách 3: Sử dụng thẻ input trực tiếp, bình thường format như thẻ text thường, khi hover hoặc focus thì format khác. <a href="edit immediate/index.html" target="_blank">Demo</a> </li> 
+   </ul> 
+   <p>Hãy kết hợp cách 1 và 3</p> 
+   <div class="demo"> 
+    <input type="text" class="inline-edit" value="Nguyễn Văn Huyên"> 
+    <br> 
+    <br> 
+    <textarea class="inline-edit">Làm thế nào để wrap text và tự động mở rộng được?</textarea> 
+    <br> 
+    <br> 
+    <div contenteditable="true" class="inline-edit">
+      Làm thế nào để wrap text và tự động mở rộng được? 
+    </div> 
+    <br> 
+    <br> 
+    <div contenteditable="true" class="inline-edit">
+      Làm thế nào để wrap text và tự động mở rộng được? 
+    </div> 
+   </div> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

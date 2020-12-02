@@ -1,0 +1,334 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <style>
+      article img { max-width: 100%;}
+    </style> 
+  <title>Responsive Design</title> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Responsive Design">
+ </head> 
+ <body> 
+  <article> 
+   <h2>Responsive Design</h2> 
+   <p>Ngày nay, do sự phát triển chóng mặt của các smartphone và tablet, nên ta cần phải làm sao cho website hiển thị tốt trên mọi thiết bị có kích thước khác nhau, bên cạnh đó cũng có nhiều người dùng không bao giờ maximize trình duyệt của họ. Để đáp ứng được nhu cầu đó hiện tại theo tôi biết thì người ta có 2 cách làm:</p> 
+   <ol> 
+    <li>Một là người lập trình sẽ viết code nhận diện thiết bị người dùng đang sử dụng, rồi sẽ đưa họ đến trang được thiết kế dành riêng cho thiết bị của họ.</li> 
+    <li>Hai là sử dụng responsive design, responsive là kiểu giao diện co giãn theo kích thước của cửa sổ trình duyệt, cũng là xu hướng thiết kế web của năm nay.</li> 
+   </ol> 
+   <p>Nói nôm na là vậy, các bạn xem vài hình ảnh sẽ dễ hiểu:</p> 
+   <img src="res1.jpg"> 
+   <p>Hôm nay tôi sẽ hướng dẫn các bạn làm thiết kế 1 giao diện responsive trong 3 bước.</p> 
+   <p><strong>Bước 1: Meta Tag</strong></p> 
+   <p>Tag meta viewport là điều tất yếu trong responsive layouts. Nó thiết lập màn hình theo tỷ lệ 1×1, điều này sẽ loại bỏ các chức năng mặc định từ các trình duyệt smartphone, chỉ hiển thị vừa màn hình để xem và có thể phóng to bằng thao tác tay, thêm vào trong thẻ &lt;head&gt;.</p> 
+   <p>HTML Code:</p> 
+   <p><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"/&gt;</code></p> 
+   <p> Trình duyệt IE8 trở xuống không hỗ trợ media query. Bạn có thể sử dụng media-queries.js hoặc respond.js để hỗ trợ.</p> 
+   <p>HTML Code:<br> </p> 
+   <p><code>&lt;!--[if lt IE 9]&gt; &lt;script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"&gt;&lt;/script&gt;<br> &lt;![endif]--&gt;</code></p> 
+   <p>The <code class="w3-codespan">width=device-width</code> part sets the width of the page to follow the screen-width of the device (which will vary depending on the device).</p> 
+   <p>The <code class="w3-codespan">initial-scale=1.0</code> part sets the initial zoom level when the page is first loaded by the browser.</p> 
+   <p>Here is an example of a web page <em>without</em> the viewport meta tag, and the same web page <em>with</em> the viewport meta tag:</p> 
+   <p>Without the viewport meta tag:</p> 
+   <img alt="" src="images/img_viewport1.png"> 
+   <p>With the viewport meta tag:</p> 
+   <img alt="" src="images/img_viewport2.png"> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p><strong> Bước 2: HTML</strong></p> 
+   <p> Trong ví dụ này, tôi có một bố cục trang cơ bản với một #header, #content nội dung, #sidebar, và #footer. Tiêu đề có height 180px cố định, nội dung #content width là 600px và #sidebar width là 300px.</p> 
+   <img src="res2.png"> 
+   <p> </p> 
+   <p>HTML Code:</p> 
+   <pre>&lt;div&gt;
+  &lt;div&gt;
+    &lt;h1&gt;Header&lt;/h1&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;h2&gt;Content&lt;/h2&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;h3&gt;Sidebar&lt;/h3&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;h4&gt;Footer&lt;/h4&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre> 
+   <strong> Bước 3: CSS-Media Queries</strong> 
+   <br> 
+   <br> Đầu tiên, tôi CSS cho các div trên 
+   <br> 
+   <p> </p> 
+   <p>Code:</p> 
+   <pre>#pagewrap {
+    padding: 5px;
+    width: 960px;
+    margin: 20px auto;
+}
+#header {
+    height: 180px;
+}
+#content {
+    width: 600px;
+    float: left;
+}
+#sidebar {
+    width: 300px;
+    float: right;
+}
+#footer {
+    clear: both;
+}</pre> 
+   <p> Sau đó, tôi sẽ sử dụng CSS3 media query, với viewport từ 980px trở xuống, màn hình sẽ hiển thị 2 cột với width của #content là 65% và #sidebar là 30%.</p> 
+   <p>Code:</p> 
+   <pre>/* 980px hoặc nhỏ hơn */
+@media screen and (max-width: 980px) {
+    #pagewrap {
+        width: 94%;
+    }
+    #content {
+        width: 65%;
+    }
+    #sidebar {
+        width: 30%;
+    }
+}</pre> 
+   <p> Và với viewport 700px trở xuống, ta set giá trị width của #content và #siderbar là auto, bỏ float đi để hiển thị 1 cột full width.</p> 
+   <p>Code:</p> 
+   <pre>/* 700px hoặc nhỏ hơn */
+@media screen and (max-width: 700px) {
+    #content {
+        width: auto;
+        float: none;
+    }
+    #sidebar {
+        width: auto;
+        float: none;
+    }
+}</pre> 
+   <p> Cuối cùng, với viewport 400px trở xuống(mobile), ta set lại height #header auto, thay đổi font chữ h1 xuống 24px, và cho ẩn luôn sidebar.</p> 
+   <p>Code: </p> 
+   <pre>/*  480px hoặc nhỏ hơn */
+@media screen and (max-width: 480px) {
+    #header {
+        height: auto;
+    }
+    h1 {
+        font-size: 24px;
+    }
+    #sidebar {
+        display: none;
+    }
+}</pre> 
+   <p> Bạn có thể viết bao nhiêu media query tuỳ ý, trong ví dụ này tôi chỉ viết 3 media queries.</p> 
+   <p>---</p> 
+   <h3>Danh sách các kích thước màn hình thiết bị</h3> 
+   <p>Khi viết CSS cho giao diện Responsive, việc quan trọng nhất là bạn phải nắm được kích thước màn hình của các loại điện thoại thông dụng để có thể viết CSS được như ý và chắc chắn nó hoạt động tốt trên nhiều thiết bị, nhất là các thiết bị thông dụng.</p> 
+   <p>Bạn có thể tham khảo các size chiều rộng của các thiết bị <a href="http://responsivedesign.is/develop/browser-feature-support/media-queries-for-common-device-breakpoints" onclick="__gaTracker('send', 'event', 'outbound-article', 'http://responsivedesign.is/develop/browser-feature-support/media-queries-for-common-device-breakpoints', 'tại đây');" rel="external nofollow" target="_blank">tại đây</a>, nhưng đa phần một dự án bạn chỉ cần tạo các breakpoint CSS như sau:</p> 
+   <ul> 
+    <li>max-width: 320px (điện thoại di động, hiển thị chiều dọc)</li> 
+    <li>max-width: 480px (điện thoại di động, hiển thị chiều ngang)</li> 
+    <li>max-width: 600px (máy tính bảng, hiển thị chiều dọc)</li> 
+    <li>max-width: 800px (máy tính bảng, hiển thị chiều ngang)</li> 
+    <li>max-width: 768px (máy tính bảng loại to, hiển thị chiều dọc)</li> 
+    <li>max-width: 1024px (máy tính bảng loại to, hiển thị chiều ngang)</li> 
+    <li>min-width: 1025px (từ size này trở lên là danh cho desktop thông thường).</li> 
+   </ul> 
+   <h3>Khái niệm Mobile-First</h3> 
+   <p> <img src="res3.png"></p> 
+   <p>Or</p> 
+   <p><img alt="" src="res4.png"></p> 
+   <p><img alt="" src="res5.png"></p> 
+   <p>Khi nói về làm giao diện Responsive thì bạn cũng cần nên biết qua khái niệm Mobile-first vì nó sẽ giúp quy trình làm giao diện Responsive của bạn nhanh hơn rất nhiều. Mobile-first nghĩa là tên một quy trình thiết kế mà chúng ta sẽ bắt đầu thiết kế cho giao diện ở điện thoại trước và sử dụng điện thoại làm nền tảng ban đầu, sau đó sẽ đến các thiết bị khác như máy tính bảng, desktop, retina,…</p> 
+   <p>Đặc điểm của quy trình mobile-first là chúng ta chỉ sử dụng media features là min-width chứ không sử dụng cái gì khác. Mình có ví dụ sau:</p> 
+   <p><code>@media all and (min-width: 320px) {<br> &nbsp; </code><code>body {</code><code></code><code><br> &nbsp;&nbsp;&nbsp; background: #e7e7e7;</code><code><br> &nbsp;&nbsp;&nbsp; color: #333333;</code><code><br> &nbsp; }</code><code><br> }</code> </p> 
+   <p> </p> 
+   <p> </p> 
+   <p>Điều này có nghĩa là các thiết bị có chiều rộng tối thiểu là 320px sẽ áp dụng các CSS bên trong, dĩ nhiên nó cũng sẽ bao gồm luôn giao diện máy tính bảng, desktop,…</p> 
+   <p>Và khi sử dụng quy trình mobile-first thì CSS của bạn sẽ có cấu trúc thế này:</p> 
+   <p><code>/* Dành cho điện thoại */<br> @media all and (min-width: 320px) { ... }</code><code><br> </code></p> 
+   <p><code>/* Dành cho máy tính bảng chiều dọc */</code><code><br> @media all and (min-width: 600px) { ... }</code><code><br> <br> </code><code>/* Dành cho máy tính bảng chiều ngang */</code><code></code><br> <code>@media all and (min-width: 1024px) { ... }</code><code></code><code><br> <br> </code><code>/* Dành cho màn hình desktop */</code><code></code><br> <code>@media all and (min-width: 1280px) { ... }</code></p> 
+   <p> </p> 
+   <p> </p> 
+   <p>Thế tại sao lại nên sử dụng mobile-first? Có rất nhiều lý do như:</p> 
+   <ul> 
+    <li>Tập trung tối đa vào giao diện ở điện thoại vì xu hướng sử dụng điện thoại ngày càng tăng.</li> 
+    <li>Tránh việc viết lại CSS, vì một CSS ở điện thoại có thể được tái sử dụng trên desktop. Nhưng nếu bạn viết CSS trên desktop trước thì ở giao diện điện thoại bạn vẫn phải viết lại nếu muốn tùy biến.</li> 
+    <li>Dễ dàng trong việc triển khai và quản lý, nâng cấp sau này.</li> 
+    <li>Tránh các lỗi hiển thị trên điện thoại do việc tùy biến từ CSS ở desktop.</li> 
+    <li>Và nhiều lý do khác mà chỉ khi làm mới biết.</li> 
+   </ul> 
+   <h3>Một số&nbsp;kiến thức cần biết khi viết CSS Responsive</h3> 
+   <ul> 
+    <li>Ngoài đơn vị của breakpoint là px, thì các đơn vị đo chiều dài trong website nên là phần trăm. Hay nói đúng hơn là sử dụng đơn vị tương đối.</li> 
+    <li>Nên sử dụng max-width thay vì width để tránh cố định chiều rộng.</li> 
+    <li>Sử dụng display: none cho các thành phần cần ẩn đi ở từng thiết bị mà bạn muốn ẩn. Và display: block ở các thiết bị cần hiển thị ra.</li> 
+    <li>Sử dụng tùy chọn !important nếu cần đè viết đè CSS.</li> 
+    <li>Use tag <strong>code</strong>, don't use tag <strong>pre</strong></li> 
+    <li>Use style: article img { max-width: 100%; }</li> 
+   </ul> 
+   <p>Cơ bản là chỉ vậy thôi, thực ra Responsive thì chỉ căng nhất là phần làm menu nhưng khi thực hành bạn sẽ nắm rõ chi tiết hơn.</p> 
+   <h2>What is a Grid-View?</h2> 
+   <p>Many web pages are based on a grid-view, which means that the page is divided into columns:</p> 
+   <p>Using a grid-view is very helpful when designing web pages. It makes it easier to place elements on the page.</p> 
+   <p>A responsive grid-view often has 12 columns, and has a total width of 100%, and will shrink and expand as you resize the browser window.</p> 
+   <p>grid-view-01.html</p> 
+   <h2>Building a Responsive Grid-View</h2> 
+   <p>Lets start building a responsive grid-view.</p> 
+   <p>First ensure that all HTML elements have the <code class="w3-codespan">box-sizing</code> property set to <code class="w3-codespan">border-box</code>. This makes sure that the padding and border are included in the total width and height of the elements.</p> 
+   <p>Add the following code in your CSS:</p> 
+   <p><span style="color:brown">* <span style="color:black">{</span><span style="color:red"><br> &nbsp;&nbsp;&nbsp; box-sizing<span style="color:mediumblue"><span style="color:black">:</span> border-box<span style="color:black">;</span></span><br> </span><span style="color:black">}</span></span></p> 
+   <p>The following example shows a simple responsive web page, with two columns:</p> 
+   <p>grid-view-02.html</p> 
+   <p>The example above is fine if the web page only contains two columns.</p> 
+   <p>However, we want to use a responsive grid-view with 12 columns, to have more control over the web page.</p> 
+   <p>First we must calculate the percentage for one column: 100% / 12 columns = 8.33%.</p> 
+   <p>Then we make one class for each of the 12 columns, <code class="w3-codespan">class="col-"</code> and a number defining how many columns the section should span:</p> 
+   <p>grid-view-03.html</p> 
+   <p><span style="color:brown">.col-1 <span style="color:black">{</span><span style="color:red">width<span style="color:mediumblue"><span style="color:black">:</span> 8.33%<span style="color:black">;</span></span></span><span style="color:black">}</span><br> .col-2 <span style="color:black">{</span><span style="color:red">width<span style="color:mediumblue"><span style="color:black">:</span> 16.66%<span style="color:black">;</span></span></span><span style="color:black">}</span><br> .col-3 <span style="color:black">{</span><span style="color:red">width<span style="color:mediumblue"><span style="color:black">:</span> 25%<span style="color:black">;</span></span></span><span style="color:black">}</span><br> .col-4 <span style="color:black">{</span><span style="color:red">width<span style="color:mediumblue"><span style="color:black">:</span> 33.33%<span style="color:black">;</span></span></span><span style="color:black">}</span><br> .col-5 <span style="color:black">{</span><span style="color:red">width<span style="color:mediumblue"><span style="color:black">:</span> 41.66%<span style="color:black">;</span></span></span><span style="color:black">}</span><br> .col-6 <span style="color:black">{</span><span style="color:red">width<span style="color:mediumblue"><span style="color:black">:</span> 50%<span style="color:black">;</span></span></span><span style="color:black">}</span><br> .col-7 <span style="color:black">{</span><span style="color:red">width<span style="color:mediumblue"><span style="color:black">:</span> 58.33%<span style="color:black">;</span></span></span><span style="color:black">}</span><br> .col-8 <span style="color:black">{</span><span style="color:red">width<span style="color:mediumblue"><span style="color:black">:</span> 66.66%<span style="color:black">;</span></span></span><span style="color:black">}</span><br> .col-9 <span style="color:black">{</span><span style="color:red">width<span style="color:mediumblue"><span style="color:black">:</span> 75%<span style="color:black">;</span></span></span><span style="color:black">}</span><br> .col-10 <span style="color:black">{</span><span style="color:red">width<span style="color:mediumblue"><span style="color:black">:</span> 83.33%<span style="color:black">;</span></span></span><span style="color:black">}</span><br> .col-11 <span style="color:black">{</span><span style="color:red">width<span style="color:mediumblue"><span style="color:black">:</span> 91.66%<span style="color:black">;</span></span></span><span style="color:black">}</span><br> .col-12 <span style="color:black">{</span><span style="color:red">width<span style="color:mediumblue"><span style="color:black">:</span> 100%<span style="color:black">;</span></span></span><span style="color:black">}</span></span></p> 
+   <p>All these columns should be floating to the left, and have a padding of 15px:</p> 
+   <p><span style="color:brown">[class*="col-"] <span style="color:black">{</span><span style="color:red"><br> &nbsp;&nbsp;&nbsp; float<span style="color:mediumblue"><span style="color:black">:</span> left<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; padding<span style="color:mediumblue"><span style="color:black">:</span> 15px<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; border<span style="color:mediumblue"><span style="color:black">:</span> 1px solid red<span style="color:black">;</span></span><br> </span><span style="color:black">}</span></span></p> 
+   <p>Each row should be wrapped in a <code class="w3-codespan">&lt;div&gt;</code>. The number of columns inside a row should always add up to 12:</p> 
+   <div class="w3-code notranslate htmlHigh"> 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>div<span style="color:red"> class<span style="color:mediumblue">="row"</span></span><span style="color:mediumblue">&gt;</span></span> 
+    <br> &nbsp; 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>div<span style="color:red"> class<span style="color:mediumblue">="col-3"</span></span><span style="color:mediumblue">&gt;</span></span>... 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>/div<span style="color:mediumblue">&gt;</span></span> 
+    <span style="color:green">&lt;!-- 25% --&gt;</span> 
+    <br> &nbsp; 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>div<span style="color:red"> class<span style="color:mediumblue">="col-9"</span></span><span style="color:mediumblue">&gt;</span></span>... 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>/div<span style="color:mediumblue">&gt;</span></span> 
+    <span style="color:green">&lt;!-- 75% --&gt;</span> 
+    <br> 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>/div<span style="color:mediumblue">&gt;</span></span> 
+   </div> 
+   <p>The columns inside a row are all floating to the left, and are therefore taken out of the flow of the page, and other elements will be placed as if the columns do not exist. To prevent this, we will add a style that clears the flow:</p> 
+   <p><span style="color:brown">.row::after <span style="color:black">{</span><span style="color:red"><br> &nbsp;&nbsp;&nbsp; content<span style="color:mediumblue"><span style="color:black">:</span> ""<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; clear<span style="color:mediumblue"><span style="color:black">:</span> both<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; display<span style="color:mediumblue"><span style="color:black">:</span> table<span style="color:black">;</span></span><br> </span><span style="color:black">}</span></span></p> 
+   <p>We also want to add some styles and colors to make it look better:</p> 
+   <p><span style="color:brown">html <span style="color:black">{</span><span style="color:red"><br> &nbsp;&nbsp;&nbsp; font-family<span style="color:mediumblue"><span style="color:black">:</span> "Lucida Sans", sans-serif<span style="color:black">;</span></span><br> </span><span style="color:black">}</span><br> .header <span style="color:black">{</span><span style="color:red"><br> &nbsp;&nbsp;&nbsp; background-color<span style="color:mediumblue"><span style="color:black">:</span> #9933cc<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; color<span style="color:mediumblue"><span style="color:black">:</span> #ffffff<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; padding<span style="color:mediumblue"><span style="color:black">:</span> 15px<span style="color:black">;</span></span><br> </span><span style="color:black">}</span><br> .menu ul <span style="color:black">{</span><span style="color:red"><br> &nbsp;&nbsp;&nbsp; list-style-type<span style="color:mediumblue"><span style="color:black">:</span> none<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; margin<span style="color:mediumblue"><span style="color:black">:</span> 0<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; padding<span style="color:mediumblue"><span style="color:black">:</span> 0<span style="color:black">;</span></span><br> </span><span style="color:black">}</span><br> .menu li <span style="color:black">{</span><span style="color:red"><br> &nbsp;&nbsp;&nbsp; padding<span style="color:mediumblue"><span style="color:black">:</span> 8px<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; margin-bottom<span style="color:mediumblue"><span style="color:black">:</span> 7px<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; background-color <span style="color:mediumblue"><span style="color:black">:</span>#33b5e5<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; color<span style="color:mediumblue"><span style="color:black">:</span> #ffffff<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; box-shadow<span style="color:mediumblue"><span style="color:black">:</span> 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)<span style="color:black">;</span></span><br> </span><span style="color:black">}</span><br> .menu li:hover <span style="color:black">{</span><span style="color:red"><br> &nbsp;&nbsp;&nbsp; background-color<span style="color:mediumblue"><span style="color:black">:</span> #0099cc<span style="color:black">;</span></span><br> </span><span style="color:black">}</span></span></p> 
+   <h2>What is a Media Query?</h2> 
+   <p>Media query is a CSS technique introduced in CSS3.</p> 
+   <p>It uses the <code class="w3-codespan">@media</code> rule to include a block of CSS properties only if a certain condition is true.</p> 
+   <p>For example, if the browser window is smaller than 500px, the background color will change to lightblue:</p> 
+   <p><span style="color:brown">@media only screen and (max-width: 500px) <span style="color:black">{</span><span style="color:brown"><br> &nbsp;&nbsp;&nbsp; body <span style="color:black"><span style="color:black">{</span></span><span style="color:red"><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background-color<span style="color:mediumblue"><span style="color:black">:</span> lightblue<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; </span><span style="color:black"><span style="color:black">}</span></span><br> </span><span style="color:black">}</span></span></p> 
+   <p>query-01.html</p> 
+   <h2>Add a Breakpoint</h2> 
+   <p>Earlier in this tutorial we made a web page with rows and columns, and it was responsive, but it did not look good on a small screen.</p> 
+   <p>Media queries can help with that. We can add a breakpoint where certain parts of the design will behave differently on each side of the breakpoint.</p> 
+   <p>Use a media query to add a breakpoint at 768px:</p> 
+   <p>grid-view-05.html</p> 
+   <h2>Always Design for Mobile First</h2> 
+   <p>Mobile First means designing for mobile before designing for desktop or any other device (This will make the page display faster on smaller devices).</p> 
+   <p>This means that we must make some changes in our CSS.</p> 
+   <p>Instead of changing styles when the width gets <em>smaller</em> than 768px, we should change the design when the width gets <em>larger</em> than 768px. This will make our design Mobile First:</p> 
+   <p>grid-view-06.html</p> 
+   <h2>Another Breakpoint</h2> 
+   <p>You can add as many breakpoints as you like.</p> 
+   <p>We will also insert a breakpoint between tablets and mobile phones.</p> 
+   <p>We do this by adding one more media query (at 600px), and a set of new classes for devices larger than 600px (but smaller than 768px):</p> 
+   <p>grid-view-07.html</p> 
+   <p>Note that the two sets of classes are almost identical, the only difference is the name (col- and col-m-).</p> 
+   <p>It might seem odd that we have two sets of identical classes, but it gives us the opportunity <em>in HTML</em>, to decide what will happen with the columns at each breakpoint:</p> 
+   <p><strong>For desktop:</strong></p> 
+   <p>The first and the third section will both span 3 columns each. The middle section will span 6 columns.</p> 
+   <p><strong>For tablets:</strong></p> 
+   <p>The first section will span 3 columns, the second will span 9, and the third section will be displayed below the first two sections, and it will span 12 columns:</p> 
+   <div class="w3-code notranslate htmlHigh"> 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>div<span style="color:red"> class<span style="color:mediumblue">="row"</span></span><span style="color:mediumblue">&gt;</span></span> 
+    <br> 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>div<span style="color:red"> class<span style="color:mediumblue">="col-3 col-m-3"</span></span><span style="color:mediumblue">&gt;</span></span>... 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>/div<span style="color:mediumblue">&gt;</span></span> 
+    <br> 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>div<span style="color:red"> class<span style="color:mediumblue">="col-6 col-m-9"</span></span><span style="color:mediumblue">&gt;</span></span>... 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>/div<span style="color:mediumblue">&gt;</span></span> 
+    <br> 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>div<span style="color:red"> class<span style="color:mediumblue">="col-3 col-m-12"</span></span><span style="color:mediumblue">&gt;</span></span>... 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>/div<span style="color:mediumblue">&gt;</span></span> 
+    <br> 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>/div<span style="color:mediumblue">&gt;</span></span> 
+   </div> 
+   <h1>Responsive Web Design - <span class="color_h1">Images</span></h1> 
+   <h2>Using The width Property</h2> 
+   <p>If the <code class="w3-codespan">width</code> property is set to 100%, the image will be responsive and scale up and down:</p> 
+   <p><span style="color:brown">img <span style="color:black">{</span><span style="color:red"><br> &nbsp;&nbsp;&nbsp; width<span style="color:mediumblue"><span style="color:black">:</span> 100%<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; height<span style="color:mediumblue"><span style="color:black">:</span> auto<span style="color:black">;</span></span><br> </span><span style="color:black">}</span></span></p> 
+   <p>image.html</p> 
+   <p>Notice that in the example above, the image can be scaled up to be larger than its original size. A better solution, in many cases, will be to use the <code class="w3-codespan">max-width</code> property instead.</p> 
+   <h2>Using The max-width Property</h2> 
+   <p>If the <code class="w3-codespan">max-width</code> property is set to 100%, the image will scale down if it has to, but never scale up to be larger than its original size:</p> 
+   <p><span style="color:brown">img <span style="color:black">{</span><span style="color:red"><br> &nbsp;&nbsp;&nbsp; max-width<span style="color:mediumblue"><span style="color:black">:</span> 100%<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; height<span style="color:mediumblue"><span style="color:black">:</span> auto<span style="color:black">;</span></span><br> </span><span style="color:black">}</span></span></p> 
+   <h2>Add an Image to The Example Web Page</h2> 
+   <p>grid-view-08.html</p> 
+   <h2>Background Images</h2> 
+   <p>Background images can also respond to resizing and scaling.</p> 
+   <p>Here we will show three different methods:</p> 
+   <p>1. If the <code class="w3-codespan">background-size</code> property is set to "contain", the background image will scale, and try to fit the content area. However, the image will keep its aspect ratio (the proportional relationship between the image's width and height):</p> 
+   <p>Here is the CSS code:</p> 
+   <p><span style="color:brown">div <span style="color:black">{</span><span style="color:red"><br> &nbsp;&nbsp;&nbsp; width<span style="color:mediumblue"><span style="color:black">:</span> 100%<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; height<span style="color:mediumblue"><span style="color:black">:</span> 400px<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; background-image<span style="color:mediumblue"><span style="color:black">:</span> url('img_flowers.jpg')<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; background-repeat<span style="color:mediumblue"><span style="color:black">:</span> no-repeat<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; background-size<span style="color:mediumblue"><span style="color:black">:</span> contain<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; border<span style="color:mediumblue"><span style="color:black">:</span> 1px solid red<span style="color:black">;</span></span><br> </span><span style="color:black">}</span></span></p> 
+   <p>image-03.html</p> 
+   <p>2. If the <code class="w3-codespan">background-size</code> property is set to "100% 100%", the background image will stretch to cover the entire content area:</p> 
+   <p>Here is the CSS code:</p> 
+   <p><span style="color:brown">div <span style="color:black">{</span><span style="color:red"><br> &nbsp;&nbsp;&nbsp; width<span style="color:mediumblue"><span style="color:black">:</span> 100%<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; height<span style="color:mediumblue"><span style="color:black">:</span> 400px<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; background-image<span style="color:mediumblue"><span style="color:black">:</span> url('img_flowers.jpg')<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; background-size<span style="color:mediumblue"><span style="color:black">:</span> 100% 100%<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; border<span style="color:mediumblue"><span style="color:black">:</span> 1px solid red<span style="color:black">;</span></span><br> </span><span style="color:black">}</span></span></p> 
+   <p>image-04.html</p> 
+   <p>3. If the <code class="w3-codespan">background-size</code> property is set to "cover", the background image will scale to cover the entire content area. Notice that the "cover" value keeps the aspect ratio, and some part of the background image may be clipped:</p> 
+   <p>Here is the CSS code:</p> 
+   <p><span style="color:brown">div <span style="color:black">{</span><span style="color:red"><br> &nbsp;&nbsp;&nbsp; width<span style="color:mediumblue"><span style="color:black">:</span> 100%<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; height<span style="color:mediumblue"><span style="color:black">:</span> 400px<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; background-image<span style="color:mediumblue"><span style="color:black">:</span> url('img_flowers.jpg')<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; background-size<span style="color:mediumblue"><span style="color:black">:</span> cover<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; border<span style="color:mediumblue"><span style="color:black">:</span> 1px solid red<span style="color:black">;</span></span><br> </span><span style="color:black">}</span></span></p> 
+   <h2>Different Images for Different Devices</h2> 
+   <p>A large image can be perfect on a big computer screen, but useless on a small device. Why load a large image when you have to scale it down anyway? To reduce the load, or for any other reasons, you can use media queries to display different images on different devices.</p> 
+   <p>Here is one large image and one smaller image that will be displayed on different devices:</p> 
+   <div class="w3-code notranslate cssHigh"> 
+    <span style="color:brown"> <span style="color:green">/* For width smaller than 400px: */</span><br> body <span style="color:black">{</span><span style="color:red"><br> &nbsp;&nbsp;&nbsp; background-image<span style="color:mediumblue"><span style="color:black">:</span> url('img_smallflower.jpg')<span style="color:black">;</span></span> <br> </span><span style="color:black">}</span><br> <br> <span style="color:green">/* For width 400px and larger: */</span><br> @media only screen and (min-width: 400px) <span style="color:black">{</span><span style="color:brown"><br> &nbsp;&nbsp;&nbsp; body <span style="color:black"><span style="color:black">{</span></span><span style="color:red"> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background-image<span style="color:mediumblue"><span style="color:black">:</span> url('img_flowers.jpg')<span style="color:black">;</span></span> <br> &nbsp;&nbsp;&nbsp; </span><span style="color:black"><span style="color:black">}</span></span><br> </span><span style="color:black">}</span></span> 
+   </div> 
+   <p>image-06.html</p> 
+   <p>You can use the media query <code class="w3-codespan">min-device-width</code>, instead of <code class="w3-codespan">min-width</code>, which checks the device width, instead of the browser width. Then the image will not change when you resize the browser window:</p> 
+   <div class="w3-code notranslate cssHigh"> 
+    <span style="color:brown"> <span style="color:green">/* For devices smaller than 400px: */</span><br> body <span style="color:black">{</span><span style="color:red"><br> &nbsp;&nbsp;&nbsp; background-image<span style="color:mediumblue"><span style="color:black">:</span> url('img_smallflower.jpg')<span style="color:black">;</span></span> <br> </span><span style="color:black">}</span><br> <br> <span style="color:green">/* For devices 400px and larger: */</span><br> @media only screen and (min-device-width: 400px) <span style="color:black">{</span><span style="color:brown"><br> &nbsp;&nbsp;&nbsp; body <span style="color:black"><span style="color:black">{</span></span><span style="color:red"> <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; background-image<span style="color:mediumblue"><span style="color:black">:</span> url('img_flowers.jpg')<span style="color:black">;</span></span> <br> &nbsp;&nbsp;&nbsp; </span><span style="color:black"><span style="color:black">}</span></span><br> </span><span style="color:black">}</span></span> 
+   </div> 
+   <h2>HTML5 &lt;picture&gt; Element</h2> 
+   <p>HTML5 introduced the <code class="w3-codespan">&lt;picture&gt;</code> element, which lets you define more than one image.</p> 
+   <p>The <code class="w3-codespan">&lt;picture&gt;</code> element works similar to the <code class="w3-codespan">&lt;video&gt;</code> and <code class="w3-codespan">&lt;audio&gt;</code> elements. You set up different sources, and the first source that fits the preferences is the one being used:</p> 
+   <div class="w3-code notranslate htmlHigh"> 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>picture<span style="color:mediumblue">&gt;</span></span> 
+    <br> &nbsp; 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>source<span style="color:red"> srcset<span style="color:mediumblue">="img_smallflower.jpg"</span> media<span style="color:mediumblue">="(max-width: 400px)"</span></span><span style="color:mediumblue">&gt;</span></span> 
+    <br> &nbsp; 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>source<span style="color:red"> srcset<span style="color:mediumblue">="img_flowers.jpg"</span></span><span style="color:mediumblue">&gt;</span></span> 
+    <br> &nbsp; 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>img<span style="color:red"> src<span style="color:mediumblue">="img_flowers.jpg"</span> alt<span style="color:mediumblue">="Flowers"</span></span><span style="color:mediumblue">&gt;</span></span> 
+    <br> 
+    <span style="color:brown"><span style="color:mediumblue">&lt;</span>/picture<span style="color:mediumblue">&gt;</span></span> 
+   </div> 
+   <p>image-08.html</p> 
+   <p>The <code class="w3-codespan">srcset</code> attribute is required, and defines the source of the image.</p> 
+   <p>The <code class="w3-codespan">media</code> attribute is optional, and accepts the media queries you find in <a href="http://www.w3schools.com/cssref/css3_pr_mediaquery.asp">CSS @media rule</a>.</p> 
+   <p>You should also define an <code class="w3-codespan">&lt;img&gt;</code> element for browsers that do not support the <code class="w3-codespan">&lt;picture&gt;</code> element.</p> 
+   <h1>Responsive Web Design - Videos</h1> 
+   <h2>Using The width Property</h2> 
+   <p>If the <code class="w3-codespan">width</code> property is set to 100%, the video player will be responsive and scale up and down:</p> 
+   <p><span style="color:brown">video <span style="color:black">{</span><span style="color:red"><br> &nbsp;&nbsp;&nbsp; width<span style="color:mediumblue"><span style="color:black">:</span> 100%<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; height<span style="color:mediumblue"><span style="color:black">:</span> auto<span style="color:black">;</span></span><br> </span><span style="color:black">}</span></span></p> 
+   <p>video-01.html</p> 
+   <p>Notice that in the example above, the video player can be scaled up to be larger than its original size. A better solution, in many cases, will be to use the <code class="w3-codespan">max-width</code> property instead.</p> 
+   <h2>Using The max-width Property</h2> 
+   <p>If the <code class="w3-codespan">max-width</code> property is set to 100%, the video player will scale down if it has to, but never scale up to be larger than its original size:</p> 
+   <p><span style="color:brown">video <span style="color:black">{</span><span style="color:red"><br> &nbsp;&nbsp;&nbsp; max-width<span style="color:mediumblue"><span style="color:black">:</span> 100%<span style="color:black">;</span></span><br> &nbsp;&nbsp;&nbsp; height<span style="color:mediumblue"><span style="color:black">:</span> auto<span style="color:black">;</span></span><br> </span><span style="color:black">}</span></span></p> 
+   <p>video-02.html</p> 
+   <h2>Add a Video to the Example Web Page</h2> 
+   <p>We want to add a video in our example web page. The video will be resized to always take up all the available space:</p> 
+   <p>grid-view-09.html</p> 
+   <h1>Responsive Web Design - <span class="color_h1">Frameworks</span></h1> 
+   <p class="intro">There are many existing CSS Frameworks that offer Responsive Design.</p> 
+   <p class="intro">They are free, and easy to use.</p> 
+   <h2>Using W3.CSS</h2> 
+   <p>w3.css.html</p> 
+   <h2>Bootstrap</h2> 
+   <p class="intro">bootstrap.html</p> 
+   <p class="intro">Templates</p> 
+   <p class="intro">http://www.w3schools.com/css/css_rwd_templates.asp</p> 
+   <p> </p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

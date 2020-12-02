@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+ <head> 
+  <meta charset="UTF-8"> 
+  <title>Highcharts Sample</title> 
+  <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet"> 
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> 
+  <link rel="stylesheet" href="css/style.css"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Highcharts Sample">
+ </head> 
+ <body> 
+  <article> 
+   <div id="demo-wrapper"> 
+    <div id="mapBox"> 
+     <div id="up"></div> 
+     <div class="selector"> 
+      <button id="btn-prev-map" class="prev-next"><i class="fa fa-angle-left"></i></button> 
+      <select id="mapDropdown" class="ui-widget combobox"></select> 
+      <button id="btn-next-map" class="prev-next"><i class="fa fa-angle-right"></i></button> 
+     </div> 
+     <div id="container"></div> 
+    </div> 
+    <div id="sideBox"> 
+     <input type="checkbox" id="chkDataLabels" checked> 
+     <label for="chkDataLabels" style="display: inline">Data labels</label> 
+     <div id="infoBox"> 
+      <h4>This map</h4> 
+      <div id="download"></div> 
+     </div> 
+    </div> 
+   </div> 
+   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
+   <script src="https://code.highcharts.com/maps/highmaps.js"></script> 
+   <script src="https://code.highcharts.com/mapdata/index.js?1"></script> 
+   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script> 
+   <script src="https://www.highcharts.com/samples/maps/demo/all-maps/jquery.combobox.js"></script> 
+   <script src="js/index.js"></script> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

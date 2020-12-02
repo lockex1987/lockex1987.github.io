@@ -1,0 +1,53 @@
+@half-thumb-size: 8px;
+
+.range-slider {
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  padding: 7px @half-thumb-size;
+  //background-color: #EEE;
+
+  // Thanh màu đen
+  & > .bar {
+    //background-color: #000;
+    //background-color: rgba(0, 0, 0, .05);
+    background: #e6e6e6;
+    
+    border-radius: 4px;
+    position: relative;
+
+    // Thanh màu xanh (được bao nhiêu phần trăm rồi)
+    & > .bar-process {
+      //background: #02c38a;
+      background-color: #007aff;
+      height: 4px;
+      border-radius: 4px;
+      //width: 0%;
+    }
+
+    // Nút tròn tròn
+    & > .bar-btn {
+      position: absolute;
+      //left: -25px;
+      background-color: #02c38a;
+      //background: #333940;
+      border-radius: 50%;
+      width: 2 * @half-thumb-size;
+      height: 2 * @half-thumb-size;
+      transform: translateX(-50%);
+      top: -7px;
+      z-index: 30;
+      box-shadow: 0 1px 2px 0 rgba(34,36,38,.15), 0 0 0 1px rgba(34,36,38,.15) inset;
+    }
+  }
+
+  & > input[type=range] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+    -webkit-appearance: none;
+    opacity: 0;
+  }
+}

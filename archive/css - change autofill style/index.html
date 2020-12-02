@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="-webkit-autofill">
+    <title>Đổi style cho trường mà trình duyệt tự điền dữ liệu</title>
+
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="css/webkit-autofill.css">
+</head>
+
+<body>
+    <article>
+        <h2>Đổi style cho trường mà trình duyệt tự điền dữ liệu</h2>
+        <p>Các trình duyệt cho phép người dùng tự động điền dữ liệu vào các trường
+            của form, ví dụ như thông tin người dùng và mật khẩu khi đăng nhập. Ví
+            dụ:</p>
+        <p><img src="images/form-autocomplete.gif"></p>
+        <p>Chú ý các trường mà được tự điền dữ liệu có background màu vàng. Chúng
+            ta sẽ thay đổi style này. Chúng ta sử dụng <code>-webkit-autofill</code>
+            pseudo-selector như sau:</p>
+        <pre>/* Change auto-complete styles in Chrome */
+:-webkit-autofill,
+:-webkit-autofill:hover, 
+:-webkit-autofill:focus {
+    /* Có thể thiết lập cả border */
+    border: 1px solid green;
+
+    /* Màu của chữ cũng bị thay đổi, chuyển về màu khi bình thường */
+    -webkit-text-fill-color: #9ECCF8;
+
+    /* Thời gian đổi màu trong 5000s (một thời gian dài) */
+    transition: background-color 5000s ease-in-out 0s;
+
+    /* Màu nền cùng màu nền của cha (nhưng sẽ bị nháy nháy) */
+    /*-webkit-box-shadow: 0 0 0px 1000px #002864 inset;*/
+
+    /* Dùng thế này không ăn */
+    /*background-color: transparent !important;*/
+}</pre>
+        <p>Chúng ta có thể sử dụng box-shadow, hoặc để thời gian transition là một
+            thời gian rất dài (làm cách này).</p>
+        <p>Một cách khác là sử dụng keyframes:</p>
+        <pre>@-webkit-keyframes autofill {
+    to {
+        color: #666;
+        background: transparent;
+    }
+}
+
+input:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+}</pre>
+        <h3>Demo</h3>
+        <form>
+            <div class="form-group"> <label for="exampleInputFirst">First name</label>
+                <input class="form-control input-lg" id="exampleInputFirst" type="text">
+            </div>
+            <div class="form-group"> <label for="exampleInputLast">Last name</label>
+                <input class="form-control input-lg" id="exampleInputLast" type="text">
+            </div>
+            <div class="form-group"> <label for="exampleInputEmail">Email address</label>
+                <input class="form-control input-lg" id="exampleInputEmail" type="email">
+            </div>
+            <p>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+            </p>
+        </form>
+        <br>
+    </article>
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

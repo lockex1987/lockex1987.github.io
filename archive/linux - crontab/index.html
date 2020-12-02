@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <title>Crontab</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+  <meta name="description" content="Crontab">
+ </head> 
+ <body> 
+  <article> 
+   <h2>Crontab</h2> 
+   <p>Cron chạy trên nền hệ thống và thường được khởi chạy lúc khởi động. Nó định kỳ kiểm tra các tác vụ cần làm mỗi một phút. Các tác vụ này được dựa trên các file crontab. Các file crontab thường được đặt tại thư mục <code>/var/spool/cron/crontabs</code>. Tuy nhiên, trên bản phân phối SuSE nó lại ở tại <code>/var/spool/cron/tabs</code>. Các tệp tin trong thư mục này có tên trùng với tên người dùng - user. Như vậy mỗi user đều có thể có crontab riêng.</p> 
+   <p>Cron là một tiện ích cho phép thực hiện các tác vụ một cách tự động theo định kỳ, ở chế độ nền của hệ thống. Crontab (CRON TABle) là một file chứa đựng bảng biểu (schedule) của các entries được chạy.</p> 
+   <p>Một cron schedule đơn giản là một text file. Mỗi người dùng có một cron schedule riêng, file này thường nằm ở <code>/var/spool/cron</code>. Crontab files không cho phép bạn tạo hoặc chỉnh sửa trực tiếp với bất kỳ trình text editor nào, trừ phi bạn dùng lệnh crontab. Một số lệnh thường dùng:</p> 
+   <p>crontab -e: tạo hoặc chỉnh sửa file crontab</p> 
+   <p>crontab -l: hiển thị file crontab</p> 
+   <p>crontab -r: xóa file crontab</p> 
+   <p><br> </p> 
+   <p><br> </p> 
+   <p>Mỗi dòng trong file crontab là một job, bao gồm nhiều trường cách nhau bằng dấu cách space hay tab.</p> 
+   <p>Có nhiều cách để chỉ định giá trị trong một trường:</p> 
+   <ul> 
+    <li>Nếu một cột được gán ký tự *, nó có nghĩa là tác vụ sau đó sẽ được chạy ở mọi giá trị cho cột đó.</li> 
+    <li>Giá trị liên tiếp kề nhau được định nghĩa bằng dấu trừ. Ví dụ: 1-5 có nghĩa là giá trị nằm từ 1 đến 5. Nếu nó ở cột "day of week" thì tác vụ này sẽ thực hiện từ thứ Hai đến thứ Sáu.</li> 
+    <li>Các giá trị không kề nhau thì cách nhau bằng dấu phẩy. Ví dụ 2,4,6 ở trường "ngày" sẽ là thứ Ba, thứ Năm, thứ Bảy.</li> 
+    <li>Các khoảng thời gian lặp lại sẽ sử dụng "/". Ví dụ nếu trường thứ nhất là phút định nghĩa là */10 thì cứ 10 phút sẽ thực hiện một lần, vào các phút 0, 10, 20, 30, 40, 50.</li> 
+   </ul> 
+   <p><br> </p> 
+   <p>Chạy script 30 phút 1 lần:</p> 
+   <p>0,30 * * * * command</p> 
+   <p>Chạy script 15 phút 1 lần:</p> 
+   <p>0,15,30,45 * * * * command</p> 
+   <p>Chạy script vào 3 giờ sáng mỗi ngày:</p> 
+   <p>0 3 * * * command</p> 
+   <p>Chạy&nbsp;hàng phút, đẩy ra log file: </p> 
+   <p>* * * * * date &gt;&gt; /home/test_cron.log</p> 
+   <p>Log lỗi:</p> 
+   <p>* * * * * sh /datadrive/b2b/scripts/test_cron.sh 2&gt;&gt; /datadrive/b2b/scripts/test_cron.log</p> 
+   <p><br> </p> 
+   <p>Để tạo cron job, bạn hãy gõ lệnh sau:</p> 
+   <p>crontab -e</p> 
+   <p>Ấn phím i để chuyển qua chế độ Insert và gõ:</p> 
+   <p>0 15 * * * echo "CTTD" &gt; /www/apache/logs/error_log</p> 
+   <p>Giải thích như sau:</p> 
+   <pre><code class="shell">0  15 *  *  * echo "CTTD" &gt; /www/apache/logs/error_log<br>|  |&nbsp; |  |  |  |<br>|  |&nbsp; |  |  |  +------------------------------ Lệnh sẽ chạy khi cron job kích hoạt<br>|  |&nbsp; |  |  +--------------------------------- Ngày trong tuần (0-6, Chủ Nhật là 0)<br>|  |&nbsp; |  +------------</code><code class="shell"><code class="shell">------------------------</code> Tháng (1-12)<br>|  |&nbsp; +---------------</code><code class="shell"><code class="shell">------------------------ </code>Ngày trong tháng (1-31)<br>|  +-----------------</code><code class="shell"><code class="shell">-------------------------</code> Giờ (0-23)<br>+-------------------</code><code class="shell"><code class="shell">--------------------------</code> Phút (0-59)</code></pre> 
+   <p>Như vậy, đoạn ở trên nghĩa là nó sẽ chạy đoạn lệnh lúc 15h (3h chiều) mỗi ngày.</p> 
+   <p>Gõ xong ấn phím ESC và gõ :wq để lưu và thoát ra.</p> 
+   <p><strong>Note:</strong> Chú ý phải có 0 phút.</p> 
+   <p><br></p> 
+   <p>Để kiểm tra:</p> 
+   <p>crontab -l</p> 
+   <p>Nếu nó hiển thị ra nghĩa là đã thành công.</p> 
+   <p><br></p> 
+   <p>Ví dụ</p> 
+   <p>Chạy file Shell script</p> 
+   <p>0 15 * * 1,4 </p> 
+   <p>Sử dụng tool sau để generate:</p> 
+   <p><a href="http://www.openjs.com/scripts/jslibrary/demos/crontab.php">http://www.openjs.com/scripts/jslibrary/demos/crontab.php</a></p> 
+   <br> 
+   <p>Mail</p> 
+   <p>Crontab mặc định sẽ gửi những công việc cho người sử dụng và những người lên kế hoạch công việc. Nếu bạn muốn chuyển hướng gửi mail đến người dùng được chỉ định, thêm hoặc cập nhật các biến MAIL trong crontab như sau:</p> 
+   <pre><code>$ crontab -l<br>MAIL="dangkhoa@123host.vn"<br>@yearly /home/dangkhoavp/annual-maintenance<br>*/10 * * * * /home/dangkhoavp/check-disk-space</code></pre> 
+   <p>Nếu như bạn muốn không gửi mail đến bất kỳ người nào, tức là để ngăn chặn crontab không được gửi qua email. Thêm hoặc cập nhật các biến MAIL trong crontab như trong hình:</p> 
+   <p>MAIL=""</p> 
+   <p><br></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

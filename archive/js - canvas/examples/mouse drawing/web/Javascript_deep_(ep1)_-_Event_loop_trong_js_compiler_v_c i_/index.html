@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html ng-app="app" class="ng-scope">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+    <!-- Standard Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+      <meta name="description" content="(Ảnh)   1.Hoàn cảnh  Bạn đã bao giờ tự hỏi tại sao setTimeout(()=>{console.log(123)}, 0); được nhiều library sử dụng đến như thế? Nó là 1 kỹ thuật ...">
+  <meta property="og:title" content="Javascript deep (ep1) - Event loop trong js compiler và cái setTimeout quái quỉ">
+  <meta property="og:site_name" content="kipalog.com">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="http://kipalog.com/posts/Javascript-deep--ep1----Event-loop-trong-js-compiler-va-cai-setTimeout-quai-qui">
+  <meta property="og:description" content="(Ảnh)   1.Hoàn cảnh  Bạn đã bao giờ tự hỏi tại sao setTimeout(()=>{console.log(123)}, 0); được nhiều library sử dụng đến như thế? Nó là 1 kỹ thuật ...">
+    <meta property="og:image" content="https://i.imgur.com/YsYksJC.png">
+
+    <!-- Site Properities -->
+    <title>
+        Javascript deep (ep1) - Event loop trong js compiler và cái setTimeout quái quỉ
+
+    </title>
+    
+      
+  
+  
+  
+  
+  
+
+    
+      
+  
+  
+  
+  
+  
+  
+  
+  
+
+    <link href="favicon-70fe7f7a773df88ce80fc2506239715f.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+
+    <!-- GA -->
+    
+    <!-- GA -->
+  
+<link media="all" href="index.css" type="text/css" rel="stylesheet">
+</head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+
+    <header class="master-header ng-scope" ng-controller="HeaderController">
+  <div class="ui transparent inverted main menu page grid">
+    <div class="middle aligned column header-container">
+      <!-- Left -->
+      <!-- Logo -->
+      <p class="logo item">
+        <a href="https://kipalog.com/">
+          <img class="ui image" src="logo-089ee7649acd5dd69ceb7c9dddece3bf.png">
+</a>      </p>
+      <!-- Search filed -->
+      <form id="search-form" class="ui search item ng-pristine ng-valid" method="GET" action="https://kipalog.com/search">
+        <div class="ui icon input">
+          <input id="search-field" name="q" class="focus-popup" placeholder="Tìm kiếm" autocomplete="off" data-content="<span>Nhập từ và </span><div class='enter-button'><span>enter </span><i class='clockwise rotated level down icon'></i></div><span> để bắt đầu tìm kiếm</span>" data-position="bottom center" data-offset="7" value="" type="text">
+        </div>
+      </form>
+
+      <!-- JS variable of logged-in or guest -->
+      <input ng-init="userLoggedIn=true" type="hidden">
+
+      <!-- Logged in header -->
+        <div class="right menu">
+
+          <!-- New post -->
+          <div class="ui simple dropdown item newpost">
+            <a class="main" href="https://kipalog.com/posts/new">
+              <i class="small edit icon"></i>
+              <strong>Viết bài</strong>
+            </a>
+            <i class="triangle down icon">
+            </i>
+            <div class="menu">
+              <div class="head item">
+                Dùng mẫu
+              </div>
+                <a href="https://kipalog.com/posts/new?template_id=1" class="child item">
+                  <i class="file outline icon"></i>
+                  #TIL
+                </a>
+              <div class="head item">
+                Bản nháp
+              </div>
+                <a href="https://kipalog.com/posts/Your-TIL-title-b5d81800-c2ee-45c0-89d8-fe93197e6e87/edit" class="child item">
+                  <i class="text file outline icon"></i>
+                  Your TIL title
+                </a>
+              <a href="https://kipalog.com/posts/drafts" class="all drafts child item">
+                Xem tất cả nháp
+              </a>
+            </div>
+          </div>
+
+          <!-- Search -->
+          <a class="item scale-item search" href="https://kipalog.com/search">
+            <i class="small search icon"></i>
+          </a>
+
+          <!-- Home -->
+          <a class="item home scale-item" href="https://kipalog.com/posts">
+            <i class="small home icon"></i>
+            <strong>Trang chủ</strong>
+</a>
+          <!-- Store -->
+          <a class="item store scale-item" href="https://kipalog.com/posts/store">
+            <i class="small bookmark icon"></i>
+            <strong>Kho log</strong>
+</a>
+          <!-- Profile -->
+          <div class="ui profile right top pointing dropdown item">
+            <div class="ui avatar image">
+              <img class="lazy" src="15070428">
+            </div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              <a class="item" href="https://kipalog.com/users/lockex1987/mypage">
+                <i class="user icon"></i>
+                Trang cá nhân
+</a>              <a class="item" href="https://kipalog.com/users/YRewERx8CVCx155Qt8LzLw">
+                <i class="setting icon"></i>
+                Cài đặt
+</a>              <a class="item signout-able" href="#" url="/users/sign_out">
+                <i class="sign out icon"></i>
+                Đăng xuất
+</a>            </div>
+          </div>
+          <!-- Notification -->
+          <div class="ui notification right top pointing fluid floating dropdown item" ng-click="seeAllNotifications();">
+            <i class="bell icon"></i>
+            <!-- ngIf: unchecked_events_count > 0 -->
+            <div class="menu">
+              <p class="ui dividing header">
+                <span class="clear-all-notify" ng-click="clearAllNotification();">
+                  <i class="checkmark icon"></i>
+                  Đánh dấu đã xem
+                </span>
+                <span class="title">
+                  Thông báo
+                </span>
+              </p>
+              <!-- Notifications -->
+              <!-- ngIf: events.length > 0 --><div ng-if="events.length > 0" class="ui feed segment ng-scope">
+                <!-- Events -->
+                <!-- ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/165460/clear" class="event ng-scope active" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="/assets/common/male_avatar-f0133698a204bbc1684476efffe76f51.png" src="male_avatar-f0133698a204bbc1684476efffe76f51.png">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">hoangduy.nguyen</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã follow bạn.</span>&nbsp;<strong class="ng-binding"></strong>
+                    </div>
+                    <div class="extra ng-binding">1 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/149558/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://avatars.githubusercontent.com/u/18503083?v=3" src="18503083">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Bui Tuan Kiet</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">cũng đã bình luận vào bài viết</span>&nbsp;<strong class="ng-binding">Hướng dẫn sử dụng Markdown trên Kipalog</strong>
+                    </div>
+                    <div class="extra ng-binding">3 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/143044/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/2/000/1d7/22f/343f79f.jpg" src="343f79f.jpg">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">MeoMunm</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">Thực hiện nhiều hàm đồng thời trong Java</strong>
+                    </div>
+                    <div class="extra ng-binding">4 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/140572/clear" class="event ng-scope active" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="/assets/common/male_avatar-f0133698a204bbc1684476efffe76f51.png" src="male_avatar-f0133698a204bbc1684476efffe76f51.png">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Vĩnh Cao</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">Thực hiện nhiều hàm đồng thời trong Java</strong>
+                    </div>
+                    <div class="extra ng-binding">4 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/128387/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://graph.facebook.com/1668941313424046/picture" src="picture">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Lưu Thành Nhựt</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã bình luận bài viết của bạn</span>&nbsp;<strong class="ng-binding">Thực hiện nhiều hàm đồng thời trong Java</strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/128380/clear" class="event ng-scope active" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="/assets/common/male_avatar-f0133698a204bbc1684476efffe76f51.png" src="male_avatar-f0133698a204bbc1684476efffe76f51.png">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">doanhcongnguyen</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">Thực hiện nhiều hàm đồng thời trong Java</strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/125861/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="/assets/common/male_avatar-f0133698a204bbc1684476efffe76f51.png" src="male_avatar-f0133698a204bbc1684476efffe76f51.png">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">trungk18</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã bình luận bài viết của bạn</span>&nbsp;<strong class="ng-binding">CSS Precedence</strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/125386/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://i.imgur.com/98LghYz.png" src="98lghyz.png">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Le Lam</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">Thực hiện nhiều hàm đồng thời trong Java</strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/125007/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://avatars.githubusercontent.com/u/5716943?v=3" src="5716943">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">psucoder</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">Thực hiện nhiều hàm đồng thời trong Java</strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/124612/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://avatars.githubusercontent.com/u/3777785?v=3" src="3777785">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">leviet</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã follow bạn.</span>&nbsp;<strong class="ng-binding"></strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/124611/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://avatars.githubusercontent.com/u/3777785?v=3" src="3777785">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">leviet</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã bình luận bài viết của bạn</span>&nbsp;<strong class="ng-binding">CSS Precedence</strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/124428/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://graph.facebook.com/10211051043174911/picture" src="picture_001.dat">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Nguyen TuanAnh</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã follow bạn.</span>&nbsp;<strong class="ng-binding"></strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/123275/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://avatars.githubusercontent.com/u/5485589?v=3" src="5485589">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Amidamaru Rookie</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã follow bạn.</span>&nbsp;<strong class="ng-binding"></strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/123265/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://avatars.githubusercontent.com/u/1875666?v=3" src="1875666">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Huy Nguyen Quang</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">CSS Precedence</strong>
+                    </div>
+                    <div class="extra ng-binding">6 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/123057/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://graph.facebook.com/904915212908682/picture" src="picture_002.dat">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Shjn Vo</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">CSS Precedence</strong>
+                    </div>
+                    <div class="extra ng-binding">7 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/123036/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://graph.facebook.com/918834964818272/picture?type=large" src="picture_003.dat">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">TranThanh</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">CSS Precedence</strong>
+                    </div>
+                    <div class="extra ng-binding">7 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/122546/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://avatars.githubusercontent.com/u/3525214?v=3" src="3525214">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">linhnv</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">CSS Precedence</strong>
+                    </div>
+                    <div class="extra ng-binding">7 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/122517/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://avatars.githubusercontent.com/u/5460915?v=3" src="5460915">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Zzbaivong</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã kipalog bài viết của bạn</span>&nbsp;<strong class="ng-binding">CSS Precedence</strong>
+                    </div>
+                    <div class="extra ng-binding">7 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/102913/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/dtkycrfm2t_hrlxd8Jh.png" src="dtkycrfm2t_hrlxd8jh.png">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Vu Nhat Minh</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã viết bài viết mới</span>&nbsp;<strong class="ng-binding">Domain-Driven Design và Microservices Architecture</strong>
+                    </div>
+                    <div class="extra ng-binding">8 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events --><a ng-repeat="event in events" href="https://kipalog.com/notifications/102433/clear" class="event ng-scope" ng-class="{active: event.status!='checked'}">
+                  <div class="label">
+                    <img class="ui avatar image" ng-class="{'square_image':event.org==true}" ,="" ng-src="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/dtkycrfm2t_hrlxd8Jh.png" src="dtkycrfm2t_hrlxd8jh.png">
+                  </div>
+                  <div class="content">
+                    <div class="summary">
+                      <strong class="ng-binding">Vu Nhat Minh</strong>&nbsp;<span ng-bind-html="event.message" class="ng-binding">đã viết bài viết mới</span>&nbsp;<strong class="ng-binding">Functor, Applicative, Monad bằng tranh vẽ</strong>
+                    </div>
+                    <div class="extra ng-binding">8 tháng</div>
+                  </div>
+                </a><!-- end ngRepeat: event in events -->
+              </div><!-- end ngIf: events.length > 0 -->
+              <!-- No notification -->
+              <!-- ngIf: events.length==0 -->
+              <!-- Tail -->
+              <div class="ui tail segment">
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</header>
+
+    <div class="ui small confirm modal" id="semanticAlert">
+  <i class="close icon"></i>
+  <div class="header">
+    Chú ý
+  </div>
+  <div class="content">
+    <div class="left">
+      <i class="orange warning icon"></i>
+    </div>
+    <div class="right">
+      <p class="message">
+      </p>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui circular orange button">
+      Ok
+    </div>
+  </div>
+</div>
+
+    <main class="master-body" scrollable-to-top="" data-target=".scroll-top">
+      <!-- Facebook SDK -->
+
+
+
+
+
+<!--post delete modal confirmation-->
+<div class="ui small confirm modal" id="postDelete">
+  <i class="close icon"></i>
+  <div class="header">
+    Xóa bài viết
+  </div>
+  <div class="content">
+    <div class="left">
+      <i class="trash icon"></i>
+    </div>
+    <div class="right">
+      <p>
+        Bạn có chắc chắn muốn xóa bài viết này không ?
+      </p>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui circular black button">
+      Không
+    </div>
+    <div class="ui circular positive button">
+      Có
+    </div>
+  </div>
+</div>
+
+<div class="ui small confirm modal" id="commentDelete">
+  <i class="close icon"></i>
+  <div class="header">
+    Xóa bình luận
+  </div>
+  <div class="content">
+    <div class="left">
+      <i class="trash icon"></i>
+    </div>
+    <div class="right">
+      <p>
+        Bạn có chắc chắn muốn xóa bình luận này không ?
+      </p>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui circular black button">
+      Không
+    </div>
+    <div class="ui circular positive button">
+      Có
+    </div>
+  </div>
+</div>
+
+<!-- Join Modal-->
+<div class="ui signin modal join-modal" id="login-modal">
+  <i class="close icon"></i>
+  <div class="ui center aligned teal header pc">
+    Chào bạn! Hãy đăng ký hoặc đăng nhập để tiếp tục nhé!
+  </div>
+  <span class="ui center aligned teal header smartphone">
+    Kipalog
+  </span>
+
+  <div class="content">
+
+    <div class="ui two column middle aligned grid basic segment">
+      <div class="equal height row">
+        <!-- Login column -->
+        <div class="column">
+          <!-- SignIn form - place Sign In URL here -->
+          <form accept-charset="UTF-8" action="https://kipalog.com/users/sign_in" class="ui form segment ng-pristine ng-valid" id="new_user" method="post"><div style="display: none;"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="2g0NAfePxHVv3eA4Besxv0/W0lC6jsHu5VbFn3A9G70=" type="hidden"></div>
+            <input id="from" name="from" value="home" type="hidden">
+            <div class="field">
+              <!-- Place Sign Up URL here -->
+              <input id="signUpURL" value="/users" type="hidden">
+            </div>
+            <div class="field">
+              <div class="ui left labeled icon input">
+                <input autofocus="autofocus" id="user_email" name="user[email]" placeholder="Email" value="" type="email">
+                <i class="mail icon"></i>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui left labeled icon input">
+                <input autocomplete="off" id="user_password" name="user[password]" placeholder="Password" type="password">
+                <i class="lock icon"></i>
+              </div>
+            </div>
+            <div class="two fluid ui buttons">
+              <input class="ui teal submit button" id="signin" value="Đăng nhập" type="submit">
+              <div class="or"></div>
+              <input class="ui orange button signup-kick" id="signup" value="Đăng ký" data-target=".ui.form" data-endpoint="#signUpURL" type="submit">
+            </div>
+</form>        <!-- Divider -->
+        <div class="ui horizontal divider">
+          or
+        </div>
+        </div>
+        <!-- Divider -->
+        <div class="ui vertical divider">
+          or
+        </div>
+        <!-- Social column -->
+        <div class="center aligned column">
+          <!-- facebook -->
+          <a class="ui facebook button" href="https://kipalog.com/users/auth/facebook">
+            <i class="facebook icon"></i>
+            facebook
+</a>          <!-- twitter -->
+          <a class="ui twitter button" href="https://kipalog.com/users/auth/twitter">
+            <i class="twitter icon"></i>
+            twitter
+</a>          <!-- github-->
+          <a class="ui black button" href="https://kipalog.com/users/auth/github">
+            <i class="github icon"></i>
+            github
+</a>        </div>
+      </div>
+    </div>
+    <br>
+    <!-- Info message -->
+    <div class="ui message">
+      <p>
+        <i class="info icon"></i>
+        Bạn luôn có thể lựa chọn email hoặc các tài khoản mạng xã hội để đăng nhập hoặc đăng ký.
+      </p>
+    </div>
+    <br>
+  </div>
+</div>
+
+
+<div class="ui divided page grid ng-scope" ng-controller="PostController">
+  <div class="twelve wide column md-col">
+    <!-- Markdown header here -->
+    <h1 class="ui teal block fluid header">
+      <strong>Javascript deep (ep1) - Event loop trong js compiler và cái setTimeout quái quỉ</strong>
+      <div class="tag">
+            <a class="ui label" href="https://kipalog.com/tags/Javascript?count=144">
+              Javascript
+              <div class="detail">144</div>
+</a>        <!-- Published date -->
+        <div class="published">
+          <a class="ui small avatar image" href="https://kipalog.com/users/jinhduong/mypage">
+            <img class="lazy" src="o2z44kq.jpg">
+</a>          <p class="date">
+            Dinh Duong viết ngày 02/03/2017
+          </p>
+        </div>
+      </div>
+    </h1>
+
+    <!-- Markdown content here -->
+    <section id="content" class="ui pilled segment md" ng-non-bindable="">
+      <p><a class="fluidbox fluidbox__instance-1 fluidbox--initialized fluidbox--closed fluidbox--ready" href="https://i.imgur.com/YsYksJC.png"><div class="fluidbox__wrap" style="z-index: 990;"><img src="ysyksjc.png" alt="cover" style="opacity: 1;" class="fluidbox__thumb"><div class="fluidbox__ghost" style="width: 791px; height: 29px; top: 0px; left: 0px;"></div></div></a><a></a></p>
+
+<span id="toc-1-ho-n-c-nh"></span><h3 class="ui dividing header">1.Hoàn cảnh</h3>
+
+<p>Bạn đã bao giờ tự hỏi tại sao <code>setTimeout(()=&gt;{console.log(123)}, 0);</code> được nhiều library sử dụng đến như thế? Nó là 1 kỹ thuật hay là 1 trick? Và tại sao <code>timeout chỉ = 0</code> nhưng nó luôn luôn là đứa chạy cuối cùng vậy, <code>0 giây</code> hiểu một cách phẳng não nhất chính là ngay tức thời cmn mà . Bài này xuất phát từ câu hỏi của một thằng bạn chả biết làm javascript lâu chưa mà đi hỏi:</p>
+
+<p><code>Ủa? sao timeout = 0 mà lại ra sau zạ ta?</code></p>
+
+<p>Hy vọng sau bài này các bạn chưa biết về <code>js compiler</code> và thằng hỏi câu trên sẽ ít nhiều hiểu được tại sao lại như vậy? Hồi trước mình cũng hông biết, nên đi tìm hiểu sau biết được chút thì chia sẽ cho các bạn chưa biết </p>
+
+<p>Đầu tiên chúng ta đi vào một ví dụ cụ thể.</p>
+
+<pre><code class="ts ui segment hljs coffeescript"><span class="hljs-built_in">console</span>.log(<span class="hljs-number">123</span>);
+
+setTimeout(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span><span class="hljs-built_in">console</span>.log(<span class="hljs-number">456</span>), <span class="hljs-number">0</span>);
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-number">789</span>);
+</code></pre>
+
+<p>Theo bạn output của đoạn code trên là gì?</p>
+
+<p>Trong đầu mình nghĩ sẽ có 3 loại câu trả lời như này:</p>
+
+<p><strong>Bạn A (beginer)</strong>: Ờ! setTimeout = 0 mà đương nhiên <code>123 456 789</code> thôi hà.</p>
+
+<p><strong>Bạn B (ko biết gọi là gì? )</strong>: Chời quơi! Mịa bố biết tỏng !!! Là thế này nhé trước <code>123</code> nhé, sau nó là <code>789</code> rồi cuối là <code>456</code> nhóóé! Đúng chưa? </p>
+
+<p><strong>Bạn C (javascript ninja)</strong> : <em>Thầm nói: Buồn cười thiệt !!!</em> Ngoài nói: Hông biết má ơi! Ra gì vậy? Giải thích dùm cái coi.</p>
+
+<p><strong>Trả lời:</strong> Ờ ờ thằng B đúng rồi đó! Giỏi ak? Mà tại sao lại như thế? <code>timeout có = 0</code> í mà ??? </p>
+
+<p><strong>Bạn B</strong>: Ờ thì <code>setTimeout</code> default nó delay theo cái số mài đưa zô ak, ví dụ 10 100 1000 gì đó, nhớ là tính theo mili giây nha mài, lấy 1000/1000 =&gt; là ra 1s. Nhớ nha!  Còn mài để số 0 là thiệt sự nó cũng delay chút xíu xíu ak nên nó mới ra sau cái thằng <code>789</code> kia. Zậy ak hiểu hông? </p>
+
+<p><strong>Tui</strong>: Ờ ờ hiểu. Zậy tại sao tao chạy đoạn code này thấy nó log ra 10.000 lần cũng lâu (browser giật giật) mà sao thằng <code>456</code> nó cứ cố chui zô cuối zậy ta?</p>
+
+<pre><code class="ts ui segment hljs coffeescript"><span class="hljs-built_in">console</span>.log(<span class="hljs-number">123</span>);
+
+setTimeout(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span><span class="hljs-built_in">console</span>.log(<span class="hljs-number">456</span>), <span class="hljs-number">0</span>);
+
+<span class="hljs-keyword">for</span> (<span class="hljs-reserved">var</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10000</span>; i++) {
+    <span class="hljs-built_in">console</span>.log(i);
+}
+</code></pre>
+
+<p><code>-&gt; Kết quả:</code><br>
+<a class="fluidbox fluidbox__instance-2 fluidbox--initialized fluidbox--closed fluidbox--ready" href="https://i.imgur.com/gdC8nfP.png"><div class="fluidbox__wrap" style="z-index: 990;"><img src="gdc8nfp.png" alt="result" style="opacity: 1;" class="fluidbox__thumb"><div class="fluidbox__ghost" style="width: 791px; height: 29px; top: 0px; left: 0px;"></div></div></a><a></a></p>
+
+<p><strong>B</strong>: Ờ ờ ờ kì zậy ta, móa kì thiệt, Hông biết ba . zaza_cript tào lao thiệt .</p>
+
+<p>Qua câu chuyện đối thoại tào lao này. Các bạn cũng có thể thấy, dù là trước hàm <code>setTimeout</code> chỉ là một hàm <code>console.log()</code> hay một vòng <code>for 10 lần</code> hay cả ngàn cả triệu lần đi nữa thì <code>setTimeout(()=&gt;console.log(456), 0);</code> luôn luôn nằm dưới cùng. <strong>Vậy lý do là do đâu?</strong> </p>
+
+<p>Điều đâu tiên chúng ta quay ngược lại tìm hiểu bản chất của <code>javascript</code>. Có thể có bạn biết hoặc không, thì... <code>javascript</code> hoạt động trên cơ chế <code>đơn luồng (single-threaded)</code>. Điều đó có nghĩa <strong>là trên lý thuyết</strong> tất cả mọi thứ xử lý trên javascript đều phải là tuần tự <code>a xong -&gt; b, b xong -&gt; c, c xong -&gt; d,...</code> </p>
+
+<p>Vậy những khái niệm <code>bất đồng bộ (asynchronous)</code> trong javascript là như thế nào? Vậy cơ chế giải quyết bất đồng bộ của javascript là như thế nào? </p>
+
+<p>Chúng ta đi đến phần ví dụ để xem javascript đã giải quyết như thế nào nhé !!!</p>
+
+<span id="toc-2-v-d-"></span><h3 class="ui dividing header">2.Ví dụ</h3>
+
+<p>Chúng ta cùng xem đoạn code sau nhé. (nó sẽ bao gồm và giải thích luôn đoạn code đầu mà chúng ta đưa ra)</p>
+
+<pre><code class="ts ui segment hljs coffeescript">$.<span class="hljs-literal">on</span>(<span class="hljs-string">'#btn_lay_data_tren_api'</span>,<span class="hljs-string">'click'</span>,<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>{
+    setTimeout(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>{
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'moi lay data xong'</span>);
+    },<span class="hljs-number">1000</span>);
+});
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">'xin chao'</span>);
+
+setTimeout(<span class="hljs-function"><span class="hljs-params">()</span>=&gt;</span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'bam zo cai nut de lay data nhen'</span>);
+},<span class="hljs-number">3000</span>);
+
+<span class="hljs-built_in">console</span>.log(`<span class="javascript">den voi jinhduong blog</span>`);
+</code></pre>
+
+<p>Đoạn code của chúng ta sẽ chia ra thành <code>4 khối</code>:</p>
+
+<ul class="ui list">
+<li>(1). Sự kiện click =&gt; tốn 1(s) =&gt; data đổ về (lấy setTimeout làm ví dụ)</li>
+<li>(2). Log câu <code>xin chào</code>
+</li>
+<li>(3). Log câu hướng dẫn vô nghĩa sau 3(s) <code>bấm nút để get data</code>
+</li>
+<li>(4). Log <code>đến với blog của tui</code>
+</li>
+</ul>
+
+<p>Cùng <code>4 thành phần</code> quan trọng của <code>javacript</code></p>
+
+<ul class="ui list">
+<li>
+<strong>Call Stack</strong> : Ngăn xếp (chứa các khối lệnh sẽ chạy)</li>
+<li>
+<strong>Callback Queue</strong> : Hàng đợi (chứa các khối lệnh sau khi đã hoàn thành việc gì đó - call api, setTimeout, promise,...)</li>
+<li>
+<strong>Event listener/ Web apis</strong> : Sẽ chứa các event listener như click, change, hover,... và các web apis được browser hỗ trợ khác.</li>
+<li>
+<strong>Event loop</strong> : Quay đều và sẽ gọi những khối lệnh hiện có trong queue</li>
+</ul>
+
+<p>Search google thì cũng có nhiều hình ảnh minh họa nhưng mình quyết định vẽ tay cho nó dễ hiểu hơn ... chắc zậy<br><br>
+<a class="fluidbox fluidbox__instance-3 fluidbox--initialized fluidbox--closed fluidbox--ready" href="https://i.imgur.com/IV2XArV.jpg"><div class="fluidbox__wrap" style="z-index: 990;"><img src="iv2xarv.jpg" alt="img" style="opacity: 1;" class="fluidbox__thumb"><div class="fluidbox__ghost" style="width: 791px; height: 29px; top: 0px; left: 0px;"></div></div></a><a></a></p>
+
+<span id="toc-gi-i-th-ch"></span><h3 class="ui dividing header">Giải thích</h3>
+
+<ul class="ui list">
+<li>Chung ta sẽ chạy từ trên xuống từ khối lệnh <code>thứ 1 -&gt; 4</code>.</li>
+<li>Nhìn vào <code>khối đỏ</code> ta thấy khối code này sẽ nằm trong danh sách <code>event listener/ web apis</code> và sẽ <code>lắng nghe (listen)</code> các sự kiện khi cái button <code>#btn_lay_data_tren_api</code> bị click zô. </li>
+<li>
+<code>Khối xanh lá</code> không có gì đặc biệt nó sẽ log ra màn hình <code>xin chao</code>.</li>
+<li>
+<code>Khối xanh dương</code> sẽ được đưa vào <code>listener/apis</code> 
+
+<ul class="ui list">
+<li>Sau khi xong (3s) thì lệnh <code>console.log("bam zo cai nut de lay data nhen")</code> sẽ được đưa xuống <code>callback queue</code>.</li>
+<li>
+<code>Event loop</code> y như 1 bác bảo vệ, cứ hở 0.01s liếc mắt coi có ai tới tiệm hok? Nếu có bác dẫn xe dùm rồi kiu zô quán đi con. (event loop đẩy khối lệnh <code>console.log("bam zo cai nut de lay data nhen")</code> lên <code>call stack</code>) </li>
+<li>
+<code>Call stack</code> khi nhận đc khối lệnh này sẽ run nó liền.</li>
+<li>
+<strong>Suy ra:</strong>  Ít nhất <strong>&gt;=3s</strong> sau câu log này mới đc show lên. Vì nếu 3(s) đã trôi qua mà trên <code>stack</code> vẫn còn các khối lệnh đang chờ run thì nó <strong>phải đợi đến lượt nó</strong> thì nó mới được run.</li>
+<li>
+<strong>Nhân hóa</strong>: Mịa máy đứa từ dưới chỗ <code>callback queue</code>(miền quê xa xui hẻo lánh) lên đây. Đợi mấy anh đường đường nằm thẳng trong diện <code>call stack</code> run trước đã nha hôn. </li>
+</ul>
+</li>
+<li>
+<code>Khối lệnh cuối</code> chả có gì đặt sắc. Đơn giản là log ra thôi. Nó là nền cho cái khối thứ 3 thể hiện.</li>
+<li>Khi chúng click vào button <code>#btn_lay_data_tren_api</code>
+
+<ul class="ui list">
+<li>Đưa khối lệnh <code>setTimeout</code> qua bên <code>listener/ apis</code> </li>
+<li>Đợi 1(s) xong đưa cái function <code>()=&gt;{console.log('moi lay data xong')}</code> xuống <code>callback queue</code>
+</li>
+<li>Đưa lên <code>call stack</code> và sau đó run -&gt; show data lên console.</li>
+</ul>
+</li>
+</ul>
+
+<p><strong>Done,</strong> có lẽ đến dây các bạn đã ít nhiều hiểu được cách mà javascript giải quyết vấn đề bất đồng bộ với single-threaded. Cũng như cách <code>setTimeout</code> hoạt động. Và nó tương tự với các khái niệm về callback như <code>Interval</code>, <code>Promise</code> và các <code>funtion callback</code>.</p>
+
+<span id="toc-cu-i-c-ng"></span><h3 class="ui dividing header">Cuối cùng</h3>
+
+<p>Với các giải thích trên chắc chắn bài toán đưa ra đâu bài chắc chắn không khó để giải thích. Và có vài điều chúng ta rút ra với callback ở javascript</p>
+
+<blockquote>
+<p>Các <code>callback function</code> đặc biệt là <code>setTimeout</code>, <code>setInterval</code> sẽ có time ít nhất &gt;= time mà nó được define ra.</p>
+
+<p>Các <code>callback funttion</code> sẽ được gọi sau khi các function khác được excute xong trên <code>call stack list</code></p>
+
+<p>Flow nó sẽ di từ <code>call stack</code>-&gt; run hoặc là đưa qua <code>event listener/ web apis</code> -&gt; <code>callback queue</code>. <code>Event loop</code> sẽ gọi các function nếu có ở <code>callback queue</code> -&gt; <code>call stack</code> -&gt; run.</p>
+</blockquote>
+
+<p>Cuối cùng một cái hình cho mọi người dễ hình dung, mườn tượng.<br>
+<a class="fluidbox fluidbox__instance-4 fluidbox--initialized fluidbox--closed fluidbox--ready" href="https://i.imgur.com/knNxvSS.png"><div class="fluidbox__wrap" style="z-index: 990;"><img src="knnxvss.png" alt="muongtuong" style="opacity: 1;" class="fluidbox__thumb"><div class="fluidbox__ghost" style="width: 791px; height: 29px; top: 0px; left: 0px;"></div></div></a><a></a></p>
+
+<p><strong>Hy vọng bài biết giúp ích cho cách bạn khi làm việc với ngôn ngữ này.</strong> Có gì sai hay thắc mắc các bạn cứ gớp ý phía dưới nhé.</p>
+
+<p>Đọc thêm các bài viết ở blog mình: <a href="https://jinhduong.github.io/">https://jinhduong.github.io</a></p>
+
+<span id="toc-tham-kh-o"></span><h3 class="ui dividing header">Tham khảo</h3>
+
+<ul class="ui list">
+<li><a href="http://latentflip.com/loupe">http://latentflip.com/loupe</a></li>
+<li><a href="http://blog.carbonfive.com/2013/10/27/the-javascript-event-loop-explained/">http://blog.carbonfive.com/2013/10/27/the-javascript-event-loop-explained/</a></li>
+</ul>
+
+    </section>
+    <!-- Markdown end here -->
+
+    <!-- Social share -->
+    <div class="meta-social-share ng-scope" ng-controller="SocialController">
+      <div class="hidden-meta">
+        <input id="share-url" value="http://kipalog.com/posts/Javascript-deep--ep1----Event-loop-trong-js-compiler-va-cai-setTimeout-quai-qui" type="hidden">
+        <input id="share-content" value="Javascript deep (ep1) - Event loop trong js compiler và cái setTimeout quái quỉ" type="hidden">
+      </div>
+      <div class="suggest-title">
+        <i class="small forward mail icon"></i>
+        Chia sẻ bài viết với bạn bè nữa nhé!
+      </div>
+      <a class="ui icon small facebook button" ng-click="shareFacebook()">
+        <i class="facebook icon"></i>
+        <span>
+          facebook
+        </span>
+      </a>
+      <a class="ui icon small google plus button" ng-click="share('gg')">
+        <i class="google plus icon"></i>
+        <span>
+          google plus
+        </span>
+      </a>
+      <a class="ui icon small twitter button" ng-click="share('tw')">
+        <i class="twitter icon"></i>
+        <span>
+          twitter
+        </span>
+      </a>
+    </div>
+
+    <!-- Meta -->
+    <div class="hidden-meta">
+      <input ng-init="like_endpoint='/likes'" type="hidden">
+      <input ng-init="unlike_endpoint='/likes/JAX7out752jYe7u5CY8KMg'" type="hidden">
+      <input ng-init="follow_endpoint='/users/follow'" type="hidden">
+      <input ng-init="unfollow_endpoint='/users/unfollow'" type="hidden">
+      <input ng-init="postId='JAX7out752jYe7u5CY8KMg'" type="hidden">
+      <input ng-init="other_id='8-DD6_QEauNetlMTwZQXlA'" type="hidden">
+      <input ng-init="like_count=6" type="hidden">
+      <input ng-init="liked=false" type="hidden">
+      <input ng-init="followerCount=33" type="hidden">
+      <input ng-init="userFollowed=false" type="hidden">
+      <input ng-init="userLoggedIn=true" type="hidden">
+      <input ng-init="mentionable_path='/users/mentionable'" type="hidden">
+    </div>
+
+    <!-- Comments -->
+    <div id="cmts" class="ui threaded comments segment ng-scope" ng-controller="CommentController">
+      <div class="ui huge ribbon label">
+        Bình luận
+      </div>
+      <br><br>
+      <!-- ngRepeat: comment in comments --><div class="comment ng-scope" ng-repeat="comment in comments">
+        <a class="avatar" href="https://kipalog.com/users/jinhduong/mypage">
+          <img class="lazy" src="o2z44kq.jpg">
+        </a>
+        <div class="content">
+          <a class="author ng-binding" href="https://kipalog.com/users/jinhduong/mypage">Dinh Duong</a>
+          <div class="metadata">
+            <span class="date ng-binding">1 ngày</span>
+            <!-- ngIf: comment.own_comment -->
+          </div>
+          <div class="text cmts-md ng-binding" ng-bind-html="trustAsHtml(comment.content)"><p>Không hiểu sao mình add emoji icon lên post hok đc @_@</p>
+</div>
+          <div class="actions">
+            <a class="cmts-link ng-hide" ng-show="comment.liked" ng-click="like_toggle($index)">Bỏ hay</a>
+            <a class="cmts-link" ng-hide="comment.liked" ng-click="like_toggle($index)">Hay</a>
+            <div class="cmts-meta ng-binding">
+              <i ng-class="{'thumbs up outline icon': !comment.liked, 'thumbs up icon': comment.liked}" class="thumbs up outline icon"></i>
+              0
+            </div>
+          </div>
+        </div>
+      </div><!-- end ngRepeat: comment in comments --><div class="comment ng-scope" ng-repeat="comment in comments">
+        <a class="avatar" href="https://kipalog.com/users/huydx/mypage">
+          <img class="lazy" src="nyan_cat_gif_by_kodiakpaws-d3emqu1.gif">
+        </a>
+        <div class="content">
+          <a class="author ng-binding" href="https://kipalog.com/users/huydx/mypage">huydx</a>
+          <div class="metadata">
+            <span class="date ng-binding">1 ngày</span>
+            <!-- ngIf: comment.own_comment -->
+          </div>
+          <div class="text cmts-md ng-binding" ng-bind-html="trustAsHtml(comment.content)"><p><a href="https://kipalog.com/users/jinhduong/mypage" class="user-mention" title="jinhduong">@jinhduong</a> bạn phải dùng emoji code giống như là <code>:+1:</code> thì sẽ được</p>
+</div>
+          <div class="actions">
+            <a class="cmts-link ng-hide" ng-show="comment.liked" ng-click="like_toggle($index)">Bỏ hay</a>
+            <a class="cmts-link" ng-hide="comment.liked" ng-click="like_toggle($index)">Hay</a>
+            <div class="cmts-meta ng-binding">
+              <i ng-class="{'thumbs up outline icon': !comment.liked, 'thumbs up icon': comment.liked}" class="thumbs up outline icon"></i>
+              1
+            </div>
+          </div>
+        </div>
+      </div><!-- end ngRepeat: comment in comments -->
+
+      <!-- My comment -->
+      <div class="comment" id="my-comment">
+        <div class="hidden-meta">
+          <input ng-init="isCmtsPreviewing=false" type="hidden">
+          <input ng-init="isCmtsAreaFocused=false" type="hidden">
+        </div>
+        <a class="avatar">
+          <img class="lazy" src="15070428">
+        </a>
+        <form accept-charset="UTF-8" action="https://kipalog.com/posts/Javascript-deep--ep1----Event-loop-trong-js-compiler-va-cai-setTimeout-quai-qui/comments" class="content ng-pristine ng-valid" id="new_comment" method="post" ng-submit="send_comment($event)"><div style="display: none;"><input name="utf8" value="✓" type="hidden"><input name="authenticity_token" value="2g0NAfePxHVv3eA4Besxv0/W0lC6jsHu5VbFn3A9G70=" type="hidden"></div>
+          <!-- ngIf: comment_error -->
+          <i class="large smile icon cmts-emoji"></i>
+          <textarea class="cmts-area ng-pristine ng-untouched ng-valid" id="my-cmts" name="comment[content]" ng-model="content" ng-show="!isCmtsPreviewing" placeholder="Ý kiến (markdown)" spellcheck="false" style="overflow: hidden; overflow-wrap: break-word; height: 67px;"></textarea>
+          <div class="ui raised segment cmts-show ng-hide" ng-show="isCmtsPreviewing"></div>
+          <div class="equal height row cmts-action ng-hide" ng-show="isCmtsAreaFocused">
+            <input value="Gửi" class="ui mini button green submit cmts-reset" data-area=".cmts-area" type="submit">
+            <div class="ui mini button cmts-reset" data-area=".cmts-area">Hủy</div>
+            &nbsp;&nbsp;&nbsp;
+            <div class="ui text shape cmts-pv">
+              <div class="sides">
+                <p class="side pv show-preview active" ng-class="{'active':!isCmtsPreviewing}" data-shape=".ui.text.shape" data-area=".cmts-area" data-show=".cmts-show">Hiển thị thử</p>
+                <p class="side pv hide-pv" ng-class="{'active':isCmtsPreviewing}" data-shape=".ui.text.shape" data-area=".cmts-area" data-show=".cmts-show">Chỉnh sửa</p>
+              </div>
+            </div>
+          </div>
+</form>      </div>
+    </div>
+
+    <!-- Smartphone area -->
+    <div class="ui center aligned basic segment smartphone-area">
+      <a class="ui bigger avatar image" href="https://kipalog.com/users/jinhduong/mypage">
+        <img class="lazy" src="o2z44kq.jpg">
+</a>      <a class="author-name" href="https://kipalog.com/users/jinhduong/mypage">
+        <h3 class="ui header caption">
+          Dinh Duong
+        </h3>
+</a>      <div class="ui two column grid segment">
+        <!-- Info -->
+        <div class="equal height row">
+          <div class="right aligned column">
+            <a href="https://kipalog.com/users/jinhduong/mypage">10</a>
+            bài viết.
+          </div>
+          <div class="left aligned column">
+            <a href="https://kipalog.com/users/jinhduong/mypage">33</a>
+            người follow
+          </div>
+        </div>
+        <!-- Button -->
+        <div class="equal height row action-btn">
+          <div class="right aligned column">
+            <div class="ui circular toggle basic button" id="smart-like-button" ng-class="{'active':liked}" ng-click="like()">
+              <i class="icon empty bookmark" ng-class="liked ? 'checkmark' : 'empty bookmark' "></i>
+              <span>Kipalog</span>
+            </div>
+          </div>
+          <div class="left aligned column ng-scope" ng-controller="UserFollowController">
+            <div class="ui circular toggle basic button" ng-class="{'active':userFollowed}" id="smart-follow-button" ng-click="followUser();">
+              <i class="rss icon teal outline" ng-class="{'teal outline':!userFollowed}"></i>
+              <span class="ng-binding">Follow</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Suggest posts list -->
+    <div class="suggest posts list">
+
+      <!-- Same author posts -->
+      <div class="ui huge ribbon label">
+        Cùng một tác giả
+      </div>
+      <div class="ui massive list feed-list">
+        <div class="item">
+          <img class="ui avatar image lazy" src="o2z44kq.jpg">
+          <div class="right floated feed-date">
+            17
+            <i class="bookmark icon"></i>
+            9
+            <i class="comment icon"></i>
+          </div>
+          <div class="content">
+            <div class="header">
+              <a href="https://kipalog.com/posts/Javascript-Tips---Nhung-dieu-co-the-hay-trong-JS--ep1">Javascript Tips - Những điều có thể hay trong JS (ep1)</a>
+              <div class="tag">
+                <a href="https://kipalog.com/tags/Javascript" class="ui label">
+                  Javascript
+                </a>
+                <a href="https://kipalog.com/tags/tips" class="ui label">
+                  tips
+                </a>
+              </div>
+            </div>
+            <div class="detail">
+              (Ảnh)  Những điều có thể bạn đã biết hoặc chưa, những kinh nghiệm nho nhỏ của mình chia sẽ khi lập trình javascript, mong nó có thể giúp ích cho cá...
+            </div>
+            <div class="meta">
+              <a href="https://kipalog.com/users/jinhduong/mypage">
+                Dinh Duong
+              </a>
+              viết
+              9 tháng
+              trước
+            </div>
+            <div class="smart-meta">
+              17
+              <i class="bookmark icon"></i>
+              9
+              <i class="comment icon"></i>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="ui avatar image lazy" src="o2z44kq.jpg">
+          <div class="right floated feed-date">
+            12
+            <i class="bookmark icon"></i>
+            9
+            <i class="comment icon"></i>
+          </div>
+          <div class="content">
+            <div class="header">
+              <a href="https://kipalog.com/posts/Share---Chrome-extension---Highlighter-Basic">Share - Chrome extension - Highlighter-Basic </a>
+              <div class="tag">
+                <a href="https://kipalog.com/tags/Javascript" class="ui label">
+                  Javascript
+                </a>
+                <a href="https://kipalog.com/tags/Chrome%20Extension" class="ui label">
+                  Chrome Extension
+                </a>
+                <a href="https://kipalog.com/tags/github" class="ui label">
+                  github
+                </a>
+                <a href="https://kipalog.com/tags/Share" class="ui label">
+                  Share
+                </a>
+              </div>
+            </div>
+            <div class="detail">
+              Tiểu sử ra đời  (Ảnh)   Không biết các bạn có bao giờ giống mình không? Nhiều khi lang thang đọc điết trên mạng rồi thấy mấy cái ý hay, ý tâm đắc m...
+            </div>
+            <div class="meta">
+              <a href="https://kipalog.com/users/jinhduong/mypage">
+                Dinh Duong
+              </a>
+              viết
+              11 tháng
+              trước
+            </div>
+            <div class="smart-meta">
+              12
+              <i class="bookmark icon"></i>
+              9
+              <i class="comment icon"></i>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="ui avatar image lazy" src="o2z44kq.jpg">
+          <div class="right floated feed-date">
+            9
+            <i class="bookmark icon"></i>
+            1
+            <i class="comment icon"></i>
+          </div>
+          <div class="content">
+            <div class="header">
+              <a href="https://kipalog.com/posts/Namespace-and-Revealing-Module-Pattern-in-Javascript">Namespace and Revealing Module Pattern in Javascript</a>
+              <div class="tag">
+                <a href="https://kipalog.com/tags/Javascript" class="ui label">
+                  Javascript
+                </a>
+                <a href="https://kipalog.com/tags/design%20pattern" class="ui label">
+                  design pattern
+                </a>
+              </div>
+            </div>
+            <div class="detail">
+              (Ảnh)   Trong javascript thì có rất nhiều mô hình thiết kế (design pattern) khác nhau, thật ra ai cũng biết là về bản chất Javascript sinh ra đã kh...
+            </div>
+            <div class="meta">
+              <a href="https://kipalog.com/users/jinhduong/mypage">
+                Dinh Duong
+              </a>
+              viết
+              10 tháng
+              trước
+            </div>
+            <div class="smart-meta">
+              9
+              <i class="bookmark icon"></i>
+              1
+              <i class="comment icon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related posts -->
+      <div class="ui huge ribbon label">
+        Bài viết liên quan
+      </div>
+      <div class="ui massive list feed-list">
+        <div class="item">
+          <img class="ui avatar image lazy" src="tsyiskht.jpg">
+          <div class="right floated feed-date">
+            23
+            <i class="bookmark icon"></i>
+            6
+            <i class="comment icon"></i>
+          </div>
+          <div class="content">
+            <div class="header">
+              <a href="https://kipalog.com/posts/Tang-suc-manh-cho-javascript-voi-lodash">Tăng sức mạnh cho javascript với lodash</a>
+              <div class="tag">
+                <a href="https://kipalog.com/tags/Javascript" class="ui label">
+                  Javascript
+                </a>
+                <a href="https://kipalog.com/tags/lodash" class="ui label">
+                  lodash
+                </a>
+                <a href="https://kipalog.com/tags/underscore" class="ui label">
+                  underscore
+                </a>
+              </div>
+            </div>
+            <div class="detail">
+              Tăng sức mạnh cho javascript với lodash  Lần này mình sẽ giới thiệu 1 thư viện javascript vô cùng bá đạo có tên là "lodash]1]", có thể nói nó là LI...
+            </div>
+            <div class="meta">
+              <a href="https://kipalog.com/users/HuyHoangPham/mypage">
+                Huy Hoàng Phạm
+              </a>
+              viết
+              hơn 1 năm
+              trước
+            </div>
+            <div class="smart-meta">
+              23
+              <i class="bookmark icon"></i>
+              6
+              <i class="comment icon"></i>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="ui avatar image lazy" src="oesuwzs2_normal.png">
+          <div class="right floated feed-date">
+            19
+            <i class="bookmark icon"></i>
+            6
+            <i class="comment icon"></i>
+          </div>
+          <div class="content">
+            <div class="header">
+              <a href="https://kipalog.com/posts/Trick--nho-de-lay-screen-size-voi-javascript-va-css">Trick  nhỏ để lấy screen size với javascript và css</a>
+              <div class="tag">
+                <a href="https://kipalog.com/tags/CSS3" class="ui label">
+                  CSS3
+                </a>
+                <a href="https://kipalog.com/tags/Javascript" class="ui label">
+                  Javascript
+                </a>
+                <a href="https://kipalog.com/tags/Web" class="ui label">
+                  Web
+                </a>
+              </div>
+            </div>
+            <div class="detail">
+              Lâu không post gì muốn viết một bài dài dài về js cơ mà đau đầu quá viết mãi không xong, thôi post bài ngắn vậy :smiley:  Lấy screen size ở đây tôi...
+            </div>
+            <div class="meta">
+              <a href="https://kipalog.com/users/mahpahh/mypage">
+                Hoàng Duy
+              </a>
+              viết
+              hơn 1 năm
+              trước
+            </div>
+            <div class="smart-meta">
+              19
+              <i class="bookmark icon"></i>
+              6
+              <i class="comment icon"></i>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="ui avatar image lazy" src="9867663">
+          <div class="right floated feed-date">
+            0
+            <i class="bookmark icon"></i>
+            0
+            <i class="comment icon"></i>
+          </div>
+          <div class="content">
+            <div class="header">
+              <a href="https://kipalog.com/posts/Three-ways-bindind--the-good-part">Three-ways bindind: the good part</a>
+              <div class="tag">
+                <a href="https://kipalog.com/tags/Javascript" class="ui label">
+                  Javascript
+                </a>
+                <a href="https://kipalog.com/tags/MVVM" class="ui label">
+                  MVVM
+                </a>
+              </div>
+            </div>
+            <div class="detail">
+              Introduction to threeways binding with HtmlJs  What is HtmlJs?   It is a library/framework that implements MVVM pattern aka twoways binding in Java...
+            </div>
+            <div class="meta">
+              <a href="https://kipalog.com/users/NhanNguyen11/mypage">
+                Nhan Nguyen
+              </a>
+              viết
+              8 tháng
+              trước
+            </div>
+            <div class="smart-meta">
+              0
+              <i class="bookmark icon"></i>
+              0
+              <i class="comment icon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- From here is right column -->
+  <div class="four wide column meta-col">
+    <div class="sticky stick" ng-class="{stick:pinStick}" style="width: 251px; top: 0px; bottom: initial;">
+      <!-- Info -->
+      <div class="row meta-info">
+        <div class="ui two column middle aligned grid celled segment meta-info">
+          <div class="center aligned column">
+            <span>
+              <a href="https://kipalog.com/posts/Javascript-deep--ep1----Event-loop-trong-js-compiler-va-cai-setTimeout-quai-qui" class="ng-binding">6</a>
+            </span>
+            <p>kipalog</p>
+          </div>
+          <div class="center aligned column">
+            <span>
+              <a class="go-to-comments ng-binding" data-target="#cmts" href="#">2</a>
+            </span>
+            <p>bình luận</p>
+          </div>
+        </div>
+      </div>
+      <!-- Like -->
+      <div class="row ui circular toggle teal basic fluid button" id="pc-like-button" ng-class="{'active':liked}" ng-click="like()">
+        <i class="left aligned icon bookmark" ng-class="liked ? 'checkmark' : 'bookmark' "></i>
+        <span class="ng-binding">Kipalog</span>
+      </div>
+      <br><br>
+      <!-- Profile -->
+      <div class="row meta-profile item">
+        <a class="left floated ui bigger avatar image" href="https://kipalog.com/users/jinhduong/mypage">
+          <img class="lazy" src="o2z44kq.jpg">
+</a>        <div ng-controller="UserFollowController" class="ng-scope">
+          <div class="right floated ui mini circular toggle basic button" ng-class="{'active':userFollowed}" id="pc-follow-button" ng-click="followUser();">
+            <i class="rss icon teal outline" ng-class="{'teal outline':!userFollowed}"></i>
+            <span class="ng-binding">Follow</span>
+          </div>
+        </div>
+        <div class="info">
+          <div class="name">
+            <a href="https://kipalog.com/users/jinhduong/mypage">
+              <h3 class="ui header caption">
+              Dinh Duong
+              </h3>
+</a>          </div>
+          <div class="extra">
+            <a href="https://kipalog.com/users/jinhduong/mypage">10</a>
+            bài viết.
+            <br>
+            <a href="https://kipalog.com/users/jinhduong/mypage">33</a>
+            người follow
+          </div>
+        </div>
+      </div>
+      <!-- Table of content -->
+      <div class="row meta-toc">
+        <p class="toc-title">
+          <i class="green hand right icon"></i>
+          &nbsp;Đầu mục bài viết
+        </p>
+        <div id="toc" class="toc-fly"><ul class="ui link list"><li class="toc-h3"><a href="#toc-1-ho-n-c-nh">1.Hoàn cảnh</a></li><li class="toc-h3"><a href="#toc-2-v-d-">2.Ví dụ</a></li><li class="toc-h3"><a href="#toc-gi-i-th-ch">Giải thích</a></li><li class="toc-h3"><a href="#toc-cu-i-c-ng">Cuối cùng</a></li><li class="toc-h3 toc-active"><a href="#toc-tham-kh-o">Tham khảo</a></li></ul></div>
+      </div>
+    </div>
+    <!-- Remind popup -->
+    <div class="anonymous-remind-block ng-hide" ng-show="!userLoggedIn">
+      <div class="ui basic segment anonymous remind">
+        <p class="ui dividing header">
+        Vẫn còn nữa!
+          <span id="remind_dismiss" class="dismiss">x</span>
+        </p>
+        <p class="description">
+          Kipalog vẫn còn rất nhiều bài viết hay và chủ đề thú vị chờ bạn khám phá!
+        </p>
+        <a href="https://kipalog.com/" class="ui signup circular green button">
+          Khám phá
+        </a>
+        <a href="https://kipalog.com/users/sign_in" class="signin">
+          Đăng nhập
+        </a>
+      </div>
+    </div>
+    <!-- Remind popup -->
+    <div class="follow-author-remind-block" ng-show="!userFollowed">
+      <div class="ui basic segment follow remind ng-scope" ng-controller="UserFollowController" ng-class="{'dismissed':userFollowed}">
+        <p class="ui dividing header">
+          Follow tác giả
+          <span id="remind_dismiss" class="dismiss">x</span>
+        </p>
+        <p class="description">
+          Nhận thông báo khi có bài viết mới cùng tác giả.
+        </p>
+        <div class="follow author row">
+          <a class="ui avatar image" href="https://kipalog.com/users/jinhduong/mypage">
+            <img class="lazy" src="o2z44kq.jpg">
+</a>          <span class="name">
+            Dinh Duong
+          </span>
+          <a class="ui follow circular button" ng-class="{'active':userFollowed}" id="pc-follow-button" ng-click="followUser();">
+            <span class="ng-binding">Follow</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    </main>
+      <!-- Footer -->
+<footer class="master-footer ui page grid">
+  <div class="row">
+    <div class="column">
+      <div class="ui horizontal divider">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve wide main column">
+      <div class="links">
+        <a target="_top" href="http://kipalog.com/tos">
+          Điều khoản
+        </a>
+        <a target="_top" href="https://www.facebook.com/groups/1466126020344500/">
+          Phản hồi
+        </a>
+        <a target="_top" href="https://github.com/Kipalog/Issue-tracker">
+          Yêu cầu
+        </a>
+        <a target="_top" href="https://www.facebook.com/pages/Kipalog/486208978117754">
+          Fanpage
+        </a>
+      </div>
+    </div>
+    <div class="four wide right column">
+      <div class="copyright">
+        <span>
+          Copyright © 2017 Kipalog
+        </span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+
+<textarea tabindex="-1" style="position: absolute; top: -999px; left: 0px; right: auto; bottom: auto; border: 0px none; padding: 0px; box-sizing: content-box; overflow-wrap: break-word; height: 0px ! important; min-height: 0px ! important; overflow: hidden; transition: none 0s ease 0s ; font-family: monospace; font-size: 14.4px; font-weight: 400; font-style: normal; letter-spacing: 0px; text-transform: none; word-spacing: 0px; text-indent: 0px; white-space: pre-wrap; line-height: 18px; width: 666.933px;" class="autosizejs" id="autosizejs"></textarea><div class="atwho-container"><div id="atwho-ground-my-cmts"><div class="atwho-view" id="at-view-58"><ul class="atwho-view-ul"></ul></div><div class="atwho-view" id="at-view-64"><ul class="atwho-view-ul"></ul></div></div></div><div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="fb_xdm_frame_https" allowtransparency="true" allowfullscreen="true" scrolling="no" id="fb_xdm_frame_https" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tabindex="-1" style="border: medium none;" src="index_1.html" frameborder="0"></iframe></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div></div></div></div></body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Bootstrap multilevel dropdown" />
+
+    <title>Menu dropdown đa cấp trong Bootstrap</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    
+    <link rel="stylesheet" href="css/multilevel.css">
+</head>
+
+<body>
+    
+        <div class="container">
+            
+                <h2>Menu dropdown đa cấp trong Bootstrap</h2>
+                <p>Chú ý class <code>.dropdown-item</code> cho phần tử <code>a</code>,
+                    không phải phần tử <code>li</code> (chú ý chung cho dropdown của Bootstrap).</p>
+                <p>Thêm class <code>.dropdown-submenu</code> vào thẻ <code>li</code>.</p>
+                    
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">
+                        Dropdown
+                    </button>
+
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="#">Some action</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Some other action</a>
+                        </li>
+
+                        <li class="dropdown-submenu">
+                            <a class="dropdown-item" href="#">Hover me for more options</a>
+
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="#">Second level</a>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item" href="#">Even More..</a>
+
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#">3rd level</a>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a class="dropdown-item" href="#">Another level</a>
+
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a class="dropdown-item" href="#">4th level</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">4th level</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item" href="#">4th level</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">3rd level</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">Second level</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">Second level</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            
+        </div>
+    
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    
+</body>
+
+</html>

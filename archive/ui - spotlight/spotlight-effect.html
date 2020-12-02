@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Spotlight Effect</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel='stylesheet' href='http://cdnjs.cloudflare.com/ajax/libs/skeleton/1.2/base.min.css'>
+  <style>
+html, body { width:100%; height:100%; }
+body { position:relative; display:table; }
+.main { display:table-cell; vertical-align:middle; text-align:center; }
+.main .title { font-size:5rem; margin-bottom:50px; }
+.main .sub-title { font-size:2rem; }
+.spotlight { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0, 0, 0, 0.5);
+    background-image:-webkit-radial-gradient(center, circle cover, rgba(0, 0, 0, 0.2) 5%, black 25%); }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <h1 class="title">Spotlight Effect</h1>
+    <p class="sub-title">tracking your mouse</p>
+  </div>
+  <div class="spotlight" id="spotlight"></div>
+
+  <script>
+var elem = document.getElementById('spotlight');
+var canTouch = !!('ontouchstart' in window);
+
+if (canTouch) {
+  document.body.addEventListener('touchmove', onTouchStart, false);
+  document.body.addEventListener('touchstart', onTouchStart, false);
+} else {
+  document.body.addEventListener('mousemove', onMoseMove, false);
+}
+
+function onTouchStart(e){
+  var target = e.targetTouches[0];
+  elem.style.backgroundImage  = '-webkit-radial-gradient(' + target.pageX + 'px ' + target.pageY + 'px, circle cover, rgba(0,0,0,0.2) 5%, rgba(0,0,0,1) 25%)';
+}
+
+function onMoseMove(e) {
+  elem.style.backgroundImage  = '-webkit-radial-gradient(' + e.pageX + 'px ' + e.pageY + 'px, circle cover, rgba(0,0,0,0.2) 5%, rgba(0,0,0,1) 25%)';
+}
+  </script>
+</body>
+</html>

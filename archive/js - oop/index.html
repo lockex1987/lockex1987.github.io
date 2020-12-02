@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="class, object oriented programming">
+    <title>Lập trình hướng đối tượng trong JS</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Lập trình hướng đối tượng trong JS</h2>
+      <p>ES6 đã giới thiệu cho chúng ta về class trong Javascript, nhưng nó vẫn
+        quá là đơn giản để có thể sử dụng cho các ứng dụng phức tạp. Trường của
+        class (hay còn được gọi là thuộc tính của class) có mục đích đem đến các
+        constructor đơn giản hơn với các thuộc tính private và static.</p>
+      <p>Hãy cùng điểm lại về class trong ES6 trước khi xem qua các ví dụ chi
+        tiết hơn. </p>
+      <h3>Những điều cơ bản về class</h3>
+      <p>Mô hình kế thừa kiểu Prototype có vẻ sẽ gây khó hiểu đối với các lập
+        trình viên đã quen hay hiểu biết nhiều về kế thừa kiểu class được sử
+        dụng trong các ngôn ngữ như C++, C#, Java hay PHP<strong>. </strong>Class
+        trong JavaScript tuy chủ yếu đơn thuần là những cú pháp được thiết kế
+        giúp cho mọi thứ dễ hơn, và nó đồng thời giúp cho những người vốn đã
+        quen với khái niệm lập trình hướng đối tượng trở nên quen thuộc hơn.</p>
+      <p>Class là một template giúp định nghĩa cách hoạt động của các object
+        thuộc class đó. Class <code>Animal</code> sau định nghĩa cho các loài
+        động vật nói chung (tên các class thường được viết hoa chữ cái đầu tiên
+        để giúp phân biệt chúng với các object và các type khác):</p>
+      <pre>class Animal {
+
+&nbsp;&nbsp;  constructor(name = 'anonymous', legs = 4, noise = 'nothing') {
+&nbsp; &nbsp;&nbsp;    this.type = 'animal';
+&nbsp; &nbsp;&nbsp;    this.name = name;
+&nbsp; &nbsp;&nbsp;    this.legs = legs;
+    &nbsp; &nbsp; this.noise = noise;
+  &nbsp; }
+
+&nbsp;&nbsp;  speak() {
+    &nbsp; &nbsp;console.log(`${this.name} says "${this.noise}"`);
+  &nbsp; }
+
+  &nbsp; walk() {
+    &nbsp; &nbsp; console.log(`${this.name} walks on ${this.legs} legs`);
+&nbsp;&nbsp;  }
+}
+</pre>
+      <p>Việc khai báo class được thực hiện ở strict mode nên ta không cần thiết
+        phải thêm <code>use strict</code>.</p>
+      <p>Hàm <code>constructor</code> sẽ chạy khi một object thuộc loại này
+        được tạo và nó có nhiệm vụ định nghĩa các thuộc tính ban đầu cho object
+        đó. <code>speak()</code> và <code>walk()</code> là các phương thức
+        giúp thêm các chức năng khác cho object.</p>
+      <p>Và giờ object của ta đã có thể được tạo từ class này thông qua từ khóa
+        <code>new</code>:</p>
+      <pre>const rex = new Animal('Rex', 4, 'woof');
+rex.speak();          // Rex says "woof"
+rex.noise = 'growl';
+rex.speak();          // Rex says "growl"
+</pre>
+      <h3>Getter và setter</h3>
+      <p>Các <code>setter</code> là các phương thức đặc biệt chỉ được dùng để
+        định nghĩa các giá trị cho object. Tương tự, <code>getter</code> là các
+        phương thức đặc biệt chỉ được dùng để trả về các giá trị. Ví dụ:</p>
+      <pre>class Animal {
+
+&nbsp;&nbsp;  constructor(name = 'anonymous', legs = 4, noise = 'nothing') {
+  &nbsp; &nbsp;&nbsp;  this.type = 'animal';
+&nbsp; &nbsp;&nbsp;    this.name = name;
+&nbsp; &nbsp;&nbsp;    this.legs = legs;
+    &nbsp; &nbsp; this.noise = noise;
+&nbsp;&nbsp;  }
+
+  &nbsp; speak() {
+    &nbsp; &nbsp; console.log(`${this.name} says "${this.noise}"`);
+&nbsp;&nbsp;  }
+
+  &nbsp; walk() {
+    &nbsp; &nbsp; console.log(`${this.name} walks on ${this.legs} legs`);
+&nbsp;&nbsp;  }
+
+  &nbsp; // setter
+&nbsp;&nbsp;  set eats(food) {
+&nbsp; &nbsp;&nbsp;    this.food = food;
+&nbsp; &nbsp; }
+
+&nbsp;&nbsp;  // getter
+  &nbsp; get dinner() {
+    &nbsp; &nbsp; return `${this.name} eats ${this.food || 'nothing'} for dinner.`;
+&nbsp;&nbsp;  }
+}
+
+const rex = new Animal('Rex', 4, 'woof');
+rex.eats = 'anything';
+console.log( rex.dinner );  // Rex eats anything for dinner.
+</pre>
+      <h3>Child / Sub-class</h3>
+      <p>Việc sử dụng một class được xây dựng trên một class khác có lẽ là điều
+        thường thấy khi lập trình hướng đối tượng. Nếu ta hầu như chỉ tạo các
+        object về <code>dog</code>, thì việc sử dụng class <code>Animal</code>
+        sẽ quá tổng quát, và lúc nào ta cũng sẽ phải định nghĩa đi định nghĩa
+        lại việc nó có 4 chân (legs) và kêu "woof" (noise) làm mặc định.</p>
+      <p>Class <code>Dog</code> có thể kế thừa tất cả các thuộc tính và phương
+        thức từ class <code>Animal</code> sử dụng từ khóa <code>extends</code>.
+        Tất cả những thuộc tính và phương thức cụ thể cho class <code>Dog</code>
+        có thể được thêm hoặc bớt nếu cần:</p>
+      <pre>class Dog extends Animal {
+
+&nbsp;&nbsp;  constructor(name) {
+&nbsp; &nbsp;&nbsp;    // call the Animal constructor
+    &nbsp; &nbsp; super(name, 4, 'woof');
+&nbsp; &nbsp;&nbsp;    this.type = 'dog';
+&nbsp;&nbsp;  }
+
+  &nbsp; // override Animal.speak
+&nbsp;&nbsp;  speak(to) {
+&nbsp; &nbsp;&nbsp;    super.speak();
+    &nbsp; &nbsp; if (to) console.log(`to ${to}`);
+&nbsp;&nbsp;  }
+}
+</pre>
+      <p><code>super</code> đại diện cho class cha và thường được gọi trong hàm
+        <code>constructor</code>. Ở ví dụ trên, phương thức <code>speak()</code>
+        của class <code>Dog</code> đã override phương thức tương ứng được định
+        nghĩa ở class <code>Animal</code>.</p>
+      <p>Giờ ta có thể tạo ra một object instance của class <code>Dog</code>:</p>
+      <pre>const rex = new Dog('Rex');
+rex.speak('everyone');      // Rex says "woof" to everyone
+
+rex.eats = 'anything';
+console.log( rex.dinner );  // Rex eats anything for dinner.
+</pre>
+      <h1>Phương thức static và thuộc tính</h1>
+      <p>Định nghĩa một phương thức với từ khóa <code>static</code> sẽ giúp cho
+        phương thức của class đó có thể được gọi mà không cần phải khởi tạo một
+        object instance. JavaScript không hỗ trợ các thuộc tính static giống như
+        các ngôn ngữ lập trình khác, nhưng việc thêm các thuộc tính vào khi định
+        nghĩa class (một class cũng đồng thời là một JavaScript object) là điều
+        có thể.</p>
+      <p>Class <code>Dog</code> có thể được điều chỉnh lưu trữ được số lần mà
+        các object được tạo từ nó:</p>
+      <pre>class Dog extends Animal {
+
+&nbsp;&nbsp;  constructor(name) {
+&nbsp; &nbsp;&nbsp;    // call the Animal constructor
+    &nbsp; &nbsp; super(name, 4, 'woof');
+&nbsp; &nbsp;&nbsp;    this.type = 'dog';
+
+    &nbsp; &nbsp; // update count of Dog objects
+&nbsp; &nbsp;&nbsp;    Dog.count++;
+  &nbsp; }
+
+&nbsp;&nbsp;  // override Animal.speak
+&nbsp;&nbsp;  speak(to) {
+&nbsp; &nbsp;&nbsp;    super.speak();
+    &nbsp; &nbsp; if (to) console.log(`to ${to}`);
+&nbsp;&nbsp;  }
+
+&nbsp; &nbsp; // return number of dog objects
+  &nbsp; static get COUNT() {
+    &nbsp; &nbsp; return Dog.count;
+&nbsp;&nbsp;  }
+}
+
+// static property (added after class is defined)
+Dog.count = 0;
+</pre>
+      <p>Hàm static getter <code>COUNT</code> của class sẽ trả về số lần mà
+        object dog được tạo:</p>
+      <pre>console.log(`Dogs defined: ${Dog.COUNT}`); // Dogs defined: 0
+
+const don = new Dog('Don');
+
+console.log(`Dogs defined: ${Dog.COUNT}`); // Dogs defined: 1
+
+const kim = new Dog('Kim');
+
+console.log(`Dogs defined: ${Dog.COUNT}`); // Dogs defined: 2
+</pre>
+      <h3>Các trường được mong chờ trong các chuẩn ES tiếp theo</h3>
+      <h4>Khai báo trường</h4>
+      <p>Một trong các đề xuất về trường của class đó là cho phép chúng được
+        khởi tạo ở ngay đầu class:</p>
+      <pre>class MyClass {
+&nbsp;&nbsp;  a = 1;
+  &nbsp; b = 2;
+&nbsp;&nbsp;  c = 3;
+}
+</pre>
+      <p>Điều này cũng tương tự với việc:</p>
+      <pre>class MyClass {
+
+&nbsp;&nbsp;  constructor() {
+  &nbsp; &nbsp;&nbsp;  this.a = 1;
+&nbsp; &nbsp;&nbsp;    this.b = 2;
+&nbsp; &nbsp;&nbsp;    this.c = 3;
+&nbsp;&nbsp;  }
+}
+</pre>
+      <h4>Trường static của class</h4>
+      <p>Các trường trong class cho phép thuộc tính static được khai báo ngay
+        bên trong class. Ví dụ:</p>
+      <pre>class MyClass {
+
+&nbsp;&nbsp;  x = 1;
+  &nbsp; y = 2;
+&nbsp;&nbsp;  static z = 3;
+}
+
+console.log(MyClass.z); // 3
+</pre>
+      <p>Và tương tự trong ES6 ta đã có một cách không gọn ghẽ cho lắm:</p>
+      <pre>class MyClass {
+
+&nbsp;&nbsp;  constructor() {
+    &nbsp; &nbsp; this.x = 1;
+  &nbsp;&nbsp;  &nbsp; this.y = 2;
+&nbsp;&nbsp;  }
+}
+
+MyClass.z = 3;
+
+console.log( MyClass.z ); // 3
+</pre>
+      <h4>Trường private của class</h4>
+      <p>Tất cả các thuộc tính trong class của ES6 đều mặc định là public và có
+        thể được xem, chỉnh sửa từ bên ngoài class. Trong ví dụ về class <code>Animal</code>
+        trên, không có gì có thể ngăn cản việc thuộc tính <code>food</code> có
+        thể sẽ bị thay đổi mà không cần thông qua hàm setter <code>eats</code>:</p>
+      <pre>class Animal {
+
+&nbsp;&nbsp;  constructor(name = 'anonymous', legs = 4, noise = 'nothing') {
+&nbsp; &nbsp;&nbsp;    this.type = 'animal';
+    &nbsp; &nbsp; this.name = name;
+&nbsp; &nbsp;&nbsp;    this.legs = legs;
+    &nbsp; &nbsp; this.noise = noise;
+&nbsp;&nbsp;  }
+
+  &nbsp; set eats(food) {
+    &nbsp; &nbsp; this.food = food;
+&nbsp;&nbsp;  }
+
+  &nbsp; get dinner() {
+    &nbsp; &nbsp; return `${this.name} eats ${this.food || 'nothing'} for dinner.`;
+&nbsp;&nbsp;  }
+}
+
+const rex = new Animal('Rex', 4, 'woof');
+rex.eats = 'anything';      // standard setter
+rex.food = 'tofu';          // bypass the eats setter altogether
+console.log( rex.dinner );  // Rex eats tofu for dinner.
+</pre>
+      <p>Các ngôn ngữ khác cho phép khai báo thuộc tính <code>private</code>.
+        Nhưng đó là điều không thể trong ES6, mặc dù các lập trình viên có thể
+        tạm thời giải quyết vấn đề này bằng cách sử dụng underscore convention (<code>_propertyName</code>).</p>
+      <p>Trong các chuẩn ES tiếp theo, các trường private của class có thể được
+        định nghĩa sử dụng dấu thăng <code>#</code> làm prefix:</p>
+      <pre>class MyClass {
+
+&nbsp;&nbsp;  a = 1;          // .a is public
+  &nbsp; #b = 2;         // .#b is private
+&nbsp; &nbsp; static #c = 3;  // .#c is private and static
+
+&nbsp;&nbsp;  incB() {
+  &nbsp;&nbsp;  &nbsp; this.#b++;
+&nbsp;&nbsp;  }
+}
+
+const m = new MyClass();
+
+m.incB(); // runs OK
+m.#b = 0; // error - private property cannot be modified outside class
+</pre>
+      <p>Hãy chú ý rằng không có cách nào để định nghĩa các phương thức, hàm
+        getter settter private, mặc dù đang có những đề xuất sử dụng dấu thăng <code>#</code>
+        làm tiền tố cho tên. Ví dụ:</p>
+      <pre>class MyClass {
+
+&nbsp;&nbsp;  // private property
+  &nbsp; #x = 0;
+
+&nbsp;&nbsp;  // private method (can only be called within the class)
+  &nbsp; #incX() {
+    &nbsp;&nbsp; &nbsp;this.#x++;
+&nbsp;&nbsp;  }
+
+  &nbsp; // private setter (can only be called within the class)
+&nbsp;&nbsp;  set #setX(x) {
+    &nbsp; &nbsp; this.#x = x;
+&nbsp;&nbsp;  }
+
+  &nbsp; // private getter (can only be called within the class)
+&nbsp;&nbsp;  get #getX() {
+  &nbsp; &nbsp;&nbsp;  return this.$x;
+&nbsp;&nbsp;  }
+}
+</pre> </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

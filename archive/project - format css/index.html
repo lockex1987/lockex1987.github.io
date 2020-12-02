@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Format CSS"/>
+    <meta name="keywords" content="format css"/>
+    <meta name="author" content="lockex1987"/>
+    
+    <title>Format CSS</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body>
+    <article>
+        <h2>Format CSS</h2>
+        
+<div>
+<textarea id="ta" style="min-height: 400px;"></textarea>
+</div>
+<div>
+<button onclick="format()" type="button">Format</button>
+</div>
+<script>
+		//TODO: Clear, Copy textarea
+		function formatCss(text) {
+			return text
+				// Xóa comment
+				.replace(/\/\*[^*]*\*\//g, "")
+				// Xóa dấu xuống dòng
+				.replace(/\n*/g, '')
+				// Chuẩn hóa chỉ có 1 dấu cách
+				.replace(/\s{1,}/g, ' ')
+				// Xử lý các ký tự { } ; , :
+				.replace(/\s{0,}\:\s{0,}/g, ":")
+				.replace(/\s{0,}\;\s{0,}/g, "; ")
+				.replace(/\s{0,}\,\s{0,}/g, ", ")
+				.replace(/\s{0,}\{\s{0,}/g, " { ")
+				.replace(/\s{0,}\}\s{0,}/g, " }\n")
+				;
+		}
+
+		function format() {
+			var ta = document.getElementById('ta');
+			ta.value = formatCss(ta.value);
+		}
+	</script>
+
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

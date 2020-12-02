@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Download từ các trang như usercloud, zippyshare, fshare, mega">
+  <title>Cloud downloader</title>
+  <link rel="icon" href="../../images/favicon.png">
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+  <article>
+    <h2>Cloud downloader</h2>
+    <p>Download từ các trang như usercloud, zippyshare, fshare, mega.</p>
+    <p>Script để lấy danh sách link từ <a href="https://mycomicposts.com/" target="_blank">MyComicPosts.com</a>:</p>
+    <pre>var text = '';
+document.querySelectorAll('.post-content a')
+        .forEach(a => text += a.href + '\n');
+console.log(text);</pre>
+    <p>Lịch sử các phiên bản:</p>
+    <ul>
+      <li>1.0.0: Runable version</li>
+      <li>1.0.1: Check frm</li>
+      <li>1.0.2 (24/09/2016): Add processing btnSuccess</li>
+      <li>1.1.0 (03/04/2019): Rename, add zippshare</li>
+      <li>1.2.0 (03/01/2029): Hỗ trợ thêm trang mega</li>
+      <li>Tách phần danh sách, có nút start, có thể remove</li>
+    </ul>
+  </article>
+  <script src="../../js/docs.js"></script>
+</body>
+
+</html>

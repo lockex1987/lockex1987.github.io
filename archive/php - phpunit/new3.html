@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PHPUnit">
+    <title>PHPUnit</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Unit Testing phần 3: Phạm vi kiểm thử và testing report</h2>
+      <p>Tôi biết khi thực hiện các kiểm thử, bạn sẽ luôn thường trực một câu
+        hỏi "<em>Test bao nhiêu là đủ?</em>", tuy nhiên chỉ có duy nhất một câu
+        trả lời hơi chán "<em>Khi nào kiểm tra hết 100% mã nguồn</em>". Nghe
+        thôi mà đã thấy chán chẳng muốn làm, hic... Đến cuối phần này, tôi tin
+        chắc bạn sẽ không còn thấy chán nữa bởi chúng ta có một số công cụ giúp
+        kiểm soát quá trình unit test.</p>
+      <h3>Phạm vi kiểm thử</h3>
+      <p>Trong các phần trước, các ví dụ của chúng ta đều là kiểm thử một phương
+        thức <code>public</code>, vậy với các phạm vi truy cập thành phần class
+        khác như <code>protected</code>, <code>private</code>, chúng ta không
+        thể truy cập trong qua đối tượng bằng toán tử đối tượng kiểu như <code>$url-&gt;someProtectedMethod()</code>
+        thì làm thế nào? Thông thường, chúng ta sẽ trả lời "<em>Các phương thức
+          protected, private không cần test</em>" là nhanh gọn nhất :). Đùa vậy
+        thôi, đã bảo phải kiểm tra hết 100% mà.</p>
+      <p><img src="https://allaravel.com/storage/app/media/uploads/2017/07/pham-vi-truy-cap-thanh-phan-class.png"></p>
+      <p>Nếu để ý kỹ bạn có thể thấy các phương thức public sẽ gọi đến các
+        phương thức non-public (<code>protected</code>, <code>private</code>),
+        vậy có thể kiểm tra các phương thức không public thông qua các phương
+        thức public. Đến với ví dụ thứ 3 về kiểm thử, chúng ta có một class User
+        có phương thức <code>cryptPassword()</code> là một phương thức <code>private</code>.</p>
+      <pre>&lt;?php
+namespace App;
+
+class User
+{
+    const MIN_PASS_LENGTH = 4;
+    private $user = array();
+
+    public function __construct(array $user)
+    {
+        $this-&gt;user = $user;
+    }
+
+    public function getUser()
+    {
+        return $this-&gt;user;
+    }
+
+    public function setPassword($password)
+    {
+        if (strlen($password) &lt; self::MIN_PASS_LENGTH) {
+            return false;
+        }
+        $this-&gt;user['password'] = $this-&gt;cryptPassword($password);
+        return true;
+    }
+
+    private function cryptPassword($password)
+    {
+        return md5($password);
+    }
+}</pre>
+      <p>Trong phần kiểm thử class User chúng ta tạo một đối tượng <code>$user
+          = new User($details)</code>, có thể gọi phương thức <code>setPassword()</code>
+        nhưng không thể gọi được phương thức <code>cryptPassword()</code> vì
+        đây là một phương thức private. <a href="https://allaravel.com/blog/lap-trinh-huong-doi-tuong-trong-php-phan-2-tinh-ke-thua/">Một
+          phương thức private chỉ được gọi từ chính class này</a>, vậy làm cách
+        nào để thực hiện kiểm thử phương thức này. Chúng ta cùng tiếp tục với
+        tạo một file test trong thư mục test:</p>
+      <pre>&lt;?php
+namespace Test;
+use App\User;
+
+class UserTest extends \PHPUnit_Framework_TestCase
+{
+    public function testGetUserReturnsUserWithExpectedValues()
+    {
+        $details = array();
+        $user = new User($details);
+        $password = '123456';
+        $user-&gt;setPassword($password);
+        $expectedPasswordResult = 'e10adc3949ba59abbe56e057f20f883e';
+        $currentUser = $user-&gt;getUser();
+        $this-&gt;assertEquals($expectedPasswordResult, $currentUser['password']);
+    }
+}</pre>
+      <p>Như vậy, thông qua việc gọi phương thức <code>public setPassword()</code>
+        chúng ta đã kiểm tra được phương thức <code>private cryptPassword()</code>.
+        Tuy nhiên, cách thức này chúng ta cần phải rất am hiểu về luồng thực
+        hiện trong ứng dụng và nếu trường hợp kiểm thử phức tạp với nhiều lần
+        gọi các phương thức lồng nhau thì cách thực hiện này là khá khó khăn.
+        Một giải pháp khác là sử dụng <a href="http://php.net/manual/en/class.reflectionclass.php">class
+          ReflectionClass</a> là một class cho phép lấy các thông tin về một
+        class như phương thức và thuộc tính.</p>
+      <pre>/**
+ * Call protected/private method of a class.
+ *
+ * @param object &amp;$object    Instantiated object that we will run method on.
+ * @param string $methodName Method name to call
+ * @param array  $parameters Array of parameters to pass into method.
+ *
+ * @return mixed Method return.
+ */
+public function invokeMethod(&amp;$object, $methodName, array $parameters = array())
+{
+    $reflection = new \ReflectionClass(get_class($object));
+    $method = $reflection-&gt;getMethod($methodName);
+    $method-&gt;setAccessible(true);
+
+    return $method-&gt;invokeArgs($object, $parameters);
+}</pre>
+      <p>Sử dụng <code>invokeMethod()</code> có thể gọi các phương thức <code>protected</code>
+        và <code>private</code> một cách trực tiếp mà không cần thông qua
+        phương thức được <code>public</code>. Ví dụ:</p>
+      <pre>$this-&gt;invokeMethod($user, 'cryptPassword', array('passwordToCrypt'));</pre>
+      <p>Nó cũng tương tự như chúng ta gọi các phương thức này từ instance của
+        Class:</p>
+      <pre>$user-&gt;cryptPassword('passwordToCrypt');</pre>
+      <h3>Báo cáo kiểm thử</h3>
+      <p>Trong một dự án lớn số lượng code lên đến hàng trăm nghìn dòng code và
+        hàng trăm đơn vị mã nguồn cần kiểm thử, khi đó thật khó để biết được các
+        đoạn mã đã được kiểm thử hết chưa. Bạn hoàn toàn có thể lặp lại quá
+        trình kiểm thử và xác nhận thủ cộng từng phần trong mã nguồn đã được
+        kiểm thử, công việc này lặp đi lặp lại thật tẻ nhạt. May thay, PHPUnit
+        có một công cụ giúp thực hiện việc này dễ dàng. Báo cáo kiểm thử được
+        sinh ra ở dạng file HTML giúp bạn ngay lập tức có thể xem các thống kê
+        về mã nguồn và các testcase đã thực hiện và độ phức tạp trong mã nguồn
+        dự án. Nó thậm chí còn cho bạn biết những phần mã nguồn mà bạn chưa kiểm
+        thử chẳng hạn không phát sinh một câu lệnh if và chạy đoạn code bên
+        trong chẳng hạn. Tạo báo cáo kiểm thử Báo cáo kiểm thử được tạo ra bằng
+        cách thêm tùy chọn --coverage-html và một tham số là tên thư mục chứa
+        báo cáo.</p>
+      <pre>$ vendor\bin\phpunit --coverage-html reports\tests\coverage
+PHPUnit 5.7.21 by Sebastian Bergmann and contributors.
+
+........                                                            8 / 8 (100%)
+
+Time: 877 ms, Memory: 4.00MB
+
+OK (8 tests, 8 assertions)
+
+Generating code coverage report in HTML format ... done</pre>
+      <p>Chú ý: một số trường hợp có thể lỗi khi thực hiện câu lệnh này:</p>
+      <h4>Trường hợp 1: Thiếu xdebug extension</h4>
+      <pre>$ vendor\bin\phpunit --coverage-html coverage
+PHPUnit 5.7.21 by Sebastian Bergmann and contributors.
+
+Error:         No code coverage driver is available
+
+........                                                            8 / 8 (100%)
+
+Time: 812 ms, Memory: 2.50MB
+
+OK (8 tests, 8 assertions)</pre>
+      <p>Với trường hợp này bạn cần cài đặt thêm Xdebug extension, các bước như
+        sau (Hướng dẫn cho Windows):</p>
+      <p>Bước 1: <a href="https://xdebug.org/download.php">Tải Xdebug extension</a>
+        dưới dạng file dll và copy vào thư mục nào đó, tôi thường để trong
+        C:/xampp/htdocs/php/ext cho tiện (máy tính tôi cài XAMPP).</p>
+      <p>Bước 2: Mở file cấu hình php.ini và thêm vào các cấu hình sau:</p>
+      <pre>[XDebug]
+zend_extension = "c:\xampp\php\ext\php_xdebug-2.5.5-5.6-vc11.dll"
+xdebug.remote_autostart = 1
+xdebug.profiler_append = 0
+xdebug.profiler_enable = 0
+xdebug.profiler_enable_trigger = 0
+xdebug.profiler_output_dir = "c:\xampp\tmp"
+;xdebug.profiler_output_name = "cachegrind.out.%t-%s"
+xdebug.remote_enable = 1
+xdebug.remote_handler = "dbgp"
+xdebug.remote_host = "127.0.0.1"
+xdebug.remote_log="c:\xampp\tmp\xdebug.txt"
+xdebug.remote_port = 9000
+xdebug.trace_output_dir = "c:\xampp\tmp"
+; 3600 (1 hour), 36000 = 10h
+xdebug.remote_cookie_expire_time = 36000</pre>
+      <p>zend_extension trỏ đến đường dẫn file xdebug download về ở bước 1. Bước
+        3: Khởi động lại Apache, như vậy đã cài đặt xong Xdebug cho XAMPP trên
+        Windows.</p>
+      <h4>Trường hợp 2: Chưa thiết lập whitelist</h4>
+      <pre>$ vendor\bin\phpunit --coverage-html app\Test\coverage                           
+PHPUnit 5.7.21 by Sebastian Bergmann and contributors.                           
+
+Error:         No whitelist configured, no code coverage will be generated       
+........                                                            8 / 8 (100%) 
+
+Time: 512 ms, Memory: 3.00MB                                                     
+
+OK (8 tests, 8 assertions)</pre>
+      <p>Do file cấu hình của PHPUnit là <code>phpunit.xml</code> chưa có các
+        thiết lập về whitelist, chúng ta thực hiện thêm vào như sau:</p>
+      <pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;phpunit colors="true"&gt;
+    &lt;testsuites&gt;
+        &lt;testsuite name="Application Test Suite"&gt;
+            &lt;directory&gt;./test/&lt;/directory&gt;
+        &lt;/testsuite&gt;
+    &lt;/testsuites&gt;
+    &lt;filter&gt;
+        &lt;whitelist processUncoveredFilesFromWhitelist="true"&gt;
+            &lt;directory suffix=".php"&gt;./app/&lt;/directory&gt;
+        &lt;/whitelist&gt;
+    &lt;/filter&gt;
+    &lt;logging&gt;
+        &lt;log type="coverage-html" target="./test/coverage/"/&gt;
+    &lt;/logging&gt;
+&lt;/phpunit&gt;</pre>
+      <p>Ok, sau khi thực hiện xong câu lệnh phpunit với tùy chọn sinh báo cáo
+        kiểm thử, bạn sẽ thấy trong thư mục <code>reports/tests/coverage</code>
+        có các báo cáo dạng file html, thực hiện chạy file <code>index.html</code>:</p>
+      <p><img src="https://allaravel.com/storage/app/media/uploads/2017/07/bao-cao-kiem-thu-ung-dung-bang-phpunit.jpg"></p>
+      <p>Trong báo cáo chúng ta sẽ thấy rằng các kiểm thử đạt được bao nhiêu
+        phần trăm, ví dụ ở đây file <code>User.php</code> mới chỉ đạt được
+        87.50% kiểm thử mã nguồn. Thực hiện click vào file này chúng ta sẽ có
+        chi tiết các thông tin cho từng file một.</p>
+      <p><img src="https://allaravel.com/storage/app/media/uploads/2017/07/testing-report-for-class-user.png"></p>
+      <p>Trong màn hình, những phần bôi màu xanh là đã được chạy qua kiểm thử,
+        phần màu đỏ là chưa chạy kiểm thử. Trong file <code>User.php</code> có
+        một nhánh <code>if...else</code> chưa kiểm thử do đó kết quả là mới chỉ
+        có 87.5% đạt, logic trong đó là nếu mật khẩu có độ dài nhỏ hơn 4 thì sẽ
+        không thiết lập. Chúng ta sẽ quay lại file kiểm thử <code>test/UserTest.php</code>
+        để hoàn thiện nốt phần này, tạo ra một phương thức <code>testSetPasswordReturnsFalseWhenPasswordLengthIsTooShort()</code>
+        để kiểm tra:</p>
+      <pre>public function testSetPasswordReturnsFalseWhenPasswordLengthIsTooShort()
+{
+    $details = array();
+    $user = new User($details);
+    $password = '123';
+    $result = $user-&gt;setPassword($password);
+    $this-&gt;assertFalse($result);
+}</pre>
+      <p>Chạy lại PHPUnit để kiểm tra, tất cả mọi việc đã ok, các code trong <code>User.php</code>
+        đã được kiểm thử hết.</p>
+      <p><img src="https://allaravel.com/storage/app/media/uploads/2017/07/ket-qua-kiem-thu-user-sau-khi-chinh-sua.png"></p>
+      <h3>Chỉ số đánh giá rủi ro khi thay đổi CRAP</h3>
+      <p>Trong báo cáo kiểm thử chúng ta để ý thấy có một cột tên là CRAP, vậy
+        chỉ số CRAP là gì và nó có tác dụng như thế nào trong kiểm thử ứng dụng.
+        Một thực tế là các lập trình viên không để ý đến các đoạn mã phức tạp
+        của mình chỉ đến khi cần duy trì hoặc cập nhật mới. Chỉ số CRAP để đánh
+        giá mức độ phức tạp của mã nguồn. CRAP được viết tắt bởi Change Risk
+        Analysis and Predictions hay tạm dịch là chỉ số đánh giá rủi ro khi thay
+        đổi phân tích và dự báo. Công thức tính CRAP như sau:</p>
+      <pre>C.R.A.P.(m) = comp(m)^2 * (1 – cov(m)/100)^3 + comp(m)</pre>
+      <p>với comp(m) là độ phức tạp của phương thức m và cov(m) là phạm vi kiểm
+        tra mã.</p>
+      <p>Nếu chỉ số CRAP thấp tức là mã nguồn không phức tạp, nói cách khác là
+        ít rủi ro khi có thay đổi mã nguồn. Chỉ số CRAP sẽ tăng lên khi trong
+        code của bạn có sử dụng các câu lệnh điều kiện if...else và các vòng lặp
+        foreach. Quay lại với câu chuyện test bao nhiêu là đủ, theo quan điểm cá
+        nhân tôi nghĩ không cần phải test đến 100% mã nguồn, nếu chỉ số CRAP
+        &lt; 5, các file code này không đủ phức tạp do đó khả năng rủi ro là cực
+        thấp.</p>
+      <h3>Kết luận</h3>
+      <p>Phần 3 về Unit testing trong PHP kết thúc, bạn cũng đã nắm được cách
+        thức kiểm thử với các phương thức có phạm vi truy cập hẹp như protected,
+        private. Các báo cáo kiểm thử của PHPUnit giúp chúng ta có được cái nhìn
+        toàn cục về dự án, đánh giá được những rủi ro tiềm ẩn. Khi bạn đọc đến
+        phần này, tôi tin là bạn đã có kế hoạch kiểm thử cho các dự án của mình,
+        unit testing không còn là cái gì khô khan, đáng sợ phải không. Phần tiếp
+        theo, chúng ta sẽ tìm hiểu về cách kiểm thử khi tích hợp các gói thư
+        viện ngoài, đây là phần cũng rất quan trọng khi mà dự án của chúng ta
+        giờ đây sử dụng rất nhiều các gói thư viện mã nguồn mở khác.</p>
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://www.youtube.com/watch?v=k9ak_rv9X0Y&amp;list=PLfdtiltiRHWGXSggf05W-pJbD47-_d8bJ">https://www.youtube.com/watch?v=k9ak_rv9X0Y&amp;list=PLfdtiltiRHWGXSggf05W-pJbD47-_d8bJ</a></p>
+      <p><a href="https://allaravel.com/blog/unit-testing-phan-1-gioi-thieu-phpunit">https://allaravel.com/blog/unit-testing-phan-1-gioi-thieu-phpunit</a></p>
+      <p><a href="https://allaravel.com/blog/unit-testing-phan-2-phuong-thuc-assertion-va-data-provider">https://allaravel.com/blog/unit-testing-phan-2-phuong-thuc-assertion-va-data-provider</a></p>
+      <p><a href="https://allaravel.com/blog/unit-testing-phan-3-pham-vi-kiem-thu-va-testing-report">https://allaravel.com/blog/unit-testing-phan-3-pham-vi-kiem-thu-va-testing-report</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

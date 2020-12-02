@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mount ổ cứng">
+    <title>Mount ổ cứng</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Mount ổ cứng</h2>
+      <h3>Chuẩn bị</h3>
+      <p>Liệt kê danh sách ổ cứng:</p>
+      <pre>lsblk</pre>
+      <p>Lấy UUID của ổ cứng:</p>
+      <pre>lsblk -o NAME,UUID,SIZE</pre>
+      <p>Tạo thư mục để mount:</p>
+      <pre>sudo mkdir /media/lockex1987/data</pre>
+      <h3>Thực hiện</h3>
+      <p>Liệt kê danh sách đang được mount:</p>
+      <pre>mount</pre>
+      <p>Bỏ không mount nữa, dùng lệnh <code>umount</code> (<strong>u</strong>
+        chứ không phải <strong>un</strong>):</p>
+      <pre>sudo umount &lt;FOLDER&gt;<br><br>sudo umount /media/lockex1987/data</pre>
+      <p>Mount ổ cứng:</p>
+      <pre>sudo mount -t &lt;TYPE&gt; -o &lt;OPTIONS&gt; &lt;DEVICE&gt; &lt;FOLDER&gt;<br><br>sudo mount -t ext4 -o defaults /dev/sdb1 /media/lockex1987/data</pre>
+      <p><code>-o defaults</code> ở đây bao gồm rw, suid, dev, exec, auto,
+        nouser, và async.</p>
+      <p>Bình thường là:</p>
+      <pre>(rw,nosuid,nodev,relatime,data=ordered,uhelper=udisks2)</pre>
+      <p>Khi chạy là:</p>
+      <pre>(rw,relatime,data=ordered)</pre>
+      <h3>Cấu hình fstab</h3>
+      <p>Cấu hình <code>/etc/fstab</code> để tự động mount ổ cứng khi khởi động
+        máy.</p>
+      <pre># &lt;file system&gt;                              &lt;mount point&gt;             &lt;type&gt;  &lt;options&gt;            &lt;dump&gt;  &lt;pass&gt;
+UUID=39e0205d-c528-4c82-8336-6296e76de697    /media/lockex1987/data    ext4    defaults             0       1</pre>
+      <h3>Tham khảo</h3>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <a href="https://en.wikipedia.org/wiki/Fstab" target="_blank">fstab -
+          Wikipedia</a></p>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <a href="https://linux4one.com/how-to-mount-and-unmount-filesystems-in-linux-with-examples/"
+          target="_blank">How to Mount and Unmount Filesystems in Linux with
+          Examples | Linux4one</a></p>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <a href="https://itfromzero.com/linux/mount-umount-o-cung-hay-thiet-bi-tren-linux.html"
+          target="_blank">Mount / Umount ổ cứng hay thiết bị trên Linux</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

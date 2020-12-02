@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Git">
+    <title>Git cheatsheet</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Cheatsheet</h2>
+      <p><br>
+      </p>
+      <p>Use-cases<br>
+      </p>
+      <p> <img alt="" src="images/git-operations.png"> </p>
+      <p>Explanation</p>
+      <p>English: A very brief and incomplete list of the operations shown in
+        the diagram:</p>
+      <pre>git pull</pre>
+      <p>fetches remote changes into the local clone, and merges them into the
+        current working files.</p>
+      <pre>git checkout</pre>
+      <p>replaces the current working files with files from a branch.</p>
+      <pre>git checkout --track</pre>
+      <p>creates a local branch from a remote branch, links them, and replaces
+        the current working files with files from that branch.</p>
+      <pre>git fetch</pre>
+      <p>downloads changes from a remote repository into the local clone</p>
+      <pre>git reset</pre>
+      <p>makes the current branch point to some specific revision or branch.</p>
+      <pre>git reset --hard</pre>
+      <p>makes the current branch point to some specific revision or branch, and
+        replaces the current working files with the files from that branch.</p>
+      <pre>git merge</pre>
+      <p>merges files from a given branch into the current branch.</p>
+      <pre>git push</pre>
+      <p>uploads changes from local branches to the respective remote
+        repositories.</p>
+      <pre>git add</pre>
+      <p>puts current working files into the stage (aka index or cache)</p>
+      <pre>git commit</pre>
+      <p>commits staged changes to a local branch</p>
+      <pre>git commit -a</pre>
+      <p>commits all modified files to a local branch (shorthand for "git add"
+        and "git commit")</p>
+      <pre>git config --list</pre>
+      <p>Liệt kê các cấu hình, cả local và global. Ví dụ kết quả:</p>
+      <pre>core.symlinks=false
+core.autocrlf=true
+core.fscache=true
+color.diff=auto
+color.status=auto
+color.branch=auto
+color.interactive=true
+help.format=html
+rebase.autosquash=true
+http.sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
+user.name=Nguyen Van Huyen
+user.email=huyennv9@cyberspace.vn
+core.autocrlf=false
+merge.tool=extMerge
+mergetool.extMerge.cmd=extMerge "$BASE" "$LOCAL" "$REMOTE" "$MERGED"
+mergetool.extMerge.trustexitcode=false
+diff.external=extDiff
+core.repositoryformatversion=0
+core.filemode=false
+core.bare=false
+core.logallrefupdates=true
+core.symlinks=false
+core.ignorecase=true
+remote.origin.url=git@source.cyberspace.vn:tksp/ttcd.git
+remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+branch.master.remote=origin
+branch.master.merge=refs/heads/master</pre>
+      <p><br>
+      </p>
+      <pre>git config --global &lt;key&gt; &lt;value&gt;</pre>
+      <p>Cấu hình.</p>
+      <pre>git init [folder]</pre>
+      <p>Khởi tạo.</p>
+      <pre>git add &lt;file&gt; ...</pre>
+      <p>Thêm các file cụ thể.</p>
+      <pre>git add .</pre>
+      <p>Thêm tất cả các file.</p>
+      <pre>git add *</pre>
+      <p>Thêm tất cả các file?</p>
+      <pre>git status</pre>
+      <p>Xem trạng thái.</p>
+      <pre>git commit -m "&lt;comment&gt;"</pre>
+      <p>Commit.</p>
+      <pre>git push &lt;remote&gt; &lt;branch&gt;</pre>
+      <p>Push.</p>
+      <pre>git log [-p] [--pretty=oneline]</pre>
+      <p>Xem log.</p>
+      <pre>git reset HEAD &lt;file&gt;</pre>
+      <p>Reset</p>
+      <pre>git remote -v</pre>
+      <p>Remote</p>
+      <pre>git remote rename &lt;old name&gt; &lt;new name&gt;</pre>
+      <p>Đổi tên remote.</p>
+      <pre>git remote add &lt;remote name&gt; &lt;url&gt;</pre>
+      <p>Thêm remote.</p>
+      <pre>git fetch &lt;remote name&gt;</pre>
+      <p>Fetch.</p>
+      <pre>git pull &lt;remote name&gt;</pre>
+      <p>Lấy code từ remote.</p>
+      <pre>git branch [[-d] branch name]</pre>
+      <p>Thêm branch.</p>
+      <pre>git checkout &lt;branch name&gt;</pre>
+      <p>Checkout.</p>
+      <pre>git merge &lt;branch name&gt;</pre>
+      <p>Merge.</p>
+      <pre>git diff --staged</pre>
+      So sánh.
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+
+    
+  </body>
+</html>

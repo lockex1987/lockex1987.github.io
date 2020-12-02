@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+ <head> 
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <meta name="description" content="JS Spread syntax">
+  <title>JS Spread syntax</title> 
+
+  <link rel="icon" href="../../images/favicon.png"> 
+  <link rel="stylesheet" href="../../css/style.css"> 
+
+ </head> 
+ <body> 
+  <article> 
+   <p>Spread syntax allows an iterable such as an array expression or string to be expanded in places where zero or more arguments (for function calls) or elements (for array literals) are expected, or an object expression to be expanded in places where zero or more key-value pairs (for object literals) are expected.</p> 
+   <h3>Syntax</h3> 
+   <p>For function calls:</p> 
+   <pre>myFunction(...iterableObj);
+</pre> 
+   <p>For array literals or strings:</p> 
+   <pre>[...iterableObj, '4', 'five', 6];</pre> 
+   <p>For object literals (new in ECMAScript 2018):</p> 
+   <pre>let objClone = { ...obj };</pre> 
+   <h3>Spread in function calls</h3> 
+   <h4>Replace apply</h4> 
+   <p>It is common to use <code>Function.prototype.apply</code> in cases where you want to use the elements of an array as arguments to a function.</p> 
+   <pre><code>function myFunction(x, y, z) { }
+var args = [0, 1, 2];
+myFunction.apply(null, args);</code></pre> 
+   <p>With spread syntax the above can be written as:</p> 
+   <pre><code>function myFunction(x, y, z) { }
+var args = [0, 1, 2];
+myFunction(...args);</code></pre> 
+   <p>Any argument in the argument list can use spread syntax and it can be used multiple times.</p> 
+   <pre><code>function myFunction(v, w, x, y, z) { }
+var args = [0, 1];
+myFunction(-1, ...args, 2, ...[3]);</code></pre> 
+   <h4>Apply for new</h4> 
+   <p>When calling a constructor with <code>new</code>, it's not possible to directly use an array and <code>apply</code> (<code>apply</code> does a <code>[[Call]]</code> and not a <code>[[Construct]]</code>). However, an array can be easily used with <code>new</code> thanks to spread syntax:</p> 
+   <pre><code>var dateFields = [1970, 0, 1];  // 1 Jan 1970
+var d = new Date(...dateFields);</code></pre> 
+   <p>To use new with an array of parameters without spread syntax, you would have to do it indirectly through partial application:</p> 
+   <pre><code>function applyAndNew(constructor, args) {
+   function partial () {
+      return constructor.apply(this, args);
+   };
+   if (typeof constructor.prototype === "object") {
+      partial.prototype = Object.create(constructor.prototype);
+   }
+   return partial;
+}
+
+
+function myConstructor () {
+   console.log("arguments.length: " + arguments.length);
+   console.log(arguments);
+   this.prop1="val1";
+   this.prop2="val2";
+};
+
+var myArguments = ["hi", "how", "are", "you", "mr", null];
+var myConstructorWithArguments = applyAndNew(myConstructor, myArguments);
+
+console.log(new myConstructorWithArguments);
+// (internal log of myConstructor):           arguments.length: 6
+// (internal log of myConstructor):           ["hi", "how", "are", "you", "mr", null]
+// (log of "new myConstructorWithArguments"): {prop1: "val1", prop2: "val2"}</code></pre> 
+   <h3>Spread in array literals</h3> 
+   <h4>A more powerful array literal</h4> 
+   <p>Without spread syntax, to create a new array using an existing array as one part of it, the array literal syntax is no longer sufficient and imperative code must be used instead using a combination of <code>push</code>, <code>splice</code>, <code>concat</code>, etc. With spread syntax this becomes much more succinct:</p> 
+   <pre><code>var parts = ['shoulders', 'knees']; 
+var lyrics = ['head', ...parts, 'and', 'toes']; 
+// ["head", "shoulders", "knees", "and", "toes"]</code></pre> 
+   <p>Just like spread for argument lists, <code>...</code> can be used anywhere in the array literal and it can be used multiple times.</p> 
+   <h4>Copy an array</h4> 
+   <pre><code>var arr = [1, 2, 3];
+var arr2 = [...arr]; // like arr.slice()
+arr2.push(4); 
+
+// arr2 becomes [1, 2, 3, 4]
+// arr remains unaffected</code></pre> 
+   <p>Note: Spread syntax effectively goes one level deep while copying an array. Therefore, it may be unsuitable for copying multidimensional arrays as the following example shows (it's the same with <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" title="The Object.assign() method is used to copy the values of all enumerable own properties from one or more source objects to a target object. It will return the target object."><code>Object.assign()</code></a> and spread syntax).</p> 
+   <pre><code>var a = [[1], [2], [3]];
+var b = [...a];
+b.shift().shift(); // 1
+// Now array a is affected as well: [[], [2], [3]]</code></pre> 
+   <h4>A better way to concatenate arrays</h4> 
+   <p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat" title="The concat() method is used to merge two or more arrays. This method does not change the existing arrays, but instead returns a new array."><code>Array.concat</code></a> is often used to concatenate an array to the end of an existing array. Without spread syntax this is done as:</p> 
+   <pre><code>var arr1 = [0, 1, 2];
+var arr2 = [3, 4, 5];
+// Append all items from arr2 onto arr1
+arr1 = arr1.concat(arr2);</code></pre> 
+   <p>With spread syntax this becomes:</p> 
+   <pre><code>var arr1 = [0, 1, 2];
+var arr2 = [3, 4, 5];
+arr1 = [...arr1, ...arr2];</code></pre> 
+   <p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/unshift" title="The unshift() method adds one or more elements to the beginning of an array and returns the new length of the array."><code>Array.unshift</code></a> is often used to insert an array of values at the start of an existing array. Without spread syntax this is done as:</p> 
+   <pre><code>var arr1 = [0, 1, 2];
+var arr2 = [3, 4, 5];
+// Prepend all items from arr2 onto arr1
+Array.prototype.unshift.apply(arr1, arr2) // arr1 is now [3, 4, 5, 0, 1, 2]</code></pre> 
+   <p>With spread syntax this becomes [Note, however, that this creates a new <code>arr1</code> array. Unlike <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/unshift" title="The unshift() method adds one or more elements to the beginning of an array and returns the new length of the array."><code>Array.unshift</code></a>, it does not modify the original <code>arr1</code> array in-place]:</p> 
+   <pre><code>var arr1 = [0, 1, 2];
+var arr2 = [3, 4, 5];
+arr1 = [...arr2, ...arr1]; // arr1 is now [3, 4, 5, 0, 1, 2]</code></pre> 
+   <h3>Spread in object literals</h3> 
+   <p>The <a href="https://github.com/tc39/proposal-object-rest-spread">Rest/Spread Properties for ECMAScript</a> proposal (stage 4) adds spread properties to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer">object literals</a>. It copies own enumerable properties from a provided object onto a new object.</p> 
+   <p>Shallow-cloning (excluding prototype) or merging of objects is now possible using a shorter syntax than <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" title="The Object.assign() method is used to copy the values of all enumerable own properties from one or more source objects to a target object. It will return the target object."><code>Object.assign()</code></a>.</p> 
+   <pre><code>var obj1 = { foo: 'bar', x: 42 };
+var obj2 = { foo: 'baz', y: 13 };
+
+var clonedObj = { ...obj1 };
+// Object { foo: "bar", x: 42 }
+
+var mergedObj = { ...obj1, ...obj2 };
+// Object { foo: "baz", x: 42, y: 13 }</code></pre> 
+   <p>Note that <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" title="The Object.assign() method is used to copy the values of all enumerable own properties from one or more source objects to a target object. It will return the target object."><code>Object.assign()</code></a> triggers <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set">setters</a> whereas spread syntax doesn't.</p> 
+   <p>Note that you cannot replace nor mimic the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" title="The Object.assign() method is used to copy the values of all enumerable own properties from one or more source objects to a target object. It will return the target object."><code>Object.assign()</code></a> function:</p> 
+   <pre><code>var obj1 = { foo: 'bar', x: 42 };
+var obj2 = { foo: 'baz', y: 13 };
+const merge = ( ...objects ) =&gt; ( { ...objects } );
+
+var mergedObj = merge ( obj1, obj2);
+// Object { 0: { foo: 'bar', x: 42 }, 1: { foo: 'baz', y: 13 } }
+
+var mergedObj = merge ( {}, obj1, obj2);
+// Object { 0: {}, 1: { foo: 'bar', x: 42 }, 2: { foo: 'baz', y: 13 } }</code></pre> 
+   <p>In the above example, the spread syntax does not work as one might expect: it spreads an array of arguments into the object literal, due to the rest parameter.</p> 
+   <h3>Only for iterables</h3> 
+   <p>Spread syntax (other than in the case of spread properties) can be applied only to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator">iterable</a> objects:</p> 
+   <pre><code>var obj = {'key1': 'value1'};
+var array = [...obj]; // TypeError: obj is not iterable</code></pre> 
+   <h3>Spread with many values</h3> When using spread syntax for function calls, be aware of the possibility of exceeding the JavaScript engine's argument length limit. See 
+   <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply" title="The apply() method calls a function with a given this value, and arguments provided as an array (or an array-like object)."><code>apply()</code></a> for more details. 
+   <h3>Rest syntax (parameters)</h3> 
+   <p>Rest syntax looks exactly like spread syntax, but is used for destructuring arrays and objects. In a way, rest syntax is the opposite of spread syntax: spread 'expands' an array into its elements, while rest collects multiple elements and 'condenses' them into a single element. See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/rest_parameters">rest parameters.</a></p> 
+  </article> 
+  <script src="../../js/docs.js"></script>  
+ </body>
+</html>

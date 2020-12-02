@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	
+    <title>Image Loader</title>
+	
+	<link rel="stylesheet" href="css/site.css">	
+    <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font: 400 16px; }
+.wrap { height: 100vh; width: 100%; display: table; }
+.char { display: table-cell; color: #fff; text-align: center; vertical-align: middle; }
+.setup { padding: 90px 0px 100px 0px; color: #555; background: #fff; font: 300 18px; }
+.container { margin: 0 auto; max-width: 800px; }
+.tips { padding: 90px 0px 100px 0px; color: #fff; font: 300 18px; }
+
+.bg { position: fixed; left: -25px; right: 0; top: -25px; z-index: 100; display: block; background-size: cover!important;
+	width: calc(100% + 50px)!important; height: calc(100% + 50px)!important; }
+.blur { filter: blur(15px); }
+main { width: 100%; display: table; position: absolute; left: 0; right: 0; z-index: 9999; }
+
+picture.placeholder { overflow: hidden; display: block; width: 100%; position: relative; height: 0; margin-bottom: 10px; }
+picture.placeholder img { position: absolute; top: 0; left: 0; width: 100%; height: auto; /* transition: opacity 0.2s linear; */ }
+picture.placeholder img.preview { filter: blur(50px); opacity: 0.5; transition: scale(1.05); }
+    </style>
+</head>
+
+<body>
+	<div class="bg blur" style="background-image: url(images/smalladsdf-minj2s33.jpg)"></div>
+
+	<main>
+		<div class="wrap">
+			<div class="char">
+				<h1>Title</h1>
+			</div>
+		</div>
+		<div class="setup">
+			<div class="container">
+				<picture class="placeholder" style="max-width: 1920px; max-height: 1080px; padding-bottom: 56.250000%;">
+                <img class="preview" data-src="images/background.jpg" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAXACoDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDydbFielWk0qbyvN8p/Lzt37TjPpmu6i8NDPKk1opoEscJhy4iY5KZOCfXFe7y011PB56suh5+LFpdn7sAqoUkDr7mrcOmNxwa7lNBAPCVbj0LrIUOOpIFDnTWwKFRvU4iLSmJ+6as/wBjt/dNduul4GEh59TVgWVyAB+4/wC/YrN1ImipPqcJ/bGoSxTQteTNMzmOMrhRlcbunT61u6P4nmnhSKWJHdPlaRs5PoTRRXL0OxpXsdBDcahIMi2tuTxhz0rSYSwwiWS1j+iycn9KKKzlLUajpcpte33JS0hUHhVJyR75zThfX+Bmyhz/AL3/ANeiiquuxNj/2Q=="/>
+            </picture>
+            
+            
+            <picture class="placeholder" style="max-width: 832px; max-height: 687px; padding-bottom: 82.572115%;">
+                <img class="preview" data-src="images/comic.jpg" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAiACoDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDpZLa7T7LdQCN1RYU2uxAT931I79MY960C9wBwkW4jgCc4B/75ziq7QXQuJP36m3CKDFxkEKAD/P8AOqkkyxXJkkLtu9YyVJHTJ7ce1ZlFy2iZNSgMjebM4lbcv3B8jcD/AOvUrnF5DIbj92IyHQdC2Rzn06j8qzFuhI6hboRMkbuZF42g9fvDHAPf8Kux2ctvaNGknmlRvG4D5x1HToKAHSXVoCrOLhFKb88gDnHNWYZVaCNlDkFQQd59KoGe1b94JkEZwWIyFJ64Oe9aUTW7QoUOUKgqQCARQBWvdSt7a7ljeVA6Sj5d2Dn3qGbUVtojNLGFbJDc4VyenPcjFJ/ZstxrMl0+1IZHEgZjkMOOMCql/CJWk8o7PJAidyRuY54b0yaALsN3BfXcQSWKdBG0vl7wSMYOD+Jpr3ZDybVuX4xtEeB+HWqOkxol+4kd5F+yyE5GT1Udq3opoo4mGxgCuRzzg/XvQBmG2RrGaNZD5btvCogOehIB6HpWxCX8mPIIO0cdO1Z9uQrC3jjhQktIAGxhs+n51qRsHiRjuGVBwRQwPHfDmuatIEV9UvWUAAA3DkD9a9I0q5nlI8yeR+P4nJoopyEjZVVGs2wAGDazZGOvKVbMaY+4v5UUUhirDEVBMSZx/dFNwBwAAKKKAP/Z"/>
+            </picture>
+            
+            <picture class="placeholder" style="max-width: 1152px; max-height: 768px; padding-bottom: 66.666667%;">
+                <img class="preview" data-src="images/wedding.jpg" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAcACoDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3a11Czvd32a4jlK8MFbJFWa+ZdM8Y6zZmOZbl1COPK2MFBwckY9xkV3dj8c7eXUrlLnTClmFYwOjEsSMYDDHf26UXJTPX6K8xsPjBbT3cNtPpdwXuD+5EOCWzkAYPckYqtZfEWRPF8r3NvOlpM/kurMpEYHAI57HJJ9CaV0Vuercmj8qjDrJGHjYMjDIZTkEUzNWlcls+XkismuVdfl45aRQ38hWisekKFYlt3OFRSqj6+/Y/SsSeQx/OoUHcARjg+5qcSM7yhiSRznPPWsHZOw3Y6nwzpNnbeI4L291RGtU5ggAO4L/Ch7gbmJ/OrXiPwtavqU0mnan5sEx3NADuaMnqM56dcHt0rgZrubCSByGyBx7iuh0e6uWW8BnkDB9m8HDbQVAGfT5jUTn0M5O2xNenUdPt4PNvtQW2gQJGFlOxQPQKfatc/EG+yd2sxq3dSJQR7dazdS1i+tLloop2C+YV56jHHX6VROuXgYjbbnB6mBMn9KSqMXMf/9k="/>
+            </picture>
+			</div>
+		</div>
+		<div class="tips">
+			<div class="container">
+				footer
+			</div>
+		</div>
+	</main>
+
+    <script>
+        function processPreview() {
+            document.querySelectorAll('picture.placeholder img.preview').forEach(function(img) {
+                var image = new Image();
+                image.onload = function() {
+                    img.src = image.src;
+                    img.classList.remove("preview");
+                };
+                image.src = img.dataset.src;
+            });
+        }
+
+        setTimeout(processPreview, 1000);
+    </script>
+	
+	<script>
+		window.addEventListener("load", function() {
+			var fullImage = "https://abload.de/img/country-1543315j1sc9.jpg";
+			var img = new Image();
+			img.onload = function() {
+				var blur = document.querySelector(".blur");
+				blur.style.backgroundImage = "url(" + fullImage +")";
+				blur.classList.remove("blur");
+			};
+			img.src = fullImage;
+		});
+	</script>
+</body>
+</html>

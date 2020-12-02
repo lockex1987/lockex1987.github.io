@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="https://production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
+  <link rel="mask-icon" type="" href="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
+  <meta name="robots" content="noindex">
+  <title>CodePen - bar loader 3.2.2 tweaks</title>
+  
+  
+  
+  
+      <style>
+      html:before {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(rgba(238, 238, 238, 0.25), #eeeeee 30em), url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/2017/tiger_lily.jpg) 50% 50%;
+  -webkit-filter: sepia(1) hue-rotate(200deg);
+  filter: sepia(1) hue-rotate(200deg);
+  content: '';
+}
+
+div {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+}
+
+.loader {
+  margin-left: -10em;
+  width: 20em;
+  height: 6.25em;
+  /* (un)comment the next line *
+  perspective: 62.5em; /**/
+  -webkit-box-reflect: below 0 linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.7));
+}
+.loader:after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform-origin: 0 100%;
+  transform: scaleY(-1);
+  background: -moz-element(#loader);
+  mask: url(#fader);
+  content: '';
+}
+
+.bar {
+  bottom: 0;
+  width: 1.25em;
+  height: 6.25em;
+  animation: bar 3s cubic-bezier(0.81, 0.04, 0.4, 0.7) infinite;
+}
+.bar:nth-child(1) {
+  margin-left: -6.25em;
+  background: #1e3f57;
+  animation-delay: 0ms;
+}
+.bar:nth-child(2) {
+  margin-left: -5em;
+  background: #264a63;
+  animation-delay: 50ms;
+}
+.bar:nth-child(3) {
+  margin-left: -3.75em;
+  background: #2d566f;
+  animation-delay: 100ms;
+}
+.bar:nth-child(4) {
+  margin-left: -2.5em;
+  background: #35617a;
+  animation-delay: 150ms;
+}
+.bar:nth-child(5) {
+  margin-left: -1.25em;
+  background: #3d6d86;
+  animation-delay: 200ms;
+}
+.bar:nth-child(6) {
+  margin-left: 0em;
+  background: #447892;
+  animation-delay: 250ms;
+}
+.bar:nth-child(7) {
+  margin-left: 1.25em;
+  background: #4c849e;
+  animation-delay: 300ms;
+}
+.bar:nth-child(8) {
+  margin-left: 2.5em;
+  background: #548fa9;
+  animation-delay: 350ms;
+}
+.bar:nth-child(9) {
+  margin-left: 3.75em;
+  background: #5b9bb5;
+  animation-delay: 400ms;
+}
+.bar:nth-child(10) {
+  margin-left: 5em;
+  background: #63a6c1;
+  animation-delay: 450ms;
+}
+
+@keyframes bar {
+  0% {
+    transform: rotate(-0.5turn) rotateX(-1turn);
+  }
+  75%, 100% {
+    transform: none;
+  }
+}
+
+    </style>
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+
+  
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+
+</head>
+
+<body translate="no" >
+
+  <div class='loader' id='loader'>
+  <div class='bar'></div>
+  <div class='bar'></div>
+  <div class='bar'></div>
+  <div class='bar'></div>
+  <div class='bar'></div>
+  <div class='bar'></div>
+  <div class='bar'></div>
+  <div class='bar'></div>
+  <div class='bar'></div>
+  <div class='bar'></div>
+</div>
+<svg>
+  <linearGradient id='grad' x2='0%' y2='100%'>
+    <stop offset='0' stop-color='#fff' stop-opacity='0'></stop>
+    <stop offset='1' stop-color='#fff' stop-opacity='.7'></stop>
+  </linearGradient>
+  <mask id='fader' maskContentUnits='objectBoundingBox'>
+    <rect fill='url(#grad)' height='1' width='1'></rect>
+  </mask>
+</svg>
+  
+  
+  
+  
+  
+
+</body>
+</html>
+ 

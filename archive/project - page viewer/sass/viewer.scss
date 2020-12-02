@@ -1,0 +1,123 @@
+// vnexpress.net phải thêm cái này, để ghi đè overflow-y: scroll;
+html {
+    overflow-y: auto;
+}
+
+
+.viewer {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    background: #FFF;
+    display: none;
+    overflow: hidden;
+
+    &.show {
+        display: block;
+
+        .content-wrapper {
+            animation: fadeIn 0.5s;
+        }
+    }
+
+    .content-wrapper {
+        height: 100%;
+        width: 100%;
+        max-width: 700px;
+        margin: 0 auto;
+        overflow: hidden;
+        cursor: grab;
+
+        .content {
+            height: 100%;
+            user-select: none;
+            pointer-events: none;
+
+            p {
+                line-height: 1.5;
+                font-size: 16px;
+                text-align: justify;
+            }
+
+            table, figure {
+                break-inside: avoid;
+            }
+        }
+    }
+
+    .info {
+        position: absolute;
+        top: 10px;
+        text-align: center;
+        left: 16px;
+        font-size: small;
+        color: rgba(0, 0, 0, 0.5);
+    }
+
+    .btn {
+        background: transparent;
+        box-shadow: none;
+        border: none;
+        cursor: pointer;
+        min-width: unset;
+        margin: 0;
+        height: auto;
+        line-height: 1;
+        padding: 0 16px;
+
+        &:hover,
+        &:focus {
+            box-shadow: none;
+            outline: none;
+        }
+    }
+
+    .btn-close {
+        position: absolute;
+        right: 0px;
+        top: 10px;
+        color: #ee3724;
+        font-weight: 700;
+        font-size: 24px;
+        width: 60px;
+    }
+
+    .btn-nav {
+        color: #007bff;
+        font-size: 96px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        display: none;
+
+        &.btn-first {
+            left: 0;
+        }
+
+        &.btn-last {
+            right: 0;
+        }
+
+        @media (min-width: 1000px) {
+            display: block;
+        }
+    }
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

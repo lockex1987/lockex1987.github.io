@@ -1,0 +1,87 @@
+$mq-xsmall: 640px;
+$mq-med: 1024px;
+
+
+*, *:before, *:after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+.css-grid {
+    display: grid;
+    grid-auto-flow: row dense;
+
+    // Lần lượt chiếm 1, 2, 4 cột
+    grid-template-columns: 1fr;
+
+    @media (min-width: $mq-xsmall) {
+        grid-gap: 1px;
+        grid-template-columns: repeat(2, 1fr); 
+    }
+
+    @media (min-width: $mq-med) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+  
+    .item {
+        width: auto;
+    
+        @media (min-width: $mq-xsmall) {
+            &:nth-child(17n + 1) {
+                grid-column-end: span 2;
+                grid-row-end: span 2; 
+            }
+        }
+    }
+
+    &__link {
+        position: relative;
+        display: block;
+        overflow: hidden;
+
+        .absolute-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 300ms ease;
+        }
+    
+        &:before,
+        &:after {
+            content: "";
+        }
+    
+        // Tỷ lệ 1x1
+        &:before {
+            display: block;
+            padding-top: 100%;
+        }
+    
+        // Hiệu ứng hover
+        &:after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: #080808;
+            opacity: 0;
+            transition: opacity 300ms ease;
+        }
+    
+        &:hover {
+            &:after {
+                opacity: 0.3;
+            }
+      
+            .absolute-bg {
+                transform: scale(1.1);
+            }
+        }
+    }
+}

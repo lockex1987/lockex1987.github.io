@@ -1,0 +1,3 @@
+A Pen created at CodePen.io. You can find this one at https://codepen.io/danirod/pen/preJgX.
+
+ CSS hasn't got a pseudoclass for detecting when an element with position:sticky; has become stuck. One of the most common tricks to simulate it is to use JavaScript to detect the vertical position of the item on the viewport is 0 or whatever value it has to reach. This *proof of concept* uses the new IntersectionObserver API to detect when my object has become stuck instead of using the scroll event.

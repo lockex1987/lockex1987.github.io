@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sử dụng collate của MySQL trong Laravel">
+    <title>Sử dụng collate của MySQL trong Laravel</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Sử dụng collate của MySQL trong Laravel</h2>
+      <p>Khái niệm collate của MySQL khi tìm kiếm (phân biệt hoa thường, phân
+        biệt dấu), sắp xếp.</p>
+      <p>Tạo dữ liệu từ post cũ:</p>
+      <p>TODO</p>
+      <p>Tạo project Laravel mới, sửa cấu hình DB ở file .env.</p>
+      <p>Sửa <code>routes/web.php</code>:</p>
+      <pre>&lt;?php
+
+Route::get('/', function () {
+    //$query = 'a';
+    //$query = 'tuấn';
+    $query = 'tuần';
+
+    $query = strtolower($query);
+    $arr = [];
+
+    // where clause
+    $arr []= DB::table('test')
+            -&gt;where(DB::raw('lower(name)'), 'like', '%' . $query . '%')
+            -&gt;get();
+
+    // https://dev.mysql.com/doc/refman/8.0/en/charset-collate.html
+    // Để collate ở trước like
+    $arr []= DB::table('test')-&gt;whereRaw(" lower(name) collate utf8mb4_general_ci like ? ", ['%' . $query . '%'])-&gt;get();
+    $arr []= DB::table('test')-&gt;whereRaw(" lower(name) collate utf8mb4_bin like ? ", ['%' . $query . '%'])-&gt;get();
+    $arr []= DB::select(" select * from `test` where lower(`name`) collate utf8mb4_bin like ? ", ['%' . $query . '%']);
+    $arr []= DB::select(" select * from test where lower(name) like '%$query%' collate utf8mb4_bin ");
+
+    // order clause
+    $arr []= DB::table('test')
+            -&gt;orderBy('name')
+            -&gt;get();
+    $arr []= DB::table('test')
+            -&gt;orderByRaw('name collate utf8mb4_vietnamese_ci')
+            -&gt;get();
+    return view('welcome', compact('arr'));
+});</pre>
+      <p>Sửa <code>resources/views/welcome.blade.php</code>:</p>
+      <pre>&lt;!doctype html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset="utf-8"&gt;
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+        &lt;title&gt;Laravel&lt;/title&gt;
+        &lt;link rel="stylesheet" href="/css/app.css"&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div class="container mt-3"&gt;
+            @foreach ($arr as $idx =&gt; $list)
+                &lt;h3&gt;Danh sách {{ $idx + 1 }}&lt;/h3&gt;
+                &lt;table class="table table-bordered"&gt;
+                    @foreach ($list as $e)
+                        &lt;tr&gt;
+                            &lt;td&gt;{{ $e-&gt;name }}&lt;/td&gt;
+                        &lt;/tr&gt;
+                    @endforeach
+                &lt;/table&gt;
+            @endforeach
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+      <p>Khi tạo table, tạo database, nên để mặc định collation là <code>utf8mb4_bin</code>.</p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

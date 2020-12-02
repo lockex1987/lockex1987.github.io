@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="date" content="2020-02-21 22:56:00">
+    <meta name="description" content="Cài đặt MySQL trên Ubuntu">
+    <title>Cài đặt MySQL trên Ubuntu</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Cài đặt MySQL trên Ubuntu</h2>
+      <h3>Cài đặt</h3>
+      <p> Hãy gõ lệnh dưới đây để cài đặt MySQL server:</p>
+      <pre>sudo apt install mysql-server</pre>
+      <p> Sau đó chạy thêm lệnh này để cài đặt bảo mật cho MySQL server và có
+        thể đổi lại mật khẩu root:</p>
+      <pre>sudo mysql_secure_installation</pre>
+      <p>Chú ý, chúng ta vẫn chưa truy cập được bằng lệnh <code>mysql -u root
+          -p</code>. Cần truy cập bằng <code>sudo mysql</code> và cấu hình lại.</p>
+      <p>Để có thể kết nối được MySQL từ máy khác, chúng ta cần chỉnh lại <code>bind-address=0.0.0.0</code>
+        ở file <code>/etc/mysql/mysqld.conf.d/mysqld.cnf</code>. Giá trị mặc
+        định là <code>127.0.0.1</code> nên bạn chỉ truy cập từ chính máy cài
+        MySQL. Bạn cũng có thể thiết lập <code>bind-address</code> bằng IP của
+        máy cài MySQL cho an toàn hơn.</p>
+      <p>Sử dụng dịch vụ:</p>
+      <pre>sudo systemctl restart mysql<br>sudo systemctl status mysql</pre>
+      <h3>Lấy thông tin phiên bản của MySQL</h3>
+      <p>Nếu bạn truy cập được trực tiếp server DB thì có thể thực hiện lệnh
+        sau:</p>
+      <pre>mysql --version</pre>
+      <p>Tuy nhiên, thông thường bạn sẽ không thể truy cập trực tiếp server như
+        thế, mà chỉ truy cập được vào MySQL thôi.</p>
+      <p>Khi đó có thể đánh lệnh sau:</p>
+      <pre>show variables like "%version%";</pre>
+      <h3>Cài đặt phiên bản 8</h3>
+      <p>MySQL đã có từ rất lâu, và có nhiều phiên bản. Hiện tại tôi chỉ hay
+        dùng phiên bản 5, và chỉ dùng các thao tác CRUD bình thường. Có nhiều
+        cải tiến hay mà tôi chưa biết đến (như hỗ trợ JSON).</p>
+      <p>Phiên bản 8 có các tính năng hiện đại như:</p>
+      <ul>
+        <li>Common Table Expression (CTE)</li>
+        <li>Window function</li>
+        <li>...</li>
+      </ul>
+      <p>Phiên bản mặc định của MySQL trên Linux Mint 18.3 (dựa trên Ubuntu
+        16.04) mà tôi đang cài vẫn là 5. Hãy nâng cấp lên phiên bản 8.</p>
+      <p>Download file apt-config.deb ở địa chỉ sau:</p>
+      <p><a href="https://repo.mysql.com/" target="_blank">repo.mysql.com</a></p>
+      <p>Tôi download file <code>mysql-apt-config_0.8.14-1_all.deb</code>.<br>
+      </p>
+      <p>Sau đó thực hiện các lệnh sau:</p>
+      <pre>dpkg -i mysql-apt-config_0.8.13-1_all.deb
+
+sudo apt-get update
+sudo apt-get install mysql-server</pre>
+      <h3>Tham khảo</h3>
+      <p> <a href="https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04"
+          target="_blank">How To Install MySQL on Ubuntu 18.04 | DigitalOcean</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>
