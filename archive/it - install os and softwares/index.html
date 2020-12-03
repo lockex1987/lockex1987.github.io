@@ -36,7 +36,7 @@
       <p>Ổ HDD chia làm 1 phân vùng:</p>
       <p>Ổ cứng chứa dữ liệu ở phân vùng <code>/dev/sda6</code>, mount vào <code>/media/lockex1987/data</code>,
         định dạng ext4, dung lượng 2T.</p>
-      <div class="mb-3"><img src="images/screenshot%20from%202018-04-05%2019-52-47.png"
+      <div class="mb-3"><img src="images/screenshot%20from%202018-04-05%2019-52-47.png"
           alt=""></div>
       <div class="mb-3"><img src="images/screenshot%20from%202018-04-05%2020-02-06.png"></div>
       <div class="mb-3"><img src="images/screenshot%20from%202018-04-05%2020-14-02.png"></div>
@@ -46,18 +46,16 @@
       <p>Chú ý cần bỏ tùy chọn Secure Boot ở Bios?</p>
       <h3>Tự động mount data partition</h3>
       <p>Sửa file <code>/etc/fstab</code> như sau:</p>
-      <pre># &lt;file system&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;mount point&gt;&nbsp;&nbsp; &lt;type&gt;&nbsp;  &lt;options&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &lt;dump&gt;&nbsp;&nbsp; &lt;pass&gt;<br>UUID=1f5fac5a-2775-4502-acdc-bf816928ed7d&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ext4&nbsp;&nbsp;&nbsp;  errors=remount-ro&nbsp;&nbsp;&nbsp;  0 &nbsp; &nbsp; &nbsp; &nbsp;1<br>UUID=1125b486-48d6-4135-84c7-914c18bac8b4&nbsp;&nbsp;&nbsp; /data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ext4&nbsp;&nbsp;&nbsp;  nosuid,nodev,nofail&nbsp;&nbsp; 0&nbsp; &nbsp; &nbsp; &nbsp; 0<br>UUID=313a44f0-2d80-4077-99ef-003bd7ff1c02&nbsp;&nbsp;&nbsp; none&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; swap&nbsp;&nbsp;&nbsp;  sw&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;0</pre>
+      <pre class="out-of-box"># &lt;file system&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;mount point&gt;&nbsp;&nbsp; &lt;type&gt;&nbsp;  &lt;options&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &lt;dump&gt;&nbsp;&nbsp; &lt;pass&gt;<br>UUID=1f5fac5a-2775-4502-acdc-bf816928ed7d&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ext4&nbsp;&nbsp;&nbsp;  errors=remount-ro&nbsp;&nbsp;&nbsp;  0 &nbsp; &nbsp; &nbsp; &nbsp;1<br>UUID=1125b486-48d6-4135-84c7-914c18bac8b4&nbsp;&nbsp;&nbsp; /data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ext4&nbsp;&nbsp;&nbsp;  nosuid,nodev,nofail&nbsp;&nbsp; 0&nbsp; &nbsp; &nbsp; &nbsp; 0<br>UUID=313a44f0-2d80-4077-99ef-003bd7ff1c02&nbsp;&nbsp;&nbsp; none&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; swap&nbsp;&nbsp;&nbsp;  sw&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;0</pre>
       <h3>Danh sách phần mềm</h3>
       <p>Trên Linux, bạn nên sử dụng Software Manager để cài đặt hoặc gỡ bỏ các
         phần mềm.</p>
-      <p>Gỡ bỏ các phần mềm mặc định không sử dụng: Tomboy, Thunderbird,
-        transmission,...</p>
+      <p>Gỡ bỏ các phần mềm mặc định không sử dụng: Thunderbird, Tomboy, GNOME
+        Mahjongg, Remmina, Rhythmbox,...</p>
       <pre>sudo apt remove tomboy
 sudo apt remove gimp
-sudo apt remove thunderbird
 sudo apt remove hexchat
 sudo apt remove pidgin
-sudo apt remove transmission-common
 
 sudo apt autoremove
 </pre>
@@ -71,14 +69,14 @@ sudo apt autoremove
           <ul>
             <li>KeePassX</li>
             <li>7-Zip (p7zip-full)</li>
-            <li>Comix</li>
+            <li>Comix / mcomix-tabetai</li>
             <li>Honey View (Windows)</li>
             <li>Notepad++ (Windows)</li>
           </ul>
         </li>
         <li>Networking:
           <ul>
-            <li>Deluge</li>
+            <li>Deluge / Transmission (Ubuntu có sẵn Transmission)</li>
             <li>Chrome / Chromium / Firefox</li>
             <li>Cài extension Chrome extension source viewer, ColorZilla,
               YouTube Ad Auto-skipper,...</li>
@@ -87,7 +85,7 @@ sudo apt autoremove
         </li>
         <li>Office:
           <ul>
-            <li>BlueGriffon</li>
+            <li><a href="#blueGriffonInstall">BlueGriffon</a></li>
             <li>FBreader (để mở file epub)</li>
             <li>Libre Office / MS Office</li>
             <li>Lac Viet 2002 / Lingoes</li>
@@ -101,19 +99,22 @@ sudo apt autoremove
         <li>System Tools:
           <ul>
             <li>ibus, ibus-unikey</li>
-            <li>meld (Software Manager)</li>
-            <li>ttf-mscorefonts-installer</li>
+            <li>Meld</li>
             <li>Virtual Box</li>
             <li>Wine</li>
             <li>Unikey (Windows)</li>
+            <li>ttf-mscorefonts-installer (sudo apt install
+              ttf-mscorefonts-installer)</li>
           </ul>
         </li>
         <li>Programming:
           <ul>
-            <li><a href="https://lockex1987.github.io/archive/git%20-%20install%20and%20config/"
+            <li><a href="https://lockex1987.github.io/archive/git%20-%20install%20and%20config/"
                 target="_blank">git</a></li>
-            <li>nginx (apt)</li>
-            <li>php (apt)</li>
+            <li><a href="https://lockex1987.github.io/posts/linux%20-%20install%20nginx/index.html"
+                target="_blank">nginx</a></li>
+            <li><a href="https://lockex1987.github.io/posts/linux%20-%20install%20php/"
+                target="_blank">PHP</a></li>
             <li>JDK</li>
             <li><a href="http://koala-app.com/" target="_blank">Koala</a></li>
             <li>JD GUI</li>
@@ -123,10 +124,9 @@ sudo apt autoremove
             <li>HeidiSQL (đi kèm MariaDB trên Windows)</li>
             <li>Sqlectron</li>
             <li>Eclipse (download zip)</li>
-            <li>Visual Studio Code (download deb)</li>
+            <li>VSCode</li>
             <li>Maven (download zip)</li>
             <li>Node JS (download zip)</li>
-            <li>PHP</li>
           </ul>
         </li>
         <li>Game:
@@ -140,20 +140,28 @@ sudo apt autoremove
       <p>Cài đặt thông qua Software Manager:</p>
       <ul>
         <li>KeePassX</li>
+        <li>VLC</li>
+        <li>VSCode</li>
+        <li>FFmpeg</li>
+        <li>mcomix-tabetai</li>
+        <li>GNOME Tweaks</li>
+        <li>Meld</li>
+        <li>FBreader</li>
       </ul>
-      <h4>BlueGriffon</h4>
-      <p>BlueGriffon (Extract, add menu), hoac cai qua file <code>.deb</code>.</p>
-      <p>BlueGriffon 3.0.1 deb</p>
-      <pre>sudo dpkg -i bluegriffon-3.0.1.Ubuntu16.04-x86_64.deb</pre>
-      <p>Select: Tools &gt; Preferences &gt; Advanced &gt; Configuration Editor
-        &gt; I'll be careful I promise. Search for: intl.charset.default.
-        Double-click the item and, in the "Enter string value" dialogue enter:
-        UTF-8.</p>
-      <p> Disable .bak file.</p>
-      <p>Bo chon tao .bak file, spellchecking, bo check update</p>
-      <p>http://bluegriffon.org/freshmeat/</p>
-      <p>Them menu</p>
-      <p>O Linux Mint 19.1 bi loi font</p>
+      <h4 id="blueGriffonInstall">BlueGriffon</h4>
+      <p>Vào trang chủ, download file <code>.deb</code>. Sau đó cài bằng lệnh
+        sau:</p>
+      <pre>sudo dpkg -i bluegriffon-3.1.Ubuntu18.04-x86_64.deb</pre>
+      <p>Sau khi cài xong, bạn có thể cấu hình:</p>
+      <ul>
+        <li>Bỏ cấu hình tạo file <code>.bak</code></li>
+        <li>Bỏ cấu hình spellchecking</li>
+      </ul>
+      <p>Ở phiên bản Ubuntu cao bạn có thể bị lỗi font như sau:</p>
+      <p>x</p>
+      <p>Khi đó hãy cài đặt GNOME Tweaks và sử dụng ứng dụng đó, cấu hình phần
+        Fonts như sau:</p>
+      <p>y</p>
       <h4>TLP</h4>
       <p>Tiết kiệm pin cho Laptop. Cái này còn nhiều ý kiến khác nhau. Có người
         bảo do driver chưa đúng (proprietary graphics card driver), có người bảo
@@ -163,22 +171,10 @@ sudo apt autoremove
       <p>Máy Laptop thì vẫn giữ bản 17.2 32bit. The 17.3 64 bit version has some
         problems with my laptop like overheat, noise, crash. </p>
       <p>Install TLP (Jupiter) to save battery</p>
-      <p> <code> sudo add-apt-repository ppa:linrunner/tlp<br>
-          sudo apt-get update<br>
-          sudo apt-get install tlp tlp-rdw<br>
-          sudo tlp start</code> </p>
+      <pre>sudo add-apt-repository ppa:linrunner/tlp
+sudo apt-get update<br>sudo apt-get install tlp tlp-rdw<br>sudo tlp start</pre>
       <p>No configuration required for using TLP. Install it and forget about
         it.</p>
-      <h4>Visual Studio Code</h4>
-      <p>Download file <code>deb</code> file để có phiên bản mới nhất?</p>
-      <p>Change Visual Studio Code tab config:</p>
-      <p><code>// Place your settings in this file to overwrite the default
-          settings<br>
-          {<br>
-          &nbsp; "editor.tabSize": 2,<br>
-          &nbsp; "editor.insertSpaces": false<br>
-          }</code></p>
-      <p>Change tab configurations of Eclipse, NetBeans, Notepad++,...</p>
       <h4 id="teamViewerInstall">Team Viewer</h4>
       <p>Tải file <code>.deb</code> 64bit.</p>
       <p>https://www.teamviewer.com/vi/ta%cc%89i-ve/linux/</p>
@@ -193,6 +189,8 @@ sudo apt-get install -f ./teamviewer_15.2.2756_amd64.deb</pre>
       <p>https://linuxize.com/post/how-to-install-teamviewer-on-ubuntu-18-04/</p>
       <h4>ibus, ibus-unikey</h4>
       <p>Cài bằng Software Manager.</p>
+      <p>Phần language thêm tiếng Việt, khi đó sẽ tự cài cả ibus-unikey.</p>
+      <p>Sau đó vào phần input source, thêm.</p>
       <p>Configure in "Language" settings, add input method "Unikey"</p>
       <p>Phải cài thêm ở chỗ input method nữa</p>
       <p>Chạy ibus và cấu hình, thêm input method</p>
@@ -200,7 +198,7 @@ sudo apt-get install -f ./teamviewer_15.2.2756_amd64.deb</pre>
       <h3>Tham khảo</h3>
       <p><a href="https://www.tecmint.com/install-ubuntu-20-04-desktop/" target="_blank">How
           To Install Ubuntu 20.04 Desktop</a></p>
-      <p><a href="https://www.tecmint.com/things-to-do-after-installing-ubuntu-20-04/"
+      <p><a href="https://www.tecmint.com/things-to-do-after-installing-ubuntu-20-04/"
           target="_blank">25 Things to Do After Installing Ubuntu 20.04 LTS
           (Focal Fossa)</a></p>
       <p><br>
