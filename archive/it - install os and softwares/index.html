@@ -11,75 +11,85 @@
   <body>
     <article>
       <h2>Cài đặt hệ điều hành và phần mềm</h2>
-      <p>Thời điểm hiện tại (11/04/2018) mình sẽ cập nhật việc cài đặt Linux
-        Mint 18.3 trên máy PC mới mua.</p>
-      <p>Linux Mint 19 nhìn trông xấu. BlueGriffon còn bị lỗi font nữa. Tức quá.
-        Lỗi tiếng Việt.</p>
+      <p>Ngày 03/12/2020, tôi đã chuyển từ Linux Mint sang Ubuntu. Linux Mint
+        cũng rất tốt, nhưng không thông dụng bằng Ubuntu. Tôi sẽ dùng Ubuntu để
+        được nhiều sự trợ giúp hơn, và áp dụng đúng môi trường ở các bài viết
+        tutorial. Ubuntu được cập nhật thường xuyên (1 năm 2 lần).</p>
       <ul>
       </ul>
       <h3>Chuẩn bị</h3>
-      <p>Backup files in folder /home/&lt;user&gt;/ (.themes, .icons)</p>
-      <p>Backup Firefox bookmarks</p>
-      <p>Backup MySQL databases</p>
-      <p>Backup ...</p>
+      <p>Backup:</p>
+      <ul>
+        <li>Backup các file trong thư mục <code>/home/&lt;user&gt;</code>, ví
+          dụ file <code>.gitconfig</code></li>
+        <li>Backup bookmark của trình duyệt</li>
+        <li>Backup MySQL database</li>
+        <li>Backup cấu hình nginx</li>
+      </ul>
+      <p>Tạo USB cài đặt từ file iso.</p>
       <h3>Chia phân vùng ổ cứng</h3>
-      <p>/dev/sda1 on / ext4 (15G)</p>
-      <p>/dev/sda5 swap</p>
-      <p>/dev/sda6 on /data ext4 (300G)</p>
-      <div class="mb-3"><img src="images/screenshot%20from%202018-04-05%2019-52-47.png"
+      <p>Tôi có 2 ổ cứng: một ổ SSD và một ổ HDD.</p>
+      <p>Ổ SSD chia làm 3 phân vùng:</p>
+      <p>Phân vùng chính là <code>/dev/sda1</code>, mount vào <code>/</code>,
+        định dạng ext4, dung lượng 15G.</p>
+      <p>Phân vùng swap là <code>/dev/sda5</code>, dun lượng ?G.</p>
+      <p>Ổ HDD chia làm 1 phân vùng:</p>
+      <p>Ổ cứng chứa dữ liệu ở phân vùng <code>/dev/sda6</code>, mount vào <code>/media/lockex1987/data</code>,
+        định dạng ext4, dung lượng 2T.</p>
+      <div class="mb-3"><img src="images/screenshot%20from%202018-04-05%2019-52-47.png"
+
           alt=""></div>
       <div class="mb-3"><img src="images/screenshot%20from%202018-04-05%2020-02-06.png"></div>
       <div class="mb-3"><img src="images/screenshot%20from%202018-04-05%2020-14-02.png"></div>
       <h3>Cài đặt hệ điều hành</h3>
-      <p>Install Linux Mint 18.3 64bit by USB (unetbootin).</p>
-      <p>Máy Laptop thì vẫn giữ bản 17.2 32bit. The 17.3 64 bit version has some
-        problems with my laptop like overheat, noise, crash. </p>
+      <p>Khởi động máy bằng USB. Chú ý nhấn các phím cho đúng. Ở máy tôi, nhấn <code>Del</code>
+        để vào Bios, <code>F8</code> để chọn thiết bị khởi động.</p>
+      <p>Chú ý cần bỏ tùy chọn Secure Boot ở Bios?</p>
       <h3>Tự động mount data partition</h3>
-      <p>cd /<br>
-        sudo chmod 777 data<br>
-        sudo gedit /etc/fstab<br>
-        -----------------------------</p>
+      <p>Sửa file <code>/etc/fstab</code> như sau:</p>
       <pre># &lt;file system&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;mount point&gt;&nbsp;&nbsp; &lt;type&gt;&nbsp;  &lt;options&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       &lt;dump&gt;&nbsp;&nbsp; &lt;pass&gt;<br>UUID=1f5fac5a-2775-4502-acdc-bf816928ed7d&nbsp;&nbsp;&nbsp; /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ext4&nbsp;&nbsp;&nbsp;  errors=remount-ro&nbsp;&nbsp;&nbsp;  0 &nbsp; &nbsp; &nbsp; &nbsp;1<br>UUID=1125b486-48d6-4135-84c7-914c18bac8b4&nbsp;&nbsp;&nbsp; /data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ext4&nbsp;&nbsp;&nbsp;  nosuid,nodev,nofail&nbsp;&nbsp; 0&nbsp; &nbsp; &nbsp; &nbsp; 0<br>UUID=313a44f0-2d80-4077-99ef-003bd7ff1c02&nbsp;&nbsp;&nbsp; none&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; swap&nbsp;&nbsp;&nbsp;  sw&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;0</pre>
       <h3>Danh sách phần mềm</h3>
-      <p>Trên Linux, bạn nên sử dụng Software Manager để cài đặt các phần mềm.</p>
-      <p>Gỡ các phần mềm mặc định không sử dụng: Tomboy, Thunderbird,
+      <p>Trên Linux, bạn nên sử dụng Software Manager để cài đặt hoặc gỡ bỏ các
+        phần mềm.</p>
+      <p>Gỡ bỏ các phần mềm mặc định không sử dụng: Tomboy, Thunderbird,
         transmission,...</p>
-      <pre>sudo apt-get remove tomboy
-sudo apt-get remove gimp
-sudo apt-get remove thunderbird
-sudo apt-get remove hexchat
-sudo apt-get remove pidgin
-sudo apt-get remove transmission-common
+      <pre>sudo apt remove tomboy
+sudo apt remove gimp
+sudo apt remove thunderbird
+sudo apt remove hexchat
+sudo apt remove pidgin
+sudo apt remove transmission-common
 
-sudo apt-get autoremove
+sudo apt autoremove
 </pre>
+      <p>Có thể gỡ bỏ qua Software Manager.</p>
       <p>Nâng cấp các phần mềm hiện tại:</p>
-      <pre>sudo apt update</pre>
-      <p>Không phải phiên bản mới nào cũng tốt: Java, Linux Mint 19.</p>
+      <pre>sudo apt update<br>sudo apt list --upgradable<br>sudo apt upgrade</pre>
       <p>Đổi software source URL để update cho nhanh.</p>
       <p>Các phần mềm nên là cross-platform và free. </p>
       <ul>
         <li>Tiện ích:
           <ul>
+            <li>KeePassX</li>
             <li>7-Zip (p7zip-full)</li>
             <li>Comix</li>
             <li>Honey View (Windows)</li>
             <li>Notepad++ (Windows)</li>
-            <li>KeePassX</li>
           </ul>
         </li>
         <li>Networking:
           <ul>
             <li>Deluge</li>
-            <li>Chrome / Chromium</li>
-            <li>Cài addon ??? cho Firefox (Firefox đã có sẵn)</li>
-            <li>TeamViewer</li>
+            <li>Chrome / Chromium / Firefox</li>
+            <li>Cài extension Chrome extension source viewer, ColorZilla,
+              YouTube Ad Auto-skipper,...</li>
+            <li><a href="#teamViewerInstall">Team Viewer</a></li>
           </ul>
         </li>
         <li>Office:
           <ul>
             <li>BlueGriffon</li>
-            <li>FBreader để mở file epub</li>
+            <li>FBreader (để mở file epub)</li>
             <li>Libre Office / MS Office</li>
             <li>Lac Viet 2002 / Lingoes</li>
           </ul>
@@ -107,8 +117,8 @@ sudo apt-get autoremove
             <li>JDK</li>
             <li><a href="http://koala-app.com/" target="_blank">Koala</a></li>
             <li>JD GUI</li>
-            <li>MySQL (apt)</li>
-            <li>MariaDB</li>
+            <li>MySQL / MariaDB</li>
+            
             <li>DBeaver Enterprice No License (download zip ở địa chỉ
               https://dbeaver.jkiss.org/files/3.8.5/)</li>
             <li>HeidiSQL (đi kèm MariaDB trên Windows)</li>
@@ -117,6 +127,7 @@ sudo apt-get autoremove
             <li>Visual Studio Code (download deb)</li>
             <li>Maven (download zip)</li>
             <li>Node JS (download zip)</li>
+            <li>PHP</li>
           </ul>
         </li>
         <li>Game:
@@ -126,6 +137,10 @@ sudo apt-get autoremove
             <li>Supertuxkart</li>
           </ul>
         </li>
+      </ul>
+      <p>Cài đặt thông qua Software Manager:</p>
+      <ul>
+        <li>KeePassX</li>
       </ul>
       <h4>BlueGriffon</h4>
       <p>BlueGriffon (Extract, add menu), hoac cai qua file <code>.deb</code>.</p>
@@ -146,6 +161,8 @@ sudo apt-get autoremove
         cài GUI nhẹ hơn (MATE), có người bảo cài phần mềm như Jupiter, TLP,
         laptop-mode-tools. Bản thân máy mình đang cài Jupiter và thấy khá hiệu
         quả.</p>
+      <p>Máy Laptop thì vẫn giữ bản 17.2 32bit. The 17.3 64 bit version has some
+        problems with my laptop like overheat, noise, crash. </p>
       <p>Install TLP (Jupiter) to save battery</p>
       <p> <code> sudo add-apt-repository ppa:linrunner/tlp<br>
           sudo apt-get update<br>
@@ -153,10 +170,8 @@ sudo apt-get autoremove
           sudo tlp start</code> </p>
       <p>No configuration required for using TLP. Install it and forget about
         it.</p>
-      <h4>KeePassX</h4>
-      <p>Install KeePassX 2 from Software Manager </p>
       <h4>Visual Studio Code</h4>
-      <p>Download deb file để có phiên bản mới nhất?</p>
+      <p>Download file <code>deb</code> file để có phiên bản mới nhất?</p>
       <p>Change Visual Studio Code tab config:</p>
       <p><code>// Place your settings in this file to overwrite the default
           settings<br>
@@ -165,8 +180,8 @@ sudo apt-get autoremove
           &nbsp; "editor.insertSpaces": false<br>
           }</code></p>
       <p>Change tab configurations of Eclipse, NetBeans, Notepad++,...</p>
-      <h4>TeamViewer</h4>
-      <p>Tải file .deb 64bit</p>
+      <h4 id="teamViewerInstall">Team Viewer</h4>
+      <p>Tải file <code>.deb</code> 64bit.</p>
       <p>https://www.teamviewer.com/vi/ta%cc%89i-ve/linux/</p>
       <p>wget
         https://download.teamviewer.com/download/linux/teamviewer_amd64.deb</p>
@@ -183,6 +198,15 @@ sudo apt-get install -f ./teamviewer_15.2.2756_amd64.deb</pre>
       <p>Phải cài thêm ở chỗ input method nữa</p>
       <p>Chạy ibus và cấu hình, thêm input method</p>
       <p>Restart</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://www.tecmint.com/install-ubuntu-20-04-desktop/" target="_blank">How
+          To Install Ubuntu 20.04 Desktop</a></p>
+      <p><a href="https://www.tecmint.com/things-to-do-after-installing-ubuntu-20-04/"
+
+          target="_blank">25 Things to Do After Installing Ubuntu 20.04 LTS
+          (Focal Fossa)</a></p>
+      <p><br>
+      </p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>
