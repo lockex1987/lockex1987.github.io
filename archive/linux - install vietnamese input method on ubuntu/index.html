@@ -1,0 +1,59 @@
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ibus-unikey">
+    <title>Hướng dẫn cài bộ gõ tiếng Việt trên Ubuntu</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Hướng dẫn cài bộ gõ tiếng Việt trên Ubuntu</h2>
+      <p>Để có thể gõ tiếng Việt, Ubuntu có hỗ trợ bộ gõ tiếng Việt là
+        ibus-unikey. Trong bài viết này mình sẽ hướng dẫn các bạn cài bộ gõ
+        tiếng Việt (ibus-unikey) trên Ubuntu 18.04 LTS với các thao tác đơn
+        giản. Bài viết này áp dụng được cho cả phiên bản mới nhất là Ubuntu
+        19.04, Ubuntu 19.10 và Ubuntu 20.04 LTS. </p>
+      <h3>Cài đặt ibus-unikey</h3>
+      <p>Mở terminal, thực hiện lệnh sau để cài đặt ibus-unikey:</p>
+      <pre>sudo apt install ibus-unikey</pre>
+      <p><img src="images/Cai-Dat-Ibus-Unikey-Command.png"></p>
+      <p>Trường hợp phiên bản Ubuntu của bạn chưa có sẵn gói ibus-unikey thì hãy
+        chạy hai lệnh sau để thêm vào:</p>
+      <pre>sudo add-apt-repository ppa:ubuntu-vn/ppa<br>sudo apt-get update</pre>
+      <h3>Khởi động lại phần mềm ibus</h3>
+      <p>Để khởi động lại ibus, các bạn dùng command sau:</p>
+      <pre>ibus restart</pre>
+      <h3>Thiết lập gõ tiếng Việt cho ibus trên Ubuntu</h3>
+      <p><strong>Bước 1:</strong> Tìm kiếm chức năng quản lý <strong>[ Settings
+          ]</strong></p>
+      <p><img src="images/Thiet-Lap-Go-Tieng-Viet-Tren-Ubuntu-Step-4.jpg"></p>
+      <p><strong>Bước 2:</strong> Ở cửa sổ <strong>[ Settings ]</strong> -&gt;
+        <strong>[ Region &amp; Language ]</strong> -&gt; <strong>[Input Sources
+          ]</strong> -&gt; Bấm <strong>[ + ]</strong> để thêm một input source</p>
+      <p><img src="images/Thiet-Lap-Go-Tieng-Viet-Tren-Ubuntu-Step-5.png"></p>
+      <p><strong>Bước 3:</strong> Ở cửa sổ <strong>[ Add an Input Source ]</strong>
+        -&gt; Tìm kiếm ngôn ngữ là “<strong>Vietnamese</strong>” -&gt; Chọn là “<strong>Vietnamese
+          (Unikey)</strong>” -&gt; Bấm “<strong>Add</strong>”</p>
+      <p><img src="images/Thiet-Lap-Go-Tieng-Viet-Tren-Ubuntu-Step-6.png"></p>
+      <p><strong>Chú ý</strong>: Đối với Ubuntu 18.10 trở lên, khi tìm kiếm với
+        “<strong>Vietnamese</strong>“, nó sẽ chỉ hiển thị <strong>Vietnamese. </strong>Các
+        bạn bấm tiếp vào “<strong>Vietnamese</strong>” nó sẽ xổ ra 2 dòng như
+        bên trên.</p>
+      <p><strong>Bước 4:</strong> Sau đó restart lại Ubuntu và xác nhận
+        Ibus-Unikey đã có 2 ngôn ngữ là tiếng Anh và tiếng Việt</p>
+      <p><img src="images/Thiet-Lap-Go-Tieng-Viet-Tren-Ubuntu-Thanh-Cong.png"></p>
+      <p>Bạn có thể chuyển đổi qua lại giữa hai ngôn ngữ bằng phím tắt là
+        "Windows + Space".</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://vinasupport.com/huong-dan-cai-bo-go-tieng-viet-ibus-unikey-tren-ubuntu/"
+          target="_blank">Hướng dẫn cài bộ gõ tiếng Việt ibus-unikey trên Ubuntu
+          18.04 LTS</a></p>
+      <p><a href="https://sonpro.website/install-vietnamese-input-method-ubuntu-18-04-lts-ibus-unikey/"
+          target="_blank">How to install Vietnamese input method on Ubuntu 18.04
+          LTS - ibus-unikey - Vu Quang Son's Blog</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

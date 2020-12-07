@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Thay đổi user chạy Nginx Server và PHP-FPM">
+    <title>Thay đổi user chạy Nginx Server và PHP-FPM</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Thay đổi user chạy nginx Server và PHP-FPM</h2>
+      <p>Vì sao cần thay đổi user chạy Nginx Server và PHP-FPM? Nếu bạn có một
+        web server chạy nginx, nó sẽ chạy mặc định với user là <code>www-data</code>
+        (trên Ubuntu / Debian ) hoặc <code>nginx</code> (trên CentOS / Red Hat).
+        Với user mặc định này, bạn không thể login được và bạn sẽ gặp các vấn đề
+        về phân quyền thư mục, file. Vì vậy nếu bạn muốn nginx và PHP-FPM chạy
+        dưới quyền user của mình thì mình cần sửa như sau:</p>
+      <h3>Thay đổi user chạy nginx</h3>
+      <p>Sửa file <code>nginx.conf</code>, thường được đặt tại đường dẫn <code>/etc/nginx/nginx.conf</code>
+        và thay đổi user bằng tài khoản của bạn:</p>
+      <p><img src="images/sua-user-nginx.png"></p>
+      <p>Sau đó restart lại nginx bằng lệnh:</p>
+      <pre>sudo systemctl restart nginx</pre>
+      <h3>Thay đổi user chạy PHP-FPM</h3>
+      <p>Sửa file <code>www.conf</code>, thường được đặt tại đường dẫn <code>/etc/php/&lt;version_cua_php&gt;/fpm/pool.d/www.conf</code>
+        và thay đổi các thông số sau bằng tài khoản của bạn:</p>
+      <ul>
+        <li>user</li>
+        <li>group</li>
+        <li>listen.owner</li>
+        <li>listen.group</li>
+      </ul>
+      <p><img src="images/sua-user-php-fpm.png"></p>
+      <p>Sau đó restart lại PHP-FPM bằng lệnh:</p>
+      <pre>sudo systemctl restart php-fpm</pre>
+      <h3>Tham khảo</h3>
+      <p><a href="https://vinasupport.com/thay-doi-user-chay-nginx-server-va-php-fpm/"
+
+          target="_blank">Thay đổi user chạy Nginx Server và PHP-FPM -
+          VinaSupport</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

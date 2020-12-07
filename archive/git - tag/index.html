@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Hướng dẫn tag (đánh dấu)">
     <title>Đánh tag với git</title>
@@ -89,8 +89,8 @@ index e69de29..fea03c1 100644
       <p>Ở lệnh trên thì bạn chỉ tạo ra tag cho commit cuối cùng của bạn. Còn
         nếu bạn có rất nhiều commit trước đó mà cần gắn tag thì chỉ cần thêm mã
         checksum (hoặc một đoạn mã checksum) của lần commit đó.</p>
-      <p>Để xem mã checksum của các lần commit trước đó thì bạn có thể sử dụng
-        git log với tham số <code>--pretty</code>&nbsp;với giá trị <code>oneline</code>&nbsp;để
+      <p>Để xem mã checksum của các lần commit trước đó thì bạn có thể sử dụng <code>git
+          log</code> với tham số <code>--pretty</code>&nbsp;với giá trị <code>oneline</code>&nbsp;để
         lọc log nhé.</p>
       <pre>$ git log --pretty=oneline
 d5a599e3385a8fc7a65958ed50bc8b54666b45ad Commit for Annotated Tag
@@ -126,8 +126,8 @@ To https://github.com/thachphamblog/hoc-git.git
       <p><img src="images/7-git-tag-github.png" alt="git-tag-github"></p>
       <h3>Nhập tag vào branch</h3>
       <p>Mặc dù ở bài sau mình sẽ giải thích qua branch nhưng tạm thời bây giờ
-        bạn có thể hiểu branch là <strong>một phân nhánh trong một cây dự án</strong>
-        để bạn sửa mã nguồn mà không ảnh hưởng đến phân nhánh gốc (master).</p>
+        bạn có thể hiểu branch là một phân nhánh trong một cây dự án để bạn sửa
+        mã nguồn mà không ảnh hưởng đến phân nhánh gốc (master).</p>
       <p>Bây giờ bạn có thể&nbsp;truy cập vào dữ liệu mà bạn đã commit thông qua
         tag kèm theo việc tạo một branch mới với lệnh <code>git checkout -b
           tên_branch tên_tag</code>. Ví dụ mình muốn đưa cái tag<code> v1.0-an</code>
@@ -145,18 +145,17 @@ Switched to a new branch 'version1'</pre>
         là tên địa chỉ remote của repository mặc định mà git tự đặt khi bạn
         clone.</p>
       <p><img src="images/7-git-push-branch.png" alt="git-push-branch"></p>
-      <p>Bây giờ bạn thử vào xem cái version1 và cái master xem có thấy sự khác
-        nhau của nó không? Ở bài nói về branch mình sẽ giải thích cho bạn kỹ
-        hơn. Đại loại là bạn tạo một phân nhánh khác để sửa code riêng mà không
-        ảnh hưởng đến code chính.</p>
+      <p>Bây giờ bạn thử vào xem cái <code>version1</code> và cái <code>master</code>
+        xem có thấy sự khác nhau của nó không? Ở bài nói về branch mình sẽ giải
+        thích cho bạn kỹ hơn. Đại loại là bạn tạo một phân nhánh khác để sửa
+        code riêng mà không ảnh hưởng đến code chính.</p>
       <h3>Lời kết</h3>
-      <p>Trong bài này chắc bạn đã thấy được sức mạnh của git là như thế nào và
+      <p>Trong bài này chắc bạn đã thấy được sức mạnh của Git là như thế nào và
         khi nó kết hợp với branch thì sẽ rất tuyệt vời trong việc phân chia
         nhánh cho mã nguồn để bạn làm việc linh hoạt hơn, dễ dàng chuyển đổi qua
         các phiên bản mà không cần làm gì nhiều. Bạn đừng lo lắng khi chưa hiểu
         rõ về branch, mình sẽ giải thích ngay ở phần sau đây.</p>
     </article>
     <script src="../../js/docs.js"></script>
-        
   </body>
 </html>
