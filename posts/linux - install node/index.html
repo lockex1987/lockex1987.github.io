@@ -42,7 +42,17 @@
       <p>Download ở địa chỉ sau:</p>
       <p><a href="https://nodejs.org/en/download/" target="_blank">nodejs.org/en/download</a></p>
       <p>Giải nén.</p>
-      <p>Thiết lập biến môi trường <code>PATH</code> ở file <code>/etc/profile</code>.</p>
+      <p>Thiết lập biến môi trường <code>PATH</code> ở file <code>/etc/profile</code>.
+        Ví dụ:</p>
+      <pre>JAVA_HOME=/opt/jdk1.8.0_201
+
+PATH=$PATH:/home/lockex1987/program/maven/bin:/home/lockex1987/program/node/bin
+
+export JAVA_HOME
+export PATH
+</pre>
+      <p>Để có thể hiệu lực ngay, thực hiện lệnh:</p>
+      <pre>source /etc/profile</pre>
       <h3>Sử dụng nhiều phiên bản với NVM</h3>
       <h4>Các phiên bản NVM</h4>
       <p>Tình hình là tôi đang sử dụng Node phiên bản 12. Tuy nhiên, tôi cần bảo
