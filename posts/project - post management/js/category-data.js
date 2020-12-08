@@ -9,7 +9,7 @@ const postsCategories = [
 ];
 
 const archiveCategories = [
-    { name: 'js', y: 136 },
+    { name: 'js', y: 135 },
     { name: 'ui', y: 123 },
     { name: 'laravel', y: 75 },
     { name: 'php', y: 64 },
@@ -22,7 +22,7 @@ const archiveCategories = [
     { name: 'web', y: 22 },
     { name: 'linux', y: 21 },
     { name: 'webext', y: 20 },
-    { name: 'java', y: 19 },
+    { name: 'java', y: 16 },
     { name: 'mysql', y: 13 },
     { name: 'vue', y: 12 },
     { name: 'composer', y: 9 },
