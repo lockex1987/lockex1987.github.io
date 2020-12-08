@@ -25,8 +25,8 @@ import org.apache.commons.mail.MultiPartEmail;
 import org.apache.commons.mail.SimpleEmail;
 import org.apache.commons.mail.resolver.DataSourceUrlResolver;
 
-import common.util.CommonUtils;
-import common.util.MailSender;
+// import common.util.CommonUtils;
+// import common.util.MailSender;
 
 public class CommonsEmailDemo {
 
@@ -39,16 +39,16 @@ public class CommonsEmailDemo {
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("Start");
-//		testPureJava();
-//		testTextEmail();
-//		testAttachment();
-//		testHtml();
-//		testInlineImage();
-//		testEmbeddedImage();
+		// testPureJava();
+		// testTextEmail();
+		// testAttachment();
+		// testHtml();
+		// testInlineImage();
+		// testEmbeddedImage();
 		testMyEmail();
 		System.out.println("Finish");
 	}
-	
+
 	private static void testPureJava() throws Exception {
 		Properties props = new Properties();
 		props.put("mail.smtp.host", HOST);
@@ -92,10 +92,10 @@ public class CommonsEmailDemo {
 		// Create the attachment
 		EmailAttachment attachment = new EmailAttachment();
 
-		//	  attachment.setPath("/home/locke/cttd.jpg");
-		//	  attachment.setDisposition(EmailAttachment.ATTACHMENT);
-		//	  attachment.setDescription("Picture of John");
-		//	  attachment.setName("John");
+		// attachment.setPath("/home/locke/cttd.jpg");
+		// attachment.setDisposition(EmailAttachment.ATTACHMENT);
+		// attachment.setDescription("Picture of John");
+		// attachment.setName("John");
 
 		attachment.setURL(new URL("http://www.apache.org/images/asf_logo_wide.gif"));
 		attachment.setDisposition(EmailAttachment.ATTACHMENT);
@@ -114,12 +114,13 @@ public class CommonsEmailDemo {
 		// send the email
 		email.send();
 	}
-	
+
 	private static void testHtml() throws Exception {
 		HtmlEmail email = new HtmlEmail();
 		init(email);
 		email.setSubject("Test HTML email");
-		email.setHtmlMsg("<html><body>The apache logo - <img src='http://www.apache.org/images/asf_logo_wide.gif'/><body></html>");
+		email.setHtmlMsg(
+				"<html><body>The apache logo - <img src='http://www.apache.org/images/asf_logo_wide.gif'/><body></html>");
 		email.send();
 	}
 
@@ -156,35 +157,37 @@ public class CommonsEmailDemo {
 		// send the email
 		email.send();
 	}
-	
+
 	private static void testMyEmail() throws Exception {
 		// Init
 		String subject = "Test my email";
 		String content = "<strong>Java</strong> is cool";
 		String htmlText = "<h1>Hello</h1> <img src='cid:imageCid'>";
-		MailSender mailSender = new MailSender(USERNAME, PASSWORD, SENDER, HOST, PORT);
-		
+
 		// Method 1:
-//		mailSender.sendMail(SENDER, subject, content, null);
-		
+		// mailSender.sendMail(SENDER, subject, content, null);
+
 		// Method 3:
 		Multipart multipart = new MimeMultipart();
-		
+
 		// text part
 		MimeBodyPart textPart = new MimeBodyPart();
 		textPart.setContent(htmlText, "text/html; charset=UTF-8");
 		multipart.addBodyPart(textPart);
-		
+
 		// image part
 		MimeBodyPart imagePart = new MimeBodyPart();
-    DataSource fds = new FileDataSource("/home/locke/cttd.jpg");
-    imagePart.setDataHandler(new DataHandler(fds));
-    imagePart.setHeader("Content-ID", "<imageCid>");
-    multipart.addBodyPart(imagePart);
-    
-    mailSender.sendMail(SENDER, subject, multipart);
+		DataSource fds = new FileDataSource("/home/locke/cttd.jpg");
+		imagePart.setDataHandler(new DataHandler(fds));
+		imagePart.setHeader("Content-ID", "<imageCid>");
+		multipart.addBodyPart(imagePart);
 
-		// Send
-		mailSender.closeTransport();
+		/*
+		 * MailSender mailSender = new MailSender(USERNAME, PASSWORD, SENDER,
+		 * HOST, PORT);
+		 * 
+		 * mailSender.sendMail(SENDER, subject, multipart);
+		 * mailSender.closeTransport();
+		 */
 	}
 }
