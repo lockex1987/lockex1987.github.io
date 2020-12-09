@@ -13,20 +13,83 @@
     <article>
       <h2>Cài đặt MySQL trên Ubuntu</h2>
       <h3>Cài đặt</h3>
-      <p> Hãy gõ lệnh dưới đây để cài đặt MySQL server:</p>
+      <p>Hãy gõ lệnh dưới đây để cài đặt MySQL server:</p>
       <pre>sudo apt install mysql-server</pre>
-      <p> Sau đó chạy thêm lệnh này để cài đặt bảo mật cho MySQL server và có
-        thể đổi lại mật khẩu root:</p>
+      <p>Sử dụng dịch vụ:</p>
+      <pre>sudo systemctl restart mysql<br>sudo systemctl status mysql<br><br>sudo systemctl enable mysql</pre>
+      <h3>Truy cập root</h3>
+      <p>Chạy lệnh sau để cài đặt bảo mật cho MySQL server và có thể đổi lại mật
+        khẩu cho user <code> root</code>:</p>
       <pre>sudo mysql_secure_installation</pre>
+      <p>Ví dụ:</p>
+      <pre class="out-of-box">Securing the MySQL server deployment.
+
+Connecting to MySQL using a blank password.
+
+VALIDATE PASSWORD COMPONENT can be used to test passwords
+and improve security. It checks the strength of password
+and allows the users to set only those passwords which are
+secure enough. Would you like to setup VALIDATE PASSWORD component?
+
+Press y|Y for Yes, any other key for No: n
+Please set the password for root here.
+
+New password: 
+
+Re-enter new password: 
+By default, a MySQL installation has an anonymous user,
+allowing anyone to log into MySQL without having to have
+a user account created for them. This is intended only for
+testing, and to make the installation go a bit smoother.
+You should remove them before moving into a production
+environment.
+
+Remove anonymous users? (Press y|Y for Yes, any other key for No) : y
+Success.
+
+
+Normally, root should only be allowed to connect from
+'localhost'. This ensures that someone cannot guess at
+the root password from the network.
+
+Disallow root login remotely? (Press y|Y for Yes, any other key for No) : y
+Success.
+
+By default, MySQL comes with a database named 'test' that
+anyone can access. This is also intended only for testing,
+and should be removed before moving into a production
+environment.
+
+
+Remove test database and access to it? (Press y|Y for Yes, any other key for No) : y
+ - Dropping test database...
+Success.
+
+ - Removing privileges on test database...
+Success.
+
+Reloading the privilege tables will ensure that all changes
+made so far will take effect immediately.
+
+Reload privilege tables now? (Press y|Y for Yes, any other key for No) : y
+Success.
+
+All done!</pre>
       <p>Chú ý, chúng ta vẫn chưa truy cập được bằng lệnh <code>mysql -u root
-          -p</code>. Cần truy cập bằng <code>sudo mysql</code> và cấu hình lại.</p>
+          -p</code>. Hiện tại bạn chỉ có thể truy cập bằng câu lệnh <code>sudo
+          mysql</code> do user <code>root</code> đang được xác thực kiểu <code>auth_socket</code>.</p>
+      <p>Bạn có thể tạo người dùng mới và phân quyền theo hướng dẫn <a href="https://lockex1987.github.io/archive/mysql%20-%20create%20a%20new%20user%20and%20grant%20permissions/"
+          target="_blank">này</a>. Bạn nên làm cách này.</p>
+      <p>Bạn cũng có thể cấu hình lại như sau:</p>
+      <pre>sudo mysql<br><br>use mysql;<br><br>select User, Host, Plugin from user;<br><br># Phiên bản cũ<br>update user set plugin = 'mysql_native_password' where User='root';<br><br># Phiên bản 8<br># update user set plugin = 'caching_sha2_password' where User='root';<br>alter user 'root'@'localhost' identified with mysql_native_password by 'abc123a@';<br><br>flush privileges;<br><br>exit;<br><br>sudo systemctl restart mysql<br><br>mysql -u root -p</pre>
+      <p><br>
+      </p>
+      <h3>Cấu hình kết nối từ máy khác</h3>
       <p>Để có thể kết nối được MySQL từ máy khác, chúng ta cần chỉnh lại <code>bind-address=0.0.0.0</code>
         ở file <code>/etc/mysql/mysqld.conf.d/mysqld.cnf</code>. Giá trị mặc
         định là <code>127.0.0.1</code> nên bạn chỉ truy cập từ chính máy cài
         MySQL. Bạn cũng có thể thiết lập <code>bind-address</code> bằng IP của
         máy cài MySQL cho an toàn hơn.</p>
-      <p>Sử dụng dịch vụ:</p>
-      <pre>sudo systemctl restart mysql<br>sudo systemctl status mysql</pre>
       <h3>Lấy thông tin phiên bản của MySQL</h3>
       <p>Nếu bạn truy cập được trực tiếp server DB thì có thể thực hiện lệnh
         sau:</p>
@@ -45,9 +108,9 @@
         <li>Window function</li>
         <li>...</li>
       </ul>
-      <p>Phiên bản mặc định của MySQL trên Linux Mint 18.3 (dựa trên Ubuntu
-        16.04) mà tôi đang cài vẫn là 5. Hãy nâng cấp lên phiên bản 8.</p>
-      <p>Download file apt-config.deb ở địa chỉ sau:</p>
+      <p>Phiên bản MySQL trên Ubuntu 20.10 là 8.0.22. Nếu ở máy bạn phiên bản
+        mặc định là thấp hơn thì hãy nâng cấp lên phiên bản 8.</p>
+      <p>Download file <code>apt-config.deb</code> ở địa chỉ sau:</p>
       <p><a href="https://repo.mysql.com/" target="_blank">repo.mysql.com</a></p>
       <p>Tôi download file <code>mysql-apt-config_0.8.14-1_all.deb</code>.<br>
       </p>
