@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="electron, node, npm proxy">
+    <title>Electron</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Electron</h2>
+      <p>Mục tiêu: Viết ứng dụng xem ảnh, cbr, cbz như Comix. Cross platform.
+        Dùng Node viết bằng JS cho sướng. Không học thêm Python.</p>
+      <h3>Tính năng</h3>
+      <p>Tên eComix (e là Electron).</p>
+      <p>Phím tắt</p>
+      <ul>
+        <li>A: Actual size</li>
+        <li>B: Best fit</li>
+        <li>W: Fit width</li>
+        <li>H: Fit height?</li>
+        <li>H: Home (hiển thị danh sách ảnh dạng grid)</li>
+        <li>F: Fullscreen toggle</li>
+        <li>N: toggle filename</li>
+        <li>ESC: exit fullscreen hoặc thoát chương trình</li>
+        <li>-&gt; Page Down: Next page</li>
+        <li>&lt;- Page Up: Previous page</li>
+      </ul>
+      <h3>Cài đặt</h3>
+      <p>Nếu máy bạn kết nối mạng qua proxy thì phải thiết lập như sau:</p>
+      <pre>set GLOBAL_AGENT_HTTP_PROXY=http://192.168.103.33:80/
+set GLOBAL_AGENT_HTTPS_PROXY=http://192.168.103.33:80/
+set ELECTRON_GET_USE_PROXY=true</pre>
+      <p>Câu lệnh cài đặt:</p>
+      <pre>npm i --save-dev electron</pre>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://www.electronjs.org/" target="_blank">Electron | Build
+          cross-platform desktop apps with JavaScript, HTML, and CSS</a> </p>
+      <p><a href="http://comix.sourceforge.net/" target="_blank">Comix - GTK
+          Comic Book Viewer</a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

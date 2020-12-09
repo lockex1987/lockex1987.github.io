@@ -11,13 +11,13 @@
   <body>
     <article>
       <h2>Tắt cảnh báo CRLF</h2>
-      <p>Khi commit git, chúng ta hay gặp cảnh báo sau:</p>
-      <pre>warning: LF will be replaced by CRLF in ...
+      <p>Khi commit Git, chúng ta hay gặp cảnh báo sau:</p>
+      <pre class="text-pre-wrap">warning: LF will be replaced by CRLF in ...
 The file will have its original line endings in your working directory.</pre>
       <p>Ở Windows, ký tự xuống dòng là <code>CRLF</code>.</p>
       <p>Ở Linux, Mac, ký tự xuống dòng là <code>LF</code>.</p>
-      <p>Có thể khó chịu nếu project gồm nhiều dev, có dev dùng Windows, có dev
-        dùng Linux.</p>
+      <p>Có thể khó chịu nếu dự án gồm nhiều người, có người dùng Windows, có
+        người dùng Linux.</p>
       <p>Git có thể xử lý việc này bằng cách tự động chuyển ký tự xuống dòng <code>CRLF</code>
         thành <code>LF</code> khi bạn thêm một file vào index, và ngược lại khi
         file đó được checkout về filesystem của bạn. Bạn có thể bật tính năng
@@ -28,8 +28,11 @@ The file will have its original line endings in your working directory.</pre>
       <p>Nếu bạn là một lập trình viên Windows và làm một dự án chỉ cho Windows
         thì bạn có thể tắt tính năng này.</p>
       <pre>git config --global core.autocrlf false</pre>
+      <p>Bạn nên thiết lập thành <code>false</code>. Các editor ở Windows phần
+        lớn cũng đều hỗ trợ <code>LF</code>.</p>
+      <p>Có khi bạn đã thiết lập thành <code>false</code> bằng câu lệnh trên
+        rồi mà vẫn không được. Khi đó hãy kiểm tra file <code>.gitattributes</code>.</p>
     </article>
-
     <script src="../../js/docs.js"></script>
   </body>
 </html>

@@ -1,22 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Đăng nhập LDAP với PHP">
+    <meta name="description" content="ldap, php, laravel">
     <title>Đăng nhập LDAP với PHP</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
     <article>
-	
-  
       <h2>Đăng nhập LDAP với PHP</h2>
       <h3>Enable LDAP</h3>
       <p>Đầu tiên chúng ta phải enable LDAP extension.</p>
-      <p>Sửa file <code>php.ini</code>, search theo từ khóa <strong>ldap</strong>,
+      <p>Sửa file <code>php.ini</code>, search theo từ khóa <code>ldap</code>,
         sau đó bỏ comment:</p>
       <pre>;extension=ldap</pre>
       <p>Rồi restart lại server (Apache, nginx,...).</p>
@@ -25,20 +22,16 @@
       <figure> <img alt="" src="images/php%20ldap.png"> </figure>
       <p>File demo:</p>
       <p><a href="phpinfo.php">phpinfo.php</a></p>
-      <p><a href="ldap_demo.php">ldap_demo.php</a></p>
+      <p><a href="ldap_login.php">ldap_login.php</a></p>
       <h3>Sử dụng với Laravel</h3>
-      <p>Thư viện là Adldap2-Laravel.</p>
+      <p>Sử dụng thư viện Adldap2-Laravel.</p>
       <p>Cài đặt:</p>
-      <div class="terminal-window">
-        <pre><span class="command">composer require adldap2/adldap2-laravel</span class="command"></pre>
-      </div>
-      
+      <pre>composer require adldap2/adldap2-laravel</pre>
       <p>Publish:</p>
-      <div class="terminal-window out-of-box">
-        <pre class=""><span class="command">php artisan vendor:publish --provider="Adldap\Laravel\AdldapServiceProvider"</span>
-<span class="command">php artisan vendor:publish --provider="Adldap\Laravel\AdldapAuthServiceProvider"</span class="command"></pre>
+      <div class="out-of-box">
+        <pre>php artisan vendor:publish --provider="Adldap\Laravel\AdldapServiceProvider"
+php artisan vendor:publish --provider="Adldap\Laravel\AdldapAuthServiceProvider"</pre>
       </div>
-      
       <p>2 lệnh trên sẽ tạo 2 file:</p>
       <ul>
         <li>config/ldap.php</li>
@@ -53,7 +46,7 @@ LDAP_BASE_DN=dc=cyberspace,dc=vn</pre>
         chứ không phải qua Eloquent:</p>
       <pre>'providers' =&gt; [
     'users' =&gt; [
-        'driver' =&gt; 'ldap', // was 'eloquent'
+        'driver' =&gt; 'ldap', // 'eloquent'
         'model'  =&gt; App\User::class
     ]
 ]</pre>
@@ -84,12 +77,7 @@ LDAP_BASE_DN=dc=cyberspace,dc=vn</pre>
       <p><a target="_blank" href="http://php.net/manual/en/book.ldap.php">php.net/manual/en/book.ldap.php</a></p>
       <p><a target="_blank" href="https://github.com/Adldap2/Adldap2-Laravel">github.com/Adldap2/Adldap2-Laravel</a></p>
       <p><a target="_blank" href="https://adldap2.github.io/Adldap2-Laravel/#/">adldap2.github.io/Adldap2-Laravel</a></p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
     </article>
     <script src="../../js/docs.js"></script>
-    
   </body>
 </html>

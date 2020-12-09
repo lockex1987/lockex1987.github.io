@@ -16,7 +16,7 @@ async function getImagesKenhsinhvien(postUrl, folder) {
             const extension = 'jpg';
             images.push({
                 url: imageUrl,
-                name: GetLinksUtils.createLocalFileName(folder, no, extension)
+                name: GetLinksUtils.createLocalFileName(folder, no, extension, true)
             });
             no++;
         }
@@ -29,7 +29,8 @@ async function getImagesKenhsinhvien(postUrl, folder) {
  * @param {String} postUrl
  */
 function getFolderKenhsinhvien(postUrl) {
-    const folder = GetLinksUtils.extractChapterNumber(postUrl);
+    const urlObject = new URL(postUrl);
+    const folder = GetLinksUtils.extractChapterNumber(urlObject.pathname);
     return folder;
 }
 

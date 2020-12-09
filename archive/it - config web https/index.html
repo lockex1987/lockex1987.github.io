@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cấu hình HTTPS cho ứng dụng web">
+    <title>Cấu hình HTTPS cho ứng dụng web</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Cấu hình HTTPS cho ứng dụng web</h2>
+	  <p>Nhiều tính năng yêu cầu HTTPS:</p>
+	  <ul>
+		<li>Đăng nhập qua Facebook, Google</li>
+		<li>Sử dụng camera, microphone</li>
+		<li>Push Notification API</li>
+		<li>PWA, service worker</li>
+		<li>Mã hóa, bảo mật</li>
+		<li>...</li>
+	  </ul>
+      <p>Sử dụng Let's encrypt (HTTPS miễn phí):</p>
+      <ul>
+        <li>https://en.wikipedia.org/wiki/Let's_Encrypt</li>
+        <li>https://letsencrypt.org/</li>
+        <li>https://kipalog.com/posts/Tao-chung-chi-SSL-mien-phi-voi-Let-s-Encrypt</li>
+        <li>https://kipalog.com/posts/Cau-hinh-HTTPS-voi-nginx-va-Let-s-Enscrypt</li>
+      </ul>
+      <p>Let's encrypt thì yêu cầu server phải public ra Internet.</p>
+      <p>Có thể dùng chứng chỉ tự ký:</p>
+	  <p>https://deliciousbrains.com/ssl-certificate-authority-for-local-https-development/</p>
+      <p>
+        <a href="https://viblo.asia/p/tao-ssl-certificate-authority-cho-https-tren-local-1VgZvpQY5Aw"
+          target="_blank">Tạo SSL Certificate Authority cho HTTPS trên local -
+          Viblo</a></p>
+      <div><div class="mb-2"><span class="text-muted mr-2 d-block">matthewhoelter.com</span> <a href="https://matthewhoelter.com/2019/10/21/how-to-setup-https-on-your-local-development-environment-localhost-in-minutes.html" target="_blank">How to setup HTTPS (SSL) on your local development environment (localhost) in minutes | Matthew Hoelter</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">dev.to</span> <a href="https://dev.to/rhymes/really-easy-way-to-use-https-on-localhost-341m" target="_blank">Really easy way to use HTTPS on localhost - DEV Community 👩‍💻👨‍💻</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">dev.to</span> <a href="https://dev.to/drevispas/common-ssl-commands-13i1" target="_blank">Common SSL Commands - DEV Community 👩‍💻👨‍💻</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">freecodecamp.org</span> <a href="https://www.freecodecamp.org/news/how-to-get-https-working-on-your-local-development-environment-in-5-minutes-7af615770eec/" target="_blank">How to get HTTPS working on your local development environment in 5 minutes</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">letsencrypt.org</span> <a href="https://letsencrypt.org/vi/docs/certificates-for-localhost/" target="_blank">Certificates for localhost - Let's Encrypt - Free SSL/TLS Certificates</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">gist.github.com</span> <a href="https://gist.github.com/cecilemuller/9492b848eb8fe46d462abeb26656c4f8" target="_blank">How to create an HTTPS certificate for localhost domains · GitHub</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">aboutssl.org</span> <a href="https://aboutssl.org/how-to-create-and-import-self-signed-certificate-to-android-device/" target="_blank">How to&nbsp;Create and Import Self Sign SSL Certificate on Android</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">viblo.asia</span> <a href="https://viblo.asia/p/tao-ssl-certificate-authority-cho-https-tren-local-1VgZvpQY5Aw" target="_blank">Tạo SSL Certificate Authority cho HTTPS trên local - Viblo</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">viblo.asia</span> <a href="https://viblo.asia/p/https-va-ssl-OeVKBg4AZkW" target="_blank">https và SSL - Viblo</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">youtube.com</span> <a href="https://www.youtube.com/watch?v=iQsKdtjwtYI" target="_blank">How SSL works tutorial - with HTTPS example - YouTube</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">youtube.com</span> <a href="https://www.youtube.com/watch?v=T4Df5_cojAs" target="_blank">How does HTTPS work? What's a CA? What's a self-signed Certificate? - YouTube</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">keycdn.com</span> <a href="https://www.keycdn.com/blog/openssl-tutorial" target="_blank">A 6 Part Introductory OpenSSL Tutorial - KeyCDN</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">phoenixnap.com</span> <a href="https://phoenixnap.com/kb/openssl-tutorial-ssl-certificates-private-keys-csrs" target="_blank">OpenSSL Tutorial: How Do SSL Certificates, Private Keys, &amp; CSRs Work?</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">digitalocean.com</span> <a href="https://www.digitalocean.com/community/tutorials/openssl-essentials-working-with-ssl-certificates-private-keys-and-csrs" target="_blank">OpenSSL Essentials: Working with SSL Certificates, Private Keys and CSRs | DigitalOcean</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">en.wikipedia.org</span> <a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function" target="_blank">Cryptographic hash function - Wikipedia</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">lockex1987.github.io</span> <a href="https://lockex1987.github.io/archive/it%20-%20cryptography/" target="_blank">Cryptography</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">lockex1987.github.io</span> <a href="https://lockex1987.github.io/archive/it%20-%20cryptography/cryptography%20-%20sha/index.html" target="_blank">SHA</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">lockex1987.github.io</span> <a href="https://lockex1987.github.io/posts/linux%20-%20ssh/" target="_blank">Sử dụng SSH</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">viblo.asia</span> <a href="https://viblo.asia/p/http2-with-nginx-1Je5EJMwKnL" target="_blank">HTTP2 with NginX - Viblo</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">viblo.asia</span> <a href="https://viblo.asia/p/tong-quan-http2-aWj53OEQ56m" target="_blank">Tổng quan HTTP/2 - Viblo</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">developers.google.com</span> <a href="https://developers.google.com/web/fundamentals/performance/resource-prioritization" target="_blank">Resource Prioritization – Getting the Browser to Help You</a></div></div>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

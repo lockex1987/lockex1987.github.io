@@ -20,15 +20,14 @@
         vào trong biến môi trường <code>PATH</code>.</p>
       <p>Sửa biến môi trường <code>PATH</code> ở file <code>/etc/profile</code>.
         Ví dụ:</p>
-      <pre class="out-of-box">PATH=$PATH:/home/lockex1987/program/maven/bin:/home/lockex1987/program/node/bin<br>export PATH</pre>
+      <pre>JAVA_HOME=/opt/jdk1.8.0_201
+PATH=$PATH:/home/lockex1987/program/maven/bin
+
+export JAVA_HOME
+export PATH
+</pre>
       <p>Xác nhận kết quả của việc cài đặt với lệnh:</p>
       <pre>mvn -v</pre>
-      <p>Kết quả mẫu là:</p>
-      <pre>Apache Maven 3.3.9 (bb52d8502b132ec0a5a3f4c09453c07478323dc5; 2015-11-10T23:41:47+07:00)<br>Maven home: /data/program/maven
-Java version: 1.8.0_60, vendor: Oracle Corporation
-Java home: /usr/local/java/jre
-Default locale: en_US, platform encoding: UTF-8
-OS name: "linux", version: "3.16.0-38-generic", arch: "i386", family:          "unix"</pre>
       <h3>Cấu hình</h3>
       <p>Có một số cách để cấu hình Maven. Tuy nhiên cách thông thường nhất đó
         là sửa file <code>settings.xml</code> ở thư mục <code>~/.m2</code>,
