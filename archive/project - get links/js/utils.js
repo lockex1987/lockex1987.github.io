@@ -9,20 +9,19 @@ function extractChapterNumber(title, firstResult = true) {
 
     // Lọc ra phần số
     // Có thể có dấu chấm ở giữa
-    // const regex = /\d+\.?\d*/g;
-    const regex = /\d+/g;
+    const regex = /\d[\d\.]*/g;
 
     if (firstResult) {
         // Làm thế này sẽ lấy ra kết quả tìm thấy đầu tiên
         const result = regex.exec(title);
         if (result) {
-            return parseInt(result[0]);
+            return result[0];
         }
     } else {
         // Làm thế này để lấy ra kết quả tìm thấy cuối cùng
         const result = [...title.matchAll(regex)];
         if (result && result.length > 0) {
-            return parseInt(result[result.length - 1]);
+            return result[result.length - 1];
         }
     }
 
@@ -240,11 +239,10 @@ async function processChapterFromCssSelector(chapterUrl, chapterNo, callbackFunc
 
 /**
  * Thêm các số 0 ở đầu cho đủ 3 ký tự.
- * @param {Integer} number
+ * @param {Integer|String} number
  */
 function paddingZero(number) {
-    // .padStart(3, '0')
-    return (1000 + number).toString().substring(1);
+    return number.toString().padStart(3, '0');
 }
 
 /**
