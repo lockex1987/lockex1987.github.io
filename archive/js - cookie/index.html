@@ -1,25 +1,35 @@
 <html>
- <head> 
-  <meta charset="UTF-8"> 
-  <title>Cookie</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <link rel="icon" href="../../images/favicon.png"> 
-  <link rel="stylesheet" href="../../css/style.css"> 
-  <meta name="description" content="Cookie">
- </head> 
- <body> 
-  <article> 
-   <p id="div-1"></p> 
-   <p id="div-2"></p> 
-   <p> <button type="button" onclick="resetCount()"> Reset Counter </button> </p> 
-   <p>Không dùng với file HTML local kiểu file:// được</p> 
-   <p><a href="Cookie.java">Code server</a> với Java</p> 
-   <p>https://en.wikipedia.org/wiki/HTTP_cookie</p> 
-   <p>https://github.com/js-cookie/js-cookie</p> 
-   <p>https://www.w3schools.com/js/js_cookies.asp</p> 
-   <script src="cookie.js"></script> 
-   <script src="index.js"></script> 
-  </article> 
-  <script src="../../js/docs.js"></script>  
- </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cookie">
+    <title>Cookie</title>
+    
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <article>
+        <h2>Cookie</h2>
+        <div class="mb-3" id="div-1"></div>
+        <div class="mb-3" id="div-2"></div>
+
+        <div class="mb-3">
+            <button type="button" onclick="resetCount()" class="btn btn-primary">
+                Reset counter
+            </button>
+        </div>
+
+        <p>Code server thiết lập cookie bằng header của response.</p>
+        <p>Tham khảo:</p>
+        <p><a href="https://en.wikipedia.org/wiki/HTTP_cookie">HTTP cookie - Wikipedia</a></p>
+    </article>
+
+    <script src="js/cookie.js"></script>
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+
 </html>

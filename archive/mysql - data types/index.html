@@ -97,11 +97,11 @@
       </div>
       <h4>Kiểu dữ liệu số dấu chấm động (floating-point)</h4>
       <p>Kiểu dữ liệu FLOAT và DOUBLE mô tả gần đúng giá trị số thực.</p>
-      <p>Bạn có thể chỉ định FLOAT(M,D), DOUBLE(M,D); trong đó M là độ dài số, D
-        là số chữ số sau dấu phảy. Điều này là không bắt buộc.</p>
-      <p>FLOAT tương đương FLOAT(10,2). Phần sau dấu phảy có thể lên tới 24.
+      <p>Bạn có thể chỉ định FLOAT(M, D), DOUBLE(M, D); trong đó M là độ dài số,
+        D là số chữ số sau dấu phảy. Điều này là không bắt buộc.</p>
+      <p>FLOAT tương đương FLOAT(10, 2). Phần sau dấu phảy có thể lên tới 24.
         FLOAT dùng 4 byte.</p>
-      <p>DOUBLE tương đương DOUBLE(16,4). Phần sau dấu phảy có thể lên tới 53.
+      <p>DOUBLE tương đương DOUBLE(16, 4). Phần sau dấu phảy có thể lên tới 53.
         DOUBLE dùng 8 byte.</p>
       <p>REAL là từ đồng nghĩa với DOUBLE.</p>
       <p>Bạn không nên sử dụng FLOAT hoặc DOUBLE, vì có thể bị sai số. Nên sử
@@ -110,12 +110,12 @@
       <p>Kiểu dấu chấm cố định DECIMAL được sử dụng để bảo vệ độ chính xác
         (precision), ví dụ như dữ liệu tiền tệ. NUMERIC là từ đồng nghĩa với
         DECIMAL.</p>
-      <p>Trong SQL chuẩn, cú pháp DECIMAL(5,2) nghĩa là độ chính xác (precision)
-        là 5, và 2 là phần thập phân (scale), nghĩa là nó có thể lưu trữ một giá
-        trị có 5 chữ số trong đó có 2 số thập phân. Vì vậy giá trị lưu trữ sẽ là
-        -999.99 tới 999.99.&nbsp; Cú pháp DECIMAL(M) tương đương với
-        DECIMAL(M,0). Tương tự DECIMAL tương đương với DECIMAL(M,0) ở đây M mặc
-        định là 10.</p>
+      <p>Trong SQL chuẩn, cú pháp DECIMAL(5, 2) nghĩa là độ chính xác
+        (precision) là 5, và 2 là phần thập phân (scale), nghĩa là nó có thể lưu
+        trữ một giá trị có 5 chữ số trong đó có 2 số thập phân. Vì vậy giá trị
+        lưu trữ sẽ là -999.99 tới 999.99.&nbsp; Cú pháp DECIMAL(M) tương đương
+        với DECIMAL(M, 0). Tương tự DECIMAL tương đương với DECIMAL(M, 0) ở đây
+        M mặc định là 10.</p>
       <p>Độ dài tối đa các chữ số cho DECIMAL là 65.</p>
       <h4>Kiểu dữ liệu bit</h4>
       <p>Kiểu dữ liệu BIT được sử dụng để lưu trữ trường giá trị bit. Kiểu
@@ -207,7 +207,7 @@
       <h4>Kiểu dữ liệu CHAR và VARCHAR</h4>
       <p>Kiểu dữ liệu CHAR và VARCHAR là giống nhau, nhưng khác nhau ở cách
         chúng được lưu trữ và truy xuất. Chúng cũng khác nhau về chiều dài tối
-        đa và giữ lại hay không khoảng trắng phía trước (trailing spaces).</p>
+        đa và giữ lại hay không khoảng trắng phía trước (trailing space).</p>
       <p>CHAR có độ dài tối đa 255. Khi lưu trữ chúng được độn thêm bên phải
         (right-padded) để có độ dài chỉ được chỉ định.</p>
       <p>VARCHAR có độ dài tối đa 65,535. Dữ liệu có chiều dài thay đổi.</p>
@@ -260,13 +260,38 @@
       <h3>Kiểu dữ liệu ENUM</h3>
       <p>Một đối tượng chuỗi có giá trị được chọn từ một danh sách các giá trị
         được đưa ra ở thời điểm tạo ra bảng. Ví dụ:</p>
-      <pre>create table my_table (
-    length enum('small', 'medium', 'large')
-);</pre>
+      <pre>-- Tạo bảng
+create table shirts (
+    name varchar(40),
+    size enum('x-small', 'small', 'medium', 'large', 'x-large')
+);
+
+-- Thêm dữ liệu
+insert into shirts (name, size)
+values
+('dress shirt', 'large'),
+('t-shirt', 'medium'),
+('polo shirt', 'small');
+
+-- Kiểm tra
+select name, size from shirts where size = 'medium';
++---------+--------+
+| name    | size   |
++---------+--------+
+| t-shirt | medium |
++---------+--------+
+
+-- Sắp xếp
+select * from shirts order by size;
+
+-- Thử thêm dữ liệu không đúng giá trị được liệt kê sẽ lỗi
+insert into shirts (name, size)
+values
+('dress shirt invalid', 'large-hihi');</pre>
       <p>Khi định nghĩa một trường kiểu này, tức là, ta đã chỉ ra một danh sách
         các đối tượng mà trường phải nhận (có thể là <code>null</code>). Ví dụ,
         nếu ta muốn một trường nào đó chỉ nhận một trong các giá trị "A" hoặc
-        "B" hoặc "C" thì ta phải định nghĩa kiểu ENUM cho nó như sau: ENUM ('A',
+        "B" hoặc "C" thì ta phải định nghĩa kiểu ENUM cho nó như sau: ENUM('A',
         'B', 'C'). Và chỉ có các giá trị này (hoặc <code>null</code>) có thể
         xuất hiện trong trường đó.</p>
       <h3>Kiểu dữ liệu SET</h3>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="service provider">
+    <title>Laravel đã xử lý một request như thế nào?</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Laravel đã xử lý một request như thế nào?</h2>
+      <h3>Mở đầu</h3>
+      <p>Laravel là một framework hoạt động theo mô hình MVC (Model - View -
+        Controller). Có thể hiểu trong mô hình này, một request đầu tiên sẽ chạy
+        đến Router, sau đó nó tiếp tục đến Controller (C), Controller sẽ có thể
+        tiếp tục xử lý tại Model (M) và trả dữ liệu ra View (V). Trong Laravel
+        framework, một request nhìn về cơ bản hay có thể gọi là bề nổi theo cách
+        hiểu đơn giản thì sẽ chạy theo cách nói ở trên. Tuy nhiên, mình rất muốn
+        biết bên dưới của nó thực sự chứa đựng những gì. Vì vậy thời gian vừa
+        qua mình cũng bớt chút thời gian để tìm đọc hiểu cũng như nghiên cứu một
+        chút về vòng đời của một request trong Laravel framework mà mình chia sẻ
+        tại bài này. Cảm ơn các bạn đã bớt chút thời gian đọc bài của mình. Nếu
+        có vấn đề gì mọi người hãy để lại comment nhé.</p>
+      <h3>Nội dung</h3>
+      <p>Trước hết mình xin được nói lại một chút về request mà mình vẫn hay
+        dùng. Khi một request được hiểu là bắt đầu từ Router thì cùng xem, trên
+        đoạn đường gian khổ để có được một Response, nó phải trải qua những gì.
+        Chúng ta sẽ tìm hiểu chi tiết hơn ở ngay dưới đây thôi. Mọi thứ sẽ được
+        bắt đầu trong app của bạn từ <code>public/index.php</code>.</p>
+      <h4>Auto load</h4>
+      <pre><code>require __DIR__.'/../vendor/autoload.php';
+</code></pre>
+      <p>Đầu tiên nó sẽ gọi đến file <code>autoload.php</code>. Nó sẽ tự động
+        load tất cả các package/library được đăng ký bởi Composer trong quá
+        trình sử dụng.</p>
+      <h4>Khởi tạo một instance từ Laravel application</h4>
+      <pre><code>$app = require_once __DIR__.'/../bootstrap/app.php';
+</code></pre>
+      <p>Dòng đầu tiên:</p>
+      <pre><code>$app = new Illuminate\Foundation\Application(
+    realpath(__DIR__.'/../') // đây chính là đường dẫn chứa application hiện tại của chúng ta
+);
+</code></pre>
+      <p>Để xem trong này có những gì nào:</p>
+      <pre><code>public function __construct($basePath = null)
+{
+    if ($basePath) {
+        $this-&gt;setBasePath($basePath);
+    }
+
+    $this-&gt;registerBaseBindings();
+
+    $this-&gt;registerBaseServiceProviders();
+
+    $this-&gt;registerCoreContainerAliases();
+}
+</code></pre>
+      <p>Đầu tiên trong <code>__constructor</code> nó nhận vào một cái <code>$basePath
+          = null</code>, sau đó nó sẽ kiểm tra sự tồn tại của <code>$basePath</code>
+        này và sẽ tạo ra các global path cho các thư mục như <code>base, lang,
+          config, public, storage, database, resources, bootstrap</code> mà
+        chúng ta vẫn sử dụng. Ví dụ:</p>
+      <pre><code>$this-&gt;instance('path.config', $this-&gt;configPath());
+
+public function configPath($path = '')
+{
+    return $this-&gt;basePath.DIRECTORY_SEPARATOR.'config'.($path ? DIRECTORY_SEPARATOR.$path : $path); // define ('DIRECTORY_SEPARATOR', "/");
+    // =&gt; chính là thư mục config trong application của bạn đó.
+}
+</code></pre>
+      <p>Vậy tại sao nói nó tạo ra các global đường dẫn ??? Đã bao giờ các bạn
+        sử dụng các hàm như <code>config_path()</code>, <code>public_path()</code>,...
+        chưa. Tất cả các hàm này đều tạo ra một instance với cái tên <code>'path.name'</code>,
+        trùng với các thư mục trong application của bạn. Và chúng được tạo ra
+        bởi các hàm trong file <code>helpers.php</code>.</p>
+      <pre><code>if (! function_exists('config_path')) {
+    /**
+     * Get the configuration path.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    function config_path($path = '')
+    {
+        return app()-&gt;make('path.config').($path ? DIRECTORY_SEPARATOR.$path : $path);
+    }
+}
+</code></pre>
+      <p>Khi bạn gọi <code>config_path()</code>, mặc định Laravel sẽ tạo ra một
+        <code>instance</code> của cái tên <code>path.config</code>. Mà hàm này
+        chính là đường dẫn đến file folder <code>config</code> đã nói ở trên.
+        Hàm <code>$this-&gt;registerBaseBindings()</code> sẽ tạo một instance
+        của <code>'app'</code> và một instance của class <code>Container::class</code>
+        bằng chính cái class <code>Illuminate\Foundation\Application.php</code>
+        này.</p>
+      <pre><code>$this-&gt;instance('app', $this);
+
+$this-&gt;instance(Container::class, $this);
+</code></pre>
+      <p>Mở cái class <code>Container.php</code> kia ra mình có thấy rất nhiều
+        các method quen thuộc liên quan đến khái niệm về <code>Service
+          Container</code> như <code>bind</code>, <code>singleton</code>. Để
+        hiểu hơn về 2 khái niệm này các bạn có thể tìm hiểu tại một số bài viết
+        như:</p>
+      <ul>
+        <li><a href="https://viblo.asia/p/laravel-beauty-tim-hieu-ve-service-container-3KbvZ1wLGmWB"
+
+            target="_blank">Laravel beauty - Tìm hiểu về service container</a>
+          của anh Trần Đức Thắng.</li>
+        <li><a href="https://viblo.asia/p/laravel-service-container-in-depth-tips-to-customize-your-application-RQqKLnqNl7z"
+
+            target="_blank">Laravel service container in depth tips to customize
+            your application</a> của anh Nguyễn Ngọc Vịnh</li>
+      </ul>
+      <p>Và cuối cùng là khởi tạo một instance của <code>PackageManifest</code>.
+        Trong bài này chúng ta không cần quan tâm nhiều lắm đâu nhé. Tiếp theo:</p>
+      <pre><code>$this-&gt;registerBaseServiceProviders();
+</code></pre>
+      <p>Laravel sẽ đăng kí các <code>Service Provider</code> cơ bản cho
+        application. Tưởng tượng như project của chúng ta sẽ luôn luôn cần có
+        những cái cơ bản, cái gốc để nó có thể hoạt động được. Chúng ta có thể
+        thấy Laravel đăng ký các provider như <code>Event, Log, Routing</code>:</p>
+      <pre><code>$this-&gt;register(new EventServiceProvider($this));
+
+$this-&gt;register(new LogServiceProvider($this));
+
+$this-&gt;register(new RoutingServiceProvider($this));
+</code></pre>
+      <p>Cuối cùng trong hàm <code>__constructor</code> là:</p>
+      <pre><code>$this-&gt;registerCoreContainerAliases();
+</code></pre>
+      <p>Mình sẽ mở 1 đoạn trong hàm này và xem nó có gì nhé:</p>
+      <pre><code>public function registerCoreContainerAliases()
+{
+    foreach ([
+        'app'                  =&gt; [\Illuminate\Foundation\Application::class, \Illuminate\Contracts\Container\Container::class, \Illuminate\Contracts\Foundation\Application::class,  \Psr\Container\ContainerInterface::class],
+        'auth'                 =&gt; [\Illuminate\Auth\AuthManager::class, \Illuminate\Contracts\Auth\Factory::class],
+       // ...
+    ] as $key =&gt; $aliases) {
+        foreach ($aliases as $alias) {
+            $this-&gt;alias($key, $alias);
+        }
+    }
+}
+</code></pre>
+      <p>Hàm này có tác dụng đăng ký các tên cho các class trong Laravel
+        Application. Ví dụ như <code>'app'</code> sẽ được gán cho <code>\Illuminate\Foundation\Application::class</code>,
+        <code>\Illuminate\Contracts\Container\Container::class</code>, <code>\Psr\Container\ContainerInterface::class]</code>.
+        Ví dụ khi bạn gọi <code>app()-&gt;make('hash')</code> thì <code>'hash'</code>
+        chính là <code>\Illuminate\Hashing\HashManager::class</code>. Bước tiếp
+        theo, Laravel sẽ đăng kí binding cho class <code>Http\Kernel</code> và
+        <code>Console\Kernel</code> cùng với đó là một class Exception, mục tiêu
+        là để phục vụ cho việc handle <code>Request</code> và handle các lỗi
+        khi xảy ra từ <code>Http</code> và giao diện <code>Console</code>. (<code>Terminal</code>).
+        Sau khi binding xong , <code>$app</code> này sẽ được trả về.</p>
+      <pre><code>$app-&gt;singleton(
+    Illuminate\Contracts\Http\Kernel::class,
+    App\Http\Kernel::class
+);
+
+$app-&gt;singleton(
+    Illuminate\Contracts\Console\Kernel::class,
+    App\Console\Kernel::class
+);
+
+$app-&gt;singleton(
+    Illuminate\Contracts\Debug\ExceptionHandler::class,
+    App\Exceptions\Handler::class
+);
+
+return $app;
+</code></pre>
+      <h4>Tạo Http Kernel</h4>
+      <pre><code>$kernel = $app-&gt;make(Illuminate\Contracts\Http\Kernel::class);
+</code></pre>
+      <p>Ở trên chúng ta thấy Laravel binding class <code>Illuminate\Contracts\Http\Kernel::class</code>
+        bằng một <code>App\Http\Kernel::class</code>. Vậy hàm này sẽ trả về cho
+        chúng ta một instance của <code>Illuminate\Contracts\Http\Kernel::class</code>,
+        chính là <code>App\Http\Kernel.php</code></p>
+      <h4>Handle Request</h4>
+      <p><code>Http Kernel</code> này sẽ xử lý <code>$request</code> và <code>$response</code>
+        là kết quả của quá trình xử lý:</p>
+      <pre><code>$response = $kernel-&gt;handle(
+    $request = Illuminate\Http\Request::capture()
+);
+</code></pre>
+      <p>Giờ chúng ta cùng tìm hiểu xem Laravel của chúng ta thực sự đã làm
+        những gì để xử lý một request nhé. Chúng ta hãy mở class <code>App\Http\Kernel</code>
+        ra. Trong này có rất nhiều <code>groupMiddleware</code> khác nhau. Nếu
+        để ý bạn có thể thấy có một nhóm <code>globalMiddleware</code>, một <code>middlewareGroup</code>
+        và một <code>routeMiddleware</code>, nhiệm vụ của chúng là dùng để lọc
+        các <code>request</code> chạy đến application của bạn, sau đó xử lý như
+        thế nào tiếp theo sẽ là do phần xử lý bên trong của middleware đó. Nhóm
+        <code>globalMiddleware</code> là phần mà mỗi request đều phải đi qua nó.
+        Ví dụ như middleware <code>\Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class</code></p>
+      <pre><code>protected function transform($key, $value)
+{
+    return is_string($value) &amp;&amp; $value === '' ? null : $value;
+}
+</code></pre>
+      <p>Hàm này chắc các bạn cũng hiểu rồi phải không. Bạn mở class mà Kernel
+        kế thừa ra tại <code>Illuminate\Foundation\Http\Kernel</code>. Kéo
+        xuống phần hàm <code>handle($request)</code> ta thấy có đoạn</p>
+      <pre><code>$response = $this-&gt;sendRequestThroughRouter($request);
+</code></pre>
+      <p>Mở hàm <code>sendRequestThroughRouter($request)</code> và 2 hàm dưới
+        luôn nhé. Tại nó gần nhau.</p>
+      <pre><code>protected function sendRequestThroughRouter($request)
+{
+    $this-&gt;app-&gt;instance('request', $request); // Đăng ký request hiện tại với Laravel Service Container với tên `'request'`
+
+    Facade::clearResolvedInstance('request'); // Loại bỏ request facade khác
+
+    $this-&gt;bootstrap(); // Load các bootstrapper
+
+    return (new Pipeline($this-&gt;app)) //Đẩy request qua các middleware và cuối cùng là đẩy request lên router
+                -&gt;send($request)
+                -&gt;through($this-&gt;app-&gt;shouldSkipMiddleware() ? [] : $this-&gt;middleware)
+                -&gt;then($this-&gt;dispatchToRouter());
+}
+
+public function bootstrap()
+{
+    if (! $this-&gt;app-&gt;hasBeenBootstrapped()) {
+        $this-&gt;app-&gt;bootstrapWith($this-&gt;bootstrappers());
+    }
+}
+
+/**
+ * Get the route dispatcher callback.
+ *
+ * @return \Closure
+ */
+protected function dispatchToRouter()
+{
+    return function ($request) {
+        $this-&gt;app-&gt;instance('request', $request);
+
+        return $this-&gt;router-&gt;dispatch($request);
+    };
+}
+</code></pre>
+      <p>Đến đây, gần như quá trình handle một <code>request</code> đã xong.
+        Quay lại hàm <code>handle($request)</code> tại <code>Illuminate\Foundation\Http\Kernel.php</code>,
+        sau khi dispatch request lên router và đã được xử lý, nó sẽ dispatch một
+        event bao để báo rằng request đã được xử lý, hàm này gồm 2 tham số quen
+        thuộc là <code>$request</code> và <code>$response</code>.</p>
+      <pre><code>$this-&gt;app['events']-&gt;dispatch(
+    new Events\RequestHandled($request, $response)
+);
+
+return $response // cuối cùng là phải return cái $response này
+</code></pre>
+      <h4>Kết thúc</h4>
+      <p>Sau khi có <code>$response</code> nó sẽ được trả về cho người dùng</p>
+      <pre><code>$response-&gt;send();
+</code></pre>
+      <p>Quá trình handle một request được kết thúc, cuối cùng là đóng Kernel và
+        kết thúc.</p>
+      <pre><code>$kernel-&gt;terminate($request, $response);
+</code></pre>
+      <h3>Vi vu</h3>
+      <p>Có lẽ đọc từ nãy đến giờ cũng khá là lan man rồi. Giờ mình sẽ tổng hợp
+        lại về nội dung chính về vòng đời của một request trong Laravel.</p>
+      <ul>
+        <li>Auto Loader.</li>
+        <li>Khởi tạo ứng dụng, đăng ký các global_path, provider cơ bản, các bí
+          danh cho các class.</li>
+        <li>Binding class Kernel, Exception.</li>
+        <li>Tạo Kernel.</li>
+        <li>Đăng ký Service Provider</li>
+        <li>Send request qua middleware =&gt; send request tới router</li>
+        <li>Gửi response về cho người dùng</li>
+        <li>Kết thúc</li>
+      </ul>
+      <p>Đã bao giờ bạn nghĩ mỗi dòng code trong Laravel bạn đang sử dụng để
+        handle request từ đâu mà dùng được chưa, ví dụ</p>
+      <pre><code>app()-&gt;handle('')
+//or
+use Client;
+public function handle(Client $client)
+...
+</code></pre>
+      <p>hay gần như bất cứ đoạn code nào khác. Tất cả chúng đều được tạo ra,
+        đều được khởi tạo một cách rất <strong>tuần tự</strong> và hoàn hảo. Và
+        thành phần quan trọng nhất trong quá trình handle một request trong
+        Laravel chính là <strong>Service Provider</strong>.</p>
+      <h3>Kết</h3>
+      <p>Bài viết của mình đến đây xin được dừng lại. Mình không biết có quá lan
+        man hay làm cho các bạn không hiểu hay không. Nếu có vấn đề gì hãy
+        comment lại cho mình biết nhé. Bài tới mình sẽ viết về <b>Service
+          Provider</b> trong Laravel. Cảm ơn mọi người đã theo dõi.</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://viblo.asia/p/laravel-da-xu-ly-mot-request-nhu-the-nao-bJzKmG7Ol9N"
+
+          target="_blank">Laravel đã xử lý một request như thế nào?</a></p>
+      <p><a href="https://viblo.asia/p/mo-mam-mot-chut-ve-service-provider-trong-laravel-m68Z0MQXlkG"
+
+          target="_blank">Mò mẫm một chút về Service Provider trong
+          Laravel</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>
