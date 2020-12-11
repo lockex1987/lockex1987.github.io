@@ -11,7 +11,7 @@ const postsCategories = [
 const archiveCategories = [
     { name: 'js', y: 140 },
     { name: 'ui', y: 123 },
-    { name: 'laravel', y: 75 },
+    { name: 'laravel', y: 76 },
     { name: 'php', y: 64 },
     { name: 'project', y: 50 },
     { name: 'it', y: 42 },

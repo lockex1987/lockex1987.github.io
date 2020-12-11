@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Laravel validation">
+    <meta name="description" content="strong password">
     <title>Validation trong Laravel</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -834,31 +834,24 @@ Validator::make($input, $rules)-&gt;passes(); // true</pre>
       <ul>
         <li>Đăng ký (chức năng của Laravel)</li>
         <li>Reset mật khẩu (chức năng của Laravel)</li>
+        <li>Ở trang quản lý người dùng: thêm mới, đổi mật khẩu</li>
         <li>Người dùng đổi mật khẩu</li>
       </ul>
       <p>Vì có nhiều chỗ thế này nên chúng ta nên viết một rule riêng.</p>
       <p>Mật khẩu mạnh là:</p>
       <ul>
-        <li>Ít nhất 8 ký tự</li>
+        <li>Ít nhất 8 ký tự (dùng validation <code>min</code>)</li>
         <li>Chứa chữ hoa</li>
         <li>Chứa chữ thường</li>
         <li>Chứa số</li>
-        <li>Chứa ký tự đặc biệt (!@#$&amp;*)</li>
+        <li>Chứa ký tự đặc biệt !"#$%&amp;'()*+,./;&lt;=&gt;?@^_`{|}~-[\]</li>
         <li>Không được trong 1 số mật khẩu yếu thông dụng (ví dụ 123456a@).</li>
       </ul>
       <p>Biểu thức chính quy là:</p>
-      <pre>^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$&amp;*]).{8,}$</pre>
-      <p><a href="">Rubular link</a></p>
-      <p>Giải thích:</p>
-      <pre>^                  Start anchor
-(?=.*[A-Z])        Ensure string has uppercase letters
-(?=.*[!@#$&amp;*])     Ensure string has one special case letter
-(?=.*[0-9])        Ensure string has digits
-(?=.*[a-z])        Ensure string has lowercase letters
-.{8,}              Độ dài ít nhất 8 ký tự
-$                  End anchor</pre>
+      <pre class="out-of-box">(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!"#$%&amp;()*+,./:;&lt;=&gt;?@^_`{|}~\'\-\[\\\]])</pre>
+      <p>Chú ý phải escape các ký tự /'-[]\ ở chỗ kiểm tra ký tự đặc biệt.</p>
       <p>Thêm validation rule kiểu extension.</p>
-      <pre>&lt;?php
+      <pre class="out-of-box">&lt;?php
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
@@ -874,13 +867,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // Register custom validators
-        Validator::extend('current_password', function ($attribute, $value, $parameters, $validator) {
-            return \Illuminate\Support\Facades\Hash::check($value, auth()-&gt;user()-&gt;password);
-        }, 'The :attribute field does not match with your current password.');
-
         Validator::extend('strong_password', function ($attribute, $value, $parameters, $validator) {
-            return preg_match('/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$&amp;*]).{8,}$/', $value);
-        }, 'Mật khẩu phải dài ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số, ký tự đặc biệt');
+            // Ký tự \ là ký tự meta để escape xâu trong PHP
+            // do đó nếu muốn có xâu \\
+            // thì chúng ta cần viết là \\\\<br>            // Biểu thức chính quy trong PHP có sử dụng ký tự / ở đầu và cuối xâu nên chúng ta cũng cần escape ký tự này
+            $regex = '(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!"#$%&amp;()*+,.\/:;&lt;=&gt;?@^_`{|}~\'\-\[\]\\\\])';
+            return preg_match('/' . $regex . '/', $value);
+        }, 'Mật khẩu phải bao gồm chữ hoa, chữ thường, số, ký tự đặc biệt');
     }
 }</pre>
       <p>Nếu làm theo cách thông thường, dùng luật regex, ta nên làm như sau
@@ -903,7 +896,8 @@ class AppServiceProvider extends ServiceProvider
 }</pre>
       <p>Mở file <code>ResetPasswordController.php</code> ở thư mục <code>app/Http/Controllers/Auth</code>.
         Thêm phương thức <code>rules()</code> với các luật sau:</p>
-      <div> <ins data-ad-client="ca-pub-8077071189647178" data-ad-slot="1403147647"
+      <div> <ins data-ad-client="ca-pub-8077071189647178" data-ad-slot="1403147647"
+
           data-ad-format="auto"></ins> </div>
       <pre>protected function rules() {
     return [

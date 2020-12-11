@@ -1,10 +1,23 @@
 <?php
-$pattern = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$&*]).{8,}$/';
-$value = '123456aA@';
-// echo preg_match($pattern, $value) . "\n";
+
+function validateStrongPassword()
+{
+	// $pattern = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$&*]).{8,}$/';
+	$pattern = '/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!"#$%&()*+,.\/:;<=>?@^_`{|}~\'\-\[\]\\\\])/';
+
+	$data = [
+		'123456aA',
+		'12345678aA@'
+	];
+	foreach ($data as $s) {
+		echo preg_match($pattern, $s) . ': ' . $s . "\n";		
+	}
+}
 
 function validateUrl()
 {
+	$pattern = "/^https?:\/\/[\w.-]+\.[\w\.-]+[\w\-\._~:\/?#[\]@!\$&\'\(\)\*\+,;=.]+$/";
+
 	$data = [
 		'http://duongdanmau.abc/xyz',
 		'javascript:alert(origin)//http://anything.com/xyz',
@@ -17,11 +30,12 @@ function validateUrl()
 			echo $s . ': ' . filter_var($s, FILTER_VALIDATE_URL) . "\n";
 		}
 		*/
-		$pattern = "/^https?:\/\/[\w.-]+\.[\w\.-]+[\w\-\._~:\/?#[\]@!\$&\'\(\)\*\+,;=.]+$/";
+		
 		if (preg_match($pattern, $s)) {
 			echo $s . "\n";
 		}
 	}
 }
 
-validateUrl();
+// validateUrl();
+validateStrongPassword();
