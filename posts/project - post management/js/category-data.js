@@ -9,7 +9,7 @@ const postsCategories = [
 ];
 
 const archiveCategories = [
-    { name: 'js', y: 140 },
+    { name: 'js', y: 144 },
     { name: 'ui', y: 123 },
     { name: 'laravel', y: 76 },
     { name: 'php', y: 64 },

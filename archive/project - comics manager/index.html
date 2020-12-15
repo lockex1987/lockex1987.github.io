@@ -1,86 +1,66 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
- <head> 
-  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
-  <link rel="icon" href="../../images/favicon.png"> 
-  <link rel="stylesheet" href="../../css/notes.css"> 
-  <title>Comics Manager</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <link rel="stylesheet" href="../../css/style.css"> 
-  <meta name="description" content="Comics Manager">
- </head> 
- <body> 
-  <article> 
-   <h1>CM (Comics Manager)</h1> 
-   <p>Ngày nay, việc đọc truyện tranh trở nên thật là dễ dàng.</p> 
-   <p>Nhớ ngày xưa, có một cuốn truyện tranh trong tay thật là quý giá, dù có thể nó chỉ được in trên loại giấy chất lượng thấp. Nhưng giờ đây, trên mạng đầy những truyện scan chất lượng cao, mà lại còn đầy đủ nữa chứ. Tuy nhiên, những cuốn truyện giấy cũ vẫn có bản sắc riêng của nó. Nó vẫn có những giá trị riêng, ít nhất thì những kí ức mà nó lưu giữ.</p> 
-   <p>Với kho truyện scan download về từ, phải có kế hoạch quản lý.</p> 
-   <p>Contents:</p> 
-   <ul> 
-    <li>Download</li> 
-    <li>Đặt lại tên folder</li> 
-    <li>Đặt lại tên file</li> 
-    <li>Nén folder</li> 
-    <li>Tạo danh sách</li> 
-   </ul> 
-   <h3>Download</h3> 
-   <p>Cách download tự động, nhanh chóng. Chúng ta có thể sử dụng các công cụ tìm kiếm như Google, RapidLibrary,... Link Mediafire thì dễ download. Với các trang đọc online, chúng ta có thể download batch các file ảnh bằng IDM hoặc Download Them All.</p> 
-   <h3>Đặt lại tên folder</h3> 
-   <p>Các truyện sẽ được lưu trong các thư mục to với tên là tên của truyện, ví dụ "captain tsubasa", "one piece", "world youth"...</p> 
-   <p>Các truyện tranh phương Tây, Trung Quốc được chia theo các chương (chapter, issue), mỗi chương khoảng 30-40 trang. Các chương có tên là số thứ tự chương.</p> 
-   <p>Các truyện Nhật Bản sẽ được chia theo các volume, khoảng 200 trang.</p> 
-   <p>Lần lượt theo thứ tự 1, 2, 3,... Số ký tự phải bằng nhau, do đó có thể chúng ta phải thêm các chữ số 0.</p> 
-   <p>Các folder phải chứa một ảnh bìa, nén theo định dạng zip (cbz).</p> 
-   <h3>Đặt lại tên file</h3> 
-   <p>Cần chắc chắn các trang bắt đầu từ 1, nếu không có thể dẫn đến trường hợp bị trùng lặp.</p> 
-   <p>Cẩn thận đuôi mở rộng của các ảnh. Chú ý kiểm tra chắc chắn rằng các ảnh có đuôi mở rộng dài 3 kí tự và các ảnh có cùng một loại extention. Ví dụ: .jpg, .png...</p> 
-   <p>Kiểm tra xem liệu có thể rename được không (có thể bị trùng, không rename được).</p> 
-   <p>Tên các file gồm 2 chữ số. Nếu số trang nhỏ hơn 10 thì thêm chữ số 0, ví dụ như 00, 01, 02... Chú ý rằng các trang bắt đầu có thể bắt đầu từ 0 hoặc 1, không quan trọng lắm.</p> 
-   <p>Các ảnh trong từng chương được đặt theo số thứ tự của trang. Chú ý không có các ảnh Credit.</p> 
-   <h3>Nén folder</h3> 
-   <p>Sử dụng phần mềm 7z.</p> 
-   <p>Sau khi đã thu thập xong một bộ truyện, một công việc cần thiết đó là sao lưu bộ truyện đó. Kinh nghiệm bị mất dữ liệu của mình đã chứng minh điều đó. Mình đã bị mất bộ truyện Phong Vân 1, Phong Vân 2, Black Cat mà mình tốn rất nhiều công để download.</p> 
-   <p>Xoá các thư mục.</p> 
-   <p>Xoá các file credit và các file Thumbs.db.</p> 
-   <p>Xoá các file thừa: credit, .txt, Thumbs.db</p> 
-   <p>Xoá các file thừa còn lại.</p> 
-   <p>Kiểm tra xem có đầy đủ hay thiếu cái gì không</p> 
-   <p>del Thumbs.db /S /A<br> del Thumbs.db /s /q /a<br> del *.rar /s /q /a<br> del *.zip /s /q /a<br> del *.txt /s /q /a</p> 
-   <p>del /q /s /a- Thumbs.db</p> 
-   <h3>Tạo danh sách</h3> 
-   <p>Nên có một file để ghi thông tin volumn - chapter - chaptername.</p> 
-   <p>========================================</p> 
-   <p>Truyện bây giờ mình sưu tầm cũng đã rất là nhiều rồi. Cần phải có kế hoạch, định hướng nên chọn lọc những cái nào, giữ lại cái nào.</p> 
-   <p>DC: 16.3 GB. Các truyện của DC có cấu trúc rất chặt chẽ. Đọc các truyện chúng ta có thể cảm nhận được cả một vũ trụ siêu anh hùng rộng lớn. Đọc truyện mà như đang xem một bộ phim Hollywood vậy. Chú ý là vừa đọc vừa cảm nhận, chứ không chỉ lướt qua để nắm nội dung.</p> 
-   <p>Manga: 51.7 GB. Manga dễ đọc, đề tài phong phú, vẽ cũng đẹp. Nhưng manga không tô màu, không có bìa riêng, các truyện riêng biệt nhau, không có được một quy trình phức tạp, công phu như truyện tranh phương Tây. Tuy nhiên cái gì cũng có cái riêng của nó. Nên kết hợp những cái hay (mình kết hợp?).</p> 
-   <p>Manhua: 9.1 GB. Manhua phải nói là vẽ rất đẹp. Nét vẽ chau chuốt, chi tiết. Tuy nhiên đọc có vẻ dài dòng. Nhiều truyện tưởng tượng một cách thái quá đến mức "bệnh hoạn". Có lẽ chỉ có Phong Vân là vẽ đẹp, nội dung hay, tiết tấu nhanh. Ô long viện thì lại là một trường hợp đặc biệt.</p> 
-   <p>Marvel: 14.8 GB. Nhiều người đánh giá Marvel hay hơn DC. Nhưng với cá nhân mình thì mình thích DC hơn. Thích Hawkeye, Superior foes of Spider-man.</p> 
-   <p>Other: 26.4 GB. Asterix, Các truyện cũ - Golden age, Dũng sĩ Hesman, Thần đồng đất Việt (tự hào truyện tranh Việt Nam), Lucky Luke, Tarzan, XIII, Tintin, Transformers,...</p> 
-   <p>Không làm CSDL riêng. Quản lý theo thư mục.</p> 
-   <p>Tổng cộng mình đã có tận 118 GB truyện. Phải sàng lọc, xóa bỏ bớt (để có thể thêm vào tiếp).</p> 
-   <p>Xóa những cái không có nội dung phù hợp. Hạn chế cảnh nóng, bạo lực.</p> 
-   <p>Xóa những cái truyện riêng lẻ?</p> 
-   <p>20/09/2015: Xóa đi những cái không cần thiết nữa. Xóa đi, tinh giảm để phát triển tiếp.</p> 
-   <ul> 
-    <li>Transformers</li> 
-    <li>Largo Winch</li> 
-    <li>XIII</li> 
-    <li>Y - The last man</li> 
-    <li>Daredevil</li> 
-    <li>20th century boys, 21st century boys</li> 
-    <li>Bokko</li> 
-    <li>Robin - Son of Batman</li> 
-   </ul> 
-   <p>Evolution:</p> 
-   <ul> 
-    <li>Đọc truyện lậu, giấy chất lượng thấp <br> </li> 
-    <li>Scan chất lượng thấp</li> 
-    <li>Scan chất lượng cao, đọc bằng ACDSee</li> 
-    <li>Tổ chức rename, nén file, có trang index link</li> 
-    <li>Đọc comic, nén CBZ, đọc bằng phần mềm Comix, dùng lệnh Java - DOS - Shell</li> 
-    <li>Đọc truyện - sách bản quyền, chất lượng cao</li> 
-   </ul> 
-  </article> 
-  <script src="../../js/docs.js"></script>  
- </body>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="description" content="Comics manager">
+    <title>Quản lý truyện tranh</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="icon" href="../../images/favicon.png">
+  </head>
+  <body>
+    <article>
+      <h2>Quản lý truyện tranh</h2>
+      <h3>Thể loại</h3>
+      <p>Truyện bây giờ mình sưu tầm cũng đã rất là nhiều rồi. Cần phải có kế
+        hoạch, định hướng nên chọn lọc những cái nào, giữ lại cái nào.</p>
+      <p>DC: 16.3 GB. Các truyện của DC có cấu trúc rất chặt chẽ. Đọc các truyện
+        chúng ta có thể cảm nhận được cả một vũ trụ siêu anh hùng rộng lớn. Đọc
+        truyện mà như đang xem một bộ phim Hollywood vậy. Chú ý là vừa đọc vừa
+        cảm nhận, chứ không chỉ lướt qua để nắm nội dung.</p>
+      <p>Manga: 51.7 GB. Manga dễ đọc, đề tài phong phú, vẽ cũng đẹp. Nhưng
+        manga không tô màu, không có bìa riêng, các truyện riêng biệt nhau,
+        không có được một quy trình phức tạp, công phu như truyện tranh phương
+        Tây. Tuy nhiên cái gì cũng có cái riêng của nó. Nên kết hợp những cái
+        hay (mình kết hợp?).</p>
+      <p>Manhua: 9.1 GB. Manhua phải nói là vẽ rất đẹp. Nét vẽ chau chuốt, chi
+        tiết. Tuy nhiên đọc có vẻ dài dòng. Nhiều truyện tưởng tượng một cách
+        thái quá đến mức "bệnh hoạn". Có lẽ chỉ có Phong Vân là vẽ đẹp, nội dung
+        hay, tiết tấu nhanh. Ô long viện thì lại là một trường hợp đặc biệt.</p>
+      <p>Marvel: 14.8 GB. Nhiều người đánh giá Marvel hay hơn DC. Nhưng với cá
+        nhân mình thì mình thích DC hơn. Thích Hawkeye, Superior foes of
+        Spider-man.</p>
+      <p>Other: 26.4 GB. Asterix, Các truyện cũ - Golden age, Dũng sĩ Hesman,
+        Thần đồng đất Việt (tự hào truyện tranh Việt Nam), Lucky Luke, Tarzan,
+        XIII, Tintin, Transformers,...</p>
+      <p>Không làm CSDL riêng. Quản lý theo thư mục.</p>
+      <h3>Evolution</h3>
+      <ul>
+        <li>Đọc truyện lậu, giấy chất lượng thấp <br>
+        </li>
+        <li>Scan chất lượng thấp</li>
+        <li>Scan chất lượng cao, đọc bằng ACDSee</li>
+        <li>Tổ chức rename, nén file, có trang index link</li>
+        <li>Đọc comic, nén CBZ, đọc bằng phần mềm Comix, dùng lệnh Java - DOS -
+          Shell</li>
+        <li>Đọc truyện - sách bản quyền, chất lượng cao</li>
+      </ul>
+      <h3>Link</h3>
+      <p><a href="https://archive.org/details/capcommanhua.7z" target="_blank">Capcom
+          Manhua Collection 7z : Capcom : Free Download, Borrow, and Streaming :
+          Internet Archive</a></p>
+      <p><a href="https://archive.org/details/monsterhunter2dosofficialguidebook"
+          target="_blank">Capcom Various Books : Capcom : Free Download, Borrow,
+          and Streaming : Internet Archive</a></p>
+      <p><a href="https://archive.org/details/kofmanhua.7z" target="_blank">Kof
+          Manhua Collection Version 2 : SNK : Free Download, Borrow, and
+          Streaming : Internet Archive</a></p>
+      <p><a href="https://archive.org/details/sg_World_Championship_Soccer_Rev_3_1989_Sega_JP-US_en"
+          target="_blank">World Championship Soccer Rev 3 : Sega : Free Borrow
+          &amp; Streaming : Internet Archive</a></p>
+      <ul>
+      </ul>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
 </html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Phương thức String.prototype.replaceAll">
+    <title>Phương thức String.prototype.replaceAll</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Phương thức String.prototype.replaceAll</h2>
+      <p>String.replace là một phương thức vô cùng hữu ích, cho phép chúng ta
+        thay thế 1 pattern trong một chuỗi bằng giá trị chúng ta truyền vào. Vấn
+        đề là nếu chúng ta muốn sử dụng string làm pattern chứ không phải là
+        RegEx, thì nó chỉ thay thế pattern đầu tiên được tìm thấy. Coi ví dụ để
+        hiểu nè:</p>
+      <pre>const str = 'I like my dog, my dog loves me';
+const newStr = str.replace('dog', 'cat');
+newStr;
+// "I like my cat, my dog loves me"</pre>
+      <p>Cái tên nói lên tất cả, String.replaceAll sẽ làm chính xác những gì
+        chúng ta cần trong trường hợp này, thay thế tất cả các pattern phù hợp
+        mà không cần sử dụng RegEx:</p>
+      <pre>const str = 'I like my dog, my dog loves me';
+const newStr = str.replaceAll('dog', 'cat');
+newStr;
+// "I like my cat, my cat loves me"</pre>
+      <p>Tham khảo:</p>
+      <p><a href="https://github.com/tc39/proposal-string-replaceall" target="_blank">tc39/proposal-string-replaceall:
+          ECMAScript proposal: String.prototype.replaceAll</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

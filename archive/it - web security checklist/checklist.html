@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="web security">
+    <title>Checklist ATTT cho ứng dụng web</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article class="mw-none">
+      <h2>Checklist ATTT cho ứng dụng web</h2>
+      <br>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Nội dung</th>
+            <th>Ghi chú</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. Quản lý xác thực, thông tin định danh<br>
+            </td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>1.1. Tên đăng nhập phải là duy nhất, không phân biệt hoa thường,
+              chỉ nên chứa tập các ký tự là chữ cái, chữ số, dấu gạch dưới.<br>
+            </td>
+            <td>Đã validate ở App\Http\Requests\Admin\User\StoreUserRequest và
+              App\Http\Requests\Admin\User\UpdateUserRequest. Validate phần
+              frontend ở user-modal.blade.php.<br>
+            </td>
+          </tr>
+          <tr>
+            <td>1.2. Không sử dụng chung thông tin đăng nhập. Nếu trong một hệ
+              thống dịch vụ có nhiều thông tin xác thực giữa các tiến trình,
+              dịch vụ thì thông tin xác thực phải khác nhau hoàn toàn.<br>
+            </td>
+            <td>Không có.<br>
+            </td>
+          </tr>
+          <tr>
+            <td>1.3. Thiết lập chính sách mật khẩu mạnh:<br>
+              a) Tuân thủ theo chính sách mật khẩu tại Quyết định số
+              1444/QĐCNVTQĐ-CNTT.<br>
+              b) Các mật khẩu đã đảm bảo theo chính sách trên phải nằm ngoài
+              danh sách blacklist các mật khẩu thông dụng, chi tiết xem tại Phụ
+              lục 01.<br>
+            </td>
+            <td>Đã check mật khẩu mạnh ở các chức năng thêm mới người dùng,
+              admin đổi mật khẩu, người dùng đổi mật khẩu.<br>
+            </td>
+          </tr>
+          <tr>
+            <td>1.4. Thiết lập thời gian hết hiệu lực cho mật khẩu tối đa 90
+              ngày, mật khẩu mới không được trùng với mật khẩu hiện tại.</td>
+            <td>Chưa làm.</td>
+          </tr>
+          <tr>
+            <td>1.5. Đối với chức năng reset / quên mật khẩu:<br>
+              a) Đường dẫn reset / quên mật khẩu được gửi qua email phải bị mất
+              hiệu lực sau lần truy cập đầu tiên hoặc sau 8 giờ nếu không được
+              truy cập.<br>
+              b) Nếu chức năng reset / quên mật khẩu thực hiện gửi mật khẩu qua
+              email, tin nhắn thì mật khẩu phải được sinh ngẫu nhiên và phải
+              tuân theo chính sách mật khẩu mạnh tại mục 1.3.<br>
+              c) Nếu chức năng reset / quên mật khẩu sử dụng mã OTP để kiểm tra
+              xác nhận từ người dùng, việc sử dụng mã OTP phải tuân thủ theo mục
+              9.7.<br>
+              d) Giới hạn số lần đổi mật khẩu trong ngày tối đa ≤ 03 lần.</td>
+            <td>Không có chức năng reset / quên mật khẩu.</td>
+          </tr>
+          <tr>
+            <td>1.6. Chỉ lưu dạng mã hash của mật khẩu, mã PIN trong database
+              (DB), sử dụng thuật toán hash từ SHA-256, SHA-512, SHA-3 và các
+              thuật toán tương đương.</td>
+            <td>Mã hóa bcrypt cho mật khẩu.</td>
+          </tr>
+          <tr>
+            <td>1.7. Trả về thông báo chung cho trường hợp người dùng đăng ký
+              thông tin định danh (username, email,…) đã tồn tại tại chức năng
+              đăng ký, hoặc gửi sai thông tin định danh tại các chức năng đăng
+              nhập, reset / quên mật khẩu, đổi địa chỉ email,…</td>
+            <td>Đã trả về thông báo chung.</td>
+          </tr>
+          <tr>
+            <td>1.8. Bật cơ chế bảo vệ bằng Captcha hoặc các hình thức tương
+              đương khi đăng nhập sai quá 5 lần liên tiếp. Việc đếm số lần đăng
+              nhập sai không được dựa theo SessionID và giá trị đếm số lần đăng
+              nhập sai không được lưu phía client.</td>
+            <td>Khóa tạm thời khi nhập sai tên đăng nhập, mật khẩu, mã OTP nhiều
+              lần.</td>
+          </tr>
+          <tr>
+            <td>1.9. Chỉ sử dụng phương thức POST để submit thông tin định danh,
+              bắt buộc sử dụng HTTPS cho đường truyền để tăng tính bảo mật.</td>
+            <td>Đã sử dụng phương thức POST.<br>
+              Chưa sử dụng HTTPS.</td>
+          </tr>
+          <tr>
+            <td>1.10. Tắt tính năng "autocomplete" đối với form chứa thông tin
+              nhạy cảm như: mã thẻ ngân hàng, mã thẻ cào, mã thẻ khách hàng…</td>
+            <td>Không có chức năng liên quan đến mã ngân hàng, mã thẻ cào, mã
+              khách hàng.</td>
+          </tr>
+          <tr>
+            <td>1.13. Đối với các webservice thuộc mô hình server gọi server,
+              việc xác thực phải đảm bảo ít nhất 3 yếu tố: username, password và
+              IP của server.</td>
+            <td>Các API đang chưa có cơ chế xác thực.</td>
+          </tr>
+          <tr>
+            <td>2. Quản lý phiên đăng nhập</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>2.1. Session phải được quản lý bởi server, sinh ngẫu nhiên và độ
+              dài tối thiểu là 128-bit (16 ký tự). Tạo mới session sau khi đăng
+              nhập thành công.</td>
+            <td>Quản lý đăng nhập ở App\Http\Controllers\Auth\LoginController,
+              sau khi đăng nhập thành công sẽ gọi phương thức
+              sendLoginResponse().<br>
+              Phương thức sendLoginResponse() được định nghĩa ở
+              Illuminate\Foundation\Auth\AuthenticatesUsers, có gọi
+              $request-&gt;session()-&gt;regenerate().<br>
+              Phương thức regenerate() được định nghĩa ở
+              Illuminate\Session\Store, có gọi phương thức migrate(). Phương
+              thức migrate() lại gọi phương thức generateSessionId().<br>
+              Phương thức generateSessionId() đang sinh ra xâu ngẫu nhiên dài 40
+              ký tự.</td>
+          </tr>
+          <tr>
+            <td>2.2. Session phải được thiết lập thời gian timeout, giá trị
+              timeout nên cân bằng giữa nhu cầu thương mại và yếu tố bảo mật.</td>
+            <td>Thời gian timeout sử dụng cấu hình lifetime ở file
+              config/session.php.<br>
+              Thời gian timeout đang được thiết lập là 2 tiếng.</td>
+          </tr>
+          <tr>
+            <td>2.4. Xóa giá trị sessionid và các dữ liệu gắn với session đó khi
+              người dùng đăng xuất.</td>
+            <td>Phương thức logout() ở App\Http\Controllers\Auth\LoginController
+              được định nghĩa ở Illuminate\Foundation\Auth\AuthenticatesUsers.<br>
+              Phương thức này đã gọi $request-&gt;session()-&gt;invalidate().<br>
+              Phương thức invalidate() được định nghĩa ở
+              Illuminate\Session\Store, có xóa dữ liệu hiện tại của session.</td>
+          </tr>
+          <tr>
+            <td>2.5. Cấu hình thuộc tính "Secure" đối với các ứng dụng sử dụng
+              HTTPS và "HTTP-Only" cho trường Cookie.</td>
+            <td>Kiểm tra bằng cách nhấn F12, vào Console, gõ lệnh:
+              document.cookie.<br>
+              Cookie XSRF-TOKEN vẫn đang truy cập được bằng JS. Tuy nhiên,
+              cookie này không được server sử dụng. Cookie này dùng ở thư viện
+              axios.<br>
+              Cấu hình secure, http_only ở file config/session.php. Hiện đang
+              cấu hình http_only, không cấu hình secure.</td>
+          </tr>
+          <tr>
+            <td>2.6. Đối với các chức năng quan trọng có tương tác với database,
+              ứng với mỗi phiên phải sinh thêm một token ngẫu nhiên, và thực
+              hiện kiểm tra tính hợp lệ của token này trước khi xử lý truy vấn
+              từ người dùng.</td>
+            <td>Đã sử dụng CSRF token.<br>
+              Cấu hình VerifyCsrfToken ở App\Http\Kernel.</td>
+          </tr>
+          <tr>
+            <td>3. Phân quyền</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>3.1. Kiểm tra phân quyền dựa trên các đối tượng được lưu tại
+              server (ví dụ: tham số lưu trên session server, dữ liệu lưu trên
+              DB,…).<br>
+              3.2. Phân quyền tối thiểu, chỉ đáp ứng đủ chức năng và tài nguyên
+              cho người dùng/ứng dụng.<br>
+              3.3. Phía giao diện người dùng: chỉ hiển thị các thành phần giao
+              diện, đường dẫn, hàm,... tương ứng với quyền của người dùng.<br>
+              3.4. Phía server: kiểm tra quyền tác động của người dùng / ứng
+              dụng trên các hàm và tài nguyên tương ứng trước khi thực hiện bất
+              cứ tác vụ nào tới hệ thống.</td>
+            <td>Đã phân quyền người dùng dựa vào vai trò.<br>
+              Có kiểm tra người dùng đăng nhập, vai trò admin trên server bằng
+              các middleware của Laravel.<br>
+              Các quyền (của vai trò) mới chỉ ẩn hiện menu thôi, chưa check ở
+              Controller.</td>
+          </tr>
+          <tr>
+            <td>3.5. Nên có tính năng xóa phiên làm việc hiện tại của người dùng
+              hoặc các cơ chế tương đương đối với các trường hợp quyền người
+              dùng bị thay đổi hoặc bị disable bởi người dùng có thẩm quyền.</td>
+            <td>Không có tính năng này.</td>
+          </tr>
+          <tr>
+            <td>3.6. Không đặt trang quản trị public Internet, trong trường hợp
+              bắt buộc phải đặt public phải giới hạn các IP được phép truy cập
+              hoặc sử dụng cơ chế xác thực đa nhân tố.</td>
+            <td>Không có trang quản trị riêng.</td>
+          </tr>
+          <tr>
+            <td>4. Tương tác với back-end</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>4.1. Mã hóa các dữ liệu nhạy cảm<br>
+              a) Đối với các loại dữ liệu nhạy cảm như thông tin tài khoản ngân
+              hàng, private key… phải thực hiện mã hóa trước khi lưu trữ, sử
+              dụng thuật toán AES-256 hoặc các thuật toán tương đương.<br>
+              b) Đối với các loại dữ liệu nhạy cảm như thông tin cá nhân, tài
+              khoản ngân hàng,... phải được mã hóa hoặc masking khi trao đổi phù
+              hợp với nghiệp vụ.</td>
+            <td>Mã hóa totp_secret_key.</td>
+          </tr>
+          <tr>
+            <td>4.2. SQL<br>
+              4.2.1. Sử dụng mô hình truy vấn prepared statement (parameterized
+              query) hoặc các hình thức tương đương.<br>
+              4.2.2. Trong 1 số trường hợp không sử dụng được các mô hình ở
+              trên, phải thiết lập danh sách whitelist các đầu vào mong muốn.</td>
+            <td>Sử dụng Query Builder, Eloquent của Laravel.</td>
+          </tr>
+          <tr>
+            <td>4.3. NoSQL<br>
+              4.3.1. Không công khai dịch vụ ra mạng Internet, cài đặt trong môi
+              trường mạng an toàn.<br>
+              4.3.2. Đối với các hệ NoSQL có hỗ trợ xác thực, phải cấu hình xác
+              thực khi truy cập.<br>
+              4.3.3. Phụ thuộc vào hệ NoSQL sử dụng, sử dụng các API hỗ trợ truy
+              vấn an toàn hoặc thực hiện escape các ký tự đặc biệt khi xây dựng
+              câu truy vấn.</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>4.6. Tương tác với OS (Hệ Điều Hành)<br>
+              4.6.1. Sử dụng các API hỗ trợ việc thực thi câu lệnh hệ thống.<br>
+              4.6.2. Không truyền trực tiếp dữ liệu người dùng truyền lên tới
+              OS, trong trường hợp bắt buộc phải thiết lập danh sách whitelist
+              các đầu vào mong muốn.</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>4.7. Tương tác với file<br>
+              4.7.1. Không truyền trực tiếp dữ liệu từ người dùng đến các hàm
+              include file.<br>
+              4.7.2. Lập danh sách whitelist các định dạng file được phép
+              upload.<br>
+              4.7.3. Validate file hợp lệ bằng cách kiểm tra phần mở rộng của
+              file tương ứng với whitelist định dạng file tại mục 4.7.2.<br>
+              4.7.4. Với các trường hợp không bắt buộc thì không lưu file upload
+              trong thư mục web, bỏ quyền thực thi trên thư mục upload.<br>
+              4.7.5. Khi cần ánh xạ tới các file tồn tại trên hệ thống phải
+              thiết lập danh sách whitelist đầu vào mong muốn hoặc gán các giá
+              trị định danh tương ứng file thay vì truyền tên file.<br>
+              4.7.6. Không trả về đường dẫn tuyệt đối của file.<br>
+              4.7.7. Tất cả dữ liệu, tài nguyên hệ thống (báo cáo, file upload,
+              file cấu hình...) không được lưu trong thư mục cho phép truy cập
+              trực tiếp không qua xác thực.</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>5. Kiểm soát dữ liệu đầu vào</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>5.1. Việc kiểm tra dữ liệu đầu vào phải được thực hiện phía
+              server.<br>
+              5.2. Thực hiện việc kiểm tra dữ liệu từ tất cả các nguồn dữ liệu
+              có tương tác với người dùng (Các tham số lấy từ GET/POST request,
+              HTTP Headers, dữ liệu lấy từ DB, dữ liệu từ file upload,…).<br>
+              5.3. Xác định 1 kiểu encoding nhất quán sử dụng khi hiển thị, trao
+              đổi hay lưu trữ dữ liệu. Chỉ thực hiện filter, validate dữ liệu
+              sau khi đã đưa dữ liệu về kiểu encoding đã xác định trước đó.<br>
+              5.4. Validate kiểu dữ liệu, phạm vi, kích thước dữ liệu và định
+              dạng dữ liệu.<br>
+              5.5. Nếu dữ liệu đầu vào bắt buộc là các ký tự đặc biệt, phải
+              thiếp lập danh sách whitelist các ký tự đầu vào mong muốn.</td>
+            <td>Đã có validate phía server.<br>
+              App\Models\Media.storageFile() và
+              App\Repositories\User\UserProfileRepository.store() đã xử lý file
+              upload.</td>
+          </tr>
+          <tr>
+            <td>6. Kiểm soát dữ liệu đầu ra</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>6.1. Phải chỉ rõ character encoding cho dữ liệu đầu ra.</td>
+            <td>Framework làm.</td>
+          </tr>
+          <tr>
+            <td>6.2. Phải thiết lập giá trị Content-type tương ứng với định dạng
+              dữ liệu trả về (ví dụ dữ liệu json phải tương ứng với Content-type
+              là application/json).</td>
+            <td>Framework làm.</td>
+          </tr>
+          <tr>
+            <td>6.3. Response body phải được encode theo ngữ cảnh sử dụng. Ví
+              dụ: Đầu ra là html, thực hiện html encode các kí tự đặc biệt
+              (&lt;&gt;’"&amp;) từ các nguồn dữ liệu không an toàn (Các tham số
+              lấy từ GET/POST request, HTTP Headers, dữ liệu lấy từ DB, dữ liệu
+              từ file upload,… có thể điều khiển được bởi người dùng).</td>
+            <td>Đã fix các bug XSS, escape khi hiển thị.</td>
+          </tr>
+          <tr>
+            <td>6.4. Response header: lọc bỏ các kí tự đặc biệt (\n, \r) do dữ
+              liệu người dùng truyền vào.</td>
+            <td>Response header không chứa ký tự do người dùng truyền vào.</td>
+          </tr>
+          <tr>
+            <td>6.5. Cookie trả về phải giới hạn tối thiểu nhất các thuộc tính
+              (domain, path, httponly, expire, secure). Tránh lưu trữ các dữ
+              liệu nhạy cảm trên cookie, nếu cần lưu trữ các dữ liệu nhạy cảm
+              thì phải thực hiện mã hóa các dữ liệu này với thuật toán đối xứng
+              mạnh và key chỉ được lưu trên server.</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>6.6. Hạn chế việc chuyển hướng, chuyển tiếp đến các URI khác.
+              Nếu ứng dụng có chức năng này phải lập danh sách whitelist các địa
+              chỉ server được phép thực hiện chuyển hướng, chuyển tiếp.</td>
+            <td>Không có chức năng chuyển hướng.</td>
+          </tr>
+          <tr>
+            <td>7. Kiểm soát ngoại lệ và ghi log ứng dụng</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>7.1. Xử lý các ngoại lệ bằng try-catch và trả về các thông báo
+              lỗi chung, thông báo lỗi trả về không được chứa các thông tin nhạy
+              cảm của người dùng, hệ thống,...</td>
+            <td>Khi trả về lỗi cho người dùng chỉ thông báo chung chung là {
+              "message": "Server Error" }.</td>
+          </tr>
+          <tr>
+            <td>7.2. Các thông tin lỗi, ngoại lệ này phải được log lại để phục
+              vụ bảo trì, xác định nguyên nhân lỗi ứng dụng.</td>
+            <td>Lưu trong file storage/logs/laravel-YYYY-MM-DD.log.</td>
+          </tr>
+          <tr>
+            <td>7.3. File log phải được đặt tại thư mục an toàn ngoài thư mục
+              web.</td>
+            <td>Lưu trong thư mục storage/logs, người dùng không truy cập được.</td>
+          </tr>
+          <tr>
+            <td>7.4. Không log lại các dữ liệu nhạy cảm (thông tin người dùng,
+              session id, thông tin hệ thống).</td>
+            <td>OK.</td>
+          </tr>
+          <tr>
+            <td>7.5. Giới hạn người dùng cho phép truy cập file log.</td>
+            <td>Đang phân quyền 777.</td>
+          </tr>
+          <tr>
+            <td>8. Sử dụng framework, thư viện (third-party components)</td>
+            <td><br>
+            </td>
+          </tr>
+          <tr>
+            <td>8.1. Loại các code thừa, các thành phần và thư viện không cần
+              thiết.</td>
+            <td>Laravel Echo đang bị comment lại.</td>
+          </tr>
+          <tr>
+            <td>8.2. Sử dụng phiên bản mới nhất của framework, thư viện tại thời
+              điểm phát triển ứng dụng và được tải về từ nguồn chính thức hoặc
+              đáng tin cậy.</td>
+            <td>OK lúc bắt đầu phát triển.</td>
+          </tr>
+          <tr>
+            <td>8.3. Thường xuyên cập nhật các bản vá lỗi cho framework, thư
+              viện.</td>
+            <td>laravel/framework 5.5, chưa phải mới nhất.</td>
+          </tr>
+          <tr>
+            <td>8.4. Tắt chế độ development của framework khi triển khai ứng
+              dụng thực tế.</td>
+            <td>Đã đổi APP_DEBUG=false ở file .env trên con triển khai UAT.</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

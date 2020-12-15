@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Toán tử logic và biểu thức gán">
+    <title>Toán tử logic và biểu thức gán</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Toán tử logic và biểu thức gán</h2>
+      <p>Với ES2021, chúng ta sẽ có thể kết hợp các Toán tử logic (&amp;&amp;,
+        || và ??) với biểu thức gán (=) tương tự như cách nó đã có thể làm trong
+        Ruby. Nếu bạn bỏ qua ES2020, bạn có thể không biết ?? là toán tử liên
+        kết vô hiệu (nullish coalescing). Hãy xem một ví dụ:</p>
+      <pre>const a = null ?? 'test';
+// 'test'
+const b = 0 ?? 'test';
+// 0</pre>
+      <p>Toán tử kết hợp nullish trả về phần tử bên phải khi phía bên trái là
+        null hoặc undefined, nếu không nó trả về phần tử bên trái. Trong ví dụ
+        đầu tiên, phần tử bên trái là null do đó nó trả về phần tử bên phải
+        trong khi ở ví dụ thứ hai, nó trả về phía bên trái vì nó không phải là
+        null hoặc undefined.</p>
+      <p>Back lại ES2021, với những đề xuất mới, chúng ta có thể thực hiện những
+        việc sau:</p>
+      <pre>a ||= b;
+// equivalent to a = a || b
+
+c &amp;&amp;= d;
+// equivalent to c = c &amp;&amp; d
+
+e ??= f;
+// equivalent to e = e ?? f</pre>
+      <p>Tham khảo:</p>
+      <p><a href="https://github.com/tc39/proposal-logical-assignment" target="_blank">tc39/proposal-logical-assignment:
+          A proposal to combine Logical Operators and Assignment Expressions</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>
