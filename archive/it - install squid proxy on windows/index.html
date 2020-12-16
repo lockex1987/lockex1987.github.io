@@ -1,0 +1,65 @@
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="squid proxy, windows, open firewall port">
+    <title>Cài đặt proxy Squid trên Windows</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Cài đặt proxy Squid trên Windows</h2>
+      <h3>Các bước cài đặt</h3>
+      <p>Download file msi từ địa chỉ <a href="http://squid.diladele.com" target="_blank">http://squid.diladele.com</a>.</p>
+      <div class="mb-3"> <img src="images/download.jpg"> </div>
+      <p>Sau khi download, click đúp vào file msi.</p>
+      <div class="mb-3"> <img src="images/squid_msi.jpg"> </div>
+      <p>Sau đó, click nút "Next" cho đến khi việc cài đặt hoàn tất. Bạn có thể
+        chỉ định thư mục cài đặt trong quá trình cài.</p>
+      <div class="mb-3"> <img src="images/license.jpg"> </div>
+      <div class="mb-3"> <img src="images/folder.jpg"> </div>
+      <div class="mb-3"> <img src="images/ready.jpg"> </div>
+      <div class="mb-3"> <img src="images/complete.jpg"> </div>
+      <p>Click nút "Finish" để hoàn tất. Bạn sẽ thấy ứng dụng Squid xuất hiện
+        trên thanh tray. Ứng dụng này cho phép bạn bật / tắt dịch vụ, cũng như
+        sửa cấu hình.</p>
+      <div class="mb-3"> <img src="images/tray.jpg"> </div>
+      <h3>Mở cổng Firewall</h3>
+      <p>Trong quá trình cài đặt file msi sẽ ở cổng TCP 3128 để kết nối đến
+        Squid từ máy khác trong mạng. Nếu vì lý do nào đó mà cổng chưa được mở,
+        bạn có thể làm theo các bước sau.</p>
+      <p>Gõ "Windows Defender Firewall with Advanced Security" ở Start Search và
+        nhấn Enter. Click tab "Inbound Rules" và nút "New Rule".</p>
+      <div class="mb-3"> <img src="images/fw_rule.jpg"> </div>
+      <p>Tạo một inbound rule cho phép client kết nối đến cổng TCP 3128, cổng
+        mặc định mà Squid chạy.</p>
+      <div class="mb-3"> <img src="images/fw_rule1.jpg"> </div>
+      <div class="mb-3"> <img src="images/fw_rule2.jpg"> </div>
+      <div class="mb-3"> <img src="images/fw_rule3.jpg"> </div>
+      <div class="mb-3"> <img src="images/fw_rule4.jpg"> </div>
+      <div class="mb-3"> <img src="images/fw_rule5.jpg"> </div>
+      <div class="mb-3"> <img src="images/fw_list.jpg"> </div>
+      <h3>Cấu hình Squid</h3>
+      <p>Từ ứng dụng Squid trên thanh tray, nhấn chọn "Open Squid
+        Configuration". Sau khi sửa cấu hình, hãy stop và start lại service.</p>
+      <div class="mb-3"><img src="images/open_squid_configuration.png" alt=""></div>
+      <h4>Cấu hình lại cổng 80</h4>
+      <p>Sửa lại cấu hình <code>http_port</code>.</p>
+      <pre># Squid normally listens to port 3128
+# http_port 3128
+http_port 80</pre>
+      <h4>Cấu hình mặc định cho phép</h4>
+      <p>Tìm đến dòng <code>http_access</code> cuối cùng, chuyển từ <code>deny</code>
+        thành <code>allow</code>.</p>
+      <pre># And finally deny all other access to this proxy
+# http_access deny all
+http_access allow all</pre>
+      <h3>Tham khảo</h3>
+      <p><a href="https://docs.diladele.com/howtos/installing_squid_windows/index.html"
+          target="_blank">How to Install Squid 3.5 on Windows — Web Filter for
+          Your Network</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

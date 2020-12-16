@@ -9,18 +9,18 @@ const postsCategories = [
 ];
 
 const archiveCategories = [
-    { name: 'js', y: 144 },
+    { name: 'js', y: 145 },
     { name: 'ui', y: 123 },
     { name: 'laravel', y: 76 },
     { name: 'php', y: 64 },
     { name: 'project', y: 50 },
-    { name: 'it', y: 42 },
+    { name: 'it', y: 43 },
     { name: 'css', y: 39 },
     { name: 'story', y: 36 },
     { name: 'git', y: 27 },
     { name: 'bootstrap', y: 22 },
     { name: 'linux', y: 21 },
-    { name: 'webext', y: 20 },
+    { name: 'webext', y: 19 },
     { name: 'java', y: 16 },
     { name: 'mysql', y: 13 },
     { name: 'vue', y: 12 },

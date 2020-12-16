@@ -9,7 +9,7 @@ async function getImagesKenhsinhvien(postUrl, folder) {
 
     const images = [];
     let no = 0;
-    const a = doc.querySelectorAll('.LbImage');
+    const a = doc.querySelectorAll('.LbImage, .bbImage');
     a.forEach((img, i) => {
         const imageUrl = img.getAttribute('src');
         if (imageUrl) {

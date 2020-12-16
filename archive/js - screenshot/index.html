@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Chụp ảnh màn hình để thông báo lỗi, export image report, dom-to-image, html2canvas, rasterizehtml, webext">
+    <title>Chụp ảnh màn hình</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body>
+    <article>
+        <h2>Chụp ảnh màn hình</h2>
+        <p>Sử dụng thư viện dom-to-image, html2canvas, rasterizeHTML hoặc API của web extension.</p>
+        <p>Thư viện html2canvas không hỗ trợ box-shadow, ảnh ở domain khác (phải thêm thư viện), tốc độ có vẻ chậm hơn
+            thư viện dom-to-image.</p>
+        <p>Khi dùng thư viện html2canvas, có thể thêm thuộc tính <code>data-html2canvas-ignore</code> với các phần tử
+            mà bạn không muốn được bao gồm ở trong screenshot.</p>
+
+        <h3>Tham khảo</h3>
+        <p><a href="https://github.com/tsayen/dom-to-image" target="_blank">tsayen/dom-to-image: Generates an image from a DOM node using HTML5 canvas</a></p>
+        <p><a href="https://html2canvas.hertzen.com/" target="_blank">html2canvas - Screenshots with JavaScript</a></p>
+        <p><a href="https://github.com/cburgmer/rasterizeHTML.js" target="_blank">cburgmer/rasterizeHTML.js: Renders HTML into the browser's canvas</a></p>
+        <p><a href="https://developer.chrome.com/extensions/tabs#method-captureVisibleTab" target="_blank">chrome.tabs - captureVisibleTab</a></p>
+        <p><a href="https://chrome.google.com/webstore/detail/viettel-toolbox/omehhfeofcbjclpaaokhlafmjidkjleo" target="_blank">Viettel Toolbox</a></p>
+        <p><a href="https://hackernoon.com/how-to-take-full-page-screenshots-in-chrome-without-extensions-be2f0cf36df1" target="_blank">How to take full page screenshots in Chrome without extensions</a></p>
+
+        <h3>Demo</h3>
+        <div id="capture" class="mb-3 bg-warning" style="padding: 10px; height: 200px;">
+            <div style="color: #000;" class="font-italic">Hello world!</div>
+            <div data-html2canvas-ignore="true">Không ở trong screenshot</div>
+            <div>
+                <img src="https://graph.facebook.com/100000755701241/picture?type=square&amp;access_token=1657333527626637%7Ce8V2df-t9VMaG0R8_0PDGs0_pW4"
+                        class="rounded-circle">
+            </div>
+        </div>
+
+        <div class="mb-3 border">
+            <canvas id="theCanvas" width="400" height="200"></canvas>
+        </div>
+
+        <div>
+            <button id="exportButton" class="btn btn-primary">
+                Export
+            </button>
+        </div>
+    </article>
+
+    <script src="libs/html2canvas/js/html2canvas.min.js"></script>
+    <script src="libs/dom-to-image/js/dom-to-image.min.js"></script>
+    <script src="libs/rasterizehtml/js/rasterizeHTML.allinone.js"></script>
+
+    <script src="../../js/common.js"></script>
+
+    <script src="js/script.js"></script>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>
