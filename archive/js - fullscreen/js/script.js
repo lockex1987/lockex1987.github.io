@@ -1,16 +1,18 @@
-let videoElement = document.querySelector('#myImage');
-
 function toggleFullScreen() {
     if (!document.fullscreenElement) {
-        videoElement.requestFullscreen();
+        const imageElement = document.querySelector('#myImage');
+        imageElement.requestFullscreen();
     } else {
         document.exitFullscreen();
     }
 }
 
 document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode == 13) {
+    const key = evt.key.toLowerCase();
+    if (key === 'f') {
         toggleFullScreen();
+    } else if (key === 'escape') {
+        document.exitFullscreen();
     }
 });
 
@@ -18,9 +20,6 @@ document.addEventListener('fullscreenchange', () => {
     console.log(document.fullscreenElement ? 'Full' : 'Not');
 });
 
-videoElement.addEventListener('click', () => {
+document.querySelector('#theButton').addEventListener('click', () => {
     toggleFullScreen();
 });
-
-alert(1);
-

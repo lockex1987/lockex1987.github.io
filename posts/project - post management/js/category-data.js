@@ -13,7 +13,7 @@ const archiveCategories = [
     { name: 'ui', y: 123 },
     { name: 'laravel', y: 76 },
     { name: 'php', y: 64 },
-    { name: 'project', y: 50 },
+    { name: 'project', y: 49 },
     { name: 'it', y: 43 },
     { name: 'css', y: 39 },
     { name: 'story', y: 36 },
