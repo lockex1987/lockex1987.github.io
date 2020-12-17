@@ -41,7 +41,7 @@ const App = {
             <div class="info">
                 <div class="mb-2">
                     <a class="title text-blue font-size-1.25"
-                            :href="(isArchivePage ? 'archive/' : 'posts/') + p.path + '/'">
+                            :href="'posts/' + p.path + '/'">
                         <span v-html="highlightText(p.title)"></span>
                     </a>
                 </div>
@@ -51,7 +51,7 @@ const App = {
 
                 <div class="mt-1">
                     <a class="text-body font-size-0.875 text-decoration-none"
-                            :href="(isArchivePage ? 'archive/' : 'posts/') + p.path + '/'">
+                            :href="'posts/' + p.path + '/'">
                         <span v-html="highlightText(p.path)"></span>
                     </a>
                 </div>
@@ -197,7 +197,7 @@ const App = {
          * Đổi title.
          */
         setTitle () {
-            document.title = (this.isArchivePage ? 'Archive' : 'Posts') +
+            document.title = 'Posts' +
                 (this.query ? ` "${this.query}"` : '');
         },
 
