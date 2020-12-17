@@ -260,5 +260,6 @@ export default {
     processChapterFromCssSelector,
     createLocalFileName,
     extractChapterNumber,
-    getImageExtension
+    getImageExtension,
+    paddingZero
 };
