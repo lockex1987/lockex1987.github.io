@@ -1,69 +1,21 @@
-import ImageSpliter from './ImageSpliter.js';
-
-const template = `
-<div v-show="screen == 'comic-viewer'">
-    <div class="current-progress zindex-10 position-fixed top-left mt-2 ml-2">
-        <div class="bar"
-                :style="{ width: percent + '%'}"></div>
-    
-        <span class="current-index-label">
-            {{text}}
-        </span>
-    </div>
-
-    <span class="position-fixed top-right mt-2 mr-2 cursor-pointer font-weight-500 font-size-1.5 text-danger zindex-10 la la-times"
-            @click="returnIssueListScreen()">
-    </span>
-
-    <!-- Toggle fullscreen -->
-    <i class="la font-size-1.5 zindex-10 cursor-pointer position-fixed top-right mr-5 mt-2 text-success"
-            :class="[isFullScreen ? 'la-compress-arrows-alt' : 'la-expand-arrows-alt']"
-            @click="toggleFullscreen()"
-            :title="isFullScreen ? 'Thoát toàn màn hình' : 'Xem toàn màn hình'"></i>
-
-    <div ref="readerBox"
-            class="text-center d-flex justify-content-center align-items-center vw-100 vh-100">
-        <img v-for="(image, idx) in imageList"
-                class="mw-100 mh-100 h-auto"
-                :src="image"
-                v-show="idx == currentIndex"/>
-
-        <!--img class="mw-none h-auto d-block"
-                :style="{
-                    'max-width': viewerWidth + 'px',
-                    'max-height': viewerHeight + 'px'
-                }"
-                :src="imageList[currentIndex]"
-                v-if="imageList && currentIndex < imageList.length"/-->
-
-        <!--div v-for="p in panels" class="">
-            <img :src="p" class=""/>
-        </div-->
-        <div ref="smallPanelsContainer"></div>
-    </div>
-
-    <div class="pointer-events-none zindex-20 position-fixed top-left h-100 d-flex align-items-center">
-        <button class="pointer-events-auto btn btn-primary rounded font-size-1.25vw opacity-0.5 hover:opacity-1 ml-2 prev-button"
-                @click="prevPanel()">
-            &lt;
-        </button>
-    </div>
-
-    <div class="pointer-events-none zindex-20 position-fixed top-right h-100 d-flex align-items-center">
-        <button class="pointer-events-auto btn btn-primary rounded font-size-1.25vw opacity-0.5 hover:opacity-1 mr-2 next-button"
-                @click="nextPanel()">
-            &gt;
-        </button>
-    </div>
-</div>`;
-
 export default {
-    template,
-
     data() {
         return {
-            // Mảng các phần tử ảnh
+            // Màn hình hiện tại
+            // Có thể có các giá trị 'comic-list', 'comic-viewer'
+            screen: 'comic-list',
+
+            // Mảng các phần tử ảnh (URL.createObjectURL) trong file cbz, cbr
             imageList: [],
+
+            // Mảng tên các ảnh,
+            nameList: [],
+
+            // Hiển thị toolbar
+            showToolbar: true,
+
+            // Tổng số ảnh trong file cbz, cbr
+            imageListLength: 0,
 
             // Chỉ số index của trang hiện tại
             currentIndex: 0,
@@ -71,8 +23,11 @@ export default {
             // Có đang ở chế độ toàn màn hình hay không
             isFullScreen: false,
 
+            // Chế độ xem ảnh (actual-size, best-fit, fit-width, fit-height)
+            viewMode: 'best-fit',
+
             // Kích thước của ảnh bằng kích thước của viewer
-            // Không sử dụng 100% để có thể zoom được
+            // Không sử dụng 100% hoặc 100vh, 100vw để có thể zoom được
             viewerWidth: null,
             viewerHeight: null,
 
@@ -82,75 +37,184 @@ export default {
     },
 
     computed: {
-        ...Vuex.mapState({
-            screen: state => state.layout.screen,
-            zipImageList: state => state.comic.zipImageList
-        }),
-
         /**
          * Phần trăm hoàn thành.
          */
-        percent() {
-            if (this.imageList.length == 0) {
-                return 0;
+        viewProgress() {
+            if (this.imageListLength == 0) {
+                return {
+                    percent: 0,
+                    label: '...'
+                };
             }
-            return (this.currentIndex + 1) * 100 / this.imageList.length;
+            return {
+                percent: (this.currentIndex + 1) * 100 / this.imageListLength,
+                label: (this.currentIndex + 1) + ' / ' + this.imageListLength
+            };
         },
 
         /**
-         * Text hiển thị.
+         * Tên của ảnh hiện tại.
          */
-        text() {
-            if (this.imageList.length == 0) {
-                return '...';
+        currentImageName() {
+            if (this.currentIndex >= this.nameList.length) {
+                return '';
             }
-            return (this.currentIndex + 1) + ' / ' + this.imageList.length;
-        }
-    },
-
-    watch: {
-        zipImageList() {
-            this.imageList = this.zipImageList;
-        },
-
-        viewZip() {
-            this.currentIndex = 0;
+            return this.nameList[this.currentIndex];
         }
     },
 
     mounted() {
-        this.listenToSwipeEvent();
-        this.computeViewerDimension();
-
-        // window.addEventListener('resize', this.computeViewerDimension);
-        // this.toggleFullScreen();
+        this.handleSwipeEvent();
         this.handleFullScreenChangeEvent();
+        this.handleKeyboardShortcuts();
+
+        this.computeViewerDimension();
+        window.addEventListener('resize', this.computeViewerDimension);
     },
 
     methods: {
         /**
-         * Chuyển về trang danh sách issue.
+         * Bắt các sự kiện phím tắt.
          */
-        returnIssueListScreen() {
-            this.$store.commit('layout/setScreen', 'comic-list');
+        handleKeyboardShortcuts() {
+            document.addEventListener('keydown', (evt) => {
+                const key = evt.key.toLowerCase();
+                // console.log(key);
+
+                if (this.screen == 'comic-viewer') {
+                    if (key == 'pageup') {
+                        evt.preventDefault();
+                        this.gotoPreviousImage();
+                    } else if (key == 'pagedown') {
+                        evt.preventDefault();
+                        this.gotoNextImage();
+                    } else if (key == 'escape') {
+                        this.closeViewer();
+                    } else if (key == 'f') {
+                        this.toggleFullscreen();
+                    } else if (key == 'escape') {
+                        // exit fullscreen hoặc thoát chương trình
+                    } else if (key == 'a') {
+                        this.viewMode = 'actual-size';
+                    } else if (key == 'b') {
+                        this.viewMode = 'best-fit';
+                    } else if (key == 'w') {
+                        this.viewMode = 'fit-width';
+                    } else if (key == 'h') {
+                        this.viewMode = 'fit-height';
+                    } else if (key == 't') {
+                        this.showToolbar = !this.showToolbar;
+                    }
+
+                    // H: Home (hiển thị danh sách ảnh dạng grid)
+                } else {
+                    if (key == 'o') {
+                        this.$refs.inputFileChooser.click();
+                    }
+                }
+            });
+        },
+
+        /**
+         * Xử lý khi chọn file.
+         * @param {Event} evt Đối tượng sự kiện.
+         */
+        handleChooseFile(evt) {
+            const files = evt.target.files;
+            if (files.length) {
+                const file = files[0];
+                // console.log(file);
+                document.title = file.name;
+                this.handleFile(file);
+
+                evt.target.value = '';
+            }
+        },
+
+        /**
+         * Kiểm tra có phải là file ảnh hay không.
+         * @param {String} url Đường dẫn
+         */
+        isImageFile(url) {
+            const fileExtension = url.split('.')
+                .pop()
+                .toLowerCase();
+            return ['jpg', 'jpeg', 'png'].includes(fileExtension);
+        },
+
+        /**
+         * Xử lý file được chọn.
+         * @param {Object} file Đối tượng file được chọn.
+         */
+        handleFile(file) {
+            archiveOpenFile(file, null, (archive, err) => {
+                // Nếu có lỗi
+                if (!archive) {
+                    alert(err);
+                    return;
+                }
+
+                // console.info('Uncompressing ' + file.name + ' (' + archive.archive_type + ') ...');
+
+                // Chỉ lọc ra file ảnh
+                const arr = archive.entries.filter(e => e.is_file && this.isImageFile(e.name));
+                // console.log(arr);
+
+                // Hiển thị viewer
+                this.screen = 'comic-viewer';
+                this.currentIndex = 0;
+                this.imageListLength = arr.length;
+
+                // Đọc từng file ảnh một
+                // Hiển thị ảnh đầu tiên nhanh nhất có thể
+                let idx = 0;
+                this.imageList = [];
+                this.nameList = arr.map(e => e.name);
+                const readImage = () => {
+                    arr[idx].readData(data => {
+                        this.imageList.push(URL.createObjectURL(new Blob([data])));
+
+                        // console.log(`${idx + 1} / ${arr.length}`);
+
+                        idx++;
+                        if (idx < arr.length) {
+                            readImage();
+                        }
+                    });
+                };
+
+                readImage();
+            });
+        },
+
+        /**
+         * Đóng màn hình viewer.
+         */
+        closeViewer() {
+            // Chuyển về trang chủ
+            this.screen = 'comic-list';
 
             // Thoát khỏi toàn màn hình (nếu đang ở trong chế độ toàn màn hình)
             if (document.fullscreenElement) {
                 document.exitFullscreen();
             }
 
-            // TODO: Free objectUrl
+            // Free objectUrl để tiết kiệm bộ nhớ
+            this.imageList.forEach(url => URL.revokeObjectURL(url));
         },
 
+        /**
+         * Tính toán kích thước màn hình.
+         */
         computeViewerDimension() {
-            const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-            const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-            this.viewerWidth = vw; // - 10
-            this.viewerHeight = vh;
-            console.log(this.viewerWidth);
+            this.viewerWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 10;
+            this.viewerHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
         },
 
         splitImage() {
+            // import ImageSpliter from './ImageSpliter.js';
+
             // 'images/origin.jpg'
             new ImageSpliter().split(this.imageList[this.currentIndex], (images) => {
                 this.$refs.smallPanelsContainer.innerHTML = '';
@@ -162,37 +226,32 @@ export default {
         },
 
         /**
-         * Chuyển trang.
-         * @param {Integer} offset Đến trang tiếp (1) hoặc trang trước đó (-1)
+         * Chuyển đến ảnh nào đó.
+         * @param {Integer} idx Vị trí ảnh
          */
-        gotoImage(offset) {
-            this.currentIndex += offset;
+        gotoImage(idx) {
+            this.currentIndex = idx;
+            // this.splitImage();
         },
 
         /**
          * Chuyển đến ảnh trước đó.
          */
-        prevPanel() {
+        gotoPreviousImage() {
             if (this.currentIndex > 0) {
                 this.scrollToTop();
-                this.drawPanel(this.currentIndex - 1);
+                this.gotoImage(this.currentIndex - 1);
             }
         },
 
         /**
          * Chuyển đến ảnh tiếp theo.
          */
-        nextPanel() {
+        gotoNextImage() {
             if (this.currentIndex + 1 < this.imageList.length) {
                 this.scrollToTop();
-                this.drawPanel(this.currentIndex + 1);
+                this.gotoImage(this.currentIndex + 1);
             }
-        },
-
-        drawPanel(num) {
-            this.currentIndex = num;
-
-            // this.splitImage();
         },
 
         /**
@@ -217,7 +276,7 @@ export default {
          */
         toggleFullscreen() {
             if (!document.fullscreenElement) {
-                this.$el.requestFullscreen();
+                document.body.requestFullscreen();
             } else {
                 document.exitFullscreen();
             }
@@ -247,17 +306,17 @@ export default {
         /**
          * Thêm sự kiện swipe trái và phải.
          */
-        listenToSwipeEvent() {
+        handleSwipeEvent() {
             const hammer = new Hammer(this.$refs.readerBox);
             hammer.on('swipeleft swiperight tap', (evt) => {
                 if (evt.isFinal) {
                     if (evt.type == 'swipeleft') {
                         if (this.currentIndex + 1 < this.imageList.length) {
-                            this.gotoImage(1);
+                            this.gotoImage(this.currentIndex + 1);
                         }
                     } else if (evt.type == 'swiperight') {
                         if (this.currentIndex - 1 >= 0) {
-                            this.gotoImage(-1);
+                            this.gotoImage(this.currentIndex - 1);
                         }
                     } else if (evt.type == 'tap') {
                         // this.toggleFullScreen();

@@ -3,28 +3,121 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="cbz, cbr, vue module">
+	<!--meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" /-->
+	<meta name="description" content="cbz, cbr, vue module, comic viewer">
 
-	<title>Comic viewer</title>
+	<title>eComix</title>
 
-	<link rel="icon" href="../../images/favicon.png"/>
-	<link rel="stylesheet" href="../../css/style.css"/>
+	<link rel="icon" href="images/comix.png"/>
+	<link rel="stylesheet" href="css/bootstrap-extended.css"/>
 </head>
 
-<body class="no-float-button">
-	<div id="app"></div>
+<body class="overflow-auto custom-scrollbar">
+	<div id="app"
+			v-cloak>
+		<div v-show="screen == 'comic-list'"
+				class="p-3">
+			<h2>eComix</h2>
+
+			<div class="mb-3">
+				<input type="file"
+						accept=".cbr,.cbz"
+						@change="handleChooseFile($event)"
+						ref="inputFileChooser">
+			</div>
+		</div>
+
+		<div v-show="screen == 'comic-viewer'">
+			<!-- Phần trăm đã đọc -->
+			<div class="view-progress zindex-10 position-fixed top-left mt-2 ml-2">
+				<div class="position-absolute view-progress-bar bg-primary"
+						:style="{ width: viewProgress.percent + '%'}"></div>
+			
+				<span class="position-absolute view-progress-label text-white pl-2">
+					{{viewProgress.label}}
+				</span>
+			</div>
+		
+			<!-- Nút đóng -->
+			<span class="position-fixed top-right mt-2 mr-2 cursor-pointer font-weight-500 font-size-1.5 text-danger zindex-10 la la-times"
+					@click="closeViewer()">
+			</span>
+		
+			<!-- Nút toggle fullscreen -->
+			<i class="la font-size-1.5 zindex-10 cursor-pointer position-fixed top-right mr-5 mt-2 text-success"
+					:class="[isFullScreen ? 'la-compress-arrows-alt' : 'la-expand-arrows-alt']"
+					@click="toggleFullscreen()"
+					:title="isFullScreen ? 'Thoát toàn màn hình' : 'Xem toàn màn hình'"></i>
+		
+			<div ref="readerBox"
+					class="text-center viewer-box d-flex justify-content-center align-items-center"
+					:class="viewMode">
+				<img v-for="(image, idx) in imageList"
+						:src="image"
+						:style="{
+							'max-width': ['best-fit', 'fit-width'].includes(viewMode) ? viewerWidth + 'px' : 'none',
+							'max-height': ['best-fit', 'fit-height'].includes(viewMode) ? viewerHeight + 'px' : 'none'
+						}"
+						v-show="idx == currentIndex"/>
+			</div>
+		
+			
+			
+
+			
+
+			<!-- Toolbar -->
+			<div class="d-flex zindex-20 position-fixed bottom-left w-100 py-1"
+					style="background-color: rgba(0, 0, 0, 0.3)"
+					v-show="showToolbar">
+				<!-- Nút ảnh trước -->
+				<button class="pointer-events-auto btn btn-primary rounded font-size-1.25vw opacity-0.5 hover:opacity-1 ml-2 prev-button"
+						@click="gotoPreviousImage()">
+					&lt;
+				</button>
+					
+				<!-- Tên của ảnh hiện tại -->
+				<div class="px-3 text-center text-white">
+					{{currentImageName}}
+				</div>
+
+				<!-- Nút ảnh sau -->
+				<button class="pointer-events-auto btn btn-primary rounded font-size-1.25vw opacity-0.5 hover:opacity-1 mr-2 next-button"
+						@click="gotoNextImage()">
+					&gt;
+				</button>
+			</div>
+		</div>
+	</div>
+	
+
+	<!--p>
+        We are using node
+        <script>document.write(process.versions.node)</script>,
+        Chrome
+        <script>document.write(process.versions.chrome)</script>,
+        and Electron
+        <script>document.write(process.versions.electron)</script>.
+    </p-->
+
+    <!--div>
+        <img id="theImage"/>
+    </div-->
 
 	<link rel="stylesheet" href="libs/line-awesome/css/line-awesome.min.css">
+
 	<script src="libs/hammer/js/hammer.min.js"></script>
     <script src="libs/vue/js/vue.min.js"></script>
 	<script src="libs/vue/js/vuex.min.js"></script>
+	<script src="libs/mousetrap/js/mousetrap.min.js"></script>
 
     <!-- Đường dẫn không được chứa ký tự ( -->
 	<script src="libs/uncompress/uncompress.js"></script>
 
 	<link rel="stylesheet" href="css/comic-viewer.css">
-    <script src="js/script.js" type="module"></script>
-
-	<!--script src="../../js/docs.js"></script-->
+	<script type="module" src="js/comic-viewer.js"></script>
+	
+	<!--script src="js/renderer.js"></script-->
+    <!--script src="js/electron-script.js"></script-->
 </body>
 </html>

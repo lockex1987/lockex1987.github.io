@@ -1,53 +1,53 @@
-.current-progress {
+.view-progress {
     background-color: rgba(0, 0, 0, 0.5);
     height: 20px;
     width: 100px;
 
-    .bar {
-        background-color: blue;
+    .view-progress-bar {
         height: 20px;
-        position: absolute;
         transition: width 0.5s;
     }
     
-    .current-index-label {
-        color: #FFF;
-        position: absolute;
-        left: 10px;
+    .view-progress-label {
         line-height: 20px;
     }
 }
 
-.viewer {
+.viewer-box {
     min-height: 100vh;
-}
 
-// Lấy style ở random girl
-.wrapper {
-    text-align: center;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    overflow: hidden;
-    padding: 0px 0;
-}
+    img {
+        max-width: none;
+        max-height: none;
+        width: auto;
+        height: auto;
+    }
 
-.the-image {
-    max-width: 100%;
-    max-height: 100%;
-}
+    &.actual-size {
 
-.the-name {
-    position: fixed;
-    bottom: 10px;
-    text-align: center;
-    width: 100%;
-}
+        img {
+            
+        }
+    }
+    
+    &.best-fit {
+        
+        img {
+            
+        }
+    }
+    
+    &.fit-width {
+        
+        img {
+            
+        }
+    }
 
-.the-name span {
-    background-color: rgba(0, 0, 0, 0.3);
-    color: white;
-    padding: 5px 15px;
+    &.fit-height {
+        
+        img {
+            
+        }
+    }
 }
