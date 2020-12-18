@@ -3,19 +3,6 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!--meta property="og:image" content="https://lockex1987.github.io/images/logo/logo-256.png"/>
-    <meta property="og:image:secure_url" content="https://lockex1987.github.io/images/logo/logo-256.png"/>
-
-    <meta property="og:image:width" content="400" />
-    <meta property="og:image:height" content="400" />
-
-    <meta property="og:url"           content="https://lockex1987.github.io/posts/project%20-%20post%20management/" />
-    <meta property="og:type"          content="website" />
-    <meta property="og:title"         content="Your Website Title" />
-    <meta property="og:description"   content="Your description" />
-    <meta property="og:image"         content="https://lockex1987.github.io/images/logo/logo-256.png" /-->
-
     <meta name="description" content="Quản lý các bài viết trên blog của tôi">
     <meta name="date" content="2020-01-01 15:56:00">
     <title>Quản lý bài viết</title>
@@ -32,25 +19,19 @@
 
       <p>Vào ngày đầu tiên của năm 2020 này, tôi quy hoạch lại các bài viết:
         giảm số lượng, tăng chất lượng, tập trung vào những cái ghi trong CV.</p>
-      <p>Chia làm 2 thư mục con:</p>
-      <ul>
-        <li>archive: Các bài viết cũ, ghi chép dạng nháp</li>
-        <li>posts: Các bài viết đã hoàn thành, thuộc trạng thái có thể xuất bản,
-          có Facebook comment, có thời gian xuất bản, có ảnh minh họa</li>
-      </ul>
-      <h3>Biểu đồ archive</h3>
-      <div id="archiveChart" class="my-3" style="height: 400px;"></div>
-      <h3>Biểu đồ posts</h3>
+
+      <p>Các bài viết đã hoàn thành, thuộc trạng thái có thể xuất bản thì được đánh dấu bằng thời gian xuất bản.
+        Các bài viết này sẽ có thêm bình luận Facebook, ảnh minh họa.</p>
+      <p>Tỷ lệ bài viết của các thể loại:</p>
       <div id="postChart" class="my-3" style="height: 400px;"></div>
     </article>
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <!--script src="https://code.highcharts.com/highcharts-3d.js"></script-->
     <!--script src="https://code.highcharts.com/modules/exporting.js"></script-->
     <!--script src="https://code.highcharts.com/modules/export-data.js"></script-->
 
-    <!--script src="https://code.highcharts.com/highcharts-3d.js"></script-->
-    <script src="js/category-data.js"></script>
-    <script src="js/script.js"></script>
+    <script type="module" src="js/script.js"></script>
     <script src="../../js/docs.js"></script>
   </body>
 </html>

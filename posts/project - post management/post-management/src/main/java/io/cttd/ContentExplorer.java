@@ -19,17 +19,12 @@ public class ContentExplorer {
 		// Lấy danh sách file, danh sách chuyên mục (cùng số bài)
 		List<Content> postList = this.getPostList("posts");
 		Map<String, Integer> postCategories = this.calculateCategoryCountMap(postList);
-		
-		List<Content> archiveList = this.getPostList("archive");
-		Map<String, Integer> archiveCategories = this.calculateCategoryCountMap(archiveList);
 
 		// Nội dung để ghi ra file
 		String contentData =
-				this.getContentListJson(postList, "allPosts") +
-				this.getContentListJson(archiveList, "allArchive");
+				this.getContentListJson(postList, "allPosts");
 		String categoriesData =
-				this.getCategoryCountMapJson(postCategories, "postsCategories") +
-				this.getCategoryCountMapJson(archiveCategories, "archiveCategories");
+				this.getCategoryCountMapJson(postCategories, "postsCategories");
 		
 		// Ghi ra file
 		this.writeDataFile(contentData, "js/content-data.js");
@@ -110,10 +105,10 @@ public class ContentExplorer {
 					}
 					json.append(" },\n");
 				});
-		return "const " + constName + " = [\n"
+		return "export default [\n"
 				+ json.substring(0, json.length() - 2) // loại dấu phảy cuối cùng
 				+ "\n];"
-				+ "\n\n";
+				+ "\n";
 	}
 	
 	/**
@@ -131,10 +126,10 @@ public class ContentExplorer {
 				.forEach(e -> {
 					json.append("    { name: '" + e.getKey() + "', y: " + e.getValue() + " },\n");
 				});
-		return "const " + constName + " = [\n"
+		return "export default [\n"
 				+ json.substring(0, json.length() - 2) // loại dấu phảy cuối cùng
 				+ "\n];"
-				+ "\n\n";
+				+ "\n";
 	}
 
 	/**

@@ -5,17 +5,18 @@ package io.cttd;
  */
 public class Content {
 
-	// Thể loại (JavaScript, HTML, Bootstrap, Java,...)
+	// Thể loại (JS, Bootstrap, Java,...)
 	private String category;
+
 	// Tiêu đề bài viết
 	private String title;
+
 	// Đường dẫn bài viết (bên trong thư mục to posts)
 	private String path;
+
 	// Mô tả bài viết
-	// Gộp chung tag vào mô tả
 	private String description;
-	// Ngôn ngữ của bài viết (tiếng Anh, tiếng Việt)
-	// private String language;
+
 	// Ngày xuất bản
 	private String date;
 

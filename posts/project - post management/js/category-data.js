@@ -1,25 +1,15 @@
-const postsCategories = [
-    { name: 'linux', y: 10 },
-    { name: 'project', y: 6 },
-    { name: 'js', y: 4 },
-    { name: 'it', y: 3 },
-    { name: 'laravel', y: 2 },
-    { name: 'ui', y: 1 },
-    { name: 'redis', y: 1 }
-];
-
-const archiveCategories = [
-    { name: 'js', y: 145 },
-    { name: 'ui', y: 123 },
-    { name: 'laravel', y: 76 },
+export default [
+    { name: 'js', y: 149 },
+    { name: 'ui', y: 124 },
+    { name: 'laravel', y: 78 },
     { name: 'php', y: 63 },
-    { name: 'project', y: 46 },
-    { name: 'it', y: 43 },
+    { name: 'project', y: 52 },
+    { name: 'it', y: 46 },
     { name: 'css', y: 39 },
     { name: 'story', y: 36 },
+    { name: 'linux', y: 31 },
     { name: 'git', y: 27 },
     { name: 'bootstrap', y: 22 },
-    { name: 'linux', y: 21 },
     { name: 'webext', y: 19 },
     { name: 'java', y: 16 },
     { name: 'mysql', y: 13 },
@@ -31,10 +21,9 @@ const archiveCategories = [
     { name: 'deno', y: 4 },
     { name: 'webrtc', y: 3 },
     { name: 'highcharts', y: 3 },
+    { name: 'redis', y: 2 },
     { name: 'docker', y: 2 },
     { name: 'highmaps', y: 2 },
-    { name: 'redis', y: 1 },
     { name: 'elasticsearch', y: 1 },
     { name: 'python', y: 1 }
 ];
-

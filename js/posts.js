@@ -1,10 +1,10 @@
+import allPosts from './content-data.js';
+import { CAT_THUMBS, ContentDataProcessor, FullTextSearch } from './category.js';
+
+
 const App = {
     template: `
 <div>
-    <div class="text-red mb-3 d-none" v-showx="isArchivePage">
-        Chú ý: Các bài viết mới đang ở tình trạng bản nháp.
-    </div>
-
     <form @submit.prevent="searchPosts()">
         <input type="text"
                 ref="queryInput"
@@ -19,10 +19,10 @@ const App = {
     <label class="custom-control custom-checkbox custom-control-animated custom-control-highlighted custom-control-outlined mt-3 mb-3">
         <input type="checkbox"
                 class="custom-control-input"
-                v-model="isArchivePage"
+                v-model="onlyPublished"
                 @change="processFilterPosts()">
         <span class="custom-control-label pt-1 pl-2">
-            Hiển thị archive
+            Chỉ hiển thị các bài viết đã xuất bản
         </span>
     </label>
 
@@ -68,10 +68,10 @@ const App = {
     </ul>
 </div>`,
 
-    data () {
+    data() {
         return {
-            // Là trang posts hay là trang archive
-            isArchivePage: false,
+            // Chỉ hiển thị các bài viết đã xuất bản
+            onlyPublished: true,
 
             // Dữ liệu sau khi đã được lọc theo tag hoặc xâu tìm kiếm
             filterPosts: [],
@@ -92,28 +92,31 @@ const App = {
     },
 
     computed: {
-        regex () {
+        regex() {
             return FullTextSearch.createPrefixSubRegex(this.query);
         },
 
         /**
-         * Toàn bộ dữ liệu
+         * Danh sách dữ liệu để search.
+         * Có thể là tất cả, hoặc chỉ những bài đã xuất bản.
          */
-        allContentList () {
-            return this.isArchivePage ? allArchive : allPosts;
+        contentList() {
+            if (this.onlyPublished) {
+                return allPosts.filter(post => post.date);
+            }
+            return allPosts;
         }
     },
 
     /**
      * Khởi tạo dữ liệu.
      */
-    created () {
-        // Trang archive sẽ có thêm tham số archive=true
-        const archive = CommonUtils.getUrlParameter('archive');
-        this.isArchivePage = !!archive;
+    created() {
+        // Khi bookmark có thể có thêm tham số searchAll=true
+        const searchAll = CommonUtils.getUrlParameter('searchAll');
+        this.onlyPublished = !searchAll;
 
         ContentDataProcessor.updateThumbnailImageOfPosts(allPosts);
-        ContentDataProcessor.updateThumbnailImageOfPosts(allArchive);
         ContentDataProcessor.sortPosts(allPosts);
         ContentDataProcessor.normalizeDateOfPosts(allPosts);
 
@@ -122,7 +125,7 @@ const App = {
         this.query = query || '';
     },
 
-    mounted () {
+    mounted() {
         this.processFilterPosts();
         this.setTitle();
         this.listenToScrollEvent();
@@ -136,7 +139,7 @@ const App = {
          * Hiển thị highlight tìm kiếm.
          * @param {String} text Xâu gốc hiển thị
          */
-        highlightText (text) {
+        highlightText(text) {
             if (!this.query) {
                 return text;
             }
@@ -149,14 +152,14 @@ const App = {
             });
         },
 
-        normalizeDate (d) {
+        normalizeDate(d) {
             return CommonUtils.normalizeDate(d);
         },
 
         /**
          * Lọc các bài viết theo từ khóa tìm kiếm.
          */
-        processFilterPosts () {
+        processFilterPosts() {
             const startTime = new Date();
 
             // Từ khóa tìm kiếm
@@ -164,9 +167,9 @@ const App = {
 
             // Tiến hành lọc theo từ khóa
             if (!query) {
-                this.filterPosts = this.allContentList;
+                this.filterPosts = this.contentList;
             } else {
-                this.filterPosts = FullTextSearch.splitSearch(this.query, this.allContentList);
+                this.filterPosts = FullTextSearch.splitSearch(this.query, this.contentList);
             }
 
             // Bắt đầu hiển thị ra cho người dùng
@@ -179,7 +182,7 @@ const App = {
             this.bindPosts();
         },
 
-        searchPosts () {
+        searchPosts() {
             // blur ô nhập xâu tìm kiếm để ẩn keyboard trên mobile
             this.$refs.queryInput.blur();
 
@@ -189,19 +192,19 @@ const App = {
             const state = {
                 query: this.query
             };
-            const url = (this.isArchivePage ? '?archive=true&' : '?') + 'query=' + this.query.toLowerCase();
+            const url = (this.onlyPublished ? '?' : '?searchAll=true&') + 'query=' + this.query.toLowerCase();
             history.pushState(state, null, url);
         },
 
         /**
          * Đổi title.
          */
-        setTitle () {
+        setTitle() {
             document.title = 'Posts' +
                 (this.query ? ` "${this.query}"` : '');
         },
 
-        listenToPopstate () {
+        listenToPopstate() {
             // Người dùng nhấn nút "Back" hoặc "Forward"
             window.addEventListener('popstate', (evt) => {
                 // Lấy nội dung nếu có địa chỉ
@@ -219,18 +222,18 @@ const App = {
             });
         },
 
-        initFocus () {
+        initFocus() {
             this.$refs.queryInput.focus();
         },
 
-        listenToScrollEvent () {
+        listenToScrollEvent() {
             window.addEventListener('scroll', this.checkLoadMorePosts);
         },
 
         /**
          * Hiển thị tất cả các post luôn 1 lần.
          */
-        bindPosts () {
+        bindPosts() {
             // console.log(this.filterPosts.length);
             // Nếu đã hết bản ghi
             if (this.curentPostIndex >= this.filterPosts.length) {
@@ -255,7 +258,7 @@ const App = {
         /**
          * Kiểm tra load bản ghi khi scroll.
          */
-        checkLoadMorePosts () {
+        checkLoadMorePosts() {
             // Nếu đang xử lý rồi thì thôi
             if (this.isLoadingMorePosts) {
                 return;
@@ -272,7 +275,7 @@ const App = {
         /**
          * Thêm các link prefetch để hiển thị ảnh các thể loại nhanh.
          */
-        addImagePrefetchLinks () {
+        addImagePrefetchLinks() {
             for (const category in CAT_THUMBS) {
                 if (CAT_THUMBS.hasOwnProperty(category)) {
                     const imageLink = CAT_THUMBS[category];

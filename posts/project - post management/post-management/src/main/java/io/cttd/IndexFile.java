@@ -15,13 +15,25 @@ import org.jsoup.select.Elements;
  */
 public class IndexFile {
 
+	// Tiêu đề
 	private String title = "";
+
+	// Mô tả
 	private String description = "";
+
 	// Ngày xuất bản
 	private String date;
+
+	// Có tồn tại file index.html
 	private boolean existsIndexFile = true;
+	
+	// Đường dẫn file index.html
 	private String indexFilePath;
+	
+	// Đối tượng file index.html
 	private File indexFileObject;
+	
+	// Đối tượng JSoup
 	private Document doc;
 
 	// Có cần ghi lại hay không
@@ -35,10 +47,10 @@ public class IndexFile {
 	 */
 	public IndexFile(String indexFilePath) {
 		this.indexFilePath = indexFilePath;
-		indexFileObject = new File(indexFilePath);
+		this.indexFileObject = new File(indexFilePath);
 
-		// Nếu file không tồn tại
-		if (!indexFileObject.exists()) {
+		// Nếu file không tồn tại thì tạo file
+		if (!this.indexFileObject.exists()) {
 			System.out.println("File không tồn tại: " + indexFilePath);
 
 			this.existsIndexFile = false;
@@ -48,8 +60,8 @@ public class IndexFile {
 
 		try {
 			this.doc = Jsoup.parse(indexFileObject, "UTF-8");
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException ex) {
+			ex.printStackTrace();
 			return;
 		}
 
@@ -60,6 +72,7 @@ public class IndexFile {
 		this.checkDescription();
 		this.checkMetaViewport();
 		this.checkFavicon();
+
 		/*
 		this.checkCommonStyle();
 		this.checkArticleTag();
@@ -83,8 +96,14 @@ public class IndexFile {
 	public String getDate() {
 		return date;
 	}
+	
+	public boolean existsIndexFile() {
+		return existsIndexFile;
+	}
 
-	// Nếu không có file index.html thì tự thêm file index luôn, về sau chỉ việc sửa
+	/**
+	 * Nếu không có file index.html thì tự thêm file index luôn, về sau chỉ việc sửa.
+	 */
 	public void createDefaultIndexFile() {
 		File source = new File("template/index.html");
 		try {
@@ -92,10 +111,6 @@ public class IndexFile {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
-	}
-
-	public boolean existsIndexFile() {
-		return existsIndexFile;
 	}
 
 	/**
@@ -145,7 +160,7 @@ public class IndexFile {
 			doc.head().append("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
 			this.needRewrite = true;
 		} else {
-			//System.out.println("viewport: " + viewport);
+			// System.out.println("viewport: " + viewport);
 		}
 	}
 
@@ -157,7 +172,7 @@ public class IndexFile {
 			doc.head().append("<link rel=\"icon\" href=\"../../images/favicon.png\">");
 			this.needRewrite = true;
 		} else {
-			//System.out.println("favicon: " + favicon);
+			// System.out.println("favicon: " + favicon);
 		}
 	}
 
@@ -169,7 +184,7 @@ public class IndexFile {
 			doc.head().append("<link rel=\"stylesheet\" href=\"../../css/style.css\">");
 			this.needRewrite = true;
 		} else {
-			//System.out.println("File style chung: " + styleFile);
+			// System.out.println("File style chung: " + styleFile);
 		}
 	}
 
@@ -191,14 +206,13 @@ public class IndexFile {
 			doc.body().append("<script src=\"../../js/docs.js\"></script>");
 			this.needRewrite = true;
 		} else {
-			//System.out.println("File script chung: " + scriptFile);
+			// System.out.println("File script chung: " + scriptFile);
 		}
 	}
 
 	private void rewrite() {
 		System.out.println("Ghi lại file");
 		String htmlCode = doc.outerHtml();
-
 		try {
 			Files.write(Paths.get(this.indexFilePath), htmlCode.getBytes());
 		} catch (IOException e) {

@@ -30,30 +30,35 @@ const CAT_THUMBS = {
     composer: 'programming/composer.png'
 };
 
+/**
+ * Chuẩn hóa ngày xuất bản, ảnh đại diện thể loại, sắp xếp.
+ */
 const ContentDataProcessor = {
 
     /**
      * Chuẩn hóa ngày về định dạng ISO 8601.
      */
-    normalizeDateOfPosts (allContentList) {
-        allContentList.forEach(e => {
-            e.date = e.date.replace(' ', 'T') + '+07:00';
+    normalizeDateOfPosts(postList) {
+        postList.forEach(e => {
+            if (e.date) {
+                e.date = e.date.replace(' ', 'T') + '+07:00';
+            }
         });
     },
 
     /**
      * Sắp xếp theo thời gian giảm dần.
      */
-    sortPosts (allContentList) {
-        allContentList.sort((a, b) => b.date.localeCompare(a.date));
+    sortPosts(postList) {
+        postList.sort((a, b) => (b.date ?? '').localeCompare(a.date ?? '') || a.path.localeCompare(b.path));
     },
 
     /**
      * Cập nhật lại ảnh cho tất cả bài viết.
      */
-    updateThumbnailImageOfPosts (allContentList) {
+    updateThumbnailImageOfPosts(postList) {
         // Cập nhật lại ảnh cho tất cả bài viết
-        allContentList.forEach(e => {
+        postList.forEach(e => {
             e.thumb = CAT_THUMBS[e.category];
             if (!e.thumb) {
                 console.log(e.category);
@@ -66,7 +71,7 @@ const FullTextSearch = {
     /**
      * Tìm kiếm theo từng từ.
      */
-    splitSearch (query, allContentList) {
+    splitSearch(query, allContentList) {
         // Chỉ tìm kiếm bắt đầu bằng, prefix
         // Có thể thêm tìm kiếm theo toàn bộ xâu tìm kiếm
         const prefixSubRegex = this.createPrefixSubRegex(query);
@@ -104,7 +109,7 @@ const FullTextSearch = {
      * Sử dụng khi tìm kiếm và highlight.
      * @param {String} query Xâu tìm kiếm
      */
-    createPrefixSubRegex (query) {
+    createPrefixSubRegex(query) {
         // Safari chưa hỗ trợ lookbehind (?<=^|\\s)
         const arr = query.trim().split(/\s/).map(s => `(^|\\s)(${s})`);
         const regex = new RegExp(arr.join('|'), 'gi');
@@ -116,7 +121,7 @@ const FullTextSearch = {
      * Sử dụng tìm kiếm toàn bộ từ.
      * @param {String} query Xâu tìm kiếm
      */
-    createWholeWordRegex (query) {
+    createWholeWordRegex(query) {
         const arr = query.trim().split(/\s/).map(s => `(^|\\s)(${s})(?=$|\\s)`);
         const regex = new RegExp(arr.join('|'), 'gi');
         return regex;
@@ -127,7 +132,7 @@ const FullTextSearch = {
      * @param {String} text Xâu to
      * @param {Regex} regex Biểu thức chính quy
      */
-    countOccurrences (text, regex) {
+    countOccurrences(text, regex) {
         return (text.match(regex) || []).length;
     },
 
@@ -136,10 +141,16 @@ const FullTextSearch = {
      * @param {String} text Xâu to
      * @param {Regex} regex Biểu thức chính quy
      */
-    countUniqueOccurrences (text, regex) {
+    countUniqueOccurrences(text, regex) {
         let arr = (text.match(regex) || []);
         arr = arr.map(s => s.toLowerCase());
         const setObj = new Set(arr);
         return setObj.size;
     }
+};
+
+export {
+    CAT_THUMBS,
+    ContentDataProcessor,
+    FullTextSearch
 };

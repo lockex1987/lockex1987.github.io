@@ -1,9 +1,11 @@
+import postsCategories from './category-data.js';
+
 /**
  * Gộp những thể loại có ít hơn 10 bài viết.
  */
 function normalizeCategories(categories) {
-    let normalized = [];
-    let names = [];
+    const normalized = [];
+    const names = [];
     normalized.push({
         name: 'other',
         y: 0
@@ -73,6 +75,4 @@ function buildChart(data, chartDivId) {
 }
 
 
-buildChart(normalizeCategories(archiveCategories), 'archiveChart');
-buildChart(postsCategories, 'postChart');
-
+buildChart(normalizeCategories(postsCategories), 'postChart');

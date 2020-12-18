@@ -1,7 +1,7 @@
 package io.cttd;
 
 /**
- * Chương trình này dùng để liệt kê danh sách các bài viết (post, archive).
+ * Chương trình này dùng để liệt kê danh sách các bài viết.
  * Các post thì liệt kê thêm ngày xuất bản.
  * Thống kê mỗi chuyên mục có bao nhiêu bài viết.
  */
