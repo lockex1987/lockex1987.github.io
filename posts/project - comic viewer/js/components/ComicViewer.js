@@ -1,3 +1,6 @@
+// https://github.com/codedread/bitjs
+import * as bitjs from '../../libs/bitjs/archive/archive.js';
+
 export default {
     data() {
         return {
@@ -12,7 +15,7 @@ export default {
             nameList: [],
 
             // Hiển thị toolbar
-            showToolbar: true,
+            showToolbar: false,
 
             // Tổng số ảnh trong file cbz, cbr
             imageListLength: 0,
@@ -22,6 +25,9 @@ export default {
 
             // Có đang ở chế độ toàn màn hình hay không
             isFullScreen: false,
+
+            // Đối tượng của thư viện Bitjs để giải nén
+            unarchiver: null,
 
             // Chế độ xem ảnh (actual-size, best-fit, fit-width, fit-height)
             viewMode: 'best-fit',
@@ -68,6 +74,7 @@ export default {
         this.handleSwipeEvent();
         this.handleFullScreenChangeEvent();
         this.handleKeyboardShortcuts();
+        this.handleClickEvent();
 
         this.computeViewerDimension();
         window.addEventListener('resize', this.computeViewerDimension);
@@ -148,6 +155,20 @@ export default {
          * @param {Object} file Đối tượng file được chọn.
          */
         handleFile(file) {
+            // Hiển thị viewer
+            this.screen = 'comic-viewer';
+
+            // Reset thông tin
+            this.currentIndex = 0;
+            this.imageListLength = 0;
+            this.imageList = [];
+            this.nameList = [];
+
+            // this.handleFileWithLibUncompess(file);
+            this.handleFileWithLibBitjs(file);
+        },
+
+        handleFileWithLibUncompess(file) {
             archiveOpenFile(file, null, (archive, err) => {
                 // Nếu có lỗi
                 if (!archive) {
@@ -160,16 +181,11 @@ export default {
                 // Chỉ lọc ra file ảnh
                 const arr = archive.entries.filter(e => e.is_file && this.isImageFile(e.name));
                 // console.log(arr);
-
-                // Hiển thị viewer
-                this.screen = 'comic-viewer';
-                this.currentIndex = 0;
                 this.imageListLength = arr.length;
 
                 // Đọc từng file ảnh một
                 // Hiển thị ảnh đầu tiên nhanh nhất có thể
                 let idx = 0;
-                this.imageList = [];
                 this.nameList = arr.map(e => e.name);
                 const readImage = () => {
                     arr[idx].readData(data => {
@@ -188,6 +204,63 @@ export default {
             });
         },
 
+        handleFileWithLibBitjs(file) {
+            const fileReader = new FileReader();
+            fileReader.onload = () => {
+                const ab = fileReader.result;
+                this.loadFromArrayBuffer(ab);
+            };
+            fileReader.readAsArrayBuffer(file);
+        },
+
+        loadFromArrayBuffer(ab) {
+            const start = (new Date()).getTime();
+            const signatureBits = new Uint8Array(ab, 0, 10);
+            const pathToBitjs = 'libs/bitjs/';
+            if (signatureBits[0] == 0x52 && signatureBits[1] == 0x61 && signatureBits[2] == 0x72 && signatureBits[3] == 0x21) {
+                // Rar
+                this.unarchiver = new bitjs.Unrarrer(ab, pathToBitjs);
+            } else if (signatureBits[0] == 80 && signatureBits[1] == 75) {
+                // Zip
+                this.unarchiver = new bitjs.Unzipper(ab, pathToBitjs);
+            } else {
+                // Try with tar
+                this.unarchiver = new bitjs.Untarrer(ab, pathToBitjs);
+            }
+
+            // Listen for unarchive events.
+            if (this.unarchiver) {
+                this.unarchiver.addEventListener(bitjs.UnarchiveEventType.PROGRESS, (evt) => {
+                    // const percentage = evt.currentBytesUnarchived / evt.totalUncompressedBytesInArchive;
+                    // console.log(percentage, evt.totalFilesInArchive);
+                });
+
+                this.unarchiver.addEventListener(bitjs.UnarchiveEventType.INFO, (evt) => {
+                    console.log(evt.msg);
+                });
+
+                this.unarchiver.addEventListener(bitjs.UnarchiveEventType.EXTRACT, (evt) => {
+                    if (evt.unarchivedFile) {
+                        const file = evt.unarchivedFile;
+                        if (this.isImageFile(file.filename)) {
+                            this.imageList.push(URL.createObjectURL(new Blob([file.fileData])));
+                            this.nameList.push(file.name);
+                            this.imageListLength = this.nameList.length;
+                        }
+                    }
+                });
+
+                this.unarchiver.addEventListener(bitjs.UnarchiveEventType.FINISH, (evt) => {
+                    const diff = ((new Date()).getTime() - start) / 1000;
+                    console.log('Unarchiving done in ' + diff + 's');
+                });
+
+                this.unarchiver.start();
+            } else {
+                alert('Some error');
+            }
+        },
+
         /**
          * Đóng màn hình viewer.
          */
@@ -202,6 +275,12 @@ export default {
 
             // Free objectUrl để tiết kiệm bộ nhớ
             this.imageList.forEach(url => URL.revokeObjectURL(url));
+
+            // Nếu đang có tiến trình giải nén thì dừng tiến trình đó lại
+            if (this.unarchiver) {
+                this.unarchiver.stop();
+                this.unarchiver = null;
+            }
         },
 
         /**
@@ -321,6 +400,17 @@ export default {
                     } else if (evt.type == 'tap') {
                         // this.toggleFullScreen();
                     }
+                }
+            });
+        },
+
+        /**
+         * Sử lý sự kiện click.
+         */
+        handleClickEvent() {
+            document.addEventListener('click', (evt) => {
+                if (this.screen == 'comic-viewer') {
+                    this.showToolbar = !this.showToolbar;
                 }
             });
         }

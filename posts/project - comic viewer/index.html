@@ -28,27 +28,6 @@
 		</div>
 
 		<div v-show="screen == 'comic-viewer'">
-			<!-- Phần trăm đã đọc -->
-			<div class="view-progress zindex-10 position-fixed top-left mt-2 ml-2">
-				<div class="position-absolute view-progress-bar bg-primary"
-						:style="{ width: viewProgress.percent + '%'}"></div>
-			
-				<span class="position-absolute view-progress-label text-white pl-2">
-					{{viewProgress.label}}
-				</span>
-			</div>
-		
-			<!-- Nút đóng -->
-			<span class="position-fixed top-right mt-2 mr-2 cursor-pointer font-weight-500 font-size-1.5 text-danger zindex-10 la la-times"
-					@click="closeViewer()">
-			</span>
-		
-			<!-- Nút toggle fullscreen -->
-			<i class="la font-size-1.5 zindex-10 cursor-pointer position-fixed top-right mr-5 mt-2 text-success"
-					:class="[isFullScreen ? 'la-compress-arrows-alt' : 'la-expand-arrows-alt']"
-					@click="toggleFullscreen()"
-					:title="isFullScreen ? 'Thoát toàn màn hình' : 'Xem toàn màn hình'"></i>
-		
 			<div ref="readerBox"
 					class="text-center viewer-box d-flex justify-content-center align-items-center"
 					:class="viewMode">
@@ -60,32 +39,48 @@
 						}"
 						v-show="idx == currentIndex"/>
 			</div>
-		
-			
-			
-
-			
 
 			<!-- Toolbar -->
-			<div class="d-flex zindex-20 position-fixed bottom-left w-100 py-1"
+			<div class="align-items-center zindex-20 position-fixed bottom-left w-100 py-1"
+					:class="[showToolbar ? 'd-flex' : 'd-none']"
 					style="background-color: rgba(0, 0, 0, 0.3)"
-					v-show="showToolbar">
+					@click.stop="">
+				<!-- Phần trăm đã đọc -->
+				<div class="view-progress position-relative ml-3">
+					<div class="position-absolute view-progress-bar bg-primary"
+							:style="{ width: viewProgress.percent + '%'}"></div>
+				
+					<span class="position-absolute view-progress-label text-white pl-2">
+						{{viewProgress.label}}
+					</span>
+				</div>
+
 				<!-- Nút ảnh trước -->
-				<button class="pointer-events-auto btn btn-primary rounded font-size-1.25vw opacity-0.5 hover:opacity-1 ml-2 prev-button"
+				<button class="btn btn-primary btn-sm rounded font-size-1.25vw opacity-0.5 hover:opacity-1 ml-3 prev-button"
 						@click="gotoPreviousImage()">
 					&lt;
 				</button>
 					
 				<!-- Tên của ảnh hiện tại -->
-				<div class="px-3 text-center text-white">
+				<div class="text-center text-white ml-2">
 					{{currentImageName}}
 				</div>
 
 				<!-- Nút ảnh sau -->
-				<button class="pointer-events-auto btn btn-primary rounded font-size-1.25vw opacity-0.5 hover:opacity-1 mr-2 next-button"
+				<button class="btn btn-primary btn-sm rounded font-size-1.25vw opacity-0.5 hover:opacity-1 ml-2 next-button"
 						@click="gotoNextImage()">
 					&gt;
 				</button>
+
+				<!-- Nút toggle fullscreen -->
+				<i class="la font-size-1.5 cursor-pointer ml-auto text-success"
+						:class="[isFullScreen ? 'la-compress-arrows-alt' : 'la-expand-arrows-alt']"
+						@click="toggleFullscreen()"
+						:title="isFullScreen ? 'Thoát toàn màn hình' : 'Xem toàn màn hình'"></i>
+
+				<!-- Nút đóng -->
+				<i class="ml-2 mr-3 cursor-pointer font-weight-500 font-size-1.5 text-danger la la-times"
+						@click="closeViewer()"></i>
 			</div>
 		</div>
 	</div>

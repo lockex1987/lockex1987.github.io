@@ -1,3 +1,4 @@
+// https://www.ofoct.com/cbrviewer/comic-book-viewer-online-src.html#
 import * as bitjs from '../libs/bitjs/archive/archive.js';
 
 /*
@@ -84,6 +85,7 @@ kthoom.Key = {
 kthoom.rotateTimes = 0;
 
 // global variables
+// Đối tượng của thư viện Bitjs để giải nén
 let unarchiver = null;
 let currentImage = 0;
 let imageFiles = [];
@@ -299,61 +301,57 @@ function getLocalFiles(evt) {
 
 function loadFromArrayBuffer(ab) {
     const start = (new Date()).getTime();
-    const h = new Uint8Array(ab, 0, 10);
-    const pathToBitJS = 'libs/bitjs/';
-    if (h[0] == 0x52 && h[1] == 0x61 && h[2] == 0x72 && h[3] == 0x21) {
-        // Rar!
-        unarchiver = new bitjs.Unrarrer(ab, pathToBitJS);
-    } else if (h[0] == 80 && h[1] == 75) {
-        // PK (Zip)
-        unarchiver = new bitjs.Unzipper(ab, pathToBitJS);
+    const signatureBits = new Uint8Array(ab, 0, 10);
+    const pathToBitjs = 'libs/bitjs/';
+    if (signatureBits[0] == 0x52 && signatureBits[1] == 0x61 && signatureBits[2] == 0x72 && signatureBits[3] == 0x21) {
+        // Rar
+        unarchiver = new bitjs.Unrarrer(ab, pathToBitjs);
+    } else if (signatureBits[0] == 80 && signatureBits[1] == 75) {
+        // Zip
+        unarchiver = new bitjs.Unzipper(ab, pathToBitjs);
     } else {
         // Try with tar
-        unarchiver = new bitjs.Untarrer(ab, pathToBitJS);
+        unarchiver = new bitjs.Untarrer(ab, pathToBitjs);
     }
 
-    // Listen for UnarchiveEvents.
+    // Listen for unarchive events.
     if (unarchiver) {
-        unarchiver.addEventListener(bitjs.UnarchiveEventType.PROGRESS,
-            function (e) {
-                const percentage = e.currentBytesUnarchived / e.totalUncompressedBytesInArchive;
-                totalImages = e.totalFilesInArchive;
-                kthoom.setProgressMeter(percentage, 'Unzipping');
-                // display nav
-                lastCompletion = percentage * 100;
-            });
+        unarchiver.addEventListener(bitjs.UnarchiveEventType.PROGRESS, (evt) => {
+            const percentage = evt.currentBytesUnarchived / evt.totalUncompressedBytesInArchive;
+            totalImages = evt.totalFilesInArchive;
+            kthoom.setProgressMeter(percentage, 'Unzipping');
+            // display nav
+            lastCompletion = percentage * 100;
+        });
 
-        unarchiver.addEventListener(bitjs.UnarchiveEventType.INFO,
-            function (e) {
-                console.log(e.msg);
-            });
+        unarchiver.addEventListener(bitjs.UnarchiveEventType.INFO, (evt) => {
+            console.log(evt.msg);
+        });
 
-        unarchiver.addEventListener(bitjs.UnarchiveEventType.EXTRACT,
-            function (e) {
-                // convert DecompressedFile into a bunch of ImageFiles
-                if (e.unarchivedFile) {
-                    const f = e.unarchivedFile;
-                    // add any new pages based on the filename
-                    if (imageFilenames.indexOf(f.filename) == -1) {
-                        imageFilenames.push(f.filename);
-                        imageFiles.push(new kthoom.ImageFile(f));
-                    }
+        unarchiver.addEventListener(bitjs.UnarchiveEventType.EXTRACT, (evt) => {
+            // convert DecompressedFile into a bunch of ImageFiles
+            if (evt.unarchivedFile) {
+                const file = evt.unarchivedFile;
+                // add any new pages based on the filename
+                if (imageFilenames.indexOf(file.filename) == -1) {
+                    imageFilenames.push(file.filename);
+                    imageFiles.push(new kthoom.ImageFile(file));
                 }
+            }
 
-                // hide logo
-                getElem('logo').setAttribute('style', 'display:none');
+            // hide logo
+            getElem('logo').setAttribute('style', 'display:none');
 
-                // display first page if we haven't yet
-                if (imageFiles.length == currentImage + 1) {
-                    updatePage();
-                }
-            });
+            // display first page if we haven't yet
+            if (imageFiles.length == currentImage + 1) {
+                updatePage();
+            }
+        });
 
-        unarchiver.addEventListener(bitjs.UnarchiveEventType.FINISH,
-            function (e) {
-                const diff = ((new Date()).getTime() - start) / 1000;
-                console.log('Unarchiving done in ' + diff + 's');
-            });
+        unarchiver.addEventListener(bitjs.UnarchiveEventType.FINISH, (evt) => {
+            const diff = ((new Date()).getTime() - start) / 1000;
+            console.log('Unarchiving done in ' + diff + 's');
+        });
 
         unarchiver.start();
     } else {
@@ -361,17 +359,18 @@ function loadFromArrayBuffer(ab) {
     }
 }
 
-function loadSingleBook(filename) {
-    const fr = new FileReader();
-    fr.onload = function () {
-        const ab = fr.result;
+function loadSingleBook(file) {
+    const fileReader = new FileReader();
+    fileReader.onload = function () {
+        const ab = fileReader.result;
         loadFromArrayBuffer(ab);
     };
-    fr.readAsArrayBuffer(filename);
+    fileReader.readAsArrayBuffer(file);
 }
 
-var createURLFromArray = function (array, mimeType) {
-    const offset = array.byteOffset; const len = array.byteLength;
+const createURLFromArray = function (array, mimeType) {
+    const offset = array.byteOffset;
+    const len = array.byteLength;
     let bb, url;
     let blob;
 
@@ -618,11 +617,12 @@ function updateLibrary() {
 }
 
 function closeBook() {
-    // Terminate any async work the current unarchiver is doing.
+    // Nếu đang có tiến trình giải nén thì dừng tiến trình đó lại
     if (unarchiver) {
         unarchiver.stop();
         unarchiver = null;
     }
+
     currentImage = 0;
     imageFiles = [];
     imageFilenames = [];
