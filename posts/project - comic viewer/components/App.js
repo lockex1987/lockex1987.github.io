@@ -1,21 +1,23 @@
 import ComicList from './ComicList.js';
-import IssueList from './IssueList.js';
 import ComicViewer from './ComicViewer.js';
 
 const template = `
 <div>
     <comic-list />
-    <issue-list />
     <comic-viewer />
 </div>`;
 
 
+/**
+ * Tính năng:
+    Full screen
+    Thêm tính năng kính lúp
+ */
 export default {
     template,
 
     components: {
         ComicList,
-        IssueList,
         ComicViewer
     },
 

@@ -1,6 +1,7 @@
 const template = `
 <div v-show="screen == 'comic-list'"
         class="p-3">
+
     <h2>Comic viewer</h2>
 
     <div class="mb-3">
@@ -8,31 +9,11 @@ const template = `
                 accept=".cbr,.cbz"
                 @change="handleChooseFile($event)">
     </div>
-
-    <div>
-        <div class="border rounded d-flex p-3 mb-3"
-                v-for="comic in comicList"
-                @click="chooseComic(comic)">
-            <img :src="'data/' + comic.id + '/' + comic.avatar"
-                    class="mr-4 object-fit-cover"
-                    style="width: 200px; height: 260px;"/>
-            <div>
-                {{comic.name}}
-            </div>
-        </div>
-    </div>
 </div>`;
 
 
 export default {
     template,
-
-    data() {
-        return {
-            // Danh sách các truyện
-            comicList: []
-        };
-    },
 
     computed: {
         ...Vuex.mapState({
@@ -40,29 +21,7 @@ export default {
         })
     },
 
-    mounted() {
-        this.getComicList();
-    },
-
     methods: {
-        /**
-         * Lấy danh sách truyện.
-         */
-        async getComicList() {
-            const data = await fetch('data/comic-list.json').then(resp => resp.json());
-            this.comicList = data;
-        },
-
-        /**
-         * Chọn truyện nào đó.
-         */
-        chooseComic(comic) {
-            // Đổi sang màn hình issue list và lấy danh sách các tập của truyện
-            this.$store.commit('layout/setScreen', 'issue-list');
-            this.$store.commit('comic/setComic', comic);
-            this.$store.commit('comic/setViewZip', false);
-        },
-
         /**
          * Xử lý khi chọn file.
          * @param {Event} evt Đối tượng sự kiện.

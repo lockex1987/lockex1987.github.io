@@ -9,31 +9,22 @@
 
 	<link rel="icon" href="../../images/favicon.png"/>
 	<link rel="stylesheet" href="../../css/style.css"/>
+	<link rel="stylesheet" href="css/comic-viewer.css">
 </head>
 
-<body>
-	<article>
-			<h2>Comic viewer</h2>
-			<p>Tính năng:</p>
-			<ul>
-				<li>Tach JSON thanh tung file theo chapter va comic</li>
-				<li>Download ZIP</li>
-				<li>Swipe</li>
-				<li>Lưu chương hiện tại, chương sau</li>
-				<li>Full screen</li>
-				<li>Đọc hết thì hiển thị các option: đọc chương tiếp</li>
-				<li>Thêm tính năng kính lúp</li>
-			</ul>
+<body class="no-float-button">
+	<div id="app"></div>
 
-			<p>Trang web này chỉ có mục đích demo.
-				Cảm ơn tác giả Kim Khánh đã sáng tác những bộ truyện rất hay, thuần Việt, có ý nghĩa giáo dục cao.</p>
+	<script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuex@3.1.2/dist/vuex.min.js"></script>
 
-			<p>
-				<a href="viewer.html">Viewer</a>
-			</p>
-	</article>
+    <!-- Đường dẫn không được chứa ký tự ( -->
+	<script src="libs/uncompress/uncompress.js"></script>
+
+    <script src="js/script.js" type="module"></script>
 
 	
-	<script src="../../js/docs.js"></script>
+	<!--script src="../../js/docs.js"></script-->
 </body>
 </html>

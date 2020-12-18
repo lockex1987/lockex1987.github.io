@@ -9,19 +9,14 @@ const template = `
 export default {
     template,
 
-    computed: {
-        ...Vuex.mapState({
-            viewZip: state => state.comic.viewZip
-        })
-    },
-
     methods: {
         /**
          * Chuyển về trang danh sách issue.
          */
         returnIssueListScreen() {
-            const screen = this.viewZip ? 'comic-list' : 'issue-list';
-            this.$store.commit('layout/setScreen', screen);
+            this.$store.commit('layout/setScreen', 'comic-list');
+
+            // TODO: Free objectUrl
         }
     }
 };

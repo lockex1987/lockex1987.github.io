@@ -32,14 +32,14 @@ const template = `
     </div>
 
     <div class="pointer-events-none zindex-20 position-fixed top-left h-100 d-flex align-items-center">
-        <button class="pointer-events-auto btn btn-primary rounded font-size-1.25vw opacity-0.5 ml-2 prev-button"
+        <button class="pointer-events-auto btn btn-primary rounded font-size-1.25vw opacity-0.5 hover:opacity-1 ml-2 prev-button"
                 @click="prevPanel()">
             &lt;
         </button>
     </div>
 
     <div class="pointer-events-none zindex-20 position-fixed top-right h-100 d-flex align-items-center">
-        <button class="pointer-events-auto btn btn-primary rounded font-size-1.25vw opacity-0.5 mr-2 next-button"
+        <button class="pointer-events-auto btn btn-primary rounded font-size-1.25vw opacity-0.5 hover:opacity-1 mr-2 next-button"
                 @click="nextPanel()">
             &gt;
         </button>
@@ -79,24 +79,11 @@ export default {
     computed: {
         ...Vuex.mapState({
             screen: state => state.layout.screen,
-            comic: state => state.comic.comic,
-            issue: state => state.comic.issue,
-            viewZip: state => state.comic.viewZip,
             zipImageList: state => state.comic.zipImageList
         })
     },
 
     watch: {
-        /**
-         * Lắng nghe sự kiện 'viewIssue' để hiện thị các trang của một tập truyện nào đó.
-         */
-        issue() {
-            // Lấy danh sách các tập
-            if (this.issue.imagesLink) {
-                this.viewIssue();
-            }
-        },
-
         zipImageList() {
             this.imageList = this.zipImageList;
         },
@@ -132,13 +119,6 @@ export default {
                     this.$refs.smallPanelsContainer.appendChild(img);
                 });
             });
-        },
-
-        async viewIssue() {
-            this.currentIndex = 0;
-            const url = `data/${this.comic.id}/${this.issue.imagesLink}`;
-            const data = await fetch(url).then(res => res.json());
-            this.imageList = data;
         },
 
         /**
