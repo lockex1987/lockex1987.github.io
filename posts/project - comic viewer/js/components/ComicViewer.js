@@ -1,14 +1,25 @@
-import ComicViewerClose from './ComicViewerClose.js';
-import ComicViewerProgress from './ComicViewerProgress.js';
 import ImageSpliter from './ImageSpliter.js';
 
 const template = `
 <div v-show="screen == 'comic-viewer'">
-    <comic-viewer-progress
-            :current-index="currentIndex"
-            :image-list-length="imageList.length"/>
+    <div class="current-progress zindex-10 position-fixed top-left mt-2 ml-2">
+        <div class="bar"
+                :style="{ width: percent + '%'}"></div>
+    
+        <span class="current-index-label">
+            {{text}}
+        </span>
+    </div>
 
-    <comic-viewer-close />
+    <span class="position-fixed top-right mt-2 mr-2 cursor-pointer font-weight-500 font-size-1.5 text-danger zindex-10 la la-times"
+            @click="returnIssueListScreen()">
+    </span>
+
+    <!-- Toggle fullscreen -->
+    <i class="la font-size-1.5 zindex-10 cursor-pointer position-fixed top-right mr-5 mt-2 text-success"
+            :class="[isFullScreen ? 'la-compress-arrows-alt' : 'la-expand-arrows-alt']"
+            @click="toggleFullscreen()"
+            :title="isFullScreen ? 'Thoát toàn màn hình' : 'Xem toàn màn hình'"></i>
 
     <div ref="readerBox"
             class="text-center d-flex justify-content-center align-items-center vw-100 vh-100">
@@ -49,15 +60,6 @@ const template = `
 export default {
     template,
 
-    props: [
-        // 'imageListLength'
-    ],
-
-    components: {
-        ComicViewerClose,
-        ComicViewerProgress
-    },
-
     data() {
         return {
             // Mảng các phần tử ảnh
@@ -65,6 +67,9 @@ export default {
 
             // Chỉ số index của trang hiện tại
             currentIndex: 0,
+
+            // Có đang ở chế độ toàn màn hình hay không
+            isFullScreen: false,
 
             // Kích thước của ảnh bằng kích thước của viewer
             // Không sử dụng 100% để có thể zoom được
@@ -80,7 +85,27 @@ export default {
         ...Vuex.mapState({
             screen: state => state.layout.screen,
             zipImageList: state => state.comic.zipImageList
-        })
+        }),
+
+        /**
+         * Phần trăm hoàn thành.
+         */
+        percent() {
+            if (this.imageList.length == 0) {
+                return 0;
+            }
+            return (this.currentIndex + 1) * 100 / this.imageList.length;
+        },
+
+        /**
+         * Text hiển thị.
+         */
+        text() {
+            if (this.imageList.length == 0) {
+                return '...';
+            }
+            return (this.currentIndex + 1) + ' / ' + this.imageList.length;
+        }
     },
 
     watch: {
@@ -99,9 +124,24 @@ export default {
 
         // window.addEventListener('resize', this.computeViewerDimension);
         // this.toggleFullScreen();
+        this.handleFullScreenChangeEvent();
     },
 
     methods: {
+        /**
+         * Chuyển về trang danh sách issue.
+         */
+        returnIssueListScreen() {
+            this.$store.commit('layout/setScreen', 'comic-list');
+
+            // Thoát khỏi toàn màn hình (nếu đang ở trong chế độ toàn màn hình)
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            }
+
+            // TODO: Free objectUrl
+        },
+
         computeViewerDimension() {
             const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
             const vh = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
@@ -164,25 +204,20 @@ export default {
         },
 
         /**
-         * Xử lý full-screen.
+         * Khi ở chế độ toàn màn hình thì đổi icon và title.
          */
-        toggleFullScreen() {
-            if (isFullscreen()) {
-                escapeFullscreen();
-            } else {
-                fullscreen(this.$refs.readerBox);
-            }
+        handleFullScreenChangeEvent() {
+            document.addEventListener('fullscreenchange', () => {
+                this.isFullScreen = !!document.fullscreenElement;
+            });
         },
 
-        toggleFullScreenx() {
+        /**
+         * Hiển thị chế độ toàn màn hình
+         */
+        toggleFullscreen() {
             if (!document.fullscreenElement) {
-                try {
-                    // $refs.viewer
-                    this.$el.requestFullscreen();
-                    alert(2);
-                } catch (ex) {
-                    alert(ex);
-                }
+                this.$el.requestFullscreen();
             } else {
                 document.exitFullscreen();
             }

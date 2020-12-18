@@ -8,11 +8,6 @@ const template = `
 </div>`;
 
 
-/**
- * Tính năng:
-    Full screen
-    Thêm tính năng kính lúp
- */
 export default {
     template,
 

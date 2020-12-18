@@ -1,5 +1,5 @@
-import App from '../components/App.js';
-import store from '../store/index.js';
+import App from './components/App.js';
+import store from './store/index.js';
 
 // Khởi tạo uncompress
 loadArchiveFormats(['rar', 'zip'], () => {
