@@ -703,7 +703,7 @@ export default [
     { category: 'ui', path: 'ui - pin element', title: 'Pin một phần tử', description: 'Pin một phần tử' },
     { category: 'ui', path: 'ui - progress bar', title: '', description: '' },
     { category: 'ui', path: 'ui - radar chart', title: 'Radar chart', description: 'Thống kê chỉ số của các vận động viên' },
-    { category: 'ui', path: 'ui - random image', title: 'Hiển thị ngẫu nhiên ảnh', description: 'random image, thecatapi, unsplash, giphy, beautiful gravure girl, chú thoòng, old master q, comic strip, image viewer' },
+    { category: 'ui', path: 'ui - random image', title: 'Hiển thị ngẫu nhiên ảnh', description: 'random image, thecatapi, unsplash, giphy, beautiful gravure girl, chú thoòng, old master q' },
     { category: 'ui', path: 'ui - reflection', title: 'Reflection', description: 'Phản chiếu, bóng loáng' },
     { category: 'ui', path: 'ui - refracted floating text effect', title: 'Refracted Floating Text Effect', description: 'Refracted Floating Text Effect' },
     { category: 'ui', path: 'ui - resizable div', title: 'Resizable div', description: 'Resizable div' },

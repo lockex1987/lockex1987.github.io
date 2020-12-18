@@ -352,4 +352,8 @@ CommonUtils.getRandomIndex = (n) => {
     return Math.floor(Math.random() * n);
 };
 
+CommonUtils.getRandomBetween = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 // alert(CommonUtils);

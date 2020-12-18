@@ -12,18 +12,13 @@ const template = `
 `;
 
 
-const styles = `
-`;
-
-CommonUtils.addCssStyles(styles);
-
 export default {
     template,
 
     data() {
         return {
             // Mảng các ảnh
-            images: [],
+            imageList: [],
 
             // Index của ảnh hiện tại
             currentIndex: 0
@@ -31,31 +26,23 @@ export default {
     },
 
     mounted() {
-        this.getImages();
+        this.getImageList();
     },
 
     computed: {
         currentImage() {
-            if (!this.images.length) {
+            if (!this.imageList.length) {
                 return {};
             }
-            return this.images[this.currentIndex];
+            return this.imageList[this.currentIndex];
         }
     },
 
     methods: {
-        async getImages() {
+        async getImageList() {
             const data = await fetch('data/oldmasterq.json').then(response => response.json());
-            this.images = data;
-            this.gotoRandomImage();
-        },
-
-        getRandomInt(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        },
-
-        gotoRandomImage() {
-            this.currentIndex = this.getRandomInt(0, this.images.length - 1);
+            this.imageList = data;
+            this.currentIndex = CommonUtils.getRandomBetween(0, this.imageList.length - 1);
         }
     }
 };
