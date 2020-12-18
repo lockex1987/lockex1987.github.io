@@ -341,4 +341,15 @@ CommonUtils.addCssStyles = (styles) => {
     document.head.appendChild(styleSheet);
 };
 
+
+
+/**
+ * Trả về một số nguyên ngẫu nhiên
+ * @param n Số truyền vào
+ * @return Số nguyên từ 0 đến n-1
+ */
+CommonUtils.getRandomIndex = (n) => {
+    return Math.floor(Math.random() * n);
+};
+
 // alert(CommonUtils);

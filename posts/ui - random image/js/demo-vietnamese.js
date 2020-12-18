@@ -1,5 +1,3 @@
-function getRandomIndex(n) {
-    return Math.floor(Math.random() * n);
-}
+import VIETNAMESE_GIRLS from '../data/vietnamese-girls.js';
 
-document.querySelector('#theImage').src = VIETNAMESE_GIRLS[getRandomIndex(VIETNAMESE_GIRLS.length)];
+document.querySelector('#theVietnameseImage').src = VIETNAMESE_GIRLS[CommonUtils.getRandomIndex(VIETNAMESE_GIRLS.length)];

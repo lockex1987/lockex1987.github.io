@@ -19,18 +19,6 @@
 <body>
     <article>
         <h2>Hiển thị ngẫu nhiên ảnh</h2>
-        <p>Ảnh <a href="demo-japanese.html" target="_blank">Nhật Bản</a>
-            và ảnh <a href="demo-vietnamese.html" target="_blank">Việt Nam</a>.</p>
-
-        <p>Trang web ngoài việc giải trí vui vui ra, còn giúp củng cố các kỹ thuật
-            sau:</p>
-        <ul>
-            <li>Sử dụng hàm ngẫu nhiên của JS</li>
-            <li>Căn chỉnh CSS sao cho ảnh best-fit với kích thước trình duyệt</li>
-        </ul>
-
-        <p>Một trang web đơn giản nhưng dễ nghiện. Đúng là ý tưởng mới quan trọng,
-            còn công nghệ thì không nên quá câu nệ, cái gì phù hợp thì làm.</p>
 
         <h3>Ảnh mèo ngẫu nhiên từ thecatapi</h3>
 
@@ -57,7 +45,19 @@
 
         <div id="app"></div>
 
+        <h3>Hot girl Việt Nam</h3>
+        
+        <div class="mb-3">
+            <img id="theVietnameseImage"/>
+        </div>
 
+        <h3>Người mẫu Nhật Bản</h3>
+
+        <div class="mb-3">
+            <img id="theJapaneseImage"/>
+        </div>
+
+        <div id="idolName" class="text-primary text-center"></div>
     </article>
 
     <script>
@@ -83,6 +83,8 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
     <script src="../../js/common.js"></script>
     <script type="module" src="js/old-master-q.js"></script>
+    <script type="module" src="js/demo-vietnamese.js"></script>
+    <script type="module" src="js/demo-japanese.js"></script>
 
     <script src="../../js/docs.js"></script>
 </body>

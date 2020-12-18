@@ -1,4 +1,4 @@
-const VIETNAMESE_GIRLS = [
+export default [
     'https://78.media.tumblr.com/0e16ac0c0c728e95d2af2aac3d2fb1d0/tumblr_p7ui6qSfz41wl0afdo1_1280.jpg',
     'https://78.media.tumblr.com/e5a95917f72f8c12b602f0dd4f854861/tumblr_p7ui6qSfz41wl0afdo2_1280.jpg',
     'https://78.media.tumblr.com/67d7005677ca1b8e1c7aec2c1bf484a1/tumblr_p7ui6qSfz41wl0afdo3_1280.jpg',

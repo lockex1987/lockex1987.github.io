@@ -4,7 +4,7 @@ const template = `
         <span v-html="currentImage.name"></span>
     </div>
 
-    <div>
+    <div class="mb-3">
         <img :src="'https://www.oldmasterq.com' + currentImage.url"
                 v-if="currentImage.url"/>
     </div>
@@ -49,11 +49,11 @@ export default {
             this.images = data;
             this.gotoRandomImage();
         },
-        
+
         getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         },
-        
+
         gotoRandomImage() {
             this.currentIndex = this.getRandomInt(0, this.images.length - 1);
         }
