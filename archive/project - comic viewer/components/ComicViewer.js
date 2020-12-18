@@ -15,7 +15,7 @@ const template = `
         <img v-for="(image, idx) in imageList"
                 class="mw-100 mh-100 h-auto"
                 :src="image"
-                v-if="idx == currentIndex"/>
+                v-show="idx == currentIndex"/>
 
         <!--img class="mw-none h-auto d-block"
                 :style="{
