@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="selinux, umask">
+    <meta name="description" content="selinux, umask, chmod, find">
     <title>Phân quyền trong Linux</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -16,16 +16,16 @@
       <h3>Tổng quan về quyền</h3>
       <p>Một file hay thư mục trong hệ thống có 4 quyền cơ bản sau:</p>
       <ul>
-        <li>Read (<code>r</code>): Đối với một file thì quyền Read chính là
+        <li>Read (<code>r</code>): Đối với một file thì quyền read chính là
           quyền được xem nội dung của file, còn đối với một folder thì quyền
-          Read chính là quyền xem được danh sách các folder con và file bên
+          read chính là quyền xem được danh sách các folder con và file bên
           trong folder đó.</li>
-        <li>Write (<code>w</code>):&nbsp;Đối với một file thì quyền Write là cho
-          phép thêm, sửa nội dùng file, còn đối với một folder thì Write cho
+        <li>Write (<code>w</code>):&nbsp;Đối với một file thì quyền write là cho
+          phép thêm, sửa nội dùng file, còn đối với một folder thì write cho
           phép thêm, xóa một folder con hay file trong thư mục đó.</li>
         <li>Execute (<code>x</code>):&nbsp;Đây là quyền thực thi. Đối với một
-          file thì Execute cho phép thực thi file trong trường hợp file này
-          thuộc dạng program hoặc script, còn đối với một folder Execute cho
+          file thì execute cho phép thực thi file trong trường hợp file này
+          thuộc dạng program hoặc script, còn đối với một folder execute cho
           phép <code>cd</code> vào thư mục này.</li>
         <li>Deny (<code>-</code>): Không có quyền làm một thao tác gì đó đối với
           một file hay folder xác định.</li>
@@ -122,8 +122,8 @@
       <p>Chuyển tất cả các file thành <code>644</code> (<code>-rw-r--r--</code>):</p>
       <pre>find /opt/lampp/htdocs -type f -exec chmod 644 {} \;</pre>
       <h3>Quyền mặc định và thay đổi quyền mặc định với umask</h3>
-      <p>Khi chúng ta tạo ra file hoặc thư mục, mặc định hệ thống gán cho nó 1
-        quyền mặc định</p>
+      <p>Khi chúng ta tạo ra file hoặc thư mục, mặc định hệ thống gán cho nó một
+        quyền mặc định:</p>
       <ul>
         <li>File: 666 (<code>rw-rw-rw-</code>) (3)</li>
         <li>Folder: 777 (<code>rwxrwxrwx</code>) (4)</li>
