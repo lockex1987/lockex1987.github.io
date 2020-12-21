@@ -1,25 +1,25 @@
-function toggleFullScreen() {
-    if (!document.fullscreenElement) {
-        const imageElement = document.querySelector('#myImage');
-        imageElement.requestFullscreen();
-    } else {
-        document.exitFullscreen();
-    }
-}
+import {
+    isFullscreen,
+    exitFullscreen,
+    toggleFullscreen,
+    addFullscreenListener
+} from './fullscreen.js';
+
+const imageElement = document.querySelector('#myImage');
 
 document.addEventListener('keydown', (evt) => {
     const key = evt.key.toLowerCase();
     if (key === 'f') {
-        toggleFullScreen();
+        toggleFullscreen(imageElement);
     } else if (key === 'escape') {
-        document.exitFullscreen();
+        exitFullscreen();
     }
 });
 
-document.addEventListener('fullscreenchange', () => {
-    console.log(document.fullscreenElement ? 'Full' : 'Not');
+addFullscreenListener(() => {
+    console.log(isFullscreen() ? 'Full' : 'Not');
 });
 
 document.querySelector('#theButton').addEventListener('click', () => {
-    toggleFullScreen();
+    toggleFullscreen(imageElement);
 });

@@ -1,5 +1,11 @@
 // https://github.com/codedread/bitjs
 import * as bitjs from '../../libs/bitjs/archive/archive.js';
+import {
+    isFullscreen,
+    exitFullscreen,
+    toggleFullscreen,
+    addFullscreenListener
+} from '../helpers/fullscreen.js';
 
 export default {
     data() {
@@ -24,7 +30,7 @@ export default {
             currentIndex: 0,
 
             // Có đang ở chế độ toàn màn hình hay không
-            isFullScreen: false,
+            isFullscreen: false,
 
             // Đối tượng của thư viện Bitjs để giải nén
             unarchiver: null,
@@ -99,9 +105,12 @@ export default {
                     } else if (key == 'escape') {
                         this.closeViewer();
                     } else if (key == 'f') {
-                        this.toggleFullscreen();
+                        this.handleToggleFullscreen();
                     } else if (key == 'escape') {
-                        // exit fullscreen hoặc thoát chương trình
+                        // Thoát khỏi chế độ fullscreen hoặc thoát chương trình
+                        if (isFullscreen()) {
+                            exitFullscreen();
+                        }
                     } else if (key == 'a') {
                         this.viewMode = 'actual-size';
                     } else if (key == 'b') {
@@ -345,20 +354,16 @@ export default {
          * Khi ở chế độ toàn màn hình thì đổi icon và title.
          */
         handleFullScreenChangeEvent() {
-            document.addEventListener('fullscreenchange', () => {
-                this.isFullScreen = !!document.fullscreenElement;
+            addFullscreenListener(() => {
+                this.isFullscreen = !!document.fullscreenElement;
             });
         },
 
         /**
-         * Hiển thị chế độ toàn màn hình
+         * Hiển thị chế độ toàn màn hình.
          */
-        toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                document.body.requestFullscreen();
-            } else {
-                document.exitFullscreen();
-            }
+        handleToggleFullscreen() {
+            toggleFullscreen(document.body);
         },
 
         /**
