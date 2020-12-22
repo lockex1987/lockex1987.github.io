@@ -1,15 +1,28 @@
 {
-  "name": "my-electron-app",
+  "name": "ecomix",
+  "productName": "eComix",
   "version": "1.0.0",
-  "description": "",
+  "description": "Comic, image viewer",
   "main": "main.js",
-    "scripts": {
-        "start": "electron ."
-    },
+  "scripts": {
+    "start": "electron .",
+    "dist:linux": "electron-builder --linux"
+  },
   "keywords": [],
-  "author": "",
+  "author": "Nguyen Van Huyen <lockex1987@gmail.com>",
+  "homepage": "https://lockex1987.github.io/",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^11.0.4"
+    "electron": "^11.0.4",
+    "electron-builder": "^22.9.1"
+  },
+  "build": {
+    "appId": "cttd.ecomix",
+    "linux": {
+      "target": [
+        "deb"
+      ],
+      "category": "viewer"
+    }
   }
 }
