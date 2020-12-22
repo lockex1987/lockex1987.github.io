@@ -6,7 +6,7 @@ export default [
     { name: 'project', y: 52 },
     { name: 'it', y: 46 },
     { name: 'css', y: 39 },
-    { name: 'story', y: 36 },
+    { name: 'story', y: 37 },
     { name: 'linux', y: 31 },
     { name: 'git', y: 27 },
     { name: 'bootstrap', y: 22 },
