@@ -1,73 +1,51 @@
 <!doctype html>
 <html lang="en">
- <head> 
-  <meta charset="UTF-8"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <meta name="description" content="JS Canvas">
-  <title>JS Canvas</title> 
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="canvas, tách một ảnh thành nhiều ảnh nhỏ, dom to canvas animation, node">
+    <title>JS canvas</title>
 
-  <link rel="icon" href="../../images/favicon.png"> 
-  <link rel="stylesheet" href="../../css/style.css"> 
-  <style>
-      canvas { border: 1px solid black; }
-    </style> 
- </head> 
- <body> 
-  <article> 
-   <canvas id="canvas"></canvas> 
-   <script>
-var c = document.getElementById("canvas");
-var size = 500;
-c.width = size;
-c.height = size;
-var ctx = c.getContext("2d");
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="css/dom-to-canvas-animation.css">
 
-ctx.fillStyle = "rgb(200,0,0)";
-        ctx.fillRect (10, 10, 50, 50);
+    <style>
 
-        ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-        ctx.fillRect (30, 30, 50, 50);
-				
-				ctx.translate(size / 2, 100);
-ctx.fillRect(25,25,100,100);
-    ctx.clearRect(45,45,60,60);
-    ctx.strokeRect(50,50,50,50);
-		
-		// 1
-		ctx.beginPath();
-    ctx.moveTo(75,50);
-    ctx.lineTo(100,75);
-    ctx.lineTo(100,25);
-    ctx.fill();
-		
-		// 2
-		ctx.beginPath();
-    ctx.arc(75,75,50,0,Math.PI*2,true); // Outer circle
-    ctx.moveTo(110,75);
-    ctx.arc(75,75,35,0,Math.PI,false);  // Mouth (clockwise)
-    ctx.moveTo(65,65);
-    ctx.arc(60,65,5,0,Math.PI*2,true);  // Left eye
-    ctx.moveTo(95,65);
-    ctx.arc(90,65,5,0,Math.PI*2,true);  // Right eye
-    ctx.stroke();
-		
-		// 4. Filled triangle
-    ctx.beginPath();
-    ctx.moveTo(25,25);
-    ctx.lineTo(105,25);
-    ctx.lineTo(25,105);
-    ctx.fill();
+    </style>
+</head>
 
-    // 5. Stroked triangle
-    ctx.beginPath();
-    ctx.moveTo(125,125);
-    ctx.lineTo(125,45);
-    ctx.lineTo(45,125);
-    ctx.closePath();
-    ctx.stroke();
-</script> 
-  </article> 
-  <script src="../../js/docs.js"></script>  
- </body>
+<body>
+    <article>
+        <h2>JS canvas</h2>
+
+        <h3>Bat dau ve don gian</h3>
+        <canvas id="simpleShapes" class="border mb-3"></canvas>
+
+        <h3>Tách một ảnh thành nhiều ảnh nhỏ</h3>
+        <div id="splitImageGallery" class="mb-3"></div>
+
+        <h3>DOM to Canvas animation</h3>
+        <div class="text-center mb-3">
+            <button class="animation-button">Click me</button>
+        </div>
+
+        <div class="text-center p-3 mb-3">
+            <img src="images/zelda-breath-of-wild.jpg" class="animation-image" />
+        </div>
+
+        <h3>Mo truong Node</h3>
+        <p>Chung ta su dung package <a href="https://www.npmjs.com/package/canvas" target="_blank">canvas</a>. Co the dung de sinh file anh, xu ly anh.</p>
+
+    </article>
+
+    <script src="js/draw-simple-shapes.js"></script>
+    <script src="js/split-image.js"></script>
+    <script src="libs/html2canvas/js/html2canvas.min.js"></script>
+    <script src="js/dom-to-canvas-animation.js"></script>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
 </html>
