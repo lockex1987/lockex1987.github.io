@@ -174,13 +174,26 @@ abstract class Controller extends BaseController
         return $validator-&gt;errors()-&gt;all();
     }
 }</pre>
-      <h4>AJAX Requests &amp; Validation</h4>
+      <h4>AJAX request và validation</h4>
       <p>Trong ví dụ này, chúng ta sử dụng form để gửi dữ liệu vào ứng dụng. Tuy
-        nhiên, nhiều ứng dụng sử dụng AJAX requests. Khi sử dụng phương thức <code>validate</code>
+        nhiên, nhiều ứng dụng sử dụng AJAX request. Khi sử dụng phương thức <code>validate</code>
         trong AJAX request, Laravel sẽ không tạo ra redirect response. Thay vì,
         Laravel tạo một JSON response chứa tất cả lỗi validation. JSON response
         này sẽ được gửi với mã 422 HTTP status.</p>
-      <h3>Form Request Validation</h3>
+      <p>Để bắt được nội dung lỗi với thư viện axios, chúng ta sử dụng try catch
+        và lấy thuộc tính <code>response.data.errors</code> của exception. Code
+        mẫu:</p>
+      <pre>try {
+    const { data } = await axios.post('url', formData);
+
+} catch (ex) {
+    // Thông báo lỗi
+    const errorMessage = Object.values(ex.response.data.errors)[0][0];
+
+} finally {
+
+}</pre>
+      <h3>Form request validation</h3>
       <h4>Tạo form request</h4>
       <p>Với những trường hợp validation phức tạp, bạn có thể tạo một "form
         request". Form requests là tùy chỉnh class request chứa logic
@@ -222,7 +235,7 @@ public function store(StoreBlogPost $request)
         session, vì vậy chúng ta có thể hiển thị nó. Nếu request là AJAX
         request, một HTTP response với mã 422 status sẽ được trả về cho người
         dùng gồm JSON representation chứa lỗi validation.</p>
-      <h4>Authorizing Form Request</h4>
+      <h4>Authorizing form request</h4>
       <p>Class form request ngoài ra còn chứa một phương thức <code>authorize</code>.
         Bên trong phương thức, bạn có thể xác thực người dùng thực sự đã có
         quyền cập nhật dữ liệu. Ví dụ, nếu một người dùng cố gắng cập nhật
@@ -346,7 +359,7 @@ class PostController extends Controller
     'title' =&gt; 'required|unique:posts|max:255',
     'body' =&gt; 'required',
 ])-&gt;validate();</pre>
-      <h4>Named Error Bag</h4>
+      <h4>Named error bag</h4>
       <p>Nếu bạn có nhiều form trên một trang, bạn có thể sử dụng phương thức <code>MessageBag</code>,
         cho phép bạn nhận nội dung lỗi từ form cụ thể. Đơn giản chỉ là truyền
         thêm một tham số thứ hai của phương thức <code>withErrors</code>:</p>
@@ -354,7 +367,7 @@ class PostController extends Controller
             -&gt;withErrors($validator, 'login');</pre>
       <p>Bạn cũng có thể lấy một thể hiện <code>MessageBag</code> từ biến <code>$errors</code>:</p>
       <pre>{{ $errors-&gt;login-&gt;first('email') }}</pre>
-      <h4>After Validation Hook</h4>
+      <h4>After validation hook</h4>
       <p>Ngoài ra validator còn cho phép bạn thêm callbacks để chạy sau khi
         validation thành công. Điều này cho phép bạn dễ dàng thực hiện các
         validation và thêm nội dung lỗi cho message collection. Để bắt đầu, sử
@@ -432,20 +445,20 @@ $validator = Validator::make($input, $rules, $messages);</pre>
       <h4>Tùy biến nội dung trong file ngôn ngữ</h4>
       <p>Trong hầu hết các trương hợp, bạn có thể tùy biến nội dung trong một
         file ngôn ngữ thay vì truyền chúng trực tiếp vào phương thức <code>Validator</code>.
-        Đề làm điều này, bạn thêm nội dung vào mảng <code>custom</code>trong
+        Để làm điều này, bạn thêm nội dung vào mảng <code>custom</code> trong
         file ngôn ngữ <code>resources/lang/xx/validation.php</code>.</p>
       <pre>'custom' =&gt; [
     'email' =&gt; [
-        'required' =&gt; 'We need to know your e-mail address!',
-    ],
-],</pre>
+        'required' =&gt; 'We need to know your e-mail address!'
+    ]
+]</pre>
       <h4>Tùy biến thuộc tính trong file ngôn ngữ</h4>
       <p>Nếu bạn muốn thuộc tính <code>:attribute</code> phần nội dung
         validation sẽ được thay đổi bởi tên thuộc tính tùy chỉnh, bạn có thể tùy
         biến trong mảng <code>attributes</code> của file ngôn ngữ <code>resources/lang/xx/validation.php</code>:</p>
       <pre>'attributes' =&gt; [
-    'email' =&gt; 'email address',
-],</pre>
+    'email' =&gt; 'email address'
+]</pre>
       <h3>Những quy định validation có sẵn</h3>
       <h4>accepted</h4>
       <p>Giá trị phải là <em>yes</em>, <em>on</em>, <em>1</em>, or <em>true</em>.
@@ -896,8 +909,7 @@ class AppServiceProvider extends ServiceProvider
 }</pre>
       <p>Mở file <code>ResetPasswordController.php</code> ở thư mục <code>app/Http/Controllers/Auth</code>.
         Thêm phương thức <code>rules()</code> với các luật sau:</p>
-      <div> <ins data-ad-client="ca-pub-8077071189647178" data-ad-slot="1403147647"
-
+      <div> <ins data-ad-client="ca-pub-8077071189647178" data-ad-slot="1403147647"
           data-ad-format="auto"></ins> </div>
       <pre>protected function rules() {
     return [

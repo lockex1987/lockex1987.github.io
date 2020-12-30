@@ -1,100 +1,138 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
- <head> 
-  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
-  <title>Laravel i18n</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <link rel="icon" href="../../images/favicon.png"> 
-  <link rel="stylesheet" href="../../css/style.css"> 
-  <meta name="description" content="Laravel i18n">
- </head> 
- <body> 
-  <article> 
-   <h3>Tham khảo</h3> 
-   <p>https://laravel.com/docs/master/localization</p> 
-   <p>https://giaphiep.com/docs/5.4/localization</p> 
-   <p><a></a></p> 
-   <h3>Giới thiệu</h3> 
-   <p>Localization của laravel cung cấp một cách tiện lợi cho việc lấy các chuỗi dữ liệu từ các ngôn ngữ khác nhau, cho phép bạn dễ dàng tạo ứng dụng đa ngôn ngữ trong ứng dụng của bạn. Các chuỗi dữ liệu được lưu trong file nằm ở trong thư mục <code>resources/lang</code>. Bên trong thư mục này có chứa các thư mục con cho mỗi ngôn ngữ được hỗ trở bởi ứng dụng:</p> 
-   <pre>/resources
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="i18n, internationalization, l10n, localization">
+    <title>Đa ngôn ngữ trong Laravel</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Đa ngôn ngữ trong Laravel</h2>
+      <h3>Giới thiệu</h3>
+      <p>Localization của Laravel cung cấp một cách tiện lợi cho việc lấy các
+        chuỗi dữ liệu từ các ngôn ngữ khác nhau, cho phép bạn dễ dàng tạo ứng
+        dụng đa ngôn ngữ trong ứng dụng của bạn. Các chuỗi dữ liệu được lưu
+        trong file nằm ở trong thư mục <code>resources/lang</code>. Bên trong
+        thư mục này có chứa các thư mục con cho mỗi ngôn ngữ được hỗ trở bởi ứng
+        dụng:</p>
+      <pre>/resources
     /lang
         /en
             messages.php
         /vi
-            messages.php</pre> 
-   <p>Tất cả các file ngôn ngữ đơn giản chỉ cần trả về mảng các chuỗi key. Ví dụ:</p> 
-   <pre>&lt;?php
+            messages.php</pre>
+      <p>Tất cả các file ngôn ngữ đơn giản chỉ cần trả về mảng các chuỗi key. Ví
+        dụ:</p>
+      <pre>&lt;?php
 
 return [
     'welcome' =&gt; 'Welcome to our application'
-];</pre> 
-   <p>Bình thường chúng ta sẽ có thư mục <code>en</code> (tiếng Anh) với các file sau (tương ứng với các chức năng đăng ký, đăng nhập, reset password, phân trang):</p> 
-   <ul> 
-    <li>auth.php</li> 
-    <li>pagination.php</li> 
-    <li>passwords.php</li> 
-    <li>validation.php</li> 
-   </ul> 
-   <h3>Cấu hình ngôn ngữ</h3> 
-   <p>Ngôn ngữ mặc định được thiết lập trong file cấu hình <code>config/app.php</code>.</p> 
-   <pre>'locale' =&gt; 'vi'</pre> 
-   <p>Bạn cũng có thể cấu hình "ngôn ngữ thay thế", khi mà ngôn ngữ đang sử dụng không có chứa file ngôn ngữ tương ứng. Giống như ngôn ngữ mặc định, ngôn ngữ thay thế cũng được cấu hình trong file <code>config/app.php</code>:</p> 
-   <pre>'fallback_locale' =&gt; 'en'</pre> 
-   <p>Tất nhiên, bạn có thể chỉnh sửa sao cho phù hợp với ứng dụng của bạn. Bạn cũng có thể thay đổi ngôn ngữ sử dụng mặc định bằng cách sử dụng hàm <code>setLocale</code> trong <code>App</code> facade: </p> 
-   <pre>Route::get('welcome/{locale}', function($locale) {
+];</pre>
+      <p>Bình thường chúng ta sẽ có thư mục <code>en</code> (tiếng Anh) với các
+        file sau (tương ứng với các chức năng đăng nhập, phân trang, quên mật
+        khẩu và kiểm tra dữ liệu đầu vào):</p>
+      <ul>
+        <li><code>auth.php</code></li>
+        <li><code>pagination.php</code></li>
+        <li><code>passwords.php</code></li>
+        <li><code>validation.php</code></li>
+      </ul>
+      <h3>Cấu hình ngôn ngữ</h3>
+      <p>Ngôn ngữ mặc định được thiết lập trong file cấu hình <code>config/app.php</code>.</p>
+      <pre>'locale' =&gt; 'vi'</pre>
+      <p>Bạn cũng có thể cấu hình "ngôn ngữ thay thế", khi mà ngôn ngữ đang sử
+        dụng không có chứa file ngôn ngữ tương ứng. Giống như ngôn ngữ mặc định,
+        ngôn ngữ thay thế cũng được cấu hình trong file <code>config/app.php</code>:</p>
+      <pre>'fallback_locale' =&gt; 'en'</pre>
+      <p>Tất nhiên, bạn có thể chỉnh sửa sao cho phù hợp với ứng dụng của bạn.
+        Bạn cũng có thể thay đổi ngôn ngữ sử dụng mặc định bằng cách sử dụng hàm
+        <code>setLocale</code> trong facade <code>App</code>: </p>
+      <pre>Route::get('welcome/{locale}', function ($locale) {
     App::setLocale($locale);
 
     //
-});</pre> 
-   <h3>Kiểm tra ngôn ngữ hiện tại</h3> 
-   <p>Bạn có thể sử dụng phương thức <code>getLocale</code> and <code>isLocale</code> trong <code>App</code> facade để xác định ngôn ngữ hiện tại hoặc kiểm tra giá trị của ngôn ngữ hiện tại:</p> 
-   <pre>$locale = App::getLocale();
+});</pre>
+      <h3>Kiểm tra ngôn ngữ hiện tại</h3>
+      <p>Bạn có thể sử dụng phương thức <code>getLocale</code> and <code>isLocale</code>
+        trong facade <code>App</code> để xác định ngôn ngữ hiện tại hoặc kiểm
+        tra giá trị của ngôn ngữ hiện tại:</p>
+      <pre>$locale = App::getLocale();
 
 if (App::isLocale('en')) {
     //
-}</pre> 
-   <p><a></a></p> 
-   <h3>Sử dụng chuỗi dịch như phím tắt</h3> 
-   <p>Đối với những ứng dụng mà yêu cầu đa ngôn ngữ nhiều, định nghĩa tất cả các chuỗi dịch với "phím tắt" có thể nhanh chóng gây nhầm lẫn trong views. Chính vì lý do đấy, Laravel cung cấp cho việc định nghĩa sử dụng string "mặc định" dịch chuỗi như là phím tắt.</p> 
-   <p>File dịch sử dụng chuỗi dịch như phím tắt được lưu dưới dạng JSON trong thư mục <code>resources/lang</code>. Ví dụ, nếu ứng dụng của bạn có dịch ngôn ngữ tiếng Việt, bạn nên tạo một file <code>resources/lang/vi.json</code>:</p> 
-   <pre>{
+}</pre>
+      <h3>Sử dụng chuỗi dịch như phím tắt</h3>
+      <p>Đối với những ứng dụng mà yêu cầu đa ngôn ngữ nhiều, định nghĩa tất cả
+        các chuỗi dịch với "phím tắt" có thể nhanh chóng gây nhầm lẫn trong
+        view. Chính vì lý do đấy, Laravel cung cấp cho việc định nghĩa sử dụng
+        string "mặc định" dịch chuỗi như là phím tắt.</p>
+      <p>File dịch sử dụng chuỗi dịch như phím tắt được lưu dưới dạng JSON trong
+        thư mục <code>resources/lang</code>. Ví dụ, nếu ứng dụng của bạn có
+        dịch ngôn ngữ tiếng Việt, bạn nên tạo một file <code>resources/lang/vi.json</code>:</p>
+      <pre>{
     "I love programming": "Tôi yêu lập trình"
-}</pre> 
-   <p><a></a></p> 
-   <h3>Lấy xâu dịch ngôn ngữ</h3> 
-   <p>Bạn có thể lấy các dòng trong file ngôn ngữ bằng cách sử dụng hàm <code>__</code> (hai dấu gạch dưới). Hàm <code>__</code> nhận tên file và khóa trong file ngôn ngữ ở đối số đầu tiên. Ví dụ, để lấy dòng có khóa là <code>welcome</code> trong file <code>resources/lang/messages.php</code>:</p> 
-   <pre>echo __('messages.welcome');<br>echo __('I love programming');</pre> 
-   <p>Tất nhiên nếu bạn sử dụng Blade templating engine, bạn có thể sử dụng cú pháp <code>{{ }}</code> để hiện thị dòng trong file ngôn ngữ hoặc sử dụng <code>@lang</code> directive:</p> 
-   <pre>{{ __('messages.welcome') }}
+}</pre>
+      <h3>Lấy xâu dịch ngôn ngữ</h3>
+      <p>Bạn có thể lấy các dòng trong file ngôn ngữ bằng cách sử dụng hàm <code>__</code>
+        (hai dấu gạch dưới). Hàm <code>__</code> nhận tên file và khóa trong
+        file ngôn ngữ ở đối số đầu tiên. Ví dụ, để lấy dòng có khóa là <code>welcome</code>
+        trong file <code>resources/lang/messages.php</code>:</p>
+      <pre>echo __('messages.welcome');<br>echo __('I love programming');</pre>
+      <p>Tất nhiên nếu bạn sử dụng Blade templating engine, bạn có thể sử dụng
+        cú pháp <code>{{ }}</code> để hiện thị dòng trong file ngôn ngữ hoặc sử
+        dụng <code>@lang</code> directive:</p>
+      <pre>{{ __('messages.welcome') }}
 
-@lang('messages.welcome')</pre> 
-   <p>Trường hợp nếu dòng ngôn ngữ không tồn tại, hàm <code>__</code>sẽ trả về từ khóa của dòng đó. Vì vậy, ở ví dụ trên, hàm <code>__</code> sẽ trả về <code>messages.welcome</code> nếu dòng này không tồn tại.</p> 
-   <p><a></a></p> 
-   <h3>Đổi tham số trong dòng ngôn ngữ</h3> 
-   <p>Nếu bạn muốn, bạn có thể khai báo các giá trị thay thế trong file ngôn ngữ. Tất cả các giá trị thay thế được tiền tố với đầu <code>:</code> (dấu hai chấm). Ví dụ, bạn khai báo một nội dung <code>welcome</code> với tên của giá trị thay thế:</p> 
-   <pre>'welcome' =&gt; 'Welcome, :name'</pre> 
-   <p>Khi thực hiện thay thế lấy ngôn ngữ, truyền vào một mảng các giá trị thay thế vào tham số thứ hai của hàm <code>__</code>:</p> 
-   <pre>echo __('messages.welcome', ['name' =&gt; 'dayle']);</pre> 
-   <p>Nếu giá trị thay thế chứa toàn ký tự in hoa, hoặc chỉ viết đầu chữ hoa, thì giá trị được truyền vào sẽ được viết tương ứng:</p> 
-   <pre>'welcome' =&gt; 'Welcome, :NAME', // Welcome, DAYLE
-'goodbye' =&gt; 'Goodbye, :Name', // Goodbye, Dayle</pre> 
-   <p><a></a></p> 
-   <h3>Tạo số nhiều</h3> 
-   <p>Tạo số nhiều là một vấn đề khó, như các ngôn ngữ khác nhau đều có quy tắc phức tạp để chuyển từ sang số nhiều. Bằng cách sử dụng ký tự "|" , bạn có thể phân biệt được thể số ít hay số nhiều của một chuỗi:</p> 
-   <pre>'apples' =&gt; 'There is one apple|There are many apples',</pre> 
-   <p>Sau khi định nghĩa, bạn có thể dùng hàm trans_choice để lấy dòng ngôn ngữ cho một giá trị "count". Trong ví dụ này, khi mà giá trị count lớn hơn một, thì thể số nhiều của dòng ngôn ngữ được trả về:</p> 
-   <pre>echo trans_choice('messages.apples', 10);</pre> 
-   <p>Vì phần phiên dịch của Laravel dựa trên thành phần phiên dịch của Symfony, bạn thậm chí có thể tạo các quy tắc phức tạo cho số nhiều:</p> 
-   <pre>'apples' =&gt; '{0} There are none|[1,19] There are some|[20,Inf] There are many',</pre> 
-   <p><a></a></p> 
-   <h3>Ghi đè nội dung của file ngôn ngữ của thư viện vendor</h3> 
-   <p>Vài packages có thể đính kèm file ngôn ngữ riêng của nó. Thay vì chỉnh sửa các file ngôn ngữ core, bạn có thể thực hiện ghi đè bằng file riêng của bạn bằng cách đặt vào trong thư mục <code>resources/lang/vendor/{package}/{locale}</code>.</p> 
-   <p>Ví dụ, nếu bạn cần ghi đè nội dung tiếng anh trong file <code>messages.php</code> của một package tên là <code>skyrim/hearthfire</code>, bạn sẽ đặt file ngôn ngữ tại: <code>resources/lang/vendor/hearthfire/en/messages.php</code>. Trong file này chỉ nên định nghĩa các dòng ngôn ngữ bạn muốn thay thế. Bất cứ dòng nào bạn không ghi đè thì nõ vẫn lấy từ file gốc.</p> 
-   <h3>Lấy file dịch mẫu</h3> 
-   <p>Đã có người khác làm các việc này cho bạn. Hãy đến trang https://github.com/caouecs/Laravel-lang và chọn ngôn ngữ mà bạn cần. Ví dụ tiếng Việt:</p> 
-   <p>https://github.com/caouecs/Laravel-lang/tree/master/src/vi</p> 
-   <p><br></p> 
-  </article> 
-  <script src="../../js/docs.js"></script>  
- </body>
+@lang('messages.welcome')</pre>
+      <p>Trường hợp nếu dòng ngôn ngữ không tồn tại, hàm <code>__</code>sẽ trả
+        về từ khóa của dòng đó. Vì vậy, ở ví dụ trên, hàm <code>__</code> sẽ
+        trả về <code>messages.welcome</code> nếu dòng này không tồn tại.</p>
+      <h3>Đổi tham số trong dòng ngôn ngữ</h3>
+      <p>Nếu bạn muốn, bạn có thể khai báo các giá trị thay thế trong file ngôn
+        ngữ. Tất cả các giá trị thay thế được tiền tố với đầu <code>:</code>
+        (dấu hai chấm). Ví dụ, bạn khai báo một nội dung <code>welcome</code>
+        với tên của giá trị thay thế:</p>
+      <pre>'welcome' =&gt; 'Welcome, :name'</pre>
+      <p>Khi thực hiện thay thế lấy ngôn ngữ, truyền vào một mảng các giá trị
+        thay thế vào tham số thứ hai của hàm <code>__</code>:</p>
+      <pre>echo __('messages.welcome', ['name' =&gt; 'dayle']);</pre>
+      <p>Nếu giá trị thay thế chứa toàn ký tự in hoa, hoặc chỉ viết đầu chữ hoa,
+        thì giá trị được truyền vào sẽ được viết tương ứng:</p>
+      <pre>'welcome' =&gt; 'Welcome, :NAME', // Welcome, DAYLE
+'goodbye' =&gt; 'Goodbye, :Name', // Goodbye, Dayle</pre>
+      <h3>Tạo số nhiều</h3>
+      <p>Tạo số nhiều là một vấn đề khó, như các ngôn ngữ khác nhau đều có quy
+        tắc phức tạp để chuyển từ sang số nhiều. Bằng cách sử dụng ký tự "<code>|</code>"
+        , bạn có thể phân biệt được thể số ít hay số nhiều của một chuỗi:</p>
+      <pre>'apples' =&gt; 'There is one apple|There are many apples',</pre>
+      <p>Sau khi định nghĩa, bạn có thể dùng hàm <code>trans_choice</code> để
+        lấy dòng ngôn ngữ cho một giá trị "<code>count</code>". Trong ví dụ này,
+        khi mà giá trị <code>count</code> lớn hơn 1 thì thể số nhiều của dòng
+        ngôn ngữ được trả về:</p>
+      <pre>echo trans_choice('messages.apples', 10);</pre>
+      <p>Vì phần phiên dịch của Laravel dựa trên thành phần phiên dịch của
+        Symfony, bạn thậm chí có thể tạo các quy tắc phức tạo cho số nhiều:</p>
+      <pre>'apples' =&gt; '{0} There are none|[1,19] There are some|[20,Inf] There are many',</pre>
+      <h3>Ghi đè nội dung của file ngôn ngữ của thư viện vendor</h3>
+      <p>Vài package có thể đính kèm file ngôn ngữ riêng của nó. Thay vì chỉnh
+        sửa các file ngôn ngữ core, bạn có thể thực hiện ghi đè bằng file riêng
+        của bạn bằng cách đặt vào trong thư mục <code>resources/lang/vendor/{package}/{locale}</code>.</p>
+      <p>Ví dụ, nếu bạn cần ghi đè nội dung tiếng anh trong file <code>messages.php</code>
+        của một package tên là <code>skyrim/hearthfire</code>, bạn sẽ đặt file
+        ngôn ngữ tại: <code>resources/lang/vendor/hearthfire/en/messages.php</code>.
+        Trong file này chỉ nên định nghĩa các dòng ngôn ngữ bạn muốn thay thế.
+        Bất cứ dòng nào bạn không ghi đè thì nõ vẫn lấy từ file gốc.</p>
+      <h3>Lấy file dịch mẫu</h3>
+      <p>Đã có người khác làm các việc này cho bạn. Hãy đến trang <a href="https://github.com/Laravel-Lang/lang"
+          target="_blank">https://github.com/caouecs/Laravel-lang</a> và chọn
+        ngôn ngữ mà bạn cần. Ví dụ tiếng Việt:</p>
+      <p><a href="https://github.com/Laravel-Lang/lang/tree/master/src/vi" target="_blank">https://github.com/caouecs/Laravel-lang/tree/master/src/vi</a></p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://laravel.com/docs/master/localization" target="_blank">https://laravel.com/docs/master/localization</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
 </html>
