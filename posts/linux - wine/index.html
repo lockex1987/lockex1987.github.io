@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cài đặt và sử dụng Wine">
+    <title>Cài đặt và sử dụng Wine</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Cài đặt và sử dụng WINE</h2>
+      <p>WINE giúp chạy các ứng dụng Windows trên Linux. Nhiều ứng dụng chỉ có
+        trên Windows như Photoshop, MS Office, nhiều game.</p>
+      <h3>Cài đặt</h3>
+      <p>Chúng ta sẽ cài đặt WINE trên Ubunut 20.10.</p>
+      <p>Phiên bản WINE trong kho Ubuntu Software là 5.0-3ubuntu1.</p>
+      <p>Để cài đặt phiên bản mới nhất (5.22), chúng ta làm các bước sau.</p>
+      <h4>Cấu hình architecture của hệ thống</h4>
+      <p>Thông thường Ubuntu 20.10 được cài với hệ thống kiến trúc 64-bit. WINE
+        cần hỗ trợ đồng thời cả ứng dụng 32-bit. Chúng ta thêm kiến trúc 32-bit
+        như sau:</p>
+      <pre>sudo dpkg --add-architecture i386</pre>
+      <h4>Thiết lập PPA</h4>
+      <p>Download key của WINE repository:</p>
+      <pre>wget -nc https://dl.winehq.org/wine-builds/winehq.key</pre>
+      <p>Thêm key:</p>
+      <pre>sudo apt-key add winehq.key</pre>
+      <p>Gộp 2 lệnh trên:</p>
+      <pre class="out-of-box">wget -qO - https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -</pre>
+      <p>Tiếp theo, chúng ta sẽ thêm repository của WINE.</p>
+      <p>Với Ubuntu 20.04:</p>
+      <pre class="out-of-box">sudo add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'</pre>
+      <p>Với Ubuntu 20.10:</p>
+      <pre class="out-of-box">sudo add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ grovy main'</pre>
+      <h4>Cài đặt package</h4>
+      <p>Cập nhật các package:</p>
+      <pre>sudo apt update</pre>
+      <p>Tiếp theo, chúng ta có thể cài đặt một trong 3 phiên bản (stable,
+        development, staging):</p>
+      <p>Bản stable:</p>
+      <pre>sudo apt install --install-recommends winehq-stable</pre>
+      <p>Bản development:</p>
+      <pre>sudo apt install --install-recommends winehq-devel</pre>
+      <p>Bản staging:</p>
+      <pre>sudo apt install --install-recommends winehq-staging
+</pre>
+      <p>Xác nhận lại việc cài đặt:</p>
+      <pre>wine --version</pre>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Cấu hình</h3>
+      <p>Thực hiện lệnh sau:</p>
+      <pre>winecfg</pre>
+      <p>Nhấn nút "Install" để download và cài đặt WINE.</p>
+      <p>Trong quá trình cài đặt, bạn có thể được hỏi cài đặt thêm các gói.</p>
+      <p>Sau khi cài đặt xong, cửa sổ sau sẽ được hiển thị:</p>
+      <p><br>
+      </p>
+      <h3>Cài đặt winestricks</h3>
+      <p>Cài đặt Winetricks thông qua kho Ubuntu Software.</p>
+      <p>sudo apt install winetricks</p>
+      <p>Trong các lệnh ở trên mình cài luôn winetricks là một công cụ giúp
+        chúng ta cài đặt các thư viện của Windows dễ hơn. Nó cung cấp cả giao
+        diện đồ hoạ và thao tác trên terminal luôn. Đôi khi trong quá trình cài
+        đặt ứng dụng nào đó nó sẽ báo lỗi thiếu thư viện dll hoặc .Net
+        framework. Đó là lúc winetricks phát huy công dụng của nó.</p>
+      <p><br>
+      </p>
+      <h3>Chạy ứng dụng Windows trên Linux với WINE</h3>
+      <p>Chạy bằng lệnh:</p>
+      <pre>wine windows_program.exe</pre>
+      <p>Chúng ta cũng có thể nhấn chuột phải và chọn "Open with WINE Windows
+        Program Loader".</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://technowikis.com/19911/how-to-install-wine-on-ubuntu-20-10"
+          target="_blank">How to install Wine on Ubuntu 20.10 - TechnoWikis.com</a></p>
+      <p><a href="https://appdb.winehq.org/" target="_blank">WineHQ - Wine
+          Application Database</a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

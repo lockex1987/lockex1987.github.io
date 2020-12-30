@@ -35,17 +35,22 @@ ipcMain.on("chooseFile", (event, arg) => {
  */
 function createWindow() {
     const win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        show: false,
+        // width: 800,
+        // height: 600,
         webPreferences: {
             // Cho phép truy cập Node API
-            nodeIntegration: true
+            nodeIntegration: true,
+            contextIsolation: true
         },
 
         // Ẩn tiêu đề, các nút close, minimize, maximize
         // Khi ẩn thì không thể di chuyển cửa sổ được
         // frame: false
     });
+
+    win.maximize();
+    win.show();
 
     // Không có menu
     // Khi đó không nhấn F11 để fullscreen được
@@ -89,4 +94,16 @@ app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
         createWindow();
     }
+});
+
+global.sharedObject = {
+    prop1: process.argv
+};
+
+// Event handler for asynchronous incoming messages
+ipcMain.on('asynchronous-message', (evt, arg) => {
+    console.log(arg);
+
+    // Event emitter for sending asynchronous messages
+    evt.sender.send('asynchronous-reply', 'async pong');
 });

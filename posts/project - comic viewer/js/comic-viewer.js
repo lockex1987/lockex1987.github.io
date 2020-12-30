@@ -6,6 +6,19 @@
  */
 import ComicViewer from './components/ComicViewer.js';
 
+// const remote = require('electron').remote;
+// const prop1 = remote.getGlobal('sharedObject').prop1;
+// console.log(prop1);
+/*
+import { ipcRenderer } from 'electron';
+// Async message handler
+ipcRenderer.on('asynchronous-reply', (event, arg) => {
+    console.log(arg);
+});
+// Async message sender
+ipcRenderer.send('asynchronous-message', 'async ping');
+*/
+
 // Khởi tạo uncompress
 /*
 loadArchiveFormats(['rar', 'zip'], () => {
