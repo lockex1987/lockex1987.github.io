@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+
+    <title>SVG cirlce path</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+    <article>
+        <h2>SVG cirlce path</h2>
+
+        <div class="mb-3 text-center">
+            <svg class="border"
+                    width="400"
+                    height="250">
+                <defs>
+                    <linearGradient id="quotaDonut__gradient">
+                        <stop stop-color="#fc0023" offset="0"></stop>
+                        <stop stop-color="#00FF00" offset="10"></stop>
+                    </linearGradient>
+                </defs>
+
+                <path id="arc0"
+                        fill="none"
+                        stroke="url(#quotaDonut__gradient)"
+                        stroke-width="40"
+                        stroke-linecap="round"/>
+            </svg>
+        </div>
+
+        <div class="mb-3 text-center">
+            <svg class="border"
+                    width="400"
+                    height="250">
+                <path id="arc1" fill="none" stroke="#f2f2f2" stroke-width="48" />
+                <path id="arc2" fill="none" stroke="#1abc9c" stroke-width="48" />
+            </svg>
+        </div>
+    </article>
+
+
+    <script src="js/circle-arc.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

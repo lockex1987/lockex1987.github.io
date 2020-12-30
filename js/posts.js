@@ -1,9 +1,7 @@
-import allPosts from './content-data.js';
+import postList from './post-list.js';
 import { CAT_THUMBS, ContentDataProcessor, FullTextSearch } from './category.js';
 
-
-const App = {
-    template: `
+const template = `
 <div>
     <form @submit.prevent="searchPosts()">
         <input type="text"
@@ -28,13 +26,13 @@ const App = {
 
     <p class="text-muted text-right font-size-0.875 mt-2"
             v-show="executedTime != null">
-        Tìm thấy {{filterPosts.length}} bài viết trong {{executedTime}}ms
+        Tìm thấy {{filteredList.length}} bài viết trong {{executedTime}}ms
     </p>
 
     <ul class="list list-unstyled">
         <li class="d-flex mb-5"
                 :id="'post' + curentPostIndex + '' + idx"
-                v-for="(p, idx) in shownPosts">
+                v-for="(p, idx) in showList">
             <img :src="'images/' + p.thumb"
                     class="thumb mr-3 mt-2">
 
@@ -66,18 +64,22 @@ const App = {
             <div>
         </li>
     </ul>
-</div>`,
+</div>`;
+
+
+const App = {
+    template: template,
 
     data() {
         return {
             // Chỉ hiển thị các bài viết đã xuất bản
             onlyPublished: true,
 
-            // Dữ liệu sau khi đã được lọc theo tag hoặc xâu tìm kiếm
-            filterPosts: [],
+            // Dữ liệu sau khi đã được lọc theo xâu tìm kiếm
+            filteredList: [],
 
             // Dữ liệu hiển thị từng trang
-            shownPosts: [],
+            showList: [],
 
             // Chỉ số bài viết hiện tại
             curentPostIndex: 0,
@@ -85,14 +87,19 @@ const App = {
             // Đánh dấu có đang xử lý hay không (để không xử lý nhiều lần)
             isLoadingMorePosts: false,
 
+            // Xâu tìm kiếm
             query: '',
 
+            // Thời gian tìm kiếm
             executedTime: null
         };
     },
 
     computed: {
-        regex() {
+        /**
+         * Biểu thức chính quy để highlight kết quả tìm kiếm được.
+         */
+        searchRegex() {
             return FullTextSearch.createPrefixSubRegex(this.query);
         },
 
@@ -100,29 +107,30 @@ const App = {
          * Danh sách dữ liệu để search.
          * Có thể là tất cả, hoặc chỉ những bài đã xuất bản.
          */
-        contentList() {
+        toSearchList() {
             if (this.onlyPublished) {
-                return allPosts.filter(post => post.date);
+                return postList.filter(post => post.date);
             }
-            return allPosts;
+            return postList;
         }
     },
 
-    /**
-     * Khởi tạo dữ liệu.
-     */
     created() {
-        // Khi bookmark có thể có thêm tham số searchAll=true
+        // Khi bookmark có thể có thêm tham số searchAll=true và query
         const searchAll = CommonUtils.getUrlParameter('searchAll');
         this.onlyPublished = !searchAll;
 
-        ContentDataProcessor.updateThumbnailImageOfPosts(allPosts);
-        ContentDataProcessor.sortPosts(allPosts);
-        ContentDataProcessor.normalizeDateOfPosts(allPosts);
-
         const query = CommonUtils.getUrlParameter('query');
-        // console.log(query);
         this.query = query || '';
+
+        // Cập nhật ảnh của thể loại
+        ContentDataProcessor.updateThumbnailImageOfPosts(postList);
+
+        // Sắp xếp
+        ContentDataProcessor.sortPosts(postList);
+
+        // Chuẩn hóa ngày xuất bản
+        ContentDataProcessor.normalizeDateOfPosts(postList);
     },
 
     mounted() {
@@ -136,27 +144,6 @@ const App = {
 
     methods: {
         /**
-         * Hiển thị highlight tìm kiếm.
-         * @param {String} text Xâu gốc hiển thị
-         */
-        highlightText(text) {
-            if (!this.query) {
-                return text;
-            }
-            return text.replace(this.regex, (match) => {
-                if (match.startsWith(' ')) {
-                    return ` <span class="bg-yellow text-body">${match.trim()}</span>`;
-                } else {
-                    return `<span class="bg-yellow text-body">${match}</span>`;
-                }
-            });
-        },
-
-        normalizeDate(d) {
-            return CommonUtils.normalizeDate(d);
-        },
-
-        /**
          * Lọc các bài viết theo từ khóa tìm kiếm.
          */
         processFilterPosts() {
@@ -167,14 +154,14 @@ const App = {
 
             // Tiến hành lọc theo từ khóa
             if (!query) {
-                this.filterPosts = this.contentList;
+                this.filteredList = this.toSearchList;
             } else {
-                this.filterPosts = FullTextSearch.splitSearch(this.query, this.contentList);
+                this.filteredList = FullTextSearch.splitSearch(this.query, this.toSearchList);
             }
 
             // Bắt đầu hiển thị ra cho người dùng
             this.curentPostIndex = 0;
-            this.shownPosts = [];
+            this.showList = [];
 
             const endTime = new Date();
             this.executedTime = endTime - startTime;
@@ -182,77 +169,18 @@ const App = {
             this.bindPosts();
         },
 
-        searchPosts() {
-            // blur ô nhập xâu tìm kiếm để ẩn keyboard trên mobile
-            this.$refs.queryInput.blur();
-
-            this.setTitle();
-
-            // Lưu trạng thái của trang
-            const state = {
-                query: this.query
-            };
-            const url = (this.onlyPublished ? '?' : '?searchAll=true&') + 'query=' + this.query.toLowerCase();
-            history.pushState(state, null, url);
-        },
-
         /**
          * Đổi title.
          */
         setTitle() {
-            document.title = 'Posts' +
-                (this.query ? ` "${this.query}"` : '');
-        },
-
-        listenToPopstate() {
-            // Người dùng nhấn nút "Back" hoặc "Forward"
-            window.addEventListener('popstate', (evt) => {
-                // Lấy nội dung nếu có địa chỉ
-                // Thiết lập lại xâu tìm kiếm
-                if (evt.state && evt.state.query) {
-                    // Lấy địa chỉ ở state
-                    this.query = evt.state.query;
-                } else {
-                    this.query = '';
-                }
-                this.setTitle();
-
-                // Tìm kiếm lại
-                this.processFilterPosts();
-            });
-        },
-
-        initFocus() {
-            this.$refs.queryInput.focus();
-        },
-
-        listenToScrollEvent() {
-            window.addEventListener('scroll', this.checkLoadMorePosts);
+            document.title = 'Posts' + (this.query ? ` "${this.query}"` : '');
         },
 
         /**
-         * Hiển thị tất cả các post luôn 1 lần.
+         * Lắng nghe sự kiện scroll.
          */
-        bindPosts() {
-            // console.log(this.filterPosts.length);
-            // Nếu đã hết bản ghi
-            if (this.curentPostIndex >= this.filterPosts.length) {
-                return;
-            }
-
-            // Đánh dấu đang xử lý
-            this.isLoadingMorePosts = true;
-
-            // Chỉ lấy ít bản ghi thôi, nếu không sẽ bị chậm
-            const morePostNumber = 20;
-
-            this.shownPosts.push(...this.filterPosts.slice(this.curentPostIndex, this.curentPostIndex + morePostNumber));
-
-            // Tăng chỉ số
-            this.curentPostIndex += morePostNumber;
-
-            // Đánh dấu đã xử lý xong
-            this.isLoadingMorePosts = false;
+        listenToScrollEvent() {
+            window.addEventListener('scroll', this.checkLoadMorePosts);
         },
 
         /**
@@ -270,6 +198,100 @@ const App = {
             if (height - scrolled < 100) {
                 this.bindPosts();
             }
+        },
+
+        /**
+         * Hiển thị tất cả các post luôn 1 lần.
+         */
+        bindPosts() {
+            // console.log(this.filteredList.length);
+            // Nếu đã hết bản ghi
+            if (this.curentPostIndex >= this.filteredList.length) {
+                return;
+            }
+
+            // Đánh dấu đang xử lý
+            this.isLoadingMorePosts = true;
+
+            // Chỉ lấy ít bản ghi thôi, nếu không sẽ bị chậm
+            const morePostNumber = 20;
+
+            this.showList.push(...this.filteredList.slice(this.curentPostIndex, this.curentPostIndex + morePostNumber));
+
+            // Tăng chỉ số
+            this.curentPostIndex += morePostNumber;
+
+            // Đánh dấu đã xử lý xong
+            this.isLoadingMorePosts = false;
+        },
+
+        /**
+         * Hiển thị highlight tìm kiếm.
+         * @param {String} text Xâu gốc hiển thị
+         */
+        highlightText(text) {
+            if (!this.query) {
+                return text;
+            }
+            return text.replace(this.searchRegex, (match) => {
+                if (match.startsWith(' ')) {
+                    return ` <span class="bg-yellow text-body">${match.trim()}</span>`;
+                } else {
+                    return `<span class="bg-yellow text-body">${match}</span>`;
+                }
+            });
+        },
+
+        /**
+         * Chuẩn hóa ngày tháng khi hiển thị.
+         * @param {Date} d Đối tượng Date
+         */
+        normalizeDate(d) {
+            return CommonUtils.normalizeDate(d);
+        },
+
+        /**
+         * Tìm kiếm.
+         */
+        searchPosts() {
+            // blur ô nhập xâu tìm kiếm để ẩn keyboard trên mobile
+            this.$refs.queryInput.blur();
+
+            this.setTitle();
+
+            // Lưu trạng thái của trang
+            const state = {
+                query: this.query
+            };
+            const url = (this.onlyPublished ? '?' : '?searchAll=true&') + 'query=' + this.query.toLowerCase();
+            history.pushState(state, null, url);
+        },
+
+        /**
+         * Lắng nghe sự kiện người dùng nhấn nút Back hoặc Forward.
+         */
+        listenToPopstate() {
+            window.addEventListener('popstate', (evt) => {
+                // Lấy nội dung nếu có địa chỉ
+                // Thiết lập lại xâu tìm kiếm
+                if (evt.state && evt.state.query) {
+                    // Lấy địa chỉ ở state
+                    this.query = evt.state.query;
+                } else {
+                    this.query = '';
+                }
+                this.setTitle();
+
+                // Tìm kiếm lại
+                this.processFilterPosts();
+            });
+        },
+
+        /**
+         * Focus luôn vào ô tìm kiếm.
+         */
+        initFocus() {
+            this.$refs.queryInput.focus();
         },
 
         /**

@@ -17,28 +17,43 @@
     <article>
         <h2>Sử dụng SVG</h2>
 
-        <h3>
-            Như ảnh bình thường
-        </h3>
-        <img class="papa" src="images/kiwi.svg" />
-        <img class="mama" src="images/kiwi.svg" />
-        <img class="baby" src="images/kiwi.svg" />
+        <h3>Như ảnh bình thường</h3>
 
-        <h3>
-            Như thuộc tính background-image
-        </h3>
-        <div class="logo"></div>
-		
+        <div class="mb-3">
+            <img class="papa" src="images/kiwi.svg" style="width: 250px;"/>
+        </div>
+        <div class="mb-3">
+            <img class="mama" src="images/kiwi.svg" style="width: 100px; "/>
+        </div>
+        <div class="mb-3">
+            <img class="baby" src="images/kiwi.svg" style="width: 50px; "/>
+        </div>
+
+        <h3>Như thuộc tính background-image</h3>
+
+        <div class="kiwi-logo mb-3"></div>
 		
 		<div class="twitter-logo" href="https://twitter.com/Snapsvg"></div>
 
-        <h3>
-            Sử dụng "inline"
-        </h3>
-        <svg enable-background="new 0 65.326 612 502.174" height="502.174px" id="Layer_1" version="1.1"
-            viewbox="0 65.326 612 502.174" width="612px" x="0px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink" y="0px">
-            <ellipse class="ground" cx="283.5" cy="487.5" fill="#C6C6C6" rx="259" ry="80">
+        <h3>Sử dụng inline, trực tiếp thẻ svg</h3>
+        
+        <svg enable-background="new 0 65.326 612 502.174"
+                height="502.174px"
+                id="Layer_1"
+                version="1.1"
+                viewbox="0 65.326 612 502.174"
+                width="612px"
+                x="0px"
+                xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                y="0px"
+                class="mb-3 mw-100">
+            <ellipse class="ground"
+                    cx="283.5"
+                    cy="487.5"
+                    fill="#C6C6C6"
+                    rx="259"
+                    ry="80">
             </ellipse>
 
             <path class="kiwi" d="M210.333,65.331C104.367,66.105-12.349,150.637,1.056,276.449c4.303,40.393,18.533,63.704,52.171,79.03
@@ -65,28 +80,23 @@
             </filter>
         </svg>
 
-        <h3>
-            Dùng AJAX để load thành inline
-        </h3>
+        <h3>Dùng AJAX để load thành inline</h3>
+
         <p>Sau khi trở thành inline thì chúng ta có thể style bằng CSS bình thường.</p>
-        <div id="demo">
-        </div>
+        <div id="demo" class="mb-3"></div>
 
-        <h3>
-            Xử lý với JS
-        </h3>
-        <div id="map">
-        </div>
+        <h3>Xử lý với JS</h3>
 
-        <div class="tooltip">
-        </div>
+        <div id="map"></div>
+
+        <div class="map-tooltip"></div>
 
         <h3>Bản đồ thế giới</h3>
 
         <div id="countries"></div>
 
         <h3>Icon</h3>
-<p>Tôi quyết định dùng ảnh SVG thay cho web font.</p>
+    <p>Tôi quyết định dùng ảnh SVG thay cho web font.</p>
     <p>Tuy nhiên, dùng ảnh thì sẽ khó cho việc định kích thước, sửa màu, căn
       chỉnh theo chiều dọc.</p>
     <p>Web font dường như tự căn chỉnh theo chiều dọc được luôn, nhưng với những
@@ -102,13 +112,13 @@
     </p>
     <p>Làm thế nào để loại bỏ khoảng trắng trên SVG?</p>
     <p>Dùng hàm getBBox của đối tượng SVG để tính toán.</p>
-    <pre>/**
+    <pre class="out-of-box">/**
  * Will trim the whitespace around the SVG's viewbox.
  */
 function trimSvgWhitespace(svg) {
-	let bbox = svg.getBBox();
-	let viewBox = [bbox.x, bbox.y, bbox.width, bbox.height].join(' ');
-	svg.setAttribute('viewBox', viewBox);
+    const bbox = svg.getBBox();
+    const viewBox = [bbox.x, bbox.y, bbox.width, bbox.height].join(' ');
+    svg.setAttribute('viewBox', viewBox);
 }</pre>
     <p>Sau khi tính toán xong, chúng ta có thể sửa lại file SVG gốc. File SVG chỉ
       là text file nên sửa rất dễ.<br>
@@ -128,15 +138,9 @@ function trimSvgWhitespace(svg) {
                     href="https://www.tutorialspoint.com/svg/walkway.htm" target="_blank">SVG Walkway.js Effects</a>
             </li>
             <li>
-                <span class="text-muted mr-2">tutorialspoint.com</span>
-                <a
-                    href="https://www.tutorialspoint.com/riotjs/riotjs_quick_guide.htm" target="_blank">RIOT.JS Quick
-                    Guide</a></li>
-            <li>
                 <span class="text-muted mr-2">developer.mozilla.org</span>
                 <a
-                    href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial" target="_blank">SVG Tutorial - SVG:
-                    Scalable Vector Graphics | MDN</a></li>
+                    href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial" target="_blank">SVG Tutorial | MDN</a></li>
             <li>
                 <span class="text-muted mr-2">flaviocopes.com</span>
                 <a href="https://flaviocopes.com/svg/"
@@ -154,28 +158,30 @@ function trimSvgWhitespace(svg) {
                 <a
                     href="https://webdesign.tutsplus.com/vi/tutorials/how-to-hand-code-svg--cms-30368"
                     target="_blank">Cách xử lý code SVG bằng tay</a></li>
-            <li>
-                <span class="text-muted mr-2">laptrinhvien.io</span>
-                <a href="https://laptrinhvien.io/hieu-ung-tu-ve-voi-svg/" target="_blank">
-					JTC » Hiệu ứng tự vẽ với SVG
-				</a>
-			</li>
-			
 			<li>
                 <span class="text-muted mr-2">github.com</span>
                 <a href="https://github.com/danklammer/bytesize-icons" target="_blank">
 					bytesize icons
 				</a>
             </li>
-            
             <li>
                 <span class="text-muted mr-2">youtube.com</span>
                 <a href="https://www.youtube.com/watch?v=PQxtlY19kto&list=PLL8woMHwr36F2tCFnWTbVBQAGQ6nTcXOO" target="_blank">
 					SVG Jenkov tutorial
 				</a>
-			</li>
-					
-					
+            </li>
+            <li>
+                <span class="text-muted mr-2">css-tricks.com</span>
+                <a href="https://css-tricks.com/svg-path-syntax-illustrated-guide/" target="_blank">
+					The SVG `path` Syntax: An Illustrated Guide
+				</a>
+            </li>
+            <li>
+                <span class="text-muted mr-2">w3schools.com</span>
+                <a href="https://www.w3schools.com/graphics/svg_intro.asp" target="_blank">
+					SVG Tutorial
+				</a>
+            </li>
         </ul>
     </article>
 

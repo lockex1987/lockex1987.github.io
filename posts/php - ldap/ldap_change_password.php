@@ -5,31 +5,30 @@ namespace Cttd\Ldap;
 class LdapManager
 {
 	// Các thông tin cấu hình LDAP
-	// Khi doi mat khau can SSL, protocol la ldaps
-	// Cong la 636
+	// Khi đổi mật khẩu cần thêm SSL, giao thức là LDAPS, cổng là 636
 	private $ldapHost = 'ldaps://cyberspace.vn';
 	private $adminUsername = 'changepassword@cyberspace.vn';
 	private $adminPassword = '559aNH7D0kJ3B$JKo';
 	private $baseDn = 'ou=People,dc=cyberspace,dc=vn';
 
 	/**
-	 * Doi mat khau LDAP.
+	 * Đổi mật khẩu LDAP.
 	 * @param $username Người dùng
-	 * @param $oldPassword Mật khẩu cu
-	 * @param $newPassword Mật khẩu moi
+	 * @param $oldPassword Mật khẩu cũ
+	 * @param $newPassword Mật khẩu mới
 	 */
 	public function changePassword($username, $oldPassword, $newPassword)
 	{
-		// Hien thi debug khi loi
-		//ldap_set_option(null, LDAP_OPT_DEBUG_LEVEL, 7);
-		
-		// Ket noi den SSL
+		// Hiển thị debug khi lỗi
+		// ldap_set_option(null, LDAP_OPT_DEBUG_LEVEL, 7);
+
+		// Kết nối dùng SSL
 		ldap_set_option(null, LDAP_OPT_X_TLS_REQUIRE_CERT, LDAP_OPT_X_TLS_NEVER);
 
 		$connection = ldap_connect($this->ldapHost);
 
 		if (! $connection) {
-			echo "Khong ket noi duoc den server LDAP \n";
+			echo 'Không kết nối được đến server LDAP' . PHP_EOL;
 			return false;
 		} else {
 			// Cấu hình LDAP
@@ -41,16 +40,16 @@ class LdapManager
 			$bindAdminResult = ldap_bind($connection, $this->adminUsername, $this->adminPassword);
 			$retval;
 			if (! $bindAdminResult) {
-				echo "Dang nhap admin that bai \n";
+				echo 'Đăng nhập admin thất bại' . PHP_EOL;
 				$retval = false;
 			} else {
-				$filter = "(samaccountname=$username)";
-				$fields = ["*"];
+				$filter = '(samaccountname=' . $username . ')';
+				$fields = ['*'];
 				$searchResult = ldap_search($connection, $this->baseDn, $filter, $fields);
 				$info = ldap_get_entries($connection, $searchResult);
 
 				// Tên người dùng ở LDAP
-				$userDn = $info[0]["distinguishedname"][0];
+				$userDn = $info[0]['distinguishedname'][0];
 
 				// Kiểm tra xem người dùng và password ở LDAP có hợp lệ hay không
 				$bindUserResult = ldap_bind($connection, $userDn, $oldPassword);
@@ -65,14 +64,14 @@ class LdapManager
 
 					$replaceResult = ldap_mod_replace($connection, $userDn, $newEntry);
 					if ($replaceResult === false) {
-						echo "Doi mat khau that bai \n";
+						echo 'Đổi mật khẩu thất bại' . PHP_EOL;
 						$retval = false;
 					} else {
-						echo "Doi mat khau thanh cong \n";
+						echo 'Đổi mật khẩu thành công' . PHP_EOL;
 						$retval = true;
 					}
 				} else {
-					echo "Username hoac password khong dung \n";
+					echo 'Username hoặc password không đúng' . PHP_EOL;
 					$retval = false;
 				}
 			}

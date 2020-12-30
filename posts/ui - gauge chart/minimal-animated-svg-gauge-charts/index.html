@@ -1,48 +1,58 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>CodePen - Minimal, animated SVG gauge charts</title>
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:400,700'>
-<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'><link rel="stylesheet" href="./style.css">
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+  <link rel="stylesheet" href="./style.css">
 
 </head>
+
 <body>
-<!-- partial:index.partial.html -->
-<div class="container">
-  <div class="row">
-    <div class="col-md-4 col-sm-4">
-      <div class="metric participation" data-ratio=".95">
-        <svg viewBox="0 0 1000 500">
+  <!-- partial:index.partial.html -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-sm-4">
+        <div class="metric participation" data-ratio=".95">
+          <svg viewBox="0 0 1000 500">
             <path d="M 950 500 A 450 450 0 0 0 50 500"></path>
-            <text class='percentage' text-anchor="middle" alignment-baseline="middle" x="500" y="300" font-size="140" font-weight="bold">0%</text>
-            <text class='title' text-anchor="middle" alignment-baseline="middle" x="500" y="450" font-size="90" font-weight="normal">Participation</text>
+            <text class='percentage' text-anchor="middle" alignment-baseline="middle" x="500" y="300" font-size="140"
+              font-weight="bold">0%</text>
+            <text class='title' text-anchor="middle" alignment-baseline="middle" x="500" y="450" font-size="90"
+              font-weight="normal">Participation</text>
           </svg>
+        </div>
       </div>
-    </div>
-    <div class="col-md-4 col-sm-4">
-      <div class="metric completion" data-ratio=".72">
-        <svg viewBox="0 0 1000 500">
+      <div class="col-md-4 col-sm-4">
+        <div class="metric completion" data-ratio=".72">
+          <svg viewBox="0 0 1000 500">
             <path d="M 950 500 A 450 450 0 0 0 50 500"></path>
-            <text class='percentage' text-anchor="middle" alignment-baseline="middle" x="500" y="300" font-size="140" font-weight="bold">0%</text>
-            <text class='title' text-anchor="middle" alignment-baseline="middle" x="500" y="450" font-size="90" font-weight="normal">Goal completion</text>
+            <text class='percentage' text-anchor="middle" alignment-baseline="middle" x="500" y="300" font-size="140"
+              font-weight="bold">0%</text>
+            <text class='title' text-anchor="middle" alignment-baseline="middle" x="500" y="450" font-size="90"
+              font-weight="normal">Goal completion</text>
           </svg>
+        </div>
       </div>
-    </div>
-    <div class="col-md-4 col-sm-4">
-      <div class="metric blocked" data-ratio=".27">
-        <svg viewBox="0 0 1000 500">
+      <div class="col-md-4 col-sm-4">
+        <div class="metric blocked" data-ratio=".27">
+          <svg viewBox="0 0 1000 500">
             <path d="M 950 500 A 450 450 0 0 0 50 500"></path>
-            <text class='percentage' text-anchor="middle" alignment-baseline="middle" x="500" y="300" font-size="140" font-weight="bold">0%</text>
-            <text class='title' text-anchor="middle" alignment-baseline="middle" x="500" y="450" font-size="90" font-weight="normal">Blockers</text>
+            <text class='percentage' text-anchor="middle" alignment-baseline="middle" x="500" y="300" font-size="140"
+              font-weight="bold">0%</text>
+            <text class='title' text-anchor="middle" alignment-baseline="middle" x="500" y="450" font-size="90"
+              font-weight="normal">Blockers</text>
           </svg>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!-- partial -->
   <script src='https://code.jquery.com/jquery-2.2.1.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js'></script><script  src="./script.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js'></script>
+  <script src="./script.js"></script>
 
 </body>
+
 </html>

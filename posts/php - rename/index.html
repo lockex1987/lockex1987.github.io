@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Đổi tên file hàng loạt, check special characters">
+    <meta name="description" content="đổi tên file hàng loạt, check special characters, phar file format, single executable">
     <title>Rename</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -11,23 +11,83 @@
   <body>
     <article>
       <h2>Rename</h2>
-	  <p>Chương trình PHP để đổi lại tên file hàng loạt.</p>
-	  <p>Câu lệnh:</p>
-	  <pre>php Rename.php &lt;command&gt; &lt;folder&gt; [option]</pre>
+      <p>Chương trình PHP để đổi lại tên file hàng loạt.</p>
+      <h3>Câu lệnh</h3>
+      <pre>php Rename.php &lt;command&gt; &lt;folder&gt; [option]</pre>
       <p>Trong đó <code>command</code> có thể có các giá trị sau:</p>
-      <ul>
-        <li><code>pr</code>: Prefix</li>
-        <li><code>pt</code>: Postfix</li>
-        <li><code>lc</code>: Lower case</li>
-        <li><code>lt</code>: Left trim</li>
-        <li><code>rt</code>: Right trim</li>
-        <li><code>et</code>: Change extension</li>
-        <li><code>rc</code>: Remove special characters ("-", ": ", or any)</li>
-        <li><code>sf</code>: Sort file</li>
-        <li><code>z</code>: Compress file</li>
-        <li><code>x</code>: Giải nén các file</li>
-        <li><code>mc</code>: Manga chapter</li>
-      </ul>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td><code>pr</code> </td>
+            <td>Prefix </td>
+          </tr>
+          <tr>
+            <td><code>pt</code> </td>
+            <td>Postfix </td>
+          </tr>
+          <tr>
+            <td><code>lc</code></td>
+            <td>Lower case</td>
+          </tr>
+          <tr>
+            <td><code>lt</code></td>
+            <td>Left trim</td>
+          </tr>
+          <tr>
+            <td><code>rt</code></td>
+            <td>Right trim</td>
+          </tr>
+          <tr>
+            <td><code>et</code></td>
+            <td>Change extension</td>
+          </tr>
+          <tr>
+            <td><code>rc</code></td>
+            <td>Remove special characters ("-", ": ", or any)</td>
+          </tr>
+          <tr>
+            <td><code>sf</code></td>
+            <td>Sort file</td>
+          </tr>
+          <tr>
+            <td><code>z</code></td>
+            <td>Compress file</td>
+          </tr>
+          <tr>
+            <td><code>x</code></td>
+            <td>Giải nén các file</td>
+          </tr>
+          <tr>
+            <td><code>mc</code></td>
+            <td>Manga chapter</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>PHAR file format</h3>
+      <p>Đóng gói PHP project (gồm nhiều file) thành một file PHAR cho dễ triển
+        khai, có thể chạy kiểu tiến trình.</p>
+      <p>Đầu tiên, bạn phải cấu hình<code> phar.readonly</code> thành <code>0</code>
+        hoặc <code>Off</code> ở file <code>php.ini</code>.</p>
+      <p>Phải thêm hàm <code>realpath</code> thì hàm <code>is_dir</code>, <code>is_file</code>,
+        <code>file_exists</code> mới chạy đúng khi đóng gói file phar. Nếu chúng
+        ta để đường dẫn là tương đối, PHP sẽ hiểu là tương đối với stub của
+        phar, không phải tương đối với thư mục đang chạy.</p>
+      <p>Tạo file phar:</p>
+      <pre>php create-phar.php</pre>
+      <p>Lệnh trên sẽ tạo file <code>app.phar</code> ở thư mục <code>dist</code>.</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://en.wikipedia.org/wiki/PHAR_%28file_format%29" target="_blank">PHAR
+          (file format) - Wikipedia</a></p>
+      <p><a href="https://www.php.net/manual/en/book.phar.php" target="_blank">PHP:
+          Phar - Manual</a></p>
+      <p><a href="https://odan.github.io/2017/08/16/create-a-php-phar-file.html"
+          target="_blank">Creating a PHP Phar file | Daniel’s Dev Blog</a></p>
+      <p><a href="https://www.sitepoint.com/packaging-your-apps-with-phar/" target="_blank">Packaging
+          Your Apps with Phar - SitePoint</a></p>
+      <p><a href="https://blog.programster.org/creating-phar-files" target="_blank">Creating
+          Phar Files | Programster's Blog</a></p>
+      <p><a href="https://www.php.net/phar.interceptfilefuncs" target="_blank">PHP:
+          Phar::interceptFileFuncs - Manual</a></p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>

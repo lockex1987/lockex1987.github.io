@@ -3,26 +3,14 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="git">
-    <title>Kỹ thuật phân nhánh (Branching) trong Git</title>
+    <meta name="description" content="git branch">
+    <title>Kỹ thuật phân nhánh trong Git</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
   </head>
   <body>
     <article>
-      <h2>Kỹ thuật phân nhánh (Branching) trong Git</h2>
-      <p>Trong khi làm việc với Git, bạn đã quá quen thuộc với việc chỉnh sửa mã
-        nguồn, sau đó là commit mỗi khi chỉnh sửa xong và push lên remote
-        repository nếu cần thiết. Nhưng bây giờ mình có một ví dụ đặt ra là mình
-        muốn tạo một phiên bản thử nghiệm với mã nguồn đang làm việc trong
-        working tree hiện tại mà không gây ảnh hưởng đến các code hiện tại. Vậy
-        thì làm cách nào? Không lẽ clone một repository từ chính cái working
-        tree hiện tại rồi sửa đổi hay sao? Như thế rất là mất công, mà lại không
-        tối ưu và không thể đồng bộ hóa hoặc rất khó khăn để đồng bộ hóa.</p>
-      <p>Mà trong Git, chúng ta sẽ sử dụng một giải pháp khác tuyệt vời hơn, dễ
-        dàng hơn gọi là phân nhánh (branching), mà cụ thể là phân nhánh cái gì?
-        Đó là phân nhánh trong working tree hiện tại bạn đang làm việc đấy, và
-        mỗi nhánh chúng ta sẽ gọi nó là một branch.</p>
+      <h2>Kỹ thuật phân nhánh trong Git</h2>
       <h3>Branch trong Git là gì?</h3>
       <p>Khi bắt đầu khởi tạo một repository hoặc clone một repository, bạn sẽ
         có một nhánh (branch) chính tên là <code>master</code>&nbsp;(bạn có thể
@@ -68,7 +56,7 @@
       <p>Ngoài ra còn một cách khác để kiểm tra đó là đọc tập tin&nbsp;<code>.git/HEAD</code>:</p>
       <pre>cat .git/HEAD
 </pre>
-      <h3>Cách tạo một branch</h3>
+      <h3>Tạo mới một branch</h3>
       <p>Trước tiên bạn có thể xem toàn bộ các branch mà bạn đang có trong
         working tree bằng lệnh <code>git branch</code>. Sau đó nếu muốn tạo
         thêm branch, chỉ cần gõ lệnh <code>git branch &lt;tên_brand&gt;</code>.
@@ -125,115 +113,35 @@ Fast-forward
 $ ls
 develop.html faq.html README.md tag.html version1.txt</pre>
       <h3>Xóa branch</h3>
-      <p>Nếu bạn không cần dùng tới branch nào nữa thì có thể xóa với lệnh <code>git
-          branch -d &lt;tên_branch&gt;</code>. Lưu ý là cái branch muốn xóa phải
-        được gộp dữ liệu (merge) về <code>master</code>.</p>
+      <p>Nếu bạn không cần dùng tới branch nào nữa thì có thể xóa với lệnh:</p>
+      <pre>git branch -d &lt;branch_name&gt;</pre>
+      <p>Lưu ý là cái branch muốn xóa phải được gộp dữ liệu (merge) về <code>master</code>.</p>
+      <p>Ví dụ xóa branch có tên <code>develop</code>:</p>
       <pre>$ git branch -d develop
 Deleted branch develop (was 8c68896).</pre>
-      <p>Sau khi xóa xong, nó sẽ báo branch đó đã được móc vào commit với mã
-        checksum&nbsp;nào (8c68896).</p>
+      <p>Để xóa remote branch bạn thực hiện lệnh sau:</p>
+      <pre>git push -d &lt;remote_name&gt; &lt;branch_name&gt;</pre>
+      <p>Ví dụ:</p>
+      <pre>git push -d origin feature/uat122020</pre>
       <h3>Làm việc với remote branch</h3>
-      <p>Quay lại một xíu với bài remote repository, bây giờ bạn hãy tạo thêm
-        một remote mới từ địa chỉ&nbsp;https://github.com/csswizardry/inuit.css
-        và đặt tên cho remote này là inuit vào working tree của bạn.</p>
-      <pre>$ git remote add inuit https://github.com/csswizardry/inuit.css
-$ git remote -v
-inuit https://github.com/csswizardry/inuit.css (fetch)
-inuit https://github.com/csswizardry/inuit.css (push)
-thach https://github.com/thachphamblog/hoc-git.git (fetch)
-thach https://github.com/thachphamblog/hoc-git.git (push)</pre>
-      <p>Bây giờ bạn có thể xem toàn bộ branch của cái remote <code>inuit</code>&nbsp;mới
-        thêm vào bằng lệnh <code>git remote show inuit</code>.</p>
-      <pre>$ git remote show inuit
- * remote inuit
- Fetch URL: https://github.com/csswizardry/inuit.css
- Push URL: https://github.com/csswizardry/inuit.css
- HEAD branch: master
- Remote branches:
- feature/docs new (next fetch will store in remotes/inuit)
- feature/grids new (next fetch will store in remotes/inuit)
- fix/beautons new (next fetch will store in remotes/inuit)
- fix/grids new (next fetch will store in remotes/inuit)
- gh-pages new (next fetch will store in remotes/inuit)
- incoming new (next fetch will store in remotes/inuit)
- master new (next fetch will store in remotes/inuit)
- v5.0.1 new (next fetch will store in remotes/inuit)
- v5.1 new (next fetch will store in remotes/inuit)
- v5.1.0 new (next fetch will store in remotes/inuit)</pre>
-      <p>Bây giờ bạn có thể chọn một cái remote branch cần fetch dữ liệu
-        về.&nbsp;Ví dụ bây giờ mình sẽ tạo một branch mới cho working tree của
-        mình tên là<code> fix_ui</code>, sau đó nạp dữ liệu trong&nbsp;branch <code>gh-pages</code>&nbsp;của<code>
-          inuit</code> thì mình sẽ lần lượt làm như sau.</p>
-      <pre>$ git branch fix_ui
-$ git checkout fix_ui
-Switched to branch 'fix_ui'
-$ git pull inuit gh-pages
-warning: no common commits
-remote: Counting objects: 309, done.
-remote: Compressing objects: 100% (33/33), done.
-remote: Total 309 (delta 4), reused 2 (delta 2), pack-reused 274
-Receiving objects: 100% (309/309), 135.63 KiB | 0 bytes/s, done.
-Resolving deltas: 100% (106/106), done.
-From https://github.com/csswizardry/inuit.css
- * branch gh-pages -&gt; FETCH_HEAD
- * [new branch] gh-pages -&gt; inuit/gh-pages
-Auto-merging README.md	
-CONFLICT (add/add): Merge conflict in README.md
-Automatic merge failed; fix conflicts and then commit the result.</pre>
-      <p>Có thể nó sẽ xảy ra lỗi conflict khi gộp file <code>README.md</code>
-        cũng không quan trọng lắm nên bạn có thể bỏ qua bằng cách gõ lệnh <code>git
-          add README.md</code>&nbsp;để track file này, vì bây giờ nếu bạn gõ
-        lệnh <code>ls</code>&nbsp;ra thì đã có các file từ inuit rồi.</p>
-      <p>Bây giờ bạn có thể&nbsp;commit nó và thử push nó lên repository của
-        bạn.</p>
-      <pre>$ git commit -m "Commit from fix_ui"
- [fix_ui c1eb301] Commit from fix_ui
-$ git push thach fix_ui
- Username for 'https://github.com': thachphamblog
- Password for 'https://thachphamblog@github.com':
- Counting objects: 317, done.
- Delta compression using up to 4 threads.
- Compressing objects: 100% (201/201), done.
- Writing objects: 100% (317/317), 135.77 KiB | 0 bytes/s, done.
- Total 317 (delta 113), reused 304 (delta 106)
- To https://github.com/thachphamblog/hoc-git.git
- * [new branch] fix_ui -&gt; fix_ui</pre>
-      <p>Nhắc lại rằng, <code>thach</code>&nbsp;nghĩa là tên remote của
-        repository mà mình cần push lên và <code>fix_ui</code>&nbsp;là tên
-        branch mình cần push. Và đây là kết quả sau khi push lên repository của
-        mình.</p>
-      <p><img src="images/9-git-push-remote-branch.png" alt="git-push-remote-branch"></p>
-      <p>Và dĩ nhiên, bạn cũng có thể qua một branch khác và sử dụng lệnh<code>
-          git merge</code> để gộp dữ liệu của branch này về.</p>
-      <p>Ngoài ra, kiến thức về branch còn có một kỹ thuật nữa cũng khá thú vị
-        mà khi làm việc nhóm có thể sẽ cần đến, đó là rebase branch với mục đích
-        hoán đổi vị trí của những lần commit. Tuy nhiên ở đây là serie cơ bản
-        nên mình sẽ không nói qua mà bạn chỉ cần sử dụng thành thạo các kỹ thuật
-        mà mình đã liệt kê trong đây là được.</p>
-      <h3>Lời kết</h3>
-      <p>Vậy là tới đây mình đã kết thúc hướng dẫn xong các kỹ thuật quan trọng
-        nhất trong Git mà bạn dù bất cứ sử dụng git trong mục đích nào cũng phải
-        sử dụng. Mình cũng đã hướng dẫn cặn kẽ nhất theo cách hiểu của mình theo
-        hướng đơn giản nhất nên mình hy vọng bạn có thể hiểu nó. Tiếp tục ở bài
-        sau, mình sẽ không nói qua về các kỹ thuật trong git nữa mà mình sẽ giới
-        thiệu cho các bạn một số dịch vụ máy chủ repository dành cho Git tốt
-        nhất và đặc biệt là có gói miễn phí để bạn có thêm nhiều lựa chọn.</p>
-      <h3>Ghi chú</h3>
-      <p>Đẩy từ local lên remote:</p>
+      <p>Hiển thị thông tin của remote:</p>
+      <pre>git remote show origin</pre>
+      <p>Lấy code từ remote:</p>
+      <pre>git pull &lt;remote_name&gt; &lt;branch_name&gt;</pre>
+      <p>Đẩy code lên remote:</p>
+      <pre>git push &lt;remote_name&gt; &lt;branch_name&gt;</pre>
+      <p>Tạo một branch trên remote từ local (lệnh này thực hiện 1 lần):</p>
       <pre>git push -u origin develop</pre>
-      <p>Lấy từ remote về local:</p>
+      <p>Lấy một branch từ remote về local (lệnh này thực hiện 1 lần):</p>
       <pre>git fetch<br>git checkout branchxyz</pre>
       <p>Chú ý: local phải chưa có branch trùng tên.</p>
       <h3>Tham khảo</h3>
       <p><a href="https://backlog.com/git-tutorial/vn/stepup/stepup1_1.html" target="_blank">https://backlog.com/git-tutorial/vn/stepup/stepup1_1.html</a></p>
-      <p><a href="https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging"
-
+      <p><a href="https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging"
           target="_blank">https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging</a></p>
-      <p><a href="https://git-scm.com/book/en/v2/Git-Branching-Remote-Branches"
-
+      <p><a href="https://git-scm.com/book/en/v2/Git-Branching-Remote-Branches"
           target="_blank">https://git-scm.com/book/en/v2/Git-Branching-Remote-Branches</a></p>
-      <p><a href="https://github.com/dgmteam/wiki/wiki/Quy-t%E1%BA%AFc-s%E1%BB%AD-d%E1%BB%A5ng-c%C3%A1c-Branch-tr%C3%AAn-Git-v%C3%A0-c%C3%A1ch-%C4%91%C3%A1nh-version"
-
+      <p><a href="https://github.com/dgmteam/wiki/wiki/Quy-t%E1%BA%AFc-s%E1%BB%AD-d%E1%BB%A5ng-c%C3%A1c-Branch-tr%C3%AAn-Git-v%C3%A0-c%C3%A1ch-%C4%91%C3%A1nh-version"
           target="_blank">https://github.com/dgmteam/wiki/wiki/Quy-t%E1%BA%AFc-s%E1%BB%AD-d%E1%BB%A5ng-c%C3%A1c-Branch-tr%C3%AAn-Git-v%C3%A0-c%C3%A1ch-%C4%91%C3%A1nh-version</a></p>
       <p><a href="https://nvie.com/posts/a-successful-git-branching-model/" target="_blank">https://nvie.com/posts/a-successful-git-branching-model/</a></p>
     </article>

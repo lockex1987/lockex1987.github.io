@@ -10,11 +10,13 @@ function loadSvg(svgUrl, containerId, callback) {
 }
 
 loadSvg('images/kiwi.svg', 'demo');
+
 loadSvg('images/vn-all.svg', 'map');
+
 loadSvg('images/world-map-2.svg', 'countries', () => {
-    const COLORS = ['red', 'green', 'blue', 'yellow'];
     document.querySelectorAll('#countries path').forEach((path, idx) => {
-        //path.style.fill = COLORS[idx % COLORS.length];
+        const COLORS = ['red', 'green', 'blue', 'yellow'];
+        path.style.fill = COLORS[idx % COLORS.length];
         if (!path.dataset.name) {
             console.log(path.id);
         }
@@ -22,15 +24,15 @@ loadSvg('images/world-map-2.svg', 'countries', () => {
 });
 
 document.addEventListener('click', (evt) => {
-    let path = evt.target.closest('#countries path');
+    const path = evt.target.closest('#countries path');
     if (path) {
-        //console.log
+        // console.log
         alert('You clicked on ' + path.dataset.name);
     }
 });
 
 
-var tooltip = document.querySelector('.tooltip');
+const tooltip = document.querySelector('.map-tooltip');
 document.querySelector('#map').addEventListener('mousemove', function (evt) {
     if (evt.target.tagName.toLowerCase() == 'path') {
         tooltip.style.display = 'block';
@@ -44,9 +46,9 @@ document.querySelector('#map').addEventListener('mousemove', function (evt) {
 
 
 function trimSvgWhitespace(svg) {
-	let bbox = svg.getBBox();
-	let viewBox = [bbox.x, bbox.y, bbox.width, bbox.height].join(' ');
-	svg.setAttribute('viewBox', viewBox);
+    const bbox = svg.getBBox();
+    const viewBox = [bbox.x, bbox.y, bbox.width, bbox.height].join(' ');
+    svg.setAttribute('viewBox', viewBox);
 }
 
 trimSvgWhitespace(document.querySelector('#envelopeSvg'));

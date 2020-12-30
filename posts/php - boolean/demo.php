@@ -1,33 +1,28 @@
-
 <!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	
-	<title>PHP Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
-	<style>
-	table{
-		border-collapse:collapse;
-		}
-	table th, table td{
-		border:1px solid #ccc;
-		padding:3px 10px;
-		text-align:left;
-		vertical-align:top;
-	}
-	table th{
-		background:#edeff0;
-	}
+	<title>PHP demo</title>
+	
+	<link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+	
+	
 </style>
 </head>
 <body>
 
+<article>
+<h2>PHP demo</h2>
 	<p>Your PHP version is <?php echo phpversion() ?>.</p>
 
-	<table border="1px solid" cellspacing="0" cellpadding="0">
+<div class="out-of-box">
+	<table class="table table-bordered">
 		<tr>
-			<th>Value of variable</th>
+			<th>Giá trị của biến</th>
 			<th>boolean</th>
 			<th>isset</th>
 			<th>empty</th>
@@ -91,11 +86,11 @@ function displayUndefined()
 
 $data = [
 	['value' => false, 'label' => 'false'],
-	['value' => '', 'label' => '"" (an empty string)'],
-	['value' => '0', 'label' => '"0" (0 as a string)'],
-	['value' => 0, 'label' => '0 (0 as an integer)'],
-	['value' => 0.0, 'label' => '0.0 (0 as a float)'],
-	['value' => array(), 'label' => 'array() (an empty array)'],
+	['value' => '', 'label' => '"" (xâu rỗng)'],
+	['value' => '0', 'label' => '"0" (xâu 0)'],
+	['value' => 0, 'label' => '0 (số nguyên 0)'],
+	['value' => 0.0, 'label' => '0.0 (số thực 0)'],
+	['value' => [], 'label' => 'Mảng rỗng []'],
 	['value' => null, 'label' => 'null'],
 	// ----------
 	['value' => true, 'label' => 'true'],
@@ -109,6 +104,7 @@ displayUndefined();
 ?>
 	
 </table>
-	
+</div>
+</article>	
 </body>
 </html>

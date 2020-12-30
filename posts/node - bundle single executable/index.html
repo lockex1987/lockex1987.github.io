@@ -1,30 +1,42 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content=""/>
-    
-    <title></title>
-
-    <link rel="icon" href="../../images/favicon.png"/>
-    <link rel="stylesheet" href="../../css/style.css"/>
-</head>
-<body>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ncc, pkg, nexe, jsbin">
+    <title>Đóng gói dự án Node thành một file js</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
     <article>
-        <h2>x</h2>
-		<div class="mb-2">
-        <span class="text-muted mr-2 d-block">github.com</span>
-        <a href="https://github.com/zeit/pkg" target="_blank">GitHub - zeit/pkg: Package your Node.js project into an executable</a>
-    </div>
-    <div class="mb-2">
-        <span class="text-muted mr-2 d-block">dev.to</span>
-        <a href="https://dev.to/jochemstoel/bundle-your-node-app-to-a-single-executable-for-windows-linux-and-osx-2c89" target="_blank">Bundle your Node app to a single executable for Windows, Linux and OsX</a>
-    </div>
-	
-        <p>y</p>
+      <h2>Đóng gói dự án Node thành một file js</h2>
+      <p>Tôi muốn đóng gói dự án Node thành một file js để dễ triển khai hơn.</p>
+      <p>Bạn cũng có thể đóng gói cả phiên bản Node chỉ định, không phụ thuộc
+        phiên bản Node ở môi trường triển khai. Một số package còn cho phép bạn
+        build ra file thực thi với hệ điều hành tương ứng (pkg, nexe, jsbin). </p>
+      <h3>Package ncc</h3>
+      <p>Cài đặt:</p>
+      <pre>npm i -g @vercel/ncc</pre>
+      <p>Sử dụng:</p>
+      <pre>ncc &lt;cmd&gt; &lt;opts&gt;</pre>
+      <p>Ví dụ:</p>
+      <pre>ncc build main.js --out dist --minify</pre>
+      <p>Chúng ta sẽ được file <code>index.js</code> ở thư mục <code>dist</code>.
+        Chúng ta chỉ cần copy một file này để triển khai.</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://vercel.com/blog/ncc" target="_blank">ncc: Node.js
+          Compiler Collection – Vercel</a></p>
+      <p><a href="https://github.com/vercel/ncc" target="_blank">vercel/ncc:
+          Compile a Node.js project into a single file. Supports TypeScript,
+          binary addons, dynamic requires.</a></p>
+      <p><a href="https://github.com/vercel/pkg" target="_blank">vercel/pkg:
+          Package your Node.js project into an executable</a></p>
+      <p><a href="https://github.com/nexe/nexe" target="_blank">nexe/nexe: 🎉
+          create a single executable out of your node.js apps</a></p>
+      <p><a href="https://github.com/criblio/js2bin" target="_blank">criblio/js2bin:
+          NodeJS application to native executable</a></p>
     </article>
-
     <script src="../../js/docs.js"></script>
-</body>
+  </body>
 </html>

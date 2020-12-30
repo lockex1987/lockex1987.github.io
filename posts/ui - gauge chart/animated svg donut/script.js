@@ -1,8 +1,8 @@
-let donut = document.querySelector('.donut');
+const donut = document.querySelector('.donut');
 
 function setThreeqQuarter() {
     donut.className = 'donut three-quarter-filled';
-    setTimeout(setOneQuater, 3000);
+    // setTimeout(setOneQuater, 3000);
 }
 
 function setOneQuater() {
@@ -15,4 +15,4 @@ function setHalf() {
     setTimeout(setThreeqQuarter, 3000);
 }
 
-setThreeqQuarter();
+// setThreeqQuarter();

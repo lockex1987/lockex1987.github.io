@@ -1,24 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
- <head> 
-  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
-  <title>Lỗi xuất báo cáo Excel với PHP</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <link rel="icon" href="../../images/favicon.png"> 
-  <link rel="stylesheet" href="../../css/style.css"> 
-  <meta name="description" content="Lỗi xuất báo cáo Excel với PHP">
- </head> 
- <body> 
-  <article> 
-   <p>Lỗi xuất báo cáo Excel với PHP</p> 
-   <p>Vào một ngày đẹp trời, chức năng báo cáo lại lăn đùng ra chết. Log lỗi là:</p> 
-   <pre>DOMDocument::loadHTML(): Invalid char in CDATA 0x8 in Entity, line: 3557 {"exception":"[object] (ErrorException(code: 0): DOMDocument::loadHTML(): Invalid char in CDATA 0x8 in Entity, line: 3557 at .../vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Reader/Html.php:548)</pre> 
-   <p>Nếu mà chỉ search theo <strong>DOMDocument::loadHTML(): Invalid char in CDATA 0x8</strong> thì ra rất ít kết quả.</p> 
-   <p>Chúng ta hãy bình tĩnh nghĩ lại:</p> 
-   <p>Lỗi là do XML không được chứa ký tự đặc biệt</p> 
-   <p>0x8 là ký tự backspace</p> 
-   <p>Cách sửa sẽ là loại bỏ các ký tự đặc biệt</p> 
-   <pre>/**
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="invalid xml characters">
+    <title>Lỗi xuất báo cáo Excel với PHP</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Lỗi xuất báo cáo Excel với PHP</h2>
+      <p>Vào một ngày đẹp trời, chức năng báo cáo lăn đùng ra chết. Log lỗi là:</p>
+      <pre class="text-pre-wrap text-break">DOMDocument::loadHTML(): Invalid char in CDATA 0x8 in Entity, line: 3557 {"exception":"[object] (ErrorException(code: 0): DOMDocument::loadHTML(): Invalid char in CDATA 0x8 in Entity, line: 3557 at .../vendor/phpoffice/phpspreadsheet/src/PhpSpreadsheet/Reader/Html.php:548)</pre>
+      <p>Nếu mà chỉ search theo <strong>DOMDocument::loadHTML(): Invalid char
+          in CDATA 0x8</strong> thì ra rất ít kết quả.</p>
+      <p>Chúng ta hãy bình tĩnh nghĩ lại. Lỗi là do XML không được chứa ký tự
+        đặc biệt. <code>0x8</code> là ký tự backspace.</p>
+      <p>Cách sửa sẽ là loại bỏ các ký tự đặc biệt:</p>
+      <pre class="out-of-box">/**
  * Removes invalid XML.
  *
  * @access public
@@ -27,7 +27,7 @@
  */
 function stripInvalidXml($value)
 {
-    $ret = "";
+    $ret = '';
     $current;
     if (empty($value)) {
         return $ret;
@@ -36,31 +36,26 @@ function stripInvalidXml($value)
     $length = strlen($value);
     for ($i = 0; $i &lt; $length; $i++) {
         $current = ord($value{$i});
-        if (($current == 0x9) ||
-                ($current == 0xA) ||
-                ($current == 0xD) ||
-                (($current &gt;= 0x20) &amp;&amp; ($current &lt;= 0xD7FF)) ||
-                (($current &gt;= 0xE000) &amp;&amp; ($current &lt;= 0xFFFD)) ||
-                (($current &gt;= 0x10000) &amp;&amp; ($current &lt;= 0x10FFFF))) {
+        if ($current == 0x9
+                || $current == 0xA
+                || $current == 0xD
+                || ($current &gt;= 0x20 &amp;&amp; $current &lt;= 0xD7FF)
+                || ($current &gt;= 0xE000 &amp;&amp; $current &lt;= 0xFFFD)
+                || ($current &gt;= 0x10000 &amp;&amp; $current &lt;= 0x10FFFF)) {
             $ret .= chr($current);
         } else {
-            $ret .= " ";
+            $ret .= ' ';
         }
     }
 
-    return ($ret == $value) ? $ret : "Catch you: " . $ret;
-}</pre> 
-   <p> </p> 
-   <p>Dữ liệu lỗi là:</p> 
-   <p>"TP HCM cấm xe máy từ 2030: Chuyên gia \bquan ngại điều gì? | Thời sự"</p> 
-   <p>Chả hiểu tại sao tiêu đề lại có ký tự này.</p> 
-   <p>http://enternews.vn/tp-hcm-cam-xe-may-tu-2030-chuyen-gia-quan-ngai-dieu-gi-145513.html</p> 
-   <p><br> </p> 
-   <p><br> </p> 
-   <p><br> </p> 
-   <p><br> </p> 
-   <p><br> </p> 
-  </article> 
-  <script src="../../js/docs.js"></script>  
- </body>
+    return ($ret == $value) ? $ret : 'Catch you: ' . $ret;
+}</pre>
+      <p>Tham khảo:</p>
+      <p><a href="https://en.wikipedia.org/wiki/Valid_characters_in_XML" target="_blank">Valid
+          characters in XML - Wikipedia</a></p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
 </html>

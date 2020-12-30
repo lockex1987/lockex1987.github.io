@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Chụp ảnh màn hình để thông báo lỗi, export image report, dom-to-image, html2canvas, rasterizehtml, webext">
+    <meta name="description" content="chụp ảnh màn hình để thông báo lỗi, export image report, dom-to-image, html2canvas, rasterizehtml, webext, invalid xml characters">
     <title>Chụp ảnh màn hình</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -28,12 +28,23 @@
         <p><a href="https://hackernoon.com/how-to-take-full-page-screenshots-in-chrome-without-extensions-be2f0cf36df1" target="_blank">How to take full page screenshots in Chrome without extensions</a></p>
 
         <h3>Demo</h3>
-        <div id="capture" class="mb-3 bg-warning" style="padding: 10px; height: 200px;">
-            <div style="color: #000;" class="font-italic">Hello world!</div>
-            <div data-html2canvas-ignore="true">Không ở trong screenshot</div>
-            <div>
-                <img src="https://graph.facebook.com/100000755701241/picture?type=square&amp;access_token=1657333527626637%7Ce8V2df-t9VMaG0R8_0PDGs0_pW4"
+        <div id="capture"
+                class="mb-3 bg-warning"
+                style="padding: 10px; height: 200px;">
+            <div style="color: #000;"
+                    class="font-italic mb-3">
+                Hello world!
+            </div>
+            <div data-html2canvas-ignore="true"
+                    class="mb-3">
+                Không ở trong screenshot
+            </div>
+            <div class="mb-3">
+                <img src="https://graph.facebook.com/100000755701241/picture?type=square&amp;access_token=EAAAAZAw4FxQIBALU9GoDhEh9yh7OvN9y473RUOsfomOFvNvHAMtGEYaauVzZCScbW9rmslXggDwPWnkt2TBDCc9eAvhHzHHhFxmU0cYtHDQYWO80WdtWVvAUBEfK92YlUuXVKRhRXWBTpBN4yK5qCwOqn4BNNcImIojrjwcgZDZD"
                         class="rounded-circle">
+            </div>
+            <div id="invalidXmlDiv">
+                
             </div>
         </div>
 

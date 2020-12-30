@@ -1,31 +1,19 @@
-.papa {
-    width: 250px;
-}
-
-.mama {
-    width: 100px; 
-}
-
-.baby {
-    width: 50px; 
-}
-
-.logo {
+.kiwi-logo {
     width: 100px;
     height: 82px;
-
     background-image: url(../images/kiwi.svg);
     background-size: 100px 82px;
 	background-color: #777;
 }
 
-.logo:hover {
+.kiwi-logo:hover {
     background-color: #09b39c;
 }
 
 .twitter-logo {
 	width: 48px;
     height: 48px;
+
     display: inline-block;
 
     background-image: url("../images/logo-twitter.svg");
@@ -33,6 +21,7 @@
 	background-color: #777;
 	transition: background-color 0.2s linear;
 }
+
 .twitter-logo:hover {
     background-color: #2ba9e1;
 }
@@ -53,7 +42,11 @@ ellipse:hover {
     fill: red;
 }
 
-.tooltip {
+#demo svg {
+    max-width: 100%;
+}
+
+.map-tooltip {
     position: absolute;
     z-index: 2;
     display: none;
@@ -65,6 +58,10 @@ ellipse:hover {
     border-radius: 3px;
     box-shadow: 0 1px 2px #666;
     background: rgba(52,188,157, 0.8);
+}
+
+#map svg {
+    max-width: 100%;
 }
 
 #map path:hover {

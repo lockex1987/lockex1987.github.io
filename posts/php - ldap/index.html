@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ldap, php, laravel">
+    <meta name="description" content="ldap, php, adldap2, laravel">
     <title>Đăng nhập LDAP với PHP</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -11,6 +11,10 @@
   <body>
     <article>
       <h2>Đăng nhập LDAP với PHP</h2>
+      <h3>Kiểm tra kết nối đến server LDAP</h3>
+      <p>Giao thức LDAP mặc định ở cổng 389.</p>
+      <p>Để kiểm tra kết nối, chúng ta sử dụng lệnh telnet:</p>
+      <pre>telnet &lt;ldap_server&gt; 389</pre>
       <h3>Enable LDAP</h3>
       <p>Đầu tiên chúng ta phải enable LDAP extension.</p>
       <p>Sửa file <code>php.ini</code>, search theo từ khóa <code>ldap</code>,
@@ -23,7 +27,10 @@
       <p>File demo:</p>
       <p><a href="phpinfo.php">phpinfo.php</a></p>
       <p><a href="ldap_login.php">ldap_login.php</a></p>
+      <p><a href="ldap_change_password.php">ldap_change_password.php</a></p>
+      <p><a href="LdapLogin.java">LdapLogin.java (code Java)</a></p>
       <h3>Sử dụng với Laravel</h3>
+      <h4>Cài đặt</h4>
       <p>Sử dụng thư viện Adldap2-Laravel.</p>
       <p>Cài đặt:</p>
       <pre>composer require adldap2/adldap2-laravel</pre>
@@ -34,14 +41,16 @@ php artisan vendor:publish --provider="Adldap\Laravel\AdldapAuthServiceProvider"
       </div>
       <p>2 lệnh trên sẽ tạo 2 file:</p>
       <ul>
-        <li>config/ldap.php</li>
-        <li>config/ldap_auth.php</li>
+        <li><code>config/ldap.php</code></li>
+        <li><code>config/ldap_auth.php</code></li>
       </ul>
-      <p>Cấu hình LDAP ở file bằng cách sửa file <code>.env</code>, ví dụ:</p>
+      <h4>Sửa file .env</h4>
+      <p>Cấu hình thông tin LDAP bằng cách sửa file <code>.env</code>, ví dụ:</p>
       <pre>LDAP_HOSTS=10.30.152.20
 LDAP_USERNAME=datcom
 LDAP_PASSWORD=Vtcc@2018
 LDAP_BASE_DN=dc=cyberspace,dc=vn</pre>
+      <h4>Sửa file config/auth.php</h4>
       <p>Sửa file cấu hình <code>config/auth.php</code> để cấu hình qua LDAP
         chứ không phải qua Eloquent:</p>
       <pre>'providers' =&gt; [
@@ -50,29 +59,46 @@ LDAP_BASE_DN=dc=cyberspace,dc=vn</pre>
         'model'  =&gt; App\User::class
     ]
 ]</pre>
-      <p>Cấu hình <code>config/ldap_auth.php</code> để khớp với các trường
-        trong DB cũng như trên LDAP:</p>
+      <h4>Sửa file config/ldap.php</h4>
+      <p>Sửa file cấu hình <code>config/ldap.php</code>, thông tin <code>schema</code>.
+        Nếu LDAP server là Windows, hãy để <code>Adldap\Schemas\ActiveDirectory::class</code>.
+        Nếu LDAP server là Linux, hay để <code>Adldap\Schemas\OpenLDAP::class</code>.</p>
+      <h4>Sửa file config/ldap_auth.php</h4>
+      <p>Sửa file cấu hình <code>config/ldap_auth.php</code> để khớp với các
+        trường trong DB cũng như trên LDAP:</p>
       <pre>'ldap' =&gt; [
-    'discover' =&gt; 'samaccountname',
-    'authenticate' =&gt; 'distinguishedname',
+    // 'discover' =&gt; 'samaccountname',
+    'discover' =&gt; 'uid',
+
+    // 'authenticate' =&gt; 'distinguishedname',
+    'authenticate' =&gt; 'dn'
 ],
+<br>// 'eloquent' =&gt; 'username',
+'eloquent' =&gt; 'name',<br><br>'sync_attributes' =&gt; [
+    // 'email' =&gt; 'userprincipalname',
+    // 'email' =&gt; 'mail',
 
-'eloquent' =&gt; 'name',
+    // 'name' =&gt; 'samaccountname',
+    'name' =&gt; 'uid',
 
-'sync_attributes' =&gt; [
-    'email' =&gt; 'userprincipalname',
-    'name' =&gt; 'samaccountname',
-    'display_name' =&gt; 'cn',
-],</pre>
+    // 'display_name' =&gt; 'cn'
+    // 'display_name' =&gt; 'dn'
+]</pre>
       <p>Để thêm ràng buộc account LDAP phải có ở account DB rồi mới cho đăng
         nhập thì chúng ta thêm rule <code>OnlyImported</code> ở file <code>ldap_auth.php</code>
         (mặc định là rule này được comment).</p>
       <pre>'rules' =&gt; [
     // Denys deleted users from authenticating.
-    Adldap\Laravel\Validation\Rules\DenyTrashed::class,
+    Adldap\Laravel\Validation\Rules\DenyTrashed::class,<br>
     // Allows only manually imported users to authenticate.
-    Adldap\Laravel\Validation\Rules\OnlyImported::class,
-],</pre>
+    Adldap\Laravel\Validation\Rules\OnlyImported::class
+]</pre>
+      <p>Để thêm tùy chọn nếu đăng nhập qua LDAP không được thì đăng nhập qua
+        Eloquent bình thường, chúng ta cấu hình thông tin <code>login_fallback</code>
+        là <code>true</code>. Khi đó, nếu người dùng không có ở LDAP thì sẽ
+        kiểm tra ở bảng trong database bình thường. Nếu người dùng có ở LDAP và
+        nhập sai password LDAP nhưng nhập đúng password database thì cũng không
+        vào được.</p>
       <h3>Tham khảo</h3>
       <p><a target="_blank" href="http://php.net/manual/en/book.ldap.php">php.net/manual/en/book.ldap.php</a></p>
       <p><a target="_blank" href="https://github.com/Adldap2/Adldap2-Laravel">github.com/Adldap2/Adldap2-Laravel</a></p>
