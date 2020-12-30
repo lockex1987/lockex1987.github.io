@@ -10,9 +10,12 @@ class IndexFile {
      * Khởi tạo.
      * @param indexFilePath Đường dẫn đến file index.html
      */
-    constructor(indexFilePath) {
+    constructor(indexFilePath, adjustPath) {
         // Đường dẫn file index.html
         this.indexFilePath = indexFilePath;
+
+        // Đường dẫn thư mục gốc của web
+        this.adjustPath = adjustPath;
 
         // Tiêu đề
         this.title = '';
@@ -70,9 +73,7 @@ class IndexFile {
      * Nếu không có file index.html thì tự thêm file index luôn, về sau chỉ việc sửa.
      */
     createDefaultIndexFile() {
-        // const adjustPath = '../../../';
-        const adjustPath = '';
-        const source = adjustPath + 'template/index.html';
+        const source = this.adjustPath + 'template/index.html';
         fs.copyFileSync(source, this.indexFilePath);
     }
 
@@ -154,8 +155,8 @@ class IndexFile {
 }
 
 
-async function processIndexFile(indexFilePath) {
-    const obj = new IndexFile(indexFilePath);
+async function processIndexFile(indexFilePath, adjustPath) {
+    const obj = new IndexFile(indexFilePath, adjustPath);
     await obj.process();
     return {
         title: obj.title,

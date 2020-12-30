@@ -1,5 +1,5 @@
 export default [
-    { name: 'js', y: 142 },
+    { name: 'js', y: 141 },
     { name: 'ui', y: 123 },
     { name: 'laravel', y: 78 },
     { name: 'php', y: 61 },

@@ -13,32 +13,44 @@ const processIndexFile = require('./index-file.js');
  * @param rootFolder Đường dẫn đến thư mục to
  * @return Danh sách bài viết
  */
-async function getPostList(rootFolder) {
+async function getPostList(rootFolder, adjustPath, oldList) {
     // Duyệt các thư mục con bên trong thư mục to "posts"
     const folderList = await fs.promises.readdir(rootFolder);
     folderList.sort();
     const postList = [];
     for (let i = 0; i < folderList.length; i++) {
-        const folderName = folderList[i];
+        const path = folderList[i];
 
         // Lấy ra thể loại của bài viết (phần đầu tiên trước dấu trừ ngăn cách)
-        const a = folderName.split(' - ');
+        const a = path.split(' - ');
         const category = a[0];
 
         // Lấy ra tiêu đề, mô tả (tag description), thời gian xuất bản (tag date) của bài viết
-        const indexFilePath = rootFolder + '/' + folderName + '/index.html';
-        const indexFile = await processIndexFile(indexFilePath);
-        const { title, description, date } = indexFile;
+        const indexFilePath = rootFolder + '/' + path + '/index.html';
 
-        // Thêm vào danh sách
-        postList.push({
-            category,
-            title,
-            description,
-            date,
-            // Đường dẫn
-            path: folderName
-        });
+        // Lấy thông tin thời gian chỉnh sửa file
+        const statsObj = fs.statSync(indexFilePath);
+        const modifiedTime = statsObj.mtimeMs || statsObj.birthtimeMs;
+
+        // Nếu file không thay đổi gì
+        const oldObj = oldList.find(e => e.path == path);
+        if (oldObj && oldObj.modifiedTime && oldObj.modifiedTime === modifiedTime) {
+            postList.push(oldObj);
+        } else {
+            console.log('Cập nhật bài viết ' + path);
+            const indexFile = await processIndexFile(indexFilePath, adjustPath);
+            const { title, description, date } = indexFile;
+
+            // Thêm vào danh sách
+            postList.push({
+                category,
+                title,
+                description,
+                date,
+                modifiedTime,
+                path
+            });
+        }
     }
     return postList;
 }
@@ -104,12 +116,25 @@ function writeDataFile(content, filePath) {
  * Hàm xử lý chính.
  */
 async function init() {
-    // const adjustPath = '../../../';
-    const adjustPath = '';
-    const postList = await getPostList(adjustPath + 'posts');
+    const startTime = (new Date()).getTime();
+
+    const adjustPath = (process.argv.length > 2) ? process.argv[2] : '';
+
+    const listFilePath = adjustPath + 'js/post-list.js';
+    const fileContent = fs.readFileSync(listFilePath, 'utf8');
+    const oldList = JSON.parse(fileContent.replace('export default [', '[').replace('];', ']'));
+
+    const postList = await getPostList(adjustPath + 'posts', adjustPath, oldList);
     const categoryMap = calculateCategoryCountMap(postList);
-    writeDataFile(getPostListJson(postList), adjustPath + 'js/post-list.js');
+
+    writeDataFile(getPostListJson(postList), listFilePath);
     writeDataFile(getCategoryCountMapJson(categoryMap), adjustPath + 'posts/project - post management/js/category-data.js');
+
+    const endTime = (new Date()).getTime();
+    console.log('Finish after ' + ((endTime - startTime) / 1000) + 's');
 }
 
 init();
+
+// Nếu ở thư mục trong, thực hiện lệnh node main.js "../../../"
+// Nếu ở thư mục gốc, thực hiện lệnh node main.js
