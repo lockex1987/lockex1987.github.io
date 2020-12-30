@@ -9,7 +9,7 @@ class HeaderNavigator {
                 <div>
                     <div class="logo mb-2 text-right">
                         <a class="text-decoration-none" href="/">
-                            <img src="/images/logo.svg" class="align-baseline"/>
+                            <img src="/images/logo/logo.svg" class="align-baseline"/>
                         </a>
                     </div>
 

@@ -1,13 +1,13 @@
 function getCursorPos(evt, element) {
     evt = evt || window.event;
-    
+
     // Get the x and y positions of the image
-    let a = element.getBoundingClientRect();
+    const a = element.getBoundingClientRect();
 
     // Calculate the cursor's x and y coordinates, relative to the image
     let x = evt.pageX - a.left;
     let y = evt.pageY - a.top;
-    
+
     // Consider any page scrolling
     x -= window.pageXOffset;
     y -= window.pageYOffset;
@@ -27,9 +27,9 @@ function magnify(img, glass, zoom) {
     img.addEventListener('touchmove', moveMagnifier);
 
     function moveMagnifier(evt) {
-        let bw = 3;
-        let w = glass.offsetWidth / 2;
-        let h = glass.offsetHeight / 2;
+        const bw = 3;
+        const w = glass.offsetWidth / 2;
+        const h = glass.offsetHeight / 2;
 
         // Get the cursor's x and y positions
         let { x, y } = getCursorPos(evt, img);
@@ -47,7 +47,7 @@ function magnify(img, glass, zoom) {
         if (y < h / zoom) {
             y = h / zoom;
         }
-        
+
         // Set the position of the magnifier glass
         glass.style.left = (x - w) + 'px';
         glass.style.top = (y - h) + 'px';

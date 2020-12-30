@@ -14,7 +14,7 @@ const template = `
                 @input="processFilterPosts()"/>
     </form>
 
-    <label class="custom-control custom-checkbox custom-control-animated custom-control-highlighted custom-control-outlined mt-3 mb-3">
+    <label class="custom-control custom-checkbox custom-control-animated custom-control-highlighted custom-control-outlined mt-3 mb-3 d-none">
         <input type="checkbox"
                 class="custom-control-input"
                 v-model="onlyPublished"
