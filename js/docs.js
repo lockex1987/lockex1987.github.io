@@ -47,7 +47,7 @@ class HeaderNavigator {
         mobileHeader.className = 'mobile-header position-fixed bg-white w-100 border-bottom d-xl-none d-flex align-items-center px-2';
         mobileHeader.innerHTML = `
                 <a href="/" class="logo">
-                    <img src="/images/logo.svg">
+                    <img src="/images/logo/logo.svg">
                 </a>
 
                 <a class="ml-auto text-blue" href="/posts.html">

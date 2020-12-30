@@ -151,7 +151,7 @@ class SevenZipWrapper
     public function compress($folder, $archive)
     {
         $command = escapeshellcmd('7z a -bb ' . escapeshellarg($archive) . ' ' . escapeshellarg($folder));
-        echo $command . PHP_EOL;
+        // echo $command . PHP_EOL;
         // 7z a -bsp1
         system($command);
     }

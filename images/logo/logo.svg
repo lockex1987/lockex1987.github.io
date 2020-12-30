@@ -1,5 +1,6 @@
 <svg version="1.1"
 		xmlns="http://www.w3.org/2000/svg"
+		xmlns:xlink="http://www.w3.org/1999/xlink"
 		width="350px"
 		height="350px"
 		viewBox="0 0 350 350">
@@ -19,6 +20,15 @@
 			<stop offset="85%" style="stop-color: #f2d200;" />
 			<stop offset="85%" style="stop-color: #70ca5c;" />
 		</linearGradient>
+		
+		<!-- Ngôi sao nhấp nháy -->
+		<path id="twinkleStart"
+				d="M 0 100
+					A 100 100 0 0 0 100 0
+					A 100 100 0 0 0 200 100
+					A 100 100 0 0 0 100 200
+					A 100 100 0 0 0 0 100"
+				fill="#FFC000"/>
 	</defs>
 	
 	<!-- Chú ý tỷ lệ vàng 1:0.618 -->
@@ -55,5 +65,11 @@
 		<rect x="80" y="260"
 				width="60" height="25"
 				fill="#8D613B"/>
+		
+		<!-- Ngôi sao nhấp nháy -->
+		<use x="1500"
+				y="200"
+				xlink:href="#twinkleStart"
+				transform="scale(0.1)"/>
 	</g>
 </svg>
