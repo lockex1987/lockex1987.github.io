@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="web font, icon, font awesome, line awesome">
+    <title>Fonticon</title>
+
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+
+    <!-- Download bản free và include -->
+    <!--link rel="stylesheet" href="libs/fontawesome-free/css/all.min.css"/-->
+
+    <!-- CDN bản free -->
+    <!--link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"/-->
+
+    <!-- Lấy link file CSS từ trang chủ fontawesome.com -->
+    <!--link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v5.15.1/css/pro.min.css"/-->
+
+    <!-- Download bản pro và include -->
+    <link rel="stylesheet" href="libs/fontawesome-pro/css/pro.min.css"/>
+
+    <link rel="stylesheet" href="libs/line-awesome/css/line-awesome.css"/>
+
+    <style>
+        .icon {
+            width: 3em;
+            height: auto;
+            vertical-align: baseline;
+        }
+    </style>
+</head>
+
+<body>
+    <article>
+        <h2>Fonticon</h2>
+        <h3>Font Awesome</h3>
+        <p><a href="https://fontawesome.com/" target="_blank">Trang chủ</a></p>
+        <p>Font Awesome có license phức tạp. Để sử dụng đầy đủ icon bạn phải dùng bản Pro mất phí.
+            Nếu chỉ dùng bản Free thì các icon ít hơn, chủ yếu là dạng solid nên trông cũng xấu.
+        </p>
+        <p>Line Awesome thì miễn phí nhưng mà ít icon hơn, ít style hơn.</p>
+        <p>Nên dùng web font icon để căn chỉnh theo chiều dọc dễ hơn so với ảnh.</p>
+
+        <h3>Line Awesome</h3>
+        <div class="mb-3"><img src="images/line-awesome.png"/></div>
+        <p><a href="https://icons8.com/line-awesome" target="_blank">Trang chủ</a></p>	
+        
+        <p>Trông đẹp hơn Font Awesome (style solid). Không có license phức tạp như Font Awesome. Version hiện tại là 1.3.0.</p>
+		
+		
+
+        <h3>Demo</h3>
+        <table class="table table-bordered">
+            <tr>
+                <td>
+                    Brand
+                </td>
+                <td>
+                    <i class="fab fa-facebook-messenger font-size-2"></i>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Default (Solid)
+                </td>
+                <td>
+                    <i class="fa fa-edit font-size-2"></i>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Solid
+                </td>
+                <td>
+                    <i class="fas fa-user font-size-2"></i>
+                    <i class="fas fa-users font-size-2"></i>
+                    <i class="fas fa-edit font-size-2"></i>
+                    <i class="fas fa-trash font-size-2"></i>
+                    <i class="fas fa-trash-alt font-size-2"></i>
+                    <i class="fas fa-bookmark font-size-2"></i>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Regular
+                </td>
+                <td>
+                    <i class="far fa-user font-size-2"></i>
+                    <i class="far fa-users font-size-2"></i>
+                    <i class="far fa-edit font-size-2"></i>
+                    <i class="far fa-trash font-size-2"></i>
+                    <i class="far fa-trash-alt font-size-2"></i>
+                    <i class="far fa-bookmark font-size-2"></i>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Light
+                </td>
+                <td>
+                    <i class="fal fa-user font-size-2"></i>
+                    <i class="fal fa-users font-size-2"></i>
+                    <i class="fal fa-edit font-size-2"></i>
+                    <i class="fal fa-trash font-size-2"></i>
+                    <i class="fal fa-trash-alt font-size-2"></i>
+                    <i class="fal fa-bookmark font-size-2"></i>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Line awesome
+                </td>
+                <td>
+                    <i class="la la-user font-size-2"></i>
+                    <i class="la la-users font-size-2"></i>
+                    <i class="la la-edit font-size-2"></i>
+                    <i class="la la-trash font-size-2"></i>
+                    <i class="la la-trash-alt font-size-2"></i>
+                    <i class="la la-bookmark font-size-2"></i>
+                </td>
+            </tr>
+        </table>
+
+        <h3>Sử dụng icon trên web</h3>
+        <p>Icon đẹp, làm trang web màu sắc rực rỡ.</p>
+        <p>Dùng HTML entity thì có thể các font chữ khác nhau thể hiện khác nhau.</p>
+        <p>Dùng fonticon có thể đổi màu dễ dàng (color, background-color, căn dọc).</p>
+        <p>Không nên sử dụng icon ở trong button.</p>
+        <p>Icon processing sử dụng Bootstrap spinner. <a href="../bootstrap%20-%20spinner/index.html">Demo</a>.</p>
+        <p>Sử dụng hamburger bar riêng, có animation. <a href="../ui%20-%20hamburger%20menu%20icon/index.html">Demo</a>.</p>
+        <p>Các icon cần thiết:</p>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Tên</th>
+                    <th>Mã</th>
+                    <th>Minh họa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Thêm</td>
+                    <td>plus</td>
+                    <td><img class="icon" src="/images/icon/plus.svg"></td>
+                </tr>
+                <tr>
+                    <td>Quay lại</td>
+                    <td>arrow-left</td>
+                    <td><img class="icon" src="/images/icon/arrow-left.svg"></td>
+                </tr>
+                <tr>
+                    <td>Xóa</td>
+                    <td>bin</td>
+                    <td><img class="icon" src="/images/icon/bin.svg"></td>
+                </tr>
+                <tr>
+                    <td>Báo cáo</td>
+                    <td>file-excel</td>
+                    <td><img class="icon" src="/images/icon/file-excel.svg"></td>
+                </tr>
+                <tr>
+                    <td>Tìm kiếm</td>
+                    <td>search</td>
+                    <td><img class="icon" src="/images/icon/search.svg"></td>
+                </tr>
+                <tr>
+                    <td>Đồng bộ, reset mật khẩu</td>
+                    <td>spinner</td>
+                    <td><img class="icon" src="/images/icon/spinner.svg"></td>
+                </tr>
+                <tr>
+                    <td>Khóa</td>
+                    <td>lock</td>
+                    <td><img class="icon" src="/images/icon/lock.svg"></td>
+                </tr>
+                <tr>
+                    <td>Mở khóa</td>
+                    <td>unlocked</td>
+                    <td><img class="icon" src="/images/icon/unlocked.svg"></td>
+                </tr>
+                <tr>
+                    <td>Lưu</td>
+                    <td>floppy-disk</td>
+                    <td><img class="icon" src="/images/icon/floppy-disk.svg"></td>
+                </tr>
+                <tr>
+                    <td>Gửi mail</td>
+                    <td>envelope</td>
+                    <td><img class="icon" src="/images/icon/envelope.svg"></td>
+                </tr>
+                <tr>
+                    <td>Copy</td>
+                    <td>copy</td>
+                    <td><img class="icon" src="/images/icon/copy.svg"></td>
+                </tr>
+                <tr>
+                    <td>Download</td>
+                    <td>download</td>
+                    <td><img class="icon" src="/images/icon/download.svg"></td>
+                </tr>
+                <tr>
+                    <td>Upload</td>
+                    <td>upload</td>
+                    <td><img class="icon" src="/images/icon/upload.svg"></td>
+                </tr>
+                <tr>
+                    <td>Logout</td>
+                    <td>power-off</td>
+                    <td><img class="icon" src="/images/icon/power-off.svg"></td>
+                </tr>
+                <tr>
+                    <td>Profile</td>
+                    <td>user</td>
+                    <td><img class="icon" src="/images/icon/user.svg"></td>
+                </tr>
+                <tr>
+                    <td>Cấu hình</td>
+                    <td>cog</td>
+                    <td><img class="icon" src="/images/icon/cog.svg"></td>
+                </tr>
+                <tr>
+                    <td>Check, chọn, xác nhận</td>
+                    <td>check</td>
+                    <td><img class="icon" src="/images/icon/check.svg"></td>
+                </tr>
+                <tr>
+                    <td>Cảnh báo, lỗi</td>
+                    <td>warning</td>
+                    <td><img class="icon" src="/images/icon/warning.svg"></td>
+                </tr>
+                <tr>
+                    <td>Thành công</td>
+                    <td>notification</td>
+                    <td><img class="icon" src="/images/icon/notification.svg"></td>
+                </tr>
+                <tr>
+                    <td>Đóng, bỏ, bỏ xác nhận, xóa</td>
+                    <td>times</td>
+                    <td><img class="icon" src="/images/icon/times.svg"></td>
+                </tr>
+                <tr>
+                    <td>Trang chủ</td>
+                    <td>home</td>
+                    <td><img class="icon" src="/images/icon/home.svg"></td>
+                </tr>
+                <tr>
+                    <td>Sửa</td>
+                    <td>edit</td>
+                    <td><img class="icon" src="/images/icon/edit.svg"></td>
+                </tr>
+                <tr>
+                    <td>Danh sách người dùng</td>
+                    <td>users</td>
+                    <td><img class="icon" src="/images/icon/users.svg"></td>
+                </tr>
+                <tr>
+                    <td>Vị trí, địa chỉ</td>
+                    <td>location</td>
+                    <td><img class="icon" src="/images/icon/location.svg"></td>
+                </tr>
+                <tr>
+                    <td>Lịch, thời gian</td>
+                    <td>calendar</td>
+                    <td><img class="icon" src="/images/icon/calendar.svg"></td>
+                </tr>
+                
+
+                <tr>
+                    <td>file</td>
+                    <td>file</td>
+                    <td><img class="icon" src="/images/icon/file.svg"></td>
+                </tr>
+                <tr>
+                    <td>tag</td>
+                    <td>tag</td>
+                    <td><img class="icon" src="/images/icon/tag.svg"></td>
+                </tr>
+
+                <tr>
+                    <td>history</td>
+                    <td>history</td>
+                    <td><img class="icon" src="/images/icon/history.svg"></td>
+                </tr>
+                <tr>
+                    <td>bell</td>
+                    <td>bell</td>
+                    <td><img class="icon" src="/images/icon/bell.svg"></td>
+                </tr>
+                <tr>
+                    <td>film</td>
+                    <td>film</td>
+                    <td><img class="icon" src="/images/icon/film.svg"></td>
+                </tr>
+                <tr>
+                    <td>image</td>
+                    <td>image</td>
+                    <td><img class="icon" src="/images/icon/image.svg"></td>
+                </tr>
+                <tr>
+                    <td>music</td>
+                    <td>music</td>
+                    <td><img class="icon" src="/images/icon/music.svg"></td>
+                </tr>
+                <tr>
+                    <td>play</td>
+                    <td>play</td>
+                    <td><img class="icon" src="/images/icon/play.svg"></td>
+                </tr>
+            </tbody>
+        </table>
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

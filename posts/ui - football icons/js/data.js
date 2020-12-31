@@ -113,3 +113,8 @@ const CLUBS = [
     'wolverhampton.svg',
     'zenit saint petersburg.svg',
 ];
+
+export {
+    NATIONALS,
+    CLUBS
+};

@@ -1,11 +1,11 @@
 export default [
     { name: 'js', y: 140 },
-    { name: 'ui', y: 119 },
+    { name: 'ui', y: 116 },
     { name: 'laravel', y: 78 },
     { name: 'php', y: 61 },
     { name: 'project', y: 49 },
     { name: 'it', y: 46 },
-    { name: 'css', y: 38 },
+    { name: 'css', y: 37 },
     { name: 'linux', y: 31 },
     { name: 'git', y: 27 },
     { name: 'story', y: 21 },
