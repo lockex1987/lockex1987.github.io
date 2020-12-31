@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="web font, icon, font awesome, line awesome">
-    <title>Fonticon</title>
+    <meta name="description" content="web font, icon, fonticon, font awesome, line awesome">
+    <title>Sử dụng icon trên web</title>
 
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -23,7 +23,7 @@
     <!-- Download bản pro và include -->
     <link rel="stylesheet" href="libs/fontawesome-pro/css/pro.min.css"/>
 
-    <link rel="stylesheet" href="libs/line-awesome/css/line-awesome.css"/>
+	<link rel="stylesheet" href="https://lockex1987.github.io/posts/project%20-%20frontend%20frameworks%20and%20libraries/src/line-awesome/css/line-awesome.min.css"/>
 
     <style>
         .icon {
@@ -36,20 +36,27 @@
 
 <body>
     <article>
-        <h2>Fonticon</h2>
+        <h2>Sử dụng icon trên web</h2>
+        <p>Icon đẹp, làm trang web màu sắc rực rỡ.</p>
+        <p>Dùng HTML entity thì có thể các font chữ khác nhau thể hiện khác nhau.</p>
+        <p>Nên dùng fonticon có thể đổi màu dễ dàng (color, background-color, căn dọc), không nên dùng ảnh.</p>
+        <p>Nên dùng web font icon để căn chỉnh theo chiều dọc dễ hơn so với ảnh.</p>
+        <p>Icon processing sử dụng Bootstrap spinner. <a href="../bootstrap%20-%20spinner/index.html">Demo</a>.</p>
+        <p>Sử dụng hamburger bar riêng, có animation. <a href="../ui%20-%20hamburger%20menu%20icon/index.html">Demo</a>.</p>
+
         <h3>Font Awesome</h3>
         <p><a href="https://fontawesome.com/" target="_blank">Trang chủ</a></p>
         <p>Font Awesome có license phức tạp. Để sử dụng đầy đủ icon bạn phải dùng bản Pro mất phí.
             Nếu chỉ dùng bản Free thì các icon ít hơn, chủ yếu là dạng solid nên trông cũng xấu.
         </p>
-        <p>Line Awesome thì miễn phí nhưng mà ít icon hơn, ít style hơn.</p>
-        <p>Nên dùng web font icon để căn chỉnh theo chiều dọc dễ hơn so với ảnh.</p>
+        
+        
 
         <h3>Line Awesome</h3>
         <div class="mb-3"><img src="images/line-awesome.png"/></div>
         <p><a href="https://icons8.com/line-awesome" target="_blank">Trang chủ</a></p>	
-        
-        <p>Trông đẹp hơn Font Awesome (style solid). Không có license phức tạp như Font Awesome. Version hiện tại là 1.3.0.</p>
+        <p>Line Awesome thì miễn phí nhưng mà ít icon hơn, ít style hơn.</p>
+        <p>Trông đẹp hơn Font Awesome (style solid).</p>
 		
 		
 
@@ -130,14 +137,7 @@
             </tr>
         </table>
 
-        <h3>Sử dụng icon trên web</h3>
-        <p>Icon đẹp, làm trang web màu sắc rực rỡ.</p>
-        <p>Dùng HTML entity thì có thể các font chữ khác nhau thể hiện khác nhau.</p>
-        <p>Dùng fonticon có thể đổi màu dễ dàng (color, background-color, căn dọc).</p>
-        <p>Không nên sử dụng icon ở trong button.</p>
-        <p>Icon processing sử dụng Bootstrap spinner. <a href="../bootstrap%20-%20spinner/index.html">Demo</a>.</p>
-        <p>Sử dụng hamburger bar riêng, có animation. <a href="../ui%20-%20hamburger%20menu%20icon/index.html">Demo</a>.</p>
-        <p>Các icon cần thiết:</p>
+        <h3>Các icon cần thiết</h3>
 
         <table class="table table-bordered">
             <thead>
@@ -151,170 +151,318 @@
                 <tr>
                     <td>Thêm</td>
                     <td>plus</td>
-                    <td><img class="icon" src="/images/icon/plus.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/plus.svg">
+                        <i class="font-size-3 la la-plus"></i>
+                        <i class="font-size-3 fal fa-plus"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Quay lại</td>
                     <td>arrow-left</td>
-                    <td><img class="icon" src="/images/icon/arrow-left.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/arrow-left.svg">
+                        <i class="font-size-3 la la-arrow-left"></i>
+                        <i class="font-size-3 fal fa-arrow-left"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Xóa</td>
                     <td>bin</td>
-                    <td><img class="icon" src="/images/icon/bin.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/bin.svg">
+                        <i class="font-size-3 la la-trash-alt"></i>
+                        <i class="font-size-3 fal fa-trash-alt"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Báo cáo</td>
                     <td>file-excel</td>
-                    <td><img class="icon" src="/images/icon/file-excel.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/file-excel.svg">
+                        <i class="font-size-3 la la-file-excel"></i>
+                        <i class="font-size-3 fal fa-file-excel"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Tìm kiếm</td>
                     <td>search</td>
-                    <td><img class="icon" src="/images/icon/search.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/search.svg">
+                        <i class="font-size-3 la la-search"></i>
+                        <i class="font-size-3 fal fa-search"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Đồng bộ, reset mật khẩu</td>
                     <td>spinner</td>
-                    <td><img class="icon" src="/images/icon/spinner.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/spinner.svg">
+                        <i class="font-size-3 la la-sync"></i>
+                        <i class="font-size-3 fal fa-sync"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Khóa</td>
                     <td>lock</td>
-                    <td><img class="icon" src="/images/icon/lock.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/lock.svg">
+                        <i class="font-size-3 la la-lock"></i>
+                        <i class="font-size-3 fal fa-lock"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Mở khóa</td>
                     <td>unlocked</td>
-                    <td><img class="icon" src="/images/icon/unlocked.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/unlocked.svg">
+                        <i class="font-size-3 la la-unlock"></i>
+                        <i class="font-size-3 fal fa-unlock"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Lưu</td>
                     <td>floppy-disk</td>
-                    <td><img class="icon" src="/images/icon/floppy-disk.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/floppy-disk.svg">
+                        <i class="font-size-3 la la-save"></i>
+                        <i class="font-size-3 fal fa-save"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Gửi mail</td>
                     <td>envelope</td>
-                    <td><img class="icon" src="/images/icon/envelope.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/envelope.svg">
+                        <i class="font-size-3 la la-envelope"></i>
+                        <i class="font-size-3 fal fa-envelope"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Copy</td>
                     <td>copy</td>
-                    <td><img class="icon" src="/images/icon/copy.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/copy.svg">
+                        <i class="font-size-3 la la-copy"></i>
+                        <i class="font-size-3 fal fa-copy"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Download</td>
                     <td>download</td>
-                    <td><img class="icon" src="/images/icon/download.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/download.svg">
+                        <i class="font-size-3 la la-download"></i>
+                        <i class="font-size-3 fal fa-download"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Upload</td>
                     <td>upload</td>
-                    <td><img class="icon" src="/images/icon/upload.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/upload.svg">
+                        <i class="font-size-3 la la-upload"></i>
+                        <i class="font-size-3 fal fa-upload"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Logout</td>
                     <td>power-off</td>
-                    <td><img class="icon" src="/images/icon/power-off.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/power-off.svg">
+                        <i class="font-size-3 la la-power-off"></i>
+                        <i class="font-size-3 fal fa-power-off"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Profile</td>
                     <td>user</td>
-                    <td><img class="icon" src="/images/icon/user.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/user.svg">
+                        <i class="font-size-3 la la-user"></i>
+                        <i class="font-size-3 fal fa-user"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Cấu hình</td>
                     <td>cog</td>
-                    <td><img class="icon" src="/images/icon/cog.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/cog.svg">
+                        <i class="font-size-3 la la-cog"></i>
+                        <i class="font-size-3 fal fa-cog"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Check, chọn, xác nhận</td>
                     <td>check</td>
-                    <td><img class="icon" src="/images/icon/check.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/check.svg">
+                        <i class="font-size-3 la la-check"></i>
+                        <i class="font-size-3 fal fa-check"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Cảnh báo, lỗi</td>
                     <td>warning</td>
-                    <td><img class="icon" src="/images/icon/warning.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/warning.svg">
+                        <i class="font-size-3 la la-exclamation-triangle"></i>
+                        <i class="font-size-3 fal fa-exclamation-triangle"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Thành công</td>
                     <td>notification</td>
-                    <td><img class="icon" src="/images/icon/notification.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/notification.svg">
+                        <i class="font-size-3 la la-exclamation-circle"></i>
+                        <i class="font-size-3 fal fa-exclamation-circle"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Đóng, bỏ, bỏ xác nhận, xóa</td>
                     <td>times</td>
-                    <td><img class="icon" src="/images/icon/times.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/times.svg">
+                        <i class="font-size-3 la la-times"></i>
+                        <i class="font-size-3 fal fa-times"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Trang chủ</td>
                     <td>home</td>
-                    <td><img class="icon" src="/images/icon/home.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/home.svg">
+                        <i class="font-size-3 la la-home"></i>
+                        <i class="font-size-3 fal fa-home"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Sửa</td>
                     <td>edit</td>
-                    <td><img class="icon" src="/images/icon/edit.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/edit.svg">
+                        <i class="font-size-3 la la-edit"></i>
+                        <i class="font-size-3 fal fa-edit"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Danh sách người dùng</td>
                     <td>users</td>
-                    <td><img class="icon" src="/images/icon/users.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/users.svg">
+                        <i class="font-size-3 la la-users"></i>
+                        <i class="font-size-3 fal fa-users"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Vị trí, địa chỉ</td>
                     <td>location</td>
-                    <td><img class="icon" src="/images/icon/location.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/location.svg">
+                        <i class="font-size-3 la la-map-marker-alt"></i>
+                        <i class="font-size-3 fal fa-map-marker-alt"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>Lịch, thời gian</td>
                     <td>calendar</td>
-                    <td><img class="icon" src="/images/icon/calendar.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/calendar.svg">
+                        <i class="font-size-3 la la-calendar"></i>
+                        <i class="font-size-3 fal fa-calendar"></i>
+                    </td>
                 </tr>
-                
-
                 <tr>
                     <td>file</td>
                     <td>file</td>
-                    <td><img class="icon" src="/images/icon/file.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/file.svg">
+                        <i class="font-size-3 la la-file"></i>
+                        <i class="font-size-3 fal fa-file"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>tag</td>
                     <td>tag</td>
-                    <td><img class="icon" src="/images/icon/tag.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/tag.svg">
+                        <i class="font-size-3 la la-tag"></i>
+                        <i class="font-size-3 fal fa-tag"></i>
+                    </td>
                 </tr>
 
                 <tr>
                     <td>history</td>
                     <td>history</td>
-                    <td><img class="icon" src="/images/icon/history.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/history.svg">
+                        <i class="font-size-3 la la-history"></i>
+                        <i class="font-size-3 fal fa-history"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>bell</td>
                     <td>bell</td>
-                    <td><img class="icon" src="/images/icon/bell.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/bell.svg">
+                        <i class="font-size-3 la la-bell"></i>
+                        <i class="font-size-3 fal fa-bell"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>film</td>
                     <td>film</td>
-                    <td><img class="icon" src="/images/icon/film.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/film.svg">
+                        <i class="font-size-3 la la-film"></i>
+                        <i class="font-size-3 fal fa-film"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>image</td>
                     <td>image</td>
-                    <td><img class="icon" src="/images/icon/image.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/image.svg">
+                        <i class="font-size-3 la la-image"></i>
+                        <i class="font-size-3 fal fa-image"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>music</td>
                     <td>music</td>
-                    <td><img class="icon" src="/images/icon/music.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/music.svg">
+                        <i class="font-size-3 la la-music"></i>
+                        <i class="font-size-3 fal fa-music"></i>
+                    </td>
                 </tr>
                 <tr>
                     <td>play</td>
                     <td>play</td>
-                    <td><img class="icon" src="/images/icon/play.svg"></td>
+                    <td>
+                        <img class="icon" src="/images/icon/play.svg">
+                        <i class="font-size-3 la la-play"></i>
+                        <i class="font-size-3 fal fa-play"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Đã bookmark</td>
+                    <td>bookmark</td>
+                    <td>
+                        <img class="icon" src="/images/icon/bookmark-solid.svg">
+                        <i class="font-size-3 la la-bookmark"></i>
+                        <i class="font-size-3 fas fa-bookmark"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Chưa bookmark</td>
+                    <td>bookmark</td>
+                    <td>
+                        <img class="icon" src="/images/icon/bookmark-regular.svg">
+                        <i class="font-size-3 la la-bookmark"></i>
+                        <i class="font-size-3 fal fa-bookmark"></i>
+                    </td>
                 </tr>
             </tbody>
         </table>

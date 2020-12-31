@@ -44,11 +44,3 @@ document.querySelector('#map').addEventListener('mousemove', function (evt) {
     }
 });
 
-
-function trimSvgWhitespace(svg) {
-    const bbox = svg.getBBox();
-    const viewBox = [bbox.x, bbox.y, bbox.width, bbox.height].join(' ');
-    svg.setAttribute('viewBox', viewBox);
-}
-
-trimSvgWhitespace(document.querySelector('#envelopeSvg'));

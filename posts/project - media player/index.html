@@ -4,10 +4,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="audio, video, subtitle, karaoke">
+  <meta name="description" content="audio, video, subtitle, karaoke, svg">
   <title>Media player</title>
   <link rel="icon" href="../../images/favicon.png">
   <link rel="stylesheet" href="../../css/style.css">
+  <!--link rel="stylesheet" href="https://lockex1987.github.io/posts/project%20-%20frontend%20frameworks%20and%20libraries/src/line-awesome/css/line-awesome.min.css"/-->
   <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -17,9 +18,10 @@
 
     <h3>Icon</h3>
 
-<svg xmlns="http://www.w3.org/2000/svg" class="equilizer" viewBox="0 0 128 128">
+<svg xmlns="http://www.w3.org/2000/svg"
+    class="equilizer"
+    viewBox="0 0 128 128">
         <g>
-            <title>Audio Equilizer</title>
             <rect class="bar" transform="translate(0,0)" y="15"></rect>
             <rect class="bar" transform="translate(25,0)" y="15"></rect>
             <rect class="bar" transform="translate(50,0)" y="15"></rect>
@@ -27,6 +29,12 @@
             <rect class="bar" transform="translate(100,0)" y="15"></rect>
         </g>
     </svg>
+
+    <img src="images/play.svg"/>
+
+    <img src="images/pause.svg"/>
+
+    <img src="images/fullscreen.svg"/>
 
     <h3>Simple audio</h3>
     <div class="media-container mb-3">
@@ -55,10 +63,7 @@
 
     <h3> Tham khảo</h3>
 
-    <p> https://www.mediaelementjs.com/ </p>
-    <p>https://kolber.github.io/audiojs/</p>
-    <p> http://www.jplayer.org/ </p>
-    <p> https://521dimensions.com/open-source/amplitudejs </p>
+    
     <ul>
       <li><span class="text-muted mr-2">codepen.io</span> <a href="https://codepen.io/tuannvbg-the-flexboxer/pen/jppZxe"
           target="_blank">H5Aplayer HTML5 Music LRC</a></li>
@@ -70,6 +75,8 @@
           target="_blank">HTML5 SMusic Player LRC 2019</a></li>
       <li><span class="text-muted mr-2">s-mohan.github.io</span> <a href="https://s-mohan.github.io/demo/smusic/"
           target="_blank">Smuisc - 水墨寒的博客</a></li>
+      <li><span class="text-muted mr-2">wayou.github.io</span> <a href="http://wayou.github.io/selected"
+        target="_blank">精選 | a collection of songs that I love, also shows how to sync lyric with HTML5 audio tag</a></li>
     </ul>
     <h3>Các trình duyệt hiển thị khác nhau</h3>
     <p>In Chrome:</p>
@@ -84,13 +91,12 @@
   </article>
 
   <link rel="stylesheet" href="css/media-player.css" />
-  <script src="js/media-player-utils.js"></script>
   <script src="js/media-player.js"></script>
 
   <script>
-    createMediaPlayer('#audioTag');
-    createMediaPlayer('#myAudio');
-    createMediaPlayer('#myVideo');
+    createMediaPlayer(document.querySelector('#audioTag'));
+    createMediaPlayer(document.querySelector('#myAudio'));
+    createMediaPlayer(document.querySelector('#myVideo'));
   </script>
 
   <script src="../../js/docs.js"></script>

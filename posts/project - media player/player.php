@@ -29,13 +29,12 @@ $srtPath = str_replace('.mp4x', '.srt', $uri);
     </div>
 
 
-    <link rel="stylesheet" href="/archive/project%20-%20media%20player/css/media-player.css" />
-    <script src="/archive/project%20-%20media%20player/js/media-player-utils.js"></script>
-    <script src="/archive/project%20-%20media%20player/js/media-player.js"></script>
+    <link rel="stylesheet" href="/posts/project%20-%20media%20player/css/media-player.css" />
+    <script src="/posts/project%20-%20media%20player/js/media-player.js"></script>
 
     <script>
         try {
-            createMediaPlayer('#myVideo');
+            createMediaPlayer(document.querySelector('#myVideo'));
         } catch (ex) {
             alert(ex.message);
         }

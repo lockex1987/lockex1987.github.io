@@ -32,7 +32,7 @@ export default {
     },
 
     mounted() {
-        createMediaPlayer('#myAudio');
+        createMediaPlayer(document.querySelector('#myAudio'));
     },
 
     watch: {
