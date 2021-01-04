@@ -1,45 +1,37 @@
 <svg version="1.1"
 		xmlns="http://www.w3.org/2000/svg"
 		xmlns:xlink="http://www.w3.org/1999/xlink"
-		width="350px"
-		height="350px"
-		viewBox="0 0 350 350">
+		width="330px"
+		height="330px"
+        viewBox="0 0 330 330">
 	<defs>
 		<linearGradient id="flavoursGrad"
 				x1="0%"
 				y1="0%"
 				x2="35%"
 				y2="100%"
-				gradientTransform="translate(20, 20); ">
-			<stop offset="35%" style="stop-color: #f63a99;" />
-			<stop offset="35%" style="stop-color: #30dcf6;" />
+                gradientTransform="translate(20, 20);"
+                spreadMethod="repeat">
+			<stop offset="25%" style="stop-color: #f63a99;" />
+			<stop offset="25%" style="stop-color: #30dcf6;" />
 			
-			<stop offset="60%" style="stop-color: #30dcf6;" />
-			<stop offset="60%" style="stop-color: #f2d200;" />
+			<stop offset="50%" style="stop-color: #30dcf6;" />
+			<stop offset="50%" style="stop-color: #f2d200;" />
 
-			<stop offset="85%" style="stop-color: #f2d200;" />
-			<stop offset="85%" style="stop-color: #70ca5c;" />
+			<stop offset="75%" style="stop-color: #f2d200;" />
+			<stop offset="75%" style="stop-color: #70ca5c;" />
 		</linearGradient>
-		
-		<!-- Ngôi sao nhấp nháy -->
-		<path id="twinkleStart"
-				d="M 0 100
-					A 100 100 0 0 0 100 0
-					A 100 100 0 0 0 200 100
-					A 100 100 0 0 0 100 200
-					A 100 100 0 0 0 0 100"
-				fill="#FFC000"/>
 	</defs>
 	
 	<!-- Chú ý tỷ lệ vàng 1:0.618 -->
-	<g transform="translate(65, 0)">
-		<!-- Kem -->
+	<g transform="translate(70, 0)">
+        <!-- Kem -->
 		<path d="M 0 80
 				A 70 80 0 0 1 70 0
 				L 120 0
-				A 70 80 0 0 0 220 80
-				L 220 250
-				A 10 10 0 0 1 210 260
+				A 70 80 0 0 0 190 80
+				L 190 250
+				A 10 10 0 0 1 180 260
 				L 10 260
 				A 10 10 0 0 1 0 250
 				Z"
@@ -54,22 +46,27 @@
 				fill="rgba(255, 255, 255, 0.5)" />
 
 		<!-- Que cầm -->
-		<path d="M 80 260
-				L 140 260
-				L 140 315
-				A 30 30 0 0 1 80 315
+		<path d="M 70 260
+				L 120 260
+				L 120 315
+				A 30 30 0 0 1 70 315
 				Z"
 				fill="#E09C5F" />
 		
 		<!-- Bóng của que cầm -->
-		<rect x="80" y="260"
-				width="60" height="25"
+		<rect x="70" y="260"
+				width="50" height="25"
 				fill="#8D613B"/>
 		
-		<!-- Ngôi sao nhấp nháy -->
-		<use x="1500"
-				y="200"
-				xlink:href="#twinkleStart"
-				transform="scale(0.1)"/>
+        <!-- Ngôi sao nhấp nháy -->
+        <g transform="scale(0.1) translate(1600, 200)">
+            <path id="twinkleStart"
+                    d="M -100 0
+                        A 100 100 0 0 0 0 -100
+                        A 100 100 0 0 0 100 0
+                        A 100 100 0 0 0 0 100
+                        A 100 100 0 0 0 -100 0"
+                    fill="#FFC000"/>
+        </g>
 	</g>
 </svg>
