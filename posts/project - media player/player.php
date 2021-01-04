@@ -21,7 +21,8 @@ $srtPath = str_replace('.mp4x', '.srt', $uri);
 </head>
 
 <body class="py-3" style="background-color: #000;">
-    <div class="media-container">
+    <!-- .media-container -->
+    <div>
         <video id="myVideo" controls preload="metadata">
             <source src="<?php echo $mp4Path; ?>" type="video/mp4">
             <track label="English" kind="subtitles" srclang="en-US" src="<?php echo $srtPath; ?>" data-type="srt" default>
