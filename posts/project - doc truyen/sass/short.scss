@@ -1,9 +1,8 @@
-@tablet: ~'(min-width: 768px)';
+$tablet: "(min-width: 768px)";
 
 #mainFrame {
 	#listDiv {
 		max-height: 720px;
-		overflow: auto;
 
 		p {
             padding-right: 16px;
@@ -14,7 +13,7 @@
             }
 		}
 
-		@media @tablet {
+		@media #{$tablet} {
 			width: 40%;
 		}
 	}
@@ -41,12 +40,12 @@
             text-align: justify;
 		}
 
-		@media @tablet {
+		@media #{$tablet} {
 			width: 55%;
 		}
 	}
 
-	@media @tablet {
+	@media #{$tablet} {
 		flex-direction: row;
 		display: flex;
 		justify-content: space-between;

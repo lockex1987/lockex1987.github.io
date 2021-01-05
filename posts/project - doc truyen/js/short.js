@@ -64,7 +64,7 @@ function bindList() {
                     </p>`;
     });
     document.getElementById('listDiv').innerHTML = listHtmlCode;
-    $('#listDiv').jScrollPane();
+    // $('#listDiv').jScrollPane();
 }
 
 /**
@@ -82,8 +82,8 @@ function defaultStory() {
  * Thay thế audio player mặc định.
  */
 function initMediaPlayer() {
-    createMediaPlayer('#html5Player');
-    createMediaPlayer('#myAudioMobile');
+    createMediaPlayer(document.querySelector('#html5Player'));
+    createMediaPlayer(document.querySelector('#myAudioMobile'));
 }
 
 /**
