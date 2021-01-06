@@ -56,9 +56,7 @@ const template = `
 
                 <div class="date text-success mt-1 font-size-0.875"
                         v-if="p.date">
-                    <img src="/images/icon/calendar.svg"
-                            style="width: 0.5rem;"
-                            class="mr-1"/>
+					<i class="la la-calendar mr-1"></i>
                     {{normalizeDate(p.date)}}
                 </div>
             <div>
