@@ -1,4 +1,4 @@
-const data = [
+export default [
     ['React ecosystem', '1. Setup'],
     ['React ecosystem', '2. React'],
     ['React ecosystem', '3. React router'],

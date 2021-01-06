@@ -1,3 +1,5 @@
+import data from './data1.js';
+
 // Add the nodes option through an event call. We want to start with the parent
 // item and apply separate colors to each child element, then the same color to
 // grandchildren.
@@ -6,13 +8,13 @@ function doSomething() {
         Highcharts.Series,
         'afterSetOptions',
         function (e) {
-            var colors = Highcharts.getOptions().colors;
-            var i = 0;
-            var nodes = {};
+            const colors = Highcharts.getOptions().colors;
+            let i = 0;
+            const nodes = {};
 
             if (this instanceof Highcharts.seriesTypes.networkgraph && e.options.id === 'react-tree') {
                 e.options.data.forEach(function (link) {
-                    let root = 'React ecosystem';
+                    const root = 'React ecosystem';
                     if (link[0] === root) {
                         nodes[root] = {
                             id: root,

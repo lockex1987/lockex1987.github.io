@@ -1,4 +1,4 @@
-const data = [
+export default [
     ['Proto Indo-European', 'Balto-Slavic'],
     ['Proto Indo-European', 'Germanic'],
     ['Proto Indo-European', 'Celtic'],

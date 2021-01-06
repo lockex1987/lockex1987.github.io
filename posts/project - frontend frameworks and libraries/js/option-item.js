@@ -14,7 +14,7 @@ const OptionItem = {
                         <a :href="e.link"
                                 target="_blank"        
                                 class="text-decoration-none">
-                            <img src="/images/icon/link.svg" class="icon"/>
+                            <i class="la la-link"></i>
                         </a>
                     </span>
 
