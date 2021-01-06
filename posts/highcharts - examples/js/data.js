@@ -1,4 +1,4 @@
-const DATA = [
+export default [
     {
         title: 'Basic line',
         url: 'https://www.highcharts.com/demo/line-basic',

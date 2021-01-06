@@ -1,25 +1,32 @@
-/*
+import DATA from './data.js';
 
-const data = [];
-const demos = document.querySelectorAll('#demos a');
-demos.forEach(demo => {
-	const url = demo.href;
-	const image = demo.querySelector('img').src;
-	const title = demo.querySelector('h3').textContent.trim();
-	const obj = {
-		title,
-		url,
-		image
-	};
-	console.log(obj);
-	data.push(obj);
-});
+/**
+ * Lấy dữ liệu từ https://www.highcharts.com/demo.
+ */
+function crawData() {
+    const data = [];
+    const demos = document.querySelectorAll('#demos a');
+    demos.forEach(demo => {
+        const url = demo.href;
+        const image = demo.querySelector('img').src;
+        const title = demo.querySelector('h3').textContent.trim();
+        const obj = {
+            title,
+            url,
+            image
+        };
+        data.push(obj);
+    });
+    console.log(data);
+}
 
-*/
 const App = {
     data() {
         return {
-            demos: DATA,
+            demos: DATA.map(e => ({
+                ...e,
+                url: e.url.replace('https://www.highcharts.com/demo/', 'examples/')
+            })),
             searchText: ''
         };
     },
@@ -27,7 +34,6 @@ const App = {
     computed: {
         filteredDemos() {
             const s = this.searchText.toLowerCase();
-            console.log(s);
             return this.demos.filter(demo => demo.title.toLowerCase().includes(s));
         }
     }
