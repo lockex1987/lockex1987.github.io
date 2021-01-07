@@ -6,46 +6,55 @@
   .media-container .media-player {
     background-color: transparent; }
     .media-container .media-player .subtitle-wrapper {
-      padding: 2px 10px;
-      height: 40px;
       position: absolute;
       top: 50%;
       left: 0;
       right: 0;
-      text-align: center; }
+      text-align: center;
+      z-index: 5; }
       .media-container .media-player .subtitle-wrapper .subtitle {
-        position: relative;
-        color: #FFF;
         max-width: 40%;
-        display: inline-block;
+        color: #FFF;
         font-size: 24px;
         text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000; }
-        .media-container .media-player .subtitle-wrapper .subtitle .base {
-          vertical-align: text-top; }
-        .media-container .media-player .subtitle-wrapper .subtitle .karaoke {
-          position: absolute;
-          left: 0;
-          top: 0;
-          color: yellow;
-          /* #d269ff; #2E9AFE*/
-          overflow: hidden;
-          width: 0%;
-          /*text-shadow: 0 0 3px rgba(255, 255, 255, 1);*/ }
+    .media-container .media-player .karaoke-wrapper {
+      height: 40px;
+      padding: 0 0.25rem;
+      overflow: hidden;
+      font-size: 20px; }
+      .media-container .media-player .karaoke-wrapper .base, .media-container .media-player .karaoke-wrapper .karaoke {
+        white-space: nowrap;
+        line-height: 40px; }
+      .media-container .media-player .karaoke-wrapper .base {
+        color: #090;
+        color: #2E9AFE;
+        color: #387ef5;
+        color: #0c60ee; }
+      .media-container .media-player .karaoke-wrapper .karaoke {
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: #d269ff;
+        color: #FF1493;
+        overflow: hidden; }
     .media-container .media-player .player-controls {
       display: flex;
       align-items: center;
       width: 100%;
-      background: transparent; }
+      background: transparent;
+      color: #4E4E50; }
       .media-container .media-player .player-controls .time-info {
         padding: 0 5px;
-        width: 100px;
-        font-size: 13px; }
+        font-size: 13px;
+        text-align: right; }
       .media-container .media-player .player-controls .timeline {
         flex: 1;
         cursor: pointer;
         background: #e6e6e6;
         border-radius: 4px;
-        position: relative; }
+        position: relative;
+        margin-left: 1rem;
+        margin-right: 1rem; }
         .media-container .media-player .player-controls .timeline .bar-process {
           background-color: #007aff;
           height: 4px;
@@ -59,9 +68,17 @@
           border-radius: 50%;
           background-color: #02c38a;
           box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15), 0 0 0 1px rgba(34, 36, 38, 0.15) inset; }
+  .media-container:fullscreen video {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1; }
   .media-container:fullscreen .player-controls {
     color: #FFF;
     position: absolute;
-    bottom: 0; }
+    bottom: 0.5rem;
+    padding: 0 0.5rem;
+    width: 100%;
+    z-index: 10; }
 
 /*# sourceMappingURL=media-player.css.map */

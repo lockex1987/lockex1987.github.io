@@ -9,62 +9,79 @@
 	.media-player {
 		background-color: transparent;
 		
+		// Phụ đề
 		.subtitle-wrapper {
-			padding: 2px 10px;
-			// background: #666;
-			height: 40px;
+			// Cho lên giữa
 			position: absolute;
 			top: 50%;
 			left: 0;
 			right: 0;
 			text-align: center;
+			z-index: 5;
 
 			.subtitle {
-				position: relative;
-				// white-space: nowrap;
-				// color: #090; // ff1493, 387ef5, 0c60ee, fff, 090
-				// color: var(--green);
-				color: #FFF;
 				max-width: 40%;
-				display: inline-block;
+				color: #FFF;
 				font-size: 24px;
-				// font-family: Roboto, sans-serif !important;
 				text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
-		
-				.base {
-					vertical-align: text-top;
-				}
-
-				.karaoke {
-					position: absolute;
-					left: 0;
-					top: 0;
-					color: yellow; /* #d269ff; #2E9AFE*/
-					overflow: hidden;
-					width: 0%;
-					/*text-shadow: 0 0 3px rgba(255, 255, 255, 1);*/
-				}
+				// text-shadow: 0 0 3px rgba(255, 255, 255, 1);
 			}
 		}
 
+		// Karaoke
+		.karaoke-wrapper {
+			height: 40px;
+			padding: 0 0.25rem;
+			overflow: hidden;
+			font-size: 20px;
+
+			.base, .karaoke {
+				white-space: nowrap;
+				line-height: 40px;
+			}
+
+			.base {
+				color: #090;
+				color: #2E9AFE;
+				color: #387ef5;
+				color: #0c60ee;
+			}
+
+			.karaoke {
+				position: absolute;
+				left: 0;
+				top: 0;
+				color: #d269ff;
+				color: #FF1493;
+				overflow: hidden;
+			}
+		}
+
+		// Tranh điều khiển
 		.player-controls {
 			display: flex;
 			align-items: center;
 			width: 100%;
 			background: transparent;
+			color: #4E4E50;
+			
 
+			// Thời gian
 			.time-info {
 				padding: 0 5px;
-				width: 100px;
 				font-size: 13px;
+				text-align: right;
 			}
 
+			// Thanh trạng thái
 			.timeline {
 				flex: 1;
 				cursor: pointer;
 				background: #e6e6e6;
 				border-radius: 4px;
 				position: relative;
+				margin-left: 1rem;
+				margin-right: 1rem;
 
 				.bar-process {
 					background-color: #007aff;
@@ -88,11 +105,23 @@
 		}
 	}
 
+	// Khi fullscreen thì điều chỉnh thanh điều khiển xuống dưới
 	&:fullscreen {
+		// Căn giữa video
+		video {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			z-index: 1;
+		}
+
 		.player-controls {
 			color: #FFF;
 			position: absolute;
-			bottom: 0;			
+			bottom: 0.5rem;
+			padding: 0 0.5rem;
+			width: 100%;
+			z-index: 10;
 		}
 	}
 }

@@ -31,89 +31,95 @@ function createMediaPlayer(mediaTag) {
     // Nút full-screen
     const fullScreenButton = mediaPlayer.querySelector('.full-screen-button');
 
-    // -------------------------------
-
     // Thẻ span chứa dòng phụ đề
-    const baseText = mediaPlayer.querySelector('.subtitle .base');
+    const subtitleText = mediaPlayer.querySelector('.subtitle-wrapper .subtitle');
 
-    // Dòng span chứa nội dung tương tự phụ đề để tạo hiệu ứng karaoke
-    const karaokeText = mediaPlayer.querySelector('.subtitle .karaoke');
+    // Thẻ span chứa nội dung karaoke chính
+    const baseText = mediaPlayer.querySelector('.karaoke-wrapper .base');
 
-
-
-
-
-
-
-
-
-
+    // Thẻ span chứa nội dung tương tự baseText để tạo hiệu ứng karaoke
+    const karaokeText = mediaPlayer.querySelector('.karaoke-wrapper .karaoke');
 
     // Các dòng phụ đề
     let lines;
 
     // Có hiển thị karaoke hay không
-    const shouldDisplayKaraoke =
-        mediaTag.tagName.toLowerCase() == 'audio'
-            ? (mediaTag.getAttribute('data-karaoke') != 'false')
-            : false;
+    // Chỉ hiển thị nếu là audio, còn video thì không
+    const shouldDisplayKaraoke = mediaTag.tagName.toLowerCase() == 'audio';
 
     /**
      * Tạo vùng div chính.
      */
     function createMediaPlayerDiv() {
         const mediaPlayer = document.createElement('div');
-        mediaPlayer.innerHTML = `                  
-                <div class="media-player">
-                    <div class="subtitle-wrapper">
-                        <span class="subtitle">
-                            <span class="base"></span>
-                            <span class="karaoke"></span>
-                        </span>
+        mediaPlayer.className = 'media-player';
+        mediaPlayer.innerHTML = `
+                <!-- Phụ đề -->
+                <div class="subtitle-wrapper"
+                        style="display: none">
+                    <span class="subtitle"></span>
+                </div>
+
+                <!-- Karaoke -->
+                <div class="karaoke-wrapper"
+                        style="display: none">
+                    <span style="position: relative; display: inline-block;">
+                        <span class="base"></span>
+                        <span class="karaoke"></span>
+                    </span>
+                </div>
+
+                <div class="player-controls">
+                    <!-- Nút play -->
+                    <svg width="16px"
+                            height="16px"
+                            viewBox="0 0 48 48"
+                            class="play-button cursor-pointer xfas xfa-play mr-1">
+                        <g fill="currentColor">
+                            <path d="M16 10v28l22-14z"/>
+                        </g>
+                    </svg>                        
+                
+                    <!-- Nút pause -->
+                    <svg width="16px"
+                            height="16px"
+                            viewBox="0 0 16 16"
+                            class="pause-button cursor-pointer xfas xfa-pause mr-1"
+                            style="display: none">
+                        <g fill="currentColor" transform="translate(-576.000000, -144.000000)">
+                            <path d="M580,146 L583,146 L583,158 L580,158 Z M585,146 L588,146 L588,158 L585,158 Z M585,146"/>
+                        </g>
+                    </svg>
+
+                    <!-- Thanh progress -->
+                    <div class="timeline">
+                        <div class="bar-process" style="width: 0px"></div>
+                        <div class="play-head" style="left: 0px"></div>
                     </div>
 
-                    <div class="player-controls">
-                        <svg width="16px"
-                                height="16px"
-                                viewBox="0 0 48 48"
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="play-button cursor-pointer xfas xfa-play mr-1">
-                            <g fill="#4E4E50">
-                                <path d="M16 10v28l22-14z"/>
-                            </g>
-                        </svg>                        
-                    
-                        <svg width="16px"
-                                height="16px"
-                                viewBox="0 0 16 16"
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="pause-button cursor-pointer xfas xfa-pause mr-1"
-                                style="display: none">
-                            <g fill="#4E4E50" transform="translate(-576.000000, -144.000000)">
-                                <path d="M580,146 L583,146 L583,158 L580,158 Z M585,146 L588,146 L588,158 L585,158 Z M585,146"/>
-                            </g>
-                        </svg>
+                    <!-- Thời gian -->
+                    <span class="time-info">
+                        <span class="current-time">0:00</span>
+                        /
+                        <span class="duration-time">0:00</span>
+                    </span>
 
-                        <span class="time-info">
-                            <span class="current-time">0:00</span> / <span class="duration-time">0:00</span>
-                        </span>
+                    <!-- Nút fullscreen -->
+                    <svg viewBox="0 0 32 32"
+                            width="16px"
+                            height="16px"
+                            class="full-screen-button xfas xfa-expand-arrows-alt ml-1 cursor-pointer"
+                            style="display: none">
+                        <g fill="currentColor" transform="scale(0.75) translate(6, 6)">
+                            <!--polygon points="26.586,2.586 20,9.172 22.828,12 29.414,5.414 32,8 32,0 24,0"/>
+                            <polygon points="12,22.828 9.172,20 2.586,26.586 0,24 0,32 8,32 5.414,29.414"/-->
 
-                        <div class="timeline">
-                            <div class="bar-process" style="width: 0px"></div>
-                            <div class="play-head" style="left: 0px"></div>
-                        </div>
-    
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 32 32"
-                                width="16px"
-                                height="16px"
-                                class="full-screen-button xfas xfa-expand-arrows-alt ml-1 cursor-pointer"
-                                style="display: none">
-                            <g fill="#4E4E50">
-                                <path d="M 4 4 L 4 13 L 6 13 L 6 7.4375 L 14.5625 16 L 6 24.5625 L 6 19 L 4 19 L 4 28 L 13 28 L 13 26 L 7.4375 26 L 16 17.4375 L 24.5625 26 L 19 26 L 19 28 L 28 28 L 28 19 L 26 19 L 26 24.5625 L 17.4375 16 L 26 7.4375 L 26 13 L 28 13 L 28 4 L 19 4 L 19 6 L 24.5625 6 L 16 14.5625 L 7.4375 6 L 13 6 L 13 4 Z"/>
-                            </g>
-                        </svg>
-                    </div>
+                            <polygon points="29.414,26.586 22.828,20 20,22.828 26.586,29.414 24,32 32,32 32,24"/>
+                            <polygon points="2.586,5.414 9.172,12 12,9.172 5.414,2.586 8,0 0,0 0,8"/>
+                            <polygon points="26.586,2.586 20,9.172 22.828,12 29.414,5.414 32,8 32,0 24,0"/>
+                            <polygon points="12,22.828 9.172,20 2.586,26.586 0,24 0,32 8,32 5.414,29.414"/>
+                        </g>
+                    </svg>
                 </div>`;
         return mediaPlayer;
     }
@@ -293,7 +299,7 @@ function createMediaPlayer(mediaTag) {
 
     // Các hàm liên quan đến API fullscreen
     // Tham khảo bài viết fullscreen
-    // ../js%20-%20fullscreen/js/fullscreen.js
+    // Bắt đầu ../js%20-%20fullscreen/js/fullscreen.js
 
     /**
      * Có phải đang trong chế độ fullscreen hay không.
@@ -301,9 +307,9 @@ function createMediaPlayer(mediaTag) {
     function isFullscreen() {
         return (
             document.fullscreenElement ||
-        document.mozFullScreenElement ||
-        document.webkitFullscreenElement ||
-        document.msFullscreenElement
+            document.mozFullScreenElement ||
+            document.webkitFullscreenElement ||
+            document.msFullscreenElement
         );
     }
 
@@ -350,6 +356,8 @@ function createMediaPlayer(mediaTag) {
         }
     }
 
+    // Hết ../js%20-%20fullscreen/js/fullscreen.js
+
     /**
      * Xử lý khi click nút fullscreen.
      */
@@ -367,15 +375,13 @@ function createMediaPlayer(mediaTag) {
         }
     }
 
-    // -------------------------------
-
     /**
- * Return the given SRT timestamp as milleseconds.
- * @param {string|number} timestamp
- * @returns {number} milliseconds
- */
+     * Chuyển xâu định dạng SRT timestamp sang số millesecond.
+     * @param {string|number} timestamp Xâu
+     * @returns {number} Số
+     */
     function toSecond(srtTimestamp) {
-    // Là số rồi thì trả về luôn
+        // Là số rồi thì trả về luôn
         if (!isNaN(srtTimestamp)) {
             return srtTimestamp;
         }
@@ -395,12 +401,12 @@ function createMediaPlayer(mediaTag) {
     }
 
     /**
- * Chuyển cả dòng thời gian.
- * @param value
- * @returns {{start: Number, end: Number}}
- */
+     * Chuyển cả dòng thời gian dạng hh:mm:ss,ZZZ --> hh:mm:ss,ZZZ thành đối tượng { start, end }.
+     * @param value
+     * @returns {{start: Number, end: Number}}
+     */
     function parseTimestamps(value) {
-    // Timestamp regex
+        // Timestamp regex
         const regex = /^((?:\d{2,}:)?\d{2}:\d{2}[,.]\d{3}) --> ((?:\d{2,}:)?\d{2}:\d{2}[,.]\d{3})(?: (.*))?$/;
         const match = regex.exec(value);
         const cue = {
@@ -411,12 +417,12 @@ function createMediaPlayer(mediaTag) {
     }
 
     /**
- * Parse an SRT string.
- * @param {String} srtString Nội dung file SRT
- * @return {Array} subtitles Mảng các câu (nội dung, thời gian)
- */
+     * Parse xâu phụ đề SRT.
+     * @param {String} srtString Nội dung file SRT
+     * @return {Array} Mảng các câu { start, end, text }
+     */
     function parseSrtText(srtString) {
-    // Nếu nội dung file rỗng thì dừng lại
+        // Nếu nội dung file rỗng thì dừng lại
         if (!srtString) {
             return [];
         }
@@ -470,11 +476,16 @@ function createMediaPlayer(mediaTag) {
         }, [{}]);
     }
 
+    /**
+     * Parse file lyric Lrc.
+     * @param {String} text Nội dung lyric
+     * @return {Array} Mảng { start, end, text }
+     */
     function parseLrcText(text) {
         const a = text.split('\n');
         const result = [];
         a.forEach(function (line) {
-        // Kiểm tra xem có chứa xâu thời gian không
+            // Kiểm tra xem có chứa xâu thời gian không
             const timeAnchors = line.match(/\d+:\d+\.\d+/g);
             if (!timeAnchors) {
                 return;
@@ -501,6 +512,9 @@ function createMediaPlayer(mediaTag) {
         return result;
     }
 
+    /**
+     * Khởi tạo phụ đề.
+     */
     function initSubtitle() {
         let hasSubtitle = false;
 
@@ -526,39 +540,52 @@ function createMediaPlayer(mediaTag) {
 
                             // console.log(lines);
                         })
-                        .catch(error => alert(error));
+                        .catch(error => {
+                            alert(error);
+                        });
                 }
             }
         }
 
-        if (!hasSubtitle) {
-            baseText.parentNode.parentNode.style.display = 'none';
+        // Nếu có phụ đề thì hiển thị
+        if (hasSubtitle) {
+            if (shouldDisplayKaraoke) {
+                baseText.parentNode.parentNode.style.display = '';
+            } else {
+                subtitleText.parentNode.style.display = '';
+            }
         }
     }
 
+    /**
+     * Cập nhật nội dung phụ đề, lyric.
+     */
     function updateSubtitleText() {
+        // Nếu không có thì dừng lại
         if (!lines) {
             return;
         }
 
         // Tìm ra phần tử đầu tiên mà lớn hơn
         const idx = lines.findIndex(findCurrentLine);
-        if (idx >= 0) {
-            baseText.innerHTML = lines[idx].text;
-            if (shouldDisplayKaraoke) {
-                karaokeText.innerHTML = lines[idx].text;
-            }
+        const text = (idx >= 0) ? lines[idx].text : '';
 
-            // Để chỗ update màu ở đây thì bị chạy giật cục
-            // vì hàm này được gọi ít lần
+        if (shouldDisplayKaraoke) {
+            baseText.innerHTML = text;
+            karaokeText.innerHTML = text;
         } else {
-            baseText.innerHTML = '';
-            if (shouldDisplayKaraoke) {
-                karaokeText.innerHTML = '';
-            }
+            subtitleText.innerHTML = text;
         }
+
+        // Để chỗ update màu ở đây thì bị chạy giật cục
+        // vì hàm này được gọi ít lần
     }
 
+    /**
+     * Tìm kiếm chỉ mục của dòng phụ đề tương ứng với thời gian hiện tại đang chạy.
+     * @param {Object} e Đối tượng { start, end, text }
+     * @return {boolean} true nếu đối tượng e chứa thời gian hiện tại
+     */
     function findCurrentLine(e) {
         // Nên cho xuất hiện sớm trước khoảng 0.5 giây?
         // Giới hạn xuất hiện tối đa chỉ trong 3 giây?
@@ -568,6 +595,9 @@ function createMediaPlayer(mediaTag) {
         return false;
     }
 
+    /**
+     * Cập nhật trạng thái dòng karaoke.
+     */
     function updateCurrentLineProgress() {
         if (lines) {
             const current = lines.find(findCurrentLine);
@@ -601,7 +631,7 @@ function createMediaPlayer(mediaTag) {
         mediaTag.addEventListener('canplaythrough', updateDuration);
         updateDuration();
 
-        // Khi đang play thì cập nhật giao diện
+        // Khi đang play thì cập nhật giao diện (thời gian, progress)
         mediaTag.addEventListener('timeupdate', timeUpdate);
 
         // Khi click vào timeline thì tua
@@ -628,11 +658,10 @@ function createMediaPlayer(mediaTag) {
             disableNativeSubtitles();
         }
 
-        // -------------------------------
-
-        // Xử lý subtitle
+        // Khởi tạo phụ đề
         initSubtitle();
 
+        // Khi đang play thì cập nhật phụ đề
         mediaTag.addEventListener('timeupdate', updateSubtitleText);
 
         // Xử lý karaoke

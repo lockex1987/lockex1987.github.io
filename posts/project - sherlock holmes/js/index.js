@@ -72,7 +72,7 @@ const app = new Vue({
 
     mounted() {
         // displayStory(data[0]);
-        createMediaPlayer('#audioPlayer');
+        createMediaPlayer(document.querySelector('#audioPlayer'));
     }
 });
 
