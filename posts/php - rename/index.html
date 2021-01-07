@@ -3,7 +3,8 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="đổi tên file hàng loạt, check special characters, phar file format, single executable">
+    <meta name="date" content="2021-01-07 09:57:00">
+    <meta name="description" content="đổi tên file hàng loạt, special characters, phar file format, single executable">
     <title>Rename</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -18,11 +19,11 @@
       <table class="table table-bordered">
         <tbody>
           <tr>
-            <td><code>pr</code> </td>
+            <td><code>pr</code></td>
             <td>Prefix </td>
           </tr>
           <tr>
-            <td><code>pt</code> </td>
+            <td><code>pt</code></td>
             <td>Postfix </td>
           </tr>
           <tr>
@@ -43,7 +44,11 @@
           </tr>
           <tr>
             <td><code>rc</code></td>
-            <td>Remove special characters ("-", ": ", or any)</td>
+            <td>Remove special characters (<code>:</code>, <code>!</code>, <code>_</code>, or any)</td>
+          </tr>
+          <tr>
+            <td><code>csc</code></td>
+            <td>Check special characters (<code>:</code>, <code>!</code>)</td>
           </tr>
           <tr>
             <td><code>sf</code></td>
@@ -63,10 +68,10 @@
           </tr>
         </tbody>
       </table>
-      <h3>PHAR file format</h3>
-      <p>Đóng gói PHP project (gồm nhiều file) thành một file PHAR cho dễ triển
+      <h3>Phar file format</h3>
+      <p>Đóng gói PHP project (gồm nhiều file) thành một file phar cho dễ triển
         khai, có thể chạy kiểu tiến trình.</p>
-      <p>Đầu tiên, bạn phải cấu hình<code> phar.readonly</code> thành <code>0</code>
+      <p>Đầu tiên, bạn phải cấu hình <code>phar.readonly</code> thành <code>0</code>
         hoặc <code>Off</code> ở file <code>php.ini</code>.</p>
       <p>Phải thêm hàm <code>realpath</code> thì hàm <code>is_dir</code>, <code>is_file</code>,
         <code>file_exists</code> mới chạy đúng khi đóng gói file phar. Nếu chúng
@@ -80,7 +85,8 @@
           (file format) - Wikipedia</a></p>
       <p><a href="https://www.php.net/manual/en/book.phar.php" target="_blank">PHP:
           Phar - Manual</a></p>
-      <p><a href="https://odan.github.io/2017/08/16/create-a-php-phar-file.html"
+      <p><a href="https://odan.github.io/2017/08/16/create-a-php-phar-file.html"
+
           target="_blank">Creating a PHP Phar file | Daniel’s Dev Blog</a></p>
       <p><a href="https://www.sitepoint.com/packaging-your-apps-with-phar/" target="_blank">Packaging
           Your Apps with Phar - SitePoint</a></p>
