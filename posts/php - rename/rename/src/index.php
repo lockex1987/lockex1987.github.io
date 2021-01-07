@@ -1,5 +1,6 @@
 <?php
 
+require_once 'polyfill.php';
 require_once 'CommonUtils.php';
 require_once 'Rename.php';
 require_once 'SevenZipWrapper.php';
@@ -8,7 +9,8 @@ if (count($argv) < 3) {
     echo 'Bạn phải nhập ít nhất 2 tham số' . PHP_EOL;
 } else {
     $command = $argv[1];
-    $rootFolder = $argv[2];
+    // Chú ý $rootFolder không có ký tự / cuối cùng
+    $rootFolder = CommonUtils::joinPath($argv[2], '');
     $a = CommonUtils::listFilesInDirectory($rootFolder);
     $rename = new Rename($rootFolder);
 
@@ -34,6 +36,8 @@ if (count($argv) < 3) {
         $rename->changeExtension($a, '.' . strtolower($argv[3]), '.' . strtolower($argv[4]));
     } elseif ($command == 'rc') {
         $rename->removeCharacter($a, count($argv) > 3 ? $argv[3] : '');
+    } elseif ($command == 'csc') {
+        $rename->checkSpecialCharacters($rootFolder);
     } elseif ($command == 'x') {
         $rename->extractFiles($a);
     } else {

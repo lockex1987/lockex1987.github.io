@@ -161,13 +161,23 @@ class Rename
     {
         foreach ($a as $f) {
             $relativePath = CommonUtils::joinPath($this->rootFolder, $f);
-            if (is_file(realpath($relativePath))) {
+            $absolutePath = realpath($relativePath);
+            if (is_file($absolutePath)) {
                 list($name, $ext) = $this->extractFileName($f);
                 if ($ext == $oldExt) {
                     echo $name . PHP_EOL;
                     $newName = $name . $newExt;
                     $this->rename($f, $newName);
                 }
+            }
+
+            // Gọi đệ quy thư mục con
+            if (is_dir($absolutePath)) {
+                $filesInFolder = array_diff(scandir($absolutePath), ['.', '..']);
+                $children = array_map(function ($e) use ($f) {
+                    return $f . '/' . $e;
+                }, $filesInFolder);
+                $this->changeExtension($children, $oldExt, $newExt);
             }
         }
     }
@@ -188,6 +198,28 @@ class Rename
                 $newName = str_replace($other, '', $newName);
             }
             $this->rename($f, $newName);
+        }
+    }
+
+    /**
+     * Loại bỏ các ký tự đặc biệt, để có thể di chuyển file giữa Windows và Linux.
+     */
+    function checkSpecialCharacters($folder)
+    {
+        $a = scandir($folder);
+        foreach ($a as $f) {
+            if (!in_array($f, ['.', '..'])) {
+                $absPath = $folder . '/' . $f;
+                if (str_contains($f, ':') || str_contains($f, '!')) {
+                    echo $absPath . PHP_EOL;
+                    $newName = str_replace(':', ' - ', $f);
+                    $newName = str_replace('!', '', $newName);
+                    // rename($absPath, $folder . '/' . $newName);
+                }
+                if (is_dir(realpath($absPath))) {
+                    $this->checkSpecialCharacters($absPath);
+                }
+            }
         }
     }
     
