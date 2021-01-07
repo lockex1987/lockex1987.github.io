@@ -9,15 +9,15 @@ function isBelow(el) {
 }
 
 function isHidden(el) {
-    return el.classList.contains('is-hidden');
+    return el.classList.contains('invisible');
 }
 
 function hideBlock(el) {
-    el.classList.add('is-hidden');
+    el.classList.add('invisible');
 }
 
 function showBlock(el) {
-    el.classList.remove('is-hidden');
+    el.classList.remove('invisible');
     el.classList.add('bounce-in');
 }
 

@@ -1,7 +1,10 @@
-$bgColor: #E06950;
+// .border
+$borderColor: #dee2e6;
 
 $LARGE_SCREEN_WIDTH: 1200px;
 
+
+// Mixin màn hình lớn
 @mixin largeScreen {
     @media (min-width: #{$LARGE_SCREEN_WIDTH}) {
         @content;
@@ -9,34 +12,36 @@ $LARGE_SCREEN_WIDTH: 1200px;
 }
 
 
+// Ảnh các kỹ năng
 .skills {
     img {
-        width: 64px;
-        height: 64px;
-        margin: 10px;
+        width: 4rem;
+        height: 4rem;
+        margin: 0.5rem;
         vertical-align: middle;
     }
 }
 
 
 .timeline {
-    /* Đường thẳng dọc */
+    // Đường thẳng dọc
     &::after {
         content: "";
         position: absolute;
         width: 4px;
-        background-color: rgba(71, 77, 93, 0.95);
+        background-color: #dee2e6;
         top: 0;
         bottom: 0;
         left: 31px;
         margin-left: -2px;
+        border-radius: 4px;
 
         @include largeScreen {
             left: 50%;
         }
     }
 
-    /* Bao nội dung */
+    // Bao nội dung
     .timeline-container {
         position: relative;
         width: 100%;
@@ -46,7 +51,7 @@ $LARGE_SCREEN_WIDTH: 1200px;
             width: 50%;
         }
 
-        /* Vòng tròn ở đường thẳng dọc */
+        // Vòng tròn ở đường thẳng dọc
         &::after {
             content: "";
             position: absolute;
@@ -55,28 +60,34 @@ $LARGE_SCREEN_WIDTH: 1200px;
             left: 23px;
             top: 32px;
             background-color: #FFF;
-            border: 4px solid #fc5c65;
+            // .text-orange
+            border: 4px solid #E06950;
             border-radius: 50%;
             z-index: 1;
         }
 
-        /* Nội dung */
-        .content {
-            padding: 20px 30px;
+        // Nội dung
+        .timeline-content {
+            // .p-3
+            padding: 1rem;
+            // .bg-transparent
             background-color: transparent;
-            border: 2px solid $bgColor;
+            // .border
+            border: 1px solid $borderColor;
+            // .rounded
+            border-radius: .25rem;
+            // .position-relative
             position: relative;
-            border-radius: 6px;
+            
             // Đang hiển thị lỗi trên mobile
             // box-shadow: 0 3px 0 #d7e4ed;
 
+            // Ảnh logo công ty
             img {
-                width: 64px;
-                display: block;
-                margin-bottom: 5px;
+                width: 4rem;
             }
 
-            /* Tất cả các mũi tên trỏ sang trái */
+            // Tất cả các mũi tên trỏ sang trái
             &::before {
                 content: " ";
                 height: 0;
@@ -84,74 +95,77 @@ $LARGE_SCREEN_WIDTH: 1200px;
                 top: 22px;
                 width: 0;
                 z-index: 1;
-                border: medium solid $bgColor;
+                border: medium solid $borderColor;
                 right: 100%;
                 border-width: 10px 10px 10px 0;
-                border-color: transparent $bgColor transparent transparent;
+                border-color: transparent $borderColor transparent transparent;
             }
         }
     }
 
     @include largeScreen {
+        // Ô chẵn
         .timeline-container:nth-child(even) {
+            // Chuyển sang trái
             left: 0;
             padding: 10px 40px 10px 0;
 
-            /* Mũi trên trỏ sang bên phải */
-            .content {
+            // Mũi trên trỏ sang bên phải
+            .timeline-content {
                 &::before {
                     left: 100%;
                     right: unset;
                     border-width: 10px 0 10px 10px;
-                    border-color: transparent transparent transparent $bgColor;
+                    border-color: transparent transparent transparent $borderColor;
                 }
             }
     
-            /* Điều chỉnh lại vòng tròn của vùng bao bên trái */
+            // Điều chỉnh lại vòng tròn của vùng bao bên trái
             &::after {
                 left: unset;
-                right: -8px; // Một nửa chiều rộng
+                right: -8px; // một nửa chiều rộng
             }
         }
 
+        // Ô lẻ
         .timeline-container:nth-child(odd) {
+            // Chuyển sang phải
             left: 50%;
             padding: 10px 0 10px 40px;
 
-            /* Mũi trên trỏ sang bên trái */
-            .content {
+            // Mũi trên trỏ sang bên trái
+            .timeline-content {
                 &::before {
                     border-width: 10px 10px 10px 0;
-                    border-color: transparent $bgColor transparent transparent;
+                    border-color: transparent $borderColor transparent transparent;
                 }
             }
 
-            /* Điều chỉnh lại vòng tròn của vùng bao bên phải */
+            // Điều chỉnh lại vòng tròn của vùng bao bên phải
             &::after {
-                left: -8px; // Một nửa chiều rộng
+                left: -8px; // một nửa chiều rộng
             }
         }
     }    
 }
 
 
-
+// Animation
 .timeline-container {
-    &.is-hidden {
-        visibility: hidden;
-    }
-
     &.bounce-in {
+        // Nút tròn có animation to ra
         &::after {
             animation: cd-bounce-1 0.6s;
         }
 
-        .content {
+        // Nội dung đi từ trái sang phải
+        .timeline-content {
             animation: cd-bounce-2 .6s;
         }
 
+        // Ở màn hình to, những nội dung chẵn sẽ đi từ phải sang trái
         &:nth-child(even) {
-            .content {
+            .timeline-content {
                 @include largeScreen {
                     animation: cd-bounce-2-inverse .6s;
                 }
@@ -161,7 +175,7 @@ $LARGE_SCREEN_WIDTH: 1200px;
 }
 
 
-
+// Nút tròn to ra
 @keyframes cd-bounce-1 {
 	0% {
 		opacity: 0;
@@ -178,6 +192,7 @@ $LARGE_SCREEN_WIDTH: 1200px;
 	}
 }
 
+// Đi từ trái sang phải
 @keyframes cd-bounce-2 {
 	0% {
 		opacity: 0;
@@ -194,6 +209,7 @@ $LARGE_SCREEN_WIDTH: 1200px;
 	}
 }
 
+// Đi từ phải sang trái
 @keyframes cd-bounce-2-inverse {
 	0% {
 		opacity: 0;

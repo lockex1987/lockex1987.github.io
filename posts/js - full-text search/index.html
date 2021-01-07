@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="lunr, fuse" />
 
-  <title>JS full text search</title>
+  <title>JS full-text search</title>
 
   <link rel="icon" href="../../images/favicon.png" />
   <link rel="stylesheet" href="../../css/style.css" />
@@ -13,7 +13,7 @@
 
 <body>
   <article>
-    <h2>JS full text search</h2>
+    <h2>JS full-text search</h2>
     <p>Sử dụng thư viện Lunr.js (hoặc Fuse.js, hoặc tự làm như trang posts.html).</p>
 
     <h3>Tham khảo</h3>    
@@ -23,18 +23,21 @@
     <p><a href="https://www.mkdocs.org/user-guide/configuration/#search" target="_blank">https://www.mkdocs.org/user-guide/configuration/#search</a></p>
 
     <h3>Demo</h3>
-    <p>
-        <input type="text" id="query" placeholder="Search..." spellcheck="false"/>
-    </p>
-    <p id="searchInfo"></p>
-    <ul class="list"></ul>
+    <div class="mb-3">
+        <input type="text"
+            id="query"
+            placeholder="Search..."
+            spellcheck="false"
+            class="form-control"/>
+    </div>
+    <div id="searchInfo" class="mb-3 text-right text-muted font-size-0.875"></div>
+    <div class="list"></div>
   </article>
 
   <script src="https://unpkg.com/lunr/lunr.js"></script>
-  <!--script src="../../lib/lunr/lunr.js"></script-->
 
-  <script src="../../js/posts-data.js"></script>
-  <script src="js/script.js"></script>
+  <script src="../../js/common.js"></script>
+  <script type="module" src="js/script.js"></script>
   <script src="../../js/docs.js"></script>
 </body>
 </html>
