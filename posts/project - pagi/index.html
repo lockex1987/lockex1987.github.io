@@ -13,7 +13,7 @@
     <article>
       <h2>Pagi</h2>
       <h3>Demo</h3>
-      <div class="out-of-box">
+      <div class="mb-3">
         <div id="dataDiv" class="mb-3"></div>
         <div id="pagiId" class="pagination-wrapper d-lg-flex align-items-center justify-content-between mb-3"></div>
       </div>
@@ -22,19 +22,19 @@
       <pre>&lt;script src="js/pagi.js"&gt;&lt;/script&gt;</pre>
       <p>Khai báo một đối tượng DOM:</p>
       <pre>&lt;div id="pagiId" class="pagination-wrapper"&gt;&lt;/div&gt;</pre>
-      <p>Khai báo hàm xử lý khi click vào link từng trang và đối tượng Pagi:</p>
-      <pre>const pagi = new Pagi({
-    containerId: 'pagiId',
-    callbackFunc: gotoPage,
-});
-
-function gotoPage(page) {
+      <p>Khai báo hàm xử lý khi click vào link từng trang.
+        Hàm này sẽ có một tham số <code>page</code> là số thứ tự trang được click (số thứ tự bắt đầu bằng 1).</p>
+      <pre>function gotoPage(page) {
     const data = callServer(page);
     pagi.update(data.total, page);
     bindItems(data.items);
 }</pre>
-      <p>Chú ý hàm xử lý có một tham số là <code>page</code>, chính là số thứ
-        tự của trang được click (số thứ tự bắt đầu bằng 1).</p>
+    <p>Khởi tạo đối tượng Pagi:</p>
+    <pre>const pagi = new Pagi({
+    container: document.querySelector('#pagiId'),
+    callbackFunc: gotoPage,
+});</pre>
+      
       <h3>Các tham số khi khởi tạo</h3>
       <div class="out-of-box">
         <table class="table table-bordered">
@@ -201,11 +201,15 @@ function gotoPage(page) {
       <p>Thư viện pagi sinh ra các phần tử phân trang theo chuẩn của Bootstrap
         4.</p>
     </article>
+
     <link rel="stylesheet" href="https://lockex1987.github.io/posts/project%20-%20noti/css/noti.css">
     <script src="https://lockex1987.github.io/posts/project%20-%20noti/js/noti.js"></script>
+
     <script src="../../js/common.js"></script>
+
     <script src="js/pagi.js"></script>
     <script src="js/demo.js"></script>
+
     <script src="../../js/docs.js"></script>
   </body>
 </html>

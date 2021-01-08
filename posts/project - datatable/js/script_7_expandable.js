@@ -1,6 +1,9 @@
-const datatable = new Datatable({
+import serverData from './mock_data.js';
+
+new Datatable({
     table: '#myTable',
-    rowTemplate: (dataEle) => {
+
+    rowTemplate(dataEle) {
         return `
                 <tr class="main-row expanded">
                     <td class="text-right">
@@ -27,5 +30,7 @@ const datatable = new Datatable({
                 `;
     },
     data: serverData,
-    searchableProps: ['country'],
+    searchableProps: [
+        'country'
+    ]
 });

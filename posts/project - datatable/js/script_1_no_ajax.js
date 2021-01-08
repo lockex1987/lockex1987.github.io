@@ -1,3 +1,5 @@
+import serverData from './mock_data.js';
+
 function bindRow(dataEle) {
     return `
             <tr>
@@ -16,11 +18,11 @@ function bindRow(dataEle) {
             </tr>`;
 }
 
-const datatable = new Datatable({
+new Datatable({
     table: '#myTable',
     rowTemplate: bindRow,
     data: serverData,
     searchableProps: [
         'country'
-    ],
+    ]
 });

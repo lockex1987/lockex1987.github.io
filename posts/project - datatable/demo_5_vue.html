@@ -6,49 +6,61 @@
     <meta name="description" content="Datatable demo">
     <title>Datatable demo</title>
     <link rel="icon" href="../../images/favicon.png">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">    
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 
 <body>
-    <article class="container py-3" id="vueDemo">
+    <article>
         <h2>Datatable demo: sử dụng với Vue</h2>
         <p>Có cả footer summary nữa.</p>
 
-        <div>
-            <table ref="myTable" class="table table-bordered table-striped table-hover">
+        <div id="vueDemo"
+                v-cloak>
+            <table ref="myTable"
+                    class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
-                        <th class="text-right"> Stt </th>
-                        <th class="" data-sort-column="country"> Quốc gia </th>
-                        <th class="text-right" data-sort-column="population"> Dân số </th>
-                        <th class="text-center" data-sort-column="fake_date"> Ngày nào đó </th>
+                        <th class="text-right">
+                            Stt
+                        </th>
+                        <th data-sort-column="country">
+                            Quốc gia
+                        </th>
+                        <th class="text-right" data-sort-column="population">
+                            Dân số
+                        </th>
+                        <th class="text-center" data-sort-column="fake_date">
+                            Ngày nào đó
+                        </th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr v-for="dataEle in items" :class="{ 'bg-danger': dataEle.checked }">
+                    <tr v-for="dataEle in items"
+                            :class="{ 'bg-danger': dataEle.checked }">
                         <td class="text-right">
-                            {{ dataEle.stt }}
+                            {{dataEle.stt}}
                         </td>
                         <td>
-                            {{ dataEle.country }}
+                            {{dataEle.country}}
                         </td>
                         <td class="text-right">
-                            {{ formatThousandsVue(dataEle.population)}}
+                            {{formatThousandsVue(dataEle.population)}}
                         </td>
                         <td class="text-center">
-                            {{ normalizeDateVue(dataEle.fake_date )}}
+                            {{normalizeDateVue(dataEle.fake_date)}}
                         </td>
                     </tr>
                 </tbody>
 
                 <tfood>
                     <tr>
-                        <td colspan="2" class="font-weight-bold">
+                        <td colspan="2"
+                                class="font-weight-bold">
                             Tổng hợp
                         </td>
                         <td class="text-right font-weight-bold">
-                            {{ summary.totalPopulation ? formatThousandsVue(summary.totalPopulation) : '' }}
+                            {{summary.totalPopulation ? formatThousandsVue(summary.totalPopulation) : ''}}
                         </td>
                         <td>
 
@@ -63,10 +75,8 @@
     <script src="libs/libs.js"></script>
     <script src="src/datatable.js"></script>
 
-    <script src="js/mock_data.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
     
-    <script src="js/script_5_vue.js"></script>
+    <script type="module" src="js/script_5_vue.js"></script>
 </body>
 </html>

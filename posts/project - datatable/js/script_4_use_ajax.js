@@ -1,32 +1,33 @@
 const datatable = new Datatable({
     table: document.querySelector('#myTable'),
+
     rowTemplate: (dataEle) => {
         return `
-                 <tr>
-                     <td class="text-right">
-                         ${dataEle.stt}
-                     </td>
-                     <td>
-                         ${CommonUtils.escapeHtml(dataEle.country)}
-                     </td>
-                     <td class="text-right">
-                         ${CommonUtils.formatThousands(dataEle.population)}
-                     </td>
-                     <td class="text-center">
-                         ${CommonUtils.normalizeDate(dataEle.fake_date)}
-                     </td>
-                 </tr>`;
+                <tr>
+                    <td class="text-right">
+                        ${dataEle.stt}
+                    </td>
+                    <td>
+                        ${CommonUtils.escapeHtml(dataEle.country)}
+                    </td>
+                    <td class="text-right">
+                        ${CommonUtils.formatThousands(dataEle.population)}
+                    </td>
+                    <td class="text-center">
+                        ${CommonUtils.normalizeDate(dataEle.fake_date)}
+                    </td>
+                </tr>`;
     },
 
-    startSearchCallback: () => {
+    startSearchCallback() {
         document.querySelector('#searchBtn span').style.display = '';
     },
 
-    finishSearchCallback: () => {
+    finishSearchCallback() {
         document.querySelector('#searchBtn span').style.display = 'none';
     },
 
-    ajax: (page, pageSize, sortColumn, sortDirection) => {
+    ajax(page, pageSize, sortColumn, sortDirection) {
         const url = 'search.php?page=' + page
             + '&pageSize=' + pageSize
             + '&orderBy=' + sortColumn
@@ -36,10 +37,10 @@ const datatable = new Datatable({
             .then(resp => resp.json());
     },
 
-    getTotalAndData: (resp) => {
+    getTotalAndData(resp) {
         return {
-            total: resp['total_x'],
-            data: resp['data_x']
+            total: resp.total_x,
+            data: resp.data_x
         };
     },
 
@@ -50,7 +51,7 @@ const datatable = new Datatable({
  * Khi người dùng thêm / sửa / xóa xong thì tìm kiếm lại.
  * Khi người dùng nhập cũng tìm kiếm lại.
  */
-document.querySelector('#searchBtn').addEventListener('click', function () {
+document.querySelector('#searchBtn').addEventListener('click', () => {
     datatable.reload();
 });
 

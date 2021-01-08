@@ -1,15 +1,24 @@
+import serverData from './mock_data.js';
+
 new Vue({
     el: '#vueDemo',
-    data: {
-        items: [],
-        summary: {}
+
+    data() {
+        return {
+            items: [],
+            summary: {}
+        };
     },
 
     mounted() {
-        const datatable = new Datatable({
+        new Datatable({
             table: this.$refs.myTable,
             data: serverData,
-            searchableProps: ['country'],
+            searchableProps: [
+                'country'
+            ],
+            // Chú ý: với Vue thì phải viêt kiểu hai chấm như dưới,
+            // nếu không đối tượng this sẽ sai
             bindItemsCallback: (items) => {
                 this.items = items;
             }
@@ -19,7 +28,7 @@ new Vue({
             totalPopulation: 1234567890
         };
     },
-    
+
     methods: {
         formatThousandsVue: CommonUtils.formatThousands,
 

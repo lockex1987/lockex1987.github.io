@@ -15,8 +15,8 @@
     if (!Element.prototype.delegate) {
         Element.prototype.delegate = function (type, selector, callback) {
             this.addEventListener(type, (evt) => {
-                let target = evt.target;
-                let obj = target.closest(selector);
+                const target = evt.target;
+                const obj = target.closest(selector);
                 if (obj) {
                     callback(evt, obj);
                 }
@@ -26,11 +26,15 @@
     }
 })();
 
+/**
+ * Nếu sử dụng từ khóa "const" ở đây
+ * thì trên Safari, chỗ DownloadProgress (module script) sẽ bị lỗi không tìm thấy biến CommonUtils.
+ */
 const CommonUtils = {};
 
 /**
  * Trả về một phần tử.
- * @param {String} selector 
+ * @param {String} selector
  */
 CommonUtils.$ = (selector) => {
     return document.querySelector(selector);
@@ -38,8 +42,8 @@ CommonUtils.$ = (selector) => {
 
 /**
  * Trả về mảng luôn để có thể thực hiện các hàm như map, reduce,...
- * @param {String} selector 
- * @param {Element} rootNode 
+ * @param {String} selector
+ * @param {Element} rootNode
  */
 CommonUtils.$$ = (selector, rootNode = document) => {
     return [...rootNode.querySelectorAll(selector)];
@@ -60,15 +64,15 @@ CommonUtils.delegateDocument = (type, selector, callback) => {
 
 /**
  * Tạo một phần tử.
- * @param {String} tag 
- * @param {Object} attributes 
+ * @param {String} tag
+ * @param {Object} attributes
  * @param {Array} children Danh sách phần tử con
  */
 CommonUtils.createElement = (tag, attributes, children) => {
     const ele = document.createElement(tag);
     if (attributes) {
-        for (let property in attributes) {
-            if (attributes.hasOwnProperty(property)) {
+        for (const property in attributes) {
+            if (Object.prototype.hasOwnProperty.call(attributes, property)) {
                 ele[property] = attributes[property];
             }
         }
@@ -90,7 +94,7 @@ CommonUtils.create = (obj) => {
     const children = obj.children;
     delete obj.tag;
     delete obj.children;
-    return this.createElement(tag, obj, children);
+    return CommonUtils.createElement(tag, obj, children);
 };
 
 /**
@@ -115,7 +119,6 @@ CommonUtils.jsonToQueryString = (json) => {
         }).join('&');
 };
 
-
 /**
  * Escape các ký tự đặc biệt thành mã HTML entity tương ứng.
  * Fix bug XSS.
@@ -124,8 +127,8 @@ CommonUtils.jsonToQueryString = (json) => {
 CommonUtils.escapeHtml = (s) => {
     if (typeof s === 'string') {
         return s.replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;');
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
     }
     return s;
 };
@@ -134,22 +137,23 @@ CommonUtils.escapeHtml = (s) => {
  * Phân cách dấu phảy phần ngàn.
  */
 CommonUtils.formatThousands = (num) => {
-    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 };
 
-
 CommonUtils.prettifyNumber = (num, digits) => {
-    if (digits == undefined) {
+    if (digits === undefined) {
         digits = 1;
     }
 
     const si = [
+        /*
         { value: 1E18, symbol: 'E' },
         { value: 1E15, symbol: 'P' },
-        { value: 1E12, symbol: 'T' },
-        { value: 1E9, symbol: 'G' },
-        { value: 1E6, symbol: 'M' },
-        { value: 1E3, symbol: 'k' }
+        */
+        { value: 2 ** 40, symbol: 'T' },
+        { value: 2 ** 30, symbol: 'G' },
+        { value: 2 ** 20, symbol: 'M' },
+        { value: 2 ** 10, symbol: 'k' }
     ];
     for (let i = 0; i < si.length; i++) {
         if (num >= si[i].value) {
@@ -163,7 +167,6 @@ CommonUtils.prettifyNumber = (num, digits) => {
     }
     return num.toFixed(digits);
 };
-
 
 /**
  * Tính toán số ngày giữa hai ngày (toDate - fromDate).
@@ -214,11 +217,9 @@ CommonUtils.convertStringWithTimeToDate = (isoString) => {
  */
 CommonUtils.convertDateToString = (date) => {
     return CommonUtils.paddingTwoZero(date.getDate()) + '/' +
-            CommonUtils.paddingTwoZero(date.getMonth() + 1) + '/' +
-            date.getFullYear();
+        CommonUtils.paddingTwoZero(date.getMonth() + 1) + '/' +
+        date.getFullYear();
 };
-
-
 
 /**
  * Chuyển đối tượng Date sang xâu dạng "dd/MM/yyyy h24:mi:ss".
@@ -227,9 +228,9 @@ CommonUtils.convertDateToString = (date) => {
  */
 CommonUtils.convertDateToStringWithTime = (date) => {
     return CommonUtils.convertDateToString(date) + ' ' +
-            CommonUtils.paddingTwoZero(date.getHours()) + ':' +
-            CommonUtils.paddingTwoZero(date.getMinutes()) + ':' +
-            CommonUtils.paddingTwoZero(date.getSeconds());
+        CommonUtils.paddingTwoZero(date.getHours()) + ':' +
+        CommonUtils.paddingTwoZero(date.getMinutes()) + ':' +
+        CommonUtils.paddingTwoZero(date.getSeconds());
 };
 
 /**
@@ -270,6 +271,17 @@ CommonUtils.downloadBlob = (blob, fileName) => {
     a.click();
 };
 
+/**
+ * Hàm save as do mình tự làm.
+ * @param text Nội dung của văn bản cần lưu
+ * @param fileName Tên file
+ */
+CommonUtils.saveTextAsFile = (text, fileName) => {
+    // Tạo đối tượng Blob
+    const textFileAsBlob = new Blob([text], { type: 'text/plain' });
+
+    CommonUtils.downloadBlob(textFileAsBlob, fileName);
+};
 
 /**
  * Lấy tham số từ URL.
@@ -278,7 +290,6 @@ CommonUtils.getUrlParameter = (param) => {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
 };
-
 
 /**
  * Không thực hiện hàm luôn khi người dùng đang thao tác,
@@ -299,7 +310,6 @@ CommonUtils.debounce = (func, delay) => {
         }, delay);
     };
 };
-
 
 /**
  * Giới hạn số lần gọi hàm.
@@ -323,52 +333,65 @@ CommonUtils.throttle = (func, limit) => {
         }
     };
 };
+
+CommonUtils.addCssStyles = (styles) => {
+    const styleSheet = document.createElement('style');
+    styleSheet.type = 'text/css';
+    styleSheet.innerText = styles;
+    document.head.appendChild(styleSheet);
+};
+
+
+
+/**
+ * Trả về một số nguyên ngẫu nhiên
+ * @param n Số truyền vào
+ * @return Số nguyên từ 0 đến n-1
+ */
+CommonUtils.getRandomIndex = (n) => {
+    return Math.floor(Math.random() * n);
+};
+
+CommonUtils.getRandomBetween = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+// alert(CommonUtils);
 /**
  * Pagi: A pagination library
- * Code mới nhất ở https://lockex1987.github.io/posts/lib - pagi/js/pagi.js.
- * 
- * @version 2.0.0
+ * Code mới nhất ở https://lockex1987.github.io/posts/project - pagi/js/pagi.js.
+ *
+ * @version 2.1.0
  * @author lockex1987
  */
 class Pagi {
-
     /**
      * Khởi tạo.
-     * @param {Object} options Tùy chọn
+     * @param Object options Tùy chọn
      */
     constructor(options = {}) {
         const defaultOptions = {
-            showFirst: false,
-            showLast: false,
+            showFirst: true,
+            showLast: true,
             showPrevious: true,
             showNext: true,
             showNumbers: true,
-            firstText: '<<', // 
             previousText: '&laquo;', // &lt;
             nextText: '&raquo;', // &gt;
-            lastText: '>>', // 
             showNoRecordText: true,
             noRecordText: 'Không có bản ghi nào',
             showTotalNumber: true,
-            pageSize: 10
+            pageSize: 10,
+            showGotoPage: true
         };
-
         Object.assign(this, defaultOptions, options);
-
-        // Người dùng có thể truyền vào "container" hoặc "containerId"
-        if (options.containerId) {
-            this.container = document.getElementById(options.containerId);
-        } else {
-            this.container = options.container;
-        }
-
-        this.addClickListener(options.callbackFunc);
+        this.addClickListener();
     }
 
     /**
      * Cập nhật.
-     * @param {Integer} totalNumber Tổng số trang
-     * @param {Integer} currentPage Trang hiện tại
+     * @param Integer totalNumber Tổng số trang
+     * @param Integer currentPage Trang hiện tại
      */
     update(totalNumber, currentPage) {
         this.setting(totalNumber, currentPage)
@@ -384,11 +407,8 @@ class Pagi {
         this.totalPage = Math.ceil(this.totalNumber / this.pageSize);
         this.currentPage = (currentPage > this.totalPage) ? this.totalPage : currentPage; // 1, 2
 
-        // The logic in pagination is as follows:
-        // - there are 5 page links shown at any time (e.g. 1 2 3 4 5) unless there are less than 5 total pages
-        // - the active link (current page) is in the 3rd position, except for when the active link is below 3 or less than 2 from the last position
-        this.startPage;
-        this.endPage;
+        // Hiển thị 5 trang (trừ khi có ít hơn 5 trang)
+        // Trang hiện tại ở vị trí giữa (thứ 3), trừ khi trang hiện tại nhỏ hơn 3 hoặc cách trang cuối cùng ít hơn 2 trang
         if (this.totalPage <= 5) {
             this.startPage = 1;
             this.endPage = this.totalPage;
@@ -406,7 +426,7 @@ class Pagi {
         // Index bắt đầu, tiện khi hiển thị số thứ tự phân trang
         this.startIndex = (this.currentPage - 1) * this.pageSize;
 
-        // Create an array of pages to ng-repeat in the pager control
+        // Tạo mảng các trang
         this.pages = [];
         for (let i = this.startPage; i <= this.endPage; i++) {
             this.pages.push(i);
@@ -417,15 +437,15 @@ class Pagi {
 
     /**
      * Click vào phân trang (thẻ A).
-     * @param {Function} callbackFunc Hàm gọi
      */
-    addClickListener(callbackFunc) {
+    addClickListener() {
         this.container.addEventListener('click', (evt) => {
             const target = evt.target;
             if (target.tagName == 'A') {
-                if (!target.classList.contains('active') && !target.classList.contains('disabled')) {
+                if (!target.classList.contains('active') &&
+                        !target.classList.contains('disabled')) {
                     const page = parseInt(target.dataset.page);
-                    callbackFunc(page);
+                    this.callbackFunc(page);
                 }
             }
         });
@@ -438,12 +458,13 @@ class Pagi {
         // Xóa dữ liệu cũ
         this.container.innerHTML = '';
 
-        // Nếu rỗng
         if (this.totalNumber <= 0) {
+            // Nếu rỗng thì hiển thị thông báo
             if (this.showNoRecordText) {
                 this.container.appendChild(this.createNoRecordText());
             }
         } else {
+            // Hiển thị số bản ghi
             if (this.showTotalNumber) {
                 this.container.appendChild(this.createTotalNumberText());
             }
@@ -451,14 +472,23 @@ class Pagi {
             if (this.totalPage > 1) {
                 this.ulTag = this.createUlTag();
 
+                // Link trang đầu, trang trước
                 this.createFirstPage();
                 this.createPreviousPage();
 
                 if (this.showNumbers) {
                     for (let i = this.startPage; i <= this.endPage; i++) {
-                        this.createMiddlePage(i);
+                        if (i === this.currentPage &&
+                                this.showGotoPage) {
+                            // Hiển thị ô chuyển đến trang
+                            this.createGotoPageInput();
+                        } else {
+                            this.createMiddlePage(i);
+                        }
                     }
                 }
+
+                // Link trang sau, trang cuối
                 this.createNextPage();
                 this.createLastPage();
 
@@ -478,7 +508,7 @@ class Pagi {
     }
 
     /**
-     * Thẻ UL bao.
+     * Thẻ UL bao bên ngoài.
      */
     createUlTag() {
         const ulTag = document.createElement('ul');
@@ -490,8 +520,11 @@ class Pagi {
      * Link đến trang đầu tiên.
      */
     createFirstPage() {
-        if (this.showFirst) {
-            this.ulTag.appendChild(this.createItem(this.firstText, 1, (this.currentPage > 1 ? '' : 'disabled')));
+        if (this.showFirst &&
+                this.currentPage > 2 &&
+                this.startPage > 1) {
+            const liTag = this.createItem(1, 1, '');
+            this.ulTag.appendChild(liTag);
         }
     }
 
@@ -499,29 +532,83 @@ class Pagi {
      * Link đến trang trước.
      */
     createPreviousPage() {
-        if (this.showPrevious) {
-            this.ulTag.appendChild(this.createItem(this.previousText,
-                (this.currentPage > 1 ? this.currentPage - 1 : 1),
-                (this.currentPage > 1 ? '' : 'disabled')));
+        if (this.showPrevious && this.currentPage > 1) {
+            const liTag = this.createItem(this.previousText, this.currentPage - 1, '');
+            this.ulTag.appendChild(liTag);
         }
     }
 
     /**
      * Link đến các trang ở tầm giữa.
-     * @param {Integer} i Chỉ số trang
+     * @param Integer i Chỉ số trang
      */
     createMiddlePage(i) {
-        this.ulTag.appendChild(this.createItem(i, i, (i === this.currentPage ? 'active' : '')));
+        const liTag = this.createItem(
+            CommonUtils && CommonUtils.formatThousands ? CommonUtils.formatThousands(i) : i,
+            i,
+            i === this.currentPage ? 'active' : ''
+        );
+        this.ulTag.appendChild(liTag);
+    }
+
+    /**
+     * Chuyển đến trang nào đó.
+     */
+    createGotoPageInput() {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'form-control d-inline-block mb-2 mb-md-0 mx-1 text-center';
+        input.style.width = '50px';
+        input.placeholder = '#';
+        input.value = this.currentPage;
+
+        const gotoPage = () => {
+            const value = input.value.trim();
+            if (value === '') {
+                return;
+            }
+            const regex = /(^\d\d*$)/;
+            if (!regex.test(value)) {
+                noti.error('Bạn phải nhập trang kiểu số nguyên dương');
+                return;
+            }
+            const page = parseInt(value);
+            if (page <= 0) {
+                noti.error('Trang phải lớn hơn 0');
+                return;
+            }
+            if (page > this.totalPage) {
+                noti.error('Trang vượt quá tổng số trang');
+                return;
+            }
+            this.callbackFunc(page);
+        };
+
+        input.addEventListener('blur', gotoPage);
+        input.addEventListener('keydown', (evt) => {
+            const keyCode = evt.keyCode;
+            if (keyCode == 13) {
+                // Nhấn ENTER
+                // Không submit form
+                evt.preventDefault();
+
+                gotoPage();
+            }
+        });
+
+        const liTag = document.createElement('li');
+        liTag.className = 'page-item';
+        liTag.appendChild(input);
+        this.ulTag.appendChild(liTag);
     }
 
     /**
      * Link đến trang tiếp theo.
      */
     createNextPage() {
-        if (this.showNext) {
-            this.ulTag.appendChild(this.createItem(this.nextText,
-                (this.currentPage < this.totalPage ? this.currentPage + 1 : this.totalPage),
-                (this.currentPage < this.totalPage ? '' : 'disabled')));
+        if (this.showNext && this.currentPage < this.totalPage) {
+            const liTag = this.createItem(this.nextText, this.currentPage + 1, '');
+            this.ulTag.appendChild(liTag);
         }
     }
 
@@ -529,16 +616,23 @@ class Pagi {
      * Link đến trang cuối cùng.
      */
     createLastPage() {
-        if (this.showLast) {
-            this.ulTag.appendChild(this.createItem(this.lastText, this.totalPage, (this.currentPage < this.totalPage ? '' : 'disabled')));
+        if (this.showLast &&
+                this.currentPage < this.totalPage - 1 &&
+                this.endPage < this.totalPage) {
+            const liTag = this.createItem(
+                CommonUtils && CommonUtils.formatThousands ? CommonUtils.formatThousands(this.totalPage) : this.totalPage,
+                this.totalPage,
+                ''
+            );
+            this.ulTag.appendChild(liTag);
         }
     }
 
     /**
      * Tạo các link.
-     * @param {String} text Nhãn
-     * @param {Integer} page Chỉ số trang
-     * @param {String} className Style
+     * @param String text Nhãn
+     * @param Integer page Chỉ số trang
+     * @param String className Style
      */
     createItem(text, page, className) {
         const liTag = document.createElement('li');
@@ -555,10 +649,13 @@ class Pagi {
             aTag.innerHTML = text;
 
             // SPA khi có thay đổi hash sẽ reload trang
-            //aTag.href = '#' + page;
+            // do đó không để hash
+            // aTag.href = '#' + page;
             aTag.href = 'javascript:;';
 
+            // Đánh dấu trang
             aTag.dataset.page = page;
+
             liTag.appendChild(aTag);
         }
         return liTag;
@@ -569,12 +666,13 @@ class Pagi {
      */
     createTotalNumberText() {
         const div = document.createElement('div');
-        div.className = 'pagination-info text-muted small mr-2 mb-sm-2';
+        div.className = 'pagination-info text-muted small mb-2 mb-md-0';
         div.textContent = 'Tổng số ' +
-                (CommonUtils && CommonUtils.formatThousands ?
-                    CommonUtils.formatThousands(this.totalNumber) :
-                    this.totalNumber
-                ) + ' bản ghi';
+            (CommonUtils && CommonUtils.formatThousands
+                ? CommonUtils.formatThousands(this.totalNumber)
+                : this.totalNumber
+            ) +
+            ' bản ghi';
         return div;
     }
 }

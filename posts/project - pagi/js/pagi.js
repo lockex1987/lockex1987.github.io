@@ -1,12 +1,11 @@
 /**
  * Pagi: A pagination library
- * Code mới nhất ở https://lockex1987.github.io/posts/lib - pagi/js/pagi.js.
- * 
+ * Code mới nhất ở https://lockex1987.github.io/posts/project - pagi/js/pagi.js.
+ *
  * @version 2.1.0
  * @author lockex1987
  */
 class Pagi {
-
     /**
      * Khởi tạo.
      * @param Object options Tùy chọn
@@ -51,8 +50,6 @@ class Pagi {
 
         // Hiển thị 5 trang (trừ khi có ít hơn 5 trang)
         // Trang hiện tại ở vị trí giữa (thứ 3), trừ khi trang hiện tại nhỏ hơn 3 hoặc cách trang cuối cùng ít hơn 2 trang
-        this.startPage;
-        this.endPage;
         if (this.totalPage <= 5) {
             this.startPage = 1;
             this.endPage = this.totalPage;
@@ -312,9 +309,9 @@ class Pagi {
         const div = document.createElement('div');
         div.className = 'pagination-info text-muted small mb-2 mb-md-0';
         div.textContent = 'Tổng số ' +
-            (CommonUtils && CommonUtils.formatThousands ?
-                CommonUtils.formatThousands(this.totalNumber) :
-                this.totalNumber
+            (CommonUtils && CommonUtils.formatThousands
+                ? CommonUtils.formatThousands(this.totalNumber)
+                : this.totalNumber
             ) +
             ' bản ghi';
         return div;

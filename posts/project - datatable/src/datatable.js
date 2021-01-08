@@ -1,12 +1,11 @@
 class Datatable {
-
     /**
      * Khởi tạo đối tượng.
      * @param {Object} options Các tùy chọn
      */
     constructor(options = {}) {
         // Khởi tạo các thuộc tính
-        let defaultOptions = {};
+        const defaultOptions = {};
         Object.assign(this, defaultOptions, options);
 
         // Người dùng có thể truyền vào xâu CSS selector của bảng hoặc trực tiếp DOM node của bảng
@@ -30,7 +29,7 @@ class Datatable {
         }
 
         // Vùng phân trang
-        let pagiContainer = this.createPagiContainer();
+        const pagiContainer = this.createPagiContainer();
 
         this.pagi = new Pagi({
             container: pagiContainer,
@@ -44,7 +43,7 @@ class Datatable {
         // Xử lý các sự kiện:
         // - Click vào mũi tên expand
         // - Chọn dòng
-        
+
         this.handleClickExpandableArrow();
         this.handleClickSelectableRow();
 
@@ -60,7 +59,7 @@ class Datatable {
             return;
         }
 
-        let wrapper = document.createElement('div');
+        const wrapper = document.createElement('div');
         wrapper.className = 'datatable-wrapper';
         this.table.parentNode.insertBefore(wrapper, this.table);
         wrapper.appendChild(this.table);
@@ -82,7 +81,7 @@ class Datatable {
      * Tạo icon đang xử lý.
      */
     createLoader() {
-        let loader = document.createElement('div');
+        const loader = document.createElement('div');
         loader.className = 'loader';
         loader.innerHTML = `<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
@@ -116,7 +115,7 @@ class Datatable {
                 this.startSearchCallback();
             }
 
-            var obj = this.getDataLocal(page);
+            const obj = this.getDataLocal(page);
             this.pagi.update(obj.total, page);
             this.bindItems(obj.data);
         };
@@ -142,7 +141,7 @@ class Datatable {
 
         this.filterDataLocal();
     }
-    
+
     /**
      * Khởi tạo trong trường hợp sử dụng AJAX.
      */
@@ -175,8 +174,8 @@ class Datatable {
                     if (this.getTotalAndData) {
                         ({ total, data } = this.getTotalAndData(resp));
                     } else {
-                        total = resp['total'];
-                        data = resp['data'];
+                        total = resp.total;
+                        data = resp.data;
                     }
 
                     this.pagi.update(total, page);
@@ -214,13 +213,13 @@ class Datatable {
             wrapper.parentNode.insertBefore(pagiContainer, wrapper);
         } else {
             // Kiểm tra xem tùy chỉnh ở chỗ nào không
-			const slot = wrapper.querySelector('.pagination-slot');
-			if (slot) {
-				slot.parentNode.replaceChild(pagiContainer, slot);
-			} else {
-				// Mặc định là ở dưới
-				wrapper.parentNode.insertBefore(pagiContainer, wrapper.nextSibling);
-			}
+            const slot = wrapper.querySelector('.pagination-slot');
+            if (slot) {
+                slot.parentNode.replaceChild(pagiContainer, slot);
+            } else {
+                // Mặc định là ở dưới
+                wrapper.parentNode.insertBefore(pagiContainer, wrapper.nextSibling);
+            }
         }
         return pagiContainer;
     }
@@ -243,7 +242,7 @@ class Datatable {
             if (items.length == 0) {
                 this.table.style.display = 'none';
             } else {
-                var html = '';
+                let html = '';
                 items.forEach((e, idx) => {
                     html += this.rowTemplate(e);
                 });
@@ -261,20 +260,20 @@ class Datatable {
             this.bindItemsCallback(items);
         }
     }
-    
+
     /**
      * Thêm ô search.
      */
     createSearchInput() {
-        let searchWrapper = document.createElement('div');
+        const searchWrapper = document.createElement('div');
         searchWrapper.className = 'py-2 d-flex justify-content-end';
-        let searchInput = document.createElement('input');
+        const searchInput = document.createElement('input');
         searchInput.className = 'form-control';
         searchInput.style.width = '200px';
         searchInput.placeholder = 'Tìm kiếm nhanh';
         searchWrapper.appendChild(searchInput);
 
-        let wrapper = this.table.parentNode;
+        const wrapper = this.table.parentNode;
         wrapper.parentNode.insertBefore(searchWrapper, wrapper);
 
         return searchInput;
@@ -308,7 +307,7 @@ class Datatable {
         } else {
             searchText = searchText.toLowerCase();
             this.filteredData = this.data.filter(e => {
-                let foundProp = this.searchableProps.find(prop => e[prop].toLowerCase().includes(searchText));
+                const foundProp = this.searchableProps.find(prop => e[prop].toLowerCase().includes(searchText));
                 return !!foundProp;
             });
         }
@@ -327,10 +326,10 @@ class Datatable {
      * @param {Integer} page Số thứ tự trang (bắt đầu từ 1)
      */
     getDataLocal(page) {
-        let startIndex = (page - 1) * this.pagi.pageSize;
-        let total = this.filteredData.length;
-        let items = [];
-        let end = Math.min(startIndex + this.pagi.pageSize, total);
+        const startIndex = (page - 1) * this.pagi.pageSize;
+        const total = this.filteredData.length;
+        const items = [];
+        const end = Math.min(startIndex + this.pagi.pageSize, total);
         for (let i = startIndex; i < end; i++) {
             items.push(this.filteredData[i]);
         }
@@ -347,30 +346,30 @@ class Datatable {
      */
     makeSortable(table, callback) {
         table.addEventListener('click', (evt) => {
-            var attribute = 'data-sort-column';
-            var target = evt.target;
+            const attribute = 'data-sort-column';
+            const target = evt.target;
             if (target.tagName == 'TH' && target.getAttribute(attribute)) {
-                let iconSortAsc = 'sorting_asc';
-                let iconSortDesc = 'sorting_desc';
-    
+                const iconSortAsc = 'sorting_asc';
+                const iconSortDesc = 'sorting_desc';
+
                 // Thẻ th hiện tại
-                let thTag = target;
-    
+                const thTag = target;
+
                 // Lấy ra trường thông tin order
-                let column = thTag.getAttribute(attribute);
-    
+                const column = thTag.getAttribute(attribute);
+
                 // Trạng thái order mới
-                let direction = thTag.classList.contains(iconSortAsc) ? 'desc' : 'asc';
-    
+                const direction = thTag.classList.contains(iconSortAsc) ? 'desc' : 'asc';
+
                 // Xóa tất cả các order cũ
                 table.querySelectorAll('[' + attribute + ']').forEach(otherTag => {
                     otherTag.classList.remove(iconSortAsc);
                     otherTag.classList.remove(iconSortDesc);
                 });
-    
+
                 // Điều chỉnh lại mũi tên hiển thị của cột hiện tại
                 thTag.classList.add(direction == 'asc' ? iconSortAsc : iconSortDesc);
-    
+
                 // Gọi hàm callback
                 callback(column, direction);
             }
@@ -390,13 +389,13 @@ class Datatable {
     handleClickExpandableArrow() {
         if (this.table.classList.contains('table-expandable')) {
             this.table.addEventListener('click', (evt) => {
-                let target = evt.target;
+                const target = evt.target;
                 if (target.classList.contains('table-expandable-arrow')) {
-                    let arrow = target;
+                    const arrow = target;
                     arrow.classList.toggle('expanded');
 
-                    let mainRow = arrow.closest('tr');
-                    let detailRow = mainRow.nextElementSibling;
+                    const mainRow = arrow.closest('tr');
+                    const detailRow = mainRow.nextElementSibling;
                     if (detailRow.style.display === 'none') {
                         detailRow.style.display = '';
                     } else {
@@ -413,8 +412,8 @@ class Datatable {
     handleClickSelectableRow() {
         if (this.table.classList.contains('table-selectable')) {
             this.table.addEventListener('click', (evt) => {
-                let target = evt.target;
-                let row = target.closest('.table-selectable tbody tr');
+                const target = evt.target;
+                const row = target.closest('.table-selectable tbody tr');
                 if (row) {
                     row.classList.toggle('selected-row');
                 }
@@ -426,8 +425,8 @@ class Datatable {
      * Lấy ra dữ liệu của các dòng được chọn.
      */
     getSelectedRows() {
-        let selectedRows = [];
-        let rows = this.table.querySelectorAll('tbody tr');
+        const selectedRows = [];
+        const rows = this.table.querySelectorAll('tbody tr');
         for (let i = 0; i < rows.length; i++) {
             if (rows[i].classList.contains('selected-row')) {
                 selectedRows.push(this.items[i]);
@@ -442,11 +441,11 @@ class Datatable {
     bindColumnList() {
         if (this.columnListNamespace) {
             // Thêm vùng div
-            let columList = document.createElement('div');
+            const columList = document.createElement('div');
             columList.className = 'datatable-column-list';
             columList.innerHTML = '<span class="text-muted">Hiển thị các cột:</span>';
             this.table.querySelectorAll('thead th').forEach((th, idx) => {
-                let labelTag = document.createElement('label');
+                const labelTag = document.createElement('label');
                 labelTag.innerHTML = `<input type="checkbox" checked data-index="${idx}"> ${th.textContent.trim()}`;
                 if (localStorage.getItem(this.columnListNamespace + idx) == 'hide') {
                     labelTag.querySelector('input').checked = false;
@@ -454,14 +453,14 @@ class Datatable {
                 columList.appendChild(labelTag);
             });
 
-            var wrapper = this.table.parentNode;
+            const wrapper = this.table.parentNode;
             wrapper.parentNode.insertBefore(columList, wrapper.nextSibling);
-        
+
             // Thêm sự kiện
             columList.addEventListener('change', (evt) => {
-                let checkbox = evt.target;
-                let index = checkbox.dataset.index;
-                let rows = this.table.querySelectorAll('tr');
+                const checkbox = evt.target;
+                const index = checkbox.dataset.index;
+                const rows = this.table.querySelectorAll('tr');
                 if (checkbox.checked) {
                     localStorage.removeItem(this.columnListNamespace + index);
                     rows.forEach(r => {
@@ -482,8 +481,8 @@ class Datatable {
      */
     hideShouldBeHiddenColumns() {
         if (this.columnListNamespace) {
-            let rows = this.table.querySelectorAll('tr');
-            let numOfColumns = rows[0].cells.length;
+            const rows = this.table.querySelectorAll('tr');
+            const numOfColumns = rows[0].cells.length;
             for (let index = 0; index < numOfColumns; index++) {
                 if (localStorage.getItem(this.columnListNamespace + index) == 'hide') {
                     rows.forEach(r => {

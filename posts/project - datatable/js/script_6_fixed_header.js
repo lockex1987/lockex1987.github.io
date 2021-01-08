@@ -1,6 +1,8 @@
-const datatable = new Datatable({
+import serverData from './mock_data.js';
+
+new Datatable({
     table: '#myTable',
-    rowTemplate: (dataEle) => {
+    rowTemplate(dataEle) {
         return `
                 <tr>
                     <!--td class="text-right">

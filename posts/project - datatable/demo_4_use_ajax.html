@@ -6,11 +6,11 @@
     <meta name="description" content="Datatable demo">
     <title>Datatable demo</title>
     <link rel="icon" href="../../images/favicon.png">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">    
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 
 <body>
-    <article class="container py-3">
+    <article>
         <h2>Datatable demo: sử dụng AJAX</h2>
         <p>Trường hợp lấy dữ liệu AJAX từ server, có thể thêm các tiêu chí tìm kiếm.</p>
         <p>Cần một server PHP để chạy.</p>
@@ -23,21 +23,34 @@
                         autocomplete="off"
                         id="search">
         
-                <button type="button" class="ml-2 btn btn-primary" id="searchBtn">
-                    <span class="spinner-border spinner-border-sm" style="display: none"></span>
+                <button type="button"
+                        class="ml-2 btn btn-primary"
+                        id="searchBtn">
+                    <span class="spinner-border spinner-border-sm"
+                            style="display: none"></span>
                     Tìm kiếm
                 </button>
             </div>
 
-            <table id="myTable" class="table table-bordered table-striped table-hover">
+            <table id="myTable"
+                    class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
-                        <th class="text-right"> Stt </th>
-                        <th class="" data-sort-column="country"> Quốc gia </th>
-                        <th class="text-right" data-sort-column="population"> Dân số </th>
-                        <th class="text-center" data-sort-column="fake_date"> Ngày nào đó </th>
+                        <th class="text-right">
+                            Stt
+                        </th>
+                        <th data-sort-column="country">
+                            Quốc gia
+                        </th>
+                        <th class="text-right" data-sort-column="population">
+                            Dân số
+                        </th>
+                        <th class="text-center" data-sort-column="fake_date">
+                            Ngày nào đó
+                        </th>
                     </tr>
                 </thead>
+
                 <tbody>
 
                 </tbody>
@@ -49,6 +62,6 @@
     <script src="libs/libs.js"></script>
     <script src="src/datatable.js"></script>
     
-    <script src="js/script_4_use_ajax.js"></script>
+    <script type="module" src="js/script_4_use_ajax.js"></script>
 </body>
 </html>

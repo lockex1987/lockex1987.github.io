@@ -8,12 +8,7 @@
     <title>Datatable</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
-    <style>
-      /* Vẫn giữ các dấu trắng như pre bình thường, tuy nhiên nếu dài quá thì tự động xuống dòng (TODO: cho vào util) */
-      .text-pre-wrap {
-        white-space: pre-wrap;
-      }
-    </style>
+    
   </head>
   <body>
     <article>
@@ -52,14 +47,14 @@
 &lt;script src="js/datatable.js"&gt;&lt;/script&gt;</pre>
       <p>Phần phân trang đang theo chuẩn Bootstrap, do đó bạn nên thêm cả CSS
         của Bootstrap:</p>
-      <pre class="text-pre-wrap text-break">&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"&gt;</pre>
+      <pre class="out-of-box text-pre-wrap text-break">&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"&gt;</pre>
       <p>Thư viện không còn ràng buộc nào khác.</p>
       <p>Chúng ta khai báo một table với các header bình thường (bắt buộc có thẻ
         <code>thead</code>), nội dung thì bỏ trống (có thể có thẻ <code>tbody</code>
         hoặc không).</p>
       <p>Với các cột mà có thể sắp xếp, chúng ta thêm thuộc tính <code>data-sort-column</code>
         với giá trị là thuộc tính sắp xếp:</p>
-      <pre class="text-pre-wrap">&lt;table id="myTable" class="table table-bordered table-striped table-hover"&gt;
+      <pre class="out-of-box text-pre-wrap">&lt;table id="myTable" class="table table-bordered table-striped table-hover"&gt;
     &lt;thead&gt;
         &lt;tr&gt;
             &lt;th class="text-right"&gt; Stt &lt;/th&gt;
@@ -75,10 +70,11 @@
       <p>Tiếp đó, chúng ta khởi tạo đối tượng Datatable như sau:</p>
       <pre>const datatable = new Datatable(options);</pre>
       <p>Trong đó options là một đối tượng, có thể có các thuộc tính sau:</p>
+      <div class="out-of-box">
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>Thuộc tính</th>
+            <th style="min-width: 200px;">Thuộc tính</th>
             <th>Mô tả</th>
           </tr>
         </thead>
@@ -134,11 +130,13 @@
           </tr>
         </tbody>
       </table>
+    </div>
       <p>Trong trường hợp không sử dụng AJAX, chúng ta có các thuộc tính sau:</p>
+      <div class="out-of-box">
       <table class="table table-bordered">
         <tbody>
           <tr>
-            <th>Thuộc tính</th>
+            <th style="min-width: 160px;">Thuộc tính</th>
             <th>Mô tả</th>
           </tr>
           <tr>
@@ -153,11 +151,13 @@
           </tr>
         </tbody>
       </table>
+    </div>
       <p>Trong trường hợp có sử dụng AJAX, chúng ta có các thuộc tính sau:</p>
+      <div class="out-of-box">
       <table class="table table-bordered">
         <tbody>
           <tr>
-            <th>Thuộc tính</th>
+            <th style="min-width: 160px;">Thuộc tính</th>
             <th>Mô tả</th>
           </tr>
           <tr>
@@ -179,6 +179,7 @@
           </tr>
         </tbody>
       </table>
+    </div>
       <p>Sau khi khởi tạo xong đối tượng datatable, chúng ta có thể sử dụng
         thuộc tính <code>reload()</code> để tìm kiếm lại dữ liệu từ trang đầu
         tiên.</p>

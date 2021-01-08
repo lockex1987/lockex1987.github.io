@@ -1,5 +1,4 @@
 (function () {
-
     const pagi = new Pagi({
         container: document.getElementById('pagiId'),
         callbackFunc: gotoPage
