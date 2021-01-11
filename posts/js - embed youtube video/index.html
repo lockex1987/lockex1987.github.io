@@ -1,47 +1,57 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head>
+
+<head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="YouTube, Facebook">
+    <meta name="description" content="youtube, facebook">
     <title>Nhúng video vào trang web</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
-  </head>
-  <body>
+</head>
+
+<body>
     <article>
-      <h2>Nhúng video vào trang web</h2>
-      <p>Thêm các class <code>.embed-responsive</code> để điều chỉnh kích thước
-        <code>iframe</code>.</p>
-      <p>Các tùy chọn:</p>
-      <ul>
-        <li>fs=0: Ẩn nút Full Screen</li>
-      </ul>
-      <h3>Tham khảo</h3>
-      <p><a href="https://developers.google.com/youtube/player_parameters" target="_blank">Player
-          Parameters</a></p>
-      <p><a href="https://developers.google.com/youtube/iframe_api_reference" target="_blank">API
-          Reference</a></p>
-      <p><a href="https://developers.facebook.com/docs/plugins/embedded-video-player/"
-          target="_blank">Embedded Videos - Social Plugins</a></p>
-      <p><a href="https://developers.facebook.com/docs/plugins/embedded-video-player/api/"
-          target="_blank">API - Social Plugins</a></p>
-      <h3>Demo YouTube</h3>
-      <div id="app"></div>
-      <h3>Demo Facebook</h3>
-      <div id="fb-root"></div>
-      <div class="fb-video mt-3" data-href="https://www.facebook.com/FacebookDevelopers/videos/10152454700553553/"
-        data-allowfullscreen="true" data-width="500"></div>
+        <h2>Nhúng video vào trang web</h2>
+        <p>Thêm các class <code>.embed-responsive</code> để điều chỉnh kích thước
+            <code>iframe</code>.
+        </p>
+        <p>Các tùy chọn:</p>
+        <ul>
+            <li>fs=0: Ẩn nút Full Screen</li>
+        </ul>
+        <h3>Tham khảo</h3>
+        <p><a href="https://developers.google.com/youtube/player_parameters" target="_blank">Player
+                Parameters</a></p>
+        <p><a href="https://developers.google.com/youtube/iframe_api_reference" target="_blank">API
+                Reference</a></p>
+        <p><a href="https://developers.facebook.com/docs/plugins/embedded-video-player/" target="_blank">Embedded Videos
+                - Social Plugins</a></p>
+        <p><a href="https://developers.facebook.com/docs/plugins/embedded-video-player/api/" target="_blank">API -
+                Social Plugins</a></p>
+
+        <h3>Demo YouTube</h3>
+        <div id="app"></div>
+
+        <h3>Demo Facebook</h3>
+        <div id="fb-root"></div>
+        <div class="fb-video mt-3" data-href="https://www.facebook.com/FacebookDevelopers/videos/10152454700553553/"
+            data-allowfullscreen="true" data-width="500">
+        </div>
     </article>
+
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+
     <script>
         function onYouTubeIframeAPIReady() {
             console.log('YouTube API ready');
         }
     </script>
+    
     <script type="module" src="js/script.js"></script>
     <script async="" defer="defer" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
     <script src="../../js/docs.js"></script>
-  </body>
+</body>
+
 </html>

@@ -61,10 +61,6 @@ export default {
         }
     },
 
-    mounted() {
-
-    },
-
     beforeDestroy() {
         console.log('Clear interval');
         clearInterval(this.timeUpdateInterval);
@@ -81,7 +77,7 @@ export default {
                     origin: window.location.href, // để dùng API yêu cầu cái này
                     enablejsapi: 1, // để dùng API yêu cầu cái này
                     autoplay: 1, // chạy luôn
-                    fs: 0, // ẩn nút fullsceen
+                    fs: 0 // ẩn nút fullsceen
                 },
                 events: {
                     onReady: this.initialize

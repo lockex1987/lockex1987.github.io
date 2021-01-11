@@ -1,3 +1,5 @@
+import YoutubePlayer from './YoutubePlayer.js';
+
 const template = `
     <div>
         <youtube-player
@@ -17,9 +19,6 @@ const template = `
         </div>
     </div>
 `;
-
-
-import YoutubePlayer from './YoutubePlayer.js';
 
 export default {
     template,
@@ -44,6 +43,6 @@ export default {
 
         removeVideo() {
             this.list.pop();
-        },
+        }
     }
 };

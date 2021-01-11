@@ -16,22 +16,22 @@
     <article>
         <h2>Thẻ picture</h2>
 
-        <div>
+        <figure>
             <picture>
                 <source media="(min-width: 650px)" srcset="images/img_pink_flowers.jpg">
                 <source media="(min-width: 465px)" srcset="images/img_white_flower.jpg">
-                <img src="images/img_orange_flowers.jpg" style="width:auto;">
+                <img src="images/img_orange_flowers.jpg">
             </picture>
-        </div>
-
-        <figure>
+		</figure>
+        
+		<figure>
             <picture>
                 <source srcset="images/person-xsmall.jpg" media="(max-width: 480px)">
                 <source srcset="images/person-small.jpg" media="(max-width: 640px)">
                 <source srcset="images/person-med.jpg">
-                <img srcset="images/person-med.jpg" alt="">
+                <img srcset="images/person-med.jpg">
             </picture>
-        </figure>
+		</figure>
 
         <p>Resize trình duyệt để thấy các ảnh khác nhau tùy theo kích thước viewport.</p>
         <p>Trình duyệt sẽ tìm phần tử <code>source</code> đầu tiên mà media query khớp với chiều rộng viewport, sau đó
@@ -42,14 +42,14 @@
 
         <p>Không hỗ trợ video.</p>
 
-        <div>
+        <figure>
             <video controls>
                 <!-- Bear -->
                 <source type="video/mp4" src="https://www.w3schools.com/tags/movie.mp4" media="all and (max-width: 640px)">
                 <!-- Bunny -->
                 <source type="video/mp4" src="https://www.w3schools.com/html/mov_bbb.mp4">
             </video>
-        </div>
+        </figure>
 
         
 

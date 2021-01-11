@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="epub reader">
+    <meta name="description" content="epub reader, bibi, futurepress, convert html to epub">
     <title>Cấu trúc file epub</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -13,53 +13,52 @@
       <h2>Cấu trúc file epub</h2>
       <h3>Giới thiệu</h3>
       <p>Epub là một định dạng chuẩn, đơn giản để lưu trữ ebook.</p>
-      <p><img src="images/epub.svg" alt=""> </p>
+      <figure><img src="images/epub.svg" alt=""></figure>
       <p>Chúng ta sẽ viết một hàm với đầu vào là file <code>epub</code>, đầu ra
         là mã HTML. Chúng ta có thể hiển thị mã HTML này lên web.</p>
       <p>Ngược lại, chúng ta hãy viết chương trình có đầu vào là HTML, đầu ra là
-        epub để đọc trên iPad.</p>
+        file epub để đọc trên iPad.</p>
       <code> </code>
-      <p>Epub 3.0 là phiên bản mới nhất của định dạng sách điện tử (e-book) tiêu
-        chuẩn XML, đã sử dụng các công nghệ web hiện đại như HTML5 và CSS3. Nó
-        vẫn tập trung vào XML bằng cách giữ lại tính năng tuần tự hóa XHTML và
-        bổ sung thêm các phụ trợ, chẳng hạn như MathML và SVG. Epub 3 cung cấp
-        một loạt các tùy chỉnh để phát triển các ấn phẩm số bản địa, tiên tiến.
-        Trong bài này, hãy tìm hiểu cách tạo ra các trang sách có bố cục trình
-        bày phong phú bằng cách sử dụng các tính năng mới trong epub 3.</p>
+      <p>Epub 3.0 là phiên bản mới nhất của định dạng e-book tiêu chuẩn XML, đã
+        sử dụng các công nghệ web hiện đại như HTML5 và CSS3. Nó vẫn tập trung
+        vào XML bằng cách giữ lại tính năng tuần tự hóa XHTML và bổ sung thêm
+        các phụ trợ, chẳng hạn như MathML và SVG. Epub 3 cung cấp một loạt các
+        tùy chỉnh để phát triển các ấn phẩm số bản địa, tiên tiến. Trong bài
+        này, hãy tìm hiểu cách tạo ra các trang sách có bố cục trình bày phong
+        phú bằng cách sử dụng các tính năng mới trong epub 3.</p>
       <p>Thực ra nội dung của ấn phẩm chính là các file XHTML và CSS. Nó cũng
         bao gồm các tài nguyên nhị phân như hình ảnh, đa phương tiện và các tài
         liệu XML.</p>
       <h3>Cấu trúc</h3>
       <p>Hình thư mục gốc khi đã giải nén file epub:</p>
       <pre>mimetype<br>META-INF/<br>    container.xml<br>OEBPS/<br>    content.opf<br>    toc.ncx<br>    cover.xhtml<br>    index.xhtml<br>    css/<br>        style.css<br>    fonts<br>        myfont.otf<br>    images<br>        cover.jpg</pre>
-      <p>Trong 1 file epub cần phải có ít nhất những file và thư mục sau:</p>
+      <p>Trong một file epub cần phải có ít nhất những file và thư mục sau:</p>
       <ul>
-        <li>File <code>mimetype</code>: báo cho phần mềm đọc sách/hệ thống biết
-          trong đây là gì</li>
-        <li>Thư mục <code>META-INF</code>: trong thư mục này phải có
+        <li>File <code>mimetype</code>: báo cho phần mềm đọc sách / hệ thống
+          biết trong đây là gì</li>
+        <li>Thư mục <code>META-INF</code>:
           <ul>
-            <li>file <code>container.xml</code> để cho ứng dụng đọc sách tìm
+            <li>File <code>container.xml</code>: để cho ứng dụng đọc sách tìm
               được nội dung sách</li>
           </ul>
         </li>
-        <li>Thư mục <code>OEBPS</code>: là nơi chứa nội dung cuốn sách. Bao
-          gồm:
+        <li>Thư mục <code>OEBPS</code>:
           <ul>
-            <li>File <code>content.opf</code>: file xml chứa danh sách các file
+            <li>File <code>content.opf</code>: file XML chứa danh sách các file
               trong epub</li>
-            <li>File <code>toc.ncx</code>: Mục lục sách</li>
-            <li>Các file <code>xhtml</code>: Nội dung sách chưa ở đây</li>
+            <li>File <code>toc.ncx</code>: mục lục sách</li>
+            <li>Các file <code>xhtml</code>: nội dung sách chưa ở đây</li>
             <li>Thư mục <code>images</code>: chứa ảnh ở đây</li>
           </ul>
         </li>
       </ul>
       <h4>File mimetype</h4>
-      <p>File này chỉ chứa chuỗi <strong>application/epub+zip</strong>. Hệ điều
+      <p>File này chỉ chứa chuỗi <code>application/epub+zip</code>. Hệ điều
         hành có thể nhìn nhận ra đây là file epub thay vì dùng đuôi mở rộng <code>.epub</code>.
         File epub được đóng gói như file zip.</p>
       <h4>Thư mục META-INF</h4>
       <p>Thư mục này chứa file <code>container.xml</code> và sẽ chỉ ra file <code>content.opf</code>
-        nằm ở đâu. Thư mục này giống nhau trên mọi e-book.</p>
+        nằm ở đâu.</p>
       <h4>Thư mục OEBPS</h4>
       <p>Thông thường thư mục này chứa nội dung cuốn sách. Nếu muốn đặt chỗ khác
         thì phải được chỉ rõ trong file <code>content.opf</code>.</p>
@@ -67,9 +66,9 @@
       <p>File này cho biết danh sách các file nội dung cuốn sách. Định nghĩa
         theo thứ tự và chứa metadata (tác giả, tên sách, ...). Tên file <code>content.opf</code>
         có thể thay đổi nhưng phải được định nghĩa trong <code>container.xml</code>.</p>
-      <pre><code>&lt;?xml version="1.0" encoding="UTF-8"??&gt;
-&lt;package xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookID" version="2.0" &gt;
-    &lt;metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf"&gt;
+      <pre class="out-of-box"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;package xmlns="http://www.idpf.org/2007/opf"<br>        unique-identifier="BookID"<br>        version="2.0"&gt;
+    &lt;metadata xmlns:dc="http://purl.org/dc/elements/1.1/"<br>            xmlns:opf="http://www.idpf.org/2007/opf"&gt;
         &lt;dc:title&gt;Sample .epub eBook&lt;/dc:title&gt; 
         &lt;dc:creator opf:role="aut"&gt;Yoda47&lt;/dc:creator&gt;
         &lt;dc:language&gt;en-US&lt;/dc:language&gt; 
@@ -97,56 +96,55 @@
 </code></pre>
       <p>Trong đó:</p>
       <ul>
-        <li><code>dc:title</code> – tiêu đề của sách.</li>
-        <li><code>dc:language</code> – xác định ngôn ngữ sử dụng trong nội dung
-          sách. Xác định ngôn ngữ theo mã code ISO 639-1 Code.</li>
-        <li><code>dc:identifier</code> – là mã xác sách. Mã này là duy nhất và
-          để phân biệt sách này với sách khác. Tiếp theo là manifest khai báo
-          các file nội dung. Tuy nhiên có thể xem ở trong file NCX.</li>
+        <li><code>dc:title</code> là tiêu đề của sách.</li>
+        <li><code>dc:language</code> để xác định ngôn ngữ sử dụng trong nội dung
+          sách. Xác định ngôn ngữ theo mã code ISO 639-1.</li>
+        <li><code>dc:identifier</code> là mã sách. Mã này là duy nhất và để phân
+          biệt sách này với sách khác. Tiếp theo là manifest khai báo các file
+          nội dung. Tuy nhiên có thể xem ở trong file NCX.</li>
       </ul>
       <p>Spine là phần khai báo mục lục.</p>
       <h4>File toc.ncx</h4>
       <p>Đây là file xác định mục lục cuốn sách.</p>
-      <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+      <pre class="out-of-box"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1"&gt;
+    &lt;head&gt;
+        &lt;meta name="dtb:uid" content="jedisaber.com06282007214712"/&gt;
+        &lt;meta name="dtb:depth" content="1"/&gt;
+        &lt;meta name="dtb:totalPageCount" content="0"/&gt;
+        &lt;meta name="dtb:maxPageNumber" content="0"/&gt;
+    &lt;/head&gt;
 
-&lt;head&gt;
-    &lt;meta name="dtb:uid" content="jedisaber.com06282007214712"/&gt;
-    &lt;meta name="dtb:depth" content="1"/&gt;
-    &lt;meta name="dtb:totalPageCount" content="0"/&gt;
-    &lt;meta name="dtb:maxPageNumber" content="0"/&gt;
-&lt;/head&gt;
+    &lt;docTitle&gt;
+        &lt;text&gt;Sample .epub eBook&lt;/text&gt;
+    &lt;/docTitle&gt;
 
-&lt;docTitle&gt;
-    &lt;text&gt;Sample .epub eBook&lt;/text&gt;
-&lt;/docTitle&gt;
+    &lt;navMap&gt;
+        &lt;navPoint id="title_page" playOrder="1"&gt;
+            &lt;navLabel&gt;
+                &lt;text&gt;Title Page&lt;/text&gt;
+            &lt;/navLabel&gt;
+            &lt;content src="title_page.xhtml"/&gt;
+        &lt;/navPoint&gt;
 
-&lt;navMap&gt;
-    &lt;navPoint id="title_page" playOrder="1"&gt;
-        &lt;navLabel&gt;
-            &lt;text&gt;Title Page&lt;/text&gt;
-        &lt;/navLabel&gt;
-        &lt;content src="title_page.xhtml"/&gt;
-    &lt;/navPoint&gt;
+        &lt;navPoint id="chapter01" playOrder="2"&gt;
+            &lt;navLabel&gt;
+                &lt;text&gt;Chapter 1&lt;/text&gt;
+            &lt;/navLabel&gt;
+            &lt;content src="chap01.xhtml"/&gt;
+        &lt;/navPoint&gt;
 
-    &lt;navPoint id="chapter01" playOrder="2"&gt;
-        &lt;navLabel&gt;
-            &lt;text&gt;Chapter 1&lt;/text&gt;
-        &lt;/navLabel&gt;
-        &lt;content src="chap01.xhtml"/&gt;
-    &lt;/navPoint&gt;
-
-    &lt;navPoint id="chapter02" playOrder="3"&gt;
-        &lt;navLabel&gt;
-            &lt;text&gt;Chapter 2&lt;/text&gt;
-        &lt;/navLabel&gt;
-        &lt;content src="chap02.xhtml"/&gt;
-    &lt;/navPoint&gt;
-&lt;/navMap&gt;
+        &lt;navPoint id="chapter02" playOrder="3"&gt;
+            &lt;navLabel&gt;
+                &lt;text&gt;Chapter 2&lt;/text&gt;
+            &lt;/navLabel&gt;
+            &lt;content src="chap02.xhtml"/&gt;
+        &lt;/navPoint&gt;
+    &lt;/navMap&gt;
 &lt;/ncx&gt;
 </code></pre>
-      <p>Lưu ý: + Bảo đảm rằng uid khớp với bên trong <code>content.opf</code>
-        + Phải có tag <code>navPoint</code>.</p>
+      <p>Lưu ý: Bảo đảm rằng <code>uid</code> khớp với bên trong <code>content.opf</code>
+        và phải có tag <code>navPoint</code>.</p>
       <p>Ví dụ một thẻ <code>navPoint</code>:</p>
       <pre><code>&lt;navPoint id="chapter01" playOrder="1"&gt;
      &lt;navLabel&gt;
@@ -157,29 +155,29 @@
 </code></pre>
       <p>Mỗi thẻ <code>navPoint</code> là một chương truyện gồm:</p>
       <ul>
-        <li>Thuộc tính <code>id</code>: là ID của chương</li>
-        <li>Thuộc tính <code>playOrder</code>: là thứ tự của chương trong mục
+        <li>Thuộc tính <code>id</code> là ID của chương</li>
+        <li>Thuộc tính <code>playOrder</code> là thứ tự của chương trong mục
           lục</li>
-        <li>Thẻ <code>&lt;navLabel&gt;&lt;text&gt;title&lt;/text&gt;&lt;/navLabel&gt;</code>:
+        <li>Thẻ <code>&lt;navLabel&gt;&lt;text&gt;title&lt;/text&gt;&lt;/navLabel&gt;</code>
           là tên chương</li>
-        <li>Thẻ <code>&lt;content src="chap01.xhtml" /&gt;</code>: là nguồn
-          trang (hoặc là file html)</li>
+        <li>Thẻ <code>&lt;content src="chap01.xhtml" /&gt;</code> là nguồn
+          trang (hoặc là file xhtml)</li>
       </ul>
       <h4>Thư mục images</h4>
-      <p>Các file ảnh của eBook sẽ được để tại đây (thực ra cũng không bắt buộc
+      <p>Các file ảnh của e-book sẽ được để tại đây (thực ra cũng không bắt buộc
         nếu như đã chỉ định rõ ràng).</p>
       <h3>Nội dung XHTML</h3>
-      <p>Nội dung của sách phải ở trong file .xhtml. Khung như sau:</p>
-      <pre>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;
+      <p>Nội dung của sách phải ở trong file <code>xhtml</code>. Khung như sau:</p>
+      <pre class="out-of-box">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;
 &lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
-  &lt;head&gt;
-    &lt;meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /&gt;
-    &lt;title&gt;[]&lt;/title&gt;
-    &lt;link rel="stylesheet" href="css/style.css" type="text/css" /&gt;
-  &lt;/head&gt;<br>
-  &lt;body&gt;
-    ...
-  &lt;/body&gt;
+    &lt;head&gt;
+        &lt;meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /&gt;
+        &lt;title&gt;[]&lt;/title&gt;
+        &lt;link rel="stylesheet" href="css/style.css" type="text/css"/&gt;
+    &lt;/head&gt;<br>
+    &lt;body&gt;
+        ...
+    &lt;/body&gt;
 &lt;/html&gt;</pre>
       <h3>Đóng gói</h3>
       <p>Di chuyển đến bên trong thư mục gốc, sau đó thực hiện các lệnh sau:</p>
@@ -195,7 +193,7 @@
       <pre>java -jar epubcheck.jar --help<br>java -jar epubcheck.jar &lt;file path&gt;</pre>
       <h3>Hiển thị chú thích</h3>
       <p>Hiển thị chú thích dạng popup.</p>
-      <p><img src="images/footnote.png" alt=""></p>
+      <figure><img src="images/footnote.png" alt=""></figure>
       <p>Cấu trúc HTML như sau:</p>
       <pre>&lt;p&gt;
     This sentence contains a
@@ -204,30 +202,23 @@
 
 &lt;aside id="note" epub:type="footnote"&gt;This is the comment.&lt;/aside&gt;</pre>
       <p>Khai báo thẻ <code>aside</code> với <code>id</code> là gì đó. Thuộc
-        tính <code>epub:type</code> là <strong>footnote</strong>. Thẻ <code>aside</code>
+        tính <code>epub:type</code> là <code>footnote</code>. Thẻ <code>aside</code>
         sẽ được chương trình đọc (iBook trên iPad) tự động ẩn.</p>
       <p>Khai báo thẻ <code>a</code> với <code>href</code> đến <code>id</code>
-        của thẻ <code>aside</code>. Thuộc tính <code>epub:type</code> là <strong>noteref</strong>.</p>
+        của thẻ <code>aside</code>. Thuộc tính <code>epub:type</code> là <code>noteref</code>.</p>
       <p>Chú ý, thẻ html phải thêm thuộc tính <code>xmlns:epub</code> để có thể
         hợp lệ thuộc tính <code>epub:type</code>.</p>
-      <pre>&lt;html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"&gt;<br>    ...<br>&lt;/html&gt;</pre>
+      <pre class="out-of-box">&lt;html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"&gt;<br>    ...<br>&lt;/html&gt;</pre>
       <h3>Tham khảo</h3>
       <p><a href="https://en.wikipedia.org/wiki/EPUB" target="_blank">EPUB -
           Wikipedia</a></p>
       <p><a href="https://lockex1987.github.io/archive/it%20-%20convert%20html%20to%20epub/"
+
           target="_blank">Convert HTML to EPUB</a> </p>
       <p><a href="http://idpf.github.io/epub3-samples/30/samples.html" target="_blank">EPUB
           3 Samples | EPUB 3 Samples Project</a> </p>
-      <p>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <a href="https://github.com/krisztianmukli/epub-boilerplate/wiki" target="_blank">Home
+      <p> <a href="https://github.com/krisztianmukli/epub-boilerplate/wiki" target="_blank">Home
           · krisztianmukli/epub-boilerplate Wiki</a></p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>

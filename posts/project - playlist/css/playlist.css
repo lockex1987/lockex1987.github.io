@@ -1,0 +1,34 @@
+.playlist {
+  margin-top: 90px;
+  height: calc(100vh - 500px); }
+  @media (min-width: 992px) {
+    .playlist {
+      margin-top: 0px;
+      height: calc(100vh - 90px); } }
+  @media (min-width: 992px) {
+    .playlist .chapter-item::before {
+      content: '+';
+      color: green;
+      margin-right: 0.5rem; } }
+
+.top-panel {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  position: fixed;
+  border-bottom: 1px solid #dee2e6; }
+  @media (min-width: 992px) {
+    .top-panel {
+      box-shadow: none;
+      position: static;
+      border-bottom: none; } }
+
+.bottom-panel {
+  box-shadow: 0 -0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  position: fixed;
+  border-top: 1px solid #dee2e6; }
+  @media (min-width: 992px) {
+    .bottom-panel {
+      box-shadow: none;
+      position: static;
+      border-top: none; } }
+
+/*# sourceMappingURL=playlist.css.map */

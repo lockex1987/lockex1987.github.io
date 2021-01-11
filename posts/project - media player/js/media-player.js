@@ -143,28 +143,10 @@ function createMediaPlayer(mediaTag) {
      */
     function playPauseAudio() {
         if (mediaTag.paused) {
-            playAudio();
+            mediaTag.play();
         } else {
-            pauseAudio();
+            mediaTag.pause();
         }
-    }
-
-    /**
-     * Play.
-     */
-    function playAudio() {
-        playButton.style.display = 'none';
-        pauseButton.style.display = '';
-        mediaTag.play();
-    }
-
-    /**
-     * Pause.
-     */
-    function pauseAudio() {
-        playButton.style.display = '';
-        pauseButton.style.display = 'none';
-        mediaTag.pause();
     }
 
     /**
@@ -189,12 +171,6 @@ function createMediaPlayer(mediaTag) {
             const timelineWidth = getTimelineWidth();
             const newMargLeft = timelineWidth * (mediaTag.currentTime / mediaTag.duration);
             updateProgressPosition(newMargLeft);
-
-            // Nếu mà đã chạy xong thì hiển thị nút play
-            if (mediaTag.currentTime == mediaTag.duration) {
-                playButton.style.display = '';
-                pauseButton.style.display = 'none';
-            }
         }
     }
 
@@ -625,6 +601,22 @@ function createMediaPlayer(mediaTag) {
         // Lắng nghe sự kiện bật tắt
         playButton.addEventListener('click', playPauseAudio);
         pauseButton.addEventListener('click', playPauseAudio);
+
+		mediaTag.addEventListener('ended', (evt) => {
+			// Nếu mà đã chạy xong thì hiển thị nút play
+			playButton.style.display = '';
+			pauseButton.style.display = 'none';
+		});
+		mediaTag.addEventListener('pause', (evt) => {
+			// Nếu đang không chạy thì hiện nút play
+			playButton.style.display = '';
+			pauseButton.style.display = 'none';
+		});
+		mediaTag.addEventListener('play', (evt) => {
+			// Nếu chạy thì hiện nút pause
+			playButton.style.display = 'none';
+			pauseButton.style.display = '';
+		});
 
         // Lời độ dài của audio hoặc video
         // Có khi load xong rồi

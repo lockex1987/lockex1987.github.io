@@ -1,0 +1,48 @@
+$desktop: "(min-width: 992px)";
+
+.playlist {
+	margin-top: 90px;
+	// Audio
+	// height: calc(100vh - 230px);
+	// Video
+	height: calc(100vh - 500px);
+
+	@media #{$desktop} {
+		margin-top: 0px;
+		height: calc(100vh - 90px);
+	}
+
+	.chapter-item {
+		@media #{$desktop} {
+			&::before {
+                content: '+';
+				color: green;
+				margin-right: 0.5rem;
+            }
+		}
+	}
+}
+
+.top-panel {
+	box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+	position: fixed;
+	border-bottom: 1px solid #dee2e6;
+
+	@media #{$desktop} {
+		box-shadow: none;
+		position: static;
+		border-bottom: none;
+	}
+}
+
+.bottom-panel {
+	box-shadow: 0 -0.125rem 0.25rem rgba(0,0,0,0.075);
+	position: fixed;
+	border-top: 1px solid #dee2e6;
+
+    @media #{$desktop} {
+		box-shadow: none;
+		position: static;
+		border-top: none;
+	}
+}
