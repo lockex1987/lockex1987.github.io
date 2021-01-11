@@ -1,5 +1,6 @@
-// import CHAPTERS from '../data/dong_chu_liet_quoc.js';
-import CHAPTERS from '../data/video_truyen_co_tich.js';
+import CHAPTERS from '../data/dong_chu_liet_quoc.js';
+// import CHAPTERS from '../data/video_truyen_co_tich.js';
+// import CHAPTERS from '../data/sherlock_holmes.js';
 import YoutubePlayer from './YoutubePlayer.js';
 
 
@@ -7,8 +8,9 @@ const template = `
 <div class="container-fluid mx-auto"
         style="max-width: 1000px;">
     <div class="row">
-        <div class="col-lg-5 pl-0">
-            <div class="top-left w-100 bg-white p-3 top-panel zindex-10">
+        <div class="col-lg-5 pl-0"
+                v-show="showList">
+            <div class="top-left w-100 p-3 top-panel zindex-10">
                 <input class="form-control"
                         v-model="filterInput"
                         type="text"
@@ -45,7 +47,7 @@ const template = `
         </div>
 
         <div class="col-lg-7 px-0">
-            <div class="bottom-left w-100 bg-white p-3 bottom-panel zindex-10">
+            <div class="bottom-left w-100 p-3 bottom-panel zindex-10">
                 <div class="font-size-0.875 text-success mb-1 text-truncate">
                     {{currentChapterObject.title}}
                 </div>
@@ -54,17 +56,29 @@ const template = `
                     {{currentChapterObject.subtitle}}
                 </div>
             
-                <!--div>
+                <div>
                     <audio ref="myAudio"
                             :src="currentChapterObject.audioLink"></audio>
-                </div-->
+                </div>
 
                 <!-- Nội dung nhúng YouTube -->
-                <youtube-player
+                <!--youtube-player
                         v-if="currentChapterObject.youtubeId"
                         :id="currentChapterObject.youtubeId"
                         :key="currentChapterObject.youtubeId"
-                        :autoplay="firstPlay == true"/>
+                        :autoplay="firstPlay == true"/-->
+
+                <div v-show="!showList">
+                    <div class="text-center mb-3 mt-3">
+                        <button class="btn btn-success"
+                                @click="returnListView">
+                            Quay lại
+                        </button>
+                    </div>
+
+                    <div v-html="currentText"
+                            class="content overflow-auto custom-slim-scrollbar"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -72,7 +86,7 @@ const template = `
 `;
 
 
-
+const baseUrl = location.href;
 
 export default {
     template,
@@ -85,11 +99,14 @@ export default {
         return {
             chapters: CHAPTERS.map((e, idx) => ({
                 ...e,
-                idx
+                idx,
+                slug: this.normalizeFileName(e.title)
             })),
             currentChapterIndex: -1,
             filterInput: '',
-            firstPlay: false
+            firstPlay: false,
+            showList: true,
+            currentText: ''
         };
     },
 
@@ -116,10 +133,23 @@ export default {
     mounted() {
         this.loadDefaultChapter();
 
-        // createMediaPlayer(this.$refs.myAudio);
+        createMediaPlayer(this.$refs.myAudio);
 
         // Load ảnh chậm
         // lazyload(document.querySelectorAll('#storyList img'));
+
+        // Người dùng nhấn phím Back/Forward
+        /*
+        window.addEventListener('popstate', function (event) {
+            const historyStateObj = event.state;
+            console.log('historyStateObj: ', historyStateObj);
+            if (!historyStateObj || !historyStateObj.id) {
+                this.showList = true;
+            } else {
+                // app.showStory(historyStateObj.id);
+            }
+        });
+        */
     },
 
     methods: {
@@ -144,10 +174,43 @@ export default {
             this.currentChapterIndex = idx;
             localStorage.setItem('currentChapterIndex', idx);
 
+            // Thêm vào history, để sử dụng được nút Back của trình duyệt và mobile
+            // Sử dụng hàm history.pushState
+            // Truyền vào đối tượng state, title, url
+            const currentChapter = this.chapters[idx];
+            // console.log(story, this.chapters, idx);
+            /*
+            const historyStateObj = { id: currentChapter.slug };
+            const historyTitle = currentChapter.title;
+            const historyUrl = baseUrl + '#' + currentChapter.slug;
+            // console.log('Change to story ' + historyTitle + ', ' + JSON.stringify(historyStateObj) + ', ' + historyUrl);
+            history.pushState(historyStateObj, historyTitle, historyUrl);
+            */
+
             // Chờ thuộc tính currentChapterObject thay đổi
             this.$nextTick(() => {
                 this.playMedia();
             });
+
+            if (currentChapter.slug) {
+                // this.loadText(currentChapter.slug);
+            }
+        },
+
+        /**
+         * Load text.
+         * @param {String} slug Duong dan
+         */
+        async loadText(slug) {
+            const url = 'text/' + slug;
+            const htmlCode = await fetch(url).then(resp => resp.text());
+            this.showList = false;
+            this.currentText = htmlCode;
+        },
+
+        returnListView() {
+            this.showList = true;
+            history.replaceState({}, 'Main', baseUrl);
         },
 
         /**
@@ -248,6 +311,10 @@ export default {
                 avatar.src = 'cttd.jpg';
             };
             img.src = src; // fires off loading of image
+        },
+
+        normalizeFileName(title) {
+            return title.toLowerCase().replace(/\s+/g, '_').replace(/'/g, '') + '.html';
         }
     }
 };

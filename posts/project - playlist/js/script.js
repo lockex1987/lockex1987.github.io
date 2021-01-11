@@ -7,4 +7,5 @@ function init() {
     });
 }
 
-window.onYouTubeIframeAPIReady = init;
+// window.onYouTubeIframeAPIReady = init;
+init();
