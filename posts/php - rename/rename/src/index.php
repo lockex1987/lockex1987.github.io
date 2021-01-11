@@ -10,7 +10,7 @@ if (count($argv) < 3) {
 } else {
     $command = $argv[1];
     // Chú ý $rootFolder không có ký tự / cuối cùng
-    $rootFolder = CommonUtils::joinPath($argv[2], '');
+    $rootFolder = rtrim($argv[2], '/');
     $a = CommonUtils::listFilesInDirectory($rootFolder);
     $rename = new Rename($rootFolder);
 

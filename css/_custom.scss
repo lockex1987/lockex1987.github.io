@@ -106,8 +106,11 @@ article {
 
 p {
     text-align: justify;
-    text-indent: 0.75rem;
     line-height: 1.725;
+	
+	@include media-breakpoint-up(md) {
+		text-indent: 0.75rem;
+	}
 }
 
 .no-indent {

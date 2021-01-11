@@ -211,10 +211,11 @@ class Rename
             if (!in_array($f, ['.', '..'])) {
                 $absPath = $folder . '/' . $f;
                 if (str_contains($f, ':') || str_contains($f, '!')) {
-                    echo $absPath . PHP_EOL;
                     $newName = str_replace(':', ' - ', $f);
                     $newName = str_replace('!', '', $newName);
-                    // rename($absPath, $folder . '/' . $newName);
+                    $newPath = $folder . '/' . $newName;
+                    echo $absPath . ' -> ' . $newPath . PHP_EOL;
+                    rename($absPath, $newPath);
                 }
                 if (is_dir(realpath($absPath))) {
                     $this->checkSpecialCharacters($absPath);
