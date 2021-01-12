@@ -4,30 +4,28 @@ const CAT_THUMBS = {
     bootstrap: 'programming/bootstrap.svg',
     js: 'programming/js.svg',
     java: 'programming/java.svg',
-    css: 'programming/css3.svg',
-    ui: 'programming/css3.svg',
+	css: 'programming/sass.svg', // css3
+    ui: 'programming/sass.svg',
     mysql: 'programming/mysql.svg',
-    web: 'programming/html5.svg',
-    webext: 'programming/web-extension.png',
     laravel: 'programming/laravel.svg',
-    highcharts: 'programming/highcharts.png',
-    highmaps: 'programming/highcharts.png',
+    highcharts: 'programming/highcharts.svg',
+    highmaps: 'programming/highcharts.svg',
     php: 'programming/php.svg',
-    vue: 'programming/vue.png',
-    project: 'category/project.png',
-    it: 'category/it.png',
-    story: 'category/story.png',
+    vue: 'programming/vue.svg',
+	project: 'programming/app store.svg',    
+	story: 'programming/epub.svg',
     docker: 'programming/docker.svg',
     git: 'programming/git.svg',
     elasticsearch: 'programming/elasticsearch.svg',
     redis: 'programming/redis.svg',
     nginx: 'programming/nginx.svg',
     node: 'programming/node.svg',
-    react: 'programming/react.svg',
     python: 'programming/python.svg',
     webrtc: 'programming/webrtc.svg',
-    deno: 'programming/deno.svg',
-    composer: 'programming/composer.png'
+    composer: 'programming/composer.svg',
+
+	webext: 'programming/web-extension.png',
+	it: 'programming/it.png'
 };
 
 /**
