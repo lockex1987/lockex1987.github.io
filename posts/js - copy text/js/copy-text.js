@@ -8,7 +8,7 @@ function copyTextToClipboard(text) {
     // thiết lập nội dung của nó là văn bản,
     // chọn (bôi đen) và thực hiện lệnh copy,
     // cuối cùng thì bỏ đối tượng đi
-    let tempElem = document.createElement('textarea');
+    const tempElem = document.createElement('textarea');
     tempElem.style.position = 'absolute';
     tempElem.style.left = '-9999px';
     tempElem.style.top = '0px';

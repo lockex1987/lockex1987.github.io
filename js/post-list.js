@@ -158,7 +158,7 @@ export default [
 {"category":"js","title":"Khai báo với const và let","description":"Khai báo với const và let","date":null,"modifiedTime":1608254852391.9214,"path":"js - const and let"},
 {"category":"js","title":"Contact Picker API","description":"chọn từ danh bạ","date":null,"modifiedTime":1609288716157.527,"path":"js - contact picker api"},
 {"category":"js","title":"Cookie","description":"Cookie","date":null,"modifiedTime":1608254852390.9214,"path":"js - cookie"},
-{"category":"js","title":"Copy text","description":"Copy text","date":null,"modifiedTime":1608254852389.9219,"path":"js - copy text"},
+{"category":"js","title":"Copy text bằng JS","description":"select, setSelectionRange, document.execCommand","date":"2020-01-14 16:37:00","modifiedTime":1610617073436.453,"path":"js - copy text"},
 {"category":"js","title":"Custom Event","description":"Custom Event","date":null,"modifiedTime":1608254852388.9211,"path":"js - custom event"},
 {"category":"js","title":"Default parameter","description":"Default parameter","date":null,"modifiedTime":1608254852387.9211,"path":"js - default parameter"},
 {"category":"js","title":"Design patterns","description":"Design patterns","date":null,"modifiedTime":1608254852386.9219,"path":"js - design patterns"},

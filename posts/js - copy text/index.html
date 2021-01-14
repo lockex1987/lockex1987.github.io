@@ -2,37 +2,56 @@
 <html lang="vi">
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Copy text">
-  <title>Copy text</title>
-  <link rel="icon" href="../../images/favicon.png">
-  <link rel="stylesheet" href="../../css/style.css">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="date" content="2020-01-14 16:37:00">
+    <meta name="description" content="select, setSelectionRange, document.execCommand">
+    <title>Copy text bằng JS</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 
 <body>
-  <article>
-    <h2>Copy text</h2>
-    <div>
-      <input type="text" class="form-control mb-3" value="Nguyễn Anh Tuấn" id="demoTextInput" />
+    <article>
+        <h2>Copy text bằng JS</h2>
+        <p>Hàm JS như sau:</p>
+        <pre>function copyTextToClipboard(text) {
+    const tempElem = document.createElement('textarea');
+    tempElem.style.position = 'absolute';
+    tempElem.style.left = '-9999px';
+    tempElem.style.top = '0px';
+    tempElem.value = text;
 
-      <button class="btn btn-primary" id="btnCopy">
-        Copy
-      </button>
-    </div>
-  </article>
+    document.body.appendChild(tempElem);
 
-  <link rel="stylesheet" href="https://lockex1987.github.io/posts/project%20-%20noti/css/noti.css" />
-  <script src="https://lockex1987.github.io/posts/project%20-%20noti/js/noti.js"></script>
-  
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/css/line-awesome.min.css"/>
-  <link rel="preload" href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/fonts/la-solid-900.woff2"
-        as="font" type="font/woff2" crossorigin="anonymous"/>
+    tempElem.select();
+    tempElem.setSelectionRange(0, tempElem.value.length);
+    document.execCommand('copy');
 
+    document.body.removeChild(tempElem);
+}</pre>
+        <p>Demo:</p>
+        <div>
+            <input type="text" class="form-control mb-3" value="Nguyễn Anh Tuấn" id="demoTextInput" />
 
-  <script src="js/copy-text.js"></script>
-  <script src="js/script.js"></script>
-  <script src="../../js/docs.js"></script>
+            <button class="btn btn-primary" id="btnCopy">
+                Copy
+            </button>
+        </div>
+    </article>
+
+    <link rel="stylesheet" href="https://lockex1987.github.io/posts/project%20-%20noti/css/noti.css" />
+    <script src="https://lockex1987.github.io/posts/project%20-%20noti/js/noti.js"></script>
+
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/css/line-awesome.min.css" />
+    <link rel="preload"
+        href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/fonts/la-solid-900.woff2" as="font"
+        type="font/woff2" crossorigin="anonymous" />
+
+    <script src="js/copy-text.js"></script>
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
 </body>
 
 </html>
