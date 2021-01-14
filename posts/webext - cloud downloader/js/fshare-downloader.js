@@ -1,8 +1,10 @@
-console.info("Fshare downloader");
+console.info('Fshare downloader');
+
+let thread;
 
 function countDown(waitSeconds) {
-    var n = waitSeconds;
-    var thread = setInterval(() => {
+    let n = waitSeconds;
+    thread = setInterval(() => {
         if (n < 0) {
             clearInterval(thread);
         } else {
@@ -20,27 +22,27 @@ function waitAndDownload(downloadUrl, waitSeconds) {
 }
 
 function checkDownload() {
-    var form = document.querySelector('#form-download');
+    const form = document.querySelector('#form-download');
     if (!form) {
         console.log('Không phải trang download');
         return;
     }
 
-    var formData = new FormData(form);
-    var formDataString = new URLSearchParams(formData).toString();
-    var fetchOptions = {
+    const formData = new FormData(form);
+    const formDataString = new URLSearchParams(formData).toString();
+    const fetchOptions = {
         method: 'POST',
         body: formDataString,
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
     };
-    
-    var getLinkUrl = form.action;
+
+    const getLinkUrl = form.action;
     fetch(getLinkUrl, fetchOptions)
         .then(response => response.json())
         .then(data => {
             console.log(data);
-            var downloadUrl = data.url;
-            var waitSeconds = data.wait_time;
+            const downloadUrl = data.url;
+            const waitSeconds = data.wait_time;
             waitAndDownload(downloadUrl, waitSeconds);
             countDown(waitSeconds);
         });
@@ -50,18 +52,18 @@ checkDownload();
 
 function getLinksOfFolder(folderLink) {
     fetch(folderLink, {
-            headers: { 'accept': 'application/json, text/plain, */*' }
-        })
+        headers: { accept: 'application/json, text/plain, */*' }
+    })
         .then(response => response.json())
         .then(data => {
             console.log(data);
-            var text = '';
+            let text = '';
             data.items.forEach(e => {
                 console.log(e.linkcode, e.name);
-                text += 'https://www.fshare.vn/file/' + e.linkcode + "\n";
+                text += 'https://www.fshare.vn/file/' + e.linkcode + '\n';
             });
             console.log(text);
         });
 }
 
-//getLinksOfFolder('https://www.fshare.vn/api/v3/files/folder?linkcode=9N7T9JNFUONX&sort=type,name');
+// getLinksOfFolder('https://www.fshare.vn/api/v3/files/folder?linkcode=9N7T9JNFUONX&sort=type,name');

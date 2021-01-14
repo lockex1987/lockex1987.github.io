@@ -1,19 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
- <head> 
-  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
-  <title>Laravel Eloquent fill method</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <link rel="icon" href="../../images/favicon.png"> 
-  <link rel="stylesheet" href="../../css/style.css"> 
-  <meta name="description" content="Laravel Eloquent fill method">
- </head> 
- <body> 
-  <article> 
-   <p>Chúng ta cần lấy dữ liệu từ request, gán vào model và lưu vào CSDL.</p> 
-   <p>Kết hợp với phương thức $request-&gt;only().</p> 
-   <p>Code đang dài dòng như thế này.</p> 
-   <pre>$name = $request-&gt;input('name');
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Laravel Eloquent fill method">
+    <title>Laravel Eloquent fill method</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Laravel Eloquent fill method</h2>
+      <p>Chúng ta cần lấy dữ liệu từ request, gán vào model và lưu vào CSDL.</p>
+      <p>Kết hợp với phương thức <code>$request-&gt;only()</code>.</p>
+      <p>Code đang dài dòng như thế này.</p>
+      <pre class="out-of-box">// Lấy thông tin từ request<br>$name = $request-&gt;input('name');
 $email = $request-&gt;input('email');
 $phone_number = $request-&gt;input('phone_number');
 $address = $request-&gt;input('address');
@@ -22,9 +23,8 @@ $restrict_access_to_ips = $request-&gt;input('restrict_access_to_ips');
 $restrict_access_to_referers = $request-&gt;input('restrict_access_to_referers');
 $role = $request-&gt;input('role');
 $limit_by = $request-&gt;input('limit_by');
-
-$user = new ApiUser();
-<br>$user-&gt;name = $name;
+<br>// Tạo mới model
+$user = new ApiUser();<br>$user-&gt;name = $name;
 $user-&gt;email = $email;
 $user-&gt;phone_number = $phone_number;
 $user-&gt;address = $address;
@@ -33,34 +33,32 @@ $user-&gt;restrict_access_to_ips = $restrict_access_to_ips;
 $user-&gt;restrict_access_to_referers = $restrict_access_to_referers;
 $user-&gt;role = $role;
 $user-&gt;limit_by = $limit_by;
-
-$user-&gt;save();</pre> 
-   <p>Trở nên ngắn gọn như sau:</p> 
-   <pre>$arr = $request-&gt;only('name', 'email', 'phone_number', 'address', 'status',
-        'restrict_access_to_ips', 'restrict_access_to_referers', 'role', 'limit_by');
+$user-&gt;save();</pre>
+      <p>Trở nên ngắn gọn như sau:</p>
+      <pre>$arr = $request-&gt;only(<br>    'name',<br>    'email',<br>    'phone_number',<br>    'address',<br>    'status',
+    'restrict_access_to_ips',<br>    'restrict_access_to_referers',<br>    'role',<br>    'limit_by'<br>);
 $user = new ApiUser();
 $user-&gt;fill($arr);
-$user-&gt;save();</pre> 
-   <p>Gần gần giống với BeanUtils của Java. Nhưng có lẽ Java sẽ không bao giờ code ngắn gọn được như vậy.</p> 
-   <p>Chú ý phải cập nhật trường fillable của model.</p> 
-   <pre>&lt;?php
+$user-&gt;save();</pre>
+      <p>Gần gần giống với BeanUtils của Java. Nhưng có lẽ Java sẽ không bao giờ
+        code ngắn gọn được như vậy.</p>
+      <p>Chú ý phải cập nhật trường <code>fillable</code> của model.</p>
+      <pre>&lt;?php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 
-class ApiUser extends Model {
-
+class ApiUser extends Model<br>{
     protected $table = 'users';
 
-    protected $fillable = ['name', 'email', 'phone_number', 'address', 'wallet', 'created_at',
-                    'status', 'restrict_access_to_ips', 'restrict_access_to_referers',
-                    'role', 'limit_by'];
+    protected $fillable = [<br>        'name',<br>        'email',<br>        'phone_number',<br>        'address',<br>        'wallet',<br>        'created_at',
+        'status',<br>        'restrict_access_to_ips',<br>        'restrict_access_to_referers',
+        'role',<br>        'limit_by'<br>    ];
 
-    protected $hidden = ['password', 'remember_token'];
-}</pre> 
-   <p><br></p> 
-  </article> 
-  <script src="../../js/docs.js"></script>  
- </body>
+    protected $hidden = [<br>        'password',<br>        'remember_token'<br>    ];
+}</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
 </html>

@@ -1,48 +1,58 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
- <head> 
-  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
-  <title>Laravel Eloquent Serialization</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <link rel="icon" href="../../images/favicon.png"> 
-  <link rel="stylesheet" href="../../css/style.css"> 
-  <meta name="description" content="Laravel Eloquent Serialization">
- </head> 
- <body> 
-  <article> 
-   <h1>Eloquent: Serialization</h1> 
-   <p>Khi xây dựng JSON API, bạn sẽ cần phải convert model và relationship thành mảng hay JSON. Eloquent cung cấp sẵn các hàm tiện ích để thực hiện việc này, cũng như các thao tác xử lý attributes đi kèm trong serialization.</p> 
-   <p>Ở các bản Laravel sau này, việc này là tự động?</p> 
-   <p><a></a></p> 
-   <h2>Serializing Models &amp; Collections</h2> 
-   <p><a></a></p> 
-   <h3>Serializing thành Arrays</h3> 
-   <p>Khi convert một model và relationships của nó thành một mảng, bạn có thể sử dụng hàm <code>toArray</code>method. Hàm này thực hiện đệ quy, vì thế tất cả các attributes và relations (bao gồm relation của relations nữa) sẽ được convert thành mảng:</p> 
-   <pre><code>$user = App\User::with('roles')-&gt;first();
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Laravel Eloquent Serialization">
+    <title>Laravel Eloquent Serialization</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Eloquent Serialization</h2>
+      <h3>Giới thiệu</h3>
+      <p>Khi xây dựng JSON API, bạn sẽ cần phải convert model và relationship
+        thành mảng hay JSON. Eloquent cung cấp sẵn các hàm tiện ích để thực hiện
+        việc này, cũng như các thao tác xử lý attributes đi kèm trong
+        serialization.</p>
+      <p>Ở các bản Laravel sau này, việc này là tự động?</p>
+      <h3>Serialize Model và Collection</h3>
+      <h4>Serialize thành mảng</h4>
+      <p>Khi convert một model và relationship của nó thành một mảng, bạn có thể
+        sử dụng hàm <code>toArray</code>. Hàm này thực hiện đệ quy, vì thế tất
+        cả các attributes và relations (bao gồm relation của relations nữa) sẽ
+        được convert thành mảng:</p>
+      <pre>$user = App\User::with('roles')-&gt;first();
 
-return $user-&gt;toArray();</code></pre> 
-   <p>You may also convert entire collections of models to arrays:</p> 
-   <pre><code>$users = App\User::all();
+return $user-&gt;toArray();</pre>
+      <p>You may also convert entire collections of models to arrays:</p>
+      <pre>$users = App\User::all();
 
-return $users-&gt;toArray();</code></pre> 
-   <p><a></a></p> 
-   <h3>Serializing thành JSON</h3> 
-   <p>Để convert một model thành JSON, bạn có thể sử dụng hàm <code>toJson</code>. Giống như <code>toArray</code>, hàm <code>toJson</code> cũng đệ quy và tất cả attributes cùng với relations sẽ được convert thành JSON:</p> 
-   <pre><code>$user = App\User::find(1);
+return $users-&gt;toArray();</pre>
+      <h4>Serialize thành JSON</h4>
+      <p>Để convert một model thành JSON, bạn có thể sử dụng hàm <code>toJson</code>.
+        Giống như <code>toArray</code>, hàm <code>toJson</code> cũng đệ quy và
+        tất cả attributes cùng với relations sẽ được convert thành JSON:</p>
+      <pre>$user = App\User::find(1);
 
-return $user-&gt;toJson();</code></pre> 
-   <p>Ngoài ra, bạn có thể cast model hay collection thành string, việc này sẽ tự động gọi tới hàm <code>toJson</code>trong model hoặc collection:</p> 
-   <pre><code>$user = App\User::find(1);
+return $user-&gt;toJson();</pre>
+      <p>Ngoài ra, bạn có thể cast model hay collection thành string, việc này
+        sẽ tự động gọi tới hàm <code>toJson</code>trong model hoặc collection:</p>
+      <pre>$user = App\User::find(1);
 
-return (string) $user;</code></pre> 
-   <p>Vì model và collection được convert thành JSON khi cast thành string, bạn có thể trả về đối tượng Eloquent trực tiếp từ trong route hay controller:</p> 
-   <pre><code>Route::get('users', function () {
+return (string) $user;</pre>
+      <p>Vì model và collection được convert thành JSON khi cast thành string,
+        bạn có thể trả về đối tượng Eloquent trực tiếp từ trong route hay
+        controller:</p>
+      <pre>Route::get('users', function () {
     return App\User::all();
-});</code></pre> 
-   <p><a></a></p> 
-   <h2>Hiding Attributes From JSON</h2> 
-   <p>Sẽ có lúc bạn muốn giới hạn attributes như mật khẩu không được hiển thị trong kết quả array hay JSON sau khi convert. Để làm được điều đó, thêm vào thuộc tính <code>$hidden</code> vào trong model:</p> 
-   <pre><code>&lt;?php
+});</pre>
+      <h3>Ẩn thuộc tính khỏi JSON</h3>
+      <p>Sẽ có lúc bạn muốn giới hạn attributes như mật khẩu không được hiển thị
+        trong kết quả array hay JSON sau khi convert. Để làm được điều đó, thêm
+        vào thuộc tính <code>$hidden</code> vào trong model:</p>
+      <pre>&lt;?php
 
 namespace App;
 
@@ -55,11 +65,15 @@ class User extends Model
      *
      * @var  array
      */
-    protected $hidden = ['password'];
-}</code></pre> 
-   <p> Khi giấu relationships, sử dụng tên phương thức của relationship, chứ không phải thuộc tính động của nó.</p> 
-   <p>Một cách khác, bạn có thể sử dụng thuộc tính <code>visible</code> để định nghĩa một white-list của những thuộc tính đó được bao gồm trong mảng của model và JSON representation. Tất cả các thuộc tính khác sẽ bị hidden khi model được convert thành mảng hoặc JSON:</p> 
-   <pre><code>&lt;?php
+    protected $hidden = [<br>        'password'<br>    ];
+}</pre>
+      <p> Khi giấu relationship, sử dụng tên phương thức của relationship, chứ
+        không phải thuộc tính động của nó.</p>
+      <p>Một cách khác, bạn có thể sử dụng thuộc tính <code>visible</code> để
+        định nghĩa một white-list của những thuộc tính đó được bao gồm trong
+        mảng của model và JSON representation. Tất cả các thuộc tính khác sẽ bị
+        hidden khi model được convert thành mảng hoặc JSON:</p>
+      <pre>&lt;?php
 
 namespace App;
 
@@ -73,16 +87,20 @@ class User extends Model
      * @var  array
      */
     protected $visible = ['first_name', 'last_name'];
-}</code></pre> 
-   <h4>Temporarily Modifying Attribute Visibility</h4> 
-   <p>Nếu bạn muốn làm cho một số thuộc tính đã giấu có thể thấy được, sử dụng hàm <code>makeVisible</code>. Hàm <code>makeVisible</code> Hàm này trả về một đối tượng của model làm cho việc móc nối tiện hơn:</p> 
-   <pre><code>return $user-&gt;makeVisible('attribute')-&gt;toArray();</code></pre> 
-   <p>Tương tự, nếu bạn muốn tạo một số attributes visible trong một thể hiện model, bạn có thể sự dùng hàm <code>makeHidden</code>.</p> 
-   <pre><code>return $user-&gt;makeHidden('attribute')-&gt;toArray();</code></pre> 
-   <p><a></a></p> 
-   <h2>Appending Values To JSON</h2> 
-   <p>Thỉnh thoảng, khi casting models thành array hoặc JSON, bạn cũng có thể thêm vào thuộc tính mà không có trường lưu trong database. Để làm thế, đầu tiện cần phải khai báo một accessor:</p> 
-   <pre><code>&lt;?php
+}</pre>
+      <h3>Tạm thời thay đổi visibility của thuộc tính</h3>
+      <p>Nếu bạn muốn làm cho một số thuộc tính đã giấu có thể thấy được, sử
+        dụng hàm <code>makeVisible</code>. Hàm <code>makeVisible</code> Hàm
+        này trả về một đối tượng của model làm cho việc móc nối tiện hơn:</p>
+      <pre>return $user-&gt;makeVisible('attribute')-&gt;toArray();</pre>
+      <p>Tương tự, nếu bạn muốn tạo một số attributes visible trong một thể hiện
+        model, bạn có thể sự dùng hàm <code>makeHidden</code>.</p>
+      <pre>return $user-&gt;makeHidden('attribute')-&gt;toArray();</pre>
+      <h3>Thêm giá trị vào JSON</h3>
+      <p>Thỉnh thoảng, khi casting models thành array hoặc JSON, bạn cũng có thể
+        thêm vào thuộc tính mà không có trường lưu trong database. Để làm thế,
+        đầu tiện cần phải khai báo một accessor:</p>
+      <pre>&lt;?php
 
 namespace App;
 
@@ -99,9 +117,11 @@ class User extends Model
     {
         return $this-&gt;attributes['admin'] == 'yes';
     }
-}</code></pre> 
-   <p>Khi đã tạo được accessor, thêm vào tên của attribute vào thuộc tính <code>appends</code> trong model. Chú ý là tên của attribute là theo kiểu "snake case", mặc dù accessor được xác định bằng kiểu "camel case":</p> 
-   <pre><code>&lt;?php
+}</pre>
+      <p>Khi đã tạo được accessor, thêm vào tên của attribute vào thuộc tính <code>appends</code>
+        trong model. Chú ý là tên của attribute là theo kiểu "snake case", mặc
+        dù accessor được xác định bằng kiểu "camel case":</p>
+      <pre>&lt;?php
 
 namespace App;
 
@@ -115,10 +135,14 @@ class User extends Model
      * @var  array
      */
     protected $appends = ['is_admin'];
-}</code></pre> 
-   <p>Khi mà attribute được thêm vào trong danh sách <code>appends</code>, nó sẽ được thêm vào khi convert thành thành array hay JSON. Attribute trong mảng <code>appends</code> cũng sẽ tuần tự theo cấu hình <code>visible</code> và <code>hidden</code> trong model.</p> 
-   <p>Nguồn: <a href="https://laravel.com/docs/5.3/eloquent-serialization">https://laravel.com/docs/5.3/eloquent-serialization</a></p> 
-  </article> 
-  <script src="../../js/docs.js"></script>  
- </body>
+}</pre>
+      <p>Khi mà attribute được thêm vào trong danh sách <code>appends</code>,
+        nó sẽ được thêm vào khi convert thành thành array hay JSON. Attribute
+        trong mảng <code>appends</code> cũng sẽ tuần tự theo cấu hình <code>visible</code>
+        và <code>hidden</code> trong model.</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://laravel.com/docs/master/eloquent-serialization" target="_blank">laravel.com/docs/master/eloquent-serialization</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
 </html>

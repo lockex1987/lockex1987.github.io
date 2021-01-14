@@ -1,7 +1,7 @@
 console.info('Mega downloader');
 
 function checkDownloadButton() {
-    let dlButton = document.querySelector('.download-file');
+    const dlButton = document.querySelector('.download-file');
     if (dlButton != null) {
         // Nếu có nút thì thực hiện click để download
         dlButton.click();
