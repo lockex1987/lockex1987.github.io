@@ -1,6 +1,6 @@
 export default [
     { name: 'js', y: 117 },
-    { name: 'ui', y: 112 },
+    { name: 'ui', y: 110 },
     { name: 'laravel', y: 78 },
     { name: 'php', y: 61 },
     { name: 'project', y: 42 },

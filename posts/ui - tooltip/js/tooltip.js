@@ -1,14 +1,14 @@
-document.addEventListener('mousemove', (e) => {
-  var div = e.target;
-  if (div.classList.contains('follow-mouse') && div.classList.contains('tooltip-container')) {
-    //console.log(div.className);  
-    var tooltip = div.querySelector('.tooltip');
-    if (tooltip) {
-      var containerRect = div.getBoundingClientRect();
-      var xOffset = 10;
-      var yOffset = 20;
-      tooltip.style.top = (e.clientY - containerRect.top - xOffset) + 'px';
-      tooltip.style.left = (e.clientX - containerRect.left + yOffset) + 'px';
+document.addEventListener('mousemove', (evt) => {
+    const div = evt.target;
+    if (div.classList.contains('tooltip-follow-mouse') && div.classList.contains('tooltip-container')) {
+        // console.log(div.className);
+        const tooltip = div.querySelector('.tooltip');
+        if (tooltip) {
+            const containerRect = div.getBoundingClientRect();
+            const xOffset = 10;
+            const yOffset = 20;
+            tooltip.style.top = (evt.clientY - containerRect.top - xOffset) + 'px';
+            tooltip.style.left = (evt.clientX - containerRect.left + yOffset) + 'px';
+        }
     }
-  }
 });

@@ -4,26 +4,35 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="tooltip" />
+    <meta name="description" content="follow mouse" />
 
     <title>Tooltip</title>
 
     <link rel="icon" href="../../images/favicon.png" />
     <link rel="stylesheet" href="../../css/style.css" />
     <link rel="stylesheet" href="css/tooltip.css">
-    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <article>
         <h2>Tooltip</h2>
-        <p>Tính năng</p>
-        <p>highlight</p>
 
-        <p>Transparent, HTML</p>
-        <p>Hiệu ứng xuất hiện</p>
-        <p>Move theo mouse</p>
-        <p>Dùng để chú thích, giải nghĩa dấu ?</p>
+        <h3>Tính năng</h3>
+        <ul>
+			<li>Không cần khởi tạo bằng JS</li>
+            <li>Highlight</li>
+            <li>Transparent background</li>
+            <li>HTML</li>
+            <li>Hiệu ứng xuất hiện (fade, expand)</li>
+            <li>Move theo mouse</li>
+        </ul>
+
+        <h3>Cách sử dụng</h3>
+        <p>Thêm class <code>.tooltip-container</code> vào phân tử.</p>
+        <p>Trong phần tử, thêm một thẻ <code>span</code> hoặc <code>div</code> con có class <code>.tooltip</code>.</p>
+        <p>Thêm các class <code>.left</code>, <code>.right</code>, <code>.top</code>, <code>.bottom</code>
+        vào <code>.tooltip-container</code> để điều chỉnh vị trí của tooltip.</p>
+        
         <h3>Demo</h3>
 
 
@@ -61,19 +70,19 @@
 
         <h4>Fade</h4>
         <p>
-            <div class="tooltip-container fade">
+            <div class="tooltip-container tooltip-fade">
                 HTML
                 <div class="tooltip">
                     <u>HyperText</u> Markup Language
                 </div>
             </div>
-            <div class="tooltip-container fade">
+            <div class="tooltip-container tooltip-fade">
                 CSS
                 <div class="tooltip">
                     Cascading StyleSheets
                 </div>
             </div>
-            <div class="tooltip-container fade">
+            <div class="tooltip-container tooltip-fade">
                 JS
                 <div class="tooltip">
                     JavaScript
@@ -83,19 +92,19 @@
 
         <h4>Expand</h4>
         <p>
-            <div class="tooltip-container expand">
+            <div class="tooltip-container tooltip-expand">
                 HTML
                 <div class="tooltip">
                     HyperText Markup Language
                 </div>
             </div>
-            <div class="tooltip-container expand">
+            <div class="tooltip-container tooltip-expand">
                 CSS
                 <div class="tooltip">
                     Cascading StyleSheets
                 </div>
             </div>
-            <div class="tooltip-container expand">
+            <div class="tooltip-container tooltip-expand">
                 JS
                 <div class="tooltip">
                     JavaScript
@@ -105,7 +114,7 @@
 
         
         
-        <h4>Đoạn văn</h4>
+        <h4>Tooltip trong một đoạn văn</h4>
         <p>
 
             <div class="tooltip-container">
@@ -153,8 +162,9 @@
 
         </p>
 
-        <h4>Di chuyển theo chuột</h4>
-        <div style="width: 100%; height: 50px; background-color: beige;" class="tooltip-container follow-mouse">
+        <h3>Di chuyển theo chuột</h3>
+        <div style="height: 50px;"
+                class="tooltip-container tooltip-follow-mouse bg-primary w-100">
             <div class="tooltip">
                 Follow mouse
             </div>

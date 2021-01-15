@@ -1,7 +1,7 @@
 // Category và ảnh đại diện
 const CAT_THUMBS = {
     linux: 'programming/linux.svg',
-    bootstrap: 'programming/bootstrap.svg',
+    bootstrap: 'programming/bootstrap-5.svg',
     js: 'programming/js.svg',
     java: 'programming/java.svg',
 	css: 'programming/sass.svg', // css3
