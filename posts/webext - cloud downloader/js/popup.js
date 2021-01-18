@@ -4,13 +4,15 @@
 function getUrls() {
     // Nhập mảng URL vào textarea
     const urls = [];
-    const arr = document.querySelector('#linksInput').value.split('\n');
+    const linksInput = document.querySelector('#linksInput');
+    const arr = linksInput.value.split('\n');
     arr.forEach(s => {
         s = s.trim();
         if (s) {
             urls.push(s);
         }
     });
+    linksInput.value = '';
     return urls;
 }
 
@@ -54,11 +56,25 @@ chrome.runtime.sendMessage({
 // Hiển thị danh sách các URL đang download
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.message == 'stats') {
-        // console.log(request.queue);
-        let text = '';
-        request.queue.forEach(s => {
-            text += s + '\n';
+        const linksDiv = document.querySelector('#linksDiv');
+        linksDiv.innerHTML = '';
+        request.queue.forEach((s, idx) => {
+            const div = document.createElement('div');
+            div.className = 'mb-2 text-truncate';
+
+            const orderTag = document.createElement('span');
+            orderTag.className = 'text-muted mr-2';
+            orderTag.textContent = '#' + (idx + 1);
+
+            const aTag = document.createElement('a');
+            // div.className = 'd-block';
+            aTag.href = s;
+            aTag.target = '_blank';
+            aTag.textContent = s;
+
+            div.appendChild(orderTag);
+            div.appendChild(aTag);
+            linksDiv.appendChild(div);
         });
-        document.querySelector('#linksInput').value = text;
     }
 });

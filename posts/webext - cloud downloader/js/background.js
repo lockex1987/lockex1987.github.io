@@ -27,7 +27,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     if (request.message == 'clearDownloads') {
-        downloadIds = [];
         queue = [];
         sendStats();
     }
@@ -53,7 +52,6 @@ function sendStats() {
 function processQueue() {
     if (queue.length > 0) {
         const url = queue.shift();
-        // console.log('Mở tab', url);
         openNewTab(url);
     }
     sendStats();
@@ -93,6 +91,5 @@ function openNewTab(newUrl) {
 chrome.browserAction.onClicked.addListener(function (tab) {
     // Lấy địa chỉ URL của trang web nằm trong extension
     const optionsUrl = chrome.extension.getURL('popup.html');
-
     openNewTab(optionsUrl);
 });
