@@ -11,7 +11,7 @@ header('Content-type: application/json');
 
 if (move_uploaded_file($fileTmpLoc, $rootFolder . '/' . $fileName)) {
     echo json_encode([
-        'returnCode' => 1,
+        'returnCode' => 0,
         'fileName' => $fileName,
         'fileSize' => $fileSize
     ]);

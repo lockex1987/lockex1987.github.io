@@ -3,7 +3,6 @@ include 'config.php';
 
 $folder = $_GET['folder'];
 
-
 // Đọc các file trong thư mục và đẩy vào mảng
 $files = scandir($rootFolder . $folder);
 

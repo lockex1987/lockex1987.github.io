@@ -63,6 +63,9 @@ export default {
     },
 
     methods: {
+        /**
+         * Download file.
+         */
         download() {
             try {
                 const request = new XMLHttpRequest();
@@ -86,6 +89,10 @@ export default {
             }
         },
 
+        /**
+         * Cap nhat trang thai download.
+         * @param {Event} evt Doi tuong Event
+         */
         updateProgress(evt) {
             try {
                 this.percent = (evt.loaded / evt.total) * 100;

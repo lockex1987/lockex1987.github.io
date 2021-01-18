@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="date" content="2021-01-18 22:51:00">
+    <meta name="description" content="Upload từ iPad sang máy tính, download từ máy tính sang iPad bang Vue va PHP; file type icon">
+
+    <title>File manager</title>
+
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="css/file-icon.css">
+</head>
+
+<body>
+    <article class="mw-none my-0">
+        <h2>File manager</h2>
+
+        <div id="app"
+                v-cloak>
+            <div class="">
+                <div class="mb-3 d-flex justify-content-between">
+                    <div class="font-weight-500 text-success">
+                        {{folder}}
+                    </div>
+        
+                    <div>
+                        <label class="btn btn-primary">
+                            Upload
+        
+                            <input type="file"
+                                    ref="uploadFileInput"
+                                    multiple
+                                    class="d-none"
+                                    @change="startUploadFiles()">
+                        </label>
+                    </div>
+                </div>
+        
+                <!-- Vùng danh sách file ĐANG upload -->
+                <div class="mt-5"
+                        v-if="uploadingFiles.length > 0">
+                    <h3>Uploading</h3>
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tên</th>
+                                <th class="text-right">Dung lượng</th>
+                                <th>Tiến trình</th>
+                            </tr>
+                        </thead>
+        
+                        <tbody>
+                            <tr v-for="(f, idx) in uploadingFiles">
+                                <td>
+                                    {{idx + 1}}
+                                </td>
+                                <td>
+                                    {{f.name}}
+                                </td>
+                                <td class="text-right">
+                                    {{f.size}}
+                                </td>
+                                <td>
+                                    <div class="progress"
+                                            style="height:10px; width: 250px;">
+                                        <div class="progress-bar"
+                                                style="width:0%; height:10px"
+                                                :id="'progressBar' + idx"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        
+                <div class="text-right mb-3">
+                    <input type="text"
+                            v-model="searchQuery"
+                            class="form-control d-inline-block"
+                            style="width: 250px"
+                            placeholder="Tim kiem"/>
+                </div>
+                
+                <!-- Danh sach file hien tai -->
+                <div v-if="files">
+                    <div class="text-danger mb-3"
+                            v-if="filteredFiles.length == 0">
+                        Không có file nào
+                    </div>
+        
+                    <div v-else>        
+                        <div v-if="folder != '/'">
+                            <a href="javascript:;"
+                                    @click="gotoParentFolder()"
+                                    class="text-decoration-none">
+                                ..
+                            </a>
+                        </div>
+        
+                        <div v-for="(f, idx) in filteredFiles"
+                                class="d-lg-flex justify-content-between"
+                                :class="{ 'mt-2 border-top pt-2': idx > 0 || folder != '/' }">
+                            <div>
+                                <a href="javascript:;"
+                                        @click="openFolder(f)"
+                                        class="file-icon file-icon-folder text-decoration-none"
+                                        v-if="f.isDir">
+                                    {{f.name}}
+                                </a>
+
+                                <a :href="'/data' + folder + f.name"
+                                        class="file-icon text-decoration-none"
+                                        v-else>
+                                    <!-- @click="f.download = true" -->
+                                    {{f.name}}
+                                </a>
+
+                                <download-progress
+                                        :url="f.url"
+                                        :file-name="f.name"
+                                        v-if="f.download"/>
+                            </div>
+
+                            <div class="text-right text-muted font-size-0.875">
+                                {{f.size}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="../../js/common.js"></script>
+
+    <script type="module" src="js/script.js"></script>
+
+    <!--script src="../../js/docs.js"></script-->
+</body>
+</html>
