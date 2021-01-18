@@ -11,74 +11,37 @@
   <body>
     <article>
       <h2>Kỹ thuật phân nhánh trong Git</h2>
-      <h3>Branch trong Git là gì?</h3>
-      <p>Khi bắt đầu khởi tạo một repository hoặc clone một repository, bạn sẽ
-        có một nhánh (branch) chính tên là <code>master</code>&nbsp;(bạn có thể
-        hiểu master là một cái thân cây). Đây là branch&nbsp;mà sẽ chứa toàn bộ
-        các mã nguồn chính trong repository.</p>
-      <p>Đó là lý do tại sao, ở các phần trước khi chúng ta push hoặc pull hay
-        làm một số việc khác thì lại có tham số <code>master</code>&nbsp;trong
-        câu lệnh, đó nghĩa là chúng ta đang thực hiện thao tác trên branch&nbsp;<code>master</code>.</p>
-      <figure> <img src="images/9-git-branching.png" alt="git-branching"><figcaption>
-          Nhánh <code>master</code> là nhánh chính mặc định trong working tree.<br>
-          Bạn có thể tạo ra một (hoặc nhiều nhánh mới) với tên là <code>develop</code>
-          chẳng hạn.</figcaption></figure>
-      <p>Bây giờ nếu bạn muốn tạo một sự thay đổi nào đó mà có thể trực tiếp sử
-        dụng trên working tree hoặc commit, push lên repository mà không ảnh
-        hưởng đến branch&nbsp;<code>master</code> thì sẽ cần tạo ra một branch
-        mới với tên là <code>develop</code>&nbsp;chẳng hạn. Và từ đó mỗi khi
-        bạn thực hiện lệnh checkout vào branch nào đó thì toàn bộ mã nguồn trên
-        working tree của bạn sẽ được đổi sang môi trường dành cho branch đang
-        checkout.</p>
-      <p>Giờ mình lấy một ví dụ đơn giản, bên branch <code>master</code>&nbsp;bạn
-        tạo một tập tin <code>master.html</code> rồi commit lên, lúc này khi
-        bạn qua cái branch <code>develop</code>&nbsp;(đã được tạo trước đó) thì
-        cái tập tin <code>master.html</code> kia sẽ không có vì nó đã được
-        commit bởi branch<code> master</code>, không liên quan gì tới<code>
-          develop</code>. Tương tự, các thay đổi của bạn bên <code>develop</code>&nbsp;cũng
-        sẽ không ảnh hưởng gì tới bên <code>master</code>&nbsp;cả.&nbsp;Điều
-        này có một cái thú vị là nó tương tác trực tiếp trên máy tính của bạn,
-        ví dụ tập tin <code>index.html</code> của <code>master</code>&nbsp;có
-        nội dung khác và <code>index.html</code> bên <code>develop</code>&nbsp;thì
-        khi bạn dùng lệnh checkout là nội dung trên máy tính nó tự đổi tương
-        ứng, đó là lý do bạn có thể test nhiều phiên bản trên máy tính mà không
-        cần đổi thư mục, chỉ cần checkout cái branch.</p>
-      <p>Giải thích thì hơi dài dòng, cứ vào làm ví dụ cụ thể cho dễ hiểu nhé.</p>
-      <h3>HEAD – con trỏ vị trí</h3>
-      <p>Trước khi nói tiếp về branch thì mình xin nói qua một xíu về<code> HEAD</code>.
-        Trong Git, từ khóa HEAD sẽ tượng trưng cho con trỏ chỉ cho bạn biết bạn
-        đang nằm ở đâu. Bây giờ hãy xem lại bài hướng dẫn đọc log commit của
-        mình, tìm tới phần tối ưu log và cài vào. Sau đó gõ lệnh <code>git log</code>
-        thì bạn sẽ thấy từ khóa HEAD cho bạn biết bạn đang ở đâu trong working
-        tree.</p>
-      <p><img src="images/9-git-head-tips.png" alt="git-head-tips"></p>
-      <p>Như ảnh trên thì có nghĩa là mình đang ở branch <code>master</code>.</p>
-      <p>Ngoài ra còn một cách khác để kiểm tra đó là đọc tập tin&nbsp;<code>.git/HEAD</code>:</p>
-      <pre>cat .git/HEAD
-</pre>
+      <h3>Giới thiệu branch trong Git</h3>
+      <p>Branch là các nhánh code, các phiên bản code khác nhau trong cùng
+        repository.</p>
+      <p>Mặc định bạn sẽ có branch chính là <code>master</code>.</p>
+      <p>Bạn có thể tự tạo một branch mới, ví dụ <code>develop</code>.</p>
+      <figure> <img src="images/9-git-branching.png" alt="git-branching"></figure>
+      <br>
+      <h3>Liệt kê danh sách branch</h3>
+      <p>Bạn có thể xem toàn bộ các branch mà bạn đang có bằng lệnh:</p>
+      <pre>git branch</pre>
       <h3>Tạo mới một branch</h3>
-      <p>Trước tiên bạn có thể xem toàn bộ các branch mà bạn đang có trong
-        working tree bằng lệnh <code>git branch</code>. Sau đó nếu muốn tạo
-        thêm branch, chỉ cần gõ lệnh <code>git branch &lt;tên_brand&gt;</code>.
-        Ví dụ mình cần tạo branch<code> develop</code>.</p>
+      <p>Để tạo thêm branch bạn dùng lệnh:</p>
+      <pre> git branch &lt;tên_brand&gt;</pre>
+      <p>Ví dụ mình cần tạo branch<code> develop</code>.</p>
       <pre>git branch develop</pre>
       <p>Bây giờ bạn có thể gõ lại lệnh <code>git branch</code>&nbsp;một lần
         nữa để xem sẽ thấy branch tên <code>develop</code> xuất hiện.</p>
       <h3>Checkout một branch</h3>
-      <p>Checkout ở đây nghĩa là bạn truy cập kiểm tra mã nguồn trong branch đó
-        để làm việc đấy. Để làm việc này, bạn sử dụng lệnh <code>git checkout
-          &lt;tên_branch</code>&gt;.</p>
+      <p>Checkout ở đây nghĩa là bạn truy cập vào mã nguồn trong branch nào đó
+        để làm việc đấy. Để làm việc này, bạn sử dụng lệnh:</p>
+      <pre>git checkout &lt;tên_branch&gt;</pre>
+      <p>Ví dụ:</p>
       <pre>git checkout develop</pre>
-      <p>Lúc này bạn đã đổi sang branch <code>develop</code>&nbsp;rồi, để kiểm
-        tra chắc ăn bạn có thể gõ các lệnh kiểm tra HEAD ở trên.</p>
-      <p>Bây giờ bạn sẽ làm việc trong branch mới chuyển hay nói đúng hơn là bạn
-        đang làm việc ở chỗ mà cái HEAD đang trỏ tới. Để chuyển về branch chính
-        thì gõ <code>git checkout master</code>.</p>
-      <p>Bây giờ bạn thử tạo một tập tin nào đó, sau đó commit ở branch <code>develop</code>&nbsp;rồi
-        chuyển về branch master sẽ thấy những gì bạn đã làm ở branch <code>develop</code>&nbsp;hoàn
-        toàn vô nghĩa ở <code>master</code>. Dưới đây là ví dụ về việc ở branch
-        <code>master</code>&nbsp;không có tập tin <code>develop.html</code>
-        được tạo ra từ branch&nbsp;<code>develop</code>.</p>
+      <p>Lúc này bạn đã đổi sang branch <code>develop</code>&nbsp;rồi.</p>
+      <p>Để chuyển về branch chính thì gõ:</p>
+      <pre>git checkout master</pre>
+      <p>Bây giờ bạn thử tạo một tập tin nào đó, sau đó commit ở branch <code>develop</code>;
+        rồi chuyển về branch <code>master</code> sẽ thấy những gì bạn đã làm ở
+        branch <code>develop</code>&nbsp;hoàn toàn vô nghĩa ở <code>master</code>.
+        Dưới đây là ví dụ về việc ở branch <code>master</code>&nbsp;không có
+        tập tin <code>develop.html</code> được tạo ra từ branch&nbsp;<code>develop</code>.</p>
       <pre>$ touch develop.html
 $ git add .
 $ git commit -m "Commit develop.html from develop branch"
@@ -95,10 +58,10 @@ faq.html README.md tag.html version1.txt</pre>
         áp dụng thay đổi ở branch bạn đang trỏ tới.</p>
       <h3>Gộp dữ liệu từ một branch</h3>
       <p>Nếu mỗi branch nó nằm riêng như vậy thì bạn muốn sử dụng các thay đổi ở
-        một branch nào đó cho <code>master</code> thì sao? À, chúng ta có thể
-        sử dụng lệnh <code>git merge</code> để chuyển dữ liệu từ một branch nào
-        đó về branch mà bạn đang trỏ đến. Lưu ý là ở branch cần chuyển về đã
-        phải được commit. Ví dụ mình cần chuyển dữ liệu từ branch <code>develop</code>
+        một branch nào đó cho <code>master</code> thì sao? Chúng ta có thể sử
+        dụng lệnh <code>git merge</code> để chuyển dữ liệu từ một branch nào đó
+        về branch mà bạn đang trỏ đến. Lưu ý là ở branch cần chuyển về đã phải
+        được commit. Ví dụ mình cần chuyển dữ liệu từ branch <code>develop</code>
         về <code>master</code> thì sẽ làm lần lượt các lệnh sau:</p>
       <pre>$ git checkout master
 Already on 'master'
@@ -130,9 +93,9 @@ Deleted branch develop (was 8c68896).</pre>
       <pre>git pull &lt;remote_name&gt; &lt;branch_name&gt;</pre>
       <p>Đẩy code lên remote:</p>
       <pre>git push &lt;remote_name&gt; &lt;branch_name&gt;</pre>
-      <p>Tạo một branch trên remote từ local (lệnh này thực hiện 1 lần):</p>
+      <p>Tạo một branch trên remote từ local (lệnh này thực hiện một lần):</p>
       <pre>git push -u origin develop</pre>
-      <p>Lấy một branch từ remote về local (lệnh này thực hiện 1 lần):</p>
+      <p>Lấy một branch từ remote về local (lệnh này thực hiện một lần):</p>
       <pre>git fetch<br>git checkout branchxyz</pre>
       <p>Chú ý: local phải chưa có branch trùng tên.</p>
       <h3>Tham khảo</h3>

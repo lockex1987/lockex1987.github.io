@@ -12,8 +12,25 @@ function getUrls() {
             urls.push(s);
         }
     });
+
     linksInput.value = '';
+    linksInput.style.height = '100px';
+
     return urls;
+}
+
+/**
+ * Tự động điều chỉnh độ cao của textarea cho khớp với nội dung.
+ */
+function checkAutoGrow() {
+    const linksInput = document.querySelector('#linksInput');
+    const minHeight = 100;
+    linksInput.addEventListener('input', () => {
+        const scrollHeight = linksInput.scrollHeight;
+        if (scrollHeight > minHeight) {
+            linksInput.style.height = (scrollHeight + 5) + 'px';
+        }
+    });
 }
 
 // Click nút 'Start download'
@@ -78,3 +95,5 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         });
     }
 });
+
+checkAutoGrow();
