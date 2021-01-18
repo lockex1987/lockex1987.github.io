@@ -1,80 +1,48 @@
 /**
- * Click nút "Download".
- */
-function handleDownload() {
-    document.querySelector('#startButton').addEventListener('click', () => {
-        // Nhập mảng JSON { url, name } vào textarea
-        const urls = JSON.parse(document.querySelector('#linksInput').value);
-
-        // Thông báo cho background danh sách URL
-        chrome.runtime.sendMessage({
-            message: 'addToQueue',
-            urls: urls
-        });
-    });
-}
-
-/**
  * Click nút "Clear".
  */
 function handleClear() {
     document.querySelector('#clearDownloads').addEventListener('click', () => {
+        // Thông báo background
         chrome.runtime.sendMessage({
             message: 'clearDownloads'
         });
 
+        // Cập nhật trạng thái
         const progressBar = document.querySelector('#progressBar');
         progressBar.style.width = '0%';
     });
 }
 
 /**
- * Cập nhật lại một giá trị thống kê.
- * @param String fieldName 
- * @param Number newValue 
- */
-function updateStat(fieldName, newValue) {
-    let el = document.querySelector('#' + fieldName);
-
-	/*
-    let cssClass = 'highlighted';
-    if (el.textContent != newValue) {
-        el.classList.remove(cssClass);
-        setTimeout(() => {
-            el.classList.add(cssClass);
-        }, 0);
-    }
-	*/
-    el.textContent = newValue;
-}
-
-/**
- * Click nút 'Choose file'
+ * Click nút 'Choose file'.
  */
 function handleOpenChooseFile() {
+    // Mô phỏng click vào input[type=file] để bật dialog chọn file
     document.querySelector('#chooseFileButton').addEventListener('click', () => {
         document.querySelector('#fileToLoad').click();
     });
 }
 
 /**
- * Khi chọn file.
+ * Xử lý khi chọn file.
  */
 function handleFileChosen() {
     const fileInput = document.querySelector('#fileToLoad');
     fileInput.addEventListener('change', () => {
         const noOfFile = fileInput.files.length;
         let count = 0;
-        let urls = [];
         // console.log(noOfFile);
         for (let i = 0; i < noOfFile; i++) {
-            let fileToLoad = fileInput.files[i];
+            const fileToLoad = fileInput.files[i];
+
             loadFileAsText(fileToLoad, (textFromFileLoaded) => {
-                urls = urls.concat(JSON.parse(textFromFileLoaded));
+                const urls = JSON.parse(textFromFileLoaded);
                 count++;
                 // console.log(count);
                 if (count == noOfFile) {
                     fileInput.value = '';
+
                     // Thông báo cho background danh sách URL
                     chrome.runtime.sendMessage({
                         message: 'addToQueue',
@@ -92,9 +60,9 @@ function handleFileChosen() {
  * @param Function callback Hàm gọi sau khi lấy được xong nội dung file
  */
 function loadFileAsText(fileToLoad, callback) {
-    let fileReader = new FileReader();
+    const fileReader = new FileReader();
     fileReader.onload = (fileLoadedEvent) => {
-        let textFromFileLoaded = fileLoadedEvent.target.result;
+        const textFromFileLoaded = fileLoadedEvent.target.result;
         callback(textFromFileLoaded);
     };
     fileReader.readAsText(fileToLoad, 'UTF-8');
@@ -111,7 +79,7 @@ function listenToStatsEvent() {
                 'numQueued',
                 'numFinished'
             ].forEach((fieldName) => {
-                let newValue = request[fieldName];
+                const newValue = request[fieldName];
                 updateStat(fieldName, newValue);
             });
 
@@ -133,6 +101,27 @@ function listenToStatsEvent() {
 }
 
 /**
+ * Cập nhật lại một giá trị thống kê.
+ * @param String fieldName
+ * @param Number newValue
+ */
+function updateStat(fieldName, newValue) {
+    const el = document.querySelector('#' + fieldName);
+
+    /*
+    let cssClass = 'highlighted';
+    if (el.textContent != newValue) {
+        el.classList.remove(cssClass);
+        setTimeout(() => {
+            el.classList.add(cssClass);
+        }, 0);
+    }
+    */
+
+    el.textContent = newValue;
+}
+
+/**
  * Lấy thông tin thống kê từ background.
  */
 function getStats() {
@@ -142,11 +131,9 @@ function getStats() {
 }
 
 function init() {
-    handleDownload();
     handleClear();
     handleOpenChooseFile();
     handleFileChosen();
-
     listenToStatsEvent();
     getStats();
 }

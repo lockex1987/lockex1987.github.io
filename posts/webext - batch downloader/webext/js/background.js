@@ -109,7 +109,7 @@ function listenToEventFromDownloadProcess() {
                     if (downloadDelta.canResume.current) {
                         chrome.downloads.resume(downloadDelta.id);
                     } else {
-                        
+
                     }
                     */
                     errors.push(ele);
@@ -148,7 +148,6 @@ function openPage(url) {
         }
     );
     */
-    
     chrome.windows.create({
         url: url,
         type: 'popup',
@@ -162,7 +161,7 @@ function openPage(url) {
  */
 function openMainPageWhenClick() {
     chrome.browserAction.onClicked.addListener(() => {
-        let mainPageUrl = chrome.extension.getURL('main.html');
+        const mainPageUrl = chrome.extension.getURL('main.html');
         openPage(mainPageUrl);
     });
 }

@@ -3,8 +3,9 @@
 
 <head>
     <meta charset="UTF-8" />
-	<link rel="stylesheet" href="https://lockex1987.github.io/css/style.css" />
-    <link rel="stylesheet" href="css/popup.css" />
+    <!--link rel="stylesheet" href="https://lockex1987.github.io/css/style.css" /-->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/main.css" />
     <title>Batch downloader</title>
 </head>
 
@@ -12,9 +13,7 @@
     <article>
         <h2>Batch downloader</h2>
 
-        <textarea id="linksInput"
-                class="form-control d-none"></textarea>
-
+        <!-- Các nút điều khiển -->
         <div class="mt-3 d-md-flex">            
             <input id="fileToLoad"
                     type="file"
@@ -33,10 +32,11 @@
 		
             <button id="clearDownloads"
                     class="btn btn-danger ml-auto">
-				Clear downloads
+				Clear download
 			</button>
         </div>
 
+        <!-- Thống kê -->
         <div class="d-md-flex mt-3">
             <div class="">
                 <span class="text-muted">
@@ -62,13 +62,15 @@
                         id="numFinished"></span>
             </div>
         </div>
-		
+        
+        <!-- Tiến độ -->
 		<div class="progress mt-3">
             <div class="progress-bar progress-bar-striped"
                     style="width: 0%;"
                     id="progressBar"></div>
 		</div>
 
+        <!-- Danh sách lỗi -->
         <pre id="errors"
                 class="mt-3 custom-scrollbar"></pre>
     </article>
