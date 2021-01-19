@@ -56,7 +56,7 @@ const template = `
 
                 <div class="date text-success mt-1 font-size-0.875"
                         v-if="p.date">
-					<i class="la la-calendar mr-1"></i>
+                    <i class="la la-calendar mr-1"></i>
                     {{normalizeDate(p.date)}}
                 </div>
             <div>

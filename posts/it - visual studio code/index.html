@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="VSCode">
+    <meta name="description" content="vscode, prettier, vetur, eslint">
     <title>Công cụ soạn thảo Visual Studio Code</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -12,12 +12,18 @@
     <article>
       <h2>Công cụ soạn thảo Visual Studio Code</h2>
       <p>Visual Studio Code (VSCode) là một trong những công cụ soạn thảo văn
-        bản lập trình tốt nhất cho web (HTML, CSS, JavaScript), PHP. VSCode nhẹ,
+        bản lập trình tốt nhất cho web (HTML, CSS, JS), PHP,... VSCode nhẹ,
         không nặng nề như Eclipse, NetBeans,...</p>
       <p>Dưới đây là một số mẹo về VSCode cần thiết mà bạn nên tìm hiểu nếu muốn
         tăng năng suất và luồng công việc của mình.</p>
+      <h3>Cài đặt</h3>
+      <p>Download file cài đặt tại địa chỉ sau:</p>
+      <p><a href="https://code.visualstudio.com/" target="_blank">Visual Studio
+          Code - Code Editing. Redefined</a> </p>
+      <div class="mb-3"> <img src="images/download.png" alt=""> </div>
+      <p>Download đúng file với hệ điều hành và tiến hành cài đặt bình thường. </p>
       <h3>Tính năng sửa CONFLICT</h3>
-      <p><img src="https://images.viblo.asia/2b1e3f2f-4b80-4117-815b-d531c36c9b12.png"></p>
+      <div class="mb-3"> <img src="images/resolve%20conflict.png" alt=""> </div>
       <p>Bạn chỉ cần tìm chọn tìm kiếm trên tất cả các file có dấu xương cá <code>&lt;&lt;&lt;&lt;&lt;</code>.
         Lúc này VSCode sẽ hiện thị 2 phần, phía trên là code của nhánh chính
         (thường là master), còn phía dưới là code của nhánh hiện tại. Sẽ có 4 sự
@@ -35,15 +41,15 @@
       <h3>Làm chủ bảng lệnh</h3>
       <p>VSCode có bảng lệnh, cho phép người dùng truy cập vào các lệnh khác
         nhau bằng cách gõ lệnh thay vì điều hướng đến menu sử dụng con chuột.</p>
-      <p><img src="https://images.viblo.asia/e7bee2e9-1caf-4f23-87f1-150868e61d63.png"></p>
+      <div class="mb-3"><img src="images/command%20panel.png"></div>
       <p>Bạn có thể hiển thị bảng lệnh này bằng cách sử dụng phím tắt <code>Ctrl
           + Shift + P</code>, sau đó chỉ cần nhập những gì muốn tìm kiếm (ví dụ
         như "close") và các tùy chọn sẽ cập nhật trong thời gian thực. Một số
         lệnh được phân loại (ví dụ: "File", Git","Terminal",...), vì vậy bạn có
         thể sử dụng lệnh đó để định vị các lệnh mà bạn không thể tìm thấy.</p>
       <h3>Mở một dự án</h3>
-      <p><img src="https://images.viblo.asia/b3d3cd09-72b8-40d2-9b6d-785a9959b2f4.png"></p>
-      <p> <img src="https://images.viblo.asia/d2d1be6f-a7ab-415d-8e04-4e37180f2f96.png"></p>
+      <div class="mb-3"><img src="images/open%20folder%201.png"></div>
+      <div class="mb-3"><img src="images/open%20folder%202.png"></div>
       <p>Nếu click vào Explorer trong thanh điều hướng bên trái, bạn sẽ thấy một
         bảng con mới mở ra. Bảng con này được chia thành hai phần: Open Editors
         (tức là các file và tài liệu hiện đang được mở) và No Folder Opened.</p>
@@ -184,35 +190,195 @@
       <p>Chuột phải vùng Maven Projects, thực hiện các thao tác Maven: clean,
         compile, package, install.</p>
       <p>Nhấn F5 để chạy, chọn Java,</p>
-      <h3>Các extension dùng trong PHP</h3>
+      <h3>Các extension hay dùng</h3>
+      <div class="mb-3"> <img src="images/essential%20extensions.png" alt=""> </div>
+      <h4>Các extension dùng trong PHP</h4>
       <p><a href="https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client"
           target="_blank">PHP Intelephense</a></p>
       <p><a href="https://marketplace.visualstudio.com/items?itemName=kakumei.php-xdebug"
           target="_blank">Xdebug</a></p>
-      <p><br>
-      </p>
-      <h3>Các extension dùng trong JS</h3>
+      <h4>Các extension dùng trong JS</h4>
       <p><a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint"
           target="_blank">ESLint</a></p>
-      <p><br>
-      </p>
-      <h3>Các extension dùng trong Vue</h3>
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer"
+          target="_blank">Live Server</a></p>
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode"
+          target="_blank">Visual Studio IntelliCode</a></p>
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome"
+          target="_blank">Debugger for Chrome</a></p>
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons"
+          target="_blank">vscode-icons</a></p>
+      <h5><a href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode"
+          target="_blank">Prettier - Code formatter</a></h5>
+      <p>Bạn cần cấu hình Formatter mặc định cho VSCode là Prettier chứ không
+        phải extension khác (ví dụ Vetur).</p>
+      <p>Cấu hình ở file <code>.prettierrc.json</code> trong thư mục gốc của dự
+        án. File mẫu:</p>
+      <pre>{
+    "trailingComma": "none",
+    "tabWidth": 4,
+    "singleQuote": true
+}</pre>
+      <p>Không phải căn chỉnh thủ công bằng tay nữa.</p>
+      <p>Các tùy chọn:</p>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th style="min-width: 170px">Cấu hình</th>
+              <th style="min-width: 150px">Kiểu dữ liệu</th>
+              <th>Mô tả</th>
+              <th>Giá trị mặc định</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>printWidth</code></td>
+              <td><br>
+              </td>
+              <td><br>
+              </td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td><code>tabWidth</code></td>
+              <td><code>integer</code><br>
+              </td>
+              <td>Số dấu cách căn chỉnh ở mỗi mức<br>
+              </td>
+              <td>2<br>
+              </td>
+            </tr>
+            <tr>
+              <td><code>useTabs</code></td>
+              <td><code>boolean</code><br>
+              </td>
+              <td>Căn chỉnh bằng tab thay vì dấu cách<br>
+              </td>
+              <td><code>false</code><br>
+              </td>
+            </tr>
+            <tr>
+              <td><code>semi</code></td>
+              <td><code>boolean</code><br>
+              </td>
+              <td>Thêm dấu chấm phảy (<code>;</code>) vào cuối câu lệnh<br>
+              </td>
+              <td><code>true</code><br>
+              </td>
+            </tr>
+            <tr>
+              <td><code>singleQuote</code></td>
+              <td><code>boolean</code><br>
+              </td>
+              <td>Sử dụng nháy đơn (<code>'</code>) thay vì nháy kép (<code>"</code>)<br>
+              </td>
+              <td><code>false</code><br>
+              </td>
+            </tr>
+            <tr>
+              <td><code>quoteProps</code></td>
+              <td><br>
+              </td>
+              <td><br>
+              </td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td><code>jsxSingleQuote</code></td>
+              <td><br>
+              </td>
+              <td><br>
+              </td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td><code>trailingComma</code></td>
+              <td>"&lt;es5|none|all&gt;"<br>
+              </td>
+              <td>Thêm dấu phảy (<code>,</code>) vào cuối<br>
+              </td>
+              <td>"es5"<br>
+              </td>
+            </tr>
+            <tr>
+              <td><code>bracketSpacing</code></td>
+              <td><br>
+              </td>
+              <td><br>
+              </td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td><code>jsxBracketSameLine</code></td>
+              <td><code>boolean</code><br>
+              </td>
+              <td>Đặt ký tự <code>&gt;</code> ở cuối của dòng cuối cùng thay vì
+                đặt một mình trên dòng tiếp theo.<br>
+                Không áp dụng với các thẻ tự đóng.<br>
+              </td>
+              <td><code>false</code><br>
+              </td>
+            </tr>
+            <tr>
+              <td><code>arrowParens</code></td>
+              <td><br>
+              </td>
+              <td><br>
+              </td>
+              <td><br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h4>Các extension dùng trong Vue</h4>
       <p><a href="https://marketplace.visualstudio.com/items?itemName=octref.vetur"
           target="_blank">Vetur</a></p>
       <p>Để từ một file <code>.vue</code> có thể goto definition một file <code>.vue</code>
         khác, chúng ta cần ghi rõ đuôi <code>.vue</code> khi import.</p>
       <p>Ví dụ:</p>
-      <pre>import TrendingChart from '~/pages/Backend/News/components/TrendingChart.vue';</pre>
+      <pre>import TrendingChart from '~/pages/News/TrendingChart.vue';</pre>
       <p>Từ file <code>.js</code> vẫn không thể goto definition đến file <code>.vue</code>
         được.</p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
+      <p>Vetur format code sử dụng Prettier.</p>
+      <p>Cấu hình .vscode/settings.json:</p>
+      <pre>{
+    "[javascript]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        }
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "octref.vetur",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        }
+    },
+    "vetur.format.defaultFormatter.html": "js-beautify-html",
+	"vetur.format.defaultFormatterOptions": {
+        "js-beautify-html": {
+            "wrap_attributes": "force"
+        }
+    },
+    "vetur.format.defaultFormatter.js": "none",
+    "vetur.format.options.tabSize": 4
+}</pre>
+      <p>Chú thích:</p>
+      <ul>
+        <li>Format vùng HTML (bên trong thẻ template) bằng js-beautify-html. Nếu
+          dùng Prettier thì bị xuống dòng, mất dấu cách, mà không sửa được.</li>
+        <li>Cấu hình tab bằng 4 dấu cách. Mặc định mỗi tab là 2 dấu cách.</li>
+        <li>Không format JS (bên trong thẻ script). Sử dụng ESLint để format
+          luôn.</li>
+        <li>Tự động format code, fix lỗi ESLint khi lưu file.</li>
+      </ul>
       <p><br>
       </p>
     </article>

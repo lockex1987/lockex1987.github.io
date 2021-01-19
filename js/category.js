@@ -4,7 +4,7 @@ const CAT_THUMBS = {
     bootstrap: 'programming/bootstrap-5.svg',
     js: 'programming/js.svg',
     java: 'programming/java.svg',
-	css: 'programming/sass.svg', // css3
+    css: 'programming/sass.svg', // css3
     ui: 'programming/sass.svg',
     mysql: 'programming/mysql.svg',
     laravel: 'programming/laravel.svg',
@@ -12,8 +12,8 @@ const CAT_THUMBS = {
     highmaps: 'programming/highcharts.svg',
     php: 'programming/php.svg',
     vue: 'programming/vue.svg',
-	project: 'programming/app store.svg',    
-	story: 'programming/epub.svg',
+    project: 'programming/app store.svg',
+    story: 'programming/epub.svg',
     docker: 'programming/docker.svg',
     git: 'programming/git.svg',
     elasticsearch: 'programming/elasticsearch.svg',
@@ -23,9 +23,8 @@ const CAT_THUMBS = {
     python: 'programming/python.svg',
     webrtc: 'programming/webrtc.svg',
     composer: 'programming/composer.svg',
-
-	webext: 'programming/web-extension.png',
-	it: 'programming/it.png'
+    webext: 'programming/web-extension.png',
+    it: 'programming/it.png'
 };
 
 /**

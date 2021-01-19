@@ -23,8 +23,7 @@
       </ul>
       <h3>Cài đặt</h3>
       <p>Cài extension cho VSCode:</p>
-      <p><a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint"
-
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint"
           target="_blank">Link</a></p>
       <p>Cài Node package:</p>
       <pre>npm install --save-dev eslint
@@ -35,8 +34,13 @@
         tạo một file <code>.eslintrc.json</code> có các cấu hình căn bản ban
         đầu, cũng như cài thêm các gói cần thiết.</p>
       <p>Bạn nên chọn extend cấu hình từ "standard" ở package là <code>eslint-config-standard</code>.
-        Package <code>eslint-config-standard</code> lại phụ thuộc các package <code>eslint-plugin-promise</code>,
-        <code>eslint-plugin-import</code>, <code>eslint-plugin-node</code>.</p>
+        Package <code>eslint-config-standard</code> lại phụ thuộc các package:
+      </p>
+      <ul>
+        <li><code>eslint-plugin-promise</code></li>
+        <li><code>eslint-plugin-import</code></li>
+        <li><code>eslint-plugin-node</code></li>
+      </ul>
       <p>Bạn cũng nên extend cấu hình "plugin:vue/essential" ở package <code>eslint-plugin-vue</code>.</p>
       <p>Ví dụ:</p>
       <pre class="out-of-box">D:\github\lockex1987.github.io&gt;npx eslint --init
@@ -64,6 +68,8 @@ added 76 packages from 50 contributors, updated 1 package and audited 186 packag
 found 0 vulnerabilities
 
 Successfully created .eslintrc.json file in D:\github\lockex1987.github.io</pre>
+      <p>Cài đặt nhanh:</p>
+      <pre class="text-pre-wrap">npm install --save-dev eslint eslint-config-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-node eslint-plugin-vue</pre>
       <p>Thêm script vào <code>package.json</code>:</p>
       <pre>"scripts": {
     "lint": "eslint --fix --ext .js,.vue resources/js"
@@ -204,9 +210,13 @@ Successfully created .eslintrc.json file in D:\github\lockex1987.github.io</pre>
       <pre>npx eslint --fix "posts/ui - carousel"</pre>
       <p>Chúng ta cần escape như sau:</p>
       <pre>npx eslint --fix \"posts/ui - carousel\"</pre>
+      <h3>Tự động fix trong VSCode</h3>
+      <p>Bạn có thể sử dụng lệnh trong VSCode để fix các bug có thể tự động của
+        file hiện tại.</p>
+      <div class="mb-3"> <img src="images/eslint%20fix%20all%20auto-fixable%20problems.png"
+          alt=""> </div>
       <h3>Tham khảo</h3>
-      <p><a href="https://viblo.asia/p/hay-su-dung-eslint-cho-du-an-cua-ban-bJzKm07O59N"
-
+      <p><a href="https://viblo.asia/p/hay-su-dung-eslint-cho-du-an-cua-ban-bJzKm07O59N"
           target="_blank">Hãy sử dụng ESLint cho dự án của bạn! - Viblo</a></p>
       <p><a href="https://eslint.org/docs/user-guide/getting-started" target="_blank">Getting
           Started with ESLint - ESLint</a></p>
