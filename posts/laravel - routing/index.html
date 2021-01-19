@@ -1,141 +1,184 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
- <head> 
-  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
-  <title>Laravel Routing</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <link rel="icon" href="../../images/favicon.png"> 
-  <link rel="stylesheet" href="../../css/style.css"> 
-  <meta name="description" content="Laravel Routing">
- </head> 
- <body> 
-  <article> 
-   <h1>Routing</h1> 
-   <h2>Cơ bản routing</h2> 
-   <p>Hầu hết các route của Laravel cơ cản là nhận một URI và một <code>Closure</code>, nó cung cấp 1 cách rất đơn giản để định nghĩa một route:</p> 
-   <pre><code>Route::get('foo', function() {
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="route">
+    <title>Laravel routing</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Laravel routing</h2>
+      <h3>Routing cơ bản</h3>
+      <p>Hầu hết các route của Laravel cơ cản là nhận một URI và một <code>Closure</code>,
+        nó cung cấp một cách rất đơn giản để định nghĩa một route:</p>
+      <pre>Route::get('foo', function () {
     return 'Hello World';
-});</code></pre> 
-   <h4>File Route mặc định</h4> 
-   <p>Tất cả các route được định nghĩa ở trong file route, ở trong thư mục <code>routes</code>. Nó đó sẽ được tự động tải bởi framework. File <code>routes/web.php</code> định nghĩa route cho dao diện web của bạn. Đấy là routes được gán vào thuộc nhóm middleware <code>web</code>, nó cung cấp một số tính năng như session và bảo mật CSRF. File <code>routes/api.php</code> được gán vào nhóm middleware <code>api</code>.</p> 
-   <p>Hầu hết các ứng dụng, bạn sẽ bắt đầu định nghĩa route trong file <code>routes/web.php</code>.</p> 
-   <h4>Một số phương thức có sẵn trong Router</h4> 
-   <p>Router cho phép bạn đăng ký routes đáp ứng nhiều phương thức HTTP:</p> 
-   <pre><code>Route::get($uri, $callback);
+});</pre>
+      <h4>File route mặc định</h4>
+      <p>Tất cả các route được định nghĩa ở trong file route, ở trong thư mục <code>routes</code>.
+        Nó đó sẽ được tự động tải bởi framework. File <code>routes/web.php</code>
+        định nghĩa route cho giao diện web của bạn. Đấy là các route được gán
+        vào thuộc nhóm middleware <code>web</code>, nó cung cấp một số tính
+        năng như session và bảo mật CSRF. File <code>routes/api.php</code> được
+        gán vào nhóm middleware <code>api</code>.</p>
+      <p>Hầu hết các ứng dụng, bạn sẽ bắt đầu định nghĩa route trong file <code>routes/web.php</code>.</p>
+      <h4>Một số phương thức có sẵn trong Route</h4>
+      <p>Class <code>Route</code> cho phép bạn đăng ký các route đáp ứng nhiều
+        phương thức HTTP:</p>
+      <pre>Route::get($uri, $callback);
 Route::post($uri, $callback);
 Route::put($uri, $callback);
 Route::patch($uri, $callback);
 Route::delete($uri, $callback);
-Route::options($uri, $callback);</code></pre> 
-   <p>Thỉnh thoảng, Bạn có thể đăng ký nhiều routes mà đáp ứng nhiều phương thức HTTP, có thể dùng phương thức <code>match</code>. Hoặc, bạn có thể đăng ký một routes mà đáp ứng tất cả các phương thức HTTP bằng cách sử dụng phương thức <code>any</code>:</p> 
-   <pre><code>Route::match(['get', 'post'], '/', function () {
+Route::options($uri, $callback);</pre>
+      <p>Thỉnh thoảng, bạn có thể đăng ký nhiều route mà đáp ứng nhiều phương
+        thức HTTP, có thể dùng phương thức <code>match</code>. Hoặc, bạn có thể
+        đăng ký một route mà đáp ứng tất cả các phương thức HTTP bằng cách sử
+        dụng phương thức <code>any</code>:</p>
+      <pre>Route::match(['get', 'post'], '/', function () {
     //
 });
 
 Route::any('foo', function () {
     //
-});</code></pre> 
-   <h4>Bảo mật CSRF</h4> 
-   <p>Tất cả các HTML form có method là <code>POST</code>, <code>PUT</code>, hoặc <code>DELETE</code> đều chỉ đến route được định nghĩa trong middlware <code>web</code> thì cần được thêm trường CSRF token. Nếu không thì request sẽ bị từ trối.</p> 
-   <pre><code>&lt;form method="POST" action="/profile"&gt;
+});</pre>
+      <h4>Bảo mật CSRF</h4>
+      <p>Tất cả các HTML form có method là <code>POST</code>, <code>PUT</code>,
+        hoặc <code>DELETE</code> đều chỉ đến route được định nghĩa trong
+        middlware <code>web</code> thì cần được thêm trường CSRF token. Nếu
+        không thì request sẽ bị từ chối.</p>
+      <pre>&lt;form method="POST" action="/profile"&gt;
     
     ...
-&lt;/form&gt;</code></pre> 
-   <p><a></a></p> 
-   <h2>Các tham số route</h2> 
-   <p><a></a></p> 
-   <h3>Tham số bắt buộc</h3> 
-   <p>Tất nhiên, đôi khi bạn cần nắm bắt các segments trong URI bên trong route của bạn. Ví dụ, bạn cần phải lấy ID của người dùng từ các URL. Bạn có thể làm như vậy bằng cách định nghĩa các tham số như sau:</p> 
-   <pre><code>Route::get('user/{id}', function($id) {
-    return 'User '.$id;
-});</code></pre> 
-   <p>Ngoài ra bạn cũng có thế định nghĩa nhiều tham số theo yêu cầu:</p> 
-   <pre><code>Route::get('posts/{post}/comments/{comment}', function ($postId, $commentId) {
+&lt;/form&gt;</pre>
+      <h3>Các tham số route</h3>
+      <h4>Tham số bắt buộc</h4>
+      <p>Tất nhiên, đôi khi bạn cần nắm bắt các segment trong URI bên trong
+        route của bạn. Ví dụ, bạn cần phải lấy ID của người dùng từ các URL. Bạn
+        có thể làm như vậy bằng cách định nghĩa các tham số như sau:</p>
+      <pre>Route::get('user/{id}', function ($id) {
+    return 'User ' . $id;
+});</pre>
+      <p>Ngoài ra bạn cũng có thế định nghĩa nhiều tham số theo yêu cầu:</p>
+      <pre class="out-of-box">Route::get('posts/{post}/comments/{comment}', function ($postId, $commentId) {
     //
-});</code></pre> 
-   <p>Tham số route luôn luôn phải nằm trong dấu ngoặc nhọn <code>{}</code>. Các tham số route không được phép chứa ký tự <code>-</code>. Bạn có thể dùng ký tự (<code>_</code>) để thay thế.</p> 
-   <p><a></a></p> 
-   <h3>Tham số tùy chọn</h3> 
-   <p>Thỉnh thoảng, bạn cần phải định nghĩa một route đặc biệt chứa tham số, nhưng sự hiện diện của tham số đấy có thể có hoặc không, bạn có thể dùng cách đặt dấu <code>?</code> sau tên tham số, và hãy chắc chắn rằng gán cho nó một giá trị mặc định:</p> 
-   <pre><code>Route::get('user/{name?}', function($name = null) {
+});</pre>
+      <p>Tham số route luôn luôn phải nằm trong dấu ngoặc nhọn <code>{}</code>.
+        Các tham số route không được phép chứa ký tự <code>-</code>. Bạn có thể
+        dùng ký tự (<code>_</code>) để thay thế.</p>
+      <h4>Tham số tùy chọn</h4>
+      <p>Thỉnh thoảng, bạn cần phải định nghĩa một route đặc biệt chứa tham số,
+        nhưng sự hiện diện của tham số đấy có thể có hoặc không, bạn có thể dùng
+        cách đặt dấu <code>?</code> sau tên tham số, và hãy chắc chắn rằng gán
+        cho nó một giá trị mặc định:</p>
+      <pre>Route::get('user/{name?}', function ($name = null) {
     return $name;
 });
 
-Route::get('user/{name?}', function($name = 'John') {
+Route::get('user/{name?}', function ($name = 'John') {
     return $name;
-});</code></pre> 
-   <p><a></a></p> 
-   <h2>Tên Routes</h2> 
-   <p>Tên routes cho phép đặt tên thuận tiện cho các URL hoặc chuyển hướng cho các route cụ thể. Bạn có chỉ định một tên cho route bằng cách thêm <code>name</code> vào định nghĩa route :</p> 
-   <pre><code>Route::get('user/profile', function() {
+});</pre>
+      <h3>Tên Route</h3>
+      <p>Tên routes cho phép đặt tên thuận tiện cho các URL hoặc chuyển hướng
+        cho các route cụ thể. Bạn có chỉ định một tên cho route bằng cách thêm <code>name</code>
+        vào định nghĩa route :</p>
+      <pre>Route::get('user/profile', function () {
     //
-})-&gt;name('profile');</code></pre> 
-   <p>Ngoài ra bạn cũng có thế chỉ định tên route cho controller:</p> 
-   <pre><code>Route::get('user/profile', 'UserController@showProfile')-&gt;name('profile');</code></pre> 
-   <h4>Tạo URL từ route đã đặt tên</h4> 
-   <p>Một khi bạn đã gán tên cho một route xác định, bạn có thể dùng tên của nó khi tạo URL hoặc chuyển hướng thông qua hàm toàn cục <code>route</code>:</p> 
-   <pre><code>// Generating URLs...
+})-&gt;name('profile');</pre>
+      <p>Ngoài ra bạn cũng có thế chỉ định tên route cho controller:</p>
+      <pre>Route::get('user/profile', 'UserController@showProfile')<br>    -&gt;name('profile');</pre>
+      <h4>Tạo URL từ route đã đặt tên</h4>
+      <p>Một khi bạn đã gán tên cho một route xác định, bạn có thể dùng tên của
+        nó khi tạo URL hoặc chuyển hướng thông qua hàm toàn cục <code>route</code>:</p>
+      <pre>// Generating URLs...
 $url = route('profile');
 
 // Generating Redirects...
-return redirect()-&gt;route('profile');</code></pre> 
-   <p>Nếu tên route được định nghĩa với tham số, bạn có thể xuyên qua nó như là một đối số thứ hai trong phương thức route <code>route</code>. Các đối số sẽ được chèn vào theo đúng thứ tự chính xác trên URLs:</p> 
-   <pre><code>Route::get('user/{id}/profile', function($id) {
+return redirect()-&gt;route('profile');</pre>
+      <p>Nếu tên route được định nghĩa với tham số, bạn có thể xuyên qua nó như
+        là một đối số thứ hai trong phương thức route <code>route</code>. Các
+        đối số sẽ được chèn vào theo đúng thứ tự chính xác trên URL:</p>
+      <pre>Route::get('user/{id}/profile', function ($id) {
     //
 })-&gt;name('profile');
 
-$url = route('profile', ['id' =&gt; 1]);</code></pre> 
-   <p><a></a></p> 
-   <h2>Nhóm Route</h2> 
-   <p>Nhóm route cho phép bạn chia sẻ các thuộc tính như middleware hoặc namespaces, trên nhiều route mà không cần định nghĩa lại chúng trên mỗi route riêng. Các thuộc tính chia sẻ được quy định trong một mảng định dạng là tham số đầu tiên của phương thức <code>Route::group</code>.</p> 
-   <p><a></a></p> 
-   <h3>Middleware</h3> 
-   <p>Để gán middleware cho tất cả các route trong một nhóm, bạn phải sử dụng từ khóa <code>middleware</code>trong mảng thuộc tính. Middleware sẽ được thực hiện theo thứ tự bạn định nghĩa mảng này:</p> 
-   <pre><code>Route::group(['middleware' =&gt; 'auth'], function() {
+$url = route('profile', ['id' =&gt; 1]);</pre>
+      <h3>Nhóm Route</h3>
+      <p>Nhóm route cho phép bạn chia sẻ các thuộc tính như middleware hoặc
+        namespace, trên nhiều route mà không cần định nghĩa lại chúng trên mỗi
+        route riêng. Các thuộc tính chia sẻ được quy định trong một mảng định
+        dạng là tham số đầu tiên của phương thức <code>Route::group</code>.</p>
+      <h4>Middleware</h4>
+      <p>Để gán middleware cho tất cả các route trong một nhóm, bạn phải sử dụng
+        từ khóa <code>middleware</code> trong mảng thuộc tính. Middleware sẽ
+        được thực hiện theo thứ tự bạn định nghĩa mảng này:</p>
+      <pre>Route::group(['middleware' =&gt; 'auth'], function () {
     Route::get('/', function ()    {
         // Uses Auth Middleware
     });
 
-    Route::get('user/profile', function() {
+    Route::get('user/profile', function () {
         // Uses Auth Middleware
     });
-});</code></pre> 
-   <p><a></a></p> 
-   <h3>Namespaces</h3> 
-   <p>Một trường hợp sử dụng chung cho nhóm route giống như PHP namespace được chỉ định với một nhóm của controllers. Bạn có thể sử dụng tham số <code>namespace</code> trong mảng thuộc tính:</p> 
-   <pre><code>Route::group(['namespace' =&gt; 'Admin'], function() {
+});</pre>
+      <h4>Namespace</h4>
+      <p>Một trường hợp sử dụng chung cho nhóm route giống như PHP namespace
+        được chỉ định với một nhóm của controller. Bạn có thể sử dụng tham số <code>namespace</code>
+        trong mảng thuộc tính:</p>
+      <pre>Route::group(['namespace' =&gt; 'Admin'], function () {
     // Controllers Within The "App\Http\Controllers\Admin" Namespace
-});</code></pre> 
-   <p>Hãy nhớ rằng, mặc định, the <code>RouteServiceProvider</code> bao gồm file route bên trong nhóm namespace, cho phép bạn đăng ký các controller routes không cần xác định đầy đủ tiền tố <code>App\Http\Controllers</code>namespace. Vì vậy, bạn chỉ cần xác định thành phần của tên đó được đưa ra sau namespace <code>App\Http\Controllers</code>.</p> 
-   <p><a></a></p> 
-   <h3>Routing tên miền con</h3> 
-   <p>Nhóm route có thể được sử dụng để xử lý các routing tên miền con. Tên miền con có thể được gán thám số route như URIs, cho phép bạn lấy một phần của tên miền con để sử dụng bên trong route hoặc controller. Tên miền con có thể được xác định bằng cách sử dụng từ khóa<code> domain</code> trong mảng thuộc tính:</p> 
-   <pre><code>Route::group(['domain' =&gt; '{account}.myapp.com'], function() {
+});</pre>
+      <p>Hãy nhớ rằng, mặc định, the <code>RouteServiceProvider</code> bao gồm
+        file route bên trong nhóm namespace, cho phép bạn đăng ký các controller
+        route không cần xác định đầy đủ tiền tố <code>App\Http\Controllers</code>
+        namespace. Vì vậy, bạn chỉ cần xác định thành phần của tên đó được đưa
+        ra sau namespace <code>App\Http\Controllers</code>.</p>
+      <h4>Routing tên miền con</h4>
+      <p>Nhóm route có thể được sử dụng để xử lý các routing tên miền con. Tên
+        miền con có thể được gán thám số route như URI, cho phép bạn lấy một
+        phần của tên miền con để sử dụng bên trong route hoặc controller. Tên
+        miền con có thể được xác định bằng cách sử dụng từ khóa<code> domain</code>
+        trong mảng thuộc tính:</p>
+      <pre>Route::group(['domain' =&gt; '{account}.myapp.com'], function () {
     Route::get('user/{id}', function ($account, $id) {
         //
     });
-});</code></pre> 
-   <p><a></a></p> 
-   <h3>Tiền tố route</h3> 
-   <p>Thuộc tính <code>prefix</code>có thể sử dụng để thêm tiền tố cho mỗi route trong một nhóm với một URI. ví dụ, bạn có thể muốn tất cả các tiền tố của tất cả các route URIs trong nhóm là <code>admin</code>:</p> 
-   <pre><code>Route::group(['prefix' =&gt; 'admin'], function() {
-    Route::get('users', function ()    {
+});</pre>
+      <h4>Tiền tố route</h4>
+      <p>Thuộc tính <code>prefix</code> có thể sử dụng để thêm tiền tố cho mỗi
+        route trong một nhóm với một URI. Ví dụ, bạn có thể muốn tất cả các tiền
+        tố của tất cả các route URI trong nhóm là <code>admin</code>:</p>
+      <pre>Route::group(['prefix' =&gt; 'admin'], function () {
+    Route::get('users', function () {
         // Matches The "/admin/users" URL
     });
-});</code></pre> 
-   <p><a></a></p> 
-   <h2>Route Model Binding</h2> 
-   <p>Khi bạn inject một model ID vào route hoặc controller, bạn sẽ thường truy vấn để để nhận model tương ứng với ID đó. Laravel route model binding cung cấp một cách khá thuận tiện là tự động inject trực tiếp trường model vào route của bạn. Ví dụ, thay vì bạn inject ID của người dùng, bạn có thể inject toàn bộ model <code>User</code> phù hợp với ID xác định.</p> 
-   <p><a></a></p> 
-   <h3>Implicit Binding</h3> 
-   <p>Laravel sẽ tự động giải quyết gợi ý Eloquent models được xác định bên trong route hoặc controller có tên biến phù hợp với tên segment. Ví dụ:</p> 
-   <pre><code>Route::get('api/users/{user}', function(App\User $user) {
+});</pre>
+      <h3>Route Model binding</h3>
+      <p>Khi bạn inject một model ID vào route hoặc controller, bạn sẽ thường
+        truy vấn để để nhận model tương ứng với ID đó. Laravel route model
+        binding cung cấp một cách khá thuận tiện là tự động inject trực tiếp
+        trường model vào route của bạn. Ví dụ, thay vì bạn inject ID của người
+        dùng, bạn có thể inject toàn bộ model <code>User</code> phù hợp với ID
+        xác định.</p>
+      <h4>Implicit binding</h4>
+      <p>Laravel sẽ tự động giải quyết gợi ý Eloquent models được xác định bên
+        trong route hoặc controller có tên biến phù hợp với tên segment. Ví dụ:</p>
+      <pre>Route::get('api/users/{user}', function (App\User $user) {
     return $user-&gt;email;
-});</code></pre> 
-   <p>Trong ví dụ trên, Eloquent đã gợi ý biến <code>$user</code> định nghĩa trong route phù hợp với <code>{user}</code> segment trong URI, Laravel tự động đẩy các model có một ID phù hợp với giá trị tương ứng từ URI. Nếu không tìm thấy trong cơ sở dữ liệu, nột phản hồi 404 HTTP sẽ tự động được sinh ra.</p> 
-   <h4>Tùy biến tên khóa</h4> 
-   <p>Nếu bạn muốn các model ràng buộc ngầm định để suer dụng một cơ sở dữ liệu khác <code>id</code> khi nhận dữ liệu, bạn có thể ghi đè nên phương thức <code>getRouteKeyName</code> trong Eloquent model:</p> 
-   <pre><code>/**
+});</pre>
+      <p>Trong ví dụ trên, Eloquent đã gợi ý biến <code>$user</code> định nghĩa
+        trong route phù hợp với <code>{user}</code> segment trong URI, Laravel
+        tự động đẩy các model có một ID phù hợp với giá trị tương ứng từ URI.
+        Nếu không tìm thấy trong cơ sở dữ liệu, nột phản hồi 404 HTTP sẽ tự động
+        được sinh ra.</p>
+      <h4>Tùy biến tên khóa</h4>
+      <p>Nếu bạn muốn các model ràng buộc ngầm định để sử dụng một cơ sở dữ liệu
+        khác <code>id</code> khi nhận dữ liệu, bạn có thể ghi đè nên phương
+        thức <code>getRouteKeyName</code> trong Eloquent model:</p>
+      <pre>/**
  * Get the route key for the model.
  *
  * @return  string
@@ -143,47 +186,65 @@ $url = route('profile', ['id' =&gt; 1]);</code></pre>
 public function getRouteKeyName()
 {
     return 'slug';
-}</code></pre> 
-   <p><a></a></p> 
-   <h3>Explicit Binding</h3> 
-   <p>Để đăng ký một explicit binding, sử dụng phương thức <code>model</code> để xác định class cho một tham số. Bạn nên định nghĩa các explicit model bindings bên trong phương thức <code>boot</code> của <code>RouteServiceProvider</code> class:</p> 
-   <pre><code>public function boot()
+}</pre>
+      <h4>Explicit binding</h4>
+      <p>Để đăng ký một explicit binding, sử dụng phương thức <code>model</code>
+        để xác định class cho một tham số. Bạn nên định nghĩa các explicit model
+        binding bên trong phương thức <code>boot</code> của <code>RouteServiceProvider</code>
+        class:</p>
+      <pre>public function boot()
 {
     parent::boot();
 
     Route::model('user', App\User::class);
-}</code></pre> 
-   <p>Tiếp thep, định nghĩa một route chứa tham số <code>{user}</code>:</p> 
-   <pre><code>$router-&gt;get('profile/{user}', function(App\User $user) {
+}</pre>
+      <p>Tiếp thep, định nghĩa một route chứa tham số <code>{user}</code>:</p>
+      <pre>$router-&gt;get('profile/{user}', function (App\User $user) {
     //
-});</code></pre> 
-   <p>Khi chúng ta đã ràng buộc tham số <code>{user}</code> trong model <code>App\User</code>, một thể hiện của <code>User</code> sẽ được inject vào route. Vì vậy, ví dụ, một request đến <code>profile/1</code> sẽ inject <code>User</code> có ID là <code>1</code>.</p> 
-   <p>Nếu thể hiện model không tìm thấy trong cơ sở dữ liệu, một resonse 404 HTTP sẽ tự động được tạo ra.</p> 
-   <h4>Tùy chỉnh theo Resolution Logic</h4> 
-   <p>Nếu bạn muốn sử dụng resolution logic theo cách riêng của bạn, Bạn có thể dùng phương thức <code>Route::bind</code>. Thuộc tính <code>Closure</code> sẽ truyền qua phương thức <code>bind</code> sẽ nhận được giá trị tham biến trên segment URI và sẽ trả về một thể hiện của class bạn muốn inject vào route:</p> 
-   <pre><code>$router-&gt;bind('user', function($value) {
+});</pre>
+      <p>Khi chúng ta đã ràng buộc tham số <code>{user}</code> trong model <code>App\User</code>,
+        một thể hiện của <code>User</code> sẽ được inject vào route. Vì vậy, ví
+        dụ, một request đến <code>profile/1</code> sẽ inject <code>User</code>
+        có ID là <code>1</code>.</p>
+      <p>Nếu thể hiện model không tìm thấy trong cơ sở dữ liệu, một resonse 404
+        HTTP sẽ tự động được tạo ra.</p>
+      <h4>Tùy chỉnh theo Resolution Logic</h4>
+      <p>Nếu bạn muốn sử dụng resolution logic theo cách riêng của bạn, bạn có
+        thể dùng phương thức <code>Route::bind</code>. Thuộc tính <code>Closure</code>
+        sẽ truyền qua phương thức <code>bind</code> sẽ nhận được giá trị tham
+        biến trên segment URI và sẽ trả về một thể hiện của class bạn muốn
+        inject vào route:</p>
+      <pre>$router-&gt;bind('user', function ($value) {
     return App\User::where('name', $value)-&gt;first();
-});</code></pre> 
-   <p><a></a></p> 
-   <h2>Form Method Spoofing</h2> 
-   <p>HTML forms không hỗ trợ một số method <code>PUT</code>, <code>PATCH</code> or <code>DELETE</code>. Vì vậy, Khi định nghĩa <code>PUT</code>, <code>PATCH</code>hoặc <code>DELETE</code> routes mà được gọi từ HTML form, bạn sẽ cần phải thêm một trường hidden <code>_method</code>vào form. Giá trị của trường hidden là <code>_method</code> sẽ sử dụng phương thức HTTP request:</p> 
-   <pre><code>&lt;form action="/foo/bar" method="POST"&gt;
-    &lt;input type="hidden"  value="PUT"&gt;
-    &lt;input type="hidden"  value="TAoJ9p7uOI0xWTiHzY7m4u0LSPY0xSpDMwZcptNT"&gt;
-&lt;/form&gt;</code></pre> 
-   <p>Bạn có thể sử dụng hàm <code>method_field</code> nó sẽ tự sinh ra một <code>_method</code> input:</p> 
-   <pre><code></code></pre> 
-   <p><a></a></p> 
-   <h2>Truy cập route hiện tại</h2> 
-   <p>Bạn có thể sử dụng phương thức <code>current</code>, <code>currentRouteName</code>, và <code>currentRouteAction</code> trên <code>Route</code>facade để truy cập thông tin về resquest route xử lý đang đến:</p> 
-   <pre><code>$route = Route::current();
+});</pre>
+      <h3>Form Method Spoofing</h3>
+      <p>HTML form không hỗ trợ một số method <code>PUT</code>, <code>PATCH</code>
+        or <code>DELETE</code>. Vì vậy, Khi định nghĩa <code>PUT</code>, <code>PATCH</code>
+        hoặc <code>DELETE</code> route mà được gọi từ HTML form, bạn sẽ cần
+        phải thêm một trường hidden <code>_method</code> vào form. Giá trị của
+        trường hidden là <code>_method</code> sẽ sử dụng phương thức HTTP
+        request:</p>
+      <pre>&lt;form action="/foo/bar" method="POST"&gt;
+    &lt;input type="hidden" name="_method" value="PUT"&gt;
+    &lt;input type="hidden" name="_token" value="{{ csrf_token() }}"&gt;
+&lt;/form&gt;</pre>
+      <p>Bạn có thể sử dụng hàm <code>method_field</code> nó sẽ tự sinh ra một
+        <code>_method</code> input:</p>
+      <h3>Truy cập route hiện tại</h3>
+      <p>Bạn có thể sử dụng phương thức <code>current</code>, <code>currentRouteName</code>,
+        và <code>currentRouteAction</code> trên <code>Route</code> facade để
+        truy cập thông tin về resquest route xử lý đang đến:</p>
+      <pre>$route = Route::current();
 
 $name = Route::currentRouteName();
 
-$action = Route::currentRouteAction();</code></pre> 
-   <p>Tham khảo thêm tài liệu API cho cả hai <a href="http://laravel.com/api/5.3/Illuminate/Routing/Router.html">underlying class of the Route facade</a> và <a href="http://laravel.com/api/5.3/Illuminate/Routing/Route.html">Route instance</a> để xem tất cả hàm truy cập.</p> 
-   <p> Nguồn: <a href="https://laravel.com/docs/5.3/routing">https://laravel.com/docs/5.3/routing</a> </p> 
-  </article> 
-  <script src="../../js/docs.js"></script>  
- </body>
+$action = Route::currentRouteAction();</pre>
+      <p>Tham khảo thêm tài liệu API cho cả hai <a href="http://laravel.com/api/5.3/Illuminate/Routing/Router.html">underlying
+          class of the Route facade</a> và <a href="http://laravel.com/api/5.3/Illuminate/Routing/Route.html">Route
+          instance</a> để xem tất cả hàm truy cập.</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://laravel.com/docs/master/routing" target="_blank">laravel.com/docs/master/routing</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
 </html>
