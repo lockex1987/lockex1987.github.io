@@ -8,7 +8,7 @@ export default [
     { name: 'linux', y: 31 },
     { name: 'css', y: 27 },
     { name: 'git', y: 27 },
-    { name: 'story', y: 21 },
+    { name: 'story', y: 22 },
     { name: 'bootstrap', y: 19 },
     { name: 'webext', y: 19 },
     { name: 'java', y: 14 },
