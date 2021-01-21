@@ -100,7 +100,8 @@ class SevenZipWrapper
     public function getEntries($filePath)
     {
         // Thực hiện lệnh 7z
-        $command = escapeshellcmd('7z l ' . escapeshellarg($filePath));
+        // $command = escapeshellcmd('7z l ' . escapeshellarg($filePath)); // thực hiện trên Windows
+        $command = '7z l ' . escapeshellarg($filePath); // thực hiện trên Ubuntu
         exec($command, $a);
         $retval = [];
 
@@ -141,7 +142,8 @@ class SevenZipWrapper
         // Có thể sử dụng tham số -y
         // Có thể dùng lệnh 'e' hoặc 'x'
         // $command = escapeshellcmd('7z x -bb3 ' . escapeshellarg($filePath) . ' -o* -y');
-        $command = escapeshellcmd('7z x -bb3 ' . escapeshellarg($filePath) . ' -o' . escapeshellarg($folder));
+        // $command = escapeshellcmd('7z x -bb3 ' . escapeshellarg($filePath) . ' -o' . escapeshellarg($folder)); // thực hiện trên Windows
+        $command = '7z x -bb3 ' . escapeshellarg($filePath) . ' -o' . escapeshellarg($folder); // thực hiện trên Ubuntu
         system($command);
     }
 
@@ -150,9 +152,8 @@ class SevenZipWrapper
      */
     public function compress($folder, $archive)
     {
-        $command = escapeshellcmd('7z a -bb ' . escapeshellarg($archive) . ' ' . escapeshellarg($folder));
-        // echo $command . PHP_EOL;
-        // 7z a -bsp1
+        // $command = escapeshellcmd('7z a -bb3 ' . escapeshellarg($archive) . ' ' . escapeshellarg($folder)); // thực hiện trên Windows
+        $command = '7z a -bb3 ' . escapeshellarg($archive) . ' ' . escapeshellarg($folder); // thực hiện trên Ubuntu
         system($command);
     }
 }
