@@ -16,11 +16,11 @@ export default [
     { name: 'vue', y: 12 },
     { name: 'composer', y: 9 },
     { name: 'nginx', y: 8 },
+    { name: 'redis', y: 6 },
     { name: 'node', y: 4 },
     { name: 'highcharts', y: 3 },
     { name: 'webrtc', y: 3 },
     { name: 'highmaps', y: 2 },
-    { name: 'redis', y: 2 },
     { name: 'elasticsearch', y: 1 },
     { name: 'python', y: 1 }
 ];

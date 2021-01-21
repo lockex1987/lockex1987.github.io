@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="date" content="2020-02-21 23:20:00">
-    <meta name="description" content="Cài đặt Redis">
+    <meta name="description" content="Cài đặt Redis trên Ubuntu, Windows, CentOS">
     <title>Cài đặt Redis</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -17,7 +17,7 @@
       <pre>sudo apt install redis-server</pre>
       <p>Lệnh trên cài luôn cả <code>redis-cli</code>.</p>
       <p>Kiểm tra:</p>
-      <pre>./redis-cli<br>...&gt; set foo bar<br>OK<br>...&gt; get foo<br>"bar"<br>...&gt; keys *</pre>
+      <pre class="bg-dark text-white">./redis-cli<br>...&gt; set foo bar<br>OK<br>...&gt; get foo<br>"bar"<br>...&gt; keys *</pre>
       <p>Để có thể kết nối Redis từ máy khác, hãy sửa file <code>/etc/redis/redis.conf</code>,
         sửa cấu hình <code>bind 127.0.0.1 ::0</code>, sửa thành:</p>
       <pre>bind 127.0.0.1 &lt;ip máy cài Redis&gt;</pre>
@@ -26,13 +26,18 @@
       <p>Kết nối đến máy cài Redis như sau:</p>
       <pre>redis-cli -h &lt;ip máy cài Redis&gt;</pre>
       <h3>Windows</h3>
-      <p>The Redis project does not officially support Windows. However, the
-        Microsoft Open Tech group develops and maintains this Windows port
-        targeting Win64.</p>
-      <p></p>
+      <p>Redis không hỗ trợ chính thức Windows. Tuy nhiên, nhóm Microsoft Open
+        Tech có phát triển và bảo trì phiên bản Windows ở địa chỉ sau:</p>
       <p><a href="https://github.com/MSOpenTech/redis/releases" target="_blank">github.com/MSOpenTech/redis/releases</a></p>
       <p>Nếu không cài đặt được thì có thể sử dụng phiên bản thấp, ví dụ
         2.8.2402.</p>
+      <h3>CentOS</h3>
+      <p>Cài đặt:</p>
+      <pre>sudo yum install epel-release<br>sudo yum install redis</pre>
+      <p>Sử dụng:</p>
+      <pre>sudo systemctl status redis<br><br>sudo systemctl start redis<br><br>sudo systemctl enable redis</pre>
+      <p>Kiểm tra:</p>
+      <pre>redis-cli ping</pre>
     </article>
     <script src="../../js/docs.js"></script>
   </body>

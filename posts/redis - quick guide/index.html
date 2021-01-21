@@ -1,8 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Redis Tutorial</title>
-<meta charset='UTF-8'>
+<html><head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Redis tutorial từ trang tutorialpoint">
+<title>Redis tutorial</title>
+
+<link rel="icon" href="../../images/favicon.png">
+
 <style>
 	article {  max-width: 800px; margin: 0 auto; border-bottom: 1px solid #A0A0A0; }
 	article p { text-align: justify; }
@@ -11,11 +15,12 @@
 	nav ul { margin: 0; padding: 0; }
 	h1 { color: #00F; }
 </style>
+
 </head>
 <body>
-<nav><ul><li><a href='#a1'>Redis Tutorial</a></li><li><a href='#a2'>Redis Overview</a></li><li><a href='#a3'>Redis Environment</a></li><li><a href='#a4'>Redis Configuration</a></li><li><a href='#a5'>Redis Data Types</a></li><li><a href='#a6'>Redis Commands</a></li><li><a href='#a7'>Redis Keys</a></li><li><a href='#a8'>Redis Strings</a></li><li><a href='#a9'>Redis Hashes</a></li><li><a href='#a10'>Redis Lists</a></li><li><a href='#a11'>Redis Sets</a></li><li><a href='#a12'>Redis Sorted Sets</a></li><li><a href='#a13'>Redis HyperLogLog</a></li><li><a href='#a14'>Redis Publish Subscribe</a></li><li><a href='#a15'>Redis Transactions</a></li><li><a href='#a16'>Redis Scripting</a></li><li><a href='#a17'>Redis Connections</a></li><li><a href='#a18'>Redis Server</a></li><li><a href='#a19'>Redis Backup</a></li><li><a href='#a20'>Redis Security</a></li><li><a href='#a21'>Redis Benchmarks</a></li><li><a href='#a22'>Redis Client Connection</a></li><li><a href='#a23'>Redis Pipelining</a></li><li><a href='#a24'>Redis Partitioning</a></li><li><a href='#a25'>Redis Java</a></li><li><a href='#a26'>Redis PHP</a></li><li><a href='#a28'>Redis Useful Resources</a></li></ul></nav>
+<nav><ul><li><a href="#a1">Redis tutorial</a></li><li><a href="#a2">Redis Overview</a></li><li><a href="#a3">Redis Environment</a></li><li><a href="#a4">Redis Configuration</a></li><li><a href="#a5">Redis Data Types</a></li><li><a href="#a6">Redis Commands</a></li><li><a href="#a7">Redis Keys</a></li><li><a href="#a8">Redis Strings</a></li><li><a href="#a9">Redis Hashes</a></li><li><a href="#a10">Redis Lists</a></li><li><a href="#a11">Redis Sets</a></li><li><a href="#a12">Redis Sorted Sets</a></li><li><a href="#a13">Redis HyperLogLog</a></li><li><a href="#a14">Redis Publish Subscribe</a></li><li><a href="#a15">Redis Transactions</a></li><li><a href="#a16">Redis Scripting</a></li><li><a href="#a17">Redis Connections</a></li><li><a href="#a18">Redis Server</a></li><li><a href="#a19">Redis Backup</a></li><li><a href="#a20">Redis Security</a></li><li><a href="#a21">Redis Benchmarks</a></li><li><a href="#a22">Redis Client Connection</a></li><li><a href="#a23">Redis Pipelining</a></li><li><a href="#a24">Redis Partitioning</a></li><li><a href="#a25">Redis Java</a></li><li><a href="#a26">Redis PHP</a></li><li><a href="#a28">Redis Useful Resources</a></li></ul></nav>
 
-<article id='a1'>
+<article id="a1">
 <h1>Redis Tutorial</h1>  
 <p>Redis is an open source, BSD licensed, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets. Redis is written in c.</p> 
 <p>This tutorial will give you great understanding on Redis concepts needed to create and deploy a highly scalable and performance oriented system.</p> 
@@ -24,7 +29,7 @@
 <h1>Prerequisites</h1> 
 <p>Before proceeding with this tutorial you should have basic knowledge of Data structure.</p>       
 </article>
-<article id='a2'>
+<article id="a2">
 <h1>Redis - Overview</h1>       
 <p>Redis is an open source, advanced key-value store and a serious solution for building high-performance, scalable web applications.</p> 
 <p>Redis has three main peculiarities that set it apart from much of its competition:</p> 
@@ -46,30 +51,25 @@
  <li><p>Redis is an in-memory but persistent on disk database, so it represents a different trade off where very high write and read speed is achieved with the limitation of data sets that can't be larger than memory. Another advantage of in memory databases is that the memory representation of complex data structures is much simpler to manipulate compared to the same data structure on disk, so Redis can do a lot, with little internal complexity.</p></li> 
 </ul>       
 </article>
-<article id='a3'>
+<article id="a3">
 <h1>Redis - Environment</h1>       
 <h2>Install Redis on Ubuntu</h2> 
 <p>To install the Redis on Ubuntu, go to terminal and type the following commands: </p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">$sudo apt-get update</span>
+<pre class="prettyprint prettyprinted"><span class="pln">$sudo apt-get update</span>
 <span class="pln">$sudo apt-get install redis-server</span>
 </pre> 
 <p>This will install redis on your machine.</p> 
 <p><b>Start Redis</b></p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">$redis-server</span>
+<pre class="prettyprint prettyprinted"><span class="pln">$redis-server</span>
 </pre> 
 <p><b>Check if redis is working?</b></p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">$redis-cli</span>
+<pre class="prettyprint prettyprinted"><span class="pln">$redis-cli</span>
 </pre> 
 <p>This will open a redis prompt, as shown below: </p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt;</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt;</span>
 </pre> 
 <p>In the above prompt <b>127.0.0.1</b> is your machine's IP address and <b>6379</b> is port on which redis server is running. Now type the <b>PING</b> command as shown below.</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; ping</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; ping</span>
 <span class="pln">PONG</span>
 </pre> 
 <p>This shows that you have successfully installed redis on your machine.</p> 
@@ -77,192 +77,185 @@
 <p>To install redis dessktop manager on ubuntu, just download the package from <a href="http://redisdesktop.com/download" target="_blank">http://redisdesktop.com/download</a> Open the downloaded package and install it.</p> 
 <p>Redis desktop manager will give you UI to manage your redis keys and data.</p>       
 </article>
-<article id='a4'>
+<article id="a4">
 <h1>Redis - Configuration</h1>       
 <h2>Redis Configuration</h2> 
 <p>In Redis there is configuration file (redis.conf) available at root directory of redis. Although you can get and set all redis configurations by redis <b>CONFIG</b> command.</p> 
 <h2>Syntax</h2> 
 <p>Basic syntax of redis <b>CONFIG</b> command is shown below:</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; CONFIG GET CONFIG_SETTING_NAME</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; CONFIG GET CONFIG_SETTING_NAME</span>
 </pre> 
 <h3>Example</h3> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; CONFIG GET loglevel</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; CONFIG GET loglevel</span>
 <span class="pln">
-1) &quot;loglevel&quot;
-2) &quot;notice&quot;
+1) "loglevel"
+2) "notice"
 </span>
 </pre> 
 <p>To get all configuration settings just use <b>*</b> in place of CONFIG_SETTING_NAME</p> 
 <h3>Example</h3> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; CONFIG GET *</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; CONFIG GET *</span>
 <span class="pln">
-  1) &quot;dbfilename&quot;
-  2) &quot;dump.rdb&quot;
-  3) &quot;requirepass&quot;
-  4) &quot;&quot;
-  5) &quot;masterauth&quot;
-  6) &quot;&quot;
-  7) &quot;unixsocket&quot;
-  8) &quot;&quot;
-  9) &quot;logfile&quot;
- 10) &quot;&quot;
- 11) &quot;pidfile&quot;
- 12) &quot;/var/run/redis.pid&quot;
- 13) &quot;maxmemory&quot;
- 14) &quot;0&quot;
- 15) &quot;maxmemory-samples&quot;
- 16) &quot;3&quot;
- 17) &quot;timeout&quot;
- 18) &quot;0&quot;
- 19) &quot;tcp-keepalive&quot;
- 20) &quot;0&quot;
- 21) &quot;auto-aof-rewrite-percentage&quot;
- 22) &quot;100&quot;
- 23) &quot;auto-aof-rewrite-min-size&quot;
- 24) &quot;67108864&quot;
- 25) &quot;hash-max-ziplist-entries&quot;
- 26) &quot;512&quot;
- 27) &quot;hash-max-ziplist-value&quot;
- 28) &quot;64&quot;
- 29) &quot;list-max-ziplist-entries&quot;
- 30) &quot;512&quot;
- 31) &quot;list-max-ziplist-value&quot;
- 32) &quot;64&quot;
- 33) &quot;set-max-intset-entries&quot;
- 34) &quot;512&quot;
- 35) &quot;zset-max-ziplist-entries&quot;
- 36) &quot;128&quot;
- 37) &quot;zset-max-ziplist-value&quot;
- 38) &quot;64&quot;
- 39) &quot;hll-sparse-max-bytes&quot;
- 40) &quot;3000&quot;
- 41) &quot;lua-time-limit&quot;
- 42) &quot;5000&quot;
- 43) &quot;slowlog-log-slower-than&quot;
- 44) &quot;10000&quot;
- 45) &quot;latency-monitor-threshold&quot;
- 46) &quot;0&quot;
- 47) &quot;slowlog-max-len&quot;
- 48) &quot;128&quot;
- 49) &quot;port&quot;
- 50) &quot;6379&quot;
- 51) &quot;tcp-backlog&quot;
- 52) &quot;511&quot;
- 53) &quot;databases&quot;
- 54) &quot;16&quot;
- 55) &quot;repl-ping-slave-period&quot;
- 56) &quot;10&quot;
- 57) &quot;repl-timeout&quot;
- 58) &quot;60&quot;
- 59) &quot;repl-backlog-size&quot;
- 60) &quot;1048576&quot;
- 61) &quot;repl-backlog-ttl&quot;
- 62) &quot;3600&quot;
- 63) &quot;maxclients&quot;
- 64) &quot;4064&quot;
- 65) &quot;watchdog-period&quot;
- 66) &quot;0&quot;
- 67) &quot;slave-priority&quot;
- 68) &quot;100&quot;
- 69) &quot;min-slaves-to-write&quot;
- 70) &quot;0&quot;
- 71) &quot;min-slaves-max-lag&quot;
- 72) &quot;10&quot;
- 73) &quot;hz&quot;
- 74) &quot;10&quot;
- 75) &quot;no-appendfsync-on-rewrite&quot;
- 76) &quot;no&quot;
- 77) &quot;slave-serve-stale-data&quot;
- 78) &quot;yes&quot;
- 79) &quot;slave-read-only&quot;
- 80) &quot;yes&quot;
- 81) &quot;stop-writes-on-bgsave-error&quot;
- 82) &quot;yes&quot;
- 83) &quot;daemonize&quot;
- 84) &quot;no&quot;
- 85) &quot;rdbcompression&quot;
- 86) &quot;yes&quot;
- 87) &quot;rdbchecksum&quot;
- 88) &quot;yes&quot;
- 89) &quot;activerehashing&quot;
- 90) &quot;yes&quot;
- 91) &quot;repl-disable-tcp-nodelay&quot;
- 92) &quot;no&quot;
- 93) &quot;aof-rewrite-incremental-fsync&quot;
- 94) &quot;yes&quot;
- 95) &quot;appendonly&quot;
- 96) &quot;no&quot;
- 97) &quot;dir&quot;
- 98) &quot;/home/deepak/Downloads/redis-2.8.13/src&quot;
- 99) &quot;maxmemory-policy&quot;
-100) &quot;volatile-lru&quot;
-101) &quot;appendfsync&quot;
-102) &quot;everysec&quot;
-103) &quot;save&quot;
-104) &quot;3600 1 300 100 60 10000&quot;
-105) &quot;loglevel&quot;
-106) &quot;notice&quot;
-107) &quot;client-output-buffer-limit&quot;
-108) &quot;normal 0 0 0 slave 268435456 67108864 60 pubsub 33554432 8388608 60&quot;
-109) &quot;unixsocketperm&quot;
-110) &quot;0&quot;
-111) &quot;slaveof&quot;
-112) &quot;&quot;
-113) &quot;notify-keyspace-events&quot;
-114) &quot;&quot;
-115) &quot;bind&quot;
-116) &quot;&quot;
+  1) "dbfilename"
+  2) "dump.rdb"
+  3) "requirepass"
+  4) ""
+  5) "masterauth"
+  6) ""
+  7) "unixsocket"
+  8) ""
+  9) "logfile"
+ 10) ""
+ 11) "pidfile"
+ 12) "/var/run/redis.pid"
+ 13) "maxmemory"
+ 14) "0"
+ 15) "maxmemory-samples"
+ 16) "3"
+ 17) "timeout"
+ 18) "0"
+ 19) "tcp-keepalive"
+ 20) "0"
+ 21) "auto-aof-rewrite-percentage"
+ 22) "100"
+ 23) "auto-aof-rewrite-min-size"
+ 24) "67108864"
+ 25) "hash-max-ziplist-entries"
+ 26) "512"
+ 27) "hash-max-ziplist-value"
+ 28) "64"
+ 29) "list-max-ziplist-entries"
+ 30) "512"
+ 31) "list-max-ziplist-value"
+ 32) "64"
+ 33) "set-max-intset-entries"
+ 34) "512"
+ 35) "zset-max-ziplist-entries"
+ 36) "128"
+ 37) "zset-max-ziplist-value"
+ 38) "64"
+ 39) "hll-sparse-max-bytes"
+ 40) "3000"
+ 41) "lua-time-limit"
+ 42) "5000"
+ 43) "slowlog-log-slower-than"
+ 44) "10000"
+ 45) "latency-monitor-threshold"
+ 46) "0"
+ 47) "slowlog-max-len"
+ 48) "128"
+ 49) "port"
+ 50) "6379"
+ 51) "tcp-backlog"
+ 52) "511"
+ 53) "databases"
+ 54) "16"
+ 55) "repl-ping-slave-period"
+ 56) "10"
+ 57) "repl-timeout"
+ 58) "60"
+ 59) "repl-backlog-size"
+ 60) "1048576"
+ 61) "repl-backlog-ttl"
+ 62) "3600"
+ 63) "maxclients"
+ 64) "4064"
+ 65) "watchdog-period"
+ 66) "0"
+ 67) "slave-priority"
+ 68) "100"
+ 69) "min-slaves-to-write"
+ 70) "0"
+ 71) "min-slaves-max-lag"
+ 72) "10"
+ 73) "hz"
+ 74) "10"
+ 75) "no-appendfsync-on-rewrite"
+ 76) "no"
+ 77) "slave-serve-stale-data"
+ 78) "yes"
+ 79) "slave-read-only"
+ 80) "yes"
+ 81) "stop-writes-on-bgsave-error"
+ 82) "yes"
+ 83) "daemonize"
+ 84) "no"
+ 85) "rdbcompression"
+ 86) "yes"
+ 87) "rdbchecksum"
+ 88) "yes"
+ 89) "activerehashing"
+ 90) "yes"
+ 91) "repl-disable-tcp-nodelay"
+ 92) "no"
+ 93) "aof-rewrite-incremental-fsync"
+ 94) "yes"
+ 95) "appendonly"
+ 96) "no"
+ 97) "dir"
+ 98) "/home/deepak/Downloads/redis-2.8.13/src"
+ 99) "maxmemory-policy"
+100) "volatile-lru"
+101) "appendfsync"
+102) "everysec"
+103) "save"
+104) "3600 1 300 100 60 10000"
+105) "loglevel"
+106) "notice"
+107) "client-output-buffer-limit"
+108) "normal 0 0 0 slave 268435456 67108864 60 pubsub 33554432 8388608 60"
+109) "unixsocketperm"
+110) "0"
+111) "slaveof"
+112) ""
+113) "notify-keyspace-events"
+114) ""
+115) "bind"
+116) ""
 </span>
 </pre> 
 <h2>Edit configuration</h2> 
 <p>To update configuration you can edit <b>redis.conf</b> file directly or can update configurations via <b>CONFIG set</b> command</p> 
 <h3>Syntax</h3> 
 <p>Basic syntax of <b>CONFIG SET</b> command is shown below: </p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; CONFIG SET CONFIG_SETTING_NAME NEW_CONFIG_VALUE</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; CONFIG SET CONFIG_SETTING_NAME NEW_CONFIG_VALUE</span>
 </pre> 
 <h3>Example</h3> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; CONFIG SET loglevel &quot;notice&quot;</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; CONFIG SET loglevel "notice"</span>
 <span class="pln">OK</span>
 <span class="pln">redis 127.0.0.1:6379&gt; CONFIG GET loglevel</span>
 <span class="pln">
-1) &quot;loglevel&quot;
-2) &quot;notice&quot;
+1) "loglevel"
+2) "notice"
 </span>
 </pre>       
 </article>
-<article id='a5'>
+<article id="a5">
 <h1>Redis - Data Types</h1>       
 <p>Redis supports 5 types of data types, which are described below: </p> 
 <h2>Strings</h2> 
 <p>Redis string is a sequence of bytes. Strings in Redis are binary safe, meaning they have a known length not determined by any special terminating characters, so you can store anything up to 512 megabytes in one string.</p> 
 <h3>Example</h3> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; SET name &quot;tutorialspoint&quot;</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; SET name "tutorialspoint"</span>
 <span class="pln">OK</span>
 <span class="pln">redis 127.0.0.1:6379&gt; GET name</span>
-<span class="pln">&quot;tutorialspoint&quot;</span>
+<span class="pln">"tutorialspoint"</span>
 </pre> 
 <p>In the above example <b>SET</b> and <b>GET</b> are redis commands, <b>name</b> is the key used in redis and <b>tutorialspoint</b> is the string value that is stored in redis.</p> 
 <p><b>NOTE: </b>A String value can be at max 512 Megabytes in length.</p> 
 <h2>Hashes</h2> 
 <p>A Redis hash is a collection of key value pairs. Redis Hashes are maps between string fields and string values, so they are used to represent objects</p> 
 <h3>Example</h3> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; HMSET user:1 username tutorialspoint password tutorialspoint points 200</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; HMSET user:1 username tutorialspoint password tutorialspoint points 200</span>
 <span class="pln">OK</span>
 <span class="pln">redis 127.0.0.1:6379&gt; HGETALL user:1</span>
 <span class="pln">
-1) &quot;username&quot;
-2) &quot;tutorialspoint&quot;
-3) &quot;password&quot;
-4) &quot;tutorialspoint&quot;
-5) &quot;points&quot;
-6) &quot;200&quot;
+1) "username"
+2) "tutorialspoint"
+3) "password"
+4) "tutorialspoint"
+5) "points"
+6) "200"
 </span>
 </pre> 
 <p>In the above example hash data type is used to store user's object whichh contais basic information of user. Here <b>HMSET, HGETALL</b> are commands for redis while <b>user:1</b> is the key.</p> 
@@ -270,8 +263,7 @@
 <h2>Lists</h2> 
 <p>Redis Lists are simply lists of strings, sorted by insertion order. You can add elements to a Redis List on the head or on the tail.</p> 
 <h3>Example</h3> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; lpush tutoriallist redis</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; lpush tutoriallist redis</span>
 <span class="pln">(integer) 1</span>
 <span class="pln">redis 127.0.0.1:6379&gt; lpush tutoriallist mongodb</span>
 <span class="pln">(integer) 2</span>
@@ -279,17 +271,16 @@
 <span class="pln">(integer) 3</span>
 <span class="pln">redis 127.0.0.1:6379&gt; lrange tutoriallist 0 10</span>
 <span class="pln">
-1) &quot;rabitmq&quot;
-2) &quot;mongodb&quot;
-3) &quot;redis&quot;
+1) "rabitmq"
+2) "mongodb"
+3) "redis"
 </span>
 </pre> 
 <p>The max length of a list is 232 - 1 elements (4294967295, more than 4 billion of elements per list).</p> 
 <h2>Sets</h2> 
 <p>Redis Sets are an unordered collection of Strings. In redis you can add, remove, and test for existence of members in O(1) time complexity.</p> 
 <h3>Example</h3> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; sadd tutoriallist redis</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; sadd tutoriallist redis</span>
 <span class="pln">(integer) 1</span>
 <span class="pln">redis 127.0.0.1:6379&gt; sadd tutoriallist mongodb</span>
 <span class="pln">(integer) 1</span>
@@ -299,9 +290,9 @@
 <span class="pln">(integer) 0</span>
 <span class="pln">redis 127.0.0.1:6379&gt; smembers tutoriallist</span>
 <span class="pln">
-1) &quot;rabitmq&quot;
-2) &quot;mongodb&quot;
-3) &quot;redis&quot;
+1) "rabitmq"
+2) "mongodb"
+3) "redis"
 </span>
 </pre> 
 <p><b>NOTE: </b>In the above example rabitmq is added twice but due to unique property of set it is added only once.</p> 
@@ -309,8 +300,7 @@
 <h2>Sorted Sets</h2> 
 <p>Redis Sorted Sets are, similarly to Redis Sets, non repeating collections of Strings. The difference is that every member of a Sorted Set is associated with score, that is used in order to take the sorted set ordered, from the smallest to the greatest score. While members are unique, scores may be repeated.</p> 
 <h3>Example</h3> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; zadd tutoriallist 0 redis</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; zadd tutoriallist 0 redis</span>
 <span class="pln">(integer) 1</span>
 <span class="pln">redis 127.0.0.1:6379&gt; zadd tutoriallist 0 mongodb</span>
 <span class="pln">(integer) 1</span>
@@ -320,26 +310,24 @@
 <span class="pln">(integer) 0</span>
 <span class="pln">redis 127.0.0.1:6379&gt; ZRANGEBYSCORE tutoriallist 0 1000</span>
 <span class="pln">
-1) &quot;redis&quot;
-2) &quot;mongodb&quot;
-3) &quot;rabitmq&quot;
+1) "redis"
+2) "mongodb"
+3) "rabitmq"
 </span>
 </pre>       
 </article>
-<article id='a6'>
+<article id="a6">
 <h1>Redis - Commands</h1>       
 <p>Redis commands are used to perform some operations on redis server.</p> 
 <p>To run commands on redis server you need a redis client. Redis client is available in redis package, which we have installed earlier.</p> 
 <h2>Syntax</h2> 
 <p>Basic syntax of redis client is as follows:</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">$redis-cli</span>
+<pre class="prettyprint prettyprinted"><span class="pln">$redis-cli</span>
 </pre> 
 <h3>Example</h3> 
 <p>Following example explains how we can start redis client.</p> 
 <p>To start redis client, open terminal and type the command <b>redis-cli</b>. This will connect to your local server and now you can run any command.</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">$redis-cli</span>
+<pre class="prettyprint prettyprinted"><span class="pln">$redis-cli</span>
 <span class="pln">redis 127.0.0.1:6379&gt;</span>
 <span class="pln">redis 127.0.0.1:6379&gt; PING</span>
 <span class="pln">
@@ -350,13 +338,11 @@ PONG
 <h2>Run commands on remote server</h2> 
 <p>To run commands on redis remote server you need to connect to server by same client <b>redis-cli</b></p> 
 <h2>Syntax</h2> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">$ redis-cli -h host -p port -a password</span>
+<pre class="prettyprint prettyprinted"><span class="pln">$ redis-cli -h host -p port -a password</span>
 </pre> 
 <h3>Example</h3> 
 <p>Following example shows how to connect to redis remote server running on host 127.0.0.1, port 6379 and has password mypass.</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">$redis-cli -h 127.0.0.1 -p 6379 -a &quot;mypass&quot;</span>
+<pre class="prettyprint prettyprinted"><span class="pln">$redis-cli -h 127.0.0.1 -p 6379 -a "mypass"</span>
 <span class="pln">redis 127.0.0.1:6379&gt;</span>
 <span class="pln">redis 127.0.0.1:6379&gt; PING</span>
 <span class="pln">
@@ -364,16 +350,14 @@ PONG
 </span>
 </pre>       
 </article>
-<article id='a7'>
+<article id="a7">
 <h1>Redis - Keys</h1>       
 <p>Redis keys commands are used for managing keys in redis. Syntax for using redis keys commands is shown below: </p> 
 <h2>Syntax</h2> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; COMMAND KEY_NAME</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; COMMAND KEY_NAME</span>
 </pre> 
 <h3>Example</h3> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; SET tutorialspoint redis</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; SET tutorialspoint redis</span>
 <span class="pln">OK</span>
 <span class="pln">redis 127.0.0.1:6379&gt; DEL tutorialspoint</span>
 <span class="pln">(integer) 1</span>
@@ -389,84 +373,82 @@ PONG
   </tr> 
   <tr>
    <td>1</td>
-   <td><a href="/redis/keys_del.htm">DEL key</a><br />This command deletes the key, if exists</td>
+   <td><a href="/redis/keys_del.htm">DEL key</a><br>This command deletes the key, if exists</td>
   </tr> 
   <tr>
    <td>2</td>
-   <td><a href="/redis/keys_dump.htm">DUMP key</a> <br />This command returns a serialized version of the value stored at the specified key.</td>
+   <td><a href="/redis/keys_dump.htm">DUMP key</a> <br>This command returns a serialized version of the value stored at the specified key.</td>
   </tr> 
   <tr>
    <td>3</td>
-   <td><a href="/redis/keys_exists.htm">EXISTS key</a> <br />This command checks whether the key exists or not.</td>
+   <td><a href="/redis/keys_exists.htm">EXISTS key</a> <br>This command checks whether the key exists or not.</td>
   </tr> 
   <tr>
    <td>4</td>
-   <td><a href="/redis/keys_expire.htm">EXPIRE key</a> seconds<br />Expires the key after the specified time</td>
+   <td><a href="/redis/keys_expire.htm">EXPIRE key</a> seconds<br>Expires the key after the specified time</td>
   </tr> 
   <tr>
    <td>5</td>
-   <td><a href="/redis/keys_expireat.htm">EXPIREAT key timestamp</a> <br />Expires the key after the specified time. Here time is in Unix timestamp format</td>
+   <td><a href="/redis/keys_expireat.htm">EXPIREAT key timestamp</a> <br>Expires the key after the specified time. Here time is in Unix timestamp format</td>
   </tr> 
   <tr>
    <td>6</td>
-   <td><a href="/redis/keys_pexpire.htm">PEXPIRE key milliseconds</a> <br />Set the expiry of key in milliseconds</td>
+   <td><a href="/redis/keys_pexpire.htm">PEXPIRE key milliseconds</a> <br>Set the expiry of key in milliseconds</td>
   </tr> 
   <tr>
    <td>7</td>
-   <td><a href="/redis/keys_pexpireat.htm">PEXPIREAT key milliseconds-timestamp</a> <br />Set the expiry of key in unix timestamp specified as milliseconds</td>
+   <td><a href="/redis/keys_pexpireat.htm">PEXPIREAT key milliseconds-timestamp</a> <br>Set the expiry of key in unix timestamp specified as milliseconds</td>
   </tr> 
   <tr>
    <td>8</td>
-   <td><a href="/redis/keys_keys.htm">KEYS pattern</a> <br />Find all keys matching the specified pattern</td>
+   <td><a href="/redis/keys_keys.htm">KEYS pattern</a> <br>Find all keys matching the specified pattern</td>
   </tr> 
   <tr>
    <td>9</td>
-   <td><a href="/redis/keys_move.htm">MOVE key db</a> <br />Move a key to another database</td>
+   <td><a href="/redis/keys_move.htm">MOVE key db</a> <br>Move a key to another database</td>
   </tr> 
   <tr>
    <td>10</td>
-   <td><a href="/redis/keys_persist.htm">PERSIST key</a> <br />Remove the expiration from the key</td>
+   <td><a href="/redis/keys_persist.htm">PERSIST key</a> <br>Remove the expiration from the key</td>
   </tr> 
   <tr>
    <td>11</td>
-   <td><a href="/redis/keys_pttl.htm">PTTL key</a> <br />Get the remaining time in keys expiry in milliseconds.</td>
+   <td><a href="/redis/keys_pttl.htm">PTTL key</a> <br>Get the remaining time in keys expiry in milliseconds.</td>
   </tr> 
   <tr>
    <td>12</td>
-   <td><a href="/redis/keys_ttl.htm">TTL key</a> <br />Get the remaining time in keys expiry.</td>
+   <td><a href="/redis/keys_ttl.htm">TTL key</a> <br>Get the remaining time in keys expiry.</td>
   </tr> 
   <tr>
    <td>13</td>
-   <td><a href="/redis/keys_randomkey.htm">RANDOMKEY</a> <br />Return a random key from redis</td>
+   <td><a href="/redis/keys_randomkey.htm">RANDOMKEY</a> <br>Return a random key from redis</td>
   </tr> 
   <tr>
    <td>14</td>
-   <td><a href="/redis/keys_rename.htm">RENAME key newkey</a> <br />Change the key name</td>
+   <td><a href="/redis/keys_rename.htm">RENAME key newkey</a> <br>Change the key name</td>
   </tr> 
   <tr>
    <td>15</td>
-   <td><a href="/redis/keys_renamenx.htm">RENAMENX key newkey</a> <br />Rename key, if new key doesn't exist</td>
+   <td><a href="/redis/keys_renamenx.htm">RENAMENX key newkey</a> <br>Rename key, if new key doesn't exist</td>
   </tr> 
   <tr>
    <td>16</td>
-   <td><a href="/redis/keys_type.htm">TYPE key</a> <br />Return the data type of value stored in key.</td>
+   <td><a href="/redis/keys_type.htm">TYPE key</a> <br>Return the data type of value stored in key.</td>
   </tr> 
  </tbody>
 </table>       
 </article>
-<article id='a8'>
+<article id="a8">
 <h1>Redis - Strings</h1>       
 <p>Redis strings commands are used for managing string values in redis. Syntax for using redis string commands is shown below: </p> 
 <h2>Syntax</h2> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; COMMAND KEY_NAME</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; COMMAND KEY_NAME</span>
 </pre> 
 <h2>Example</h2> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; SET tutorialspoint redis</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; SET tutorialspoint redis</span>
 <span class="pln">OK</span>
 <span class="pln">redis 127.0.0.1:6379&gt; GET tutorialspoint</span>
-<span class="pln">&quot;redis&quot;</span>
+<span class="pln">"redis"</span>
 </pre> 
 <p>In the above example <b>SET and GET</b> are the command, while <b>tutorialspoint</b> is the key.</p> 
 <h2>Redis strings commands</h2> 
@@ -479,105 +461,104 @@ PONG
   </tr> 
   <tr>
    <td>1</td>
-   <td><a href="/redis/strings_set.htm">SET key value</a> <br />This command sets the value at the specified key</td>
+   <td><a href="/redis/strings_set.htm">SET key value</a> <br>This command sets the value at the specified key</td>
   </tr> 
   <tr>
    <td>2</td>
-   <td><a href="/redis/strings_get.htm">GET key</a> <br />Get the value of a key.</td>
+   <td><a href="/redis/strings_get.htm">GET key</a> <br>Get the value of a key.</td>
   </tr> 
   <tr>
    <td>3</td>
-   <td><a href="/redis/strings_getrange.htm">GETRANGE key start end</a> <br />Get a substring of the string stored at a key</td>
+   <td><a href="/redis/strings_getrange.htm">GETRANGE key start end</a> <br>Get a substring of the string stored at a key</td>
   </tr> 
   <tr>
    <td>4</td>
-   <td><a href="/redis/strings_getset.htm">GETSET key value</a><br />Set the string value of a key and return its old value</td>
+   <td><a href="/redis/strings_getset.htm">GETSET key value</a><br>Set the string value of a key and return its old value</td>
   </tr> 
   <tr>
    <td>5</td>
-   <td><a href="/redis/strings_getbit.htm">GETBIT key offset</a><br />Returns the bit value at offset in the string value stored at key</td>
+   <td><a href="/redis/strings_getbit.htm">GETBIT key offset</a><br>Returns the bit value at offset in the string value stored at key</td>
   </tr> 
   <tr>
    <td>6</td>
-   <td><a href="/redis/strings_mget.htm">MGET key1 [key2..]</a><br />Get the values of all the given keys</td>
+   <td><a href="/redis/strings_mget.htm">MGET key1 [key2..]</a><br>Get the values of all the given keys</td>
   </tr> 
   <tr>
    <td>7</td>
-   <td><a href="/redis/strings_setbit.htm">SETBIT key offset value</a><br />Sets or clears the bit at offset in the string value stored at key</td>
+   <td><a href="/redis/strings_setbit.htm">SETBIT key offset value</a><br>Sets or clears the bit at offset in the string value stored at key</td>
   </tr> 
   <tr>
    <td>8</td>
-   <td><a href="/redis/strings_setex.htm">SETEX key seconds value</a><br />Set the value with expiry of a key</td>
+   <td><a href="/redis/strings_setex.htm">SETEX key seconds value</a><br>Set the value with expiry of a key</td>
   </tr> 
   <tr>
    <td>9</td>
-   <td><a href="/redis/strings_setnx.htm">SETNX key value</a><br />Set the value of a key, only if the key does not exist</td>
+   <td><a href="/redis/strings_setnx.htm">SETNX key value</a><br>Set the value of a key, only if the key does not exist</td>
   </tr> 
   <tr>
    <td>10</td>
-   <td><a href="/redis/strings_setrange.htm">SETRANGE key offset value</a><br />Overwrite part of a string at key starting at the specified offset</td>
+   <td><a href="/redis/strings_setrange.htm">SETRANGE key offset value</a><br>Overwrite part of a string at key starting at the specified offset</td>
   </tr> 
   <tr>
    <td>11</td>
-   <td><a href="/redis/strings_strlen.htm">STRLEN key</a><br />Get the length of the value stored in a key</td>
+   <td><a href="/redis/strings_strlen.htm">STRLEN key</a><br>Get the length of the value stored in a key</td>
   </tr> 
   <tr>
    <td>12</td>
-   <td><a href="/redis/strings_mset.htm">MSET key value [key value ...]</a><br />Set multiple keys to multiple values</td>
+   <td><a href="/redis/strings_mset.htm">MSET key value [key value ...]</a><br>Set multiple keys to multiple values</td>
   </tr> 
   <tr>
    <td>13</td>
-   <td><a href="/redis/strings_msetnx.htm">MSETNX key value [key value ...]</a> <br />Set multiple keys to multiple values, only if none of the keys exist</td>
+   <td><a href="/redis/strings_msetnx.htm">MSETNX key value [key value ...]</a> <br>Set multiple keys to multiple values, only if none of the keys exist</td>
   </tr> 
   <tr>
    <td>14</td>
-   <td><a href="/redis/strings_psetex.htm">PSETEX key milliseconds value</a><br />Set the value and expiration in milliseconds of a key</td>
+   <td><a href="/redis/strings_psetex.htm">PSETEX key milliseconds value</a><br>Set the value and expiration in milliseconds of a key</td>
   </tr> 
   <tr>
    <td>15</td>
-   <td><a href="/redis/strings_incr.htm">INCR key</a><br />Increment the integer value of a key by one</td>
+   <td><a href="/redis/strings_incr.htm">INCR key</a><br>Increment the integer value of a key by one</td>
   </tr> 
   <tr>
    <td>16</td>
-   <td><a href="/redis/strings_incrby.htm">INCRBY key increment</a><br />Increment the integer value of a key by the given amount</td>
+   <td><a href="/redis/strings_incrby.htm">INCRBY key increment</a><br>Increment the integer value of a key by the given amount</td>
   </tr> 
   <tr>
    <td>17</td>
-   <td><a href="/redis/strings_incrbyfloat.htm">INCRBYFLOAT key increment</a><br />Increment the float value of a key by the given amount</td>
+   <td><a href="/redis/strings_incrbyfloat.htm">INCRBYFLOAT key increment</a><br>Increment the float value of a key by the given amount</td>
   </tr> 
   <tr>
    <td>18</td>
-   <td><a href="/redis/strings_decr.htm">DECR key</a><br />Decrement the integer value of a key by one</td>
+   <td><a href="/redis/strings_decr.htm">DECR key</a><br>Decrement the integer value of a key by one</td>
   </tr> 
   <tr>
    <td>19</td>
-   <td><a href="/redis/strings_decrby.htm">DECRBY key decrement</a><br />Decrement the integer value of a key by the given number</td>
+   <td><a href="/redis/strings_decrby.htm">DECRBY key decrement</a><br>Decrement the integer value of a key by the given number</td>
   </tr> 
   <tr>
    <td>20</td>
-   <td><a href="/redis/strings_append.htm">APPEND key value</a><br />Append a value to a key</td>
+   <td><a href="/redis/strings_append.htm">APPEND key value</a><br>Append a value to a key</td>
   </tr> 
  </tbody>
 </table>       
 </article>
-<article id='a9'>
+<article id="a9">
 <h1>Redis - Hashes</h1>       
 <p>Redis Hashes are maps between string fields and string values, so they are the perfect data type to represent objects</p> 
 <p>In redis every hash can store up to more than 4 billion field-value pairs.</p> 
 <h2>Example</h2> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; HMSET tutorialspoint name &quot;redis tutorial&quot; description &quot;redis basic commands for caching&quot; likes 20 visitors 23000</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; HMSET tutorialspoint name "redis tutorial" description "redis basic commands for caching" likes 20 visitors 23000</span>
 <span class="pln">OK</span>
 <span class="pln">redis 127.0.0.1:6379&gt; HGETALL tutorialspoint</span>
 <span class="pln">
-1) &quot;name&quot;
-2) &quot;redis tutorial&quot;
-3) &quot;description&quot;
-4) &quot;redis basic commands for caching&quot;
-5) &quot;likes&quot;
-6) &quot;20&quot;
-7) &quot;visitors&quot;
-8) &quot;23000&quot;
+1) "name"
+2) "redis tutorial"
+3) "description"
+4) "redis basic commands for caching"
+5) "likes"
+6) "20"
+7) "visitors"
+8) "23000"
 </span>
 </pre> 
 <p>In the above example we have set redis tutorials detail (name, description, likes, visitors) in hash named <b>tutorialspoint</b></p> 
@@ -593,70 +574,69 @@ PONG
   </tr> 
   <tr>
    <td>1</td>
-   <td><a href="/redis/hashes_hdel.htm">HDEL key field2 [field2]</a> <br />Delete one or more hash fields</td>
+   <td><a href="/redis/hashes_hdel.htm">HDEL key field2 [field2]</a> <br>Delete one or more hash fields</td>
   </tr> 
   <tr>
    <td>2</td>
-   <td><a href="/redis/hashes_hexists.htm">HEXISTS key field</a> <br />Determine whether a hash field exists or not</td>
+   <td><a href="/redis/hashes_hexists.htm">HEXISTS key field</a> <br>Determine whether a hash field exists or not</td>
   </tr> 
   <tr>
    <td>3</td>
-   <td><a href="/redis/hashes_hget.htm">HGET key field</a> <br />Get the value of a hash field stored at specified key</td>
+   <td><a href="/redis/hashes_hget.htm">HGET key field</a> <br>Get the value of a hash field stored at specified key</td>
   </tr> 
   <tr>
    <td>4</td>
-   <td><a href="/redis/hashes_hgetall.htm">HGETALL key</a> <br />Get all the fields and values stored in a hash at specified key</td>
+   <td><a href="/redis/hashes_hgetall.htm">HGETALL key</a> <br>Get all the fields and values stored in a hash at specified key</td>
   </tr> 
   <tr>
    <td>5</td>
-   <td><a href="/redis/hashes_hincrby.htm">HINCRBY key field increment</a> <br />Increment the integer value of a hash field by the given number</td>
+   <td><a href="/redis/hashes_hincrby.htm">HINCRBY key field increment</a> <br>Increment the integer value of a hash field by the given number</td>
   </tr> 
   <tr>
    <td>6</td>
-   <td><a href="/redis/hashes_hincrbyfloat.htm">HINCRBYFLOAT key field increment</a> <br />Increment the float value of a hash field by the given amount</td>
+   <td><a href="/redis/hashes_hincrbyfloat.htm">HINCRBYFLOAT key field increment</a> <br>Increment the float value of a hash field by the given amount</td>
   </tr> 
   <tr>
    <td>7</td>
-   <td><a href="/redis/hashes_hkeys.htm">HKEYS key</a> <br />Get all the fields in a hash</td>
+   <td><a href="/redis/hashes_hkeys.htm">HKEYS key</a> <br>Get all the fields in a hash</td>
   </tr> 
   <tr>
    <td>8</td>
-   <td><a href="/redis/hashes_hlen.htm">HLEN key</a> <br />Get the number of fields in a hash</td>
+   <td><a href="/redis/hashes_hlen.htm">HLEN key</a> <br>Get the number of fields in a hash</td>
   </tr> 
   <tr>
    <td>9</td>
-   <td><a href="/redis/hashes_hmget.htm">HMGET key field1 [field2]</a> <br />Get the values of all the given hash fields</td>
+   <td><a href="/redis/hashes_hmget.htm">HMGET key field1 [field2]</a> <br>Get the values of all the given hash fields</td>
   </tr> 
   <tr>
    <td>10</td>
-   <td><a href="/redis/hashes_hmset.htm">HMSET key field1 value1 [field2 value2 ]</a> <br />Set multiple hash fields to multiple values</td>
+   <td><a href="/redis/hashes_hmset.htm">HMSET key field1 value1 [field2 value2 ]</a> <br>Set multiple hash fields to multiple values</td>
   </tr> 
   <tr>
    <td>11</td>
-   <td><a href="/redis/hashes_hset.htm">HSET key field value</a> <br />Set the string value of a hash field</td>
+   <td><a href="/redis/hashes_hset.htm">HSET key field value</a> <br>Set the string value of a hash field</td>
   </tr> 
   <tr>
    <td>12</td>
-   <td><a href="/redis/hashes_hsetnx.htm">HSETNX key field value</a> <br />Set the value of a hash field, only if the field does not exist</td>
+   <td><a href="/redis/hashes_hsetnx.htm">HSETNX key field value</a> <br>Set the value of a hash field, only if the field does not exist</td>
   </tr> 
   <tr>
    <td>13</td>
-   <td><a href="/redis/hashes_hvals.htm">HVALS key</a> <br />Get all the values in a hash</td>
+   <td><a href="/redis/hashes_hvals.htm">HVALS key</a> <br>Get all the values in a hash</td>
   </tr> 
   <tr>
    <td>14</td>
-   <td><a href="/redis/hashes_hset.htm">HSCAN key cursor [MATCH pattern] [COUNT count]</a> <br />Incrementally iterate hash fields and associated values</td>
+   <td><a href="/redis/hashes_hset.htm">HSCAN key cursor [MATCH pattern] [COUNT count]</a> <br>Incrementally iterate hash fields and associated values</td>
   </tr> 
  </tbody>
 </table>       
 </article>
-<article id='a10'>
+<article id="a10">
 <h1>Redis - Lists</h1>       
 <p>Redis Lists are simply lists of strings, sorted by insertion order. You can add elements in redis lists in head or tail of list.</p> 
 <p>Maximum length of a list is 2<sup>32</sup> - 1 elements (4294967295, more than 4 billion of elements per list).</p> 
 <h2>Example</h2> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; LPUSH tutorials redis</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; LPUSH tutorials redis</span>
 <span class="pln">(integer) 1</span>
 <span class="pln">redis 127.0.0.1:6379&gt; LPUSH tutorials mongodb</span>
 <span class="pln">(integer) 2</span>
@@ -664,9 +644,9 @@ PONG
 <span class="pln">(integer) 3</span>
 <span class="pln">redis 127.0.0.1:6379&gt; LRANGE tutorials 0 10</span>
 <span class="pln">
-1) &quot;mysql&quot;
-2) &quot;mongodb&quot;
-3) &quot;redis&quot;
+1) "mysql"
+2) "mongodb"
+3) "redis"
 </span>
 </pre> 
 <p>In the above example three values are inserted in redis list named tutorials by the command <b>LPUSH</b>.</p> 
@@ -680,82 +660,81 @@ PONG
   </tr> 
   <tr>
    <td>1</td>
-   <td><a href="/redis/lists_blpop.htm">BLPOP key1 [key2 ] timeout</a> <br />Remove and get the first element in a list, or block until one is available</td>
+   <td><a href="/redis/lists_blpop.htm">BLPOP key1 [key2 ] timeout</a> <br>Remove and get the first element in a list, or block until one is available</td>
   </tr> 
   <tr>
    <td>2</td>
-   <td><a href="/redis/lists_brpop.htm">BRPOP key1 [key2 ] timeout</a> <br />Remove and get the last element in a list, or block until one is available</td>
+   <td><a href="/redis/lists_brpop.htm">BRPOP key1 [key2 ] timeout</a> <br>Remove and get the last element in a list, or block until one is available</td>
   </tr> 
   <tr>
    <td>3</td>
-   <td><a href="/redis/lists_brpoplpush.htm">BRPOPLPUSH source destination timeout</a> <br />Pop a value from a list, push it to another list and return it; or block until one is available</td>
+   <td><a href="/redis/lists_brpoplpush.htm">BRPOPLPUSH source destination timeout</a> <br>Pop a value from a list, push it to another list and return it; or block until one is available</td>
   </tr> 
   <tr>
    <td>4</td>
-   <td><a href="/redis/lists_lindex.htm">LINDEX key index</a> <br />Get an element from a list by its index</td>
+   <td><a href="/redis/lists_lindex.htm">LINDEX key index</a> <br>Get an element from a list by its index</td>
   </tr> 
   <tr>
    <td>5</td>
-   <td><a href="/redis/lists_linsert.htm">LINSERT key BEFORE|AFTER pivot value</a> <br />Insert an element before or after another element in a list</td>
+   <td><a href="/redis/lists_linsert.htm">LINSERT key BEFORE|AFTER pivot value</a> <br>Insert an element before or after another element in a list</td>
   </tr> 
   <tr>
    <td>6</td>
-   <td><a href="/redis/lists_llen.htm">LLEN key</a> <br />Get the length of a list</td>
+   <td><a href="/redis/lists_llen.htm">LLEN key</a> <br>Get the length of a list</td>
   </tr> 
   <tr>
    <td>7</td>
-   <td><a href="/redis/lists_lpop.htm">LPOP key</a> <br />Remove and get the first element in a list</td>
+   <td><a href="/redis/lists_lpop.htm">LPOP key</a> <br>Remove and get the first element in a list</td>
   </tr> 
   <tr>
    <td>8</td>
-   <td><a href="/redis/lists_lpush.htm">LPUSH key value1 [value2]</a> <br />Prepend one or multiple values to a list</td>
+   <td><a href="/redis/lists_lpush.htm">LPUSH key value1 [value2]</a> <br>Prepend one or multiple values to a list</td>
   </tr> 
   <tr>
    <td>9</td>
-   <td><a href="/redis/lists_lpushx.htm">LPUSHX key value</a> <br />Prepend a value to a list, only if the list exists</td>
+   <td><a href="/redis/lists_lpushx.htm">LPUSHX key value</a> <br>Prepend a value to a list, only if the list exists</td>
   </tr> 
   <tr>
    <td>10</td>
-   <td><a href="/redis/lists_lrange.htm">LRANGE key start stop</a> <br />Get a range of elements from a list</td>
+   <td><a href="/redis/lists_lrange.htm">LRANGE key start stop</a> <br>Get a range of elements from a list</td>
   </tr> 
   <tr>
    <td>11</td>
-   <td><a href="/redis/lists_lrem.htm">LREM key count value</a> <br />Remove elements from a list</td>
+   <td><a href="/redis/lists_lrem.htm">LREM key count value</a> <br>Remove elements from a list</td>
   </tr> 
   <tr>
    <td>12</td>
-   <td><a href="/redis/lists_lset.htm">LSET key index value</a> <br />Set the value of an element in a list by its index</td>
+   <td><a href="/redis/lists_lset.htm">LSET key index value</a> <br>Set the value of an element in a list by its index</td>
   </tr> 
   <tr>
    <td>13</td>
-   <td><a href="/redis/lists_ltrim.htm">LTRIM key start stop</a> <br />Trim a list to the specified range</td>
+   <td><a href="/redis/lists_ltrim.htm">LTRIM key start stop</a> <br>Trim a list to the specified range</td>
   </tr> 
   <tr>
    <td>14</td>
-   <td><a href="/redis/lists_rpop.htm">RPOP key</a> <br />Remove and get the last element in a list</td>
+   <td><a href="/redis/lists_rpop.htm">RPOP key</a> <br>Remove and get the last element in a list</td>
   </tr> 
   <tr>
    <td>15</td>
-   <td><a href="/redis/lists_rpoplpush.htm">RPOPLPUSH source destination</a> <br />Remove the last element in a list, append it to another list and return it</td>
+   <td><a href="/redis/lists_rpoplpush.htm">RPOPLPUSH source destination</a> <br>Remove the last element in a list, append it to another list and return it</td>
   </tr> 
   <tr>
    <td>16</td>
-   <td><a href="/redis/lists_rpush.htm">RPUSH key value1 [value2]</a> <br />Append one or multiple values to a list</td>
+   <td><a href="/redis/lists_rpush.htm">RPUSH key value1 [value2]</a> <br>Append one or multiple values to a list</td>
   </tr> 
   <tr>
    <td>17</td>
-   <td><a href="/redis/lists_rpushx.htm">RPUSHX key value</a> <br />Append a value to a list, only if the list exists</td>
+   <td><a href="/redis/lists_rpushx.htm">RPUSHX key value</a> <br>Append a value to a list, only if the list exists</td>
   </tr> 
  </tbody>
 </table>       
 </article>
-<article id='a11'>
+<article id="a11">
 <h1>Redis - Sets</h1>       
 <p>Redis Sets are an unordered collection of unique Strings. Unique means sets doesn't allow repition of data in a key.</p> 
 <p>In redis set add, remove, and test for existence of members in O(1) (constant time regardless of the number of elements contained inside the Set). Maximum length of a list is 2<sup>32</sup> - 1 elements (4294967295, more than 4 billion of elements per set).</p> 
 <h2>Example</h2> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; SADD tutorials redis</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; SADD tutorials redis</span>
 <span class="pln">(integer) 1</span>
 <span class="pln">redis 127.0.0.1:6379&gt; SADD tutorials mongodb</span>
 <span class="pln">(integer) 1</span>
@@ -765,9 +744,9 @@ PONG
 <span class="pln">(integer) 0</span>
 <span class="pln">redis 127.0.0.1:6379&gt; SMEMBERS tutorials</span>
 <span class="pln">
-1) &quot;mysql&quot;
-2) &quot;mongodb&quot;
-3) &quot;redis&quot;
+1) "mysql"
+2) "mongodb"
+3) "redis"
 </span>
 </pre> 
 <p>In the above example three values are inserted in redis set named tutorials by the command <b>SADD</b>.</p> 
@@ -781,74 +760,73 @@ PONG
   </tr> 
   <tr>
    <td>1</td>
-   <td><a href="/redis/sets_sadd.htm">SADD key member1 [member2]</a> <br />Add one or more members to a set</td>
+   <td><a href="/redis/sets_sadd.htm">SADD key member1 [member2]</a> <br>Add one or more members to a set</td>
   </tr> 
   <tr>
    <td>2</td>
-   <td><a href="/redis/sets_scard.htm">SCARD key</a> <br />Get the number of members in a set</td>
+   <td><a href="/redis/sets_scard.htm">SCARD key</a> <br>Get the number of members in a set</td>
   </tr> 
   <tr>
    <td>3</td>
-   <td><a href="/redis/sets_sdiff.htm">SDIFF key1 [key2]</a> <br />Subtract multiple sets</td>
+   <td><a href="/redis/sets_sdiff.htm">SDIFF key1 [key2]</a> <br>Subtract multiple sets</td>
   </tr> 
   <tr>
    <td>4</td>
-   <td><a href="/redis/sets_sdiffstore.htm">SDIFFSTORE destination key1 [key2]</a> <br />Subtract multiple sets and store the resulting set in a key</td>
+   <td><a href="/redis/sets_sdiffstore.htm">SDIFFSTORE destination key1 [key2]</a> <br>Subtract multiple sets and store the resulting set in a key</td>
   </tr> 
   <tr>
    <td>5</td>
-   <td><a href="/redis/sets_sinter.htm">SINTER key1 [key2]</a> <br />Intersect multiple sets</td>
+   <td><a href="/redis/sets_sinter.htm">SINTER key1 [key2]</a> <br>Intersect multiple sets</td>
   </tr> 
   <tr>
    <td>6</td>
-   <td><a href="/redis/sets_sinterstore.htm">SINTERSTORE destination key1 [key2]</a> <br />Intersect multiple sets and store the resulting set in a key</td>
+   <td><a href="/redis/sets_sinterstore.htm">SINTERSTORE destination key1 [key2]</a> <br>Intersect multiple sets and store the resulting set in a key</td>
   </tr> 
   <tr>
    <td>7</td>
-   <td><a href="/redis/sets_sismember.htm">SISMEMBER key member</a> <br />Determine if a given value is a member of a set</td>
+   <td><a href="/redis/sets_sismember.htm">SISMEMBER key member</a> <br>Determine if a given value is a member of a set</td>
   </tr> 
   <tr>
    <td>8</td>
-   <td><a href="/redis/sets_sismember.htm">SMEMBERS key</a> <br />Get all the members in a set</td>
+   <td><a href="/redis/sets_sismember.htm">SMEMBERS key</a> <br>Get all the members in a set</td>
   </tr> 
   <tr>
    <td>9</td>
-   <td><a href="/redis/sets_smove.htm">SMOVE source destination member</a> <br />Move a member from one set to another</td>
+   <td><a href="/redis/sets_smove.htm">SMOVE source destination member</a> <br>Move a member from one set to another</td>
   </tr> 
   <tr>
    <td>10</td>
-   <td><a href="/redis/sets_spop.htm">SPOP key</a> <br />Remove and return a random member from a set</td>
+   <td><a href="/redis/sets_spop.htm">SPOP key</a> <br>Remove and return a random member from a set</td>
   </tr> 
   <tr>
    <td>11</td>
-   <td><a href="/redis/sets_srandmember.htm">SRANDMEMBER key [count]</a> <br />Get one or multiple random members from a set</td>
+   <td><a href="/redis/sets_srandmember.htm">SRANDMEMBER key [count]</a> <br>Get one or multiple random members from a set</td>
   </tr> 
   <tr>
    <td>12</td>
-   <td><a href="/redis/sets_srem.htm">SREM key member1 [member2]</a> <br />Remove one or more members from a set</td>
+   <td><a href="/redis/sets_srem.htm">SREM key member1 [member2]</a> <br>Remove one or more members from a set</td>
   </tr> 
   <tr>
    <td>13</td>
-   <td><a href="/redis/sets_sunion.htm">SUNION key1 [key2]</a> <br />Add multiple sets</td>
+   <td><a href="/redis/sets_sunion.htm">SUNION key1 [key2]</a> <br>Add multiple sets</td>
   </tr> 
   <tr>
    <td>14</td>
-   <td><a href="/redis/sets_sunionstore.htm">SUNIONSTORE destination key1 [key2]</a> <br />Add multiple sets and store the resulting set in a key</td>
+   <td><a href="/redis/sets_sunionstore.htm">SUNIONSTORE destination key1 [key2]</a> <br>Add multiple sets and store the resulting set in a key</td>
   </tr> 
   <tr>
    <td>15</td>
-   <td><a href="/redis/sets_sscan.htm">SSCAN key cursor [MATCH pattern] [COUNT count]</a> <br />Incrementally iterate Set elements</td>
+   <td><a href="/redis/sets_sscan.htm">SSCAN key cursor [MATCH pattern] [COUNT count]</a> <br>Incrementally iterate Set elements</td>
   </tr> 
  </tbody>
 </table>       
 </article>
-<article id='a12'>
+<article id="a12">
 <h1>Redis - Sorted Sets</h1>       
 <p>Redis Sorted Sets are similar to Redis Sets with unique feature of values stored in set. The difference is that every member of a Sorted Set is associated with score, that is used in order to take the sorted set ordered, from the smallest to the greatest score.</p> 
 <p>In redis sorted set add, remove, and test for existence of members in O(1) (constant time regardless of the number of elements contained inside the Set). Maximum length of a list is 2<sup>32</sup> - 1 elements (4294967295, more than 4 billion of elements per set).</p> 
 <h2>Example</h2> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; ZADD tutorials 1 redis</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; ZADD tutorials 1 redis</span>
 <span class="pln">(integer) 1</span>
 <span class="pln">redis 127.0.0.1:6379&gt; ZADD tutorials 2 mongodb</span>
 <span class="pln">(integer) 1</span>
@@ -860,12 +838,12 @@ PONG
 <span class="pln">(integer) 0</span>
 <span class="pln">redis 127.0.0.1:6379&gt; ZRANGE tutorials 0 10 WITHSCORES</span>
 <span class="pln">
-1) &quot;redis&quot;
-2) &quot;1&quot;
-3) &quot;mongodb&quot;
-4) &quot;2&quot;
-5) &quot;mysql&quot;
-6) &quot;4&quot;
+1) "redis"
+2) "1"
+3) "mongodb"
+4) "2"
+5) "mysql"
+6) "4"
 </span>
 </pre> 
 <p>In the above example three values are inserted with its score in redis sorted set named tutorials by the command <b>ZADD</b>.</p> 
@@ -879,103 +857,102 @@ PONG
   </tr> 
   <tr>
    <td>1</td>
-   <td><a href="/redis/sorted_sets_zadd.htm">ZADD key score1 member1 [score2 member2]</a> <br />Add one or more members to a sorted set, or update its score if it already exists</td>
+   <td><a href="/redis/sorted_sets_zadd.htm">ZADD key score1 member1 [score2 member2]</a> <br>Add one or more members to a sorted set, or update its score if it already exists</td>
   </tr> 
   <tr>
    <td>2</td>
-   <td><a href="/redis/sorted_sets_zcard.htm">ZCARD key</a> <br />Get the number of members in a sorted set</td>
+   <td><a href="/redis/sorted_sets_zcard.htm">ZCARD key</a> <br>Get the number of members in a sorted set</td>
   </tr> 
   <tr>
    <td>3</td>
-   <td><a href="/redis/sorted_sets_zcount.htm">ZCOUNT key min max</a> <br />Count the members in a sorted set with scores within the given values</td>
+   <td><a href="/redis/sorted_sets_zcount.htm">ZCOUNT key min max</a> <br>Count the members in a sorted set with scores within the given values</td>
   </tr> 
   <tr>
    <td>4</td>
-   <td><a href="/redis/sorted_sets_zincrby.htm">ZINCRBY key increment member</a> <br />Increment the score of a member in a sorted set</td>
+   <td><a href="/redis/sorted_sets_zincrby.htm">ZINCRBY key increment member</a> <br>Increment the score of a member in a sorted set</td>
   </tr> 
   <tr>
    <td>5</td>
-   <td><a href="/redis/sorted_sets_zinterstore.htm">ZINTERSTORE destination numkeys key [key ...]</a> <br />Intersect multiple sorted sets and store the resulting sorted set in a new key</td>
+   <td><a href="/redis/sorted_sets_zinterstore.htm">ZINTERSTORE destination numkeys key [key ...]</a> <br>Intersect multiple sorted sets and store the resulting sorted set in a new key</td>
   </tr> 
   <tr>
    <td>6</td>
-   <td><a href="/redis/sorted_sets_zlexcount.htm">ZLEXCOUNT key min max</a> <br />Count the number of members in a sorted set between a given lexicographical range</td>
+   <td><a href="/redis/sorted_sets_zlexcount.htm">ZLEXCOUNT key min max</a> <br>Count the number of members in a sorted set between a given lexicographical range</td>
   </tr> 
   <tr>
    <td>7</td>
-   <td><a href="/redis/sorted_sets_zrange.htm">ZRANGE key start stop [WITHSCORES]</a> <br />Return a range of members in a sorted set, by index</td>
+   <td><a href="/redis/sorted_sets_zrange.htm">ZRANGE key start stop [WITHSCORES]</a> <br>Return a range of members in a sorted set, by index</td>
   </tr> 
   <tr>
    <td>8</td>
-   <td><a href="/redis/sorted_sets_zrangebylex.htm">ZRANGEBYLEX key min max [LIMIT offset count]</a> <br />Return a range of members in a sorted set, by lexicographical range</td>
+   <td><a href="/redis/sorted_sets_zrangebylex.htm">ZRANGEBYLEX key min max [LIMIT offset count]</a> <br>Return a range of members in a sorted set, by lexicographical range</td>
   </tr> 
   <tr>
    <td>9</td>
-   <td><a href="/redis/sorted_sets_zrangebyscore.htm">ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT]</a> <br />Return a range of members in a sorted set, by score</td>
+   <td><a href="/redis/sorted_sets_zrangebyscore.htm">ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT]</a> <br>Return a range of members in a sorted set, by score</td>
   </tr> 
   <tr>
    <td>10</td>
-   <td><a href="/redis/sorted_sets_zrank.htm">ZRANK key member</a> <br />Determine the index of a member in a sorted set</td>
+   <td><a href="/redis/sorted_sets_zrank.htm">ZRANK key member</a> <br>Determine the index of a member in a sorted set</td>
   </tr> 
   <tr>
    <td>11</td>
-   <td><a href="/redis/sorted_sets_zrem.htm">ZREM key member [member ...]</a> <br />Remove one or more members from a sorted set</td>
+   <td><a href="/redis/sorted_sets_zrem.htm">ZREM key member [member ...]</a> <br>Remove one or more members from a sorted set</td>
   </tr> 
   <tr>
    <td>12</td>
-   <td><a href="/redis/sorted_sets_zremrangebylex.htm">ZREMRANGEBYLEX key min max</a> <br />Remove all members in a sorted set between the given lexicographical range</td>
+   <td><a href="/redis/sorted_sets_zremrangebylex.htm">ZREMRANGEBYLEX key min max</a> <br>Remove all members in a sorted set between the given lexicographical range</td>
   </tr> 
   <tr>
    <td>13</td>
-   <td><a href="/redis/sorted_sets_zremrangebyrank.htm">ZREMRANGEBYRANK key start stop</a> <br />Remove all members in a sorted set within the given indexes</td>
+   <td><a href="/redis/sorted_sets_zremrangebyrank.htm">ZREMRANGEBYRANK key start stop</a> <br>Remove all members in a sorted set within the given indexes</td>
   </tr> 
   <tr>
    <td>14</td>
-   <td><a href="/redis/sorted_sets_zremrangebyscore.htm">ZREMRANGEBYSCORE key min max</a> <br />Remove all members in a sorted set within the given scores</td>
+   <td><a href="/redis/sorted_sets_zremrangebyscore.htm">ZREMRANGEBYSCORE key min max</a> <br>Remove all members in a sorted set within the given scores</td>
   </tr> 
   <tr>
    <td>15</td>
-   <td><a href="/redis/sorted_sets_zrevrange.htm">ZREVRANGE key start stop [WITHSCORES]</a> <br />Return a range of members in a sorted set, by index, with scores ordered from high to low</td>
+   <td><a href="/redis/sorted_sets_zrevrange.htm">ZREVRANGE key start stop [WITHSCORES]</a> <br>Return a range of members in a sorted set, by index, with scores ordered from high to low</td>
   </tr> 
   <tr>
    <td>16</td>
-   <td><a href="/redis/sorted_sets_zrevrangebyscore.htm">ZREVRANGEBYSCORE key max min [WITHSCORES]</a> <br />Return a range of members in a sorted set, by score, with scores ordered from high to low</td>
+   <td><a href="/redis/sorted_sets_zrevrangebyscore.htm">ZREVRANGEBYSCORE key max min [WITHSCORES]</a> <br>Return a range of members in a sorted set, by score, with scores ordered from high to low</td>
   </tr> 
   <tr>
    <td>17</td>
-   <td><a href="/redis/sorted_sets_zrevrank.htm">ZREVRANK key member</a> <br />Determine the index of a member in a sorted set, with scores ordered from high to low</td>
+   <td><a href="/redis/sorted_sets_zrevrank.htm">ZREVRANK key member</a> <br>Determine the index of a member in a sorted set, with scores ordered from high to low</td>
   </tr> 
   <tr>
    <td>18</td>
-   <td><a href="/redis/sorted_sets_zscore.htm">ZSCORE key member</a> <br />Get the score associated with the given member in a sorted set</td>
+   <td><a href="/redis/sorted_sets_zscore.htm">ZSCORE key member</a> <br>Get the score associated with the given member in a sorted set</td>
   </tr> 
   <tr>
    <td>19</td>
-   <td><a href="/redis/sorted_sets_zunionstore.htm">ZUNIONSTORE destination numkeys key [key ...]</a> <br />Add multiple sorted sets and store the resulting sorted set in a new key</td>
+   <td><a href="/redis/sorted_sets_zunionstore.htm">ZUNIONSTORE destination numkeys key [key ...]</a> <br>Add multiple sorted sets and store the resulting sorted set in a new key</td>
   </tr> 
   <tr>
    <td>20</td>
-   <td><a href="/redis/sorted_sets_zscan.htm">ZSCAN key cursor [MATCH pattern] [COUNT count]</a> <br />Incrementally iterate sorted sets elements and associated scores</td>
+   <td><a href="/redis/sorted_sets_zscan.htm">ZSCAN key cursor [MATCH pattern] [COUNT count]</a> <br>Incrementally iterate sorted sets elements and associated scores</td>
   </tr> 
  </tbody>
 </table>       
 </article>
-<article id='a13'>
+<article id="a13">
 <h1>Redis - HyperLogLog</h1>       
 <p>Redis HyperLogLog is a algorithm that use randomization in order to provide an approximation of the number of unique elements in a set using just a constant, and small, amount of memory.</p> 
 <p>HyperLogLog provides a very good approximation of the cardinality of a set even using a very small amount of memory around 12 kbytes per key with a standard error of 0.81% and there is no limit to the number of items you can count, unless you approach 2<sup>64</sup> items.</p> 
 <h3>Example</h3> 
 <p>Following example explains how redis HyperLogLog works:</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; PFADD tutorials &quot;redis&quot;</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; PFADD tutorials "redis"</span>
 <span class="pln">
 1) (integer) 1
 </span>
-<span class="pln">redis 127.0.0.1:6379&gt; PFADD tutorials &quot;mongodb&quot;</span>
+<span class="pln">redis 127.0.0.1:6379&gt; PFADD tutorials "mongodb"</span>
 <span class="pln">
 1) (integer) 1
 </span>
-<span class="pln">redis 127.0.0.1:6379&gt; PFADD tutorials &quot;mysql&quot;</span>
+<span class="pln">redis 127.0.0.1:6379&gt; PFADD tutorials "mysql"</span>
 <span class="pln">
 1) (integer) 1
 </span>
@@ -994,51 +971,49 @@ PONG
   </tr> 
   <tr>
    <td>1</td>
-   <td><a href="/redis/hyperloglog_pfadd.htm">PFADD key element [element ...]</a> <br />Adds the specified elements to the specified HyperLogLog.</td>
+   <td><a href="/redis/hyperloglog_pfadd.htm">PFADD key element [element ...]</a> <br>Adds the specified elements to the specified HyperLogLog.</td>
   </tr> 
   <tr>
    <td>2</td>
-   <td><a href="/redis/hyperloglog_pfcount.htm">PFCOUNT key [key ...]</a> <br />Return the approximated cardinality of the set(s) observed by the HyperLogLog at key(s).</td>
+   <td><a href="/redis/hyperloglog_pfcount.htm">PFCOUNT key [key ...]</a> <br>Return the approximated cardinality of the set(s) observed by the HyperLogLog at key(s).</td>
   </tr> 
   <tr>
    <td>3</td>
-   <td><a href="/redis/hyperloglog_pfmerge.htm">PFMERGE destkey sourcekey [sourcekey ...]</a> <br />Merge N different HyperLogLogs into a single one.</td>
+   <td><a href="/redis/hyperloglog_pfmerge.htm">PFMERGE destkey sourcekey [sourcekey ...]</a> <br>Merge N different HyperLogLogs into a single one.</td>
   </tr> 
  </tbody>
 </table>       
 </article>
-<article id='a14'>
+<article id="a14">
 <h1>Redis - Publish Subscribe</h1>       
 <p>Redis pub sub implements the messaging system where senders (in redis terminology called publishers) sends the messages while receivers (subscribers) receive them. The link by which messages are transferred is called channel.</p> 
 <p>In redis a client can subscribe any number of channels.</p> 
 <h3>Example</h3> 
 <p>Following example explains how publish subscriber concept works. In the below given example one client subscribe a channel named <b>redisChat</b></p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; SUBSCRIBE redisChat</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; SUBSCRIBE redisChat</span>
 <span class="pln">
 Reading messages... (press Ctrl-C to quit)
-1) &quot;subscribe&quot;
-2) &quot;redisChat&quot;
+1) "subscribe"
+2) "redisChat"
 3) (integer) 1
 </span>
 </pre> 
 <p>Now, two clients are publishing the messages on same channel named redisChat and above subscribed client is receiving messages.</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; PUBLISH redisChat &quot;Redis is a great caching technique&quot;</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; PUBLISH redisChat "Redis is a great caching technique"</span>
 <span class="pln">
 (integer) 1
 </span>
-<span class="pln">redis 127.0.0.1:6379&gt; PUBLISH redisChat &quot;Learn redis by tutorials point&quot;</span>
+<span class="pln">redis 127.0.0.1:6379&gt; PUBLISH redisChat "Learn redis by tutorials point"</span>
 <span class="pln">
 (integer) 1
 </span>
 <span class="pln">
-1) &quot;message&quot;
-2) &quot;redisChat&quot;
-3) &quot;Redis is a great caching technique&quot;
-1) &quot;message&quot;
-2) &quot;redisChat&quot;
-3) &quot;Learn redis by tutorials point&quot;
+1) "message"
+2) "redisChat"
+3) "Redis is a great caching technique"
+1) "message"
+2) "redisChat"
+3) "Learn redis by tutorials point"
 </span>
 </pre> 
 <h2>Redis pubsub commands</h2> 
@@ -1051,32 +1026,32 @@ Reading messages... (press Ctrl-C to quit)
   </tr> 
   <tr>
    <td>1</td>
-   <td><a href="/redis/pub_sub_psubscribe.htm">PSUBSCRIBE pattern [pattern ...]</a> <br />Subscribe to channels matching the given patterns.</td>
+   <td><a href="/redis/pub_sub_psubscribe.htm">PSUBSCRIBE pattern [pattern ...]</a> <br>Subscribe to channels matching the given patterns.</td>
   </tr> 
   <tr>
    <td>2</td>
-   <td><a href="/redis/pub_sub_pubsub.htm">PUBSUB subcommand [argument [argument ...]]</a> <br />Tells the state of pubsub system eg which clients are active on the server.</td>
+   <td><a href="/redis/pub_sub_pubsub.htm">PUBSUB subcommand [argument [argument ...]]</a> <br>Tells the state of pubsub system eg which clients are active on the server.</td>
   </tr> 
   <tr>
    <td>3</td>
-   <td><a href="/redis/pub_sub_publish.htm">PUBLISH channel message</a> <br />Post a message to a channel.</td>
+   <td><a href="/redis/pub_sub_publish.htm">PUBLISH channel message</a> <br>Post a message to a channel.</td>
   </tr> 
   <tr>
    <td>4</td>
-   <td><a href="/redis/pub_sub_punsubscribe.htm">PUNSUBSCRIBE [pattern [pattern ...]]</a> <br />Stop listening for messages posted to channels matching the given patterns.</td>
+   <td><a href="/redis/pub_sub_punsubscribe.htm">PUNSUBSCRIBE [pattern [pattern ...]]</a> <br>Stop listening for messages posted to channels matching the given patterns.</td>
   </tr> 
   <tr>
    <td>5</td>
-   <td><a href="/redis/pub_sub_subscribe.htm">SUBSCRIBE channel [channel ...]</a> <br />Listen for messages published to the given channels.</td>
+   <td><a href="/redis/pub_sub_subscribe.htm">SUBSCRIBE channel [channel ...]</a> <br>Listen for messages published to the given channels.</td>
   </tr> 
   <tr>
    <td>6</td>
-   <td><a href="/redis/pub_sub_unsubscribe.htm">UNSUBSCRIBE [channel [channel ...]]</a> <br />Stop listening for messages posted to the given channels.</td>
+   <td><a href="/redis/pub_sub_unsubscribe.htm">UNSUBSCRIBE [channel [channel ...]]</a> <br>Stop listening for messages posted to the given channels.</td>
   </tr> 
  </tbody>
 </table>       
 </article>
-<article id='a15'>
+<article id="a15">
 <h1>Redis - Transactions</h1>       
 <p>Redis transactions allow the execution of a group of commands in a single step. Transactions has two properties in it, which are described below: </p> 
 <ul class="list"> 
@@ -1085,16 +1060,14 @@ Reading messages... (press Ctrl-C to quit)
 </ul> 
 <h2>Sample</h2> 
 <p>Redis transaction is initiated by command <b>MULTI</b> and then you need to pass list of commands that should be executed in transaction and after that whole transaction is executed by <b>EXEC</b> command.</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; MULTI</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; MULTI</span>
 <span class="pln">OK</span>
 <span class="pln">List of commands here</span>
 <span class="pln">redis 127.0.0.1:6379&gt; EXEC</span>
 </pre> 
 <h3>Example</h3> 
 <p>Following example explains how redis transaction can be initiated and executed.</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; MULTI</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; MULTI</span>
 <span class="pln">OK</span>
 <span class="pln">redis 127.0.0.1:6379&gt; SET tutorial redis</span>
 <span class="pln">QUEUED</span>
@@ -1105,7 +1078,7 @@ Reading messages... (press Ctrl-C to quit)
 <span class="pln">redis 127.0.0.1:6379&gt; EXEC</span>
 <span class="pln">
 1) OK
-2) &quot;redis&quot;
+2) "redis"
 3) (integer) 1
 </span>
 </pre> 
@@ -1119,44 +1092,42 @@ Reading messages... (press Ctrl-C to quit)
   </tr> 
   <tr>
    <td>1</td>
-   <td><a href="transactions_discard.htm">DISCARD</a> <br />Discard all commands issued after MULTI</td>
+   <td><a href="transactions_discard.htm">DISCARD</a> <br>Discard all commands issued after MULTI</td>
   </tr> 
   <tr>
    <td>2</td>
-   <td><a href="/redis/transactions_exec.htm">EXEC</a> <br />Execute all commands issued after MULTI</td>
+   <td><a href="/redis/transactions_exec.htm">EXEC</a> <br>Execute all commands issued after MULTI</td>
   </tr> 
   <tr>
    <td>3</td>
-   <td><a href="/redis/transactions_multi.htm">MULTI</a> <br />Mark the start of a transaction block</td>
+   <td><a href="/redis/transactions_multi.htm">MULTI</a> <br>Mark the start of a transaction block</td>
   </tr> 
   <tr>
    <td>4</td>
-   <td><a href="/redis/transactions_unwatch.htm">UNWATCH</a> <br />Forget about all watched keys</td>
+   <td><a href="/redis/transactions_unwatch.htm">UNWATCH</a> <br>Forget about all watched keys</td>
   </tr> 
   <tr>
    <td>5</td>
-   <td><a href="/redis/transactions_watch.htm">WATCH key [key ...]</a> <br />Watch the given keys to determine execution of the MULTI/EXEC block</td>
+   <td><a href="/redis/transactions_watch.htm">WATCH key [key ...]</a> <br>Watch the given keys to determine execution of the MULTI/EXEC block</td>
   </tr> 
  </tbody>
 </table>       
 </article>
-<article id='a16'>
+<article id="a16">
 <h1>Redis - Scripting</h1>       
 <p>Redis scripting is used to evaluate scripts using the Lua interpreter. It is built into Redis starting from version 2.6.0. Command used for scripting is <b>EVAL</b> command.</p> 
 <h2>Syntax</h2> 
 <p>Basic syntax of <b>EVAL</b> command is as follows:</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; EVAL script numkeys key [key ...] arg [arg ...]</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; EVAL script numkeys key [key ...] arg [arg ...]</span>
 </pre> 
 <h3>Example</h3> 
 <p>Following example explains how redis scripting works:</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; EVAL &quot;return {KEYS[1],KEYS[2],ARGV[1],ARGV[2]}&quot; 2 key1 key2 first second</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; EVAL "return {KEYS[1],KEYS[2],ARGV[1],ARGV[2]}" 2 key1 key2 first second</span>
 <span class="pln">
-1) &quot;key1&quot;
-2) &quot;key2&quot;
-3) &quot;first&quot;
-4) &quot;second&quot;
+1) "key1"
+2) "key2"
+3) "first"
+4) "second"
 </span>
 </pre> 
 <h2>Redis Scripting commands</h2> 
@@ -1169,38 +1140,37 @@ Reading messages... (press Ctrl-C to quit)
   </tr> 
   <tr>
    <td>1</td>
-   <td><a href="/redis/scripting_eval.htm">EVAL script numkeys key [key ...] arg [arg ...]</a> <br />Execute a Lua script.</td>
+   <td><a href="/redis/scripting_eval.htm">EVAL script numkeys key [key ...] arg [arg ...]</a> <br>Execute a Lua script.</td>
   </tr> 
   <tr>
    <td>2</td>
-   <td><a href="/redis/scripting_evalsha.htm">EVALSHA sha1 numkeys key [key ...] arg [arg ...]</a> <br />Execute a Lua script.</td>
+   <td><a href="/redis/scripting_evalsha.htm">EVALSHA sha1 numkeys key [key ...] arg [arg ...]</a> <br>Execute a Lua script.</td>
   </tr> 
   <tr>
    <td>3</td>
-   <td><a href="/redis/scripting_script_exists.htm">SCRIPT EXISTS script [script ...]</a> <br />Check existence of scripts in the script cache.</td>
+   <td><a href="/redis/scripting_script_exists.htm">SCRIPT EXISTS script [script ...]</a> <br>Check existence of scripts in the script cache.</td>
   </tr> 
   <tr>
    <td>4</td>
-   <td><a href="/redis/scripting_script_flush.htm">SCRIPT FLUSH</a> <br />Remove all the scripts from the script cache.</td>
+   <td><a href="/redis/scripting_script_flush.htm">SCRIPT FLUSH</a> <br>Remove all the scripts from the script cache.</td>
   </tr> 
   <tr>
    <td>5</td>
-   <td><a href="/redis/scripting_script_kill.htm">SCRIPT KILL</a> <br />Kill the script currently in execution.</td>
+   <td><a href="/redis/scripting_script_kill.htm">SCRIPT KILL</a> <br>Kill the script currently in execution.</td>
   </tr> 
   <tr>
    <td>6</td>
-   <td><a href="/redis/scripting_script_load.htm">SCRIPT LOAD script</a> <br />Load the specified Lua script into the script cache.</td>
+   <td><a href="/redis/scripting_script_load.htm">SCRIPT LOAD script</a> <br>Load the specified Lua script into the script cache.</td>
   </tr> 
  </tbody>
 </table>       
 </article>
-<article id='a17'>
+<article id="a17">
 <h1>Redis - Connections</h1>       
 <p>Redis connection commands are basically used to manage client connections with redis server.</p> 
 <h3>Example</h3> 
 <p>Following example explains how a client authenticate itself to redis server and checks whether server is running or not.</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; AUTH &quot;password&quot;</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; AUTH "password"</span>
 <span class="pln">OK</span>
 <span class="pln">redis 127.0.0.1:6379&gt; PING</span>
 <span class="pln">PONG</span>
@@ -1215,34 +1185,33 @@ Reading messages... (press Ctrl-C to quit)
   </tr> 
   <tr>
    <td>1</td>
-   <td><a href="/redis/connection_auth.htm">AUTH password</a> <br />Authenticate to the server with given password</td>
+   <td><a href="/redis/connection_auth.htm">AUTH password</a> <br>Authenticate to the server with given password</td>
   </tr> 
   <tr>
    <td>2</td>
-   <td><a href="/redis/connection_echo.htm">ECHO message</a> <br />Print the given string</td>
+   <td><a href="/redis/connection_echo.htm">ECHO message</a> <br>Print the given string</td>
   </tr> 
   <tr>
    <td>3</td>
-   <td><a href="/redis/connection_ping.htm">PING</a> <br />Check whether server is running or not</td>
+   <td><a href="/redis/connection_ping.htm">PING</a> <br>Check whether server is running or not</td>
   </tr> 
   <tr>
    <td>4</td>
-   <td><a href="/redis/connection_quit.htm">QUIT</a> <br />Close the current connection</td>
+   <td><a href="/redis/connection_quit.htm">QUIT</a> <br>Close the current connection</td>
   </tr> 
   <tr>
    <td>5</td>
-   <td><a href="/redis/connection_select.htm">SELECT index</a> <br />Change the selected database for the current connection</td>
+   <td><a href="/redis/connection_select.htm">SELECT index</a> <br>Change the selected database for the current connection</td>
   </tr> 
  </tbody>
 </table>       
 </article>
-<article id='a18'>
+<article id="a18">
 <h1>Redis - Server</h1>       
 <p>Redis server commands are basically used to manage redis server.</p> 
 <h3>Example</h3> 
 <p>Following example explains how we can get all statistics and information about server.</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis 127.0.0.1:6379&gt; INFO</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis 127.0.0.1:6379&gt; INFO</span>
 <span class="pln">
 # Server
 redis_version:2.8.13
@@ -1342,147 +1311,145 @@ db3:keys=1,expires=0,avg_ttl=0
   </tr> 
   <tr>
    <td>1</td>
-   <td><a href="/redis/server_bgrewriteaof.htm">BGREWRITEAOF</a> <br />Asynchronously rewrite the append-only file</td>
+   <td><a href="/redis/server_bgrewriteaof.htm">BGREWRITEAOF</a> <br>Asynchronously rewrite the append-only file</td>
   </tr> 
   <tr>
    <td>2</td>
-   <td><a href="/redis/server_bgsave.htm">BGSAVE</a> <br />Asynchronously save the dataset to disk</td>
+   <td><a href="/redis/server_bgsave.htm">BGSAVE</a> <br>Asynchronously save the dataset to disk</td>
   </tr> 
   <tr>
    <td>3</td>
-   <td><a href="/redis/server_client_kill.htm">CLIENT KILL [ip:port] [ID client-id]</a> <br />Kill the connection of a client</td>
+   <td><a href="/redis/server_client_kill.htm">CLIENT KILL [ip:port] [ID client-id]</a> <br>Kill the connection of a client</td>
   </tr> 
   <tr>
    <td>4</td>
-   <td><a href="/redis/server_client_list.htm">CLIENT LIST</a> <br />Get the list of client connections connection to the server</td>
+   <td><a href="/redis/server_client_list.htm">CLIENT LIST</a> <br>Get the list of client connections connection to the server</td>
   </tr> 
   <tr>
    <td>5</td>
-   <td><a href="/redis/server_client_getname.htm">CLIENT GETNAME</a> <br />Get the name of current connection</td>
+   <td><a href="/redis/server_client_getname.htm">CLIENT GETNAME</a> <br>Get the name of current connection</td>
   </tr> 
   <tr>
    <td>6</td>
-   <td><a href="/redis/server_client_pause.htm">CLIENT PAUSE timeout</a> <br />Stop processing commands from clients for specified time</td>
+   <td><a href="/redis/server_client_pause.htm">CLIENT PAUSE timeout</a> <br>Stop processing commands from clients for specified time</td>
   </tr> 
   <tr>
    <td>7</td>
-   <td><a href="/redis/server_client_setname.htm">CLIENT SETNAME connection-name</a> <br />Set the current connection name</td>
+   <td><a href="/redis/server_client_setname.htm">CLIENT SETNAME connection-name</a> <br>Set the current connection name</td>
   </tr> 
   <tr>
    <td>8</td>
-   <td><a href="/redis/server_cluster_slots.htm">CLUSTER SLOTS</a> <br />Get array of Cluster slot to node mappings</td>
+   <td><a href="/redis/server_cluster_slots.htm">CLUSTER SLOTS</a> <br>Get array of Cluster slot to node mappings</td>
   </tr> 
   <tr>
    <td>9</td>
-   <td><a href="/redis/server_command.htm">COMMAND</a> <br />Get array of Redis command details</td>
+   <td><a href="/redis/server_command.htm">COMMAND</a> <br>Get array of Redis command details</td>
   </tr> 
   <tr>
    <td>10</td>
-   <td><a href="/redis/server_command_count.htm">COMMAND COUNT</a> <br />Get total number of Redis commands</td>
+   <td><a href="/redis/server_command_count.htm">COMMAND COUNT</a> <br>Get total number of Redis commands</td>
   </tr> 
   <tr>
    <td>11</td>
-   <td><a href="/redis/server_command_getkeys.htm">COMMAND GETKEYS</a> <br />Extract keys given a full Redis command</td>
+   <td><a href="/redis/server_command_getkeys.htm">COMMAND GETKEYS</a> <br>Extract keys given a full Redis command</td>
   </tr> 
   <tr>
    <td>12</td>
-   <td><a href="/redis/server_bgsave.htm">BGSAVE</a> <br />Asynchronously save the dataset to disk</td>
+   <td><a href="/redis/server_bgsave.htm">BGSAVE</a> <br>Asynchronously save the dataset to disk</td>
   </tr> 
   <tr>
    <td>13</td>
-   <td><a href="/redis/server_command_info.htm">COMMAND INFO command-name [command-name ...]</a> <br />Get array of specific Redis command details</td>
+   <td><a href="/redis/server_command_info.htm">COMMAND INFO command-name [command-name ...]</a> <br>Get array of specific Redis command details</td>
   </tr> 
   <tr>
    <td>14</td>
-   <td><a href="/redis/server_config_get.htm">CONFIG GET parameter</a> <br />Get the value of a configuration parameter</td>
+   <td><a href="/redis/server_config_get.htm">CONFIG GET parameter</a> <br>Get the value of a configuration parameter</td>
   </tr> 
   <tr>
    <td>15</td>
-   <td><a href="/redis/server_config_rewrite.htm">CONFIG REWRITE</a> <br />Rewrite the configuration file with the in memory configuration</td>
+   <td><a href="/redis/server_config_rewrite.htm">CONFIG REWRITE</a> <br>Rewrite the configuration file with the in memory configuration</td>
   </tr> 
   <tr>
    <td>16</td>
-   <td><a href="/redis/server_config_set.htm">CONFIG SET parameter value</a> <br />Set a configuration parameter to the given value</td>
+   <td><a href="/redis/server_config_set.htm">CONFIG SET parameter value</a> <br>Set a configuration parameter to the given value</td>
   </tr> 
   <tr>
    <td>17</td>
-   <td><a href="/redis/server_config_resetstat.htm">CONFIG RESETSTAT</a> <br />Reset the stats returned by INFO</td>
+   <td><a href="/redis/server_config_resetstat.htm">CONFIG RESETSTAT</a> <br>Reset the stats returned by INFO</td>
   </tr> 
   <tr>
    <td>18</td>
-   <td><a href="/redis/server_dbsize.htm">DBSIZE</a> <br />Return the number of keys in the selected database</td>
+   <td><a href="/redis/server_dbsize.htm">DBSIZE</a> <br>Return the number of keys in the selected database</td>
   </tr> 
   <tr>
    <td>19</td>
-   <td><a href="/redis/server_debug_object.htm">DEBUG OBJECT key</a> <br />Get debugging information about a key</td>
+   <td><a href="/redis/server_debug_object.htm">DEBUG OBJECT key</a> <br>Get debugging information about a key</td>
   </tr> 
   <tr>
    <td>20</td>
-   <td><a href="/redis/server_debug_segfault.htm">DEBUG SEGFAULT</a> <br />Make the server crash</td>
+   <td><a href="/redis/server_debug_segfault.htm">DEBUG SEGFAULT</a> <br>Make the server crash</td>
   </tr> 
   <tr>
    <td>21</td>
-   <td><a href="/redis/server_flushall.htm">FLUSHALL</a> <br />Remove all keys from all databases</td>
+   <td><a href="/redis/server_flushall.htm">FLUSHALL</a> <br>Remove all keys from all databases</td>
   </tr> 
   <tr>
    <td>22</td>
-   <td><a href="/redis/server_flushdb.htm">FLUSHDB</a> <br />Remove all keys from the current database</td>
+   <td><a href="/redis/server_flushdb.htm">FLUSHDB</a> <br>Remove all keys from the current database</td>
   </tr> 
   <tr>
    <td>23</td>
-   <td><a href="/redis/server_info.htm">INFO [section]</a> <br />Get information and statistics about the server</td>
+   <td><a href="/redis/server_info.htm">INFO [section]</a> <br>Get information and statistics about the server</td>
   </tr> 
   <tr>
    <td>24</td>
-   <td><a href="/redis/server_lastsave.htm">LASTSAVE</a> <br />Get the UNIX time stamp of the last successful save to disk</td>
+   <td><a href="/redis/server_lastsave.htm">LASTSAVE</a> <br>Get the UNIX time stamp of the last successful save to disk</td>
   </tr> 
   <tr>
    <td>25</td>
-   <td><a href="/redis/server_monitor.htm">MONITOR</a> <br />Listen for all requests received by the server in real time</td>
+   <td><a href="/redis/server_monitor.htm">MONITOR</a> <br>Listen for all requests received by the server in real time</td>
   </tr> 
   <tr>
    <td>26</td>
-   <td><a href="/redis/server_role.htm">ROLE</a> <br />Return the role of the instance in the context of replication</td>
+   <td><a href="/redis/server_role.htm">ROLE</a> <br>Return the role of the instance in the context of replication</td>
   </tr> 
   <tr>
    <td>27</td>
-   <td><a href="/redis/server_save.htm">SAVE</a> <br />Synchronously save the dataset to disk</td>
+   <td><a href="/redis/server_save.htm">SAVE</a> <br>Synchronously save the dataset to disk</td>
   </tr> 
   <tr>
    <td>28</td>
-   <td><a href="/redis/server_shutdown.htm">SHUTDOWN [NOSAVE] [SAVE]</a> <br />Synchronously save the dataset to disk and then shut down the server</td>
+   <td><a href="/redis/server_shutdown.htm">SHUTDOWN [NOSAVE] [SAVE]</a> <br>Synchronously save the dataset to disk and then shut down the server</td>
   </tr> 
   <tr>
    <td>29</td>
-   <td><a href="/redis/server_slaveof.htm">SLAVEOF host port</a> <br />Make the server a slave of another instance, or promote it as master</td>
+   <td><a href="/redis/server_slaveof.htm">SLAVEOF host port</a> <br>Make the server a slave of another instance, or promote it as master</td>
   </tr> 
   <tr>
    <td>30</td>
-   <td><a href="/redis/server_showlog.htm">SLOWLOG subcommand [argument]</a> <br />Manages the Redis slow queries log</td>
+   <td><a href="/redis/server_showlog.htm">SLOWLOG subcommand [argument]</a> <br>Manages the Redis slow queries log</td>
   </tr> 
   <tr>
    <td>31</td>
-   <td><a href="/redis/server_sync.htm">SYNC</a> <br /> command used for replication</td>
+   <td><a href="/redis/server_sync.htm">SYNC</a> <br> command used for replication</td>
   </tr> 
   <tr>
    <td>32</td>
-   <td><a href="/redis/server_time.htm">TIME</a> <br />Return the current server time</td>
+   <td><a href="/redis/server_time.htm">TIME</a> <br>Return the current server time</td>
   </tr> 
  </tbody>
 </table>       
 </article>
-<article id='a19'>
+<article id="a19">
 <h1>Redis - Backup</h1>       
 <p>Redis <b>SAVE</b> command is used to create back up of current redis database. </p> 
 <h3>SYNTAX</h3> 
 <p>Basic syntax of redis <b>SAVE</b> command is shown below: </p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">127.0.0.1:6379&gt; SAVE</span>
+<pre class="prettyprint prettyprinted"><span class="pln">127.0.0.1:6379&gt; SAVE</span>
 </pre> 
 <h3>EXAMPLE</h3> 
 <p>Below given example create the back up of current database.</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">127.0.0.1:6379&gt; SAVE</span>
+<pre class="prettyprint prettyprinted"><span class="pln">127.0.0.1:6379&gt; SAVE</span>
 <span class="pln">
 OK
 </span>
@@ -1490,70 +1457,62 @@ OK
 <p>This command will create dump.rdb file in your redis directory.</p> 
 <h2>Restore Redis Data</h2> 
 <p>To restore redis data just move redis backup file (dump.rdb) into your redis directory and start the server. To get your redis directory use <b>CONFIG</b> command of redis as shown below:</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">127.0.0.1:6379&gt; CONFIG get dir</span>
+<pre class="prettyprint prettyprinted"><span class="pln">127.0.0.1:6379&gt; CONFIG get dir</span>
 <span class="pln">
-1) &quot;dir&quot;
-2) &quot;/user/tutorialspoint/redis-2.8.13/src&quot;
+1) "dir"
+2) "/user/tutorialspoint/redis-2.8.13/src"
 </span>
 </pre> 
 <p>In the output of above command <b>/user/tutorialspoint/redis-2.8.13/src</b> is the directory, where redis server is installed.</p> 
 <h2>Bgsave</h2> 
 <p>To create redis backup alternate command <b>BGSAVE</b> is also available. This command will start the backup process and run this in background</p> 
 <h3>EXAMPLE</h3> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">127.0.0.1:6379&gt; BGSAVE</span>
+<pre class="prettyprint prettyprinted"><span class="pln">127.0.0.1:6379&gt; BGSAVE</span>
 <span class="pln">
 Background saving started
 </span>
 </pre>       
 </article>
-<article id='a20'>
+<article id="a20">
 <h1>Redis - Security</h1>       
 <p>Redis database can be make secured, so any client making connection needs to authenticate before executing command. To secure redis you need to set the password in config file.</p> 
 <h3>Example</h3> 
 <p>Below given example shows the steps to secure your redis instance.</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">127.0.0.1:6379&gt; CONFIG get requirepass</span>
-<span class="pln">1) &quot;requirepass&quot;
-2) &quot;&quot;</span>
+<pre class="prettyprint prettyprinted"><span class="pln">127.0.0.1:6379&gt; CONFIG get requirepass</span>
+<span class="pln">1) "requirepass"
+2) ""</span>
 </pre> 
 <p>By default this property is blank, means no password is set for this instance. You can change this property by executing the following command</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">127.0.0.1:6379&gt; CONFIG set requirepass &quot;tutorialspoint&quot;</span>
+<pre class="prettyprint prettyprinted"><span class="pln">127.0.0.1:6379&gt; CONFIG set requirepass "tutorialspoint"</span>
 <span class="pln">OK</span>
 <span class="pln">127.0.0.1:6379&gt; CONFIG get requirepass</span>
-<span class="pln">1) &quot;requirepass&quot;
-2) &quot;tutorialspoint&quot;</span>
+<span class="pln">1) "requirepass"
+2) "tutorialspoint"</span>
 </pre> 
 <p>After setting the password if any client runs command without authentication, then <b>(error) NOAUTH Authentication required.</b> error will return to that. So client needs to use <b>AUTH</b> command to authenticate himself.</p> 
 <h3>Syntax</h3> 
 <p>Basic syntax of <b>AUTH</b> command is shown below: </p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">127.0.0.1:6379&gt; AUTH password</span>
+<pre class="prettyprint prettyprinted"><span class="pln">127.0.0.1:6379&gt; AUTH password</span>
 </pre> 
 <h3>Example</h3> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">127.0.0.1:6379&gt; AUTH &quot;tutorialspoint&quot;</span>
+<pre class="prettyprint prettyprinted"><span class="pln">127.0.0.1:6379&gt; AUTH "tutorialspoint"</span>
 <span class="pln">OK</span>
-<span class="pln">127.0.0.1:6379&gt; SET mykey &quot;Test value&quot;</span>
+<span class="pln">127.0.0.1:6379&gt; SET mykey "Test value"</span>
 <span class="pln">OK</span>
 <span class="pln">127.0.0.1:6379&gt; GET mykey</span>
-<span class="pln">&quot;Test value&quot;</span>
+<span class="pln">"Test value"</span>
 </pre>       
 </article>
-<article id='a21'>
+<article id="a21">
 <h1>Redis - Benchmarks</h1>       
 <p>Redis benchmark is the utility to check the performance of redis by running n commands simultaneously. </p> 
 <h3>SYNTAX</h3> 
 <p>Basic syntax of redis benchmark is shown below: </p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis-benchmark [option] [option value]</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis-benchmark [option] [option value]</span>
 </pre> 
 <h3>EXAMPLE</h3> 
 <p>Below given example check the redis by calling 100000 commands.</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis-benchmark -n 100000</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis-benchmark -n 100000</span>
 <span class="pln">
 PING_INLINE: 141043.72 requests per second
 PING_BULK: 142857.14 requests per second
@@ -1675,15 +1634,14 @@ MSET (10 keys): 93283.58 requests per second
 </table> 
 <h3>Example</h3> 
 <p>Below given example shows the multiple usage of options in redis benchmark utility.</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis-benchmark -h 127.0.0.1 -p 6379 -t set,lpush -n 100000 -q</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis-benchmark -h 127.0.0.1 -p 6379 -t set,lpush -n 100000 -q</span>
 <span class="pln">
 SET: 146198.83 requests per second
 LPUSH: 145560.41 requests per second
 </span>
 </pre>       
 </article>
-<article id='a22'>
+<article id="a22">
 <h1>Redis - Client Connection</h1>       
 <p>Redis accepts clients connections on the configured listening TCP port and on the Unix socket if enabled. When a new client connection is accepted the following operations are performed:</p> 
 <ul class="list"> 
@@ -1693,18 +1651,16 @@ LPUSH: 145560.41 requests per second
 </ul> 
 <h3>Maximum number of clients</h3> 
 <p>In Redis config (redis.conf) there is property called <b>maxclients</b>, which describes maximum number of clients that can connect to redis. Basic syntax of command is: </p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">config get maxclients</span>
+<pre class="prettyprint prettyprinted"><span class="pln">config get maxclients</span>
 <span class="pln">
-1) &quot;maxclients&quot;
-2) &quot;10000&quot;
+1) "maxclients"
+2) "10000"
 </span>
 </pre> 
 <p>By default this property is set to 10000 (depending upon maximum number of file descriptors limit of OS), although you can change this property. </p> 
 <h3>EXAMPLE</h3> 
 <p>In below given example we have set maximum number of clients to 100000, while starting the server</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">redis-server --maxclients 100000</span>
+<pre class="prettyprint prettyprinted"><span class="pln">redis-server --maxclients 100000</span>
 </pre> 
 <h3>Client Commands</h3> 
 <table class="src"> 
@@ -1742,7 +1698,7 @@ LPUSH: 145560.41 requests per second
  </tbody>
 </table>       
 </article>
-<article id='a23'>
+<article id="a23">
 <h1>Redis - Pipelining</h1>       
 <p>Redis is a TCP server and supports Request/Response protocol. In redis a request is accomplished with the following steps:</p> 
 <ul class="list"> 
@@ -1753,8 +1709,7 @@ LPUSH: 145560.41 requests per second
 <p>Basic meaning of pipelining is, client can send multiple requests to server without waiting for the replies at all, and finally read the replies in a single step.</p> 
 <h3>Example</h3> 
 <p>To check the redis pipelining, just start the redis instance and type following command in terminal.</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">$(echo -en &quot;PING\r\n SET tutorial redis\r\nGET tutorial\r\nINCR visitor\r\nINCR visitor\r\nINCR visitor\r\n&quot;; sleep 10) | nc localhost 6379</span>
+<pre class="prettyprint prettyprinted"><span class="pln">$(echo -en "PING\r\n SET tutorial redis\r\nGET tutorial\r\nINCR visitor\r\nINCR visitor\r\nINCR visitor\r\n"; sleep 10) | nc localhost 6379</span>
 <span class="pln">
 +PONG
 +OK
@@ -1768,7 +1723,7 @@ redis
 <h3>Benefits of pipelining</h3> 
 <p>The benefit of this technique is a drastically improved protocol performance. The speedup gained by pipelining ranges from a factor of five for connections to localhost up to a factor of at least one hundred over slower internet connections.</p>       
 </article>
-<article id='a24'>
+<article id="a24">
 <h1>Redis - Partitioning</h1>       
 <p>Partitioning is the process of splitting your data into multiple Redis instances, so that every instance will only contain a subset of your keys.</p> 
 <h3>Benefits of Partitioning</h3> 
@@ -1791,7 +1746,7 @@ redis
 <h3>Hash Partitioning</h3> 
 <p>In this type of partitioning, a hash function (eg. modulus function) is used to convert key into a number and then data is stored in different- different redis instances.</p>       
 </article>
-<article id='a25'>
+<article id="a25">
 <h1>Redis - Java</h1>       
 <h2>Installation</h2> 
 <p>Before we start using Redis in our Java programs, we need to make sure that we have Redis java Driver and Java set up on the machine. You can check Java tutorial for Java installation on your machine. Now, let us check how to set up Redis java driver.</p> 
@@ -1800,78 +1755,72 @@ redis
  <li>You need to include the <b>jedis.jar</b> into your classpath.</li> 
 </ul> 
 <h2>Connect to redis server</h2> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">
+<pre class="prettyprint prettyprinted"><span class="pln">
 import redis.clients.jedis.Jedis;
 public class RedisJava {
    public static void main(String[] args) {
       //Connecting to Redis server on localhost
-      Jedis jedis = new Jedis(&quot;localhost&quot;);
-      System.out.println(&quot;Connection to server sucessfully&quot;);
+      Jedis jedis = new Jedis("localhost");
+      System.out.println("Connection to server sucessfully");
       //check whether server is running or not
-      System.out.println(&quot;Server is running: &quot;+jedis.ping());
+      System.out.println("Server is running: "+jedis.ping());
  }
 }
 </span>
 </pre> 
 <p>Now, let's compile and run above program to test the connection to redis server. You can change your path as per your requirement. We are assuming current version of jedis.jar is available in the current path</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">$javac RedisJava.java
+<pre class="prettyprint prettyprinted"><span class="pln">$javac RedisJava.java
 $java RedisJava
 Connection to server sucessfully
 Server is running: PONG
 </span>
 </pre> 
 <h3>Redis Java String Example</h3> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">
+<pre class="prettyprint prettyprinted"><span class="pln">
 import redis.clients.jedis.Jedis;
 public class RedisStringJava {
    public static void main(String[] args) {
       //Connecting to Redis server on localhost
-      Jedis jedis = new Jedis(&quot;localhost&quot;);
-      System.out.println(&quot;Connection to server sucessfully&quot;);
+      Jedis jedis = new Jedis("localhost");
+      System.out.println("Connection to server sucessfully");
       //set the data in redis string
-      jedis.set(&quot;tutorial-name&quot;, &quot;Redis tutorial&quot;);
+      jedis.set("tutorial-name", "Redis tutorial");
      // Get the stored data and print it
-     System.out.println(&quot;Stored string in redis:: &quot;+ jedis.get(&quot;tutorial-name&quot;));
+     System.out.println("Stored string in redis:: "+ jedis.get("tutorial-name"));
  }
 }
 </span>
 </pre> 
 <p>Now, let's compile and run above program.</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">$javac RedisStringJava.java
+<pre class="prettyprint prettyprinted"><span class="pln">$javac RedisStringJava.java
 $java RedisStringJava
 Connection to server sucessfully
 Stored string in redis:: Redis tutorial
 </span>
 </pre> 
 <h3>Redis Java List Example</h3> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">
+<pre class="prettyprint prettyprinted"><span class="pln">
 import redis.clients.jedis.Jedis;
 public class RedisListJava {
    public static void main(String[] args) {
       //Connecting to Redis server on localhost
-      Jedis jedis = new Jedis(&quot;localhost&quot;);
-      System.out.println(&quot;Connection to server sucessfully&quot;);
+      Jedis jedis = new Jedis("localhost");
+      System.out.println("Connection to server sucessfully");
       //store data in redis list
-      jedis.lpush(&quot;tutorial-list&quot;, &quot;Redis&quot;);
-      jedis.lpush(&quot;tutorial-list&quot;, &quot;Mongodb&quot;);
-      jedis.lpush(&quot;tutorial-list&quot;, &quot;Mysql&quot;);
+      jedis.lpush("tutorial-list", "Redis");
+      jedis.lpush("tutorial-list", "Mongodb");
+      jedis.lpush("tutorial-list", "Mysql");
      // Get the stored data and print it
-     List&lt;String&gt; list = jedis.lrange(&quot;tutorial-list&quot;, 0 ,5);
+     List&lt;String&gt; list = jedis.lrange("tutorial-list", 0 ,5);
      for(int i=0; i&lt;list.size(); i++) {
-       System.out.println(&quot;Stored string in redis:: &quot;+list.get(i));
+       System.out.println("Stored string in redis:: "+list.get(i));
      }
  }
 }
 </span>
 </pre> 
 <p>Now, let's compile and run above program.</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">$javac RedisListJava.java
+<pre class="prettyprint prettyprinted"><span class="pln">$javac RedisListJava.java
 $java RedisListJava
 Connection to server sucessfully
 Stored string in redis:: Redis
@@ -1880,27 +1829,25 @@ Stored string in redis:: Mysql
 </span>
 </pre> 
 <h3>Redis Java Keys Example</h3> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">
+<pre class="prettyprint prettyprinted"><span class="pln">
 import redis.clients.jedis.Jedis;
 public class RedisKeyJava {
    public static void main(String[] args) {
       //Connecting to Redis server on localhost
-      Jedis jedis = new Jedis(&quot;localhost&quot;);
-      System.out.println(&quot;Connection to server sucessfully&quot;);
+      Jedis jedis = new Jedis("localhost");
+      System.out.println("Connection to server sucessfully");
       //store data in redis list
      // Get the stored data and print it
-     List&lt;String&gt; list = jedis.keys(&quot;*&quot;);
+     List&lt;String&gt; list = jedis.keys("*");
      for(int i=0; i&lt;list.size(); i++) {
-       System.out.println(&quot;List of stored keys:: &quot;+list.get(i));
+       System.out.println("List of stored keys:: "+list.get(i));
      }
    }
 }
 </span>
 </pre> 
 <p>Now, let's compile and run above program.</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">$javac RedisKeyJava.java
+<pre class="prettyprint prettyprinted"><span class="pln">$javac RedisKeyJava.java
 $java RedisKeyJava
 Connection to server sucessfully
 List of stored keys:: tutorial-name
@@ -1908,13 +1855,12 @@ List of stored keys:: tutorial-list
 </span>
 </pre>       
 </article>
-<article id='a26'>
+<article id="a26">
 <h1>Redis - PHP</h1>       
 <h2>Installation</h2> 
 <p>Before we start using Redis in our Php programs, we need to make sure that we have Redis php Driver and Php set up on the machine. You can check Php tutorial for Php installation on your machine. Now, let us check how to set up Redis php driver.</p> 
 <p>You need to download the phpredis from github repository <a href="https://github.com/nicolasff/phpredis" target="_blank">https://github.com/nicolasff/phpredis</a>. Once you’ve downloaded it, extract the files to phpredis directory. On ubuntu, install this extension as shown below.</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">
+<pre class="prettyprint prettyprinted"><span class="pln">
 cd phpredis
 sudo phpize
 sudo ./configure
@@ -1923,76 +1869,69 @@ sudo make install
 </span>
 </pre> 
 <p>Now copy and paste the content of “modules” folder to the php extension directory and add the following lines in php.ini.</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">
+<pre class="prettyprint prettyprinted"><span class="pln">
 extension = redis.so
 </span>
 </pre> 
 <p>Now your redis php installation is complete.</p> 
 <h2>Connect to redis server</h2> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">
+<pre class="prettyprint prettyprinted"><span class="pln">
 &lt;?php
    //Connecting to Redis server on localhost
    $redis = new Redis();
    $redis-&gt;connect('127.0.0.1', 6379);
-   echo &quot;Connection to server sucessfully&quot;;
+   echo "Connection to server sucessfully";
    //check whether server is running or not
-   echo &quot;Server is running: &quot;+ $redis-&gt;ping();
+   echo "Server is running: "+ $redis-&gt;ping();
 ?&gt;
 </span>
 </pre> 
 <p>When program is executed, it will produce the following result:</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">
+<pre class="prettyprint prettyprinted"><span class="pln">
 Connection to server sucessfully
 Server is running: PONG
 </span>
 </pre> 
 <h3>Redis php String Example</h3> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">
+<pre class="prettyprint prettyprinted"><span class="pln">
 &lt;?php
    //Connecting to Redis server on localhost
    $redis = new Redis();
    $redis-&gt;connect('127.0.0.1', 6379);
-   echo &quot;Connection to server sucessfully&quot;;
+   echo "Connection to server sucessfully";
    //set the data in redis string
-   $redis-&gt;set(&quot;tutorial-name&quot;, &quot;Redis tutorial&quot;);
+   $redis-&gt;set("tutorial-name", "Redis tutorial");
    // Get the stored data and print it
-   echo &quot;Stored string in redis:: &quot; + jedis.get(&quot;tutorial-name&quot;);
+   echo "Stored string in redis:: " + jedis.get("tutorial-name");
 ?&gt;
 </span>
 </pre> 
 <p>When program is executed, it will produce the following result:</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">
+<pre class="prettyprint prettyprinted"><span class="pln">
 Connection to server sucessfully
 Stored string in redis:: Redis tutorial
 </span>
 </pre> 
 <h3>Redis php List Example</h3> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">
+<pre class="prettyprint prettyprinted"><span class="pln">
 &lt;?php
    //Connecting to Redis server on localhost
    $redis = new Redis();
    $redis-&gt;connect('127.0.0.1', 6379);
-   echo &quot;Connection to server sucessfully&quot;;
+   echo "Connection to server sucessfully";
    //store data in redis list
-   $redis-&gt;lpush(&quot;tutorial-list&quot;, &quot;Redis&quot;);
-   $redis-&gt;lpush(&quot;tutorial-list&quot;, &quot;Mongodb&quot;);
-   $redis-&gt;lpush(&quot;tutorial-list&quot;, &quot;Mysql&quot;);
+   $redis-&gt;lpush("tutorial-list", "Redis");
+   $redis-&gt;lpush("tutorial-list", "Mongodb");
+   $redis-&gt;lpush("tutorial-list", "Mysql");
    // Get the stored data and print it
-   $arList = $redis-&gt;lrange(&quot;tutorial-list&quot;, 0 ,5);
-   echo &quot;Stored string in redis:: &quot;
+   $arList = $redis-&gt;lrange("tutorial-list", 0 ,5);
+   echo "Stored string in redis:: "
    print_r($arList);
 ?&gt;
 </span>
 </pre> 
 <p>When program is executed, it will produce the following result:</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">
+<pre class="prettyprint prettyprinted"><span class="pln">
 Connection to server sucessfully
 Stored string in redis::
 Redis
@@ -2001,23 +1940,21 @@ Mysql
 </span>
 </pre> 
 <h3>Redis Php Keys Example</h3> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">
+<pre class="prettyprint prettyprinted"><span class="pln">
 &lt;?php
    //Connecting to Redis server on localhost
    $redis = new Redis();
    $redis-&gt;connect('127.0.0.1', 6379);
-   echo &quot;Connection to server sucessfully&quot;;
+   echo "Connection to server sucessfully";
    // Get the stored keys and print it
-   $arList = $redis-&gt;keys(&quot;*&quot;);
-   echo &quot;Stored keys in redis:: &quot;
+   $arList = $redis-&gt;keys("*");
+   echo "Stored keys in redis:: "
    print_r($arList);
 ?&gt;
 </span>
 </pre> 
 <p>When program is executed, it will produce the following result:</p> 
-<pre class="prettyprint prettyprinted">
-<span class="pln">
+<pre class="prettyprint prettyprinted"><span class="pln">
 Connection to server sucessfully
 Stored string in redis::
 tutorial-name
@@ -2026,7 +1963,7 @@ tutorial-list
 </pre>       
 </article>
 
-<article id='a28'>
+<article id="a28">
 <h1>Redis - Useful Resources</h1>       
 <p>The following resources contain additional information on Redis. Please use them to get more in-depth knowledge on this topic.</p> 
 <h2>Useful Links on Redis</h2> 
@@ -2044,5 +1981,6 @@ tutorial-list
 <p>To enlist your site on this page, please drop an email to <b>contact@tutorialspoint.com</b></p> 
 <div style="clear:both;"></div>       
 </article>
-</body>
-</html>
+
+
+</body></html>

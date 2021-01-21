@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="date" content="2021-01-21 13:36:00">
+    <meta name="description" content="Database trong Redis">
+    <title>Database trong Redis</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Database trong Redis</h2>
+      <p>Chúng ta có lẽ ai cũng <em>sử dụng</em> Redis hàng ngày. Tuy nhiên,
+        chúng ta thường chỉ bật tắt service và cấu hình để Laravel kết nối đến
+        Redis thôi. Ít khi chúng ta thực sự <em>thao tác</em> với Redis.</p>
+      <p>Mãi đến hôm nay (21/01/2021) tôi mới biết Redis cũng có <em>database</em>.
+        Khái niệm database trong Redis tương tự khái niệm schema trong các hệ
+        quản trị CSDL quan hệ. Dữ liệu ở các database là tách biệt nhau.</p>
+      <p>Câu chuyện là thế này: tôi đang phải debug một chức năng có lưu cache
+        trên Redis. Tuy nhiên, khi tôi truy cập <code>redis-cli</code> và gõ
+        lệnh <code>keys *</code> thì không có dữ liệu gì. Đó là do mặc định tôi
+        sẽ truy cập database số 0. Laravel cache thì thường được lưu ở database
+        số 1. Tôi phải truy cập vào database số 1 thì mới thấy dữ liệu cần tìm.</p>
+      <p>Mỗi service Redis sẽ có 16 database, đánh số từ 0 đến 15.
+        Chúng ta có thể kiểm tra bằng lệnh sau:</p>
+      <pre>config get databases</pre>
+      <pre class="bg-dark text-white">127.0.0.1:6379&gt; config get databases<br>1) "databases"<br>2) "16"</pre>
+      <p>Bạn cũng có thể lấy số key của từng database mà không rỗng bằng lệnh
+        sau:</p>
+      <pre>info keyspace</pre>
+      <pre class="bg-dark text-white">127.0.0.1:6379&gt; info keyspace<br># Keyspace<br>db1:keys=14,expires=6,avg_ttl=945999143400</pre>
+      <p>Để chuyển sang một database nào đó, chúng ta sử dụng lệnh <code>select</code>.
+        Ví dụ để chuyển sang database số 1 dùng lệnh sau:</p>
+      <pre>select 1</pre>
+      <pre class="bg-dark text-white">127.0.0.1:6379&gt; select 1
+OK
+127.0.0.1:6379[1]&gt;
+</pre>
+      <p> Có thể thấy Redis thêm <code>[1]</code> để hiển thị chúng ta đang ở
+        database số 1.</p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="vi">
   <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Tìm kiếm, so sánh, sắp xếp tiếng Việt, không phân biệt hoa thường">
+    <meta name="description" content="tìm kiếm, so sánh, sắp xếp tiếng Việt, không phân biệt hoa thường, charset, collate">
     <title>Character Set và Collation trong MySQL</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -16,57 +16,61 @@
         tự trong Character Set.</p>
       <p>Ví dụ:</p>
       <ul>
-        <li>Character Set: Tập có 4 ký tự A, B, C, D. Số 0 thể hiện ký tự A, số
-          1 thể hiện ký tự B, số 2 thể hiện ký tự C và số 3 thể hiện ký tự D</li>
-        <li>Collation: Chỉ có 1 luật so sánh là "Số thể hiện ký tự nào lớn hơn
-          thì ký tự đó lớn hơn"</li>
+        <li>Character Set: tập có 4 ký tự A, B, C, D. Số 0 thể hiện ký tự A, số
+          1 thể hiện ký tự B, số 2 thể hiện ký tự C và số 3 thể hiện ký tự D.</li>
+        <li>Collation: chỉ có 1 luật so sánh là "Số thể hiện ký tự nào lớn hơn
+          thì ký tự đó lớn hơn".</li>
       </ul>
       <p>Giả sử có 1 bảng MySQL sử dụng Character Set và Collation trên thì:</p>
       <ul>
         <li>Ta chỉ lưu được giá trị cho các trường như AB, ABCD, ABBBBBB...
-          không thể lưu được giá trị AE</li>
-        <li>Khi thực hiện truy vấn <code>SELECT * FROM account ORDER BY name
-            ASC</code> thì MySQL sẽ áp dụng các luật so sánh trong Collation để
-          sắp xếp dữ liệu. AB, BA, B thì mã của AB là 01, mã của BA là 10, mã
-          của B là 1. Vì 01 &lt; 1 &lt; 10 nên kết quả sắp xếp sẽ là AB, B, BA</li>
-        <li>Khi thực hiện truy vấn <code>SELECT * FROM account WHERE name =
+          không thể lưu được giá trị AE.</li>
+        <li>Khi thực hiện truy vấn <code>select * from account order by name
+            asc</code> thì MySQL sẽ áp dụng các luật so sánh trong Collation để
+          sắp xếp dữ liệu. Với ba phần tử AB, BA, B thì mã của AB là 01, mã của
+          BA là 10, mã của B là 1. Vì 01 &lt; 1 &lt; 10 nên kết quả sắp xếp sẽ
+          là AB, B, BA.</li>
+        <li>Khi thực hiện truy vấn <code>select * from account where name =
             'CCC'</code> thì MySQL sẽ lấy mã số thể hiện CCC là 222 để dò tìm.</li>
       </ul>
       <p>Khi DB lưu tiếng Việt thì để Charset là UTF8 rồi nhưng còn Collation
-        thì chọn utf8_general_ci hay utf8_vietnamese_ci hay utf_bin?</p>
+        thì chọn <code>utf8_general_ci</code> hay <code>utf8_vietnamese_ci</code>
+        hay <code>utf_bin</code>?</p>
       <p>Như đã đề cập phía trên Collation chỉ đơn giản là tập các luật để so
         sánh (lớn hơn, bằng hay nhỏ hơn) các xâu sinh ra từ các ký tự trong tập
         Charset:</p>
       <ul>
-        <li>Với utf8_general_ci "Phùng" sẽ bằng với "Phúng", "Phụng", "pHÙng",
-          "phũnG"...</li>
-        <li>Với utf8_bin "Phùng" sẽ chỉ bằng với đúng "Phùng"</li>
+        <li>Với <code>utf8_general_ci</code> thì "Phùng" sẽ bằng với "Phúng",
+          "Phụng", "pHÙng", "phũnG"...</li>
+        <li>Với <code>utf8_bin</code> thì "Phùng" sẽ chỉ bằng với đúng "Phùng"</li>
       </ul>
       <p>Vì vậy tùy từng trường hợp, bạn phải xem dữ liệu của bạn là cái gì, thì
         bạn mới có thể quyết định đúng cho việc chọn collation được.</p>
       <p>Ví dụ:</p>
       <ul>
-        <li>Lưu họ và tên, không cho trùng lặp (UNIQUE) thì sẽ phải dùng
-          utf8_bin</li>
-        <li>Muốn search không dấu mà vẫn ra kết quả có dấu thì dùng
-          utf8_general_ci</li>
+        <li>Lưu họ và tên, không cho trùng lặp (UNIQUE) thì sẽ phải dùng <code>utf8_bin</code>.</li>
+        <li>Muốn search không dấu mà vẫn ra kết quả có dấu thì dùng <code>utf8_general_ci</code>.</li>
       </ul>
       <p>Chọn ở từng mệnh đề:</p>
       <ul>
-        <li>Kiểm tra trùng: lower(name) = 'xxx' collate utf8mb4_bin</li>
-        <li>Tìm kiếm chính xác: lower(name) like '%xxx%' collate utf8mb4_bin</li>
-        <li>Tìm kiếm không phân biệt dấu: lower(name) like '%xxx%' collate
-          utf8mb4_general_ci</li>
-        <li>Sắp xếp: order by name collate utf8mb4_vietnamese_ci</li>
+        <li>Kiểm tra trùng: <code>lower(name) = 'xxx' collate utf8mb4_bin</code>.</li>
+        <li>Tìm kiếm chính xác: <code>lower(name) like '%xxx%' collate
+            utf8mb4_bin</code>.</li>
+        <li>Tìm kiếm không phân biệt dấu: <code>lower(name) like '%xxx%'
+            collate utf8mb4_general_ci</code>.</li>
+        <li>Sắp xếp: <code>order by name collate utf8mb4_vietnamese_ci</code>.</li>
       </ul>
       <p>Ghi chú:</p>
       <ul>
-        <li>ci là viết tắt của case-insensitive, bin là viết tắt của binary.</li>
-        <li>Character Set utf8 trong MySQL thực ra là utf8mb3 (phiên bản cũ),
-          hoặc utf8mb4 (phiên bản mới). Luôn sử dụng utf8mb4, đừng sử dụng utf8
-          chung chung.</li>
-        <li>Khi chỉ định Collation hãy chỉ định rõ ràng là utf8mb4_general_ci,
-          utf8mb4_vietnamese_ci, utf8mb4_bin.</li>
+        <li><code>ci</code> là viết tắt của <code>case-insensitive</code>, <code>bin</code>
+          là viết tắt của <code>binary</code>.</li>
+        <li>Character Set <code>utf8</code> trong MySQL thực ra là <code>utf8mb3</code>
+          (phiên bản cũ), hoặc <code>utf8mb4</code> (phiên bản mới). Luôn sử
+          dụng <code>utf8mb4</code>, đừng sử dụng <code>utf8</code> chung
+          chung. Nếu sử dụng <code>utf8</code> chung chung thì có thể nó là <code>utf8mb3</code>
+          và bị lỗi tiếng Việt.</li>
+        <li>Khi chỉ định Collation hãy chỉ định rõ ràng là <code>utf8mb4_general_ci</code>,
+          <code>utf8mb4_vietnamese_ci</code>, <code>utf8mb4_bin</code>.</li>
       </ul>
       <p>Các câu lệnh SQL để bạn thực hành:</p>
       <p><a target="_blank" href="collate_demo.sql">collate_demo.sql</a></p>

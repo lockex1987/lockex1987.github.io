@@ -1,3 +1,12 @@
+-- Liệt kê chi tiết từng cột
+show full columns from organizations;
+
+-- Câu lệnh tạo cột
+show create table organizations;
+
+-- Sửa collate của cột
+alter table organizations modify name varchar(255) not null comment 'Tên cơ quan/tổ chức (nội dung node)' collate utf8mb4_vietnamese_ci;
+
 drop table if exists test_general;
 drop table if exists test_vietnamese;
 drop table if exists test_bin;
