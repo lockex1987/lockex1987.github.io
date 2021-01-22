@@ -2,7 +2,7 @@ export default [
     { name: 'js', y: 117 },
     { name: 'ui', y: 108 },
     { name: 'laravel', y: 78 },
-    { name: 'php', y: 61 },
+    { name: 'php', y: 62 },
     { name: 'it', y: 39 },
     { name: 'project', y: 39 },
     { name: 'linux', y: 31 },

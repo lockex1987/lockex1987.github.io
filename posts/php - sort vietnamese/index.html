@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="date" content="2021-01-22 10:02:00"/>
+    <meta name="description" content="sort, setlocale, strcoll, LC_COLLATE, SORT_LOCALE_STRING"/>
+    
+    <title>Sắp xếp tiếng Việt trong PHP</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body>
+    <article>
+        <h2>Sắp xếp tiếng Việt trong PHP</h2>
+
+        <p>Nếu sử dụng hàm <code>sort</code> bình thường thì các ký tự tiếng Việt (Â, Ê, Ô, Đ) sẽ ở cuối.</p>
+        <p>Chúng ta cần thiết lập lại locale và dùng hàm <code>sort</code> với tùy chọn <code>SORT_LOCALE_STRING</code>.</p>
+        
+        <pre>setlocale(LC_COLLATE, 'vi_VN.UTF-8', 'vi.UTF-8', 'vi_VN', 'vi');
+sort($locale, SORT_LOCALE_STRING);</pre>
+
+<p>Sắp xếp không phân biệt chữ thường và chữ hoa.</p>
+
+        <div id="app">
+            <div v-for="e in list">
+                <demo-list :title="e.title"
+                    :names="e.names"></demo-list>
+            </div>
+        </div>
+    </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="js/demo.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+</html>
