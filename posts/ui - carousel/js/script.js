@@ -1,7 +1,9 @@
+import HEROES from './heroes.js';
+
 /**
  * Xây dựng nội dung HTML cho demo 1.
  */
-function bindGalleryCarouselHtml () {
+function bindGalleryCarouselHtml() {
     const heroes = HEROES;
 
     // Nội dung của nat-carousel-inner
@@ -38,7 +40,25 @@ function bindGalleryCarouselHtml () {
     carouselIndicators.querySelector('[data-item-to]').classList.add('active');
 
     // Tự động chuyển
-    Carousel.autoPlay(carouselInner, 2 * 1000);
+    // Carousel.autoPlay(carouselInner, 2 * 1000);
 }
 
+function adjustCarouselWidth() {
+    const gallery = document.querySelector('#gallery');
+    const originalWidth = Math.floor(parseFloat(getComputedStyle(gallery).width.replace('px', '')));
+    const gutterWidth = 32;
+    const gapWidth = 16;
+    const numberOfItem = 3;
+    const itemWidth = Math.floor((originalWidth - 2 * gutterWidth - (numberOfItem - 1) * gapWidth) / numberOfItem);
+    const windowWidth = window.innerWidth;
+    if (windowWidth >= 1200) {
+        const newWidth = itemWidth * numberOfItem + (numberOfItem - 1) * gapWidth + gutterWidth * 2;
+        console.log(originalWidth, itemWidth, newWidth);
+        gallery.style.width = newWidth + 'px';
+    }
+}
+
+
+
 bindGalleryCarouselHtml();
+adjustCarouselWidth();

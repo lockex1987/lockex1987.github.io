@@ -1,4 +1,4 @@
-const HEROES = [
+export default [
     {
         rank: '1',
         nameVietnamese: 'Tống Giang',
