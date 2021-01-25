@@ -40,7 +40,14 @@ zend_extension=xdebug-3.0.2-7.2-vc15-nts-x86_64
 ; XDebug 3
 xdebug.mode=debug
 xdebug.start_with_request=yes
-xdebug.client_port=9000</pre>
+; xdebug.client_port=9003<br>xdebug.log_level=0</pre>
+      <p>Chú ý: Ở XDebug 2, chúng ta nên chỉnh lại cổng của xdebug, đổi từ mặc
+        định 9000 sang 9003 để tránh trùng với cổng của PHP-FPM. Ở XDebug
+        2,&nbsp; tên cấu hình là <code>xdebug.remote_port</code>. Ở XDebug 3,
+        tên cấu hình là xdebug.client_port và cổng mặc định là 9003.</p>
+      <p>Thêm cấu hình <code>xdebug.log_level=0</code> để disable log lỗi mỗi
+        khi chạy php-cli hoặc php-fpm. Lỗi là:</p>
+      <pre class="text-pre-wrap">Xdebug: [Step Debug] Time-out connecting to debugging client, waited: 200 ms. Tried: localhost:9003 (through xdebug.client_host/xdebug.client_port) :-(</pre>
       <p>Restart lại server. Kiểm tra lại thông tin xdebug ở <code>phpinfo()</code>.</p>
       <div class="mb-3 border"><img src="images/xdebug%20info.png" alt=""></div>
       <h3>Cài đặt VSCode extension PHP Debug</h3>
