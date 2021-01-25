@@ -11,9 +11,15 @@ function bindGalleryCarouselHtml() {
         ${heroes.map((h) => `
             <div class="nat-carousel-item">
                 <div class="card h-100">
-                    <img class="card-img-top object-fit-cover"
-                            src="images/${h.image}"
-                            title="${h.image}"/>
+                    <div class="embed-responsive embed-responsive-300by430">
+                        <div class="embed-responsive-item d-flex justify-content-center align-items-center">
+                            <img class="mh-100x h-100 w-100 object-fit-cover"
+                                style="border-radius: 0.25rem 0.25rem 0 0"
+                                src="images/${h.image}"
+                                title="${h.image}"/>
+                        </div>
+                    </div>
+                    
                     <div class="card-body">
                         <div class="card-title text-success">
                             #${h.rank}: ${h.nameVietnamese}
@@ -43,22 +49,28 @@ function bindGalleryCarouselHtml() {
     // Carousel.autoPlay(carouselInner, 2 * 1000);
 }
 
+
 function adjustCarouselWidth() {
-    const gallery = document.querySelector('#gallery');
-    const originalWidth = Math.floor(parseFloat(getComputedStyle(gallery).width.replace('px', '')));
-    const gutterWidth = 32;
-    const gapWidth = 16;
-    const numberOfItem = 3;
-    const itemWidth = Math.floor((originalWidth - 2 * gutterWidth - (numberOfItem - 1) * gapWidth) / numberOfItem);
+    const carousel = document.querySelector('#gallery');
+
     const windowWidth = window.innerWidth;
     if (windowWidth >= 1200) {
-        const newWidth = itemWidth * numberOfItem + (numberOfItem - 1) * gapWidth + gutterWidth * 2;
-        console.log(originalWidth, itemWidth, newWidth);
-        gallery.style.width = newWidth + 'px';
+        const gutterWidth = 32;
+        const gapWidth = 16;
+        const numberOfItem = 3;
+        carousel.style.width = Carousel.computePreferWidth(carousel, gutterWidth, gapWidth, numberOfItem);
+    } else if (windowWidth >= 1200) {
+        const gutterWidth = 32;
+        const gapWidth = 16;
+        const numberOfItem = 2;
+        carousel.style.width = Carousel.computePreferWidth(carousel, gutterWidth, gapWidth, numberOfItem);
+    } else {
+        carousel.style.width = 'auto';
     }
 }
 
 
-
 bindGalleryCarouselHtml();
 adjustCarouselWidth();
+
+window.addEventListener('resize', adjustCarouselWidth);

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="vi">
   <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="dimension">
+    <meta name="date" content="2021-01-25 09:10:00">
+    <meta name="description" content="dimension, size, position, width, height, offsetWidth, offsetHeight, clientWidth, clientHeight, scrollWidth, scrollHeight, getBoundingClientRect, getComputedStyle">
     <title>Lấy kích thước màn hình</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -12,72 +13,94 @@
     <article>
       <h2>Lấy kích thước màn hình</h2>
       <p>Và kích thước của phần tử bất kỳ.</p>
+      <h3>Giới thiệu</h3>
+      <p>Có một số thuộc tính mà bạn có thể sử dụng để quyết định width và
+        height của một phần tử. Bạn sẽ cần quyết định thuộc tính nào là đúng với
+        nhu cầu của mình. Chú ý rằng các thuộc tính này đều là read-only. Nếu
+        bạn muốn thiết lập width và height của một phần tử, sử dụng các thuộc
+        tính như <code>width</code>, <code>height</code>, <code>min-width</code>,
+        <code>min-height</code>, <code>max-width</code>, <code>max-height</code>
+        (bằng CSS hoặc JS).</p>
       <h3>Demo</h3>
-      <table id="demoTable" style="width: 700px;">
+      <table id="demoTable" class="table table-bordered">
         <thead>
           <tr>
             <th> Hàm </th>
             <th> Kết quả </th>
           </tr>
         </thead>
-
-        <tbody></tbody>
+        <tbody>
+        </tbody>
       </table>
-      <h3>Ghi chú</h3>
-	  
+
+      <h3>offsetWidth, offsetHeight</h3>
+      <p>Nếu bạn cần biết tổng số không gian mà một phần tử chiếm giữ, bao gồm
+        chiều rộng của nội dung nhìn thấy, scrollbar (nếu có), padding, border,
+        bạn hãy sử dụng thuộc tính <code>offsetWidth</code> và <code>offsetHeight</code>.
+        Hầu hết các trường hợp, các giá trị này sẽ bằng với width và height của
+        hàm <code>getBoundingClientRect()</code>, khi mà không có transform nào
+        được áp dụng cho phần tử. Trong trường hợp có transform, <code>offsetWidth</code>
+        và <code>offsetHeight</code> trả về kích thước layout của phần tử,
+        trong khi <code>getBoundingClientRect()</code> trả về kích thước
+        render. Ví dụ, một phần tử có <code>width: 100px; transform: scale(0.5)</code>
+        thì <code>offsetWidth</code> trả về 100 còn <code>getBoundingClientRect()</code>
+        trả về 50.</p>
+      <div class="mb-3"> <img src="images/dimensions-offset.png" alt=""> </div>
+      <h3>clientWidth, clientHeight</h3>
+      <p>Nếu bạn muốn biết tổng số không gian mà nội dung hiển thị thực sự, bao
+        gồm padding nhưng không bao gồm border, margin, scrollbar, bạn hãy sử
+        dụng thuộc tính <code>clientWidth</code> và <code>clientHeight</code>.</p>
+      <div class="mb-3"><img src="images/dimensions-client.png" alt=""></div>
+      <h3>scrollWidth, scrollHeight</h3>
+      <p>Nếu bạn muốn kích thước thực sự của nội dung, bất kể nó nhìn thấy được
+        bao nhiêu, hãy sử dụng thuộc tính <code>scrollWidth</code> và <code>scrollHeight</code>.
+        Các giá trị này trả về toàn bộ kích thước của phần tử, kể cả chỉ một
+        phần của nó là nhìn thấy do sử dụng scrollbar.</p>
+      <p>Ví dụ, nếu một phần tử 600x400 được hiển thị trong một vùng 300x300 có
+        scrollbar, scrollWidth sẽ trả về 600 còn <strong>offsetWidth trả về 300</strong>
+        (cần test).</p>
+      <h3>Phương thức getBoundingClientRect()</h3>
+      <p>Phương thức getBoundingClientRect() trả về một đối tượng chứa các thông
+        tin về kích thước của một phần tử và vị trí tương đối của nó so với
+        viewport.</p>
+      <p>Giá trị trả về là một hình chữ nhật nhỏ nhất chứa toàn bộ phần tử, bao
+        gồm padding và border. Các thuộc tính left, top, right, bottom, x, y,
+        width, height mô tả kích thước và vị trí bằng pixel. Các thuộc tính
+        ngoài width và height sẽ là tương đối với góc trên trái của viewport.</p>
+      <div class="mb-3"><img src="images/element-box-diagram.png" alt=""></div>
+      <h3>Hàm getComputedStyle()</h3>
+      <p>Hàm getComputedStyle() trả về một đối tượng chứa các giá trị của tất cả
+        các thuộc tính CSS của một phần tử, sau khi đã áp dụng các stylesheet.</p>
+      <h3>Ghi chú </h3>
       <p>Nên sử dụng thuộc tính <code>clientWidth</code> của phần tử <code>document.documentElement</code>.</p>
-      <p>The Element.clientWidth property is zero for inline elements and elements with no CSS; otherwise, it's the inner width of an element in pixels. It includes padding but excludes borders, margins, and vertical scrollbars (if present).</p>
-      <p>Typically, offsetWidth is a measurement in pixels of the element's CSS width, including any borders, padding, and vertical scrollbars (if rendered). It does not include the width of pseudo-elements such as ::before or ::after.</p>
-      <p>If the element is hidden (for example, by setting style.display on the element or one of its ancestors to "none"), then 0 is returned.</p>
-
       <h3>Tham khảo</h3>
-      <ul><li><span class="text-muted mr-2">developer.mozilla.org</span> <a href="https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/Determining_the_dimensions_of_elements" target="_blank">Determining the dimensions of elements - Web APIs | MDN</a></li><li><span class="text-muted mr-2">developer.mozilla.org</span> <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect" target="_blank">Element.getBoundingClientRect() - Web APIs | MDN</a></li><li><span class="text-muted mr-2">developer.mozilla.org</span> <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle" target="_blank">Window.getComputedStyle() - Web APIs | MDN</a></li><li><span class="text-muted mr-2">plainjs.com</span> <a href="https://plainjs.com/javascript/styles/getting-width-and-height-of-an-element-23/" target="_blank">Getting width and height of an element</a></li><li><span class="text-muted mr-2">usefulangle.com</span> <a href="http://usefulangle.com/post/40/javascript-client-height-vs-offset-height-vs-scroll-height" target="_blank">Understanding clientHeight, offsetHeight &amp; scrollHeight</a></li><li><span class="text-muted mr-2">javascript.info</span> <a href="https://javascript.info/size-and-scroll" target="_blank">Element size and scrolling</a></li><li><span class="text-muted mr-2">lockex1987.github.io</span> <a href="https://lockex1987.github.io/posts/js%20-%20relative%20mouse%20coordinate/" target="_blank">Get relative mouse coordinate</a></li></ul>
+      <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/Determining_the_dimensions_of_elements"
+
+          target="_blank">Determining the dimensions of elements - Web APIs |
+          MDN</a></p>
+      <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect"
+
+          target="_blank">Element.getBoundingClientRect() - Web APIs | MDN</a></p>
+      <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle"
+
+          target="_blank">Window.getComputedStyle() - Web APIs | MDN</a></p>
+      <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetWidth"
+
+          target="_blank">HTMLElement.offsetWidth - Web APIs | MDN</a></p>
+      <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/clientWidth"
+
+          target="_blank">Element.clientWidth - Web APIs | MDN</a></p>
+      <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollWidth"
+
+          target="_blank">Element.scrollWidth - Web APIs | MDN</a></p>
+      <p><a href="https://javascript.info/size-and-scroll" target="_blank">Element
+          size and scrolling</a></p>
+      <p><a href="https://lockex1987.github.io/posts/js%20-%20relative%20mouse%20coordinate/"
+
+          target="_blank">Get relative mouse coordinate</a></p>
     </article>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script>
-        function bindDemoTable() {
-            const methods = [
-                '$(window).width()',
-                '$(document).width()',
-                'window.screen.width',
-                'window.screen.availWidth',
-                'window.innerWidth',
-                'window.outerWidth',
-
-                'document.documentElement.clientWidth',
-                'document.documentElement.offsetWidth',
-                'document.documentElement.scrollWidth',
-
-                'document.body.clientWidth',		
-                'document.body.offsetWidth',
-                'document.body.scrollWidth',
-
-                /*
-                '$(window).height()',
-                '$(document).height()',
-                'window.screen.height',
-                'window.screen.availHeight',
-                'window.innerHeight',
-                'document.documentElement.clientHeight',
-                'document.body.clientHeight',
-                */
-            ];
-            let html = '';
-            methods.forEach(s => {
-                html += `
-                        <tr>
-                            <td><code>${s}</code></td>
-                            <td>${eval(s)}</td>
-                        </tr>`;
-            });
-            document.querySelector('#demoTable tbody').innerHTML = html;
-        }
-
-        bindDemoTable();
-
-        window.addEventListener('resize', bindDemoTable);
-    </script>
+    <script src="js/script.js"></script>
     <script src="../../js/docs.js"></script>
   </body>
 </html>

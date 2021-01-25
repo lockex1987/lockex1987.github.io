@@ -1,20 +1,11 @@
-@charset "UTF-8";
-#gallery {
-    /*
-    @media (min-width: 768px) {
-        --carouselItemGap: 16px;
-        --carouselItemNum: 2;
-
-        // width - 64 - 16 chia hết cho 2
-        width: 720px;
-    }
-    */ }
-  @media (min-width: 1200px) {
-    #gallery {
-      --carouselItemGap: 16px;
-      --carouselItemNum: 3; } }
-  #gallery .nat-carousel-item img {
-    height: 320px; }
+@media (min-width: 768px) {
+  #gallery {
+    --carouselItemGap: 16px;
+    --carouselItemNum: 2; } }
+@media (min-width: 1200px) {
+  #gallery {
+    --carouselItemGap: 16px;
+    --carouselItemNum: 3; } }
 
 .nat-carousel-control {
   width: 32px;
@@ -34,5 +25,8 @@
   .nat-carousel .nat-carousel-indicators li.active {
     background-color: #F00;
     opacity: 1; }
+
+.embed-responsive-300by430::before {
+  padding-top: 143.33333333333333%; }
 
 /*# sourceMappingURL=style.css.map */
