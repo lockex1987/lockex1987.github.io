@@ -60,10 +60,9 @@ async function getLiveVersionFirst(request) {
         // Fetch failed, maybe we are offline. Try cache...
         // NOTE: On a patchy network, it could take a long time for the fetch
         // to fail and for us to get here. TO DO: introduce a timeout.
-        const response = await caches.match(request);    
+        const response = await caches.match(request);
         return response;
     }
-
 }
 
 async function getCachedVersionFirst(request) {
@@ -98,7 +97,7 @@ function deleteOldCaches() {
                 }
             })
         );
-    })
+    });
 }
 
 // Xóa các cache cũ
@@ -119,7 +118,7 @@ function receivePushNotification(evt) {
     const options = {
         // data: 'url',
         body: body,
-        icon: "/archive/project%20-%20lich%20cua%20toi/images/icon-128.png",
+        icon: '/archive/project%20-%20lich%20cua%20toi/images/icon-128.png',
         vibrate: [200, 100, 200],
         // tag: 'tag',
         // image: 'image',

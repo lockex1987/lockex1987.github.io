@@ -1,7 +1,7 @@
-Vue({
+new Vue({
     el: '#app',
 
-    data () {
+    data() {
         const number = 8;
         const list = [];
         for (let i = 0; i < number; i++) {
@@ -16,7 +16,7 @@ Vue({
         };
     },
 
-    mounted () {
+    mounted() {
         this.$nextTick(() => {
             this.list.forEach(e => {
                 this.drawChart(e.id);
@@ -25,7 +25,7 @@ Vue({
     },
 
     methods: {
-        drawChart (id) {
+        drawChart(id) {
             const categories = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             const data = categories.map(c => Math.floor((Math.random() * 10) + 1));
             Highcharts.chart('lineChart' + id, {

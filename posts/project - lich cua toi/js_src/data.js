@@ -31,7 +31,7 @@ const EVENT_DATA = [
     { date: '16/10', isLunar: false, isAnnual: true, note: 'Sinh nhật Dương' },
     { date: '30/04', isLunar: false, isAnnual: true, note: 'Giải phóng miền Nam' },
     { date: '01/05', isLunar: false, isAnnual: true, note: 'Quốc tế lao động' },
-    { date: '02/09', isLunar: false, isAnnual: true, note: 'Quốc khánh' },
+    { date: '02/09', isLunar: false, isAnnual: true, note: 'Quốc khánh' }
 ];
 
 /**

@@ -1,17 +1,17 @@
 function breadthFirstSearch(nodes, src, dest) {
     // Hàng đợi các đỉnh để từ đó thăm tiếp các đỉnh khác
-    var queueToExplore = [];
+    const queueToExplore = [];
 
     // Đánh dấu các đỉnh đã thăm
     // Ban đầu đánh dấu các đỉnh là chưa thăm
-    var visited = {};
+    const visited = {};
 
     // Lưu thêm biến pred lưu đỉnh liền trước,
     // để về sau còn truy dấu đường đi
-    var pred = {};
+    const pred = {};
 
     // Đã đến đỉnh đích hay chưa
-    var isFinish = false;
+    let isFinish = false;
 
     // Thăm đỉnh bắt đầu (src)
     queueToExplore.push(src);
@@ -23,10 +23,10 @@ function breadthFirstSearch(nodes, src, dest) {
         var currentIndex = queueToExplore.shift();
 
         // Lấy ra danh sách các đỉnh liền kề
-        var adjList = nodes[currentIndex].links;
+        const adjList = nodes[currentIndex].links;
 
         // Xét tất cả các đỉnh kề
-        adjList.forEach(function(childIndex) {
+        adjList.forEach(function (childIndex) {
             // Nếu đỉnh kề này chưa được thăm
             if (!visited[childIndex]) {
                 // Đánh dấu và đẩy vào queue
@@ -54,10 +54,10 @@ function breadthFirstSearch(nodes, src, dest) {
 }
 
 function constructPath(pred, dest) {
-    var path = [];
+    const path = [];
     path.push(dest);
 
-    var idx = dest;
+    let idx = dest;
     while (pred[idx] != undefined) {
         path.push(pred[idx]);
         idx = pred[idx];
@@ -67,12 +67,12 @@ function constructPath(pred, dest) {
 }
 
 function demo() {
-    var nodes = [
+    const nodes = [
         {
-            links: [ 1 ] // node 0 is linked to node 1
+            links: [1] // node 0 is linked to node 1
         },
         {
-            links: [ 0, 2 ], // node 1 is linked to node 0 and 2
+            links: [0, 2], // node 1 is linked to node 0 and 2
             path: []
         }
     ];

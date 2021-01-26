@@ -21,12 +21,12 @@ function calculateSomeRelations() {
 }
 
 function calculateAllRelations() {
-    var count = 0;
-    for (var p1 in personMap) {
+    let count = 0;
+    for (const p1 in personMap) {
         // if (count == 4) {
-        for (var p2 in personMap) {
+        for (const p2 in personMap) {
             if (p1 != p2) {
-                var relation = calculateRelation(p1, p2);
+                const relation = calculateRelation(p1, p2);
                 // if (relation == 'UNK') {
                 // console.log(p1, 'là', relation, p2);
                 // }
