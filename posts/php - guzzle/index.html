@@ -1,82 +1,83 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
-    <title>Sử dụng Guzzle để gọi API</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="http client">
+    <title>Sử dụng Guzzle để gọi API</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
-    <meta name="description" content="PHP Guzzle">
   </head>
   <body>
     <article>
       <h2>Sử dụng Guzzle để gọi API</h2>
+      <p>Nếu bạn sử dụng Laravel, bạn có thể sử dụng wrapper của nó cho đơn
+        giản.</p>
       <p>Guzzle là một PHP HTTP client giúp việc gửi HTTP request trở lên đơn
         giản. Phiên bản mới nhất là Guzzle 6. Các lợi thế của Guzzle 6:</p>
       <ul>
         <li> Dễ dàng thực hiện tạo query string, POST request, streaming large
-          upload, streaming large download, sử dụng HTTP cookies, upload dữ liệu
-          Json.... </li>
+          upload, streaming large download, sử dụng HTTP cookie, upload dữ liệu
+          JSON....</li>
         <li> Có thể gửi cả request đồng bộ và không đồng bộ bằng cách sử dụng
-          cùng một interface. </li>
+          cùng một interface.</li>
         <li> Sử dụng tiểu chuẩn PSR-7 cho request, response, stream. Điều này
-          giúp bạn dễ dàng tích hợp các thư viện khác sử dụng PSR-7 với Guzzle.
-          (Các phiên bản trước không sử dụng PSR-7) </li>
-        <li> Không phụ thuộc chặt vào cURL, PHP stream, sockets hoặc vòng lặp
+          giúp bạn dễ dàng tích hợp các thư viện khác sử dụng PSR-7 với Guzzle.</li>
+        <li> Không phụ thuộc chặt vào cURL, PHP stream, socket hoặc vòng lặp
           không bị chặn. </li>
-        <li> Hệ thống Middleware cho phép bạn kiểm soát hành vi của client </li>
+        <li> Hệ thống Middleware cho phép bạn kiểm soát hành vi của client.</li>
       </ul>
       <h3>Cài đặt</h3>
       <h4>Yêu cầu</h4>
       <ul>
         <li>PHP &gt;= 5.5.0.</li>
-        <li>Để sử dụng PHP stream handler, allow_url_fopen cần được kích hoạt
-          trong file php.ini trên hệ thống của bạn.</li>
+        <li>Để sử dụng PHP stream handler, <code>allow_url_fopen</code> cần
+          được kích hoạt trong file <code>php.ini</code> trên hệ thống của bạn.</li>
         <li>Để sử dụng cURL handler, bạn cần có phiên bản cURL &gt;= 7.19.4 biên
           dịch cùng OpenSSL và zlib.</li>
       </ul>
       <p>Ghi chú: Guzzle không còn yêu cầu cURL để gửi HTTP request. Guzzle sẽ
-        sử dụng PHP stream wrapper để gửi HTTP requests nếu cURL không được cài
+        sử dụng PHP stream wrapper để gửi HTTP request nếu cURL không được cài
         đặt. Ngoài ra bạn cũng có thể sử dụng HTTP handler của riêng mình để gửi
         request.</p>
       <h4>Cài đặt</h4>
-      <p>Bạn nên cài đặt thông qua composer</p>
+      <p>Bạn nên cài đặt thông qua lệnh composer:</p>
       <pre>composer require guzzlehttp/guzzle
 </pre>
-      <p>Bạn có thể trong file composer.json của bạn</p>
+      <p>Bạn có thể trong file <code>composer.json</code> của bạn</p>
       <pre>{
     "require": {
         "guzzlehttp/guzzle": "~6.0"
     }
 }
 </pre>
-      <p>Sau khi cài đặt bạn cần required Composer's autoloader <code>require
-          'vendor/autoload.php';</code></p>
+      <p>Sau khi cài đặt bạn cần require file <code>autoload.php</code> của
+        Composer trong code:</p>
+      <pre>require 'vendor/autoload.php';</pre>
       <h3>Sử dụng</h3>
-      <h4>Tạo Request</h4>
-      <p>Bạn có thể gửi request với Guzzle sử dụng GuzzleHtpp\ClientInterface
-        object.</p>
-      <p> Tạo một Client</p>
+      <h4>Tạo request</h4>
+      <p>Bạn có thể gửi request với Guzzle sử dụng đối tượng <code>GuzzleHtpp\ClientInterface</code>.</p>
+      <p> Tạo một Client:</p>
       <pre>use GuzzleHttp\Client;
 
 ....
 
 $client = new Client([
-        // Base URI được sử dụng với request
-        'base_uri' =&gt; 'http://httpbin.org',
+    // Base URI được sử dụng với request
+    'base_uri' =&gt; 'http://httpbin.org'
 ]);
 </pre>
-      <p>base_uri: ( có thể là chuỗi hoặc một thể hiện của UriInterface) Can be
-        a string or instance of UriInterface. Base URI của client sẽ được kết
-        hợp với đường dẫn tương đối. Ví dụ:</p>
+      <p><code>base_uri</code>: có thể là chuỗi hoặc một thể hiện của
+        UriInterface. Base URI của client sẽ được kết hợp với đường dẫn tương
+        đối. Ví dụ:</p>
       <pre>// Tạo một client với một base URI
-$client = new GuzzleHttp\Client(['base_uri' =&gt; 'https://foo.com/api/']);
+$client = new GuzzleHttp\Client([<br>    'base_uri' =&gt; 'https://foo.com/api/'<br>]);<br>
 // Gửi một request đến https://foo.com/api/test
-$response = $client-&gt;request('GET', 'test');
+$response = $client-&gt;request('GET', 'test');<br>
 // Gửi một request đến https://foo.com/root
 $response = $client-&gt;request('GET', '/root');
 </pre>
-      <h4>Gửi Request</h4>
+      <h4>Gửi request</h4>
       <p>Magic method khiến việc gửi request đồng bộ hết sức đơn giản:</p>
       <pre>$response = $client-&gt;get('http://httpbin.org/get');
 $response = $client-&gt;delete('http://httpbin.org/delete');
@@ -86,7 +87,7 @@ $response = $client-&gt;patch('http://httpbin.org/patch');
 $response = $client-&gt;post('http://httpbin.org/post');
 $response = $client-&gt;put('http://httpbin.org/put');
 </pre>
-      <p>Bạn cũng có thể tạo một Request và gửi nó với Client đã tạo.</p>
+      <p>Bạn cũng có thể tạo một request và gửi nó với Client đã tạo.</p>
       <pre>use GuzzleHttp\Psr7\Request;
 
 ...
@@ -105,13 +106,13 @@ $promise = $client-&gt;patchAsync('http://httpbin.org/patch');
 $promise = $client-&gt;postAsync('http://httpbin.org/post');
 $promise = $client-&gt;putAsync('http://httpbin.org/put');
 </pre>
-      <p> Hoặc bạn có thể tạo request và gửi đi tương tự như Request đồng bộ</p>
+      <p> Hoặc bạn có thể tạo request và gửi đi tương tự như request đồng bộ.</p>
       <pre>use GuzzleHttp\Psr7\Request;
 
 // Khởi tạo một PSR-7 request object
-$headers = ['X-Foo' =&gt; 'Bar'];
+$headers = [<br>    'X-Foo' =&gt; 'Bar'<br>];
 $body = 'Hello!';
-$request = new Request('HEAD', 'http://httpbin.org/head', $headers, $body);
+$request = new Request(<br>    'HEAD',<br>    'http://httpbin.org/head',<br>    $headers,<br>    $body<br>);
 
 // Và gửi đi
 $promise = $client-&gt;sendAsync($request);
@@ -120,9 +121,10 @@ $promise = $client-&gt;sendAsync($request);
 $promise = $client-&gt;requestAsync('GET', 'http://httpbin.org/get');
 </pre>
       <h4>Sử dụng response</h4>
-      <p>Trong các ví dụ trên chúng ta sử dụng biến $response để chứa thông tin
-        phản hồi. $response sẽ là một thể hiện của PSR-7 response,
-        Psr\Http\Message\ResponseInterface và chứa rất nhiều thông tin hữu ích</p>
+      <p>Trong các ví dụ trên chúng ta sử dụng biến <code>$response</code> để
+        chứa thông tin phản hồi. <code>$response</code> sẽ là một thể hiện của
+        PSR-7 response, <code>Psr\Http\Message\ResponseInterface</code> và chứa
+        rất nhiều thông tin hữu ích.</p>
       <p>Bạn có thể lấy thông tin status code và reason phrase:</p>
       <pre>$code = $response-&gt;getStatusCode(); // 200
 $reason = $response-&gt;getReasonPhrase(); // OK
@@ -130,7 +132,7 @@ $reason = $response-&gt;getReasonPhrase(); // OK
 $code = $response-&gt;getStatusCode(); // 404
 $reason = $response-&gt;getReasonPhrase(); // Not Found
 </pre>
-      <p>Lấy thông tin header</p>
+      <p>Lấy thông tin header:</p>
       <pre>// Kiểm tra xem có header hay không.
 if ($response-&gt;hasHeader('Content-Length')) {
     echo "It exists";
@@ -144,56 +146,55 @@ foreach ($response-&gt;getHeaders() as $name =&gt; $values) {
     echo $name . ': ' . implode(', ', $values) . "\r\n";
 }
 </pre>
-      <p>Body của một response được lấy bằng cách sử dụng phương thức getBody().
-        Body có thể sử dụng như là một chuỗi string hoặc 1 stream</p>
-      <pre>$body = $response-&gt;getBody();
+      <p>Body của một response được lấy bằng cách sử dụng phương thức <code>getBody()</code>.
+        Body có thể sử dụng như là một chuỗi string hoặc 1 stream:</p>
+      <pre>$body = $response-&gt;getBody();<br>
 // Sử dụng như một string
-echo $body;
+echo $body;<br>
 // Sử dụng như một stream
-$tenBytes = $body-&gt;read(10);
+$tenBytes = $body-&gt;read(10);<br>
 // Đọc nội dung còn lại như một string
 $remainingBytes = $body-&gt;getContents();
 </pre>
-      <h4>Query String</h4>
-      <p>Bạn có thể gửi query string trong uri</p>
+      <h4>Query string</h4>
+      <p>Bạn có thể gửi query string trong uri:</p>
       <pre>$response = $client-&gt;request('GET', 'http://httpbin.org?foo=bar');
 </pre>
       <p>Điều này khá là phiền phức nếu query string của bạn quá dài, lúc đó bạn
-        nên sử dụng tùy chọn query</p>
+        nên sử dụng tùy chọn query:</p>
       <pre>$client-&gt;request('GET', 'http://httpbin.org', [
     'query' =&gt; ['foo' =&gt; 'bar']
 ]);
 </pre>
-      <p>Tùy chọn query sử dụng PHP's http_build_query để định dạng query
-        string.</p>
-      <h4>Uploading Data</h4>
-      <p>Guzzle cung cấp cho bạn một số cách khá hiệu quả để upload data.</p>
+      <p>Tùy chọn query sử dụng hàm <code>http_build_query</code> của PHP để
+        định dạng query string.</p>
+      <h4>Upload dữ liệu</h4>
+      <p>Guzzle cung cấp cho bạn một số cách khá hiệu quả để upload dữ liệu.</p>
       <p>Bạn có thể gửi một request chứa một stream với dữ liệu là chuỗi string,
-        resource nhận được từ fopen hoặc một thể hiện của
-        Psr\Http\Message\StreamInterface</p>
-      <pre>// Một string.
+        resource nhận được từ <code>fopen</code> hoặc một thể hiện của <code>Psr\Http\Message\StreamInterface</code>:</p>
+      <pre>// Một string
 $r = $client-&gt;request('POST', 'http://httpbin.org/post', [
     'body' =&gt; 'raw data'
 ]);
 
-// Một resource.
+// Một resource
 $body = fopen('/path/to/file', 'r');
-$r = $client-&gt;request('POST', 'http://httpbin.org/post', ['body' =&gt; $body]);
+$r = $client-&gt;request('POST', 'http://httpbin.org/post', [<br>    'body' =&gt; $body<br>]);
 
-// Sử dụng phương thức stream_for() để tạo một PSR-7 stream.
+// Sử dụng phương thức stream_for() để tạo một PSR-7 stream
 $body = \GuzzleHttp\Psr7\stream_for('hello!');
-$r = $client-&gt;request('POST', 'http://httpbin.org/post', ['body' =&gt; $body]);
+$r = $client-&gt;request('POST', 'http://httpbin.org/post', [<br>    'body' =&gt; $body<br>]);
 </pre>
-      <p>Nếu bạn muốn upload json data, hãy sử dụng tùy chọn json</p>
+      <p>Nếu bạn muốn upload dữ liệu JSON, hãy sử dụng tùy chọn <code>json</code>:</p>
       <pre>$r = $client-&gt;request('PUT', 'http://httpbin.org/put', [
     'json' =&gt; ['foo' =&gt; 'bar']
 ]);
 </pre>
-      <p>POST/Form Requests</p>
-      <p> Gửi form fields</p>
-      <p>Để gửi application/x-www-form-urlencoded POST requests bạn cần tùy chọn
-        form_params</p>
-      <pre>  $response = $client-&gt;request('POST', 'http://httpbin.org/post', [
+      <h3>POST form request</h3>
+      <h4>Gửi form field</h4>
+      <p>Để gửi POST request <code>application/x-www-form-urlencoded</code> bạn
+        cần tùy chọn <code>form_params</code>:</p>
+      <pre>$response = $client-&gt;request('POST', 'http://httpbin.org/post', [
     'form_params' =&gt; [
         'field_name' =&gt; 'abc',
         'other_field' =&gt; '123',
@@ -201,54 +202,55 @@ $r = $client-&gt;request('POST', 'http://httpbin.org/post', ['body' =&gt; $body]
             'nested' =&gt; 'hello'
         ]
     ]
-    ]);
+]);
 </pre>
-      <p> Gửi form file</p>
-      <p>Nếu bạn cần gửi 1 file trong POST request (multipart/form-data POST
-        requests) sử dụng multipart option. multipart nhận một array của array.
-        Mỗi array con gồm :</p>
-      <p>name: (required, string) tên của field.</p>
-      <p>contents: (required, mixed) Bạn có thể gửi một request chứa một stream
-        với dữ liệu là chuỗi string, resource nhận được từ fopen hoặc một thể
-        hiện của Psr\Http\Message\StreamInterface</p>
-      <pre>      $response = $client-&gt;request('POST', 'http://httpbin.org/post', [
-            'multipart' =&gt; [
-                [
-                    'name'     =&gt; 'field_name',
-                    'contents' =&gt; 'abc'
-                ],
-                [
-                    'name'     =&gt; 'file_name',
-                    'contents' =&gt; fopen('/path/to/file', 'r')
-                ],
-                [
-                    'name'     =&gt; 'other_file',
-                    'contents' =&gt; 'hello',
-                    'filename' =&gt; 'filename.txt',
-                    'headers'  =&gt; [
-                        'X-Foo' =&gt; 'this is an extra header to include'
-                    ]
-                ]
+      <h4> Gửi form file</h4>
+      <p>Nếu bạn cần gửi 1 file trong POST request (POST request dạng <code>multipart/form-data</code>)
+        sử dụng tùy chọn <code>multipart</code>. multipart nhận một array của
+        array. Mỗi array con gồm:</p>
+      <ul>
+        <li>name: (required, string) tên của field.</li>
+        <li>contents: (required, mixed) Bạn có thể gửi một request chứa một
+          stream với dữ liệu là chuỗi string, resource nhận được từ fopen hoặc
+          một thể hiện của Psr\Http\Message\StreamInterface</li>
+      </ul>
+      <p>Ví dụ:</p>
+      <pre>$response = $client-&gt;request('POST', 'http://httpbin.org/post', [
+    'multipart' =&gt; [
+        [
+            'name'     =&gt; 'field_name',
+            'contents' =&gt; 'abc'
+        ],
+        [
+            'name'     =&gt; 'file_name',
+            'contents' =&gt; fopen('/path/to/file', 'r')
+        ],
+        [
+            'name'     =&gt; 'other_file',
+            'contents' =&gt; 'hello',
+            'filename' =&gt; 'filename.txt',
+            'headers'  =&gt; [
+                'X-Foo' =&gt; 'this is an extra header to include'
             ]
-    ]);
+        ]
+    ]
+]);
 </pre>
-      <h4> Cookie</h4>
-      <p>Guzzle có thể thay đổi cookie session nếu bạn sử dụng tùy chọn cookie.
-        Khi gửi request cookie bắt buộc phải là một thể hiện của
-        GuzzleHttp\Cookie\CookieJarInterface</p>
-      <pre>$jar = new \GuzzleHttp\Cookie\CookieJar;
-        $r = $client-&gt;request('GET', 'http://httpbin.org/cookies', [
-        'cookies' =&gt; $jar
-    ]);
+      <h3>Cookie</h3>
+      <p>Guzzle có thể thay đổi cookie session nếu bạn sử dụng tùy chọn <code>cookies</code>.
+        Khi gửi request cookie bắt buộc phải là một thể hiện của <code>GuzzleHttp\Cookie\CookieJarInterface</code>:</p>
+      <pre>$jar = new \GuzzleHttp\Cookie\CookieJar;<br>
+$r = $client-&gt;request('GET', 'http://httpbin.org/cookies', [
+    'cookies' =&gt; $jar
+]);
 </pre>
-      <h3>Tổng Kết</h3>
-      <p>Guzzle 6 là 1 package mạnh mẽ giúp ích rất tốt cho bạn trong việc gửi
-        PHP HTTP request. Nó rất thích hợp khi bạn làm việc với API.</p>
-      <h3> Tài liệu tham khảo</h3>
-      <p>Guzzle 6 Doc : <a href="http://docs.guzzlephp.org/" target="_blank">http://docs.guzzlephp.org/</a>
-      </p>
-      <p>https://guzzle.readthedocs.io/en/latest/</p>
-      <p><a href="https://github.com/guzzle/guzzle">https://github.com/guzzle/guzzle</a></p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://docs.guzzlephp.org/en/stable/" target="_blank">Guzzle,
+          PHP HTTP client — Guzzle Documentation</a></p>
+      <p><a href="https://github.com/guzzle/guzzle" target="_blank">guzzle/guzzle:
+          Guzzle, an extensible PHP HTTP client</a></p>
+      <p><a href="https://laravel.com/docs/master/http-client" target="_blank">HTTP
+          Client - Laravel</a></p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>

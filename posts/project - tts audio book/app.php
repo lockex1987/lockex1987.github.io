@@ -1,19 +1,25 @@
 <?php
+
 require 'vendor/autoload.php';
 
 // Truyện "Phi hồ ngoại truyện".
 
 
+/**
+ * Gọi API.
+ */
 function callTtsApi($text)
 {
     $token = 'c4Mi6k-sYPTmnZcxZAaRUtmf0kWgRrRnLMnZUMqRLixpBilMCQJV27hxxS6ikn-5';
     $voice = 'doanngocle';
     $speed = 1;
-    $url = 'https://vtcc.ai/voice/api/tts/v1/rest/syn';
+    $url = 'https://viettelgroup.ai//voice/api/tts/v1/rest/syn';
 
     // Không xác thực SSL
     // http://docs.guzzlephp.org/en/stable/request-options.html#verify-option
-    $client = new \GuzzleHttp\Client(['verify' => false]);
+    $client = new \GuzzleHttp\Client([
+        'verify' => false
+    ]);
     $options = [
         'headers' => [
             'token' => $token
@@ -35,17 +41,24 @@ function callTtsApi($text)
     return $content;
 }
 
-// Nên tách thành nhiều file nhỏ,
-// Mỗi file tầm 1000 từ, 5000 ký tự, 50 dòng.
+
+/**
+ * Đọc nội dung file text.
+ * Nên tách thành nhiều file nhỏ, mỗi file tầm 1000 từ, 5000 ký tự, 50 dòng.
+ */
 function readTextFile($fileName)
 {
     $fileObj = fopen($fileName, 'r');
     $text = fread($fileObj, filesize($fileName));
-    //echo $text . "\n";
+    // echo $text . "\n";
     fclose($fileObj);
     return $text;
 }
 
+
+/**
+ * Ghi file âm thanh.
+ */
 function writeAudioFile($fileName, $content)
 {
     $fileObj = fopen($fileName, 'w');
@@ -53,6 +66,10 @@ function writeAudioFile($fileName, $content)
     fclose($fileObj);
 }
 
+
+/**
+ * Hàm thực thi.
+ */
 function main()
 {
     $folder = 'data-files/';
