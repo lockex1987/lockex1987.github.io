@@ -42,13 +42,13 @@
     function handleShowLunarDate() {
         const showLunarDate = document.querySelector('#showLunarDate');
 
-        if (localStorage.showLunarDate == 'true') {
+        if (localStorage.getItem('showLunarDate') == 'true') {
             calendarWrapper.classList.add('show-lunar');
         }
 
-        showLunarDate.checked = (localStorage.showLunarDate == 'true');
-        showLunarDate.addEventListener('click', () => {
-            localStorage.showLunarDate = showLunarDate.checked ? 'true' : 'false';
+        showLunarDate.checked = (localStorage.getItem('showLunarDate') == 'true');
+        showLunarDate.addEventListener('change', () => {
+            localStorage.setItem('showLunarDate', showLunarDate.checked ? 'true' : 'false');
             calendarWrapper.classList.toggle('show-lunar');
         });
     }

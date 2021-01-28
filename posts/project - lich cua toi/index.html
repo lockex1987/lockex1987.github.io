@@ -11,7 +11,7 @@
 
     <link rel="icon" href="images/favicon.png">
 
-    <link rel="stylesheet" href="../../css/bootstrap-extended.css">
+    <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="css/calendar.css">
 
     <!-- Add manifest here (for Progressive Web App) -->
@@ -68,12 +68,13 @@
         </div>
 
         <!-- Các nút điều kiển -->
-        <div class="controller position-fixed w-100 mx-auto d-flex justify-content-center align-items-end p-2 bottom-left">
-            <label class="custom-control custom-checkbox custom-control-lg custom-control-animated custom-control-highlighted custom-control-outlined mb-0">
+        <div class="position-fixed w-100 mx-auto d-flex justify-content-center align-items-end p-2 bottom-left zindex-10">
+            <!-- Dùng custom-control trên iPad bị lỗi do xung đột với thư viện nat-carousel -->
+            <label classx="custom-control custom-checkbox custom-control-lg custom-control-animated custom-control-highlighted custom-control-outlined">
                 <input type="checkbox"
-                    class="custom-control-input"
+                    classx="custom-control-input"
                     id="showLunarDate" />
-                <span class="custom-control-label">
+                <span classx="custom-control-label">
                     Hiện âm lịch
                 </span>
             </label>

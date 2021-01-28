@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cài đặt nemo trong Ubuntu">
+    <title>Cài đặt nemo trong Ubuntu</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Cài đặt nemo trong Ubuntu</h2>
+      <p>Ubuntu mặc định sử dụng Nautilus.</p>
+      <p>Nemo là file manager mặc định của Cinnamon desktop environment.</p>
+      <p>Một số tính năng:</p>
+      <ul>
+        <li>Toolbar có thể cấu hình</li>
+        <li>Open as root</li>
+        <li>Open terminal</li>
+        <li>Hiển thị tiến trình copy ở dialog riêng</li>
+        <li>Ghi nhớ cách hiển thị (list, grid, compact)</li>
+      </ul>
+      <p>Cài đặt nemo:</p>
+      <pre>sudo apt install nemo</pre>
+      <p>Mở nemo:</p>
+      <pre>nemo</pre>
+      <p>Thiết lập nemo là file manager mặc định:</p>
+      <pre class="text-pre-wrap">sudo apt-get install dconf-tools
+
+# xdg-mime default nautilus.desktop inode/directory application/x-gnome-saved-search
+
+xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
+
+# gsettings set org.gnome.desktop.background show-desktop-icons true
+
+gsettings set org.gnome.desktop.background show-desktop-icons false
+
+gsettings set org.nemo.desktop show-desktop-icons true</pre>
+      <p><br>
+      </p>
+      <p>Tham khảo</p>
+      <p> <a href="https://connectwww.com/how-to-install-nemo-file-manager-nemo-extensions-on-ubuntu/61820/"
+          target="_blank">How to install Nemo file Manager &amp; Nemo extensions
+          on Ubuntu | CONNECTwww.com</a></p>
+      <p> <a href="https://www.linuxuprising.com/2018/07/how-to-replace-nautilus-with-nemo-file.html"
+          target="_blank">How To Replace Nautilus With Nemo File Manager On
+          Ubuntu Or Pop!_OS Gnome Desktop (Complete Guide) - Linux Uprising Blog</a></p>
+      <p> <a href="https://sourcedigit.com/23294-install-nemo-file-manager-on-ubuntu-linux/"
+          target="_blank">Install Nemo File Manager On Ubuntu Linux</a> </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

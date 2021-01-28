@@ -196,6 +196,7 @@
      */
     function initDragEvents() {
         // Thêm tùy chọn { passive: false } để có thể gọi preventDefault
+        // Bị xung đột với custom-control-checkbox của Bootstrap trên iPad :(
         window.addEventListener('touchstart', startDrag);
         window.addEventListener('touchmove', handleDrag, { passive: false });
         window.addEventListener('touchend', finishDrag);
@@ -363,25 +364,29 @@
     }
 
     // Khởi tạo
-    initDragEvents();
-    initResizeEvent();
-    initControlEvents();
-    handleClickIndicators();
+    function init() {
+        initDragEvents();
+        initResizeEvent();
+        initControlEvents();
+        handleClickIndicators();
 
-    // Chìa ra các API
-    if (!globalThis.Carousel) {
-        globalThis.Carousel = {};
+        // Chìa ra các API
+        if (!globalThis.Carousel) {
+            globalThis.Carousel = {};
+        }
+
+        if (!globalThis.Carousel.autoPlay) {
+            globalThis.Carousel.autoPlay = autoPlay;
+        }
+
+        if (!globalThis.Carousel.gotoItem) {
+            globalThis.Carousel.gotoItem = gotoItem;
+        }
+
+        if (!globalThis.Carousel.computePreferWidth) {
+            globalThis.Carousel.computePreferWidth = computePreferWidth;
+        }
     }
 
-    if (!globalThis.Carousel.autoPlay) {
-        globalThis.Carousel.autoPlay = autoPlay;
-    }
-
-    if (!globalThis.Carousel.gotoItem) {
-        globalThis.Carousel.gotoItem = gotoItem;
-    }
-
-    if (!globalThis.Carousel.computePreferWidth) {
-        globalThis.Carousel.computePreferWidth = computePreferWidth;
-    }
+    init();
 })();
