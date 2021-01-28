@@ -4,16 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="lunar calendar, progressive web app, pwa, lichcuatoi.github.io, offline, service worker, TODO: sử dụng nat-carousel">
+    <meta name="description" content="lunar calendar, âm lịch, progressive web app, pwa, lichcuatoi.github.io, offline, service worker, TODO: sử dụng nat-carousel">
 
     <title>Lịch của tôi</title>
 
     <link rel="icon" href="images/favicon.png">
-    <link rel="stylesheet" href="libs/libs.1590642245736.css">
+
+    <link rel="stylesheet" href="../../css/bootstrap-extended.css">
     <link rel="stylesheet" href="css/calendar.css">
 
     <!-- Add manifest here (for Progressive Web App) -->
-    <link rel="manifest" href="./manifest.json">
+    <!--link rel="manifest" href="./manifest.json"-->
 
     <!-- Add to home screen for Safari on iOS (for Progressive Web App) -->
     <meta name="theme-color" content="#00bcd4" />
@@ -36,10 +37,21 @@
 <body class="h-100 overflow-hidden">
     <div id="calendar"
         class="calendar">
-        <div id="amlich"></div>
+        <!-- Lịch -->
+        <div class="nat-carousel">
+            <div class="nat-carousel-wrapper">
+                <div class="nat-carousel-inner"
+                    id="amlich">
+                </div>
+            </div>
+        </div>
 
-        <div id="warning"></div>
+        <!-- Thông báo -->
+        <div id="warning"
+            class="text-center text-warning"></div>
 
+        <!-- Vùng cài đặt PWA-->
+        <!-- Tạm không sử dụng -->
         <div id="a2hsSection"
             style="display: none;">
             <div class="pwa-logo">
@@ -54,7 +66,8 @@
             </div>
         </div>
 
-        <div class="controller position-fixed w-100 mx-auto d-flex justify-content-between align-items-end p-2">
+        <!-- Các nút điều kiển -->
+        <div class="controller position-fixed w-100 mx-auto d-flex justify-content-center align-items-end p-2">
             <label class="custom-control custom-checkbox custom-control-lg custom-control-animated custom-control-highlighted custom-control-outlined mb-0">
                 <input type="checkbox"
                     class="custom-control-input"
@@ -64,24 +77,41 @@
                 </span>
             </label>
 
-            <span id="onLineStatus"></span>
+            <!--span id="onLineStatus"></span-->
 
-            <button onclick="subscribeNotification()"
+            <!--button onclick="subscribeNotification()"
                 class="btn btn-primary">
                 Subscribe
-            </button>
+            </button-->
         </div>
     </div>
 
-    <script src="libs/libs.1590642245736.js"></script>
+    
 
-    <link rel="preload" href="fonts/la-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="stylesheet" href="../project - noti/css/noti.css">
+    <script src="../project - noti/js/noti.js"></script>
 
-    <script src="js/calendar.js"></script>
+    <link rel="stylesheet" href="../ui - carousel/css/nat-carousel.css">
+    <script src="../ui - carousel/js/nat-carousel.js"></script>
+
+    <link rel="stylesheet" href="../project - frontend frameworks and libraries/src/line-awesome/css/line-awesome.min.css">
+    <link rel="preload"
+        href="../project - frontend frameworks and libraries/src/line-awesome/fonts/la-solid-900.woff2"
+        as="font"
+        type="font/woff2"
+        crossorigin="anonymous" />
+
+    <script src="../../js/common.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/calendar-core.js"></script>
+    <script src="js/calendar-gui.js"></script>
+    <script src="js/calendar-init.js"></script>
+
     <script src="js/new_moon_days.js"></script>
     <script src="js/warning.js"></script>
-    <script src="js/script.js"></script>
-    <script src="js/a2hs.js"></script>
+
+    <!--script src="js/script.js"></script-->
+    <!--script src="js/a2hs.js"></script-->
 </body>
 
 </html>

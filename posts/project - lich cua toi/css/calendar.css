@@ -1,101 +1,81 @@
+@charset "UTF-8";
 .thang-header {
   text-align: center;
   padding: 50px 0;
   font-weight: 300;
   background: #00bcd4;
-  color: #FFF;
-}
-.thang-header .tenthang {
-  text-transform: uppercase;
-  font-size: 28px;
-}
-@media (min-width: 480px) {
+  color: #FFF; }
   .thang-header .tenthang {
-    font-size: 30px;
-  }
-}
-.thang-header .nam {
-  font-size: 16px;
-}
+    text-transform: uppercase;
+    font-size: 28px; }
+    @media (min-width: 480px) {
+      .thang-header .tenthang {
+        font-size: 30px; } }
+  .thang-header .nam {
+    font-size: 16px; }
+
 .thang {
-  width: 100%;
-}
-.thang .ngaytuan {
-  width: 14%;
-  height: 55px;
-  font-weight: bold;
-  font-size: 10px;
-  /* color: rgba(255, 255, 255, 0.5); */
-  text-align: center;
-}
-.thang .ngaythang.homnay {
-  background-color: #FFF000;
-  color: #000;
-}
-.thang .ngaythang.homnay .am {
-  color: rgba(0, 0, 0, 0.7);
-}
-.thang .ngaythang.event {
-  cursor: pointer;
-}
-.thang .ngaythang.event::after {
-  content: '✓';
-  transform: translate(40px, -45px);
-  position: absolute;
-  color: green;
-}
-.thang .t2t6,
-.thang .t7,
-.thang .cn {
-  text-align: left;
-  font-size: 15px;
-  padding-top: 5px;
-  transition: all 0.25s ease-out;
-  padding-left: 20px;
-}
-.thang .am,
-.thang .am2 {
-  text-align: right;
-  font-size: 11px;
-  padding-bottom: 5px;
-  padding-right: 15px;
-  opacity: 0;
-  transition: all 0.25s ease-out;
-}
-.thang .am {
-  color: blue;
-}
-.thang .am2 {
-  color: #004080;
-}
+  width: 100%; }
+  .thang .ngaytuan {
+    width: 14%;
+    height: 55px;
+    font-weight: bold;
+    font-size: 10px;
+    text-align: center; }
+  .thang .ngaythang.homnay {
+    background-color: #FFF000;
+    color: #000; }
+    .thang .ngaythang.homnay .am {
+      color: rgba(0, 0, 0, 0.7); }
+  .thang .ngaythang.event {
+    cursor: pointer; }
+    .thang .ngaythang.event::after {
+      content: '✓';
+      transform: translate(40px, -45px);
+      position: absolute;
+      color: green; }
+  .thang .t2t6, .thang .t7, .thang .cn {
+    text-align: left;
+    font-size: 15px;
+    padding-top: 5px;
+    transition: all 0.25s ease-out;
+    padding-left: 20px; }
+  .thang .am,
+  .thang .am2 {
+    text-align: right;
+    font-size: 11px;
+    padding-bottom: 5px;
+    padding-right: 15px;
+    opacity: 0;
+    transition: all 0.25s ease-out; }
+  .thang .am {
+    color: blue; }
+  .thang .am2 {
+    color: #004080; }
+
 .calendar {
   margin: 0px auto;
   padding: 0px;
   overflow: hidden;
-  position: relative;
-}
-@media (min-width: 768px) {
-  .calendar {
-    max-width: 768px;
-  }
-}
-.calendar .amlich-item {
-  cursor: move;
-  outline: none;
-}
-.calendar #amlich.show-lunar .t2t6,
-.calendar #amlich.show-lunar .t7,
-.calendar #amlich.show-lunar .cn {
-  padding-left: 15px;
-}
-.calendar #amlich.show-lunar .am,
-.calendar #amlich.show-lunar .am2 {
-  opacity: 1;
-}
+  position: relative; }
+  @media (min-width: 768px) {
+    .calendar {
+      max-width: 768px; } }
+  .calendar .amlich-item {
+    cursor: move;
+    outline: none; }
+  .calendar #amlich.show-lunar .t2t6,
+  .calendar #amlich.show-lunar .t7,
+  .calendar #amlich.show-lunar .cn {
+    padding-left: 15px; }
+  .calendar #amlich.show-lunar .am,
+  .calendar #amlich.show-lunar .am2 {
+    opacity: 1; }
+
 .controller {
   bottom: 0px;
-  max-width: 768px;
-}
+  max-width: 768px; }
+
 #a2hsSection {
   width: 350px;
   margin: 30px auto 0;
@@ -104,34 +84,24 @@
   cursor: pointer;
   border-radius: 40px;
   box-sizing: border-box;
-  /* Animation?? */
-}
-#a2hsSection .pwa-logo {
-  width: 80px;
-}
-#a2hsSection .pwa-logo img {
-  width: 100%;
-  height: auto;
-}
-#a2hsSection .install-text {
-  padding-left: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#a2hsSection .install-text .title {
-  font-size: 22px;
-  font-weight: 700;
-}
-#a2hsSection .install-text .subtitle {
-  font-size: 20px;
-}
-@media all and (display-mode: standalone) {
-  #a2hsSection {
-    display: none;
-  }
-}
-#warning {
-  text-align: center;
-  color: #FFF000;
-}
+  /* Animation?? */ }
+  #a2hsSection .pwa-logo {
+    width: 80px; }
+    #a2hsSection .pwa-logo img {
+      width: 100%;
+      height: auto; }
+  #a2hsSection .install-text {
+    padding-left: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    #a2hsSection .install-text .title {
+      font-size: 22px;
+      font-weight: 700; }
+    #a2hsSection .install-text .subtitle {
+      font-size: 20px; }
+  @media all and (display-mode: standalone) {
+    #a2hsSection {
+      display: none; } }
+
+/*# sourceMappingURL=calendar.css.map */

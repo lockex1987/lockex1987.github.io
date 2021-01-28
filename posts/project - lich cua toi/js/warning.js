@@ -1,35 +1,35 @@
 /*
 Vietnamese calendar
-	Sử dụng trong khoảng 200 năm thôi
-	Bước 1: tính Julian day
-	Bước 2: tính 2,400 ngày mồng 1 âm sẵn
-		Sóc (New moon)
-		Tiết khí
-		Tháng 11
+    Sử dụng trong khoảng 200 năm thôi
+    Bước 1: tính Julian day
+    Bước 2: tính 2,400 ngày mồng 1 âm sẵn
+        Sóc (New moon)
+        Tiết khí
+        Tháng 11
 
-		var NEW_MOON_DAYS = [];
-		for (var year = 1900; year <= 2099; year++) {
-			NEW_MOON_DAYS.push(...getYearInfo(year));
-		}
-		//
-		//JSON.stringify(NEW_MOON_DAYS, null, 2)
-		var text = '';
-		// day:${e.day}, luôn là 1
-		NEW_MOON_DAYS.forEach(e => text += `{month:${e.month},year:${e.year},leap:${e.leap},jd:${e.jd}},\n`)
-		text
-	Bước 3: đổi âm ra dương, dương ra âm dựa vào 2,400 ngày sẵn kia
+        var NEW_MOON_DAYS = [];
+        for (var year = 1900; year <= 2099; year++) {
+            NEW_MOON_DAYS.push(...getYearInfo(year));
+        }
+        //
+        //JSON.stringify(NEW_MOON_DAYS, null, 2)
+        var text = '';
+        // day:${e.day}, luôn là 1
+        NEW_MOON_DAYS.forEach(e => text += `{month:${e.month},year:${e.year},leap:${e.leap},jd:${e.jd}},\n`)
+        text
+    Bước 3: đổi âm ra dương, dương ra âm dựa vào 2,400 ngày sẵn kia
 
-	Lịch dựa vào tính toán thiên văn phức tạp.
-	Có nhiều loại lịch:
-	- Lịch La Mã
-	- Lịch Julius
-	- Lịch Gregorius
-	- Lịch Trung Quốc
-	- Lịch Việt Nam (âm lịch)
-	Mỗi loại lịch lại được áp dụng ở từng thời kỳ.
-	Ngày làm mốc:
-	- Julian day (không liên quan đến lịch Julius)
-	Lịch âm dựa vào các khái niệm: ...
+    Lịch dựa vào tính toán thiên văn phức tạp.
+    Có nhiều loại lịch:
+    - Lịch La Mã
+    - Lịch Julius
+    - Lịch Gregorius
+    - Lịch Trung Quốc
+    - Lịch Việt Nam (âm lịch)
+    Mỗi loại lịch lại được áp dụng ở từng thời kỳ.
+    Ngày làm mốc:
+    - Julian day (không liên quan đến lịch Julius)
+    Lịch âm dựa vào các khái niệm: ...
 
 */
 
@@ -95,7 +95,7 @@ function getWarning() {
     const today = new Date();
     let html = '';
     checkDates.forEach(e => {
-        const greDate = addDate(today, e.diff);
+        const greDate = CommonUtils.addDate(today, e.diff);
         const greDay = greDate.getDate();
         const greMonth = greDate.getMonth() + 1;
         const greYear = greDate.getFullYear();

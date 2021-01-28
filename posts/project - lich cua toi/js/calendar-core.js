@@ -69,12 +69,12 @@ const CalendarCore = (function () {
     }
 
     /**
-	 * Tính số ngày Julian.
-	 * @param {Integer} dd Ngày
-	 * @param {Integer} mm Tháng
-	 * @param {Integer} yy Năm
-	 * @return {Integer} Julian date number
-	 */
+     * Tính số ngày Julian.
+     * @param {Integer} dd Ngày
+     * @param {Integer} mm Tháng
+     * @param {Integer} yy Năm
+     * @return {Integer} Julian date number
+     */
     function jdn(dd, mm, yy) {
         const a = Math.floor((14 - mm) / 12);
         const y = yy + 4800 - a;
@@ -84,10 +84,10 @@ const CalendarCore = (function () {
     }
 
     /**
-	 * Lấy danh sách những ngày mồng Một âm trong năm.
-	 * @param {Integer} yy Năm dương
-	 * @param {*} k Year code
-	 */
+     * Lấy danh sách những ngày mồng Một âm trong năm.
+     * @param {Integer} yy Năm dương
+     * @param {*} k Year code
+     */
     function decodeLunarYear(yy, k) {
         const ly = [];
         const monthLengths = [29, 30];
@@ -125,9 +125,9 @@ const CalendarCore = (function () {
     }
 
     /**
-	 * Lấy danh sách những ngày mồng Một âm trong năm.
-	 * @param {Integer} yyyy Năm
-	 */
+     * Lấy danh sách những ngày mồng Một âm trong năm.
+     * @param {Integer} yyyy Năm
+     */
     function getYearInfo(yyyy) {
         let yearCode;
         if (yyyy < 1900) {
@@ -146,10 +146,10 @@ const CalendarCore = (function () {
     const LAST_DAY = jdn(31, 12, 2199);
 
     /**
-	 * Trả về đối tượng LunarDate của ...
-	 * @param jd ??
-	 * @param ly ??
-	 */
+     * Trả về đối tượng LunarDate của ...
+     * @param jd ??
+     * @param ly ??
+     */
     function findLunarDate(jd, ly) {
         if (jd > LAST_DAY || jd < FIRST_DAY || ly[0].jd > jd) {
             return new LunarDate(0, 0, 0, 0, jd);
@@ -168,10 +168,10 @@ const CalendarCore = (function () {
     }
 
     /**
-	 * Trả về mảng các ngày âm trong tháng.
-	 * @param {Integer} mm Tháng dương
-	 * @param {Integer} yy Năm dương
-	 */
+     * Trả về mảng các ngày âm trong tháng.
+     * @param {Integer} mm Tháng dương
+     * @param {Integer} yy Năm dương
+     */
     function getMonth(mm, yy) {
         // Tháng tiếp theo
         let mm1, yy1;

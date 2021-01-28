@@ -1,4 +1,4 @@
-$(function () {
+(function () {
     // Ngày hiện tại
     const today = new Date();
 
@@ -8,13 +8,16 @@ $(function () {
     const currentYear = today.getFullYear();
 
     // Chỉ số lớn nhất và nhỏ nhất của slide
-    let slideMin = -3;
-    let slideMax = 3;
+    const slideMin = -3;
+    const slideMax = 3;
+
+    // Vùng chứa lịch các tháng
+    const calendarWrapper = document.querySelector('#amlich');
 
     /**
-	 * Lấy HTML của 1 tháng
-	 * @param {Integer} offset
-	 */
+     * Lấy HTML của 1 tháng
+     * @param {Integer} offset
+     */
     function getMonth(offset) {
         let m = currentMonth + offset;
         let y = currentYear;
@@ -26,36 +29,49 @@ $(function () {
             m -= 12;
             y++;
         }
-        return '<div class="amlich-item">' + lunarCalendarGui.printMonth(m, y) + '</div>';
+        const div = document.createElement('div');
+        div.innerHTML = lunarCalendarGui.printMonth(m, y);
+        div.className = 'amlich-item nat-carousel-item';
+        return div;
     }
 
     /**
-	 * Khởi tạo
-	 */
-    function init() {
-        // Hiển thị 5 tháng
-        for (let i = -2; i <= 2; i++) {
-            $('#amlich').append(getMonth(i));
-        }
+     * Bind nút "Hiện Âm lịch" và gắn sự kiện cho nút đó.
+     */
+    function handleShowLunarDate() {
+        const showLunarDate = document.querySelector('#showLunarDate');
 
-
-        // Ẩn hiện Âm lịch
         if (localStorage.showLunarDate == 'true') {
-            $('#amlich').addClass('show-lunar');
+            calendarWrapper.classList.add('show-lunar');
         }
 
-        // Bind nút "Hiện Âm lịch"
-        // và gắn sự kiện cho nút đó
-        $('#showLunarDate')
-            .attr('checked', (localStorage.showLunarDate == 'true'))
-            .click(function () {
-                const isChecked = $('#showLunarDate').is(':checked');
-                localStorage.showLunarDate = isChecked ? 'true' : 'false';
-                $('#amlich').toggleClass('show-lunar');
-            });
+        showLunarDate.checked = (localStorage.showLunarDate == 'true');
+        showLunarDate.addEventListener('click', () => {
+            localStorage.showLunarDate = showLunarDate.checked ? 'true' : 'false';
+            calendarWrapper.classList.toggle('show-lunar');
+        });
+    }
 
+    /**
+     * Khởi tạo 5 tháng.
+     */
+    function initMonths() {
+        calendarWrapper.style.visibility = 'hidden';
+        for (let i = -2; i <= 2; i++) {
+            calendarWrapper.appendChild(getMonth(i));
+        }
+        Carousel.gotoItem(calendarWrapper, 2);
+        setTimeout(() => {
+            calendarWrapper.style.visibility = 'visible';
+        }, 250);
+    }
 
-        $('#amlich').slick({
+    /**
+     * Khởi tạo carousel.
+     */
+    function initCarousel() {
+        // TODO: Bỏ đi
+        $(calendarWrapper).slick({
             dots: false,
             infinite: false,
             arrows: false, // chuyển thành true nhưng vẫn có thể không nhìn thấy do nó có color là white
@@ -65,6 +81,7 @@ $(function () {
             slidesToScroll: 1,
             initialSlide: 2 // slide ở giữa
         }).on('swipe', function (event, slickObj, direction) {
+            /*
             // Get the current slide
             const slideIndex = slickObj.currentSlide;
 
@@ -84,8 +101,18 @@ $(function () {
                     slideMin--;
                 }, 300);
             }
+            */
         });
     }
 
+    /**
+     * Khởi tạo
+     */
+    function init() {
+        initMonths();
+        handleShowLunarDate();
+        // initCarousel();
+    }
+
     init();
-});
+})();
