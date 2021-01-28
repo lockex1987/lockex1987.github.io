@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="date" content="2021-01-18 22:51:00">
-    <meta name="description" content="Upload từ iPad sang máy tính, download từ máy tính sang iPad bang Vue va PHP; file type icon">
+    <meta name="description" content="Upload từ iPad sang máy tính, download từ máy tính sang iPad bằng Vue và PHP; file type icon">
 
     <title>File manager</title>
 
@@ -49,17 +49,17 @@
                         Upload
     
                         <input type="file"
-                                ref="uploadFileInput"
-                                multiple
-                                class="d-none"
-                                @change="startUploadFiles()">
+                            ref="uploadFileInput"
+                            multiple
+                            class="d-none"
+                            @change="startUploadFiles()">
                     </label>
                 </div>
             </div>
     
             <!-- Vùng danh sách file ĐANG upload -->
             <div class="mt-5"
-                    v-if="uploadingFiles.length > 0">
+                v-if="uploadingFiles.length > 0">
                 <h3>Uploading</h3>
                 
                 <table class="table">
@@ -107,16 +107,16 @@
                 </div>
 
                 <input type="text"
-                        v-model="searchQuery"
-                        class="form-control d-inline-block"
-                        style="width: 250px"
-                        placeholder="Tim kiem"/>
+                    v-model="searchQuery"
+                    class="form-control d-inline-block"
+                    style="width: 250px"
+                    placeholder="Tim kiem"/>
             </div>
             
             <!-- Danh sach file hien tai -->
             <div v-if="files">
                 <div class="text-danger mb-3"
-                        v-if="filteredFiles.length == 0">
+                    v-if="filteredFiles.length == 0">
                     Không có file nào
                 </div>
     
@@ -157,7 +157,5 @@
     <script src="../../js/common.js"></script>
 
     <script type="module" src="js/script.js"></script>
-
-    <!--script src="../../js/docs.js"></script-->
 </body>
 </html>

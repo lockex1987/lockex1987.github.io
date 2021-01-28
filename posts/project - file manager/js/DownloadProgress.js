@@ -105,7 +105,7 @@ export default {
                 const minutes = Math.round(time / 60);
 
                 this.remainTime = (minutes > 0 ? minutes + ' phút ' : '') +
-                        (CommonUtils.paddingTwoZero(seconds) + ' giây');
+                    (CommonUtils.paddingTwoZero(seconds) + ' giây');
             } catch (ex) {
                 alert(ex);
             }

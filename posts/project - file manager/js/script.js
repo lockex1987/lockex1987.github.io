@@ -5,7 +5,6 @@ try {
         el: '#app',
         ...App
     });
-    // alert(1);
 } catch (ex) {
     alert(ex);
 }
