@@ -11,123 +11,141 @@
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="css/file-icon.css">
+    <link rel="stylesheet" href="../project - frontend frameworks and libraries/src/line-awesome/css/line-awesome.min.css">
 </head>
 
 <body>
-    <article class="mw-none my-0">
+    <article class="mw-nonex my-0">
         <h2>File manager</h2>
 
         <div id="app"
-                v-cloak>
-            <div class="">
-                <div class="mb-3 d-flex justify-content-between">
-                    <div class="font-weight-500 text-success">
-                        {{folder}}
-                    </div>
-        
-                    <div>
-                        <label class="btn btn-primary">
-                            Upload
-        
-                            <input type="file"
-                                    ref="uploadFileInput"
-                                    multiple
-                                    class="d-none"
-                                    @change="startUploadFiles()">
-                        </label>
-                    </div>
+            v-cloak>
+            <div class="mb-3 d-flex justify-content-between flex-wrap">
+                <nav>
+                    <ol class="font-size-1.25 font-weight-500 breadcrumb bg-transparent pt-0 pl-0 pb-0">
+                        <li>
+                            <span style="display: inline-block; padding-right: .5rem; color: #6c757d;">
+                                /
+                            </span>
+                        </li>
+
+                        <li v-for="(p, idx) in breadcrumbs"
+                            class="breadcrumb-item"
+                            :class="{ 'active': idx == breadcrumbs.length - 1 }">
+                            <span v-if="idx == breadcrumbs.length - 1">
+                                {{p}}
+                            </span>
+                            <span v-else
+                                class="cursor-pointer text-success"
+                                @click="openFolderInBreadCrumbs(idx)">
+                                {{p}}
+                            </span>
+                        </li>
+                    </ol>
+                </nav>
+    
+                <div>
+                    <label class="btn btn-primary">
+                        Upload
+    
+                        <input type="file"
+                                ref="uploadFileInput"
+                                multiple
+                                class="d-none"
+                                @change="startUploadFiles()">
+                    </label>
                 </div>
-        
-                <!-- Vùng danh sách file ĐANG upload -->
-                <div class="mt-5"
-                        v-if="uploadingFiles.length > 0">
-                    <h3>Uploading</h3>
-                    
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Tên</th>
-                                <th class="text-right">Dung lượng</th>
-                                <th>Tiến trình</th>
-                            </tr>
-                        </thead>
-        
-                        <tbody>
-                            <tr v-for="(f, idx) in uploadingFiles">
-                                <td>
-                                    {{idx + 1}}
-                                </td>
-                                <td>
-                                    {{f.name}}
-                                </td>
-                                <td class="text-right">
-                                    {{f.size}}
-                                </td>
-                                <td>
-                                    <div class="progress"
-                                            style="height:10px; width: 250px;">
-                                        <div class="progress-bar"
-                                                style="width:0%; height:10px"
-                                                :id="'progressBar' + idx"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-        
-                <div class="text-right mb-3">
-                    <input type="text"
-                            v-model="searchQuery"
-                            class="form-control d-inline-block"
-                            style="width: 250px"
-                            placeholder="Tim kiem"/>
-                </div>
+            </div>
+    
+            <!-- Vùng danh sách file ĐANG upload -->
+            <div class="mt-5"
+                    v-if="uploadingFiles.length > 0">
+                <h3>Uploading</h3>
                 
-                <!-- Danh sach file hien tai -->
-                <div v-if="files">
-                    <div class="text-danger mb-3"
-                            v-if="filteredFiles.length == 0">
-                        Không có file nào
-                    </div>
-        
-                    <div v-else>        
-                        <div v-if="folder != '/'">
-                            <a href="javascript:;"
-                                    @click="gotoParentFolder()"
-                                    class="text-decoration-none">
-                                ..
-                            </a>
-                        </div>
-        
-                        <div v-for="(f, idx) in filteredFiles"
-                                class="d-lg-flex justify-content-between"
-                                :class="{ 'mt-2 border-top pt-2': idx > 0 || folder != '/' }">
-                            <div>
-                                <a href="javascript:;"
-                                        @click="openFolder(f)"
-                                        class="file-icon file-icon-folder text-decoration-none"
-                                        v-if="f.isDir">
-                                    {{f.name}}
-                                </a>
-
-                                <a :href="'/data' + folder + f.name"
-                                        class="file-icon text-decoration-none"
-                                        v-else>
-                                    <!-- @click="f.download = true" -->
-                                    {{f.name}}
-                                </a>
-
-                                <download-progress
-                                        :url="f.url"
-                                        :file-name="f.name"
-                                        v-if="f.download"/>
-                            </div>
-
-                            <div class="text-right text-muted font-size-0.875">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Tên</th>
+                            <th class="text-right">Dung lượng</th>
+                            <th>Tiến trình</th>
+                        </tr>
+                    </thead>
+    
+                    <tbody>
+                        <tr v-for="(f, idx) in uploadingFiles">
+                            <td>
+                                {{idx + 1}}
+                            </td>
+                            <td>
+                                {{f.name}}
+                            </td>
+                            <td class="text-right">
                                 {{f.size}}
-                            </div>
+                            </td>
+                            <td>
+                                <div class="progress"
+                                        style="height:10px; width: 250px;">
+                                    <div class="progress-bar"
+                                            style="width:0%; height:10px"
+                                            :id="'progressBar' + idx"></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    
+            <div class="d-flex justify-content-between mb-3">
+                <div>
+                    <span @click="gotoParentFolder()"
+                        class="text-decoration-none cursor-pointer text-primary"
+                        v-if="folder != '/'">
+                        <i class="la la-arrow-up"></i>
+                        Trở về thư mục cha
+                    </span>
+                </div>
+
+                <input type="text"
+                        v-model="searchQuery"
+                        class="form-control d-inline-block"
+                        style="width: 250px"
+                        placeholder="Tim kiem"/>
+            </div>
+            
+            <!-- Danh sach file hien tai -->
+            <div v-if="files">
+                <div class="text-danger mb-3"
+                        v-if="filteredFiles.length == 0">
+                    Không có file nào
+                </div>
+    
+                <div v-else>        
+                    <div v-for="(f, idx) in filteredFiles"
+                        class="d-flex justify-content-between flex-wrap"
+                        :class="{ 'mt-2 border-top pt-2': idx > 0 || folder != '/' }">
+                        <div>
+                            <span @click="openFolder(f)"
+                                class="cursor-pointer text-primary file-icon file-icon-folder text-decoration-none"
+                                v-if="f.isDir">
+                                {{f.name}}
+                            </span>
+
+                            <a :href="'/data' + folder + f.name"
+                                class="file-icon text-decoration-none"
+                                v-else>
+                                <!-- @click="f.download = true" -->
+                                {{f.name}}
+                            </a>
+
+                            <download-progress
+                                :url="f.url"
+                                :file-name="f.name"
+                                v-if="f.download"/>
+                        </div>
+
+                        <div class="text-right text-muted font-size-0.875">
+                            {{f.size}}
                         </div>
                     </div>
                 </div>

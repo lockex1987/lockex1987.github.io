@@ -1,4 +1,5 @@
 <?php
+
 include 'config.php';
 
 $folder = $_GET['folder'];

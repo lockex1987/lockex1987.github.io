@@ -95,7 +95,7 @@ $response = $client-&gt;put('http://httpbin.org/put');
 $request = new Request('PUT', 'http://httpbin.org/put');
 $response = $client-&gt;send($request, ['timeout' =&gt; 2]);
 </pre>
-      <h4>Request không đồng bộ</h4>
+      <h4>Gửi request không đồng bộ</h4>
       <p>Bạn có thể gửi request không đồng bộ bằng magic method được cung cấp
         bởi client:</p>
       <pre>$promise = $client-&gt;getAsync('http://httpbin.org/get');
@@ -120,7 +120,7 @@ $promise = $client-&gt;sendAsync($request);
 // Hoặc, nếu bạn không muốn gửi cả thể hiện của request:
 $promise = $client-&gt;requestAsync('GET', 'http://httpbin.org/get');
 </pre>
-      <h4>Sử dụng response</h4>
+      <h4>Xử lý response</h4>
       <p>Trong các ví dụ trên chúng ta sử dụng biến <code>$response</code> để
         chứa thông tin phản hồi. <code>$response</code> sẽ là một thể hiện của
         PSR-7 response, <code>Psr\Http\Message\ResponseInterface</code> và chứa
@@ -156,7 +156,7 @@ $tenBytes = $body-&gt;read(10);<br>
 // Đọc nội dung còn lại như một string
 $remainingBytes = $body-&gt;getContents();
 </pre>
-      <h4>Query string</h4>
+      <h3>Query string</h3>
       <p>Bạn có thể gửi query string trong uri:</p>
       <pre>$response = $client-&gt;request('GET', 'http://httpbin.org?foo=bar');
 </pre>
@@ -168,7 +168,7 @@ $remainingBytes = $body-&gt;getContents();
 </pre>
       <p>Tùy chọn query sử dụng hàm <code>http_build_query</code> của PHP để
         định dạng query string.</p>
-      <h4>Upload dữ liệu</h4>
+      <h3>Upload dữ liệu</h3>
       <p>Guzzle cung cấp cho bạn một số cách khá hiệu quả để upload dữ liệu.</p>
       <p>Bạn có thể gửi một request chứa một stream với dữ liệu là chuỗi string,
         resource nhận được từ <code>fopen</code> hoặc một thể hiện của <code>Psr\Http\Message\StreamInterface</code>:</p>
@@ -190,8 +190,7 @@ $r = $client-&gt;request('POST', 'http://httpbin.org/post', [<br>    'body' =&gt
     'json' =&gt; ['foo' =&gt; 'bar']
 ]);
 </pre>
-      <h3>POST form request</h3>
-      <h4>Gửi form field</h4>
+      <h3>Gửi POST form field</h3>
       <p>Để gửi POST request <code>application/x-www-form-urlencoded</code> bạn
         cần tùy chọn <code>form_params</code>:</p>
       <pre>$response = $client-&gt;request('POST', 'http://httpbin.org/post', [
@@ -204,15 +203,15 @@ $r = $client-&gt;request('POST', 'http://httpbin.org/post', [<br>    'body' =&gt
     ]
 ]);
 </pre>
-      <h4> Gửi form file</h4>
+      <h3> Gửi POST form file</h3>
       <p>Nếu bạn cần gửi 1 file trong POST request (POST request dạng <code>multipart/form-data</code>)
         sử dụng tùy chọn <code>multipart</code>. multipart nhận một array của
         array. Mỗi array con gồm:</p>
       <ul>
-        <li>name: (required, string) tên của field.</li>
-        <li>contents: (required, mixed) Bạn có thể gửi một request chứa một
-          stream với dữ liệu là chuỗi string, resource nhận được từ fopen hoặc
-          một thể hiện của Psr\Http\Message\StreamInterface</li>
+        <li><code>name</code>: (required, string) tên của field.</li>
+        <li><code>contents</code>: (required, mixed) Bạn có thể gửi một request
+          chứa một stream với dữ liệu là chuỗi string, resource nhận được từ <code>fopen</code>
+          hoặc một thể hiện của <code>Psr\Http\Message\StreamInterface</code>.</li>
       </ul>
       <p>Ví dụ:</p>
       <pre>$response = $client-&gt;request('POST', 'http://httpbin.org/post', [

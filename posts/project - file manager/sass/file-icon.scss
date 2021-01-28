@@ -1,35 +1,154 @@
 .file-icon {
-    padding-left: 24px;
-    background-size: 16px 16px;
+    padding-left: 2rem;
+    background-size: 1.5rem 1.5rem;
     background-color: transparent;
     background-repeat: no-repeat;
     background-position: center left;
-    background-image: url("../images/file types/text.ico");
+    background-image: url("../images/file types/default_file.svg");
 
     &.file-icon-folder {
-        background-image: url("../images/file types/folder blender.png");
+        background-image: url("../images/file types/default_folder.svg");
     }
 
-    &[href$='.zip'],
-    &[href$='.rar'],
+    &[href$='.zip'] {
+        background-image: url("../images/file types/file_type_zip.svg");
+    }
+    
+    &[href$='.tar'] {
+        background-image: url("../images/file types/tar.ico");
+    }
+
+    &[href$='.rar'] {
+        background-image: url("../images/file types/rar.ico");
+    }
+
     &[href$='.cbz'],
     &[href$='.cbr'] {
-        background-image: url("../images/file types/archive.ico");
+        background-image: url("../images/file types/honeyview.jfif");
     }
     
     &[href$='.py'] {
-        background-image: url("../images/file types/folder blender.png");
-    }
-    
-    &[href$='.php'] {
-        background-image: url("../images/file types/folder blender.png");
+        background-image: url("../images/file types/file_type_python.png");
     }
     
     &[href$='.js'] {
-        background-image: url("../images/file types/folder blender.png");
+        background-image: url("../images/file types/file_type_js.svg");
     }
     
     &[href$='.pdf'] {
-        background-image: url("../images/file types/pdf.ico");
+        background-image: url("../images/file types/file_type_pdf.svg");
+    }
+
+    &[href$='.exe'],
+    &[href$='.msi'] {
+        background-image: url("../images/file types/file_type_exe.svg");
+    }
+
+    &[href$='.bat'],
+    &[href$='.sh'] {
+        background-image: url("../images/file types/file_type_bat.svg");
+    }
+
+    &[href$='.php'],
+    &[href$='.phar'] {
+        background-image: url("../images/file types/file_type_php.svg");
+    }
+
+    &[href$='.xml'] {
+        background-image: url("../images/file types/file_type_xml.svg");
+    }
+
+    &[href$='.html'] {
+        background-image: url("../images/file types/file_type_html.svg");
+    }
+
+    &[href$='.ini'],
+    &[href$='.env'],
+    &[href$='.conf'] {
+        background-image: url("../images/file types/file_type_ini.svg");
+    }
+
+    &[href$='.txt'] {
+        background-image: url("../images/file types/file_type_text.svg");
+    }
+
+    &[href$='.xls'],
+    &[href$='.xlsx'] {
+        background-image: url("../images/file types/file_type_excel.svg");
+    }
+
+    &[href$='.doc'],
+    &[href$='.docx'] {
+        background-image: url("../images/file types/file_type_word.svg");
+    }
+
+    &[href$='.ppt'],
+    &[href$='.pptx'] {
+        background-image: url("../images/file types/file_type_powerpoint.svg");
+    }
+
+    &[href$='.sql'] {
+        background-image: url("../images/file types/file_type_sql.svg");
+    }
+
+    &[href$='.md'] {
+        background-image: url("../images/file types/file_type_markdown.svg");
+    }
+
+    &[href$='.json'] {
+        background-image: url("../images/file types/file_type_json.svg");
+    }
+
+    &[href$='.png'],
+    &[href$='.jpg'],
+    &[href$='.jpeg'] {
+        background-image: url("../images/file types/file_type_image.svg");
+    }
+
+    &[href$='.mp4'],
+    &[href$='.avi'],
+    &[href$='.mkv'] {
+        background-image: url("../images/file types/file_type_video.svg");
+    }
+
+    &[href$='.mp3'],
+    &[href$='.wav'] {
+        background-image: url("../images/file types/file_type_audio.svg");
+    }
+
+    &[href$='.ttf'],
+    &[href$='.eot'],
+    &[href$='.woff'],
+    &[href$='.woff2'] {
+        background-image: url("../images/file types/file_type_font.svg");
+    }
+
+    &[href$='.svg'] {
+        background-image: url("../images/file types/file_type_svg.svg");
+    }
+
+    &[href$='.css'] {
+        background-image: url("../images/file types/file_type_css.svg");
+    }
+
+    &[href$='.scss'] {
+        background-image: url("../images/file types/file_type_scss.svg");
+    }
+
+    &[href$='.vue'] {
+        background-image: url("../images/file types/file_type_vue.svg");
+    }
+
+    &[href$='.ts'] {
+        background-image: url("../images/file types/file_type_typescript.svg");
+    }
+
+    &[href$='.git'],
+    &[href$='.gitignore'] {
+        background-image: url("../images/file types/file_type_git.svg") !important;
+    }
+
+    &[href$='.yml'] {
+        background-image: url("../images/file types/file_type_yaml.svg");
     }
 }

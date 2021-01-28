@@ -1,4 +1,5 @@
 <?php
+
 include 'config.php';
 
 $paramName = 'myFile'; // tên param của form

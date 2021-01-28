@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Học MySQL">
+    <meta name="description" content="check version">
     <title>Học MySQL</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -14,6 +14,13 @@
       <p>MySQL rất là cơ bản. Nhiều khi tưởng chỉ có cơ bản, nhưng có nhiều tính
         năng nâng cao cũng rất hay.</p>
       <p>Học lại, back to basic.</p>
+	  <p>Kiểm tra phiên bản MySQL:</p>
+	  <pre>show variables like '%version%';
+
+select version();</pre>
+
+	  <p>Nếu truy cập được trực tiếp server cài MySQL:</p>
+	  <pre>mysql -V</pre>
       <p><a href="https://lockex1987.github.io/posts.html?archive=true&amp;query=mysql"
           target="_blank">https://lockex1987.github.io/posts.html?archive=true&amp;query=mysql</a>
       </p>

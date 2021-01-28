@@ -1,23 +1,18 @@
 import DownloadProgress from './DownloadProgress.js';
 
 
-// const template = ``;
-
-
 export default {
-    // template,
-
     components: {
         DownloadProgress
     },
 
     data() {
         return {
-            // Tim kiem file
+            // Xâu tìm kiếm
             searchQuery: '',
-            // Danh sach file
+            // Danh sách file và folder của thư mục hiện tại
             files: null,
-            // Thu muc hien tai
+            // Thư mục hiện tại
             folder: '/',
             // Danh sách các file đang upload
             uploadingFiles: [],
@@ -27,32 +22,42 @@ export default {
     },
 
     computed: {
+        /**
+         * Lọc nội dung theo xâu tìm kiếm.
+         */
         filteredFiles() {
             if (!this.files) {
                 return null;
             }
             const lowerCasedQuery = this.searchQuery.toLowerCase();
             return this.files.filter(f => f.name.toLowerCase().includes(lowerCasedQuery));
+        },
+
+        /**
+         * Đường dẫn breadcrumb.
+         */
+        breadcrumbs() {
+            const a = this.folder.split('/');
+            return a.slice(1, a.length - 1);
         }
     },
 
     mounted() {
-        this.getUploadedFiles();
+        this.listFolderContent();
     },
 
     methods: {
         /**
-         * Lấy danh sách file.
+         * Lấy danh sách file và folder trong thư mục hiện tại.
          */
-        async getUploadedFiles() {
+        async listFolderContent() {
             const url = 'server/list_files.php?folder=' + encodeURIComponent(this.folder);
             const data = await fetch(url).then(resp => resp.json());
 
             // Sap xep folder truoc file
             // Sap xep theo ten
             data.sort((f1, f2) => {
-                return ((f2.isDir ? 1 : 0) - (f1.isDir ? 1 : 0))
-                        || f1.name.localeCompare(f2.name);
+                return ((f2.isDir ? 1 : 0) - (f1.isDir ? 1 : 0)) || f1.name.localeCompare(f2.name);
             });
 
             this.files = data.map(f => ({
@@ -62,15 +67,27 @@ export default {
                 size: f.isDir ? '' : CommonUtils.prettifyNumber(f.size, 0) + 'B',
                 download: false
             }));
+
+            // Reset lại thông tin tìm kiếm để hiển thị tất cả
+            this.searchQuery = '';
         },
 
         /**
-         * Mo thu muc.
-         * @param {Object} f Thu muc
+         * Mở thư mục.
+         * @param {Object} f Đối tượng thư mục, gồm có thuộc tính name
          */
         openFolder(f) {
             this.folder = this.folder + f.name + '/';
-            this.getUploadedFiles();
+            this.listFolderContent();
+        },
+
+        /**
+         * Mở thư mục khi click vào breadcrumb.
+         * @param {Integer} idx Chỉ số thư mục trên breadcrumb.
+         */
+        openFolderInBreadCrumbs(idx) {
+            this.folder = '/' + this.breadcrumbs.slice(0, idx + 1).join('/') + '/';
+            this.listFolderContent();
         },
 
         /**
@@ -80,7 +97,7 @@ export default {
             const a = this.folder.split('/');
             const b = a.slice(0, a.length - 2);
             this.folder = b.join('/') + '/';
-            this.getUploadedFiles();
+            this.listFolderContent();
         },
 
         /**
@@ -143,7 +160,7 @@ export default {
                 this.uploadingFiles = [];
                 this.currentIndex = 0;
 
-                this.getUploadedFiles();
+                this.listFolderContent();
             }
         }
     }
