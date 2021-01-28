@@ -62,29 +62,49 @@
      * @param {Event} evt Sự kiện
      */
     function finishDrag(evt) {
-        if (!draggedMark.carouselInner) {
+        const carouselInner = draggedMark.carouselInner;
+        if (!carouselInner) {
             return;
         }
 
         const deltaX = getXCoord(evt) - draggedMark.startXCoord;
-        // const dragRatio = Math.abs(deltaX / draggedMark.carouselInner.parentNode.clientWidth);
+        // const dragRatio = Math.abs(deltaX / carouselInner.parentNode.clientWidth);
 
         // if (dragRatio > 0.1) {
         if (Math.abs(deltaX) > 30) {
             const newStartIndex = draggedMark.startIndex - Math.sign(deltaX) * Math.ceil(Math.abs(deltaX) / draggedMark.itemWidth); // Math.round, Math.floor
-            draggedMark.startIndex = adjustIndex(draggedMark.carouselInner, newStartIndex);
-            saveStartIndex(draggedMark.carouselInner, draggedMark.startIndex);
-            updateIndicators(draggedMark.carouselInner, draggedMark.startIndex);
+            draggedMark.startIndex = adjustIndex(carouselInner, newStartIndex);
+            saveStartIndex(carouselInner, draggedMark.startIndex);
+            updateIndicators(carouselInner, draggedMark.startIndex);
+
+            const tempFunc = () => {
+                triggerSwipeEvent(carouselInner);
+                carouselInner.removeEventListener('transitionend', tempFunc);
+            };
+            carouselInner.addEventListener('transitionend', tempFunc);
         }
 
         // const transitionDuration = (1 - dragRatio) * 0.25;
         const transitionDuration = 0.25;
-        draggedMark.carouselInner.style.transitionDuration = `${transitionDuration}s`;
+        carouselInner.style.transitionDuration = `${transitionDuration}s`;
 
-        updateScrollLeft(draggedMark.carouselInner, draggedMark.startIndex, draggedMark.itemWidth);
+        updateScrollLeft(carouselInner, draggedMark.startIndex, draggedMark.itemWidth);
 
         // Bỏ đánh dấu
         draggedMark.carouselInner = false;
+    }
+
+    /**
+     * Tạo sự kiện swipe.
+     * @param {DOMNode} carouselInner Đối tượng inner
+     */
+    function triggerSwipeEvent(carouselInner) {
+        const evt = new CustomEvent('swipe', {
+            detail: {
+                hazcheeseburger: true
+            }
+        });
+        carouselInner.dispatchEvent(evt);
     }
 
     /**
@@ -95,6 +115,7 @@
         const itemNum = getItemNum(carouselInner);
         let idx = Math.min(itemIndex, totalItem - itemNum);
         idx = Math.max(idx, 0);
+        console.log(idx, totalItem);
         return idx;
     }
 
@@ -147,14 +168,17 @@
 
     /**
      * Cập nhật lại vị trí của trang hiện tại.
+     * @param {Boolean} animation Có hiển thị animation hay không (mặc định là có)
      */
-    function updateScrollLeft(carouselInner, startIndex, itemWidth) {
+    function updateScrollLeft(carouselInner, startIndex, itemWidth, animation = true) {
+        if (!animation) {
+            carouselInner.style.transitionDuration = '0s';
+        }
+
         const x = startIndex * itemWidth;
         carouselInner.style.transform = `translateX(${-x}px)`;
-        /*
-        const x = startIndex * 100;
-        carouselInner.style.transform = `translateX(${-x}%)`;
-        */
+
+        // carouselInner.style.transitionDuration = '0.25s';
     }
 
     /**
@@ -278,13 +302,14 @@
      * Chuyển đến phần tử nào đó.
      * @param {DOMNode} carouselInner
      * @param {Integer} index
+     * @param {Boolean} animation Có hiển thị animation hay không (mặc định là có)
      */
-    function gotoItem(carouselInner, index) {
+    function gotoItem(carouselInner, index, animation = true) {
         const itemWidth = calculateItemWidth(carouselInner);
         const startIndex = adjustIndex(carouselInner, index);
         saveStartIndex(carouselInner, startIndex);
         updateIndicators(carouselInner, startIndex);
-        updateScrollLeft(carouselInner, startIndex, itemWidth);
+        updateScrollLeft(carouselInner, startIndex, itemWidth, animation);
     }
 
     /**

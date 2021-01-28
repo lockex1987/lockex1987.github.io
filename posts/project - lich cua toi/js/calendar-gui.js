@@ -47,8 +47,8 @@ const lunarCalendarGui = (function () {
 
         // Hiển thị tháng năm
         let res = `
-                <div class="thang-header">
-                    <div class="tenthang">
+                <div class="text-center py-5 font-weight-300 bg-info text-white">
+                    <div class="text-uppercase font-size-1.75">
                         ${MONTH_NAMES[mm]}
                     </div>
                     <div class="nam">

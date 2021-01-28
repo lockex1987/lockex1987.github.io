@@ -8,8 +8,8 @@
     const currentYear = today.getFullYear();
 
     // Chỉ số lớn nhất và nhỏ nhất của slide
-    const slideMin = -3;
-    const slideMax = 3;
+    let slideMin;
+    let slideMax;
 
     // Vùng chứa lịch các tháng
     const calendarWrapper = document.querySelector('#amlich');
@@ -32,6 +32,7 @@
         const div = document.createElement('div');
         div.innerHTML = lunarCalendarGui.printMonth(m, y);
         div.className = 'amlich-item nat-carousel-item';
+        div.dataset.debug = m + '-' + y;
         return div;
     }
 
@@ -53,55 +54,45 @@
     }
 
     /**
-     * Khởi tạo 5 tháng.
+     * Khởi tạo 7 tháng.
      */
     function initMonths() {
-        calendarWrapper.style.visibility = 'hidden';
-        for (let i = -2; i <= 2; i++) {
+        slideMin = -4;
+        slideMax = 4;
+
+        for (let i = -3; i <= 3; i++) {
             calendarWrapper.appendChild(getMonth(i));
         }
-        Carousel.gotoItem(calendarWrapper, 2);
-        setTimeout(() => {
-            calendarWrapper.style.visibility = 'visible';
-        }, 250);
+
+        // Chuyển đến slide ở giữa
+        Carousel.gotoItem(calendarWrapper, 3, false);
     }
 
     /**
      * Khởi tạo carousel.
      */
     function initCarousel() {
-        // TODO: Bỏ đi
-        $(calendarWrapper).slick({
-            dots: false,
-            infinite: false,
-            arrows: false, // chuyển thành true nhưng vẫn có thể không nhìn thấy do nó có color là white
-            draggable: true,
-            speed: 300,
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            initialSlide: 2 // slide ở giữa
-        }).on('swipe', function (event, slickObj, direction) {
-            /*
-            // Get the current slide
-            const slideIndex = slickObj.currentSlide;
+        calendarWrapper.addEventListener('swipe', () => {
+            // Lấy chỉ số slide hiện tại
+            const slideIndex = parseInt(calendarWrapper.dataset.startCarouselIndex);
+
+            // Lấy tổng số slide
+            const slideCount = calendarWrapper.querySelectorAll('.nat-carousel-item').length;
 
             // Nếu đã đến cuối bên phải thì thêm vào cuối
-            if (slideIndex == slickObj.slideCount - 2) {
-                slickObj.slickAdd(getMonth(slideMax));
+            if (slideIndex >= slideCount - 3) {
+                // console.log(slideMax);
+                calendarWrapper.appendChild(getMonth(slideMax));
                 slideMax++;
             }
 
             // Nếu đã đến cuối bên trái thì thêm vào đầu
-            if (slideIndex == 1) {
-                // Phải chờ slick chuyển slide xong (tầm speed đang là 300)
-                setTimeout(function () {
-                    // Slide có index là 1 bây giờ sẽ chuyển thành 2
-                    slickObj.currentSlide = slickObj.currentSlide + 1;
-                    slickObj.slickAdd(getMonth(slideMin), 0, true);
-                    slideMin--;
-                }, 300);
+            if (slideIndex <= 1) {
+                // console.log(slideMin);
+                calendarWrapper.insertBefore(getMonth(slideMin), calendarWrapper.firstChild);
+                slideMin--;
+                Carousel.gotoItem(calendarWrapper, slideIndex + 1, false);
             }
-            */
         });
     }
 
@@ -111,7 +102,7 @@
     function init() {
         initMonths();
         handleShowLunarDate();
-        // initCarousel();
+        initCarousel();
     }
 
     init();
