@@ -16,7 +16,7 @@ foreach ($files as $file) {
             'name' => $file,
             'isDir' => $isDir,
             'size' => $isDir ? null : filesize($absPath), // bytes
-            'url' => '/data/' . $folder . $file
+            'url' => '/data-drive/' . $folder . $file
         ]);
     }
 }
