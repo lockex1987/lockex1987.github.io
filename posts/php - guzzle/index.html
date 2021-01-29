@@ -243,6 +243,35 @@ $r = $client-&gt;request('GET', 'http://httpbin.org/cookies', [
     'cookies' =&gt; $jar
 ]);
 </pre>
+      <h3>Xử lý lỗi</h3>
+      <p>Khi gặp lỗi mạng, lỗi do client (mã lỗi 4xx), lỗi do server (mã lỗi
+        5xx), Guzzle sẽ bắn ra Exception.</p>
+      <p>Các Exception là:</p>
+      <pre>. \RuntimeException
+└── TransferException (GuzzleException)
+    └── RequestException
+        ├── BadResponseException
+        │   ├── ServerException
+        │   └── ClientException
+        ├── ConnectException
+        └── TooManyRedirectsException</pre>
+      <p>Để xử lý Exception, chúng ta cần bao câu lệnh trong khối <code>try -
+          catch</code>:</p>
+      <pre>use GuzzleHttp\Psr7;<br>use GuzzleHttp\Exception\RequestException;
+
+try {
+    $client-&gt;request('GET', 'https://github.com/_abc_123_404');
+} catch (RequestException $ex) {
+    echo Psr7\Message::toString($ex-&gt;getRequest());
+    if ($ex-&gt;hasResponse()) {
+        echo Psr7\Message::toString($ex-&gt;getResponse());
+    }
+}</pre>
+      <p>Để lấy mã lỗi và nội dung lỗi, chúng ta có thể lấy từ đối tượng <code>$ex-&gt;getResponse()</code>
+        như bình thường. Ví dụ:</p>
+      <pre>$response = $ex-&gt;getResponse();
+return response($response-&gt;getBody(), $response-&gt;getStatusCode())
+    -&gt;header('Content-Type', 'application/json');</pre>
       <h3>Tham khảo</h3>
       <p><a href="https://docs.guzzlephp.org/en/stable/" target="_blank">Guzzle,
           PHP HTTP client — Guzzle Documentation</a></p>

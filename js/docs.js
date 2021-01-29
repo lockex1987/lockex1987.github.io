@@ -2,7 +2,7 @@ class HeaderNavigator {
     /**
      * Thêm vùng header chung (desktop).
      */
-    addDesktopHeader () {
+    addDesktopHeader() {
         const desktopHeader = document.createElement('div');
         desktopHeader.className = 'd-none d-xl-block pt-4 desktop-header';
         desktopHeader.innerHTML = `
@@ -42,7 +42,7 @@ class HeaderNavigator {
     /**
       * Thêm vùng header chung (mobile).
       */
-    addMobileHeader () {
+    addMobileHeader() {
         const mobileHeader = document.createElement('div');
         mobileHeader.className = 'mobile-header position-fixed bg-white w-100 border-bottom d-xl-none d-flex align-items-center px-2';
         mobileHeader.innerHTML = `
@@ -69,7 +69,7 @@ class HeaderNavigator {
     /**
      * Ẩn hiện header khi scroll (màn hình mobile).
      */
-    toggleMobileHeaderWhenScroll () {
+    toggleMobileHeaderWhenScroll() {
         let prevScrollPos = window.pageYOffset;
         const header = document.querySelector('.mobile-header');
         let isHide = false;
@@ -115,7 +115,7 @@ class TocSection {
      * Load file JS.
      * @param {String} filePath Đường dẫn file
     */
-    loadJsFile (filePath) {
+    loadJsFile(filePath) {
         const scriptTag = document.createElement('script');
         scriptTag.setAttribute('type', 'text/javascript');
         scriptTag.setAttribute('src', filePath);
@@ -125,7 +125,7 @@ class TocSection {
     /**
      * Tải các file để tạo mục lục.
      */
-    loadToc () {
+    loadToc() {
         const arr = document.querySelectorAll('article h3, article h4');
         if (arr.length >= 4) {
             this.loadJsFile('../../js/toc.js');
@@ -139,21 +139,21 @@ const PageInfo = {
      * Kiểm tra xem có phải là mở file HTML trực tiếp trên máy hay không (không qua server nào)
      * @return true nếu là file HTML trực tiếp
      */
-    isLocalFile () {
+    isLocalFile() {
         return window.location.protocol === 'file:';
     },
 
     /**
      * Kiểm tra là trang chủ.
      */
-    isHomePage () {
+    isHomePage() {
         return window.location.pathname === '/';
     },
 
     /**
      * Thiết lập màu của browser ở mobile.
      */
-    setBrowserThemeColor () {
+    setBrowserThemeColor() {
         document.head.insertAdjacentHTML('beforeend', '<meta name="theme-color" content="#55acee">');
     },
 
@@ -161,14 +161,14 @@ const PageInfo = {
      * Kiểm tra xem có phải đã publish hay không.
      * Ở thư mục /posts/ và có meta[name="date"].
      */
-    isPublishContent () {
+    isPublishContent() {
         return window.location.pathname.startsWith('/posts/');
     },
 
     /**
      * Lấy thời gian xuất bản.
      */
-    getPublishDate () {
+    getPublishDate() {
         const meta = document.querySelector('meta[name="date"]');
         return meta.content;
     },
@@ -176,7 +176,7 @@ const PageInfo = {
     /**
      * Lấy mô tả.
      */
-    getDescription () {
+    getDescription() {
         const meta = document.querySelector('meta[name="description"]');
         return meta.content;
     }
@@ -186,7 +186,7 @@ class FacebookComment {
     /**
      * Thêm bình luận Facebook.
      */
-    addFacebookComment () {
+    addFacebookComment() {
         // Lấy ra URL tuyệt đối
         let href = location.href;
 
@@ -225,7 +225,7 @@ class ScrollButton {
     /**
      * Di chuyển lên đầu trang.
      */
-    addScrollToTopButton () {
+    addScrollToTopButton() {
         const floatButton = document.createElement('a');
         floatButton.href = '#';
         floatButton.className = 'float-button position-fixed cursor-pointer';
@@ -239,7 +239,7 @@ class Datetime {
      * Chuyển xâu định dạng yyyy-MM-dd HH:mm:ss về dd/MM/YYYY
      * @param {String} standardDate
      */
-    convertStandardDateToIsoDate (standardDate) {
+    convertStandardDateToIsoDate(standardDate) {
         //
         return standardDate.replace(' ', 'T') + '+07:00';
     }
@@ -248,7 +248,7 @@ class Datetime {
      * Chuẩn hóa ngày tháng về định dạng dd/MM/yyyy.
      * @param s Xâu định dạng ISO 8601
      */
-    normalizeDate (s) {
+    normalizeDate(s) {
         const iso8601Date = this.convertStandardDateToIsoDate(s);
         const d = this.convertStringWithTimeToDate(iso8601Date);
         return this.convertDateToString(d);
@@ -258,7 +258,7 @@ class Datetime {
      * Trả về đối tượng Date từ xâu dạng YYYY-MM-DDTHH:MM:SSZ
      * @param {String} isoString Xâu ngày tháng, định dạng ISO 8601
      */
-    convertStringWithTimeToDate (isoString) {
+    convertStringWithTimeToDate(isoString) {
         return new Date(isoString);
     }
 
@@ -267,7 +267,7 @@ class Datetime {
      * @param {Date} date Một đối tượng Date
      * @return {String} Một xâu dạng dd/MM/yyyy tương ứng
      */
-    convertDateToString (date) {
+    convertDateToString(date) {
         return this.paddingTwoZero(date.getDate()) + '/' +
             this.paddingTwoZero(date.getMonth() + 1) + '/' +
             date.getFullYear();
@@ -276,31 +276,38 @@ class Datetime {
     /**
      * Thêm các chữ số 0 ở đầu để có độ dài là 2 ký tự.
      */
-    paddingTwoZero (n) {
+    paddingTwoZero(n) {
         return (n < 10) ? ('0' + n) : n;
     }
 }
 
+
+/**
+ * Thông tin thống kê ở cuối trang.
+ */
 class FooterSummary {
     /**
      * Thêm thông tin ở cuối bài viết.
      */
-    addPublishDateSpanAndShareLink () {
-        const footer = document.createElement('footer');
-        footer.className = 'mt-5 mt-lg-0 mb-5 mb-lg-0 bg-light p-4 footer';
+    addPublishDateSpanAndShareLink() {
+        const article = document.querySelector('article');
 
-        document.querySelector('article').appendChild(footer);
+        if (article) {
+            const footer = document.createElement('footer');
+            footer.className = 'mt-5 mt-lg-0 mb-5 mb-lg-0 bg-light p-4 footer';
+            footer.appendChild(this.createPublishDateContainer());
+            footer.appendChild(this.createDescriptionContainer());
+            // footer.appendChild(this.createCategoryContainer());
+            footer.appendChild(this.createShareLinkContainer());
 
-        footer.appendChild(this.createPublishDateContainer());
-        footer.appendChild(this.createDescriptionContainer());
-        footer.appendChild(this.createCategoryContainer());
-        footer.appendChild(this.createShareLinkContainer());
+            article.appendChild(footer);
+        }
     }
 
     /**
      * Thêm ngày xuất bản.
      */
-    createPublishDateContainer () {
+    createPublishDateContainer() {
         const label = document.createElement('div');
         label.className = 'text-muted mb-1';
         label.innerHTML = 'Ngày xuất bản:';
@@ -321,7 +328,7 @@ class FooterSummary {
     /**
      * Thêm link share Facebook.
      */
-    createShareLinkContainer () {
+    createShareLinkContainer() {
         const label = document.createElement('div');
         label.className = 'text-muted mb-1';
         label.innerHTML = 'Share:';
@@ -331,7 +338,7 @@ class FooterSummary {
         const content = document.createElement('a');
         content.href = 'https://www.facebook.com/sharer/sharer.php?u=' + url;
         content.className = 'text-decoration-none';
-        content.innerHTML = '<img src="/images/programming/facebook.svg" class="icon align-baseline"/>';
+        content.innerHTML = '<img src="/images/programming/facebook.svg" class="align-baseline"/>';
         content.target = '_blank';
         content.title = 'Chia sẻ qua Facebook';
 
@@ -345,7 +352,7 @@ class FooterSummary {
     /**
      * Thêm mô tả.
      */
-    createDescriptionContainer () {
+    createDescriptionContainer() {
         const label = document.createElement('div');
         label.className = 'text-muted mb-1';
         label.innerHTML = 'Mô tả:';
@@ -365,7 +372,7 @@ class FooterSummary {
     /**
      * Thêm chuyên mục.
      */
-    createCategoryContainer () {
+    createCategoryContainer() {
         const label = document.createElement('div');
         label.className = 'text-muted mb-1';
         label.innerHTML = 'Chuyên mục:';
@@ -399,7 +406,7 @@ window.addEventListener('DOMContentLoaded', () => {
         headerNavigator.toggleMobileHeaderWhenScroll();
 
         if (PageInfo.isPublishContent()) {
-            // (new FooterSummary()).addPublishDateSpanAndShareLink();
+            (new FooterSummary()).addPublishDateSpanAndShareLink();
         }
 
         // (new FacebookComment()).addFacebookComment();

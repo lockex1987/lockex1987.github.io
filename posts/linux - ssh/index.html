@@ -13,8 +13,8 @@
     <article>
       <h2>Sử dụng SSH</h2>
       <p>Cấu hình và sử dụng SSH để không phải gõ password.</p>
-      <p>Sử dụng ssh để thực hiện lệnh.</p>
-      <p>Sử dụng scp để copy file (upload hoặc download).</p>
+      <p>Sử dụng lệnh <code>ssh</code> để thực hiện lệnh.</p>
+      <p>Sử dụng lệnh <code>scp</code> để copy file (upload hoặc download).</p>
       <p>Không dùng password nữa để có thể thực hiện các script tự động. Nếu
         dùng password thì script sẽ dừng lại, chờ chúng ta nhập password.</p>
       <h3>Generate key mới</h3>
@@ -23,8 +23,8 @@
       <p>Nhớ không nhập passphrase.</p>
       <p>Các tham số:</p>
       <ul>
-        <li>-b: số bit</li>
-        <li>-C: comment</li>
+        <li><code>-b</code>: số bit</li>
+        <li><code>-C</code>: comment</li>
       </ul>
       <p>Các key sẽ được lưu vào thư mục <code>~/.ssh</code>. Tên các key
         thường là <code>id_rsa</code> và <code>id_rsa.pub</code>.</p>
@@ -34,16 +34,16 @@
       <pre>ssh admin1@192.168.1.116 mkdir -p .ssh</pre>
       <p>Chuyển public key (<code>id_rsa.pub</code>) vào file <code>authorized_keys</code>
         trên server:</p>
-      <pre class="out-of-box-xl">cat .ssh/id_rsa.pub | ssh admin1@192.168.1.116 'cat &gt;&gt; .ssh/authorized_keys'</pre>
+      <pre class="text-pre-wrap">cat .ssh/id_rsa.pub | ssh admin1@192.168.1.116 'cat &gt;&gt; .ssh/authorized_keys'</pre>
       <p>Thiết lập quyền cho thư mục và file, không cho phép người khác đọc:</p>
-      <pre class="out-of-box-xl">ssh admin1@192.168.1.116 "chmod 700 .ssh; chmod 600 .ssh/authorized_keys"</pre>
+      <pre class="text-pre-wrap">ssh admin1@192.168.1.116 "chmod 700 .ssh; chmod 600 .ssh/authorized_keys"</pre>
       <p>Câu lệnh gộp:</p>
-      <pre class="out-of-box-xl custom-scrollbar">cat ~/.ssh/id_rsa.pub | ssh admin1@192.168.1.116 "mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; cat &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys"</pre>
+      <pre class="text-pre-wrap">cat ~/.ssh/id_rsa.pub | ssh admin1@192.168.1.116 "mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; cat &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys"</pre>
       <p>Từ giờ mỗi lần tuy cập lại sẽ không cần dùng password nữa.</p>
       <pre>ssh admin1@192.168.1.116</pre>
       <h3>Một số file trong thư mục .ssh</h3>
       <p>File <code>known_hosts</code>:</p>
-      <pre class="out-of-box-xl">[bitbucket.cyberspace.vn]:7999,[10.30.152.24]:7999 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDpWlLsJMdkWaXkb2dq+9sE2205w4Q7P4tbDkwmRntgRHbs0dh1lBaHxXTilzsDLMDNXKgCteLxy38ni6nQWmLhAm1d+K4fZt4LqHhb+h9OwadJYY5jJl/lS2ksnhpKTpS9hFxilmf6FTrVg8EYdKFiSWnCRmyQ8b+fl9GZ0O9578ktqArG/hfurN/j4Awm1NHxJWs8H7xjlRDejsBbrZ7y4R+WK2Ghjw7gyYYQE951zviJGNBQ9lqb88jkUlIeg+6GXE/frSgVP1gMB9ym6GohOqGG9P20O+OXTL7E00rwS02HMWDmKnel4yERPQiuBFajo5WkNxi4Yw7szBz6grAT
+      <pre>[bitbucket.cyberspace.vn]:7999,[10.30.152.24]:7999 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDpWlLsJMdkWaXkb2dq+9sE2205w4Q7P4tbDkwmRntgRHbs0dh1lBaHxXTilzsDLMDNXKgCteLxy38ni6nQWmLhAm1d+K4fZt4LqHhb+h9OwadJYY5jJl/lS2ksnhpKTpS9hFxilmf6FTrVg8EYdKFiSWnCRmyQ8b+fl9GZ0O9578ktqArG/hfurN/j4Awm1NHxJWs8H7xjlRDejsBbrZ7y4R+WK2Ghjw7gyYYQE951zviJGNBQ9lqb88jkUlIeg+6GXE/frSgVP1gMB9ym6GohOqGG9P20O+OXTL7E00rwS02HMWDmKnel4yERPQiuBFajo5WkNxi4Yw7szBz6grAT
 bitbucket.cyberspace.vn,10.30.152.24 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMgxyMkUFJr+W83w1gd6/O/gJEy55+XL8EI1qfVchX25UAIU2UaHtq6WYYZd8kmkzknEMQJgLdo0vNp9JzSVr+w=
 source.cyberspace.vn,10.30.152.17 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHctn+maU69t3+JkOBj2I08PeZRMt3aftzzAPfYgRdQFw6mVetJwXhUNg80WYMkgmqZtP6PdlProdBFEKIoejCg=</pre>
       <p>File <code>.ssh/config</code> để mỗi server sử dụng key khác nhau:</p>
@@ -63,5 +63,6 @@ Host 192.168.101.20
           thiệu về Docker làm quen với Docker tạo container</a></p>
     </article>
     <script src="../../js/docs.js"></script>
+    
   </body>
 </html>

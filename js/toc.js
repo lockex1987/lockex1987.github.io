@@ -3,7 +3,7 @@ const toc = (() => {
      * Sinh ra ID mặc định.
      * @param {String} text
      */
-    function generateUniqueId (text) {
+    function generateUniqueId(text) {
         // Thay thế ký tự . bằng ký tự _
         const baseId = text.replace(/\./g, '_');
 
@@ -23,7 +23,7 @@ const toc = (() => {
      * @param {String} tagName Tên tag (h1, h2, h3, h4, h5, h6)
      * @param {Array} headingSelectors Mảng các heading tùy chọn
      */
-    function getLevel (tagName, headingSelectors) {
+    function getLevel(tagName, headingSelectors) {
         tagName = tagName.toUpperCase();
         return headingSelectors.indexOf(tagName);
     }
@@ -35,7 +35,7 @@ const toc = (() => {
      * @param {Array} headings Danh sách các heading
      * @param {Array} headingSelectors Danh sách các tag
      */
-    function process (el, listTag, headings, headingSelectors) {
+    function process(el, listTag, headings, headingSelectors) {
         // Level hiện tại
         let currentLevel = 0;
 
@@ -102,7 +102,7 @@ const toc = (() => {
      * @param {String} textContent Nhãn của heading
      * @param {String} id ID của heading
      */
-    function appendListItem (listGroupTag, textContent, id) {
+    function appendListItem(listGroupTag, textContent, id) {
         // Tạo thẻ a, bao bởi thẻ li, rồi thêm vào thẻ ol hoặc ul
         const aTag = document.createElement('a');
         aTag.textContent = textContent;
@@ -119,7 +119,7 @@ const toc = (() => {
      * @param {DOMNode} el Đối tượng DOM danh sách
      * @param {Object} options Tùy chọn
      */
-    function buildToc (el, options) {
+    function buildToc(el, options) {
         // Đánh dấu, reset nội dung, thiết lập style
         el.dataset.toc = true;
         el.innerHTML = '';
@@ -163,7 +163,7 @@ const toc = (() => {
     /**
      * Tự động khởi tạo với các phần tử có thuộc tính 'data-toc'.
      */
-    function init () {
+    function init() {
         const arr = document.querySelectorAll('[data-toc]');
         if (arr.length > 0) {
             arr.forEach((el) => {

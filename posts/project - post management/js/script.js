@@ -1,5 +1,3 @@
-import postsCategories from './category-data.js';
-
 /**
  * Gộp những thể loại có ít hơn 10 bài viết.
  */
@@ -75,4 +73,11 @@ function buildChart(data, chartDivId) {
 }
 
 
-buildChart(normalizeCategories(postsCategories), 'postChart');
+async function init() {
+    const categoryData = await fetch('data/category-data.json').then(resp => resp.json());
+    const postsCategories = normalizeCategories(categoryData);
+    buildChart(postsCategories, 'postChart');
+}
+
+
+init();

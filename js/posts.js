@@ -1,5 +1,5 @@
-import postList from './post-list.js';
 import { CAT_THUMBS, ContentDataProcessor, FullTextSearch } from './category.js';
+
 
 const template = `
 <div>
@@ -89,7 +89,10 @@ const App = {
             query: '',
 
             // Thời gian tìm kiếm
-            executedTime: null
+            executedTime: null,
+
+            // Danh sách bài viết
+            postList: null
         };
     },
 
@@ -106,10 +109,13 @@ const App = {
          * Có thể là tất cả, hoặc chỉ những bài đã xuất bản.
          */
         toSearchList() {
-            if (this.onlyPublished) {
-                return postList.filter(post => post.date);
+            if (this.postList == null) {
+                return null;
             }
-            return postList;
+            if (this.onlyPublished) {
+                return this.postList.filter(post => post.date);
+            }
+            return this.postList;
         }
     },
 
@@ -120,19 +126,10 @@ const App = {
 
         const query = CommonUtils.getUrlParameter('query');
         this.query = query || '';
-
-        // Cập nhật ảnh của thể loại
-        ContentDataProcessor.updateThumbnailImageOfPosts(postList);
-
-        // Sắp xếp
-        ContentDataProcessor.sortPosts(postList);
-
-        // Chuẩn hóa ngày xuất bản
-        ContentDataProcessor.normalizeDateOfPosts(postList);
     },
 
     mounted() {
-        this.processFilterPosts();
+        this.getPostList();
         this.setTitle();
         this.listenToScrollEvent();
         this.listenToPopstate();
@@ -141,6 +138,28 @@ const App = {
     },
 
     methods: {
+        /**
+         * Lấy dữ liệu bài viết.
+         */
+        async getPostList() {
+            const postList = await fetch('data/post-list.json').then(resp => resp.json());
+
+            // Cập nhật ảnh của thể loại
+            ContentDataProcessor.updateThumbnailImageOfPosts(postList);
+
+            // Sắp xếp
+            ContentDataProcessor.sortPosts(postList);
+
+            // Chuẩn hóa ngày xuất bản
+            ContentDataProcessor.normalizeDateOfPosts(postList);
+
+            this.postList = postList;
+
+            this.$nextTick(() => {
+                this.processFilterPosts();
+            });
+        },
+
         /**
          * Lọc các bài viết theo từ khóa tìm kiếm.
          */

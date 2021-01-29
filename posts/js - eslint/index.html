@@ -3,6 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="date" content="2021-01-29 10:17:00">
     <meta name="description" content="lint, vscode">
     <title>Sử dụng ESLint</title>
     <link rel="icon" href="../../images/favicon.png">
@@ -13,17 +14,19 @@
       <h2>Sử dụng ESLint</h2>
       <p>ESLint giúp gợi ý code, gợi ý sửa code, giúp code của chúng ta sẽ cùng
         một chuẩn, nhìn đẹp hơn.</p>
-      <p>Dùng ESLint để thống nhất style trong nhóm:</p>
+      <p>Dùng ESLint để thống nhất style trong dự án có nhiều thành viên cùng
+        phát triển:</p>
       <ul>
         <li>Indent bằng 4 space</li>
-        <li>Indent khi break câu lệnh, thẻ là 8 space</li>
-        <li>Có dấu cách sau <code>{</code> và trước <code>}</code> nếu viết
-          trên một dòng</li>
+        <li>Indent khi break câu lệnh, thẻ là 4 space</li>
+        <li>Có dấu cách sau dấu <code>{</code> và trước dấu <code>}</code> nếu
+          viết trên một dòng</li>
         <li>Mỗi file nhỏ hơn 500 dòng</li>
       </ul>
       <h3>Cài đặt</h3>
       <p>Cài extension cho VSCode:</p>
-      <p><a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint"
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint"
+
           target="_blank">Link</a></p>
       <p>Cài Node package:</p>
       <pre>npm install --save-dev eslint
@@ -43,7 +46,7 @@
       </ul>
       <p>Bạn cũng nên extend cấu hình "plugin:vue/essential" ở package <code>eslint-plugin-vue</code>.</p>
       <p>Ví dụ:</p>
-      <pre class="out-of-box">D:\github\lockex1987.github.io&gt;npx eslint --init
+      <pre class="out-of-box bg-dark text-white custom-scrollbar">D:\github\lockex1987.github.io&gt;npx eslint --init
 √ How would you like to use ESLint? · style
 √ What type of modules does your project use? · esm
 √ Which framework does your project use? · vue
@@ -67,23 +70,23 @@ Installing eslint-plugin-vue@latest, eslint-config-standard@latest, eslint@^7.12
 added 76 packages from 50 contributors, updated 1 package and audited 186 packages in 45.959s
 found 0 vulnerabilities
 
-Successfully created .eslintrc.json file in D:\github\lockex1987.github.io</pre>
+<span class="text-success">Successfully created .eslintrc.json file in D:\github\lockex1987.github.io</span></pre>
       <p>Cài đặt nhanh:</p>
       <pre class="text-pre-wrap">npm install --save-dev eslint eslint-config-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-node eslint-plugin-vue</pre>
-      <p>Thêm script vào <code>package.json</code>:</p>
+      <p>Thêm script vào file <code>package.json</code>:</p>
       <pre>"scripts": {
     "lint": "eslint --fix --ext .js,.vue resources/js"
 }</pre>
       <p>Để kiểm tra, chúng ta có thể chạy lệnh sau:</p>
       <pre>npm run lint</pre>
       <p>Hoặc:</p>
-      <pre>npx eslint --ext .js,.vue resources/js</pre>
+      <pre>npx eslint --ext .js,.vue resources/js<br><br>npx eslint --fix js</pre>
       <h3>Cấu hình</h3>
       <p>File <code>.eslintrc.json</code> có các cấu hình sau:</p>
       <h4>env</h4>
       <p>Đây là nơi cấu hình môi trường mà code của chúng ta sẽ chạy. Môi trường
         khác nhau thì sẽ có những biến toàn cục khác nhau. Ví dụ, môi trường
-        browser thì sẽ có các biến như window, document, môi trường ES6 sẽ có
+        browser thì sẽ có các biến như window, document; môi trường ES6 sẽ có
         một số loại dữ liệu mới như Set chẳng hạn. </p>
       <pre>"env": {
     "browser": true,
@@ -93,13 +96,15 @@ Successfully created .eslintrc.json file in D:\github\lockex1987.github.io</pre>
       <h4>extends</h4>
       <p>Đây là những config có sẵn được sử dụng, chúng ta sẽ mở rộng chúng bằng
         cách thêm vào những config của riêng mình.</p>
+      <p>Mặc định, tất cả các rule đều không được enable. Chúng ta extends từ
+        các tập luật được enable phổ biến để đỡ phải định nghĩa nhiều.</p>
       <pre>"extends": [
     "plugin:vue/essential",
     "standard"
 ]</pre>
       <h4>plugins</h4>
       <p>Đây là những plugin được sử dụng để mở rộng hoạt động của ESLint. Ví dụ
-        để hỗ trợ Vue template: </p>
+        để hỗ trợ Vue template:</p>
       <pre>"plugins": [
     "vue"
 ]
@@ -149,11 +154,11 @@ Successfully created .eslintrc.json file in D:\github\lockex1987.github.io</pre>
     "env": {
         "browser": true,
         "es6": true
-    },
+    },<br>
     "extends": [
         "plugin:vue/essential",
         "standard"
-    ],
+    ],<br>
     "plugins": [
         "vue"
     ],
@@ -184,7 +189,6 @@ Successfully created .eslintrc.json file in D:\github\lockex1987.github.io</pre>
             "named": "never",
             "asyncArrow": "always"
         }],
-
         "eqeqeq": "off",
         "no-new": "off",
         "no-multiple-empty-lines": "off",
@@ -213,10 +217,12 @@ Successfully created .eslintrc.json file in D:\github\lockex1987.github.io</pre>
       <h3>Tự động fix trong VSCode</h3>
       <p>Bạn có thể sử dụng lệnh trong VSCode để fix các bug có thể tự động của
         file hiện tại.</p>
-      <div class="mb-3"> <img src="images/eslint%20fix%20all%20auto-fixable%20problems.png"
+      <div class="mb-3"> <img src="images/eslint%20fix%20all%20auto-fixable%20problems.png"
+
           alt=""> </div>
       <h3>Tham khảo</h3>
-      <p><a href="https://viblo.asia/p/hay-su-dung-eslint-cho-du-an-cua-ban-bJzKm07O59N"
+      <p><a href="https://viblo.asia/p/hay-su-dung-eslint-cho-du-an-cua-ban-bJzKm07O59N"
+
           target="_blank">Hãy sử dụng ESLint cho dự án của bạn! - Viblo</a></p>
       <p><a href="https://eslint.org/docs/user-guide/getting-started" target="_blank">Getting
           Started with ESLint - ESLint</a></p>

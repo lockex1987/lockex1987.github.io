@@ -85,7 +85,7 @@ function calculateCategoryCountMap(postList) {
  */
 function getPostListJson(postList) {
     const temp = postList.map(post => JSON.stringify(post));
-    return 'export default [\n' + temp.join(',\n') + '\n];\n';
+    return '[\n' + temp.join(',\n') + '\n]\n';
 }
 
 
@@ -98,8 +98,8 @@ function getPostListJson(postList) {
 function getCategoryCountMapJson(categoryCountMap) {
     const arr = Array.from(categoryCountMap, ([key, value]) => ({ name: key, y: value }));
     arr.sort((a, b) => b.y - a.y);
-    const temp = arr.map(({ name, y }) => `    { name: '${name}', y: ${y} }`);
-    return 'export default [\n' + temp.join(',\n') + '\n];\n';
+    const temp = arr.map(({ name, y }) => `    { "name": "${name}", "y": ${y} }`);
+    return '[\n' + temp.join(',\n') + '\n]\n';
 }
 
 
@@ -120,15 +120,15 @@ async function init() {
 
     const adjustPath = (process.argv.length > 2) ? process.argv[2] : '';
 
-    const listFilePath = adjustPath + 'js/post-list.js';
+    const listFilePath = adjustPath + 'data/post-list.json';
     const fileContent = fs.readFileSync(listFilePath, 'utf8');
-    const oldList = JSON.parse(fileContent.replace('export default [', '[').replace('];', ']'));
+    const oldList = JSON.parse(fileContent);
 
     const postList = await getPostList(adjustPath + 'posts', adjustPath, oldList);
     const categoryMap = calculateCategoryCountMap(postList);
 
     writeDataFile(getPostListJson(postList), listFilePath);
-    writeDataFile(getCategoryCountMapJson(categoryMap), adjustPath + 'posts/project - post management/js/category-data.js');
+    writeDataFile(getCategoryCountMapJson(categoryMap), adjustPath + 'posts/project - post management/data/category-data.json');
 
     const endTime = (new Date()).getTime();
     console.log('Finish after ' + ((endTime - startTime) / 1000) + 's');
