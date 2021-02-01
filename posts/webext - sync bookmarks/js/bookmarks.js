@@ -1,7 +1,7 @@
 /**
  * Tham khảo https://developer.chrome.com/extensions/bookmarks
  */
-class Bookmarks {
+export default class Bookmarks {
     /**
      * Lấy danh sách bookmark của trình duyệt.
      * @param {Function} callback Hàm callback, có tham số là danh sách bookmark
@@ -91,4 +91,4 @@ class Bookmarks {
             chrome.bookmarks.create(data);
         }
     }
-}
+};

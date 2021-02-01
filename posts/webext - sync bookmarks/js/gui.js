@@ -1,4 +1,4 @@
-class Gui {
+export default class Gui {
     /**
      * Duyệt cây bookmark, hiển thị folder và node.
      */
@@ -106,4 +106,4 @@ class Gui {
         li.appendChild(deleteIcon);
         */
     }
-}
+};

@@ -1,3 +1,6 @@
+import Bookmarks from './bookmarks.js';
+import Gui from './gui.js';
+
 // const mlab = new Mlab('lockex1987', 'bookmarks', 'lNqkzI-WP6v_uw-xx9RvM_XUROvjaa0s');
 const bookmarks = new Bookmarks();
 const gui = new Gui();
