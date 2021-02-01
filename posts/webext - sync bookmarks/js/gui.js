@@ -1,5 +1,4 @@
 class Gui {
-
     /**
      * Duyệt cây bookmark, hiển thị folder và node.
      */

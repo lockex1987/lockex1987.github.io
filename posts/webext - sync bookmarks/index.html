@@ -12,16 +12,36 @@
 <body>
     <article>
         <h2>Đồng bộ bookmark</h2>
-        <div class="mb-3 out-of-box" id="buttons" style="display: none">
+        <div class="mb-3 out-of-box"
+            id="buttons"
+            style="display: none">
             <div class="d-flex flex-wrap w-100">
-                <button class="btn mb-2 btn-primary" id="dumpLocalBtn"> Pull local </button>
-                <button class="btn mb-2 btn-secondary ml-2" id="dumpCloudBtn"> Pull cloud </button>
-                <button class="btn mb-2 btn-success ml-2" id="pushCloudBtn"> Push local to cloud </button>
-                <button class="btn mb-2 btn-warning ml-auto" id="addBookmarkBtn"> Add bookmarks from cloud </button>
+                <button class="btn mb-2 btn-primary"
+                    id="dumpLocalBtn"
+                    style="display: none">
+                    Pull local
+                </button>
+
+                <button class="btn mb-2 btn-secondary ml-2"
+                    id="dumpCloudBtn"
+                    style="display: none">
+                    Pull cloud
+                </button>
+
+                <button class="btn mb-2 btn-success ml-2"
+                    id="pushCloudBtn">
+                    Push local to cloud
+                </button>
+
+                <button class="btn mb-2 btn-warning ml-auto"
+                    id="addBookmarkBtn">
+                    Add bookmarks from cloud
+                </button>
             </div>
         </div>
 
-        <div id="sourceLabel" class="text-danger mb-3">From cloud</div>
+        <div id="sourceLabel"
+            class="text-danger mb-3">From cloud</div>
 
         <ul data-toc="true"></ul>
 
@@ -30,14 +50,15 @@
 
     <script src="https://lockex1987.github.io/js/toc.js"></script>
     
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/css/line-awesome.min.css"/>
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/fonts/la-solid-900.woff2"
+    <link rel="stylesheet" href="https://lockex1987.github.io/posts/project - frontend frameworks and libraries/src/line-awesome/css/line-awesome.min.css"/>
+    <link rel="preload" href="https://lockex1987.github.io/posts/project - frontend frameworks and libraries/src/line-awesome/fonts/la-solid-900.woff2"
         as="font" type="font/woff2" crossorigin="anonymous"/>
 
     <link rel="stylesheet" href="https://lockex1987.github.io/posts/project%20-%20noti/css/noti.css" />
     <script src="https://lockex1987.github.io/posts/project%20-%20noti/js/noti.js"></script>
 
-    <script src="js/mlab.js"></script>
+    <script src="https://lockex1987.github.io/js/common.js"></script>
+
     <script src="js/bookmarks.js"></script>
     <script src="js/gui.js"></script>
     <script src="js/script.js"></script>
