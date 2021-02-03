@@ -17,6 +17,14 @@
       <p>Sử dụng lệnh <code>scp</code> để copy file (upload hoặc download).</p>
       <p>Không dùng password nữa để có thể thực hiện các script tự động. Nếu
         dùng password thì script sẽ dừng lại, chờ chúng ta nhập password.</p>
+      <p>Cài đặt</p>
+      <p>Để có thể ssh từ một máy khác thì máy hiện tại (server) phải cài đặt <code>openssh-server</code>:</p>
+      <pre>sudo apt install openssh-server</pre>
+      <p>Sau khi cài đặt, chúng ta sẽ có dịch vụ ssh:</p>
+      <pre>sudo systemctl status ssh<br><br>sudo systemctl enable ssh</pre>
+      <p>Ở client, nếu là máy Linux thì chúng ta có thể cài đặt <code>openssh-client</code>.
+        Khi cài xong gói đó chúng ta sẽ có lệnh <code>ssh</code>. Ngoài ra
+        chúng ta có thể sử dụng các tool như Putty hoặc iTerminal (iPad).</p>
       <h3>Generate key mới</h3>
       <p>Thực hiện câu lệnh:</p>
       <pre>ssh-keygen -t rsa<br>ssh-keygen -t rsa -b 4096 -C "lockex1987@gmail.com"</pre>
@@ -63,6 +71,5 @@ Host 192.168.101.20
           thiệu về Docker làm quen với Docker tạo container</a></p>
     </article>
     <script src="../../js/docs.js"></script>
-    
   </body>
 </html>
