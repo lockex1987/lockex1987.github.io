@@ -192,11 +192,15 @@ class SevenZipWrapper
             }
         }
 
-        /*
+        // PHP 8 có hàm này
         $archiveFile->registerProgressCallback(0.05, function ($r) {
-            printf("%d%%\n", $r * 100);
+            // Hiển thị tiến độ trên một dòng
+            // https://www.hashbangcode.com/article/overwriting-command-line-output-php
+            echo chr(27) . "[0G";
+            echo round($r * 100, 2) . '%';
         });
-        */
+
+        echo PHP_EOL;
 
         $archiveFile->close();
     }
