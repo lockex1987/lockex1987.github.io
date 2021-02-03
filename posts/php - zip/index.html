@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="vi">
   <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="zip, rar, extract, compress, docx">
     <title>Thao tác với ZIP file bằng PHP</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
-	
   </head>
   <body>
     <article>
-      <h2>Thao tác với ZIP file bằng PHP</h2>
+      <h2>Thao tác với file ZIP và RAR bằng PHP</h2>
       <p>Lớp <a href="http://php.net/manual/en/class.ziparchive.php" rel="external"
           target="_blank"><code>ZipArchive</code></a> chứa nhiều các thuộc tính
         và phương thức giúp bạn nén và giải nén file.</p>
@@ -173,8 +172,8 @@ $zip-&gt;close();</pre>
       <p><a target="_blank" href="export_docx.php">export_docx.php</a></p>
       <h3>Định dạng rar</h3>
       <p>Để sử dụng định dạng rar, cần cài thêm extension rar.</p>
-      <p><a target="_blank" href="https://pecl.php.net/package/rar/4.0.0/windows">PECL
-          :: Package :: rar 4.0.0 for Windows</a></p>
+      <p><a target="_blank" href="https://pecl.php.net/package/rar">PECL ::
+          Package :: rar</a></p>
       <p>Khi download file dll, chú ý chọn đúng phiên bản:</p>
       <ul>
         <li><code>Thread Safe</code> hay <code>Non Thread Safe</code></li>
@@ -184,10 +183,24 @@ $zip-&gt;close();</pre>
       <p><a target="_blank" href="check_x64_and_thread_safe.php">check_x64_and_thread_safe.php</a><br>
       </p>
       <p>Chú ý không hỗ trợ phiên bản PHP 7.3.</p>
+      <p>Download file dll.</p>
+      <p>Kiểm tra thư mục chứa các extension (module) ở file <code>php.ini</code>:</p>
+      <pre>extension_dir = "ext"</pre>
+      <p>Copy file dll vào thư mục chứa extension.</p>
+      <p>Khai báo extension ở file <code>php.ini</code>:</p>
+      <pre>extension=php_rar</pre>
+      <p>Kiểm tra:</p>
+      <p><a href="rar_example.php" target="_blank">rar_example.php</a></p>
       <h3>Tham khảo</h3>
       <p><a target="_blank" href="https://www.php.net/manual/en/book.rar.php">https://www.php.net/manual/en/book.rar.php</a></p>
       <p><a target="_blank" href="https://www.php.net/manual/en/book.zip.php">https://www.php.net/manual/en/book.zip.php</a></p>
       <p><a target="_blank" href="https://www.geeksforgeeks.org/what-is-thread-safe-or-non-thread-safe-in-php/">https://www.geeksforgeeks.org/what-is-thread-safe-or-non-thread-safe-in-php/</a></p>
+      <p><a href="https://github.com/selective-php/rar" target="_blank">selective-php/rar:
+          RAR file reader for PHP</a></p>
+      <p><a href="https://github.com/lockex1987/lockex1987.github.io/blob/master/posts/php%20-%20rename/rename/src/SevenZipWrapper.php"
+          target="_blank">lockex1987.github.io/SevenZipWrapper.php</a> </p>
+      <p><br>
+      </p>
       <p><br>
       </p>
     </article>

@@ -34,18 +34,19 @@ class SevenZipWrapper
     /**
      * Giải nén file bằng PHP thuần.
      */
-    public function extractNative($archive, $dir)
+    public function extractNative($archivePath, $extractFolder)
     {
-        $extension = strtolower(pathinfo($archive, PATHINFO_EXTENSION));
-        $filename = strtolower(pathinfo($archive, PATHINFO_FILENAME));
+        // $extension = substr($archivePath, strrpos($archivePath, '.') - strlen($archivePath) + 1);
+        $extension = strtolower(pathinfo($archivePath, PATHINFO_EXTENSION));
+        $filename = strtolower(pathinfo($archivePath, PATHINFO_FILENAME));
         switch ($extension) {
             case 'zip':
             case 'cbz':
-                $this->extractZipArchive($archive, $filename, $dir);
+                $this->extractZipArchive($archivePath, $filename, $extractFolder);
                 break;
             case 'rar':
             case 'cbr':
-                $this->extractRarArchive($archive, $filename, $dir);
+                $this->extractRarArchive($archivePath, $filename, $extractFolder);
                 break;
         }
     }
@@ -53,32 +54,41 @@ class SevenZipWrapper
     /**
      * Giải nén file ZIP bằng PHP thuần.
      */
-    private function extractZipArchive($archive, $filename, $dir)
+    private function extractZipArchive($archivePath, $archiveName, $extractFolder)
     {
-        $zip = new ZipArchive();
-        if ($zip->open($archive)) {
-            $numFiles = $zip->count();
+        $archiveFile = new ZipArchive();
+        if ($archiveFile->open($archivePath)) {
+            $numFiles = $archiveFile->count();
             $hasFolder = false;
             for ($i = 0; $i < $numFiles; $i++) {
-                $entry = $zip->getNameIndex($i);
+                $entry = $archiveFile->getNameIndex($i);
                 if (strpos($entry, '/') !== false || strpos($entry, '\\') !== false) {
                     $hasFolder = true;
                 }
                 echo $entry . PHP_EOL;
             }
-            $destination = $dir . '/' . ($hasFolder ? '' : $filename);
-            $zip->extractTo($destination);
-            $zip->close();
+
+            $destination = $extractFolder . '/' . ($hasFolder ? '' : $archiveName);
+            $archiveFile->extractTo($destination);
+            $archiveFile->close();
         }
     }
 
     /**
      * Giải nén file RAR bằng PHP thuần.
      */
-    private function extractRarArchive($archive, $filename, $dir)
+    private function extractRarArchive($archivePath, $archiveName, $extractFolder)
     {
-        $rar = RarArchive::open($archive);
-        $entries = $rar->getEntries();
+        $archiveFile = RarArchive::open($archivePath);
+        if ($archiveFile === false) {
+            die('Cannot open ' . $archivePath);
+        }
+
+        $entries = $archiveFile->getEntries();
+        if ($entries === false) {
+            die('Cannot retrieve entries');
+        }
+
         $hasFolder = false;
         foreach ($entries as $entry) {
             if (strpos($entry, '/') !== false || strpos($entry, '\\') !== false) {
@@ -86,12 +96,15 @@ class SevenZipWrapper
             }
         }
 
-        $destination = $dir . '/' . ($hasFolder ? '' : $filename);
+        $destination = $extractFolder . '/' . ($hasFolder ? '' : $archiveName);
         foreach ($entries as $entry) {
             echo $entry->getName()  . PHP_EOL;
+            // echo 'Packed size: ' . $entry->getPackedSize() . PHP_EOL;
+            // echo 'Unpacked size: ' . $entry->getUnpackedSize() . PHP_EOL;
             $entry->extract($destination);
         }
-        $rar->close();
+
+        $archiveFile->close();
     }
 
     /**
@@ -150,10 +163,41 @@ class SevenZipWrapper
     /**
      * Nén file bằng 7z.
      */
-    public function compress($folder, $archive)
+    public function compress7z($folder, $archive)
     {
         // $command = escapeshellcmd('7z a -bb3 ' . escapeshellarg($archive) . ' ' . escapeshellarg($folder)); // thực hiện trên Windows
         $command = '7z a -bb3 ' . escapeshellarg($archive) . ' ' . escapeshellarg($folder); // thực hiện trên Ubuntu
         system($command);
+    }
+
+    /**
+     * Nén thư mục.
+     */
+    public function compressFolder($compressFolder, $archivePath)
+    {
+        $rootPath = realpath($compressFolder);
+        $archiveFile = new ZipArchive();
+        $archiveFile->open($archivePath, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($rootPath),
+            RecursiveIteratorIterator::LEAVES_ONLY
+        );
+        foreach ($files as $name => $file) {
+            // Bỏ qua . và ..
+            if (!$file->isDir()) {
+                $realPath = $file->getRealPath();
+                $relativePath = substr($realPath, strlen($rootPath) + 1);
+                echo $relativePath . PHP_EOL;
+                $archiveFile->addFile($realPath, $relativePath);
+            }
+        }
+
+        /*
+        $archiveFile->registerProgressCallback(0.05, function ($r) {
+            printf("%d%%\n", $r * 100);
+        });
+        */
+
+        $archiveFile->close();
     }
 }

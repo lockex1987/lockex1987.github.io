@@ -120,7 +120,7 @@ class Rename
 
         foreach ($a as $f) {
             if (is_dir(realpath($f))) {
-                $compressor->compress($f, $f . '.zip');
+                $compressor->compressFolder($f, $f . '.zip');
             }
         }
 
@@ -232,7 +232,9 @@ class Rename
             $extWithoutDot = substr($ext, 1);
             if (in_array($extWithoutDot, ['zip', 'rar', 'cbz', 'cbr'])) {
                 $path = CommonUtils::joinPath($this->rootFolder, $f);
-                $extractor->extract7z($path, $this->rootFolder);
+                
+                // $extractor->extract7z($path, $this->rootFolder);
+                $extractor->extractNative($path, $this->rootFolder);
             }
         }
     }
