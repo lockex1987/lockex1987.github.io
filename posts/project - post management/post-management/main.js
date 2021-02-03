@@ -29,8 +29,13 @@ async function getPostList(rootFolder, adjustPath, oldList) {
         const indexFilePath = rootFolder + '/' + path + '/index.html';
 
         // Lấy thông tin thời gian chỉnh sửa file
-        const statsObj = fs.statSync(indexFilePath);
-        const modifiedTime = statsObj.mtimeMs || statsObj.birthtimeMs;
+        let modifiedTime;
+        if (!fs.existsSync(indexFilePath)) {
+            modifiedTime = 0;
+        } else {
+            const statsObj = fs.statSync(indexFilePath);
+            modifiedTime = statsObj.mtimeMs || statsObj.birthtimeMs;
+        }
 
         // Nếu file không thay đổi gì
         const oldObj = oldList.find(e => e.path == path);
