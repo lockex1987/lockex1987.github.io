@@ -13,8 +13,9 @@
     <article>
       <h2>Sử dụng SSH key với Git</h2>
       <p>GitHub công bố sẽ không hỗ trợ việc xác thực bằng password (khi thao
-        tác với dòng lệnh) nữa từ .</p>
-      <p>Chúng ta có thể chuyển sang sử dụng PAT hoặc SSH key.</p>
+        tác với dòng lệnh) nữa từ 13/08/2021.</p>
+      <p>Chúng ta có thể chuyển sang sử dụng PAT (Personal Access Token) hoặc
+        SSH key.</p>
       <p>Nhìn qua thì PAT có vẻ cũng gần giống như password. Chúng ta hãy sử
         dụng SSH key.</p>
       <h3>Thành phần của một SSH key</h3>
@@ -25,21 +26,21 @@
           vào file <code>~/.ssh/authorized_keys</code> trên server của bạn.</li>
         <li>Private key (dạng file văn bản): Bạn sẽ lưu file này vào máy tính,
           sau đó sẽ thiết lập cho PuTTY, WinSCP, Git Bash,... để có thể login.</li>
-        <li>Keyphrase (dạng string, cần ghi nhớ): Mật khẩu để mở private key,
+        <li>Passphrase (dạng string, cần ghi nhớ): Mật khẩu để mở private key,
           khi đăng nhập vào server nó sẽ hỏi cái này.</li>
       </ul>
       <p>Một SSH key bạn có thể sử dụng cho nhiều server khác nhau.</p>
-      <p>Keyphrase là không bắt buộc. Nếu bạn không nhập thì những lần sau khi
+      <p>Passphrase là không bắt buộc. Nếu bạn không nhập thì những lần sau khi
         sử dụng bạn sẽ không phải điền.</p>
       <h3>Tạo SSH key</h3>
       <p>Nếu bạn đang sử dụng Linux thì không cần phần mềm mà sẽ sử dụng
         Terminal để tạo. Hãy mở Terminal lên và gõ:</p>
-      <pre>$ ssh-keygen -t rsa</pre>
+      <pre>ssh-keygen -t rsa</pre>
       <p>Nó sẽ hỏi bạn muốn lưu private key này vào đâu, mặc định nó sẽ lưu vào
         <code>~/.ssh</code>. Bạn có thể để trống và nhấn Enter.</p>
       <p>Nếu bạn muốn nhiều key thì bạn phải đặt nó ở các file khác nhau.</p>
-      <p>Tiếp tục nó sẽ hỏi bạn có muốn thiết lập keypharse không, nếu muốn thì
-        nhập keypharse cần thiết lập vào rồi nhấn Enter.</p>
+      <p>Tiếp tục nó sẽ hỏi bạn có muốn thiết lập passpharse không, nếu muốn thì
+        nhập passpharse cần thiết lập vào rồi nhấn Enter.</p>
       <div class="mb-3"> <img alt="" src="images/ssh-keygen.png"> </div>
       <p>Trong đó bạn có thể thấy nó có ghi đường dẫn lưu file private key (<code>id_rsa</code>)
         và file public key (<code>id_rsa.pub</code>).</p>
@@ -57,10 +58,22 @@
       <div class="mb-3"> <img alt="" src="images/add%20ssh%20key%20to%20bitbucket.png">
       </div>
       <p>Click <code>Add key</code> để thêm vào tài khoản của bạn.</p>
+      <h3>Cài đặt public key cho tài khoản GitHub</h3>
+      <p>Truy cập vào github.com rồi đăng nhập bằng username và password bình
+        thường.</p>
+      <p>Click vào menu to Settings, sau đó chuyển đến tab "SSH and GPG kes".</p>
+      <div class="mb-3"><img src="images/github%20ssh%20config.png" alt=""></div>
+      <p>Click vào nút "New SSH key".</p>
+      <p>Nhập tên (có thể đặt bất kỳ) và nội dung key (lấy từ file public key),
+        sau đó nhấn "Add SSH key":</p>
+      <div class="mb-3"><img src="images/github%20add%20ssh%20key.png" alt=""></div>
+      <p>Bạn có thể bị yêu cầu nhập password để confirm lại việc thêm key.</p>
+      <p>Sau khi thêm, key sẽ được hiển thị như sau:</p>
+      <div class="mb-3"><img src="images/github%20list%20ssh%20key.png" alt=""></div>
       <h3>Nạp ssh key tự động</h3>
       <p>ssh-agent là trình quản lý SSH key của bạn.</p>
       <p>Mỗi khi mở Git Bash, đánh các lệnh sau:</p>
-      <pre>$ ssh-agent<br>$ ssh-add ~/.ssh/id_rsa</pre>
+      <pre>ssh-agent<br>ssh-add ~/.ssh/id_rsa</pre>
       <p>Chúng ta cần làm 1 việc cho thuận tiện khi làm việc với Git là nạp SSH
         key tự động mỗi khi chạy Git Bash. Để làm vệc này ta tạo một file với
         tên <code>~/.bashrc</code> với nội dung như sau:</p>
@@ -96,7 +109,7 @@
       <p>Tương ứng với 3 tài khoản trên các bạn sẽ phải tạo 3 bộ ssh-key tương
         ứng để cấu hình ssh tới server git. Trên màn hình command bạn làm các
         thao tác sau:</p>
-      <pre>$ cd ~/.ssh<br>$ ssh-keygen -t rsa –C "option_email"</pre>
+      <pre>cd ~/.ssh<br>ssh-keygen -t rsa –C "option_email"</pre>
       <p>This creates a new ssh key, using the provided email as a label.</p>
       <p>(option_email bạn có thể điền email account của mình hoặc tùy ý hoặc ko
         điền cũng được). =&gt; Nhập tên cho bộ ssh-key tương ứng.</p>
@@ -184,12 +197,41 @@ Host github-acc1
         tài khoản khác nhau rồi. Chia sẻ cách mà bạn thực hiện cấu hình config
         để mọi người cùng biết thêm nhé :D.</p>
       <h3>Chuyển đổi</h3>
-      <p> Thay đổi URL của repository cũ:</p>
-      <pre>git remote set-url origin ssh://git@bitbucket.cyberspace.vn:7999/sn/safenet_front.git</pre>
+      <p>Kiểm tra URL cũ:</p>
+      <pre>git remote show origin<br><br># git remote -v</pre>
+      <p>Ví dụ:</p>
+      <pre class="bg-dark text-white">$ git remote show origin
+* remote origin
+  Fetch URL: https://github.com/lockex1987/lockex1987.github.io
+  Push  URL: https://github.com/lockex1987/lockex1987.github.io
+  HEAD branch: master
+  Remote branch:
+    master tracked
+  Local branch configured for 'git pull':
+    master merges with remote master
+  Local ref configured for 'git push':
+    master pushes to master (fast-forwardable)</pre>
+      <p> Thay đổi URL của repository cũ bằng lệnh <code>git remote set-url</code>.
+        Ở URL mới, chúng ta sẽ đổi <code>https</code> thành <code>ssh</code>,
+        thêm <code>git@</code> trước tên host, do đó <code>https://github.com/Foo/Bar.git</code>
+        sẽ trở thành <code>ssh://git@github.com/Foo/Bar.git</code>.</p>
+      <pre class="out-of-box">git remote set-url origin ssh://git@bitbucket.cyberspace.vn:7999/sn/safenet_front.git<br><br>git remote set-url origin ssh://git@github.com/lockex1987/lockex1987.github.io</pre>
       <p> Clone: </p>
-      <pre>git clone ssh://git@bitbucket.cyberspace.vn:7999/sn/safenet_front.git</pre>
-      <p>Tham khảo</p>
-      <p>https://techmaster.vn/posts/34411/github-su-dung-ssh-hay-https</p>
+      <pre class="out-of-box">git clone ssh://git@bitbucket.cyberspace.vn:7999/sn/safenet_front.git</pre>
+      <h3>Tham khảo</h3>
+      <p><a href="https://techmaster.vn/posts/34411/github-su-dung-ssh-hay-https"
+          target="_blank">Github: sử dụng ssh hay https</a></p>
+      <p><a href="https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/"
+          target="_blank">Token authentication requirements for Git operations -
+          The GitHub Blog</a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>

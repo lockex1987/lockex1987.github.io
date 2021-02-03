@@ -28,6 +28,31 @@
       </ul>
       <p>Các key sẽ được lưu vào thư mục <code>~/.ssh</code>. Tên các key
         thường là <code>id_rsa</code> và <code>id_rsa.pub</code>.</p>
+      <p>Ví dụ:</p>
+      <pre class="out-of-box text-white bg-dark">$ ssh-keygen -t rsa -b 4096 -C "lockex1987@gmail.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/c/Users/VTCC-/.ssh/id_rsa): lockex1987
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in lockex1987.
+Your public key has been saved in lockex1987.pub.
+The key fingerprint is:
+SHA256:srEU/sjEuEymP2yDicnXQWGVx6Qg16ja+WiVLRlihOE lockex1987@gmail.com
+The key's randomart image is:
++---[RSA 4096]----+
+| .o. o+.+.       |
+|.. .o+.o.o       |
+| E. o o..        |
+|   + * .         |
+|  + B % S        |
+| . B @ O         |
+|.o.+B B .        |
+|o.o==o           |
+|  o..o           |
++----[SHA256]-----+</pre>
+      <p>Trong ví dụ trên, tôi đặt lại tên file là <code>lockex1987</code> nên
+        trong thư mục <strong>hiện tại</strong> sẽ có hai file là <code>lockex1987</code>
+        và <code>lockex1987.pub</code>.</p>
       <h3>Copy file lên server<br>
       </h3>
       <p>Tạo thư mục <code>~/.ssh</code> trên server:</p>
@@ -63,6 +88,5 @@ Host 192.168.101.20
           thiệu về Docker làm quen với Docker tạo container</a></p>
     </article>
     <script src="../../js/docs.js"></script>
-    
   </body>
 </html>
