@@ -1,8 +1,9 @@
 <?php
+
 function exportDocx()
 {
-	
 }
+
 // Đường dẫn đến file chứa nội dung
 const MAIN_DOCUMENT_PATH = "word/document.xml";
 

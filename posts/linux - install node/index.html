@@ -65,17 +65,49 @@ export PATH
           Windows. Ironically written in Go.</a></p>
       <h4>Các câu lệnh NVM</h4>
       <p>Liệt kê các phiên bản có:</p>
-      <pre>nvm ls-remote</pre>
+      <pre>nvm ls-remote<br><br>nvm list available</pre>
       <p>Cài đặt một phiên bản nào đó:</p>
-      <pre>nvm install &lt;version&gt;</pre>
+      <pre>nvm install &lt;version&gt;<br><br>nvm install 14.14.0 64</pre>
+      <p>Sử dụng proxy (nếu máy tính không có mạng trực tiếp):</p>
+      <pre># Lấy proxy hiện tại<br>nvm proxy<br><br># Thiết lập proxy<br>nvm proxy http://192.168.103.25:80<br><br># Không sử dụng proxy nữa<br>nvm proxy none</pre>
       <p>Kiểm tra phiên bản hiện tại:</p>
-      <pre>node -v<br># hoặc<br>nvm current</pre>
-      <p>Liệt kê các phiên bản đã cài đặt</p>
-      <pre>nvm ls</pre>
+      <pre>node -v<br># hoặc<br>nvm current<br><br>nvm list</pre>
+      <p>Liệt kê các phiên bản đã cài đặt:</p>
+      <pre>nvm ls<br><br>nvm list</pre>
       <p>Sử dụng phiên bản nào đó:</p>
-      <pre>nvm use &lt;version&gt;</pre>
+      <pre>nvm use &lt;version&gt;<br><br>nvm use 14.14.0</pre>
       <p>Gỡ bỏ phiên bản nào đó:</p>
-      <pre>nvm deactivate<br>nvm uninstall &lt;version&gt;</pre>
+      <pre>nvm deactivate<br>nvm uninstall &lt;version&gt;<br><br>nvm uninstall 10.18.1</pre>
+      <p>Ví dụ, nâng cấp Node từ phiên bản 12 lên phiên bản 14 để có thể sử dụng
+        ES6 module:</p>
+      <pre class="bg-dark text-success">C:\Users\VTCC-&gt;nvm list
+
+  * 14.14.0 (Currently using 64-bit executable)
+    12.13.1
+
+C:\Users\VTCC-&gt;nvm arch
+System Default: 64-bit.
+Currently Configured: 64-bit.
+
+C:\Users\VTCC-&gt;nvm use 12.13.1
+Now using node v12.13.1 (64-bit)
+
+C:\Users\VTCC-&gt;node -v
+v12.13.1
+
+C:\Users\VTCC-&gt;npm -v
+6.12.1
+
+C:\Users\VTCC-&gt;nvm use 14.14.0
+Now using node v14.14.0 (64-bit)
+
+C:\Users\VTCC-&gt;node -v
+v14.14.0
+
+C:\Users\VTCC-&gt;npm -v
+6.14.8
+
+C:\Users\VTCC-&gt;</pre>
       <h3>Gỡ bỏ Node</h3>
       <p>Bạn có thể sử dụng apt hoặc nvm.</p>
       <pre>sudo apt remove nodejs</pre>

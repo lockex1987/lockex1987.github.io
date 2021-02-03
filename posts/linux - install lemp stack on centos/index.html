@@ -48,19 +48,18 @@ sudo systemctl enable nginx</pre>
         hỗ trợ cho những tính năng mới cũng như tăng cường khả năng bảo mật, bạn
         cần phiên bản PHP mới hơn trên hệ thống CentOS 7.</p>
       <p>Cài đặt:</p>
-      <pre>sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm<br><br>sudo yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm<br><br>sudo yum --enablerepo=remi-php72 install php php-common \<br>        php-cli \
-        php-mysql php-gd php-mbstring \
-        php-xml \
-        php-zip php-curl  php-ldap \
-        php-fileinfo php-redis \
-        php-mysqlnd php-json php-bcmath<br><br>sudo yum --enablerepo=remi-php72 install php-fpm</pre>
+      <pre>sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm<br><br># sudo yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm<br>sudo yum install http://rpms.remirepo.net/enterprise/remi-release-8.rpm<br><br>sudo yum install php72 \<br>    php72-common \<br>    php72-cli \
+    php72-mysql \<br>    php72-gd \<br>    php72-mbstring \
+    php72-xml \
+    php72-zip \<br>    php72-curl \<br>    php72-ldap \
+    php72-fileinfo \<br>    php72-redis \
+    php72-mysqlnd \<br>    php72-json \<br>    php72-bcmath<br><br>sudo yum install php72-fpm</pre>
       <p>Kiểm tra PHP:</p>
       <pre>php --version</pre>
       <p>Kiểm tra php-fpm:</p>
       <pre>sudo systemctl status php-fpm<br><br>sudo systemctl start php-fpm<br><br>sudo systemctl enable php-fpm</pre>
       <p>Cấu hình chạy PHP với nginx theo <a href="https://lockex1987.github.io/posts/linux%20-%20run%20php%20with%20nginx/"
           target="_blank">hướng dẫn này</a>.</p>
-      
       <h3>Tham khảo</h3>
       <p><a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-centos-7"
           target="_blank">How To Install Linux, Nginx, MariaDB, PHP (LEMP) stack

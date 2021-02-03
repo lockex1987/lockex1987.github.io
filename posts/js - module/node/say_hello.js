@@ -15,7 +15,7 @@ exports = {
 */
 
 exports.NAME = 'Nguyễn Anh Tuấn';
-//module.exports.NAME = 'Nguyễn Anh Tuấn';
+// module.exports.NAME = 'Nguyễn Anh Tuấn';
 
 // Không dùng được exports?
 exports.goodbye = () => {

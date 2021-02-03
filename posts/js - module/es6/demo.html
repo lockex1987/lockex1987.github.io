@@ -10,12 +10,11 @@
     <link rel="stylesheet" href="../../../css/style.css">
 </head>
 <body>
-    
     <h2>Demo ES6 module</h2>
-    <p>Phải chạy ở server, không chạy được ở file://</p>
-    <p>Kiểu (type) của thẻ script phải là module</p>
-    <p>Ít trình duyệt hỗ trợ</p>
-    <p>Node (v8) không hỗ trợ</p>
+    <p>Phải chạy ở server, không chạy được ở file local (<code>file://</code>).</p>
+    <p>Kiểu (thuộc tính <code>type</code>) của thẻ <code>script</code> phải là <code>module</code>.</p>
+    <p>Ở môi trường Node (v14.14.0) phải có file <code>package.json</code>, có cấu hình <code>"type": "module"</code> thì mới chạy được.</p>
+    <p><a href="https://nodejs.org/api/packages.html#packages_determining_module_system" target="_blank">Module: Packages</a></p>
 
 
     <script type="module" src="hello.js"></script>

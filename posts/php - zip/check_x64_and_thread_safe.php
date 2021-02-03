@@ -1,4 +1,5 @@
 <?php
+
 echo (PHP_INT_SIZE * 8) . "bit\n";
 
 echo ZEND_THREAD_SAFE . "\n";

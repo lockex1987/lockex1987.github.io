@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Các hàm xử lý xâu trong PHP">
+    <meta name="description" content="mbstring, multi-bytes">
     <title>Các hàm xử lý xâu trong PHP</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -11,428 +11,699 @@
   <body>
     <article>
       <h2>Các hàm xử lý xâu trong PHP</h2>
-	  <div class="out-of-box">
-      <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>Hàm</th>
-            <th>Mô tả</th>
-          </tr>
+      <h3>Danh sách các hàm thường</h3>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Hàm</th>
+              <th>Mô tả</th>
+            </tr>
           </thead>
-        <tbody>
-          
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strlen.asp">strlen()</a></td>
-            <td>Trả về độ dài của xâu</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_str_word_count.asp">str_word_count()</a></td>
-            <td>Đếm số từ trong một xâu</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strpos.asp">strpos()</a></td>
-            <td>Trả về vị trí của lần xuất hiện đầu tiên của một xâu trong một
-              xâu khác (phân biệt hoa thường)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_str_replace.asp">str_replace()</a></td>
-            <td>Thay thế một số ký tự trong một xâu (phân biệt hoa thường)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_explode.asp">explode()</a></td>
-            <td>Tách một xâu thành một mảng (split)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_implode.asp">implode()</a></td>
-            <td>Trả về một xâu từ các phần tử trong một mảng (join)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_number_format.asp">number_format()</a></td>
-            <td>Định dạng một số với các nhóm hàng ngàn</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_str_pad.asp">str_pad()</a></td>
-            <td>Pad một xâu theo độ dài mới</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_str_repeat.asp">str_repeat()</a></td>
-            <td>Lặp lại một xâu theo một số lần cho trước</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strtolower.asp">strtolower()</a></td>
-            <td>Chuyển một xâu về chữ thường</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strtoupper.asp">strtoupper()</a></td>
-            <td>Chuyển một xâu về chữ hoa</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_trim.asp">trim()</a></td>
-            <td>Loại bỏ các ký tự trắng ở cả hai bên của một xâu</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_addcslashes.asp">addcslashes()</a></td>
-            <td>Returns a string with backslashes in front of the specified
-              characters</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_addslashes.asp">addslashes()</a></td>
-            <td>Returns a string with backslashes in front of predefined
-              characters</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_bin2hex.asp">bin2hex()</a></td>
-            <td>Chuyển một xâu của các ký tự ASCII thành các giá trị hexa</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_chop.asp">chop()</a></td>
-            <td>Loại bỏ các ký tự trắng phía bên phải (kết thúc) của một xâu</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_chr.asp">chr()</a></td>
-            <td>Trả về một ký tự từ một giá trị ASCII cho trước</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_chunk_split.asp">chunk_split()</a></td>
-            <td>Tách một xâu thành một chuỗi các phần nhỏ hơn</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_convert_cyr_string.asp">convert_cyr_string()</a></td>
-            <td>Converts a string from one Cyrillic character-set to another</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_convert_uudecode.asp">convert_uudecode()</a></td>
-            <td>Decodes a uuencoded string</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_convert_uuencode.asp">convert_uuencode()</a></td>
-            <td>Encodes a string using the uuencode algorithm</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_count_chars.asp">count_chars()</a></td>
-            <td>Returns information about characters used in a string</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_crc32.asp">crc32()</a></td>
-            <td>Calculates a 32-bit CRC for a string</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_crypt.asp">crypt()</a></td>
-            <td>Hashing một chiều xâu</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_echo.asp">echo()</a></td>
-            <td>Output một hoặc nhiều xâu</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_fprintf.asp">fprintf()</a></td>
-            <td>Writes a formatted string to a specified output stream</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_get_html_translation_table.asp">get_html_translation_table()</a></td>
-            <td>Returns the translation table used by htmlspecialchars() and
-              htmlentities()</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_hebrev.asp">hebrev()</a></td>
-            <td>Converts Hebrew text to visual text</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_hebrevc.asp">hebrevc()</a></td>
-            <td>Converts Hebrew text to visual text and new lines (\n) into
-              &lt;br&gt;</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_hex2bin.asp">hex2bin()</a></td>
-            <td>Chuyển một xâu của các giá trị hexa thành các ký tự ASCII</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_html_entity_decode.asp">html_entity_decode()</a></td>
-            <td>Chuyển các HTML entity thành các ký tự</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_htmlentities.asp">htmlentities()</a></td>
-            <td>Chuyển các ký tự thành các HTML entity</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_htmlspecialchars_decode.asp">htmlspecialchars_decode()</a></td>
-            <td>Converts some predefined HTML entities to characters</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_htmlspecialchars.asp">htmlspecialchars()</a></td>
-            <td>Converts some predefined characters to HTML entities</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_join.asp">join()</a></td>
-            <td>Alias của <a href="https://www.w3schools.com/php/func_string_implode.asp">implode()</a></td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_lcfirst.asp">lcfirst()</a></td>
-            <td>Chuyển ký tự đầu tiên của một xâu thành chữ thường</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_levenshtein.asp">levenshtein()</a></td>
-            <td>Trả về khoảng cách Levenshtein giữa hai xâu</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_localeconv.asp">localeconv()</a></td>
-            <td>Returns locale numeric and monetary formatting information</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_ltrim.asp">ltrim()</a></td>
-            <td>Loại bỏ các khoảng trắng ở bên trái (bắt đầu) của một xâu</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_md5.asp">md5()</a></td>
-            <td>Tính hash MD5 của một xâu</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_md5_file.asp">md5_file()</a></td>
-            <td>Tính hash MD5 của một file</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_metaphone.asp">metaphone()</a></td>
-            <td>Calculates the metaphone key of a string</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_money_format.asp">money_format()</a></td>
-            <td>Returns a string formatted as a currency string</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_nl_langinfo.asp">nl_langinfo()</a></td>
-            <td>Returns specific local information</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_nl2br.asp">nl2br()</a></td>
-            <td>Inserts HTML line breaks in front of each newline in a string</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_ord.asp">ord()</a></td>
-            <td>Trả về giá trị ASCII của ký tự đầu tiên của một xâu</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_parse_str.asp">parse_str()</a></td>
-            <td>Parses a query string into variables</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_print.asp">print()</a></td>
-            <td>Output một hoặc nhiều xâu</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_printf.asp">printf()</a></td>
-            <td>Outputs a formatted string</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_quoted_printable_decode.asp">quoted_printable_decode()</a></td>
-            <td>Converts a quoted-printable string to an 8-bit string</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_quoted_printable_encode.asp">quoted_printable_encode()</a></td>
-            <td>Converts an 8-bit string to a quoted printable string</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_quotemeta.asp">quotemeta()</a></td>
-            <td>Quotes meta characters</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_rtrim.asp">rtrim()</a></td>
-            <td>Loại bỏ các khoảng trắng ở bên phải của một xâu</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_setlocale.asp">setlocale()</a></td>
-            <td>Thiết lập thông tin locale</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_sha1.asp">sha1()</a></td>
-            <td>Tính toán hash SHA-1 của một xâu</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_sha1_file.asp">sha1_file()</a></td>
-            <td>Tính toán hash SHA-1 của một file</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_similar_text.asp">similar_text()</a></td>
-            <td>Tính toán sự giống nhau giữa hai xâu</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_soundex.asp">soundex()</a></td>
-            <td>Calculates the soundex key of a string</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_sprintf.asp">sprintf()</a></td>
-            <td>Writes a formatted string to a variable</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_sscanf.asp">sscanf()</a></td>
-            <td>Parses input from a string according to a format</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_str_getcsv.asp">str_getcsv()</a></td>
-            <td>Parses a CSV string into an array</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_str_ireplace.asp">str_ireplace()</a></td>
-            <td>Thay thế một số ký tự trong một xâu (không phân biệt hoa thường)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_str_rot13.asp">str_rot13()</a></td>
-            <td>Thực hiện encode ROT13 trên một xâu</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_str_shuffle.asp">str_shuffle()</a></td>
-            <td>Trộn ngẫu nhiên tất cả các ký tự trong một xâu</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_str_split.asp">str_split()</a></td>
-            <td>Tách một xâu thành một mảng</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strcasecmp.asp">strcasecmp()</a></td>
-            <td>So sánh hai xâu (không phân biệt hoa thường)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strchr.asp">strchr()</a></td>
-            <td>Tìm sự xuất hiện đầu tiên của một xâu trong một xâu khác (alias
-              của <code>strstr()</code>)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strcmp.asp">strcmp()</a></td>
-            <td>So sánh hai xâu (phân biệt hoa thường)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strcoll.asp">strcoll()</a></td>
-            <td>So sánh hai xâu (dựa vào locale)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strcspn.asp">strcspn()</a></td>
-            <td>Returns the number of characters found in a string before any
-              part of some specified characters are found</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strip_tags.asp">strip_tags()</a></td>
-            <td>Strips HTML and PHP tags from a string</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_stripcslashes.asp">stripcslashes()</a></td>
-            <td>Unquotes a string quoted with addcslashes()</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_stripslashes.asp">stripslashes()</a></td>
-            <td>Unquotes a string quoted with addslashes()</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_stripos.asp">stripos()</a></td>
-            <td>Trả về vị trí của sự xuất hiện đầu tiên của một xâu trong một
-              xâu khác (không phân biệt hoa thường)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_stristr.asp">stristr()</a></td>
-            <td>Tìm kiếm sự xuất hiện đầu tiên của một xâu trong một xâu khác
-              (không phân biệt hoa thường)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strnatcasecmp.asp">strnatcasecmp()</a></td>
-            <td>So sánh hai xâu sử dụng thuật toán "thứ tự tự nhiên" (không phân
-              biệt hoa thường)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strnatcmp.asp">strnatcmp()</a></td>
-            <td>So sánh hai xâu sử dụng thuật toán "thứ tự tự nhiên" (phân biệt
-              hoa thường)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strncasecmp.asp">strncasecmp()</a></td>
-            <td>String comparison of the first n characters (case-insensitive)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strncmp.asp">strncmp()</a></td>
-            <td>String comparison of the first n characters (case-sensitive)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strpbrk.asp">strpbrk()</a></td>
-            <td>Searches a string for any of a set of characters</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strrchr.asp">strrchr()</a></td>
-            <td>Finds the last occurrence of a string inside another string</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strrev.asp">strrev()</a></td>
-            <td>Đảo ngược một xâu</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strripos.asp">strripos()</a></td>
-            <td>Tìm vị trí xuất hiện cuối cùng của một xâu trong một xâu khác
-              (không phân biệt hoa thường)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strrpos.asp">strrpos()</a></td>
-            <td>Tìm vị trí xuất hiện cuối cùng của một xâu trong một xâu khác
-              (phân biệt hoa thường)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strspn.asp">strspn()</a></td>
-            <td>Returns the number of characters found in a string that contains
-              only characters from a specified charlist</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strstr.asp">strstr()</a></td>
-            <td>Finds the first occurrence of a string inside another string
-              (case-sensitive)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strtok.asp">strtok()</a></td>
-            <td>Splits a string into smaller strings</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_strtr.asp">strtr()</a></td>
-            <td>Translates certain characters in a string</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_substr.asp">substr()</a></td>
-            <td>Returns a part of a string</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_substr_compare.asp">substr_compare()</a></td>
-            <td>Compares two strings from a specified start position (binary
-              safe and optionally case-sensitive)</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_substr_count.asp">substr_count()</a></td>
-            <td>Đếm số lần xuất hiện của một xâu con trong một xâu khác</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_substr_replace.asp">substr_replace()</a></td>
-            <td>Replaces a part of a string with another string</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_ucfirst.asp">ucfirst()</a></td>
-            <td>Chuyển ký tự đầu tiên của một xâu thành chữ hoa</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_ucwords.asp">ucwords()</a></td>
-            <td>Chuyển ký tự đầu tiên của từng từ trong một xâu thành chữ hoa</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_vfprintf.asp">vfprintf()</a></td>
-            <td>Writes a formatted string to a specified output stream</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_vprintf.asp">vprintf()</a></td>
-            <td>Outputs a formatted string</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_vsprintf.asp">vsprintf()</a></td>
-            <td>Writes a formatted string to a variable</td>
-          </tr>
-          <tr>
-            <td><a href="https://www.w3schools.com/php/func_string_wordwrap.asp">wordwrap()</a></td>
-            <td>Wraps a string to a given number of characters</td>
-          </tr>
-        </tbody>
-      </table>
-	  </div>
-      <p>Tham khảo: <a target="_blank" href="https://www.w3schools.com/php/php_ref_string.asp">w3schools.com</a></p>
+          <tbody>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strlen.asp">strlen()</a></td>
+              <td>Trả về độ dài của xâu</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_str_word_count.asp">str_word_count()</a></td>
+              <td>Đếm số từ trong một xâu</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strpos.asp">strpos()</a></td>
+              <td>Trả về vị trí của lần xuất hiện đầu tiên của một xâu trong một
+                xâu khác (phân biệt hoa thường)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_str_replace.asp">str_replace()</a></td>
+              <td>Thay thế một số ký tự trong một xâu (phân biệt hoa thường)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_explode.asp">explode()</a></td>
+              <td>Tách một xâu thành một mảng (split)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_implode.asp">implode()</a></td>
+              <td>Trả về một xâu từ các phần tử trong một mảng (join)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_number_format.asp">number_format()</a></td>
+              <td>Định dạng một số với các nhóm hàng ngàn</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_str_pad.asp">str_pad()</a></td>
+              <td>Pad một xâu theo độ dài mới</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_str_repeat.asp">str_repeat()</a></td>
+              <td>Lặp lại một xâu theo một số lần cho trước</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strtolower.asp">strtolower()</a></td>
+              <td>Chuyển một xâu về chữ thường</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strtoupper.asp">strtoupper()</a></td>
+              <td>Chuyển một xâu về chữ hoa</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_trim.asp">trim()</a></td>
+              <td>Loại bỏ các ký tự trắng ở cả hai bên của một xâu</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_addcslashes.asp">addcslashes()</a></td>
+              <td>Returns a string with backslashes in front of the specified
+                characters</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_addslashes.asp">addslashes()</a></td>
+              <td>Returns a string with backslashes in front of predefined
+                characters</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_bin2hex.asp">bin2hex()</a></td>
+              <td>Chuyển một xâu của các ký tự ASCII thành các giá trị hexa</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_chop.asp">chop()</a></td>
+              <td>Loại bỏ các ký tự trắng phía bên phải (kết thúc) của một xâu</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_chr.asp">chr()</a></td>
+              <td>Trả về một ký tự từ một giá trị ASCII cho trước</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_chunk_split.asp">chunk_split()</a></td>
+              <td>Tách một xâu thành một chuỗi các phần nhỏ hơn</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_convert_cyr_string.asp">convert_cyr_string()</a></td>
+              <td>Converts a string from one Cyrillic character-set to another</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_convert_uudecode.asp">convert_uudecode()</a></td>
+              <td>Decodes a uuencoded string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_convert_uuencode.asp">convert_uuencode()</a></td>
+              <td>Encodes a string using the uuencode algorithm</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_count_chars.asp">count_chars()</a></td>
+              <td>Returns information about characters used in a string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_crc32.asp">crc32()</a></td>
+              <td>Calculates a 32-bit CRC for a string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_crypt.asp">crypt()</a></td>
+              <td>Hashing một chiều xâu</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_echo.asp">echo()</a></td>
+              <td>Output một hoặc nhiều xâu</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_fprintf.asp">fprintf()</a></td>
+              <td>Writes a formatted string to a specified output stream</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_get_html_translation_table.asp">get_html_translation_table()</a></td>
+              <td>Returns the translation table used by htmlspecialchars() and
+                htmlentities()</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_hebrev.asp">hebrev()</a></td>
+              <td>Converts Hebrew text to visual text</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_hebrevc.asp">hebrevc()</a></td>
+              <td>Converts Hebrew text to visual text and new lines (\n) into
+                &lt;br&gt;</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_hex2bin.asp">hex2bin()</a></td>
+              <td>Chuyển một xâu của các giá trị hexa thành các ký tự ASCII</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_html_entity_decode.asp">html_entity_decode()</a></td>
+              <td>Chuyển các HTML entity thành các ký tự</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_htmlentities.asp">htmlentities()</a></td>
+              <td>Chuyển các ký tự thành các HTML entity</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_htmlspecialchars_decode.asp">htmlspecialchars_decode()</a></td>
+              <td>Converts some predefined HTML entities to characters</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_htmlspecialchars.asp">htmlspecialchars()</a></td>
+              <td>Converts some predefined characters to HTML entities</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_join.asp">join()</a></td>
+              <td>Alias của <a href="https://www.w3schools.com/php/func_string_implode.asp">implode()</a></td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_lcfirst.asp">lcfirst()</a></td>
+              <td>Chuyển ký tự đầu tiên của một xâu thành chữ thường</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_levenshtein.asp">levenshtein()</a></td>
+              <td>Trả về khoảng cách Levenshtein giữa hai xâu</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_localeconv.asp">localeconv()</a></td>
+              <td>Returns locale numeric and monetary formatting information</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_ltrim.asp">ltrim()</a></td>
+              <td>Loại bỏ các khoảng trắng ở bên trái (bắt đầu) của một xâu</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_md5.asp">md5()</a></td>
+              <td>Tính hash MD5 của một xâu</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_md5_file.asp">md5_file()</a></td>
+              <td>Tính hash MD5 của một file</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_metaphone.asp">metaphone()</a></td>
+              <td>Calculates the metaphone key of a string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_money_format.asp">money_format()</a></td>
+              <td>Returns a string formatted as a currency string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_nl_langinfo.asp">nl_langinfo()</a></td>
+              <td>Returns specific local information</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_nl2br.asp">nl2br()</a></td>
+              <td>Inserts HTML line breaks in front of each newline in a string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_ord.asp">ord()</a></td>
+              <td>Trả về giá trị ASCII của ký tự đầu tiên của một xâu</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_parse_str.asp">parse_str()</a></td>
+              <td>Parses a query string into variables</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_print.asp">print()</a></td>
+              <td>Output một hoặc nhiều xâu</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_printf.asp">printf()</a></td>
+              <td>Outputs a formatted string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_quoted_printable_decode.asp">quoted_printable_decode()</a></td>
+              <td>Converts a quoted-printable string to an 8-bit string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_quoted_printable_encode.asp">quoted_printable_encode()</a></td>
+              <td>Converts an 8-bit string to a quoted printable string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_quotemeta.asp">quotemeta()</a></td>
+              <td>Quotes meta characters</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_rtrim.asp">rtrim()</a></td>
+              <td>Loại bỏ các khoảng trắng ở bên phải của một xâu</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_setlocale.asp">setlocale()</a></td>
+              <td>Thiết lập thông tin locale</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_sha1.asp">sha1()</a></td>
+              <td>Tính toán hash SHA-1 của một xâu</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_sha1_file.asp">sha1_file()</a></td>
+              <td>Tính toán hash SHA-1 của một file</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_similar_text.asp">similar_text()</a></td>
+              <td>Tính toán sự giống nhau giữa hai xâu</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_soundex.asp">soundex()</a></td>
+              <td>Calculates the soundex key of a string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_sprintf.asp">sprintf()</a></td>
+              <td>Writes a formatted string to a variable</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_sscanf.asp">sscanf()</a></td>
+              <td>Parses input from a string according to a format</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_str_getcsv.asp">str_getcsv()</a></td>
+              <td>Parses a CSV string into an array</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_str_ireplace.asp">str_ireplace()</a></td>
+              <td>Thay thế một số ký tự trong một xâu (không phân biệt hoa
+                thường)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_str_rot13.asp">str_rot13()</a></td>
+              <td>Thực hiện encode ROT13 trên một xâu</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_str_shuffle.asp">str_shuffle()</a></td>
+              <td>Trộn ngẫu nhiên tất cả các ký tự trong một xâu</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_str_split.asp">str_split()</a></td>
+              <td>Tách một xâu thành một mảng</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strcasecmp.asp">strcasecmp()</a></td>
+              <td>So sánh hai xâu (không phân biệt hoa thường)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strchr.asp">strchr()</a></td>
+              <td>Tìm sự xuất hiện đầu tiên của một xâu trong một xâu khác
+                (alias của <code>strstr()</code>)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strcmp.asp">strcmp()</a></td>
+              <td>So sánh hai xâu (phân biệt hoa thường)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strcoll.asp">strcoll()</a></td>
+              <td>So sánh hai xâu (dựa vào locale)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strcspn.asp">strcspn()</a></td>
+              <td>Returns the number of characters found in a string before any
+                part of some specified characters are found</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strip_tags.asp">strip_tags()</a></td>
+              <td>Strips HTML and PHP tags from a string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_stripcslashes.asp">stripcslashes()</a></td>
+              <td>Unquotes a string quoted with addcslashes()</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_stripslashes.asp">stripslashes()</a></td>
+              <td>Unquotes a string quoted with addslashes()</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_stripos.asp">stripos()</a></td>
+              <td>Trả về vị trí của sự xuất hiện đầu tiên của một xâu trong một
+                xâu khác (không phân biệt hoa thường)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_stristr.asp">stristr()</a></td>
+              <td>Tìm kiếm sự xuất hiện đầu tiên của một xâu trong một xâu khác
+                (không phân biệt hoa thường)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strnatcasecmp.asp">strnatcasecmp()</a></td>
+              <td>So sánh hai xâu sử dụng thuật toán "thứ tự tự nhiên" (không
+                phân biệt hoa thường)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strnatcmp.asp">strnatcmp()</a></td>
+              <td>So sánh hai xâu sử dụng thuật toán "thứ tự tự nhiên" (phân
+                biệt hoa thường)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strncasecmp.asp">strncasecmp()</a></td>
+              <td>String comparison of the first n characters (case-insensitive)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strncmp.asp">strncmp()</a></td>
+              <td>String comparison of the first n characters (case-sensitive)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strpbrk.asp">strpbrk()</a></td>
+              <td>Searches a string for any of a set of characters</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strrchr.asp">strrchr()</a></td>
+              <td>Finds the last occurrence of a string inside another string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strrev.asp">strrev()</a></td>
+              <td>Đảo ngược một xâu</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strripos.asp">strripos()</a></td>
+              <td>Tìm vị trí xuất hiện cuối cùng của một xâu trong một xâu khác
+                (không phân biệt hoa thường)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strrpos.asp">strrpos()</a></td>
+              <td>Tìm vị trí xuất hiện cuối cùng của một xâu trong một xâu khác
+                (phân biệt hoa thường)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strspn.asp">strspn()</a></td>
+              <td>Returns the number of characters found in a string that
+                contains only characters from a specified charlist</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strstr.asp">strstr()</a></td>
+              <td>Finds the first occurrence of a string inside another string
+                (case-sensitive)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strtok.asp">strtok()</a></td>
+              <td>Splits a string into smaller strings</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_strtr.asp">strtr()</a></td>
+              <td>Translates certain characters in a string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_substr.asp">substr()</a></td>
+              <td>Returns a part of a string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_substr_compare.asp">substr_compare()</a></td>
+              <td>Compares two strings from a specified start position (binary
+                safe and optionally case-sensitive)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_substr_count.asp">substr_count()</a></td>
+              <td>Đếm số lần xuất hiện của một xâu con trong một xâu khác</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_substr_replace.asp">substr_replace()</a></td>
+              <td>Replaces a part of a string with another string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_ucfirst.asp">ucfirst()</a></td>
+              <td>Chuyển ký tự đầu tiên của một xâu thành chữ hoa</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_ucwords.asp">ucwords()</a></td>
+              <td>Chuyển ký tự đầu tiên của từng từ trong một xâu thành chữ hoa</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_vfprintf.asp">vfprintf()</a></td>
+              <td>Writes a formatted string to a specified output stream</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_vprintf.asp">vprintf()</a></td>
+              <td>Outputs a formatted string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_vsprintf.asp">vsprintf()</a></td>
+              <td>Writes a formatted string to a variable</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.w3schools.com/php/func_string_wordwrap.asp">wordwrap()</a></td>
+              <td>Wraps a string to a given number of characters</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Danh sách các hàm mbstring</h3>
+      <p>PHP coi string là một mảng byte. Mỗi ký tự ASCII sẽ lưu trữ trọn vẹn
+        trong một byte. Tuy nhiên, để lưu trữ các ký tự Unicode (ví dụ tiếng
+        Việt), chúng ta sẽ cần hơn một byte cho một ký tự. Để PHP xử lý đúng các
+        ký tự Unicode, chúng ta hãy sử dụng các hàm mb_. Các hàm này ở module
+        mbstring.</p>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Hàm</th>
+              <th>Mô tả</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-check-encoding.php">mb_check_encoding</a></td>
+              <td>Check if strings are valid for the specified encoding</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-chr.php">mb_chr</a></td>
+              <td>Get a specific character</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-convert-case.php">mb_convert_case</a></td>
+              <td>Perform case folding on a string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-convert-encoding.php">mb_convert_encoding</a></td>
+              <td>Convert character encoding</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-convert-kana.php">mb_convert_kana</a></td>
+              <td>Convert "kana" one from another ("zen-kaku", "han-kaku" and
+                more)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-convert-variables.php">mb_convert_variables</a></td>
+              <td>Convert character code in variable(s)</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-decode-mimeheader.php">mb_decode_mimeheader</a></td>
+              <td>Decode string in MIME header field</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-decode-numericentity.php">mb_decode_numericentity</a></td>
+              <td>Decode HTML numeric string reference to character</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-detect-encoding.php">mb_detect_encoding</a></td>
+              <td>Detect character encoding</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-detect-order.php">mb_detect_order</a></td>
+              <td>Set/Get character encoding detection order</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-encode-mimeheader.php">mb_encode_mimeheader</a></td>
+              <td>Encode string for MIME header</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-encode-numericentity.php">mb_encode_numericentity</a></td>
+              <td>Encode character to HTML numeric string reference</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-encoding-aliases.php">mb_encoding_aliases</a></td>
+              <td>Get aliases of a known encoding type</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-ereg-match.php">mb_ereg_match</a></td>
+              <td>Regular expression match for multibyte string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-ereg-replace-callback.php">mb_ereg_replace_callback</a></td>
+              <td>Perform a regular expression search and replace with multibyte
+                support using a callback</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-ereg-replace.php">mb_ereg_replace</a></td>
+              <td>Replace regular expression with multibyte support</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-ereg-search-getpos.php">mb_ereg_search_getpos</a></td>
+              <td>Returns start point for next regular expression match</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-ereg-search-getregs.php">mb_ereg_search_getregs</a></td>
+              <td>Retrieve the result from the last multibyte regular expression
+                match</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-ereg-search-init.php">mb_ereg_search_init</a></td>
+              <td>Setup string and regular expression for a multibyte regular
+                expression match</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-ereg-search-pos.php">mb_ereg_search_pos</a></td>
+              <td>Returns position and length of a matched part of the multibyte
+                regular expression for a predefined multibyte string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-ereg-search-regs.php">mb_ereg_search_regs</a></td>
+              <td>Returns the matched part of a multibyte regular expression</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-ereg-search-setpos.php">mb_ereg_search_setpos</a></td>
+              <td>Set start point of next regular expression match</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-ereg-search.php">mb_ereg_search</a></td>
+              <td>Multibyte regular expression match for predefined multibyte
+                string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-ereg.php">mb_ereg</a></td>
+              <td>Regular expression match with multibyte support</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-eregi-replace.php">mb_eregi_replace</a></td>
+              <td>Replace regular expression with multibyte support ignoring
+                case</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-eregi.php">mb_eregi</a></td>
+              <td>Regular expression match ignoring case with multibyte support</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-get-info.php">mb_get_info</a></td>
+              <td>Get internal settings of mbstring</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-http-input.php">mb_http_input</a></td>
+              <td>Detect HTTP input character encoding</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-http-output.php">mb_http_output</a></td>
+              <td>Set/Get HTTP output character encoding</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-internal-encoding.php">mb_internal_encoding</a></td>
+              <td>Set/Get internal character encoding</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-language.php">mb_language</a></td>
+              <td>Set/Get current language</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-list-encodings.php">mb_list_encodings</a></td>
+              <td>Returns an array of all supported encodings</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-ord.php">mb_ord</a></td>
+              <td>Get code point of character</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-output-handler.php">mb_output_handler</a></td>
+              <td>Callback function converts character encoding in output buffer</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-parse-str.php">mb_parse_str</a></td>
+              <td>Parse GET/POST/COOKIE data and set global variable</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-preferred-mime-name.php">mb_preferred_mime_name</a></td>
+              <td>Get MIME charset string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-regex-encoding.php">mb_regex_encoding</a></td>
+              <td>Set/Get character encoding for multibyte regex</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-regex-set-options.php">mb_regex_set_options</a></td>
+              <td>Set/Get the default options for mbregex functions</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-scrub.php">mb_scrub</a></td>
+              <td>Description</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-send-mail.php">mb_send_mail</a></td>
+              <td>Send encoded mail</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-split.php">mb_split</a></td>
+              <td>Split multibyte string using regular expression</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-str-split.php">mb_str_split</a></td>
+              <td>Given a multibyte string, return an array of its characters</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-strcut.php">mb_strcut</a></td>
+              <td>Get part of string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-strimwidth.php">mb_strimwidth</a></td>
+              <td>Get truncated string with specified width</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-stripos.php">mb_stripos</a></td>
+              <td>Finds position of first occurrence of a string within another,
+                case insensitive</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-stristr.php">mb_stristr</a></td>
+              <td>Finds first occurrence of a string within another, case
+                insensitive</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-strlen.php">mb_strlen</a></td>
+              <td>Get string length</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-strpos.php">mb_strpos</a></td>
+              <td>Find position of first occurrence of string in a string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-strrchr.php">mb_strrchr</a></td>
+              <td>Finds the last occurrence of a character in a string within
+                another</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-strrichr.php">mb_strrichr</a></td>
+              <td>Finds the last occurrence of a character in a string within
+                another, case insensitive</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-strripos.php">mb_strripos</a></td>
+              <td>Finds position of last occurrence of a string within another,
+                case insensitive</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-strrpos.php">mb_strrpos</a></td>
+              <td>Find position of last occurrence of a string in a string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-strstr.php">mb_strstr</a></td>
+              <td>Finds first occurrence of a string within another</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-strtolower.php">mb_strtolower</a></td>
+              <td>Make a string lowercase</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-strtoupper.php">mb_strtoupper</a></td>
+              <td>Make a string uppercase</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-strwidth.php">mb_strwidth</a></td>
+              <td>Return width of string</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-substitute-character.php">mb_substitute_character</a></td>
+              <td>Set/Get substitution character</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-substr-count.php">mb_substr_count</a></td>
+              <td>Count the number of substring occurrences</td>
+            </tr>
+            <tr>
+              <td><a href="https://www.php.net/manual/en/function.mb-substr.php">mb_substr</a></td>
+              <td>Get part of string</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <h3>Tham khảo</h3>
+      <p><a target="_blank" href="https://www.w3schools.com/php/php_ref_string.asp">w3schools.com</a></p>
+      <p><a href="https://www.php.net/manual/en/ref.mbstring.php" target="_blank">PHP:
+          Multibyte String Functions - Manual</a></p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>

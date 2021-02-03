@@ -162,7 +162,8 @@ const PageInfo = {
      * Ở thư mục /posts/ và có meta[name="date"].
      */
     isPublishContent() {
-        return window.location.pathname.startsWith('/posts/');
+		const meta = document.querySelector('meta[name="date"]');
+		return !!meta;
     },
 
     /**
@@ -294,7 +295,7 @@ class FooterSummary {
 
         if (article) {
             const footer = document.createElement('footer');
-            footer.className = 'mt-5 mt-lg-0 mb-5 mb-lg-0 bg-light p-4 footer';
+            footer.className = 'mt-5 mt-lg-0 mb-5 mb-lg-0 p-4 footer';
             footer.appendChild(this.createPublishDateContainer());
             footer.appendChild(this.createDescriptionContainer());
             // footer.appendChild(this.createCategoryContainer());
