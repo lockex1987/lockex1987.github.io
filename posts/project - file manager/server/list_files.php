@@ -9,7 +9,7 @@ $files = scandir($rootFolder . $folder);
 
 $result = [];
 foreach ($files as $file) {
-    if (!in_array($file, ['.', '..'])) {
+    if (!in_array($file, ['.', '..', 'lost+found', '.Trash-1000'])) {
         $absPath = $rootFolder . $folder . $file;
         $isDir = is_dir($absPath);
         array_push($result, [
