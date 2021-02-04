@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="date" content="2021-01-29 10:11:00">
-    <meta name="description" content="ssh key, git, github">
+    <meta name="description" content="ssh key, git, github, ssh-agent">
     <title>Sử dụng SSH key với Git</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -232,17 +232,36 @@ Host github-acc1
     # TCPKeepAlive yes
     # IdentitiesOnly yes
 </pre>
-      <p><br>
-      </p>
+      <p>Trên môi trường Linux, bạn cần phải làm các việc sau:</p>
+      <pre class="bg-dark text-white"># Khởi động ssh-agent (có cần?)
+$ eval "$(ssh-agent -s)"
+Agent pid 5724
+<br>$ ssh-add ~/.ssh/lockex1987
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions 0664 for '/home/lockex1987/.ssh/lockex1987' are too open.
+It is required that your private key files are NOT accessible by others.
+This private key will be ignored.<br><br># Phân lại quyền cho file key
+$ chmod 600 ~/.ssh/lockex1987
+<br># Thêm key vào ssh-agent<br>$ ssh-add ~/.ssh/lockex1987
+Identity added: /home/lockex1987/.ssh/lockex1987 (lockex1987@gmail.com)
+<br># Kiểm tra lại<br>$ ssh -T git@github.com
+The authenticity of host 'github.com (13.250.177.223)' can't be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com,13.250.177.223' (RSA) to the list of known hosts.
+Hi lockex1987! You've successfully authenticated, but GitHub does not provide shell access.
+</pre>
       <h3>Tham khảo</h3>
-      <p><a href="https://techmaster.vn/posts/34411/github-su-dung-ssh-hay-https"
+      <p><a href="https://techmaster.vn/posts/34411/github-su-dung-ssh-hay-https"
           target="_blank">Github: sử dụng ssh hay https</a></p>
-      <p><a href="https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/"
+      <p><a href="https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/"
           target="_blank">Token authentication requirements for Git operations -
           The GitHub Blog</a></p>
-      <p><a href="https://docs.github.com/en/github/authenticating-to-github/about-authentication-to-github"
+      <p><a href="https://docs.github.com/en/github/authenticating-to-github/about-authentication-to-github"
           target="_blank">About authentication to GitHub - GitHub Docs</a></p>
-      <p><a href="https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account"
+      <p><a href="https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account"
           target="_blank">Adding a new SSH key to your GitHub account - GitHub
           Docs</a> </p>
       <p><br>
