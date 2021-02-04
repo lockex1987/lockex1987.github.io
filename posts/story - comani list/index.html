@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="fandom issue, crawler" />
+
+    <title>Ultimates</title>
+
+    <link rel="icon"
+        href="../../images/favicon.png" />
+    <link rel="stylesheet"
+        href="../../css/style.css" />
+</head>
+
+<body>
+    <article>
+        <div id="app"
+            v-cloak>
+            <div class="pt-4 text-center mb-3">
+                <img :src="logo" />
+            </div>
+
+            <ul data-toc></ul>
+
+            <div v-for="section in sections">
+                <h3>
+                    {{section.title}}
+                </h3>
+
+                <div class="d-flex justify-content-between flex-wrap">
+                    <div v-for="item in section.items"
+                        class="d-inline-block p-3 align-top text-center">
+
+                        <img :src="item.image"
+                            class="object-fit-cover"
+                            style="height: 300px; width: 200px;" />
+
+                        <div class="my-3"
+                            style="width: 200px;">
+                            <div class="font-size-0.875 font-weight-500">
+                                <a :href="item.link"
+                                    target="_blank">
+                                    <i>{{item.title}}</i>
+                                    {{item.issue}}
+                                </a>
+                            </div>
+
+                            <div class="text-muted">
+                                "{{item.subtitle}}"
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3>Tham khảo</h3>
+        <ul>
+            <li>
+                <a href="https://marvel.fandom.com/wiki/Ultimates_Vol_1"
+                    target="_blank">Ultimates Vol 1 (2002–2004) | Fandom</a>
+            </li>
+        </ul>
+    </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="js/script.js"
+        type="module"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

@@ -162,8 +162,8 @@ const PageInfo = {
      * Ở thư mục /posts/ và có meta[name="date"].
      */
     isPublishContent() {
-		const meta = document.querySelector('meta[name="date"]');
-		return !!meta;
+        const meta = document.querySelector('meta[name="date"]');
+        return !!meta;
     },
 
     /**
