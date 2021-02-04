@@ -216,8 +216,24 @@ Host github-acc1
         thêm <code>git@</code> trước tên host, do đó <code>https://github.com/Foo/Bar.git</code>
         sẽ trở thành <code>ssh://git@github.com/Foo/Bar.git</code>.</p>
       <pre class="out-of-box">git remote set-url origin ssh://git@bitbucket.cyberspace.vn:7999/sn/safenet_front.git<br><br>git remote set-url origin ssh://git@github.com/lockex1987/lockex1987.github.io</pre>
-      <p> Clone: </p>
+      <p> Clone:</p>
       <pre class="out-of-box">git clone ssh://git@bitbucket.cyberspace.vn:7999/sn/safenet_front.git</pre>
+      <p>Trên máy Windows, nếu chúng ta cài đặt Git Bash thì sẽ có sẵn tool <code>connect.exe</code>.</p>
+      <p>Sửa lại file <code>~/.ssh/config</code> như sau:</p>
+      <pre>Host github.com
+    HostName ssh.github.com
+    # Port 22
+    Port 443
+    User git
+    IdentityFile "C:\Users\VTCC-\.ssh\lockex1987"
+    # ProxyCommand nc -X connect -x 192.168.103.25:80 %h %p
+    # ProxyCommand nc -proxy -x 192.168.103.25:80 %h %p
+    ProxyCommand connect -H 192.168.103.25:80 %h %p
+    # TCPKeepAlive yes
+    # IdentitiesOnly yes
+</pre>
+      <p><br>
+      </p>
       <h3>Tham khảo</h3>
       <p><a href="https://techmaster.vn/posts/34411/github-su-dung-ssh-hay-https"
           target="_blank">Github: sử dụng ssh hay https</a></p>
