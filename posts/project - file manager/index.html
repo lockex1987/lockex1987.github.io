@@ -23,9 +23,15 @@
             <div class="mb-3 d-flex justify-content-between flex-wrap">
                 <nav>
                     <ol class="font-size-1.25 font-weight-500 breadcrumb bg-transparent pt-0 pl-0 pb-0">
-                        <li>
-                            <span style="display: inline-block; padding-right: .5rem; color: #6c757d;">
-                                /
+                        <li class="breadcrumb-item"
+                            :class="{ 'active': 0 == breadcrumbs.length }">
+                            <span v-if="0 == breadcrumbs.length">
+                                ROOT
+                            </span>
+                            <span v-else
+                                class="cursor-pointer text-success"
+                                @click="folder = '/'; listFolderContent();">
+                                ROOT
                             </span>
                         </li>
 
@@ -122,8 +128,8 @@
     
                 <div v-else>        
                     <div v-for="(f, idx) in filteredFiles"
-                        class="d-flex justify-content-between flex-wrap"
-                        :class="{ 'mt-2 border-top pt-2': idx > 0 || folder != '/' }">
+                        class="d-flex justify-content-start align-items-end flex-wrap"
+                        :class="{ 'mt-2 pt-2': idx > 0 || folder != '/' }">
                         <div>
                             <span @click="openFolder(f)"
                                 class="cursor-pointer text-primary file-icon file-icon-folder text-decoration-none"
@@ -144,7 +150,7 @@
                                 v-if="f.download"/>
                         </div>
 
-                        <div class="text-right text-muted font-size-0.875">
+                        <div class="text-right text-muted font-size-0.875 ml-2">
                             {{f.size}}
                         </div>
                     </div>
