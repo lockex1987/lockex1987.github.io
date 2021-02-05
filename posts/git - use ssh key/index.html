@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="date" content="2021-01-29 10:11:00">
-    <meta name="description" content="ssh key, git, github, ssh-agent">
+    <meta name="description" content="ssh key, git, github, ssh-agent, ssh-add">
     <title>Sử dụng SSH key với Git</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -253,15 +253,55 @@ Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
 Warning: Permanently added 'github.com,13.250.177.223' (RSA) to the list of known hosts.
 Hi lockex1987! You've successfully authenticated, but GitHub does not provide shell access.
 </pre>
+      <p><mark class="text-uppercase">Cần xác minh</mark></p>
+      <p>Trên môi trường Linux, chúng ta cần phân quyền 600 cho private key để
+        người dùng khác trong máy không thể đọc được nội dung file. Nếu private
+        key mà có thể được đọc bằng người dùng khác thì sẽ không được sử dụng,
+        có thể gây ra lỗi.</p>
+      <p><code>ssh-agent</code> là một tool để quản lý passphrase, giúp cho bạn
+        không phải nhập đi nhập lại passphrase mỗi lần thao tác ssh. <code>ssh-add</code>
+        là lệnh để thêm private key vào cho <code>ssh-agent</code> quản lý. Nếu
+        bạn không có passphrase thì cũng không cần sử dụng <code>ssh-agent</code>.</p>
+      <h3>ssh-agent và ssh-add</h3>
+      <p>Khởi động <code>ssh-agent</code>:</p>
+      <pre class="bg-dark text-white">$ <span class="text-success">eval $(ssh-agent -s)</span>
+Agent pid 755</pre>
+      <p>Thêm key vào <code>ssh-agent</code>:</p>
+      <pre class="bg-dark text-white">$ <span class="text-success">ssh-add ~/.ssh/id_rsa</span>
+Identity added: /c/Users/VTCC-/.ssh/id_rsa (/c/Users/VTCC-/.ssh/id_rsa)</pre>
+      <p>Liệt kê các key đang có trong <code>ssh-agent</code>:</p>
+      <pre class="bg-dark text-white">$ <span class="text-success">ssh-add -l</span>
+2048 SHA256:fscKGt5ez65cZLerrf1CZ0n5Bsq2thTQlzBt1IZ4f7M /c/Users/VTCC-/.ssh/id_rsa (RSA)
+
+$ <span class="text-success">ssh-add -L</span>
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDD4oVh2lMEeg4xjLQaw/f+PwAPhE9CDWVdqDGtDgOd01vuZG9LWkmtpQlkQsSHMzf0OSEzT9aHa5yUesLVAxq+v3mQFw0X0fenok4Wbo9Y7DrLYBsqogufaBoIKrMdpkqtg6YAHx0VtTBfxLy0PbH3dpzvLCqoEYTIxwjILp3Mglz0idyzdFv6IMzsvyO4QE+tbQgFKMe1y8uByjGFiRLsv9W3BN3Mcz8RqBSbixXEbrl42LK5zX0FFH7fPwvF2Am5Gb5Dm+88k/J4qUTUHDIFMVg+1fSlHvN7/TQ8VvlLbtgZUOTOFZuFMM3q4+bqBVYctkgaS5+LRKiwCgZbAiit /c/Users/VTCC-/.ssh/id_rsa</pre>
+      <p>Xóa một key khỏi ssh-agent:</p>
+      <pre class="bg-dark text-white">$ <span class="text-success">ssh-add -d ~/.ssh/id_rsa</span>
+Identity removed: /c/Users/VTCC-/.ssh/id_rsa (huyennv9@VTCC-HUYENNV1)
+
+$ <span class="text-success">ssh-add -l</span>
+The agent has no identities.</pre>
+      <p>Xóa tất cả key đang có trong <code>ssh-agent</code>:</p>
+      <pre class="bg-dark text-white">$ <span class="text-success">ssh-add ~/.ssh/id_rsa</span>
+Identity added: /c/Users/VTCC-/.ssh/id_rsa (/c/Users/VTCC-/.ssh/id_rsa)
+
+$ <span class="text-success">ssh-add -l</span>
+2048 SHA256:fscKGt5ez65cZLerrf1CZ0n5Bsq2thTQlzBt1IZ4f7M /c/Users/VTCC-/.ssh/id_rsa (RSA)
+
+$ <span class="text-success">ssh-add -D</span>
+All identities removed.
+
+$ <span class="text-success">ssh-add -l</span>
+The agent has no identities.</pre>
       <h3>Tham khảo</h3>
-      <p><a href="https://techmaster.vn/posts/34411/github-su-dung-ssh-hay-https"
+      <p><a href="https://techmaster.vn/posts/34411/github-su-dung-ssh-hay-https"
           target="_blank">Github: sử dụng ssh hay https</a></p>
-      <p><a href="https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/"
+      <p><a href="https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/"
           target="_blank">Token authentication requirements for Git operations -
           The GitHub Blog</a></p>
-      <p><a href="https://docs.github.com/en/github/authenticating-to-github/about-authentication-to-github"
+      <p><a href="https://docs.github.com/en/github/authenticating-to-github/about-authentication-to-github"
           target="_blank">About authentication to GitHub - GitHub Docs</a></p>
-      <p><a href="https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account"
+      <p><a href="https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account"
           target="_blank">Adding a new SSH key to your GitHub account - GitHub
           Docs</a> </p>
       <p><br>
