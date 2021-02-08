@@ -253,16 +253,44 @@ Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
 Warning: Permanently added 'github.com,13.250.177.223' (RSA) to the list of known hosts.
 Hi lockex1987! You've successfully authenticated, but GitHub does not provide shell access.
 </pre>
-      <p><mark class="text-uppercase">Cần xác minh</mark></p>
+      <h3>Phân quyền private key trên Linux</h3>
       <p>Trên môi trường Linux, chúng ta cần phân quyền 600 cho private key để
         người dùng khác trong máy không thể đọc được nội dung file. Nếu private
         key mà có thể được đọc bằng người dùng khác thì sẽ không được sử dụng,
         có thể gây ra lỗi.</p>
+      <pre class="bg-dark text-white">$ <span class="text-success">chmod 666 ../.ssh/lockex1987</span>
+$ <span class="text-success">git remote show origin</span>
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions 0666 for '/home/lockex1987/.ssh/lockex1987' are too open.
+It is required that your private key files are NOT accessible by others.
+This private key will be ignored.
+Load key "/home/lockex1987/.ssh/lockex1987": bad permissions
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+$ <span class="text-success">chmod 600 ../.ssh/lockex1987</span>
+$ <span class="text-success">git remote show origin</span>
+* remote origin
+  Fetch URL: ssh://git@github.com/lockex1987/lockex1987.github.io
+  Push  URL: ssh://git@github.com/lockex1987/lockex1987.github.io
+  HEAD branch: master
+  Remote branch:
+    master tracked
+  Local branch configured for 'git pull':
+    master merges with remote master
+  Local ref configured for 'git push':
+    master pushes to master (up to date)
+$</pre>
+      
+      <h3>ssh-agent và ssh-add</h3>
       <p><code>ssh-agent</code> là một tool để quản lý passphrase, giúp cho bạn
         không phải nhập đi nhập lại passphrase mỗi lần thao tác ssh. <code>ssh-add</code>
         là lệnh để thêm private key vào cho <code>ssh-agent</code> quản lý. Nếu
         bạn không có passphrase thì cũng không cần sử dụng <code>ssh-agent</code>.</p>
-      <h3>ssh-agent và ssh-add</h3>
       <p>Khởi động <code>ssh-agent</code>:</p>
       <pre class="bg-dark text-white">$ <span class="text-success">eval $(ssh-agent -s)</span>
 Agent pid 755</pre>
@@ -294,14 +322,14 @@ All identities removed.
 $ <span class="text-success">ssh-add -l</span>
 The agent has no identities.</pre>
       <h3>Tham khảo</h3>
-      <p><a href="https://techmaster.vn/posts/34411/github-su-dung-ssh-hay-https"
+      <p><a href="https://techmaster.vn/posts/34411/github-su-dung-ssh-hay-https"
           target="_blank">Github: sử dụng ssh hay https</a></p>
-      <p><a href="https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/"
+      <p><a href="https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/"
           target="_blank">Token authentication requirements for Git operations -
           The GitHub Blog</a></p>
-      <p><a href="https://docs.github.com/en/github/authenticating-to-github/about-authentication-to-github"
+      <p><a href="https://docs.github.com/en/github/authenticating-to-github/about-authentication-to-github"
           target="_blank">About authentication to GitHub - GitHub Docs</a></p>
-      <p><a href="https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account"
+      <p><a href="https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account"
           target="_blank">Adding a new SSH key to your GitHub account - GitHub
           Docs</a> </p>
       <p><br>
@@ -312,5 +340,6 @@ The agent has no identities.</pre>
       </p>
     </article>
     <script src="../../js/docs.js"></script>
+    
   </body>
 </html>
