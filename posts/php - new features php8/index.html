@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="php8">
+    <meta name="description" content="php8, union type, jit - just in time, nullsafe operator, named arguments, attribute, match expression">
     <title>Những cái mới trong PHP 8</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -11,58 +11,51 @@
   <body>
     <article>
       <h2>Những cái mới trong PHP 8</h2>
-      <p>PHP 8 will be released on <a target="_blank" href="https://wiki.php.net/todo/php80">November
-          26, 2020</a>. It's a new major version, which means that it will
-        introduce some breaking changes, as well as lots of new features and
-        performance improvements. Right now PHP 8 is in feature freeze, meaning
-        no new features can be added anymore.</p>
-      <p>Because of the breaking changes, there's a higher chance you'll need to
-        make some changes in your code to get it running on PHP 8. If you've
-        kept up to date with the latest releases though, the upgrade shouldn't
-        be too hard, since most breaking changes were deprecated before in the
-        7.* versions. And don't worry, all these deprecations are listed in this
-        post.</p>
-      <p>Besides breaking changes, PHP 8 also brings a nice set of new features
-        such as <a href="https://stitcher.io/blog/new-in-php-8#jit-rfc">the JIT
-          compiler</a>, <a href="https://stitcher.io/blog/new-in-php-8#union-types-rfc">union
-          types</a>, <a href="https://stitcher.io/blog/new-in-php-8#attributes-rfc">attributes</a>,
-        and more.</p>
+      <p>PHP 8 đã được release vào ngày 26/11/2020. Đây là một phiên bản mới
+        major, nghĩa là nó sẽ có một số thay đổi gây break cũng như nhiều tính
+        năng mới và cải thiện hiệu năng.</p>
       <h3>Tính năng mới</h3>
-      <p>Let's start with all new features, it's quite a list!</p>
-      <h4>Union types</h4>
-      <p>Given the dynamically typed nature of PHP, there are lots of cases
-        where union types can be useful. Union types are a collection of two or
-        more types which indicate that either one of those can be used.</p>
-      <pre>public function foo(Foo|Bar $input): int|float;</pre>
-      <p>Note that <code>void</code> can never be part of a union type, since
-        it indicates "no return value at all". Furthermore, <code>nullable</code>
-        unions can be written using <code>|null</code>, or by using the
-        existing <code>?</code> notation:</p>
-      <pre>public function foo(Foo|null $foo): void;
-public function bar(?Bar $bar): void;</pre>
+      <p>Hãy bắt đầu với các tính năng mới. Danh sách khá là dài.</p>
+      <h4>Kiểu dữ liệu union</h4>
+      <p>Bản chất tự nhiên của PHP là kiểu dữ liệu động, do đó sẽ có nhiều
+        trường hợp kiểu dữ liệu union có thể hữu ích. Kiểu dữ liệu union là một
+        tập hợp của hai hoặc nhiều kiểu dữ liệu mà chỉ thị có thể sử dụng kiểu
+        gì cũng được.</p>
+      <p>Ví dụ chúng ta khai báo:</p>
+      <pre>public function foo(Foo|Bar $input): int|float<br>{<br>}</pre>
+      <p>Hàm trên sẽ chấp nhận tham số đầu vào <code>$input</code> có kiểu là <code>Foo</code>
+        hoặc <code>Bar</code>, và trả về dữ liệu kiểu <code>int</code> hoặc <code>float</code>.</p>
+      <p>Chú ý:</p>
+      <ul>
+        <li><code>void</code> không thể là một phần của kiểu dữ liệu union vì nó
+          nghĩa là "không có giá trị trả về".</li>
+        <li>Kiểu <code>nullable</code> union có thể viết bằng cách <code>|null</code>,
+          hoặc sử dụng notation <code>?</code>.</li>
+        <li>Chúng ta nên khai báo kiểu dữ liệu để code rõ ràng. Đọc khai báo của
+          hàm là chúng ta biết cách sử dụng và truyền dữ liệu thế nào luôn.</li>
+      </ul>
+      <pre>public function foo(Foo|null $foo): void<br>{<br>}<br>
+public function bar(?Bar $bar): void<br>{<br>}</pre>
       <h4>JIT</h4>
-      <p>The JIT - just in time - compiler promises significant performance
-        improvements, albeit not always within the context of web requests. I've
-        done my <a href="https://stitcher.io/blog/jit-in-real-life-web-applications">own
-          benchmarks</a> on real-life web applications, and it seems like the
-        JIT doesn't make that much of a difference, if any, on those kinds of
-        PHP projects.</p>
-      <p>If you want to know more about what the JIT can do for PHP, you can
-        read another post I wrote about it <a href="https://stitcher.io/blog/php-jit">here</a>.</p>
-      <h4>The nullsafe operator</h4>
-      <p>If you're familiar with the <a href="https://stitcher.io/blog/shorthand-comparisons-in-php#null-coalescing-operator">null
-          coalescing operator</a> you're already familiar with its shortcomings:
-        it doesn't work on method calls. Instead you need intermediate checks,
-        or rely on <code>optional</code> helpers provided by some frameworks:</p>
+      <p>JIT (just in time) compiler hứa hẹn sẽ cải thiện hiệu năng một cách
+        đáng kể, không chỉ trong phạm vi ngữ cảnh web request.</p>
+      <p>Nếu bạn muốn biết nhiều hơn về JIT, bạn có thể đọc bài viết về nó <a href="https://stitcher.io/blog/php-jit"
+          target="_blank">ở đây</a>.</p>
+      <h4>Toán tử nullsafe</h4>
+      <p>Nếu bạn đã quen thuộc với toán tử <a href="https://stitcher.io/blog/shorthand-comparisons-in-php#null-coalescing-operator"
+          target="_blank">null coalescing</a>, bạn cũng đã quen với hạn chế của
+        nó: nó không sử dụng được khi gọi phương thức. Bạn sẽ phải kiểm tra
+        trước, ví dụ:</p>
       <pre>$startDate = $booking-&gt;getStartDate();<br>$dateAsString = $startDate ? $startDate-&gt;asDateTimeString() : null;</pre>
-      <p>With the addition of the nullsafe operator, we can now have null
-        coalescing-like behaviour on methods!</p>
+      <p>Với toán tử nullsafe (<code>?-&gt;</code>), chúng ta giờ có thể gọi
+        phương thức giống như null coalescing:</p>
       <pre>$dateAsString = $booking-&gt;getStartDate()?-&gt;asDateTimeString();</pre>
-      <h4>Named arguments</h4>
-      <p><a href="https://stitcher.io/blog/php-8-named-arguments">Named
-          arguments</a> allow you to pass in values to a function, by specifying
-        the value name, so that you don't have to take their order into
-        consideration, and you can also skip optional parameters!</p>
+      <h4>Truyền tham số theo tên</h4>
+      <p><a href="https://stitcher.io/blog/php-8-named-arguments" target="_blank">Named
+          arguments</a> (truyền tham số theo tên) cho phép bạn truyền giá trị
+        cho một hàm bằng cách chỉ ra tên của giá trị, do đó bạn không cần quan
+        tâm đến vị trí của các tham số, và bạn có thể bỏ qua các tham số tùy
+        chọn!</p>
       <pre>function foo(string $a, string $b, ?string $c = null, ?string $d = null) 
 {
     /* … */
@@ -73,14 +66,13 @@ foo(
     a: 'value a', 
     d: 'value d',
 );</pre>
-      <p>You can read about them in-depth <a href="https://stitcher.io/blog/php-8-named-arguments">in
-          this post</a>.</p>
-      <h4>Attributes</h4>
-      <p><a href="https://stitcher.io/blog/attributes-in-php-8">Attributes</a>,
-        commonly known as annotations in other languages, offers a way to add
-        meta data to classes, without having to parse docblocks.</p>
-      <p>As for a quick look, here's an example of what attributes look like,
-        from the RFC:</p>
+      <p>Bạn có thể đọc sâu về chúng <a href="https://stitcher.io/blog/php-8-named-arguments"
+          target="_blank">trong bài viết này</a>.</p>
+      <h4>Attribute</h4>
+      <p><a href="https://stitcher.io/blog/attributes-in-php-8" target="_blank">Attribute</a>,
+        thường được biết là annotation ở các ngôn ngữ lập trình khác, đưa ra một
+        cách để thêm dữ liệu meta vào class.</p>
+      <p>Ví dụ:</p>
       <pre>use App\Attributes\ExampleAttribute;
 
 #[ExampleAttribute]
@@ -93,7 +85,7 @@ class Foo
     public $x;
  
     #[ExampleAttribute]
-    public function foo(#[ExampleAttribute] $bar) { }
+    public function foo(#[ExampleAttribute] $bar)<br>    {<br>    }
 }</pre>
       <pre>#[Attribute]
 class ExampleAttribute
@@ -110,17 +102,18 @@ class ExampleAttribute
           RFC</a> afterwards. If you want to take a deep dive in how attributes
         work, and how you can build your own; you can read about <a href="https://stitcher.io/blog/attributes-in-php-8">attributes
           in depth</a> on this blog.</p>
-      <h4>Match expression</h4>
-      <p>You could call it the big brother of the switch expresion: match can
-        return values, doesn't require break statements, can combine conditions,
-        uses strict type comparisons and doesn't do any type coercion.</p>
-      <p>It looks like this:</p>
+      <h4>Biểu thức match</h4>
+      <p>Biểu thức match tương tự khối xử lý switch. Biểu thức match có thể trả
+        về giá trị, không yêu cầu câu lệnh break, có thể kết hợp các điều kiện,
+        sử dụng so sánh kiểu dữ liệu nghiêm ngặt và không thực hiện type
+        coercion.</p>
+      <p>Nó trông giống như sau:</p>
       <pre>$result = match($input) {
-    0 =&gt; "hello",
-    '1', '2', '3' =&gt; "world",
+    0 =&gt; 'hello',
+    '1', '2', '3' =&gt; 'world'
 };</pre>
-      <p>You can read up on the match expression in detail, <a href="https://stitcher.io/blog/php-8-match-or-switch">over
-          here</a>.</p>
+      <p>Bạn có thể đọc chi tiết <a href="https://stitcher.io/blog/php-8-match-or-switch"
+          target="_blank">ở đây</a>.</p>
       <h4>Constructor property promotion</h4>
       <p>This RFC adds syntactic sugar to create value objects or data transfer
         objects. Instead of specifying class properties and a constructor for
@@ -305,25 +298,25 @@ function bar(string|Stringable $stringable) { /* … */ }
 
 bar(new Foo());
 bar('abc');</pre>
-      <h4>New str_contains() function</h4>
+      <h4>Hàm mới str_contains()</h4>
       <p>Some might say it's long overdue, but we finally don't have to rely on
         <code>strpos()</code> anymore to know whether a string contains another
         string.</p>
       <p>Instead of doing this:</p>
-      <pre>if (strpos('string with lots of words', 'words') !== false) { /* … */ }</pre>
+      <pre>if (strpos('string with lots of words', 'words') !== false) {<br>    /* … */<br>}</pre>
       <p>You can now do this:</p>
-      <pre>if (str_contains('string with lots of words', 'words')) { /* … */ }</pre>
-      <h4>New str_starts_with() and str_ends_with() functions</h4>
+      <pre>if (str_contains('string with lots of words', 'words')) {<br>    /* … */<br>}</pre>
+      <h4>Hàm mới str_starts_with() và str_ends_with()</h4>
       <p>Two other ones long overdue, these two functions are now added in the
         core.</p>
       <pre>str_starts_with('haystack', 'hay'); // true
 str_ends_with('haystack', 'stack'); // true</pre>
-      <h4>New fdiv() function</h4>
+      <h4>Hàm mới fdiv()</h4>
       <p>The new <code>fdiv()</code> function does something similar as the <code>fmod()</code>
         and <code>intdiv()</code> functions, which allows for division by 0.
         Instead of errors you'll get <code>INF</code>, <code>-INF</code> or <code>NAN</code>,
         depending on the case.</p>
-      <h4>New get_debug_type() function</h4>
+      <h4>Hàm mới get_debug_type()</h4>
       <p><code>get_debug_type()</code> returns the type of a variable. Sounds
         like something <code> gettype()</code> would do? <code>get_debug_type()</code>
         returns more useful output for arrays, strings, anonymous classes and
@@ -333,7 +326,7 @@ str_ends_with('haystack', 'stack'); // true</pre>
         will return the class name.</p>
       <p>A full list of differences between <code>get_debug_type()</code> and <code>gettype()</code>
         can be found in the RFC.</p>
-      <h4>New get_resource_id() function</h4>
+      <h4>Hàm mới get_resource_id()</h4>
       <p>Resources are special variables in PHP, referring to external
         resources. One example is a MySQL connection, another one a file handle.</p>
       <p>Each one of those resources gets assigned an ID, though previously the
@@ -347,7 +340,7 @@ str_ends_with('haystack', 'stack'); // true</pre>
         classes using them. There's a caveat though: before PHP 8 the signature
         of these method implementations weren't validated. The following was
         valid:</p>
-      <pre>trait Test {
+      <pre>trait Test<br>{
     abstract public function test(int $input): int;
 }
 
@@ -392,7 +385,7 @@ class UsesTrait
         enabled, this is not possible anymore. Since JSON is so widely used,
         it's best developers can always rely on it being there, instead of
         having to ensure the extension exist first.</p>
-      <h3> Breaking changes</h3>
+      <h3>Các thay đổi break</h3>
       <p>As mentioned before: this is a major update and thus there will be
         breaking changes. The best thing to do is take a look at the full list
         of breaking changes over at the <a target="_blank" href="https://github.com/php/php-src/blob/master/UPGRADING#L20">UPGRADING</a>

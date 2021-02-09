@@ -4,9 +4,11 @@
 // https://codepen.io/ravi-shukla/pen/ywQdYw
 // https://github.com/lockex1987/lockex1987.github.io/blob/master/archive/project%20-%20money%20manager/js/app.js
 
+/**
+ * Khởi tạo Vue.
+ * @param {Object} GoogleAuth Đối tượng GoogleAuth
+ */
 function initVueApp(GoogleAuth) {
-    document.querySelector('#app').style.display = '';
-
     new Vue({
         el: '#app',
 
@@ -30,6 +32,9 @@ function initVueApp(GoogleAuth) {
         },
 
         methods: {
+            /**
+             * Thiết lập trạng thái đăng nhập.
+             */
             setSigninStatus() {
                 const user = GoogleAuth.currentUser.get();
                 this.isAuthorized = !!user.hasGrantedScopes(GOOGLE_API.SCOPE);
@@ -40,6 +45,9 @@ function initVueApp(GoogleAuth) {
                 }
             },
 
+            /**
+             * Đăng nhập hoặc đăng xuất.
+             */
             handleAuthClick() {
                 if (GoogleAuth.isSignedIn.get()) {
                     // User is authorized and has clicked 'Sign out' button
@@ -51,11 +59,18 @@ function initVueApp(GoogleAuth) {
                 }
             },
 
+            /**
+             * Bỏ kết nối.
+             */
             revokeAccess() {
                 // TODO: Cần cập nhật lại setSigninStatus
                 GoogleAuth.disconnect();
             },
 
+            /**
+             * Upload file.
+             * Nội dung file tự sinh.
+             */
             uploadGeneratedFile() {
                 const fileContent = 'sample text';
                 const file = new Blob([fileContent], { type: 'text/plain' });
@@ -71,6 +86,9 @@ function initVueApp(GoogleAuth) {
                 this.uploadFile(form);
             },
 
+            /**
+             * Upload file bình thường.
+             */
             async uploadNormalFile() {
                 // Nếu đang upload rồi thì dừng lại
                 if (this.isUploading) {
@@ -79,7 +97,7 @@ function initVueApp(GoogleAuth) {
 
                 const accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
                 const file = this.$refs.fileInput.files[0];
-                
+
                 // Bước 1: Lấy URL resumable session
                 const metadata = {
                     name: file.name,
@@ -91,7 +109,7 @@ function initVueApp(GoogleAuth) {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                         'Content-Type': 'application/json'
-                    },
+                    }
                 });
                 const location = resp.headers.get('Location');
                 // console.log(location);
@@ -121,9 +139,9 @@ function initVueApp(GoogleAuth) {
                     xhr.responseType = 'json';
                     xhr.addEventListener('load', () => {
                         // console.log('File ID', xhr.response.id);
-                        if (200 <= xhr.status && xhr.status < 400) {
+                        if (xhr.status >= 200 && xhr.status < 400) {
                             totalFailures = 0;
-                            
+
                             // if file is not completely uploaded
                             this.uploadedBytes = this.uploadedBytes + chunkSize;
                             if (this.uploadedBytes <= this.fileSize) {
@@ -180,6 +198,10 @@ function initVueApp(GoogleAuth) {
                 reader.readAsArrayBuffer(blob);
             },
 
+            /**
+             * Upload file.
+             * @param {} form 
+             */
             uploadFile(form) {
                 const accessToken = gapi.auth.getToken().access_token; // Here gapi is used for retrieving the access token.
 
@@ -189,7 +211,7 @@ function initVueApp(GoogleAuth) {
                 xhr.responseType = 'json';
                 xhr.addEventListener('load', () => {
                     console.log('File ID', xhr.response.id);
-                    if (200 <= xhr.status && xhr.status < 300) {
+                    if (xhr.status >= 200 && xhr.status < 300) {
                         console.log('Completed');
                     }
                 });
@@ -202,6 +224,9 @@ function initVueApp(GoogleAuth) {
                 xhr.send(form);
             },
 
+            /**
+             * Tạo thư mục.
+             */
             async createFolder() {
                 // Dùng cách này, owner không phải là 'me'
                 const fileMetadata = {
@@ -253,6 +278,11 @@ function initVueApp(GoogleAuth) {
                 this.files = resp.result.files;
             },
 
+            /**
+             * Download file.
+             * @param {String} fileId ID của file
+             * @param {String} fileName Tên của file
+             */
             async downloadFile(fileId, fileName) {
                 console.log(fileId);
                 const resp = await gapi.client.drive.files.get({
@@ -264,6 +294,10 @@ function initVueApp(GoogleAuth) {
                 // window.location = 'https://www.googleapis.com/drive/v3/files/' + fileId + '?alt=media&key=' + GOOGLE_API.API_KEY;
             },
 
+            /**
+             * Xóa file.
+             * @param {String} fileId ID của file
+             */
             async deleteFile(fileId) {
                 const resp = await gapi.client.drive.files.delete({
                     fileId: fileId
@@ -272,19 +306,27 @@ function initVueApp(GoogleAuth) {
                 this.getFiles();
             },
 
+            /**
+             * Hiển thị dung lượng file.
+             * @param {Integer} n Dung lượng file
+             */
             prettifyNumber(n) {
                 if (n === undefined) {
                     return '';
                 }
-				if (typeof n == 'string') {
-					n = parseInt(n);
-				}
+                if (typeof n == 'string') {
+                    n = parseInt(n);
+                }
                 return CommonUtils.prettifyNumber(n);
             }
         }
     });
 }
 
+
+/**
+ * Hàm này sẽ được gọi sau khi Google API load xong.
+ */
 function handleClientLoad() {
     // Load the API's client and auth2 modules.
     // Call the initClient function after the modules load.
@@ -292,19 +334,24 @@ function handleClientLoad() {
     // gapi.client.load('drive', 'v2', makeRequest);
 }
 
-function initClient() {
+
+/**
+ * Khởi tạo.
+ */
+async function initClient() {
     // Initialize the gapi.client object, which app uses to make API requests.
     // Get API key and client ID from API Console.
     // 'scope' field specifies space-delimited list of access scopes.
-    gapi.client.init({
+    await gapi.client.init({
         apiKey: GOOGLE_API.API_KEY,
         discoveryDocs: [
             GOOGLE_API.DISCOVERY_URL
         ],
         clientId: GOOGLE_API.CLIENT_ID,
         scope: GOOGLE_API.SCOPE
-    }).then(function () {
-        const GoogleAuth = gapi.auth2.getAuthInstance();
-        initVueApp(GoogleAuth);
     });
+
+    const GoogleAuth = gapi.auth2.getAuthInstance();
+    document.querySelector('#app').style.display = '';
+    initVueApp(GoogleAuth);
 }

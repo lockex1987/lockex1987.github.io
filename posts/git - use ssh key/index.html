@@ -200,7 +200,7 @@ Host github-acc1
       <p>Kiểm tra URL cũ:</p>
       <pre>git remote show origin<br><br># git remote -v</pre>
       <p>Ví dụ:</p>
-      <pre class="bg-dark text-white">$ git remote show origin
+      <pre class="bg-dark text-white">$ <span class="text-success">git remote show origin</span>
 * remote origin
   Fetch URL: https://github.com/lockex1987/lockex1987.github.io
   Push  URL: https://github.com/lockex1987/lockex1987.github.io
@@ -233,20 +233,27 @@ Host github-acc1
     # IdentitiesOnly yes
 </pre>
       <p>Trên môi trường Linux, bạn cần phải làm các việc sau:</p>
-      <pre class="bg-dark text-white"># Khởi động ssh-agent (có cần?)
-$ eval "$(ssh-agent -s)"
+      <pre class="bg-dark text-white"><span class="text-warning"># Khởi động ssh-agent (nếu không dùng passphrase thì không cần)</span>
+$ <span class="text-success">eval "$(ssh-agent -s)"</span>
 Agent pid 5724
-<br>$ ssh-add ~/.ssh/lockex1987
+
+$ <span class="text-success">ssh-add ~/.ssh/lockex1987</span>
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 Permissions 0664 for '/home/lockex1987/.ssh/lockex1987' are too open.
 It is required that your private key files are NOT accessible by others.
-This private key will be ignored.<br><br># Phân lại quyền cho file key
-$ chmod 600 ~/.ssh/lockex1987
-<br># Thêm key vào ssh-agent<br>$ ssh-add ~/.ssh/lockex1987
+This private key will be ignored.
+
+<span class="text-warning"># Phân lại quyền cho file key</span>
+$ <span class="text-success">chmod 600 ~/.ssh/lockex1987</span>
+
+<span class="text-warning"># Thêm key vào ssh-agent</span>
+$ <span class="text-success">ssh-add ~/.ssh/lockex1987</span>
 Identity added: /home/lockex1987/.ssh/lockex1987 (lockex1987@gmail.com)
-<br># Kiểm tra lại<br>$ ssh -T git@github.com
+
+<span class="text-warning"># Kiểm tra lại</span>
+$ <span class="text-success">ssh -T git@github.com</span>
 The authenticity of host 'github.com (13.250.177.223)' can't be established.
 RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
@@ -285,7 +292,6 @@ $ <span class="text-success">git remote show origin</span>
   Local ref configured for 'git push':
     master pushes to master (up to date)
 $</pre>
-      
       <h3>ssh-agent và ssh-add</h3>
       <p><code>ssh-agent</code> là một tool để quản lý passphrase, giúp cho bạn
         không phải nhập đi nhập lại passphrase mỗi lần thao tác ssh. <code>ssh-add</code>
@@ -323,13 +329,17 @@ $ <span class="text-success">ssh-add -l</span>
 The agent has no identities.</pre>
       <h3>Tham khảo</h3>
       <p><a href="https://techmaster.vn/posts/34411/github-su-dung-ssh-hay-https"
+
           target="_blank">Github: sử dụng ssh hay https</a></p>
       <p><a href="https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/"
+
           target="_blank">Token authentication requirements for Git operations -
           The GitHub Blog</a></p>
       <p><a href="https://docs.github.com/en/github/authenticating-to-github/about-authentication-to-github"
+
           target="_blank">About authentication to GitHub - GitHub Docs</a></p>
       <p><a href="https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account"
+
           target="_blank">Adding a new SSH key to your GitHub account - GitHub
           Docs</a> </p>
       <p><br>

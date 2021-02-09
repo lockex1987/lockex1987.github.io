@@ -12,11 +12,11 @@ http://ignisart.com/camdenhouse/canon/index.html
 // Dùng web developer tools để thêm id cho bảng chứa mục lục
 function getTableOfContent() {
     document.querySelectorAll('#toc-1 tbody tr').forEach(tr => {
-	    const cells = tr.querySelectorAll('td');
+        const cells = tr.querySelectorAll('td');
         const title = cells[0].textContent.trim();
-	    const atag = cells[1].querySelector('a');
-	    const link = atag.href;
-	    console.log(JSON.stringify({ title, link }) + ',');
+        const atag = cells[1].querySelector('a');
+        const link = atag.href;
+        console.log(JSON.stringify({ title, link }) + ',');
     });
 }
 
@@ -82,27 +82,27 @@ function crawlPage(title, link) {
     // console.log(fileName);
 
     fetch(link)
-	    .then(response => response.arrayBuffer())
-	    .then(buffer => {
+        .then(response => response.arrayBuffer())
+        .then(buffer => {
             // Trang web gốc có charset lạ, dẫn đến bị lỗi ký tự đặc biệt
             // Để lấy charset của một trang web, chúng ta sử dụng lệnh sau:
             // document.characterSet
             // Sau đó chúng ta sẽ convert lại charset UTF-8
-		    const decoder = new TextDecoder('windows-1252');
-		    const htmlCode = decoder.decode(buffer);
-		    // console.log(htmlCode);
+            const decoder = new TextDecoder('windows-1252');
+            const htmlCode = decoder.decode(buffer);
+            // console.log(htmlCode);
 
-		    const doc = parseDocumentFromString(htmlCode);
+            const doc = parseDocumentFromString(htmlCode);
 
-		    const cells = doc.querySelectorAll('td');
-		    // console.log(cells.length); // 12
+            const cells = doc.querySelectorAll('td');
+            // console.log(cells.length); // 12
 
-		    finalHtml += cleanHtml(cells[5], true);
-		    finalHtml += cleanHtml(cells[8], false);
+            finalHtml += cleanHtml(cells[5], true);
+            finalHtml += cleanHtml(cells[8], false);
 
-		    // console.log(finalHtml);
-		    saveTextAsFile(finalHtml, fileName);
-	    });
+            // console.log(finalHtml);
+            saveTextAsFile(finalHtml, fileName);
+        });
 }
 
 data.forEach(e => crawlPage(e.title, e.link));

@@ -15,7 +15,7 @@ function downloadFromUrl($url, $filePath)
 	// $proxy = 'socks5://127.0.0.1:2222';
 	// $proxy = '127.0.0.1:2222';
 	// $proxy = '127.0.0.1';
-	$proxy = 'http://192.168.103.33:80';
+	$proxy = 'http://192.168.103.25:80';
 
 	if (!empty($proxy)) {
 		curl_setopt($ch, CURLOPT_PROXY, $proxy);
@@ -37,6 +37,7 @@ function downloadFromUrl($url, $filePath)
 
     fclose($file);
 }
+
 
 if (count($argv) < 2) {
     echo 'Ban phai nhap file input' . PHP_EOL;

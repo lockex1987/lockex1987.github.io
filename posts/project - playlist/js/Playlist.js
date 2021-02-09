@@ -1,96 +1,13 @@
-import CHAPTERS from '../data/dong_chu_liet_quoc.js';
+// import CHAPTERS from '../data/dong_chu_liet_quoc.js';
 // import CHAPTERS from '../data/video_truyen_co_tich.js';
-// import CHAPTERS from '../data/sherlock_holmes.js';
+import CHAPTERS from '../data/sherlock_holmes.js';
 import YoutubePlayer from './YoutubePlayer.js';
 
 
-const template = `
-<div class="container-fluid mx-auto"
-        style="max-width: 1000px;">
-    <div class="row">
-        <div class="col-lg-5 pl-0"
-                v-show="showList">
-            <div class="top-left w-100 p-3 top-panel zindex-10">
-                <input class="form-control"
-                        v-model="filterInput"
-                        type="text"
-                        placeholder="Tìm kiếm..">
-            </div>
-
-            <div class="playlist overflow-auto custom-slim-scrollbar">
-                <div v-for="chapterObj in filterChapters"
-                        class="px-3 py-2 d-flex mb-3 cursor-pointer chapter-item border-bottom-x"
-                        :class="{ 'bg-light': chapterObj.idx == currentChapterIndex }"
-                        @click="setCurrentChapter(chapterObj.idx)">
-                    <img :src="chapterObj.imageLink"
-                            style="width: 8rem; height: 4.5rem"
-                            class="mr-3 object-fit-cover"
-                            v-if="chapterObj.imageLink"/>
-
-                    <div class="flex-1">
-                        <div class="text-primary">
-                            {{chapterObj.title}}
-                        </div>
-
-                        <div class="text-muted"
-                                v-if="chapterObj.subtitle">
-                            {{chapterObj.subtitle}}
-                        </div>
-
-                        <div class='text-orange'
-                                v-if="chapterObj.duration">
-                            {{chapterObj.duration}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-7 px-0">
-            <div class="bottom-left w-100 p-3 bottom-panel zindex-10">
-                <div class="font-size-0.875 text-success mb-1 text-truncate">
-                    {{currentChapterObject.title}}
-                </div>
-            
-                <div class="font-weight-700 mb-3 text-truncate">
-                    {{currentChapterObject.subtitle}}
-                </div>
-            
-                <div>
-                    <audio ref="myAudio"
-                            :src="currentChapterObject.audioLink"></audio>
-                </div>
-
-                <!-- Nội dung nhúng YouTube -->
-                <!--youtube-player
-                        v-if="currentChapterObject.youtubeId"
-                        :id="currentChapterObject.youtubeId"
-                        :key="currentChapterObject.youtubeId"
-                        :autoplay="firstPlay == true"/-->
-
-                <div v-show="!showList">
-                    <div class="text-center mb-3 mt-3">
-                        <button class="btn btn-success"
-                                @click="returnListView">
-                            Quay lại
-                        </button>
-                    </div>
-
-                    <div v-html="currentText"
-                            class="content overflow-auto custom-slim-scrollbar"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-`;
-
-
+// Sử dụng ở History API
 const baseUrl = location.href;
 
 export default {
-    template,
-
     components: {
         YoutubePlayer
     },
@@ -162,6 +79,10 @@ export default {
                 oldItemIndex = 0;
             } else {
                 oldItemIndex = parseInt(oldItemIndex);
+
+                if (oldItemIndex >= this.chapters.length) {
+                    oldItemIndex = 0;
+                }
             }
             this.setCurrentChapter(oldItemIndex);
         },
@@ -193,13 +114,13 @@ export default {
             });
 
             if (currentChapter.slug) {
-                // this.loadText(currentChapter.slug);
+                this.loadText(currentChapter.slug);
             }
         },
 
         /**
-         * Load text.
-         * @param {String} slug Duong dan
+         * Load text của chương truyện.
+         * @param {String} slug Đường dẫn chương truyện
          */
         async loadText(slug) {
             const url = 'text/' + slug;
@@ -208,9 +129,12 @@ export default {
             this.currentText = htmlCode;
         },
 
+        /**
+         * Chuyển về trang danh sách.
+         */
         returnListView() {
             this.showList = true;
-            history.replaceState({}, 'Main', baseUrl);
+            // history.replaceState({}, 'Main', baseUrl);
         },
 
         /**

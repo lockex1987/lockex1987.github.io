@@ -3,36 +3,43 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="upload file, create folder" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="upload file, create folder" />
 
     <title>Google Drive API</title>
 
-    <link rel="icon" href="../../images/favicon.png" />
-    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="icon"
+        href="../../images/favicon.png" />
+    <link rel="stylesheet"
+        href="../../css/style.css" />
 </head>
 
 <body class="no-float-button">
     <article>
         <h2>Google Drive API</h2>
 
-        <div id="app" style="display: none">
+        <div id="app"
+            style="display: none">
             <div class="mb-3 text-right">
                 <button class="btn btn-primary"
-                        @click="handleAuthClick()"
-                        v-show="!isAuthorized">
+                    @click="handleAuthClick()"
+                    v-show="!isAuthorized">
                     {{isAuthorized ? 'Đăng xuất' : 'Đăng nhập / Cấp quyền'}}
                 </button>
+
                 <button class="btn btn-secondary"
-                        @click="revokeAccess()"
-                        v-show="isAuthorized">
+                    @click="revokeAccess()"
+                    v-show="isAuthorized">
                     Bỏ kết nối
                 </button>
             </div>
 
             <div v-show="isAuthorized">
                 <div class="mb-3">
-                    <input type="file" ref="fileInput"/>
+                    <input type="file"
+                        ref="fileInput" />
                 </div>
 
                 <div v-show="isUploading">
@@ -47,32 +54,41 @@
                     </div>
 
                     <div class="mb-3">
-                        <div class="progress" style="height: 0.25rem"> 
+                        <div class="progress"
+                            style="height: 0.25rem">
                             <div class="progress-bar"
-                                    :style="{ 'width': uploadedPercent + '%' }"></div> 
+                                :style="{ 'width': uploadedPercent + '%' }"></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <button class="btn btn-success d-none" @click="createFolder()">
+                    <button class="btn btn-success d-none"
+                        @click="createFolder()">
                         Create folder
                     </button>
-                    <button class="btn btn-info d-none" @click="uploadGeneratedFile()">
+
+                    <button class="btn btn-info d-none"
+                        @click="uploadGeneratedFile()">
                         Upload generated file
                     </button>
-                    <button class="btn btn-success" @click="uploadNormalFile()">
-                        <span class="spinner-border spinner-border-sm" v-show="isUploading"></span>
+
+                    <button class="btn btn-success"
+                        @click="uploadNormalFile()">
+                        <span class="spinner-border spinner-border-sm"
+                            v-show="isUploading"></span>
                         Upload file
                     </button>
 
-                    <button class="btn btn-secondary d-none" @click="getFiles()">
+                    <button class="btn btn-secondary d-none"
+                        @click="getFiles()">
                         List
                     </button>
                 </div>
 
                 <div v-if="files">
-                    <div v-show="files.length == 0" class="mb-3 text-danger">
+                    <div v-show="files.length == 0"
+                        class="mb-3 text-danger">
                         Không tồn tại bản ghi
                     </div>
 
@@ -81,7 +97,8 @@
                             Danh sách file
                         </div>
 
-                        <div v-for="f in files" class="mb-2">
+                        <div v-for="f in files"
+                            class="mb-2">
                             <!-- @click.prevent="downloadFile(f.id, f.name)" -->
                             <a :href="f.webContentLink">
                                 {{f.name}}
@@ -92,29 +109,29 @@
                             </span>
 
                             <span class="text-danger ml-2 cursor-pointer font-weight-500"
-                                    @click.prevent="deleteFile(f.id)">
+                                @click.prevent="deleteFile(f.id)">
                                 &times;
                             </span>
                         </div>
                     </div>
                 </div>
-
-                
             </div>
         </div>
     </article>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script-->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
     <script src="../../js/common.js"></script>
     <script src="js/env.js"></script>
     <script src="js/script.js"></script>
 
-    <script async defer
-            src="https://apis.google.com/js/api.js"
-            onload="this.onload = function () {}; handleClientLoad()"
-            onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    <script async
+        defer
+        src="https://apis.google.com/js/api.js"
+        onload="this.onload = function () {}; handleClientLoad()"
+        onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>
+
     <script src="../../js/docs.js"></script>
 </body>
 

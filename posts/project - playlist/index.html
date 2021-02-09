@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="media player, playlist, audio, video, tam quốc diễn nghĩa, đông chu liệt quốc, vov, đọc truyện đêm khuya, youtube, truyện cổ tích việt nam, sherlock holmes">
+    <meta name="description" content="media player, playlist, audio, video,
+            tam quốc diễn nghĩa,
+            đông chu liệt quốc,
+            vov,
+            truyện cổ tích việt nam,
+            sherlock holmes,
+            đọc truyện đêm khuya,
+            youtube, history api" />
 
     <title>Playlist</title>
 
@@ -13,7 +20,91 @@
 </head>
 
 <body>
-    <div id="app"></div>
+    <div id="app"
+        v-cloak>
+        <div class="container-fluid mx-auto"
+            style="max-width: 1000px;">
+            <div class="row">
+                <div class="col-lg-5 pl-0"
+                    v-show="showList">
+                    <div class="top-left w-100 p-3 top-panel zindex-10">
+                        <input class="form-control"
+                            v-model="filterInput"
+                            type="text"
+                            placeholder="Tìm kiếm..">
+                    </div>
+
+                    <div class="playlist overflow-auto custom-slim-scrollbar">
+                        <div v-for="chapterObj in filterChapters"
+                            class="px-3 py-2 d-flex mb-3 cursor-pointer chapter-item border-bottom-x"
+                            :class="{ 'bg-light': chapterObj.idx == currentChapterIndex }"
+                            @click="setCurrentChapter(chapterObj.idx)">
+                            <img :src="chapterObj.imageLink"
+                                style="width: 8rem; height: 4.5rem"
+                                class="mr-3 object-fit-cover"
+                                v-if="chapterObj.imageLink"/>
+
+                            <div class="flex-1">
+                                <div class="text-primary">
+                                    {{chapterObj.title}}
+                                </div>
+
+                                <div class="text-muted"
+                                    v-if="chapterObj.subtitle">
+                                    {{chapterObj.subtitle}}
+                                </div>
+
+                                <div class='text-orange'
+                                    v-if="chapterObj.duration">
+                                    {{chapterObj.duration}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-html="currentText"
+                    class="content overflow-auto custom-slim-scrollbar pl-3 pt-3"
+                    v-show="!showList"></div>
+
+                <div class="col-lg-7 px-0">
+                    <div class="bottom-left w-100 p-3 bottom-panel zindex-10">
+                        <div class="d-flex">
+                            <div>
+                                <div class="font-size-0.875 text-success mb-1 text-truncate">
+                                    {{currentChapterObject.title}}
+                                </div>
+                            
+                                <div class="font-weight-700 mb-3 text-truncate">
+                                    {{currentChapterObject.subtitle}}
+                                </div>
+                            </div>
+
+                            <div v-show="!showList"
+                                class="ml-auto">
+                                <span class="cursor-pointer text-primary"
+                                    @click="returnListView()">
+                                    Quay lại
+                                </span>
+                            </div>
+                        </div>
+                    
+                        <div>
+                            <audio ref="myAudio"
+                                :src="currentChapterObject.audioLink"></audio>
+                        </div>
+
+                        <!-- Nội dung nhúng YouTube -->
+                        <!--youtube-player
+                                v-if="currentChapterObject.youtubeId"
+                                :id="currentChapterObject.youtubeId"
+                                :key="currentChapterObject.youtubeId"
+                                :autoplay="firstPlay == true"/-->                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <link rel="stylesheet" href="../project - media player/css/media-player.css" />
     <script src="../project - media player/js/media-player.js"></script>

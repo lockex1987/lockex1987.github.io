@@ -58,7 +58,7 @@
       <p>Chọn phiên bản 7.2, 64bit, Non Thread Safe.</p>
       <p><a href="https://windows.php.net/downloads/releases/php-7.2.28-nts-Win32-VC15-x64.zip"
           target="_blank">https://windows.php.net/downloads/releases/php-7.2.28-nts-Win32-VC15-x64.zip</a></p>
-      <p>Giải nén vào thư mục <code>D:\program\php</code>.</p>
+      <p>Giải nén vào thư mục <code>D:\program\php72</code>.</p>
       <p>Cấu hình biến môi trường <code>PATH</code>.</p>
       <p>Đổi tên file <code>php.ini-production</code> thành <code>php.ini</code>.</p>
       <p>Sửa file <code>php.ini</code>, bỏ comment những chỗ sau:</p>
@@ -70,8 +70,31 @@
       <div class="mb-3 text-center"><img src="images/current%20vc.png" alt=""></div>
       <p>Phiên bản VC ở máy tôi sau khi cài đặt nâng cấp:</p>
       <div class="mb-3 text-center"><img src="images/required%20vc.png" alt=""></div>
+      <p>Bạn cũng có thể làm tương tự các bước trên với PHP 8. Thư mục cài đặt
+        là <code>D:\program\php80</code>.</p>
+      <p>Để không bị xung khác giữa phiên bản 7.2 và 8.0, bạn hãy đổi lại tên
+        các file php.exe và php-cgi.exe ở từng thư mục. Bạn muốn phiên bản nào
+        là mặc định thì cần có các file php.exe và php-cgi.exe ở thư mục tương
+        ứng. Ví dụ cấu trúc thư mục và file trên máy tôi như sau:</p>
+      <pre>D:\program<br>    php72<br>        php72.exe<br>        php72-cgi.exe<br>    php80<br>        php80.exe<br>        php80-cgi.exe<br>        php.exe<br>        php-cgi.exe</pre>
       <p>Kiểm tra PHP:</p>
-      <div class="mb-3 text-center"><img src="images/check%20php.png" alt=""></div>
+      <pre class="bg-dark text-white out-of-box">C:\Users\VTCC-&gt;php72 --version
+PHP 7.2.28 (cli) (built: Feb 18 2020 12:54:23) (NTS MSVC15 (Visual C++ 2017) x64)
+Copyright (c) 1997-2018 The PHP Group
+Zend Engine v3.2.0, Copyright (c) 1998-2018 Zend Technologies
+    with Xdebug v3.0.2, Copyright (c) 2002-2021, by Derick Rethans
+
+C:\Users\VTCC-&gt;php80 --version
+PHP 8.0.1 (cli) (built: Jan  5 2021 23:43:33) (NTS Visual C++ 2019 x64)
+Copyright (c) The PHP Group
+Zend Engine v4.0.1, Copyright (c) Zend Technologies
+
+C:\Users\VTCC-&gt;php --version
+PHP 8.0.1 (cli) (built: Jan  5 2021 23:43:33) (NTS Visual C++ 2019 x64)
+Copyright (c) The PHP Group
+Zend Engine v4.0.1, Copyright (c) Zend Technologies
+
+C:\Users\VTCC-&gt;</pre>
       <h3>Chạy PHP với nginx</h3>
       <p>Bạn có thể chạy PHP trên nginx thông qua FastCGI bằng giao thức TCP.</p>
       <h4>Cấu hình nginx</h4>
@@ -98,11 +121,12 @@ location ~ \.php$ {
     include        fastcgi_params;
 }</pre>
       <h4>Chạy PHP FastCGI</h4>
-      <p>Trong thư mục root PHP (<code>D:\program\php</code>), bạn sẽ nhìn thấy
-        file <code>php-cgi.exe</code>. Bạn cần phải chạy file này trên một địa
-        chỉ TCP giống như đã khai báo ở mục <code>fastcgi_pass</code> là <code>127.0.0.1:9000</code>.</p>
+      <p>Trong thư mục root PHP (<code>D:\program\php72</code>), bạn sẽ nhìn
+        thấy file <code>php-cgi.exe</code> (hoặc <code>php72-cgi.exe</code>
+        nếu bạn đã đổi tên). Bạn cần phải chạy file này trên một địa chỉ TCP
+        giống như đã khai báo ở mục <code>fastcgi_pass</code> là <code>127.0.0.1:9000</code>.</p>
       <p>Chạy các lệnh sau:</p>
-      <pre>set PHP_FCGI_MAX_REQUESTS=0<br>D:<br>D:\program\php\php-cgi.exe -b 127.0.0.1:9000</pre>
+      <pre>set PHP_FCGI_MAX_REQUESTS=0<br>D:<br>D:\program\php72\php72-cgi.exe -b 127.0.0.1:9000</pre>
       <h4>Kiểm tra </h4>
       <p>Tạo một file <code>phpinfo.php</code> trong thư mục <code>D:\program\nginx\html</code>
         với nội dung như sau để kiểm tra:</p>
@@ -121,10 +145,9 @@ start nginx
 
 echo .
 echo Starting PHP FastCGI...
-REM Đã cấu hình PATH toàn cục rồi
-REM set PATH=D:\program\php;%PATH%
 set PHP_FCGI_MAX_REQUESTS=0
-php-cgi.exe -b 127.0.0.1:9000
+set PHP_FCGI_CHILDREN=5
+php72-cgi.exe -b 127.0.0.1:9000
 </pre>
       <p><code>stop-nginx.bat</code></p>
       <pre>@ECHO OFF
@@ -134,7 +157,7 @@ taskkill /f /IM nginx.exe
 
 echo .
 echo Stopping PHP FastCGI...
-taskkill /f /IM php-cgi.exe
+taskkill /f /IM php72-cgi.exe
 
 echo Stopped
 pause

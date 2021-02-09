@@ -15,7 +15,7 @@ function getChaptersMangakakalot(doc) {
  * @param {Function} callbackFunc Hàm callback sau khi thực hiện xong
  */
 function processChapterMangakakalot(chapterUrl, chapterNo, callbackFunc) {
-    const cssSelector = '#vungdoc img';
+    const cssSelector = '.container-chapter-reader img';
     GetLinksUtils.processChapterFromCssSelector(chapterUrl, chapterNo, callbackFunc,
         cssSelector);
 }
