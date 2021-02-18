@@ -119,8 +119,6 @@ class SevenZipWrapper
         $retval = [];
 
         // Tìm đến dòng bắt đầu và dòng kết thúc
-        $startIndex;
-        $endIndex;
         $i = 0;
         while (strpos($a[$i], '-------------------') === false) {
             $i++;
