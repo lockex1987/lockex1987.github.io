@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="vi">
   <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hàm callback trong PHP">
+    <meta name="description" content="callback, callable, closure, anonymous function, lambda">
     <title>Hàm callback trong PHP</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -20,14 +20,13 @@
         callback là rất đơn giản. Chúng ta xem một ví dụ sau:</p>
       <pre>function sayHello($callback)
 {
-    echo "Hello!\n";
-
+    echo 'Hello!' . PHP_EOL;
     $callback();
 }
 
 function sayGoodbye()
 {
-    echo "Goodbye!\n";
+    echo 'Goodbye!' . PHP_EOL;
 }
 
 sayHello('sayGoodbye');</pre>
@@ -39,36 +38,34 @@ sayHello('sayGoodbye');</pre>
         dụng kết quả của hàm gọi trong hàm được gọi. Ví dụ tiếp theo cho thấy hỗ
         trợ viên sau khi lấy thông tin về lỗi người dùng và sử dụng thông tin
         này để gọi lại cho khách hàng:</p>
-      <pre>function sayHello2($first_name, $last_name, $callback)
+      <pre>function sayHello2($firstName, $lastName, $callback)
 {
-    $full_name = $first_name . ' ' . $last_name;
-
-    $callback($full_name);
+    $fullName = $firstName . ' ' . $lastName;
+    $callback($fullName);
 }
 
-function formatName($full_name)
+function formatName($fullName)
 {
-    echo 'Hello '. $full_name . "\n";
+    echo 'Hello '. $fullName . PHP_EOL;
 }
 
 sayHello2('Nguyen Van', 'A', 'formatName');</pre>
-      <p>Bản chất của <code>$callback($full_name)</code> là gọi đến một hàm
-        được xây dựng sẵn trong PHP <a target="_blank" href="http://php.net/manual/en/language.types.callable.php">call_user_func</a>,
-        như vậy <code>$callback($full_name)</code> là tương đương với <code>call_user_func($callback,
-          $full_name)</code>. Sử dụng callback có thể có lỗi xảy ra nếu chúng ta
+      <p>Bản chất của <code>$callback($fullName)</code> là gọi đến một hàm được
+        xây dựng sẵn trong PHP <a target="_blank" href="http://php.net/manual/en/language.types.callable.php">call_user_func</a>,
+        như vậy <code>$callback($fullName)</code> là tương đương với <code>call_user_func($callback,
+          $fullName)</code>. Sử dụng callback có thể có lỗi xảy ra nếu chúng ta
         callback đến một hàm chưa được định nghĩa, vậy chúng ta cần kiểm tra
         biến được truyền vào có phải là một hàm hay không bằng hàm <code>is_callable()</code>:</p>
-      <pre>function sayHello3($first_name, $last_name, $callback)
+      <pre>function sayHello3($firstName, $lastName, $callback)
 {
-    $full_name = $first_name . ' ' . $last_name;
-
+    $fullName = $firstName . ' ' . $lastName;
     if (is_callable($callback)) {
-        call_user_func($callback, $full_name);
+        call_user_func($callback, $fullName);
     }
 }
 
 sayHello3('Nguyen Van', 'A', 'formatName');</pre>
-      <p>Source code <a target="_blank" href="demo.php">demo.php</a>.</p>
+      <p>Source code <a target="_blank" href="callback_demo.php">callback_demo.php</a>.</p>
       <h3>Sử dụng callback ở đâu?</h3>
       <p>Callback thường được sử dụng trong những tình huống sau:</p>
       <ul>
@@ -83,7 +80,8 @@ sayHello3('Nguyen Van', 'A', 'formatName');</pre>
         thời gian. Nếu như viết theo cách cũ:</p>
       <pre>fileObject = open(file);
 
-// Cần phải chờ file được mở thì mới ghi vào file được, có thể mất 5 phút chẳng hạn.
+// Cần phải chờ file được mở thì mới ghi vào file được,
+// có thể mất 5 phút chẳng hạn
 fileObject.write("We are writing to the file.");
 
 // Tiếp theo mới làm được những việc khác
@@ -91,10 +89,217 @@ doSomething();</pre>
       <p>Sử dụng callback, chúng ta có thể thực hiện được những việc khác luôn</p>
       <pre>fileObject = open(file, writeToFile)
 
-// Không cần phải chờ file mở và ghi vào file, chúng ta có thể thực hiện việc khác luôn.
+// Không cần phải chờ file mở và ghi vào file,
+// chúng ta có thể thực hiện việc khác luôn
 doSomething();</pre>
+      <h3>Lambda là gì?</h3>
+      <p>Các hàm Lambda là các hàm ẩn danh (anonymous function), sử dụng một
+        lần, có thể được định nghĩa vào bất cứ lúc nào, và thường gắn với một
+        biến hoặc gán vào một hàm khác như một tham số. Các hàm này chỉ tồn tại
+        trong phạm vi của biến mà nó được định nghĩa, vì vậy khi biến đó vượt ra
+        ngoài phạm vi, thì hàm này cũng không còn nữa.</p>
+      <h4>Hàm ẩn danh</h4>
+      <p>Một hàm ẩn danh chỉ đơn giản là một hàm không có tên. Ví dụ:</p>
+      <pre>// Hàm thường
+function helloWorld()
+{
+    return 'Hello world';
+}
+
+// Hàm ẩn danh
+function ()
+{
+    return 'Hello world';
+}; // chú ý có dấu chấm phảy ở cuối
+</pre>
+      <h4>Sử dụng hàm ẩn danh</h4>
+      <p>Bởi vì các hàm này không có tên, chúng ta không thể gọi nó như một chức
+        năng thường xuyên. Thay vào đó ta phải gán nó vào một biến hoặc cho vào
+        1 hàm khác khác như là một tham số. Ví dụ:</p>
+      <pre>// Hàm ẩn danh gán cho 1 biến
+$hello = function () {
+    return 'Hello world';
+};
+
+// Gọi hàm bình thường
+echo helloWorld() . PHP_EOL;
+
+// Gọi hàm ẩn danh
+echo $hello() . PHP_EOL;
+</pre>
+      <p>Để sử dụng các hàm ẩn danh, chúng ta gán nó vào một biến và sau đó gọi
+        là biến như là một function như trên. Hoặc sử dụng Lambda như thế này:</p>
+      <pre>// Pass Lambda to function
+function shout($message)
+{
+    echo $message() . PHP_EOL;
+}
+
+// Call function
+shout(function () {
+    return 'Hello world';
+});
+</pre>
+      <h4>Tại sao dùng Lambda</h4>
+      <p>Lambda rất hữu dụng, bởi vì chúng ta không cần phải tạo hẳn một hàm cho
+        một lần sử dụng duy nhất.</p>
+      <p>Thông thường, chúng ta sẽ cần một hàm để làm một công việc, nhưng nó
+        không có nghĩa là chúng ta sẽ dùng nó trong phạm vi global. Thay vì có
+        một hàm sử dụng một lần và sau đó bỏ đi để nó ở đó, chúng ta có thể sử
+        dụng một Lambda để thay thế.</p>
+      <p>Tất nhiên, chúng ta có thể sử dụng chức năng <code>create_function</code>
+        trong PHP. Điều này về cơ bản là giống nhau:</p>
+      <pre>// Use create_function
+$hello = create_function('', 'echo "Hello World!";');
+
+// Call function
+$hello();
+</pre>
+      <h3>Closure là gì?</h3>
+      <p>Một Closure (bao đóng) về cơ bản giống như một Lambda, ngoài ra nó có
+        thể truy cập các biến bên ngoài phạm vi mà nó được tạo ra. Ví dụ:</p>
+      <pre>// Create a user
+$user = 'Thỏ 7 màu';
+
+// Create a Closure
+$helloUser = function () use ($user) {
+    echo "Hello $user\n";
+};
+
+// Greet the user
+$helloUser();
+</pre>
+      <p>Như chúng ta có thể thấy ở trên, Closure có thể truy cập biến <code>$user</code>.
+        Bởi vì nó đã được khai báo trong các điều khoản sử dụng <code>use
+          ($user)</code> của định nghĩa hàm Closure.</p>
+      <p>Nếu chúng ta thay đổi biến <code>$user</code> ban đầu trong Closure,
+        nó sẽ không ảnh hưởng đến các biến ban đầu. Để cập nhật các biến ban
+        đầu, chúng ta có thể thêm một dấu <code>&amp;</code>. Một dấu <code>&amp;</code>
+        trước một biến có nghĩa đây là một reference và vì vậy các biến ban đầu
+        cũng được cập nhật.</p>
+      <pre>// Set counter
+$i = 0;
+
+// Increase counter within the scope of the function
+$closure1 = function () use ($i)
+{
+    $i++;
+};
+
+// Run the function
+$closure1();
+
+// The global count hasn't changed
+echo $i . PHP_EOL; // returns 0
+
+// Reset count
+$i = 0;
+
+// Increase counter within the scope of the function<br>// but pass it as a reference
+$closure2 = function () use (&amp;$i)
+{
+    $i++;
+};
+
+// Run the function
+$closure2();
+
+// The global count has increased
+echo $i . PHP_EOL; // returns 1
+</pre>
+      <p>Closure cũng rất hữu ích khi sử dụng các hàm PHP mà chấp nhận hàm
+        callback như <code>array_map</code>, <code>array_filter</code>, <code>array_reduce</code>
+        hoặc <code>array_walk</code>. Ví dụ:</p>
+      <pre>// An array of names
+$users = [
+    'Thỏ 7 màu',
+    'Đậu đỏ',
+    'Gấu AK',
+    'Bé đội xô'
+];
+
+// Pass the array to array_walk
+array_walk($users, function ($name) {
+    echo 'Hello ' . $name . PHP_EOL;
+});
+</pre>
+      <p>Ngoài ra, chúng ta có thể truy cập các biến bên ngoài phạm vi của
+        Closure bằng cách sử dụng <code>use</code>:</p>
+      <pre>// Set a multiplier
+$multiplier = 3;
+
+// Create a list of numbers
+$numbers = [1, 2, 3, 4];
+
+// Use array_walk to iterate through the list and multiply
+array_walk($numbers, function ($number) use ($multiplier) {
+    echo ($number * $multiplier) . PHP_EOL;
+});
+</pre>
+      <h3>Sử dụng Closure trong trường hợp cụ thể</h3>
+      <p>Ví dụ trong Laravel:</p>
+      <pre>Route::get('user/(:any)', function ($name) {
+    return 'Hello ' . $name;
+});
+</pre>
+      <p>Như vậy là có một link <code>user/Tho7mau</code> thì sẽ có phản hồi là
+        "Hello Tho7mau".</p>
+      <p>Đó là ví dụ, còn tình huống của mình là thế này (bao các điều kiện OR
+        khi filter DB query):</p>
+      <pre>class A<br>{
+    public static function f($query, $callback = null)
+    {
+        $query-&gt;where(...);
+        $query-&gt;where(function ($currentQuery) use ($callback) {
+            $currentQuery-&gt;orWhere(...);
+
+            if ($callback &amp;&amp; is_callable($callback)) {
+                $currentQuery = $callback($currentQuery);
+            }
+         });
+         $query-&gt;someWhere(...);
+         return $query-&gt;paginate($xxx);
+    }
+}
+<br>
+class B extends A<br>{
+    public static function f1($yyy)
+    {
+        $query-&gt;where(...);
+        return parent::f($query, __CLASS__ . '::f2');
+    }
+
+    public static function f2($query)
+    {
+        return $query-&gt;orWhere(...);
+    }
+}
+</pre>
+      <h3>Kết luận</h3>
+      <p>callable là kiểu dữ liệu.</p>
+      <p>Callback là thuật ngữ chung, được biểu thị bởi kiểu dữ liệu callable.</p>
+      <p>Callback có thể là:</p>
+      <ul>
+        <li>hàm sẵn của PHP</li>
+        <li>hàm do người dùng định nghĩa</li>
+        <li>hàm anonymous (closure viết thường)</li>
+        <li>hàm arrow</li>
+        <li>phương thức của đối tượng</li>
+        <li>phương thức static của class</li>
+      </ul>
+      <p>Hàm anonymous và hàm arrow được implement bởi class Closure (Closure
+        viết hoa).</p>
       <h3>Tham khảo</h3>
       <p><a target="_blank" href="https://allaravel.com/blog/callback-trong-php-la-gi">https://allaravel.com/blog/callback-trong-php-la-gi</a></p>
+      <p><a target="_blank" href="https://viblo.asia/p/lambda-va-closures-trong-php-DXOGRZZnGdZ">https://viblo.asia/p/lambda-va-closures-trong-php-DXOGRZZnGdZ</a></p>
+      <p><a href="https://www.php.net/manual/en/language.types.callable.php" target="_blank">PHP:
+          Callbacks / Callables - Manual</a></p>
+      <p><a href="https://www.php.net/manual/en/functions.anonymous.php" target="_blank">PHP:
+          Anonymous functions - Manual</a></p>
+      <p><a href="https://www.php.net/manual/en/functions.arrow.php" target="_blank">PHP:
+          Arrow Functions - Manual</a></p>
+      <p><a href="https://www.php.net/manual/en/class.closure.php" target="_blank">PHP:
+          Closure - Manual</a></p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>

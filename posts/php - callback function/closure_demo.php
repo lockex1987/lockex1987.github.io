@@ -1,20 +1,23 @@
 <?php
+
 // Hàm thường
 function helloWorld()
 {
     return 'Hello world';
 }
 
+
 // Hàm ẩn danh
-function ()
-{
+function () {
     return 'Hello world';
 };
+
 
 // Hàm ẩn danh gán cho 1 biến
 $hello = function () {
     return 'Hello world';
 };
+
 
 // Gọi hàm bình thường
 echo helloWorld() . PHP_EOL;
@@ -29,6 +32,7 @@ function shout($message)
     echo $message() . PHP_EOL;
 }
 
+
 // Call function
 shout(function () {
     return 'Hello world';
@@ -40,7 +44,7 @@ $user = 'Thỏ 7 màu';
 
 // Create a Closure
 $helloUser = function () use ($user) {
-    echo "Hello $user\n";
+    echo 'Hello ' . $user . PHP_EOL;
 };
 
 // Greet the user
@@ -51,8 +55,7 @@ $helloUser();
 $i = 0;
 
 // Increase counter within the scope of the function
-$closure1 = function () use ($i)
-{
+$closure1 = function () use ($i) {
     $i++;
 };
 
@@ -65,9 +68,9 @@ echo $i . PHP_EOL; // returns 0
 // Reset count
 $i = 0;
 
-// Increase counter within the scope of the function but pass it as a reference
-$closure2 = function () use (&$i)
-{
+// Increase counter within the scope of the function
+// but pass it as a reference
+$closure2 = function () use (&$i) {
     $i++;
 };
 
@@ -88,7 +91,7 @@ $users = [
 
 // Pass the array to array_walk
 array_walk($users, function ($name) {
-    echo "Hello $name\n";
+    echo 'Hello ' . $name . PHP_EOL;
 });
 
 
@@ -102,4 +105,3 @@ $numbers = [1, 2, 3, 4];
 array_walk($numbers, function ($number) use ($multiplier) {
     echo ($number * $multiplier) . PHP_EOL;
 });
-
