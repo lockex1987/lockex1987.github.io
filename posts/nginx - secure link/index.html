@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="md5">
+    <title>Bảo vệ đường link</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Bảo vệ đường link</h2>
+      <p>Bạn cần bảo vệ đường link đến các file upload, không cho người khác
+        download mà không có quyền.</p>
+      <p>Giả sử ban đầu chúng ta có một cấu hình nginx đơn giản như sau:</p>
+      <pre>server {
+    listen       80;
+    server_name  localhost;
+    root         D:/htdocs/lockex1987.github.io;
+
+    location / {
+        index  index.php index.html;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+}</pre>
+      <p>Tiếp theo, chúng ta thêm một cấu hình đến các đường dẫn mà bắt đầu là
+        /secure-upload. Các đường dẫn này sẽ được trỏ đến các file nằm trên thư
+        mục khác.</p>
+      <pre>location /secure-upload {
+    root D:/new;        
+}</pre>
+      <p>Tạo file <code>test.txt</code> ở thư mục <code>D:/new/secure-upload</code>
+        (chú ý phải ở trong thư mục con <code>secure-upload</code>) có nội dung
+        như sau:</p>
+      <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="vi"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+  &lt;/head&gt;
+  
+  &lt;body&gt;
+    &lt;h1&gt;File này được bảo vệ không cho phép download dễ dàng&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+
+</pre>
+      <p>Khởi động lại nginx, kiểm tra đường link sau:</p>
+      <p><a href="http://localhost/secure-upload/test.html" target="_blank">http://localhost/secure-upload/test.html</a></p>
+      <p>Chúng ta có thể truy cập file bình thường.</p>
+      <p>Giờ chúng ta hãy thêm cấu hình secure link như sau:</p>
+      <pre>location /secure-upload {
+    root D:/new;
+		
+    secure_link $arg_md5,$arg_expires;
+    secure_link_md5 "$secure_link_expires$uri mySecrete@2021";
+    if ($secure_link = "") {
+        return 403;
+    }
+    if ($secure_link = "0") {
+        return 410;
+    }
+}</pre>
+      <p>Khởi động lại nginx, truy cập lại link trên, chúng ta có thể thấy bị
+        lỗi 403 Forbidden.</p>
+      <p>Để truy cập được file, chúng ta phải chỉnh lại đường dẫn, thêm các tham
+        số là <code>md5</code> và <code>expires</code>. Tên các tham số được
+        định nghĩa ở cấu hình:</p>
+      <pre>secure_link $arg_md5,$arg_expires;</pre>
+      <p>Tham số <code>expires</code> là Unix epoch (tính bằng số giây).</p>
+      <p>Tham số <code>md5</code> là định dạng base64 của xâu tổng hợp giữa giá
+        trị expires, dấu cách, đường dẫn, dấu cách, và xâu "mySecret@2021" như
+        trong cấu hình:</p>
+      <pre>secure_link_md5 "$secure_link_expires $uri mySecrete@2021";</pre>
+      <p>Đường dẫn <code>$uri</code> bao gồm cả phần đằng trước <code>/secure-upload</code>,
+        trong trường hợp file của chúng ta sẽ là <code>/secure-upload/test.html</code>.</p>
+      <p>Giá trị <code>md5</code> có loại bỏ các ký tự đặc biệt trên đường dẫn
+        bằng cách:</p>
+      <ul>
+        <li>Thay ký tự cộng <code>+</code> bằng ký tự trừ <code>-</code></li>
+        <li>Thay ký tự slash <code>/</code> bằng ký tự gạch dưới <code>_</code></li>
+        <li>Loại bỏ ký tự bằng <code>=</code></li>
+      </ul>
+      <p>nginx sẽ tự động kiểm tra, nếu tham số md5 không hợp lệ thì biến <code>$secure_link</code>
+        sẽ trả về giá trị "", nếu thời gian đã hết hạn thì biến <code>$secure_link</code>
+        trả về giá trị "0".</p>
+      <p>Chúng ta sẽ cấu hình để trả về các mã 403 Forbidden và 410 Gone:</p>
+      <pre>if ($secure_link = "") {
+    return 403;
+}
+if ($secure_link = "0") {
+    return 410;
+}</pre>
+      <p>Code PHP để sinh ra đường dẫn là:</p>
+      <pre class="out-of-box">/**
+ * @param $uri - Đường dẫn đến file cần bảo vệ, ví dụ /downloads/myfile.zip
+ * @param $secret - Giá trị bí mật giống như trong cấu hình nginx server<br> *        Hãy giữ nó bí mật và an toàn!!!
+ * @param $ttl - Số giây cho đến khi link bị hết hạn
+ * @param $userIp - IP của người dùng được phép<br> *        Thông thường, chúng ta sẽ lấy nó bằng cái gì đó như $_SERVER['REMOTE_ADDR']
+ * @return string
+ */
+function generateSecureLink($uri, $secret, $ttl, $userIp)
+{
+    $expires = time() + $ttl;
+    $md5 = md5("$expires $uri $secret", true); // có thể thêm $userIp ở đây
+    $md5 = base64_encode($md5);
+    $md5 = strtr($md5, '+/', '-_');
+    $md5 = str_replace('=', '', $md5);
+    return $uri . '?md5=' . $md5 . '&amp;expires=' . $expires;
+}</pre>
+      <p>Kiểm tra: <a href="generate_secure_link.php" target="_blank">generate_secure_link.php</a>
+      </p>
+      <p>Chúng ta sẽ có một đường link dạng như sau:</p>
+      <pre class="text-pre-wrap">http://localhost/secure-upload/test.html?md5=3-kc5gPsIKYmamRFcj9Yww&amp;expires=1613729720</pre>
+      <p>Nếu chúng ta truy cập đường dẫn trên thì sẽ lại xem được file.</p>
+      <p>Chờ hết 60 giây, truy cập link sẽ báo 410 Gone.</p>
+      <p>Tham khảo</p>
+      <p><a href="https://www.nginx.com/blog/securing-urls-secure-link-module-nginx-plus/"
+          target="_blank">Securing URLs with NGINX and NGINX&nbsp;Plus</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>
