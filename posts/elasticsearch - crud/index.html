@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Thêm sửa xóa trong Elasticsearch</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta name="description" content="Thêm sửa xóa trong Elasticsearch">
+  </head>
+  <body>
+    <article>
+      <h2>API tạo dữ liệu – Insert, thêm dữ liệu vào Elasticsearch</h2>
+      <h3>API tạo document Elasticsearch.</h3>
+      <p>Có 2 cách để tạo document trong Elasticsearch:</p>
+      <p>Cách 1: Dùng API POST</p>
+      <ul>
+        <li>POST /index_name/type_name/id</li>
+        <li>{</li>
+        <li> "field" : "value"</li>
+        <li>}</li>
+      </ul>
+      <p>Trong đó:</p>
+      <ul>
+        <li><code>index_name</code> và <code>type_name</code> là tên của Index
+          và tên của Type, nếu chưa tồn tại thì sẽ được tự động tạo</li>
+        <li><code>id</code> là id của document được tạo, nếu không truyền id thì
+          nó sẽ tự động tạo ra 1 chuỗi để làm id.</li>
+      </ul>
+      <p>(Xem lại: <a href="https://stackjava.com/elasticsearch/elasticsearch-la-gi-cac-khai-niem-trong-elasticsearch.html#concept">Các
+          khái niệm trong Elasticsearch</a>)</p>
+      <p>Ví dụ insert 1 document vào <code>type</code> player của index <code>stackjava</code></p>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-insert-data-0.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-insert-data-0.png"></a></p>
+      <p>Trường hợp mình không truyền id thì id của document mới sẽ được tự động
+        tạo ra.</p>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-insert-data-1.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-insert-data-1.png"></a></p>
+      <p>Trường hợp index, type và id truyền vào đã tồn tại thì nó sẽ tương
+        đương với câu lệnh update.</p>
+      <p>Ví dụ:</p>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-insert-data-2.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-insert-data-2.png"></a></p>
+      <p>Cách 2: Dùng API PUT</p>
+      <p>Dùng method PUT với tham số <code>op_type=create</code></p>
+      <ul>
+        <li>PUT /index_name/type_name/id?op_type=create</li>
+        <li>{ ... }</li>
+      </ul>
+      <p>Hoặc:</p>
+      <ul>
+        <li>PUT /index_name/type_name/id/create</li>
+        <li>{ ... }</li>
+      </ul>
+      <p>Tuy nhiên với cách này, nếu bộ <code>index_name, type_name và id</code>
+        đã tồn tại thì nó sẽ báo lỗi</p>
+      <pre><code>document_already_exists_exception</code></pre>
+      <p> </p>
+      <p>Okay, Done!</p>
+      <p> </p>
+      <p>References:</p>
+      <p><a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/create-doc.html"
+          target="_blank">https://www.elastic.co/guide/…/create-doc.html</a></p>
+      <p></p>
+      <h3>API Lấy document theo Id, Select document Elasticsearch</h3>
+      <ul>
+        <li>GET /index_name/type_name/id</li>
+      </ul>
+      <p>Ví dụ:</p>
+      <p>Lấy document có <code>id = 1</code> trong type <code>player</code>
+        của index <code>stackjava</code></p>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/09/elasticsearch-get-document-1.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/09/elasticsearch-get-document-1.png"></a></p>
+      <p>Tuy nhiên trong dữ liệu trả về có khá nhiều field không cần thiết như
+        index name, version…<br>
+        Để lấy data của mỗi document ta dùng thêm thẻ <code>_source</code> vào
+        sau url</p>
+      <ul>
+        <li>GET /index_name/type_name/id/_source</li>
+      </ul>
+      <p>Ví dụ:</p>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/09/elasticsearch-get-document-2.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/09/elasticsearch-get-document-2.png"></a></p>
+      <p>Trường hợp chỉ muốn lấy 1 số field trong document ta dùng tham số <code>_source=field1,field2</code></p>
+      <p>Ví dụ chỉ lấy trường name:</p>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/09/elasticsearch-get-document-3.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/09/elasticsearch-get-document-3.png"></a></p>
+      <p>Trường hợp document cần lấy không tồn tại thì nó sẽ trả về HTTP code =
+        404:</p>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/09/elasticsearch-get-document-4.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/09/elasticsearch-get-document-4.png"></a></p>
+      <p> </p>
+      <p>Okay, Done!</p>
+      <p>References:</p>
+      <p><a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/get-doc.html"
+          target="_blank">https://www.elastic.co/guide/…/get-doc.html</a></p>
+      <p></p>
+      <h3>API cập nhật dữ liệu – Update document Elasticsearch</h3>
+      <p>Có 2 cách để cập nhật, chỉnh sửa document trong Elasticsearch.</p>
+      <p>Cách 1: Modifiy document bằng method <code>PUT</code></p>
+      <ul>
+        <li>PUT /index_name/type_name/id</li>
+        <li>{</li>
+        <li> "field": "data"</li>
+        <li>}</li>
+      </ul>
+      <p>Ví dụ:</p>
+      <p>Update trường username và password cho type <code>customer</code> của
+        index <code>stackjava</code> với id document là <code>1</code></p>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-update-document-1.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-update-document-1.png"></a></p>
+      <p>Những field mà bạn không truyền vào nó sẽ hiểu là bạn truyền null, ví
+        dụ ở trong trường hợp trên mình không có field password thì nó sẽ hiểu
+        là bạn muốn cập nhật password thành null.</p>
+      <p>Trường hợp document chưa tồn tại thì nó sẽ tự động tạo ra.</p>
+      <p>Cách 2: Update document bằng method <code>POST</code></p>
+      <ul>
+        <li>POST /index_name/type_name/id</li>
+        <li>{</li>
+        <li> "field": "data"</li>
+        <li>}</li>
+      </ul>
+      <p>Update document bằng method <code>POST</code> có tác dụng tương đương
+        với method <code>PUT</code></p>
+      <p>Tuy nhiên bản chất của việc update document bằng method <code>POST</code>
+        khác với method <code>PUT</code> ở chỗ là method <code>PUT</code> sẽ
+        replace / sửa lại dữ liệu trên document đã có còn method <code>POST</code>
+        là xóa document cũ đi (nếu có tồn tại) và tạo 1 document mới.</p>
+      <p> </p>
+      <p>Okay, Done!</p>
+      <p> </p>
+      <p>References:</p>
+      <p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/_updating_documents.html"
+          target="_blank">https://www.elastic.co/guide/…/_updating_documents.html</a></p>
+      <p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/_modifying_your_data.html"
+          target="_blank">https://www.elastic.co/guide/…/_modifying_your_data.html</a></p>
+      <p></p>
+      <h3>API xóa dữ liệu – Delete document trong Elasticsearch</h3>
+      <p>Có 2 cách xóa dữ liệu trong Elasticsearch là dùng method <code>DELETE</code>
+        hoặc dùng method <code>POST</code> với thẻ <code>_delete_by_query</code></p>
+      <p>Cách 1: Sử dụng DELETE API</p>
+      <ul>
+        <li>DELETE /index_name/type_name/id</li>
+      </ul>
+      <p>Ví dụ xóa document có <code>id = 1</code> nằm trong type <code>customer</code>
+        của index <code>stackjava</code></p>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-delete-document-1.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-delete-document-1.png"></a></p>
+      <p>Cách 2: Xóa document bằng Query API</p>
+      <p>Để xóa document bằng Query API ta dùng method <code>POST</code> với
+        thẻ <code>_delete_by_query</code></p>
+      <p>Cú pháp:</p>
+      <ul>
+        <li>POST /index_name/type_name/_delete_by_query</li>
+        <li>{</li>
+        <li> "query": { </li>
+        <li> "match": {</li>
+        <li> "message": "some message"</li>
+        <li> }</li>
+        <li> }</li>
+        <li>}</li>
+      </ul>
+      <p>Với cách này ta có thể xóa document theo nhiều điều kiện khác nhau,
+        thay vì chỉ xóa theo id như method <code>DELETE</code></p>
+      <p>Ví dụ xóa tất cả document có <code>name = "sena"</code> ở trong type <code>customer</code>
+        của index <code>stackjava</code></p>
+      <p> </p>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-delete-document-2.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/08/elasticsearch-delete-document-2.png"></a></p>
+      <p> </p>
+      <p>Okay, Done!</p>
+      <p>References:</p>
+      <p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete.html"
+          target="_blank">https://www.elastic.co/guide/…/docs-delete.html</a></p>
+      <p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-delete-by-query.html"
+          target="_blank">https://www.elastic.co/guide/…/docs-delete-by-query.html</a></p>
+      <p></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

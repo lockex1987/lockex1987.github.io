@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Giới thiệu Elasticsearch</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta name="description" content="Giới thiệu Elasticsearch">
+  </head>
+  <body>
+    <article>
+      <h2>Elasticsearch là gì? Các khái niệm trong Elasticsearch</h2>
+      <h3>Elasticsearch là gì?</h3>
+      <p>Elasticsearch là một search engine (công cụ tìm kiếm) rất mạnh mẽ.</p>
+      <p>Elasticsearch cũng có thể coi là một <a href="https://stackjava.com/mongodb/document-stores-la-gi-document-oriented-database-systems.html">document
+          oriented database</a>, nó chứa dữ liệu giống như một database và thực
+        hiện tìm kiếm trên những dữ liệu đó.</p>
+      <p>Đại khái là thay vì bạn tìm kiếm trên file, trên các database như
+        MySQL, Oracle, MongoDB… thì bạn chuyển dữ liệu đó sang Elasticsearch và
+        thực hiện tìm kiếm trên Elasticsearch sẽ mang lại hiệu quả rất lớn, đặc
+        biệt là trong những trường hợp dữ liệu lớn.</p>
+      <h3>Một số đặc điểm, tính năng của Elasticsearch</h3>
+      <p>Elasticsearch được viết bằng ngôn ngữ lập trình Java.</p>
+      <p>Elasticsearch hoạt động như một cloud server theo cơ chế Restful, tức
+        là bạn có thể thêm/sửa/xóa/tìm kiếm dữ liệu trên Elasticsearch với các
+        API http (POST, PUT, DELETE, GET) như gửi request tới một service vậy.</p>
+      <p>Tất cả dữ liệu được lưu vào Elasticsearch đều được <a href="https://stackjava.com/mongodb/danh-chi-muc-la-gi-danh-chi-muc-trong-mongodb.html">đánh
+          index (đánh chỉ mục)</a>, đây là lý do tại sao hiệu năng tìm kiếm của
+        Elasticsearch rất cao.</p>
+      <p>Việc đánh index của Elasticsearch khá giống với MongoDB tuy nhiên đó
+        đánh index một cách chi tiết hơn, ví dụ bạn có 1 đoạn text ‘tran van b’
+        khi đánh index trong MongoDB nó sẽ tách ra làm 3 từ là [‘tran’, ‘van’,
+        ‘b’] nếu bạn search từ ‘a’ thì nó sẽ không tìm thấy. Ngược lại
+        Elasticsearch vẫn tìm thấy trong trường hợp này.</p>
+      <p>Chính nhờ cơ chế đánh index và lưu dữ liệu dạng document oriented nên
+        Elasticsearch rất thích hợp trong các trường hợp:</p>
+      <ul>
+        <li>Tìm kiếm text thông thường, query like, sử dụng cho trương hợp
+          autocomplete</li>
+        <li>Tìm kiếm text và dữ liệu có cấu trúc</li>
+        <li>Tổng hợp dữ liệu</li>
+        <li>Tìm kiếm theo tọa độ</li>
+        <li>Tìm kiếm với big data.</li>
+      </ul>
+      <h3>Cơ chế làm việc với Elasticsearch</h3>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/07/elasticsearch-1.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/07/elasticsearch-1.png"></a></p>
+      <p>Các dữ liệu tổng hợp, dữ liệu được người dùng tải lên sẽ lưu vào
+        database sau đấy đồng bộ hóa sang Elasticsearch.</p>
+      <p>Khi người dùng tìm kiếm thì sẽ tìm kiếm trên Elasticsearch, tốc độ vừa
+        nhanh, vừa giảm tải cho database.</p>
+      <h3>Các khái nhiệm trong Elasticsearch</h3>
+      <p>Cluster: Một tập hợp Nodes (servers) chứa tất cả các dữ liệu nhằm đảm
+        bảo tính tin cậy và sẵn dùng</p>
+      <p>Node: Một server duy nhất chứa một số dữ liệu và tham gia vào cluster’s
+        indexing and querying.</p>
+      <p>Index: Index ở đây không phải là chỉ số mà là một tập hợp các
+        documents, nó tương đương với khái niệm một database.</p>
+      <p>Type: hay còn gọi là Mapping Type: là 1 tập các document cùng loại
+        (tương đương với khái niệm collection trong MongoDB hay khái niệm table
+        trong database SQL).</p>
+      <p>Document: Một JSON object với một số dữ liệu, đây là một đơn vị thông
+        tin trong Elasticsearch (tương đương với khái niệm document trong
+        MongoDB hay khái niệm row trong table của database SQL).</p>
+      <p>Shards: Tập con các documents của 1 Index. Một Index có thể được chia
+        thành nhiều shard, mỗi shard cũng có thể coi là một index có thể được
+        truy cập trực tiếp giúp tính toán, tìm kiếm 1 cách song song.</p>
+      <p> </p>
+      <p>Hiểu nôm na thì 1 hệ thống có thể sử dụng kết hợp nhiều server
+        Elasticsearch, mỗi server Elasticsearch là 1 node.</p>
+      <p>Mỗi Node chứa nhiều Index, trong Index lại có thể chứa nhiều type khác
+        nhau. Dữ liệu thực tế sẽ được lưu vào trong các type.</p>
+      <p>(Có thể hiểu là 1 Node sẽ chứa nhiều database, trong 1 database có thể
+        chứa nhiều table. Trong table chứa các row là dữ liệu được thêm vào)</p>
+      <p> </p>
+      <p>Okay, Done!</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h2>Ưu nhược điểm của Elasticsearch, So sánh Elasticsearch với MongoDB</h2>
+      <h3>Ưu nhược điểm của Elasticsearch</h3>
+      <p>Ưu điểm</p>
+      <ul>
+        <li>Là phần mềm mã nguồn mở, hoàn toàn miễn phí, cộng đồng phát triển
+          lớn.</li>
+        <li>Tốc độ nhanh: Elasticsearch có khả năng thực hiện những câu truy vấn
+          phức tập một cách nhanh chóng và cũng có thể lưu lại hầu hết cấu trúc
+          truy vấn vào bộ nhớ đệm để sử dụng cho việc filter kết quả…</li>
+        <li>Hỗ trợ Full-text search: với các tính năng như tách từ, tách câu,
+          tạo chỉ mục cho dữ liệu</li>
+        <li>Hỗ trợ tìm kiếm mờ, tự động hoàn thành (autocomplete): giúp bạn có
+          thể tìm ra kết quả kể cả khi bạn viết sai chính tả.</li>
+        <li>Cung cấp Restful API cho phép xử lý các yêu cầu với các API Restful
+          request.</li>
+        <li>Dữ liệu lưu dưới dạng document oriented, free schema nên rất linh
+          hoạt cho những trường hợp dữ liệu thường xuyên thay đổi cấu trúc.</li>
+        <li>Khả năng mở rộng và tính sẵn dùng cao: với việc sử dụng mô hình
+          cluster với nhiều node cùng tham gia phục vụ việc sử lý dữ liệu, khi
+          một node chết thì vẫn không ảnh hưởng tới luồng xử lý, ngược lại khi
+          muốn mở rộng ta chỉ cần thêm node mới vào hệ thống.</li>
+      </ul>
+      <p>Nhược điểm:</p>
+      <ul>
+        <li>Không phù hợp cho những trường hợp mà dữ liệu được ghi nhiều
+          (create, update, delete)</li>
+        <li>Không hỗ trợ transaction, không có ràng buộc quan hệ giữa các dữ
+          liệu dẫn tới việc dữ liệu có thể bị sai.</li>
+      </ul>
+      <h3>So sánh Elasticsearch với MongoDB</h3>
+      <p>Sau khi xem xong ưu nhược điểm của Elasticsearch nhiều bạn sẽ thấy rằng
+        sao nó giống MongoDB thế, bởi vì cả Elasticsearch và MongoDB đều lưu dữ
+        liệu NoSQL, document oriented, free schema, được xây dựng để đáp ứng cho
+        các phản hồi realtime, dễ mở rộng…</p>
+      <p>(Xem lại: <a href="https://stackjava.com/mongodb/uu-nhuoc-diem-cua-mongodb-khi-nao-nen-dung-mongodb.html">Ưu
+          nhược điểm của mongodb</a>)</p>
+      <p>Vậy điểm khác biệt giữa Elasticsearch so với MongoDB là gì?</p>
+      <p>Khi nói tới Elasticsearch người ta sẽ nói tới đó là một search engine
+        chứ không phải là một database như MongoDB.</p>
+      <p>Mặc dù Elasticsearch và MongoDB đều hỗ trợ cơ chế đánh index cho dữ
+        liệu. Và khi các field của MongoDB được đánh index đầy đủ thì khả năng
+        tìm kiếm của MongoDB cũng không kém cạnh so với Elasticsearch. Nhưng
+        Elasticsearch vẫn có những điểm riêng biệt như:</p>
+      <ul>
+        <li>Cung cấp Restful API cho phép xử lý các yêu cầu dưới dạng các
+          request API Restful.</li>
+        <li>Tự động đánh index khi insert dữ liệu</li>
+        <li>Việc đánh index ở mức độ chuyên sâu hơn so với MongoDB, trong khi
+          MongoDB chỉ đánh index ở mức độ từ /words thì Elasticsearch chia nhỏ
+          hơn nên MongoDB sẽ không phù hợp cho trường hợp tìm kiếm mờ</li>
+      </ul>
+      <p>(ví dụ bạn có 1 đoạn text ‘tran van b’ khi đánh index trong MongoDB nó
+        sẽ tách ra làm 3 từ là [‘tran’, ‘van’, ‘b’] nếu bạn search từ ‘a’ thì nó
+        sẽ không tìm thấy)</p>
+      <p>Giải pháp đó là sử dụng kết hợp cả MongoDB và Elasticsearch. MongoDB sẽ
+        được dùng để làm database lưu dữ liệu còn Elasticsearch sẽ được đồng bộ
+        dữ liệu với MongoDB. Khi thực hiện tìm kiếm ta sẽ tìm kiếm trên
+        Elasticsearch:</p>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/07/elasticsearch-1.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/07/elasticsearch-1.png"></a></p>
+      <p>(Xem thêm: <a href="https://stackjava.com/elasticsearch/dong-bo-du-lieu-giua-mongodb-voi-elasticsearch-bang-transporter.html">Đồng
+          bộ dữ liệu giữa MongoDB với Elasticsearch bằng Transporter</a>)</p>
+      <p>(Xem thêm: <a href="https://stackjava.com/uncategorized/monstache-la-gi-dong-bo-mongodb-sang-elasticsearch-voi-monstache.html">Đồng
+          bộ realtime dữ liệu MongoDB và Elasticsearch sử dụng Monstache</a>)</p>
+      <p> </p>
+      <p>Okay, Done!</p>
+      <p><br>
+      </p>
+      <p></p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

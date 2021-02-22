@@ -33,7 +33,7 @@ const CAT_THUMBS = {
 const ContentDataProcessor = {
 
     /**
-     * Chuẩn hóa ngày về định dạng ISO 8601.
+     * Chuẩn hóa ngày về định dạng ISO 8601 và thêm múi giờ Việt Nam.
      */
     normalizeDateOfPosts(postList) {
         postList.forEach(e => {
@@ -44,14 +44,14 @@ const ContentDataProcessor = {
     },
 
     /**
-     * Sắp xếp theo thời gian giảm dần.
+     * Sắp xếp các bài viết theo thời gian giảm dần.
      */
     sortPosts(postList) {
         postList.sort((a, b) => (b.date ?? '').localeCompare(a.date ?? '') || a.path.localeCompare(b.path));
     },
 
     /**
-     * Cập nhật lại ảnh cho tất cả bài viết.
+     * Cập nhật lại ảnh của thể loại cho tất cả bài viết.
      */
     updateThumbnailImageOfPosts(postList) {
         // Cập nhật lại ảnh cho tất cả bài viết

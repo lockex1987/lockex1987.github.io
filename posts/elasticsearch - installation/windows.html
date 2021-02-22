@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Cài đặt Elasticsearch trên Windows</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <meta name="description" content="Cài đặt Elasticsearch trên Windows">
+  </head>
+  <body>
+    <article>
+      <h2>Hướng dẫn cài đặt Elasticsearch trên Windows 10</h2>
+      <h3>Yêu cầu</h3>
+      <p>Elasticsearch yêu cầu Java 8 trở lên, do đó trước khi cài
+        Elasticsearch, hãy chắc chắn rằng bạn đã cài Java version &gt;= 8 trên
+        máy rồi nhé.</p>
+      <h3>Cài đặt Elasticsearch</h3>
+      <p>Ở đây mình cài đặt trên Windows nên sẽ sử dụng bản cài đặt<code> .msi</code>
+        tại <a href="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.3.2.msi.">https://artifacts.elastic.co/…elasticsearch-6.3.2.msi.</a></p>
+      <p>Để download các phiên bản khác các bạn truy cập vào: <a href="https://www.elastic.co/downloads/elasticsearch"
+          target="_blank">https://www.elastic.co/downloads/elasticsearch</a></p>
+      <p>Các bước cài đặt Elasticsearch</p>
+      <p>Click đúp vào file <code>.msi</code> vừa tải về</p>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-1.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-1.png"></a></p>
+      <p>Phần cấu hình directories (các thư mục chứa data, config hay các files
+        log) mình để mặc định, các bạn có thể sửa lại theo ý của mình nhé.</p>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-2.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-2.png"></a></p>
+      <p>Phần cấu hình elasticsearch, mình start nó bằng tay nên sẽ chọn “Do not
+        install as a service” tức là khi nào cần thì mới bật</p>
+      <p>còn mục “Install as a service” thì nó sẽ cài đặt elasticsearch giốn như
+        1 service của windows, và sẽ tự động start khi mở máy.</p>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-3.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-3.png"></a></p>
+      <p>Phần cấu hình elasticsearch mình để mặc định (Các bạn có thể sửa theo ý
+        muốn nhé</p>
+      <ul>
+        <li>Ví dụ port 9200 bị trùng với ứng dụng nào rồi thì sửa lại</li>
+        <li>Máy thừa ram mà muốn elasticsearch chạy nhanh thì cung cấp nhiều bộ
+          nhớ cho nó)</li>
+      </ul>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-4.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-4.png"></a></p>
+      <p>Phần plugin thì mình không cài gì cả. (Mình sẽ hướng dẫn các plugin của
+        elasticsearch sau)</p>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-5.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-5.png"></a></p>
+      <p>Mình dùng bản communiy nên chọn license là basic.</p>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-6.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-6.png"></a><a
+          href="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-7.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-7.png"></a></p>
+      <p>Kết quả: sau khi cài đặt thành công, các bạn truy cập bin của folder
+        cài đặt và click đúp vào file <code>elasticsearch.exe</code> để chạy
+        elasticsearch</p>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-8.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-8.png"></a></p>
+      <p>Để kiểm tra lại Elasticsearch đã chạy chưa, và các thông tin cấu hình
+        thì các bạn mở trình duyệt web và truy cập địa chỉ <a href="http://localhost:9200/"
+          target="_blank">localhost:9200</a>.</p>
+      <p><a href="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-9.png"><img
+            src="https://stackjava.com/wp-content/uploads/2018/07/install-elasticsearch-9.png"></a></p>
+      <p> </p>
+      <p>Okay, Done!</p>
+      <p>Các phần tiếp theo mình sẽ hướng dẫn thực hiện đưa dữ liệu vào
+        elasticsearch, đánh index và truy vấn, code ví dụ java với elasticsearch</p>
+      <p>Download file zip cho Windows, giải nén, chạy file <code>bin/elasticsearch.bat</code>.</p>
+      <p>References:</p>
+      <p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/_installation.html"
+          target="_blank">https://www.elastic.co/guide/en/elasticsearch/reference/current/_installation.html</a></p>
+      <p></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

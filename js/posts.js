@@ -5,57 +5,61 @@ const template = `
 <div>
     <form @submit.prevent="searchPosts()">
         <input type="text"
-                ref="queryInput"
-                v-model="query"
-                placeholder="Search..."
-                spellcheck="false"
-                class="w-100 mb-2 query"
-                autocomplete="off"
-                @input="processFilterPosts()"/>
+            ref="queryInput"
+            v-model="query"
+            placeholder="Search..."
+            spellcheck="false"
+            class="w-100 mb-2 query"
+            autocomplete="off"
+            @input="processFilterPosts()"/>
     </form>
 
     <label class="custom-control custom-checkbox custom-control-animated custom-control-highlighted custom-control-outlined mt-3 mb-3 d-none">
         <input type="checkbox"
-                class="custom-control-input"
-                v-model="onlyPublished"
-                @change="processFilterPosts()">
+            class="custom-control-input"
+            v-model="onlyPublished"
+            @change="processFilterPosts()">
         <span class="custom-control-label pt-1 pl-2">
             Chỉ hiển thị các bài viết đã xuất bản
         </span>
     </label>
 
     <p class="text-muted text-right font-size-0.875 mt-2"
-            v-show="executedTime != null">
-        Tìm thấy {{filteredList.length}} bài viết trong {{executedTime}}ms
+        v-show="executedTime != null">
+        Tìm thấy {{totalRecords}} bài viết trong {{executedTime}}ms
     </p>
 
     <ul class="list list-unstyled">
         <li class="d-flex mb-5"
-                :id="'post' + curentPostIndex + '' + idx"
-                v-for="(p, idx) in showList">
+            :id="'post' + curentPostIndex + '' + idx"
+            v-for="(p, idx) in showList">
             <img :src="'images/' + p.thumb"
-                    class="thumb mr-3 mt-2">
+                class="thumb mr-3 mt-2">
 
-            <div class="info">
+            <div>
                 <div class="mb-2">
-                    <a class="title text-blue font-size-1.25"
-                            :href="'posts/' + p.path + '/'">
+                    <a class="text-blue font-size-1.25"
+                        :href="'posts/' + p.path + '/'">
                         <span v-html="highlightText(p.title)"></span>
                     </a>
                 </div>
                 
-                <div class="description text-muted mt-1"
-                        v-html="highlightText(p.description)"></div>
+                <div class="text-muted mt-1"
+                    v-html="highlightText(p.description)"></div>
 
                 <div class="mt-1">
                     <a class="text-body font-size-0.875 text-decoration-none"
-                            :href="'posts/' + p.path + '/'">
+                        :href="'posts/' + p.path + '/'">
                         <span v-html="highlightText(p.path)"></span>
                     </a>
                 </div>
 
-                <div class="date text-success mt-1 font-size-0.875"
-                        v-if="p.date">
+                <div class="text-muted mt-1 font-size-0.875"
+                    v-html="highlightText(p.content)"
+                    v-if="p.content"></div>
+
+                <div class="text-success mt-1 font-size-0.875"
+                    v-if="p.date">
                     <i class="la la-calendar mr-1"></i>
                     {{normalizeDate(p.date)}}
                 </div>
@@ -76,6 +80,9 @@ const App = {
             // Dữ liệu sau khi đã được lọc theo xâu tìm kiếm
             filteredList: [],
 
+            // Tổng số bản ghi tìm thấy
+            totalRecords: 0,
+
             // Dữ liệu hiển thị từng trang
             showList: [],
 
@@ -92,7 +99,10 @@ const App = {
             executedTime: null,
 
             // Danh sách bài viết
-            postList: null
+            postList: null,
+
+            // Tìm kiếm local (file JSON), không phải Elasticsearch
+            localSearch: true
         };
     },
 
@@ -129,7 +139,12 @@ const App = {
     },
 
     mounted() {
-        this.getPostList();
+        if (this.localSearch) {
+            this.getPostList();
+        } else {
+            this.processFilterPosts();
+        }
+
         this.setTitle();
         this.listenToScrollEvent();
         this.listenToPopstate();
@@ -161,24 +176,50 @@ const App = {
         },
 
         /**
+         * Tìm kiếm ở Elasticsearch.
+         */
+        async searchElastic() {
+            const size = 20;
+            const url = 'http://localhost:3001/search' +
+                '?queryText=' + encodeURIComponent(this.query) +
+                '&from=' + this.curentPostIndex +
+                '&size=' + size;
+            const data = await fetch(url).then(resp => resp.json());
+
+            const hits = data.hits;
+
+            // Cập nhật ảnh của thể loại
+            ContentDataProcessor.updateThumbnailImageOfPosts(hits);
+            // console.log(hits);
+
+            this.filteredList = hits;
+            this.totalRecords = data.total;
+        },
+
+        /**
          * Lọc các bài viết theo từ khóa tìm kiếm.
          */
-        processFilterPosts() {
+        async processFilterPosts() {
             const startTime = new Date();
 
             // Từ khóa tìm kiếm
             const query = this.query.toLowerCase();
 
-            // Tiến hành lọc theo từ khóa
-            if (!query) {
-                this.filteredList = this.toSearchList;
-            } else {
-                this.filteredList = FullTextSearch.splitSearch(this.query, this.toSearchList);
-            }
-
             // Bắt đầu hiển thị ra cho người dùng
             this.curentPostIndex = 0;
             this.showList = [];
+
+            // Tiến hành lọc theo từ khóa
+            if (this.localSearch) {
+                if (!query) {
+                    this.filteredList = this.toSearchList;
+                } else {
+                    this.filteredList = FullTextSearch.splitSearch(this.query, this.toSearchList);
+                }
+                this.totalRecords = this.filteredList.length;
+            } else {
+                await this.searchElastic();
+            }
 
             const endTime = new Date();
             this.executedTime = endTime - startTime;
@@ -221,9 +262,8 @@ const App = {
          * Hiển thị tất cả các post luôn 1 lần.
          */
         bindPosts() {
-            // console.log(this.filteredList.length);
             // Nếu đã hết bản ghi
-            if (this.curentPostIndex >= this.filteredList.length) {
+            if (this.curentPostIndex >= this.totalRecords) {
                 return;
             }
 
@@ -233,7 +273,12 @@ const App = {
             // Chỉ lấy ít bản ghi thôi, nếu không sẽ bị chậm
             const morePostNumber = 20;
 
-            this.showList.push(...this.filteredList.slice(this.curentPostIndex, this.curentPostIndex + morePostNumber));
+            if (this.localSearch) {
+                this.showList.push(...this.filteredList.slice(this.curentPostIndex, this.curentPostIndex + morePostNumber));
+            } else {
+                this.showList.push(...this.filteredList);
+            }
+            // console.log(this.showList);
 
             // Tăng chỉ số
             this.curentPostIndex += morePostNumber;
@@ -247,6 +292,10 @@ const App = {
          * @param {String} text Xâu gốc hiển thị
          */
         highlightText(text) {
+            if (!this.localSearch) {
+                return text;
+            }
+
             if (!this.query) {
                 return text;
             }

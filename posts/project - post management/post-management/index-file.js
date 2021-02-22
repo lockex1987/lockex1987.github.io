@@ -1,5 +1,5 @@
-const { JSDOM } = require('jsdom');
-const fs = require('fs');
+import { JSDOM } from 'jsdom';
+import fs from 'fs';
 
 
 /**
@@ -25,6 +25,9 @@ class IndexFile {
 
         // Ngày xuất bản
         this.date = null;
+
+        // Nội dung
+        this.content = '';
 
         // Có tồn tại file index.html
         this.existsIndexFile = true;
@@ -59,6 +62,7 @@ class IndexFile {
         this.title = document.title;
         this.description = this.getDescriptionFromDoc();
         this.date = this.getDateFromDoc();
+        this.content = this.getContent();
 
         this.checkDescription();
         this.checkMetaViewport();
@@ -93,6 +97,13 @@ class IndexFile {
      */
     getDateFromDoc() {
         return this.getMetaTagContent('date');
+    }
+
+    /**
+     * Lấy nội dung bài viết.
+     */
+    getContent() {
+        return this.document.body.textContent;
     }
 
     /**
@@ -155,15 +166,16 @@ class IndexFile {
 }
 
 
-async function processIndexFile(indexFilePath, adjustPath) {
+export const processIndexFile = async function (indexFilePath, adjustPath) {
     const obj = new IndexFile(indexFilePath, adjustPath);
     await obj.process();
     return {
         title: obj.title,
         description: obj.description,
-        date: obj.date
+        date: obj.date,
+        content: obj.content
     };
-}
+};
 
 
-module.exports = processIndexFile;
+// export default { processIndexFile };

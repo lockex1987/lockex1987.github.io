@@ -3,8 +3,9 @@
  * Các post thì liệt kê thêm ngày xuất bản.
  * Thống kê mỗi chuyên mục có bao nhiêu bài viết.
  */
-const fs = require('fs');
-const processIndexFile = require('./index-file.js');
+import { promises, existsSync, statSync, writeFileSync, readFileSync } from 'fs';
+import { processIndexFile } from './index-file.js';
+import { insertPost } from './elasticsearch.js';
 
 
 /**
@@ -15,7 +16,7 @@ const processIndexFile = require('./index-file.js');
  */
 async function getPostList(rootFolder, adjustPath, oldList) {
     // Duyệt các thư mục con bên trong thư mục to "posts"
-    const folderList = await fs.promises.readdir(rootFolder);
+    const folderList = await promises.readdir(rootFolder);
     folderList.sort();
     const postList = [];
     for (let i = 0; i < folderList.length; i++) {
@@ -30,28 +31,42 @@ async function getPostList(rootFolder, adjustPath, oldList) {
 
         // Lấy thông tin thời gian chỉnh sửa file
         let modifiedTime;
-        if (!fs.existsSync(indexFilePath)) {
+        if (!existsSync(indexFilePath)) {
             modifiedTime = 0;
         } else {
-            const statsObj = fs.statSync(indexFilePath);
+            const statsObj = statSync(indexFilePath);
             modifiedTime = statsObj.mtimeMs || statsObj.birthtimeMs;
         }
 
-        // Nếu file không thay đổi gì
         const oldObj = oldList.find(e => e.path == path);
         if (oldObj && oldObj.modifiedTime && oldObj.modifiedTime === modifiedTime) {
+            // Nếu file không thay đổi gì
             postList.push(oldObj);
         } else {
             console.log('Cập nhật bài viết ' + path);
             const indexFile = await processIndexFile(indexFilePath, adjustPath);
-            const { title, description, date } = indexFile;
+            const { title, description, date, content } = indexFile;
 
-            // Thêm vào danh sách
-            postList.push({
+            const post = {
                 category,
                 title,
                 description,
                 date,
+                // content,
+                modifiedTime,
+                path
+            };
+
+            // Thêm vào danh sách
+            postList.push(post);
+
+            // Thêm vào Elasticsearch
+            insertPost({
+                category,
+                title,
+                description,
+                date,
+                content,
                 modifiedTime,
                 path
             });
@@ -59,7 +74,6 @@ async function getPostList(rootFolder, adjustPath, oldList) {
     }
     return postList;
 }
-
 
 /**
  * Tính toán số bài viết của từng thể loại.
@@ -110,36 +124,42 @@ function getCategoryCountMapJson(categoryCountMap) {
 
 /**
  * Ghi ra file dữ liệu.
- * @param content  Nội dung file
+ * @param content Nội dung file
  * @param filePath Đường dẫn đến file đầu ra
  */
 function writeDataFile(content, filePath) {
-    fs.writeFileSync(filePath, content);
+    writeFileSync(filePath, content);
 }
+
 
 /**
  * Hàm xử lý chính.
+ * @param adjustPath Đường dẫn đến thư mục gốc
  */
-async function init() {
+async function init(adjustPath) {
     const startTime = (new Date()).getTime();
 
-    const adjustPath = (process.argv.length > 2) ? process.argv[2] : '';
-
+    // Dữ liệu cũ
     const listFilePath = adjustPath + 'data/post-list.json';
-    const fileContent = fs.readFileSync(listFilePath, 'utf8');
+    const fileContent = readFileSync(listFilePath, 'utf8');
     const oldList = JSON.parse(fileContent);
 
+    // Quét lại các bài viết
     const postList = await getPostList(adjustPath + 'posts', adjustPath, oldList);
+
+    // Thống kê theo chuyên mục
     const categoryMap = calculateCategoryCountMap(postList);
 
+    // Ghi ra file
     writeDataFile(getPostListJson(postList), listFilePath);
-    writeDataFile(getCategoryCountMapJson(categoryMap), adjustPath + 'posts/project - post management/data/category-data.json');
+    const categoryFilePath = adjustPath + 'posts/project - post management/data/category-data.json';
+    writeDataFile(getCategoryCountMapJson(categoryMap), categoryFilePath);
 
     const endTime = (new Date()).getTime();
     console.log('Finish after ' + ((endTime - startTime) / 1000) + 's');
 }
 
-init();
 
 // Nếu ở thư mục trong, thực hiện lệnh node main.js "../../../"
 // Nếu ở thư mục gốc, thực hiện lệnh node main.js
+init((process.argv.length > 2) ? process.argv[2] : '');
