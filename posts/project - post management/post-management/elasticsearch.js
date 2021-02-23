@@ -1,7 +1,6 @@
 import { Client } from '@elastic/elasticsearch';
 import express from 'express';
 import bodyParser from 'body-parser';
-import e from 'express';
 
 
 const client = new Client({
@@ -9,22 +8,44 @@ const client = new Client({
 });
 
 
-
+/**
+ * Tạo index.
+ */
 async function createIndex() {
     try {
         const { body } = await client.indices.create({
-            index: 'gov'
+            index: 'post',
+            body: {
+                mappings: {
+                    properties: {
+                        date: {
+                            type: 'date',
+                            format: 'yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis'
+                        },
+                        modifiedTime: {
+                            type: 'double'
+                        },
+                        category: {
+                            type: 'keyword'
+                        }
+                    }
+                }
+            }
         });
         console.log('Create', body);
     } catch (ex) {
-        console.log(ex);
+        // console.log(ex);
+        console.log(ex.meta.body.error);
     }
 }
 
 
+/**
+ * Xóa toàn bộ index.
+ */
 async function deleteIndex() {
     const { body } = await client.indices.delete({
-        index: 'gov'
+        index: 'post'
     });
     console.log('Delete', body);
 }
@@ -54,7 +75,8 @@ export const insertPost = async function (post) {
             body: post
         });
     } catch (ex) {
-        console.log(ex);
+        // console.log(ex);
+        console.log(ex.meta.body.error);
     }
 };
 
@@ -107,6 +129,27 @@ async function deleteData() {
 }
 
 
+async function getAllDataToCheck() {
+    const options = {
+        index: 'post',
+        body: {
+            from: 0,
+            size: 1000,
+            query: {
+                match_all: {}
+            }
+        },
+        // Không hiển thị source, kết quả ngắn gọn
+        _source: false
+    };
+
+    const { body } = await client.search(options);
+    // console.log(body);
+    console.log(body.hits.total);
+    console.log(body.hits.hits);
+}
+
+
 /**
  * Tìm kiếm.
  * @param {String} queryText Xâu tìm kiếm
@@ -124,7 +167,25 @@ async function runSearch(queryText, from, size) {
                     size: size,
                     query: {
                         match_all: {}
-                    }
+                    },
+                    // Sắp xếp bài viết theo ngày xuất bản, đường dẫn
+                    sort: [
+                        {
+                            date: 'desc'
+                        },
+                        {
+                            // ID bản ghi chính là path
+                            // Không sắp xếp được theo path vì path có kiểu dữ liệu là string, không được tối ưu cho sắp xếp
+                            _id: { order: 'asc' }
+                        }
+                        /*,
+                        'user',
+                        {
+                            age: 'asc'
+                        },
+                        '_score'
+                        */
+                    ]
                 }
             };
         } else {
@@ -135,6 +196,7 @@ async function runSearch(queryText, from, size) {
                 body: {
                     from: from,
                     size: size,
+                    // _source: ['title', 'summary', 'publish_date']
                     query: {
                         // match: { ConstituencyName: 'Ipswich' }
                         // wildcard: { 'constituencyname': '???wich' }
@@ -142,8 +204,10 @@ async function runSearch(queryText, from, size) {
                         // match: { content: queryText }
                         multi_match: {
                             query: queryText,
-                            fields: ['title^3', 'path^3', 'description^2', 'content']
-                            // fields: ['title', 'path', 'description', 'content']
+                            fields: ['title^3', 'path^3', 'description^2', 'content'],
+                            // fields: ['title', 'path', 'description', 'content'],
+                            // Search cả từ, các từ phải đứng cạnh nhau
+                            type: 'phrase'
                         }
                     },
                     highlight: {
@@ -155,20 +219,21 @@ async function runSearch(queryText, from, size) {
                             description: {},
                             content: {}
                         }
-                    },
-                    // _source: true
+                    }
                 }
             };
         }
         const { body } = await client.search(options);
         // console.log(body);
         // console.log(body.hits.total);
-        // console.log(body.hits.hits);
+        console.log(body.hits.hits);
         const total = body.hits.total.value;
         let hits;
         if (!queryText) {
             hits = body.hits.hits.map(e => ({
                 category: e._source.category,
+                date: e._source.date,
+                // id: e._id,
                 path: e._source.path,
                 title: e._source.title,
                 description: e._source.description
@@ -176,6 +241,7 @@ async function runSearch(queryText, from, size) {
         } else {
             hits = body.hits.hits.map(e => ({
                 category: e._source.category,
+                date: e._source.date,
                 path: e.highlight.path?.[0] ?? e._source.path,
                 title: e.highlight.title?.[0] ?? e._source.title,
                 description: e.highlight.description?.[0] ?? e._source.description,
@@ -187,7 +253,9 @@ async function runSearch(queryText, from, size) {
             hits
         };
     } catch (ex) {
-        console.log(ex);
+        // console.log(ex);
+        console.log(ex.meta.body.error);
+
         return {
             total: 0,
             hits: []
@@ -224,6 +292,14 @@ function createApiServer() {
 }
 
 
+/**
+ * Đóng kết nối.
+ */
+export const closeConnection = function () {
+    client.close();
+};
+
+
 async function init() {
     // createIndex();
     // deleteIndex();
@@ -235,8 +311,16 @@ async function init() {
     // const result = await runSearch('', 0, 20);
     // console.log(result);
 
-    createApiServer();
+    // getAllDataToCheck();
+
+    // createApiServer();
+
+    // closeConnection();
 }
 
 
+// TODO:
+// - Đồng bộ bài viết đã xóa
+// - Search tiếng Việt
+// - Tạo Laravel API
 init();

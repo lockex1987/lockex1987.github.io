@@ -5,7 +5,7 @@
  */
 import { promises, existsSync, statSync, writeFileSync, readFileSync } from 'fs';
 import { processIndexFile } from './index-file.js';
-import { insertPost } from './elasticsearch.js';
+// import { insertPost, closeConnection } from './elasticsearch.js';
 
 
 /**
@@ -60,8 +60,9 @@ async function getPostList(rootFolder, adjustPath, oldList) {
             // Thêm vào danh sách
             postList.push(post);
 
+            /*
             // Thêm vào Elasticsearch
-            insertPost({
+            await insertPost({
                 category,
                 title,
                 description,
@@ -70,8 +71,13 @@ async function getPostList(rootFolder, adjustPath, oldList) {
                 modifiedTime,
                 path
             });
+            */
         }
     }
+
+    // Đóng kết nối Elasticsearch
+    // closeConnection();
+
     return postList;
 }
 

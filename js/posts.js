@@ -190,7 +190,12 @@ const App = {
 
             // Cập nhật ảnh của thể loại
             ContentDataProcessor.updateThumbnailImageOfPosts(hits);
+
+            // Chuẩn hóa ngày xuất bản
+            ContentDataProcessor.normalizeDateOfPosts(hits);
+
             // console.log(hits);
+
 
             this.filteredList = hits;
             this.totalRecords = data.total;
@@ -261,7 +266,7 @@ const App = {
         /**
          * Hiển thị tất cả các post luôn 1 lần.
          */
-        bindPosts() {
+        async bindPosts() {
             // Nếu đã hết bản ghi
             if (this.curentPostIndex >= this.totalRecords) {
                 return;
@@ -276,7 +281,11 @@ const App = {
             if (this.localSearch) {
                 this.showList.push(...this.filteredList.slice(this.curentPostIndex, this.curentPostIndex + morePostNumber));
             } else {
+                if (this.filteredList == null) {
+                    await this.searchElastic();
+                }
                 this.showList.push(...this.filteredList);
+                this.filteredList = null;
             }
             // console.log(this.showList);
 
