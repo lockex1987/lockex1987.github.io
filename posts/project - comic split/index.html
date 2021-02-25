@@ -3,9 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Split ảnh truyện tranh">
-    <meta name="keywords" content="comic, split image, panel to panel">
-    <meta name="author" content="lockex1987">
+    <meta name="description" content="comic, image, panel to panel, php gd"/>
     <title>Split ảnh truyện tranh</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -15,16 +13,18 @@
       <h2>Split ảnh truyện tranh</h2>
       <h3>Giới thiệu</h3>
       <p><a href="viewer.html">Viewer</a></p>
-      <p> Chia ảnh ra thành các panel (hàng, ô) nhỏ để dễ đọc trên các thiết bị
+      <p>Chia ảnh ra thành các panel (hàng, ô) nhỏ để dễ đọc trên các thiết bị
         như điện thoại di động.</p>
-      <p> Xử lý ảnh thật là hay, có nhiều ý tưởng hữu ích: nhận dạng biển số,
+      <p>Xử lý ảnh thật là hay, có nhiều ý tưởng hữu ích: nhận dạng biển số,
         nhận dạng cháy, đọc số công tơ, phát hiện trộm,...</p>
       <p><a href="https://thigiacmaytinh.com/" target="_blank">thigiacmaytinh.com</a></p>
-      <p> Để làm những cái đó, chúng ta nên sử dụng OpenCV.</p>
-      <p> Việc tách các khung truyện tranh thì sử dụng Pillow của Python thôi.</p>
+      <p>Để làm những cái đó, chúng ta nên sử dụng OpenCV.</p>
+      <p>Việc tách các khung truyện tranh thì sử dụng Pillow của Python thôi.</p>
+      <p>Tách ảnh, đóng gói file cbz, đọc trên iPad.</p>
       <h3>Thuật toán</h3>
-      <p> Cấu trúc của 1 trang truyện là:</p>
-      <pre>  +---Page-------------------------------------+
+      <p>Cấu trúc của 1 trang truyện là:</p>
+      <pre>
+  +---Page-------------------------------------+
   |                                            | &lt;- Gutter
   | +-----------+ +-----------+ +-----------+  |-----
   | |           | |           | |           |  |
@@ -40,9 +40,7 @@
   |                                            | &lt;- Gutter
   +--------------------------------------------+
                 &lt;-&gt;
-              Gutter
-
-</pre>
+              Gutter</pre>
       <p> Gutter là các khoảng không gian trống chia các panel. Gutter trái,
         phải, trên, dưới có thể không tồn tại.</p>
       <p> Chúng ta có thể kiểm tra 1 đường thẳng (ngang hoặc dọc) có phải là
@@ -73,11 +71,17 @@
         trên cho từng dòng. Bây giờ chúng ta sẽ di chuyển theo chiều ngang từ
         trái qua phải.</p>
       <p> Ảnh gốc: </p>
-      <img alt="" src="images/origin.jpg" style="max-width: 200px;">
+      <div class="mb-3">
+        <img alt="" src="images/origin.jpg" style="max-width: 200px;">
+      </div>
       <p> Ảnh mono 1: </p>
-      <p> <img alt="" src="images/mono-1.jpg" style="max-width: 200px;"> </p>
+      <div class="mb-3">
+        <img alt="" src="images/mono-1.jpg" style="max-width: 200px;">
+      </div>
       <p> Ảnh mono 2: </p>
-      <p> <img alt="" src="images/mono-2.jpg" style="max-width: 200px;"> </p>
+      <div class="mb-3">
+        <img alt="" src="images/mono-2.jpg" style="max-width: 200px;">
+      </div>
       <h3> Hạn chế</h3>
       <p> Chương trình có thể không split thành công các ô từ một trang mà bị
         xoay.</p>

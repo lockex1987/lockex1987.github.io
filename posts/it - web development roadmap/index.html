@@ -14,7 +14,8 @@
       <h2>Web development roadmap</h2>
       <p>From zero to deployment.</p>
       <p>Bài viết này mô tả các bước để phát triển một ứng dụng web.</p>
-      <p>Solve problems use programming language (tool). Không chạy theo language, framework.</p>
+      <p>Solve problems use programming language (tool). Không chạy theo
+        language, framework.</p>
       <h3>Bước 1: Setup</h3>
       <p>Các bước nhỏ:</p>
       <ul>
@@ -44,10 +45,19 @@
         <li>Đăng xuất</li>
         <li>Thêm throttle</li>
         <li>Đổi thông tin (mật khẩu, tên, số điện thoại, email, avatar)</li>
+        <ul>
+          <li>Avatar lưu ở trong DB</li>
+        </ul>
         <li>Lịch sử đăng nhập (OS, Browser, IP, time)</li>
         <li>Danh sách các ứng dụng được phân quyền</li>
         <li>Email đổi mật khẩu thành công</li>
+        <ul>
+          <li>Giới hạn số lần đổi tối đa trong một ngày</li>
+        </ul>
         <li>Quên mật khẩu</li>
+        <ul>
+          <li>Giới hạn số lần thao tác tối đa trong một ngày</li>
+        </ul>
         <li>Đăng ký, TODO:
           <ul>
             <li>Đăng ký qua Facebook, Google</li>
@@ -56,7 +66,6 @@
         </li>
         <li>Gửi mail xác nhận khi đăng ký</li>
       </ul>
-      
       <h4>sso-admin</h4>
       <ul>
         <li>Đăng nhập qua <strong>sso-passport</strong> (người dùng phải được
@@ -70,8 +79,6 @@
         </li>
         <li>Gán ứng dụng cho người dùng</li>
       </ul>
-      
-      
       <h4>uw-admin (sso-admin)</h4>
       <p>Không mất công làm lại các bài toán cũ.</p>
       <p>Làm luôn trên project <strong>sso-admin</strong>.</p>
@@ -108,15 +115,12 @@
           <li>TODO: Notification dạng hệ thống, k phải là noti.info</li>
           <li>TODO: Khi đánh dấu đã đọc thì cập nhật lại số thông báo mới</li>
         </ul>
-        
-        
         <li>Múi giờ Việt Nam (lưu DB không bị lệch với trường timestamp)</li>
         <ul>
-          <li>Thiết lập <code>'timezone' => 'Asia/Ho_Chi_Minh'</code> ở file <code>config/app.php</code>, mặc định đang là <code>UTC</code></li>
+          <li>Thiết lập <code>'timezone' =&gt; 'Asia/Ho_Chi_Minh'</code> ở file
+            <code>config/app.php</code>, mặc định đang là <code>UTC</code></li>
         </ul>
-        
         <li>i18n: tiếng Việt (các thông báo lỗi validate)</li>
-        
         <li>Danh mục dùng chung (tham khảo Voyage)</li>
         <ul>
           <li>Quốc gia, thể loại phim (dùng để quản lý movie)</li>
@@ -125,22 +129,18 @@
         <ul>
           <li>Động (thêm, sửa, xóa)</li>
         </ul>
-        
         <li>Import Excel</li>
         <li>Export Excel</li>
-
         <li>Tổ chức (dữ liệu dạng cây)</li>
         <ul>
           <li>Ở form người dùng có chọn tổ chức</li>
         </ul>
-
         <li>Quản lý nội dung</li>
         <ul>
           <li>Dùng editor Summernote</li>
           <li>HTML purify chống lỗi XSS</li>
           <li>Nội dung chứa ảnh</li>
         </ul>
-        
         <li>Upload đính kèm file</li>
         <ul>
           <li>Giới hạn dung lượng</li>
@@ -151,18 +151,15 @@
         <ul>
           <li>Response log</li>
         </ul>
-        
-        <li>Logging: cấu hình log Laravel theo ngày, tách log lỗi ra file riêng, đẩy log lỗi vào DB, liệt kê và download file log</li>
+        <li>Logging: cấu hình log Laravel theo ngày, tách log lỗi ra file riêng,
+          đẩy log lỗi vào DB, liệt kê và download file log</li>
         <ul>
-          <li>Log service: Xem log ở các server có load balancer (không biết lỗi ở server nào), cảnh báo log lỗi</li>
+          <li>Log service: Xem log ở các server có load balancer (không biết lỗi
+            ở server nào), cảnh báo log lỗi</li>
           <li>Xem log lỗi nginx</li>
-		  <li>Log lỗi hệ thống đẩy vào DB, có chức năng view (https://laravel.com/docs/master/errors)</li>
+          <li>Log lỗi hệ thống đẩy vào DB, có chức năng view
+            (https://laravel.com/docs/master/errors)</li>
         </ul>
-       
-        
-        
-        
-        
         <li>Components demo:
           <ul>
             <li>Week picker</li>
@@ -171,29 +168,22 @@
             <li>...</li>
           </ul>
         </li>
-        
-
-        
       </ul>
-      
       <p>Ứng dụng thật:</p>
       <ul>
         <li>Mail</li>
         <ul>
-          
           <li>Mail cảnh báo hoạt động</li>
           <li>Mail truyền thông</li>
           <li>Mail báo cáo tuần, báo cáo ngày</li>
           <li>Mail service: Gửi mail tập trung, gọi REST POST với các tham số
             (app, secret, to, title, body)</li>
         </ul>
-        
         <li>Quản lý movie</li>
         <li>English common words</li>
         <li>My family (có DB)</li>
         <li>Monitor service: Ứng dụng alive; định kỳ đọc log lỗi, nếu có thì
           cảnh báo</li>
-        
         <li>ElasticSearch
           <ul>
             <li>Tìm kiếm dữ liệu lớn (khách hàng Viettel)</li>
@@ -205,7 +195,6 @@
           <li>Notification?</li>
         </ul>
       </ul>
-      
       <h4>uw-frontend</h4>
       <p>Server render, hỗ trợ SEO.</p>
       <ul>
@@ -228,7 +217,6 @@
           <li>Dùng Share API để share link</li>
         </ul>
       </ul>
-      
       <h4>websocket-server</h4>
       <ul>
         <li>Điều hướng chat</li>

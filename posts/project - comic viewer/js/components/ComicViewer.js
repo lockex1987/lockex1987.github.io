@@ -300,26 +300,12 @@ export default {
             this.viewerHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
         },
 
-        splitImage() {
-            // import ImageSpliter from './ImageSpliter.js';
-
-            // 'images/origin.jpg'
-            new ImageSpliter().split(this.imageList[this.currentIndex], (images) => {
-                this.$refs.smallPanelsContainer.innerHTML = '';
-                images.forEach(img => {
-                    img.className = 'd-block mb-5 mx-auto';
-                    this.$refs.smallPanelsContainer.appendChild(img);
-                });
-            });
-        },
-
         /**
          * Chuyển đến ảnh nào đó.
          * @param {Integer} idx Vị trí ảnh
          */
         gotoImage(idx) {
             this.currentIndex = idx;
-            // this.splitImage();
         },
 
         /**

@@ -103,7 +103,10 @@ class IndexFile {
      * Lấy nội dung bài viết.
      */
     getContent() {
-        return this.document.body.textContent;
+		// Sử dụng innerText, không sử dụng textContent
+		// innerText bỏ qua các dấu cách ở hai đầu, bỏ qua các thẻ script và style,
+		// có áp dụng CSS (ví dụ text-transform: uppercase)
+        return this.document.body.innerText;
     }
 
     /**
