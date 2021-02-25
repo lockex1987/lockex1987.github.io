@@ -11,6 +11,7 @@ class phpClass
 	}
 }
 
+
 class Books
 {
 	/* các biến thành viên */
@@ -98,10 +99,12 @@ class Novel extends Books
 	}
 }
 
+
 interface Mail
 {
 	public function sendMail();
 }
+
 
 class Report implements Mail
 {
@@ -112,10 +115,12 @@ class Report implements Mail
 	}
 }
 
+
 class MyClass
 {
-	// Ghi nhớ rằng, tên hằng không bắt đầu với $, như trong tên biến.
-	const requiredMargin = 1.7; // từ khóa const
+	// Ghi nhớ rằng, tên hằng không bắt đầu với $, như trong tên biến
+	// Từ khóa const
+	const requiredMargin = 1.7;
 	
 	function __construct($incomingValue)
 	{
@@ -124,6 +129,7 @@ class MyClass
 		// được tạo
 	}
 }
+
 
 abstract class MyAbstractClass
 {
@@ -134,6 +140,7 @@ abstract class MyAbstractClass
 		// ...
 	}
 }
+
 
 class Foo
 {
@@ -183,4 +190,3 @@ class NameSub1 extends Name
 	}
 }
 */
-?>

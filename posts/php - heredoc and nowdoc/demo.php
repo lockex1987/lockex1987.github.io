@@ -13,33 +13,43 @@ function noSpaceBefore()
 	// Có highlight
 	// Heredoc có xử lý biến
 	// Nowdoc thì không xử lý, giữ nguyên
-	$html = <<<'HTML'
-<div class='something'>
-	<ul class='mylist'>
-	<li>$something</li>
-	<li>$whatever</li>
-	<li>$testing123</li>
-	</ul>
-</div>
-HTML;
+	$html1 = <<<'HTML'
+		<div class='something'>
+			<ul class='mylist'>
+			<li>$something</li>
+			<li>$whatever</li>
+			<li>$testing123</li>
+			</ul>
+		</div>
+	HTML;
 
-	echo $html . "\n";
+	$html2 = <<<HTML
+		<div class='something'>
+			<ul class='mylist'>
+			<li>$something</li>
+			<li>$whatever</li>
+			<li>$testing123</li>
+			</ul>
+		</div>
+	HTML;
+
+	echo $html1 . PHP_EOL;
+	echo $html2 . PHP_EOL;
 }
 
 
 $normal = ' select * from table ';
 
 $sql = <<<SQL
-       SELECT * FROM table
+    select * from table
 SQL;
 
 noSpaceBefore();
 
-echo $sql . "\n";
+echo $sql . PHP_EOL;
 
 strtoupper('Cài đặt VSCode extesion PHP IntelliSense để có tính năng auto-complete');
 
 $a = [0, 1, 2];
-echo end($a) . "\n";
+echo end($a) . PHP_EOL;
 //echo $a[-1];
-
