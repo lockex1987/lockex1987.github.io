@@ -12,7 +12,7 @@ class ImageSpliter
     private string $ext;
 
     // Thư mục chứa các ảnh được cắt ra output
-    private string $outputFolder = '_output/';
+    private string $outputFolder = '../_output/';
 
     public function __construct(string $inputPath)
     {
@@ -22,6 +22,8 @@ class ImageSpliter
 
         $this->checkOutputFolder();
         $grid = $this->splitImageToGrid();
+        // var_dump($grid);
+        $grid = $this->splitFrameHorizontaly($grid);
         $this->splitFile($grid);
 
         // Giải phóng bộ nhớ
@@ -30,17 +32,17 @@ class ImageSpliter
 
     /**
      * Chia ảnh thành các hàng.
+     * @param $left {int} Tạo độ bên trái
+     * @param $top {int} Tạo độ bên trên
+     * @param $right {int} Tạo độ bên phải
+     * @param $bottom {int} Tạo độ bên dưới
      * @return {array} Mảng các hàng, mỗi hàng là mảng bao gồm { left, top, right, bottom }
      */
-    private function getAllRows(): array
+    private function getAllRows(int $left, int $top, int $right, int $bottom): array
     {
-        $width = imagesx($this->img);
-        $height = imagesy($this->img);
         $rows = [];
-        $left = 0; // có thể bỏ qua 1 số pixel ở bên trái, cho nhanh hoặc do scan lỗi (bị đen ở bên trái hoặc phải)
-        $y1 = 0; // có thể bỏ qua 1 số dòng đầu ở đây để tăng tốc độ
-        $right = $width - 1; // có thể bỏ qua một số pixel ở bên phải
-        $bottom = $height - 1;
+        $y1 = $top;
+
         while (true) {
             [$y1, $y2] = $this->getTopMostRow($left, $y1, $right, $bottom);
             if ($y1 == -1) {
@@ -56,6 +58,16 @@ class ImageSpliter
             // Di chuyển xuống dưới 5px (tăng tốc độ nhưng vẫn đảm bảo không vào row mới)
             $y1 = $y2 + 5;
         }
+
+        if (count($rows) == 0) {
+            $rows[] = [
+                'left' => $left,
+                'top' => $top,
+                'right' => $right,
+                'bottom' => $bottom
+            ];
+        }
+
         return $rows;
     }
 
@@ -187,7 +199,7 @@ class ImageSpliter
         while ($x2 < $right && !$this->isGutterColumn($x2, $top, $bottom)) {
             $x2++;
         }
-        
+
         if ($x2 - $x1 < $minFrameWidth) {
             return [-1, -1];
         }
@@ -333,21 +345,19 @@ class ImageSpliter
     private function cropImages(array $grid, string $fileName): void
     {
         $idx = 0;
-        foreach ($grid as $rows) {
-            foreach ($rows as ['left' => $left, 'top' => $top, 'right' => $right, 'bottom' => $bottom]) {
-                $rect = [
-                    'x' => $left,
-                    'y' => $top,
-                    'width' => $right - $left + 1,
-                    'height' => $bottom - $top + 1
-                ];
-                $cropedImage = imagecrop($this->img, $rect);
-                $outputPath = $this->outputFolder . $fileName . '-' . str_pad($idx + 1, 3, '0', STR_PAD_LEFT) . '.' . $this->ext;
-                $this->writeImageToFile($cropedImage, $outputPath, $this->ext);
-                imagedestroy($cropedImage);
+        foreach ($grid as ['left' => $left, 'top' => $top, 'right' => $right, 'bottom' => $bottom]) {
+            $rect = [
+                'x' => $left,
+                'y' => $top,
+                'width' => $right - $left + 1,
+                'height' => $bottom - $top + 1
+            ];
+            $cropedImage = imagecrop($this->img, $rect);
+            $outputPath = $this->outputFolder . $fileName . '-' . str_pad($idx + 1, 3, '0', STR_PAD_LEFT) . '.' . $this->ext;
+            $this->writeImageToFile($cropedImage, $outputPath, $this->ext);
+            imagedestroy($cropedImage);
 
-                $idx++;
-            }
+            $idx++;
         }
     }
 
@@ -368,12 +378,20 @@ class ImageSpliter
      */
     private function splitImageToGrid(): array
     {
-        $rows = $this->getAllRows();
+        $width = imagesx($this->img);
+        $height = imagesy($this->img);
+
+        $left = 0; // có thể bỏ qua 1 số pixel ở bên trái, cho nhanh hoặc do scan lỗi (bị đen ở bên trái hoặc phải)
+        $top = 0; // có thể bỏ qua 1 số dòng đầu ở đây để tăng tốc độ
+        $right = $width - 1; // có thể bỏ qua một số pixel ở bên phải
+        $bottom = $height - 1;
+
+        $rows = $this->getAllRows($left, $top, $right, $bottom);
 
         // Chỉ có một hàng thì không cần tách
         // Copy ảnh thôi
-        if (count($rows) < 2) {
-            return [];
+        if (count($rows) == 1) {
+            return $rows;
         }
 
         $grid = [];
@@ -414,12 +432,30 @@ class ImageSpliter
                 }
                 */
             }
-            $grid[] = $frames;
+
+            // 
+            
+
+            $grid = array_merge($grid, $frames);
         }
 
-        // Có thể cắt tiếp các frame, có trường hợp một frame trải trên 2 hàng
-
         return $grid;
+    }
+
+
+    /**
+     * Có thể cắt tiếp các frame, có trường hợp một frame trải trên 2 hàng.
+     * @param $grid {array} Mảng
+     * @return {array} Mảng
+     */
+    private function splitFrameHorizontaly(array $grid): array
+    {
+        $arr = [];
+        foreach ($grid as ['left' => $left, 'top' => $top, 'right' => $right, 'bottom' => $bottom]) {
+            $subRows = $this->getAllRows($left, $top, $right, $bottom);
+            $arr = array_merge($arr, $subRows);
+        }
+        return $arr;
     }
 
     /**
@@ -432,7 +468,7 @@ class ImageSpliter
         // Tên file mà không có đuôi mở rộng
         $fileName = str_replace('.' . $this->ext, '', $baseName);
 
-        if (count($grid) == 0) {
+        if (count($grid) == 1) {
             // Chỉ có một hàng thì không cần tách
             // Copy ảnh thôi
             copy($this->inputPath, $this->outputFolder . $baseName);

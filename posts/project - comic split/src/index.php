@@ -24,7 +24,7 @@ class Main
      */
     function processFolder(): void
     {
-        $folder = 'data-files';
+        $folder = '../data-files';
         $files = scandir($folder);
         foreach ($files as $f) {
             if (!in_array($f, ['.', '..'])) {
@@ -62,8 +62,8 @@ class Main
             return;
         }
 
-        $this->processSingleFile('../images/origin.jpg');
-        // $this->processFolder();
+        // $this->processSingleFile('../images/origin.jpg');
+        $this->processFolder();
     }
 }
 
