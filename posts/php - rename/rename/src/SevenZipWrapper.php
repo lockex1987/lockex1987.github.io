@@ -173,6 +173,7 @@ class SevenZipWrapper
      */
     public function compressFolder($compressFolder, $archivePath)
     {
+        echo $compressFolder . PHP_EOL;
         $rootPath = realpath($compressFolder);
         $archiveFile = new ZipArchive();
         $archiveFile->open($archivePath, ZipArchive::CREATE | ZipArchive::OVERWRITE);
@@ -185,20 +186,22 @@ class SevenZipWrapper
             if (!$file->isDir()) {
                 $realPath = $file->getRealPath();
                 $relativePath = substr($realPath, strlen($rootPath) + 1);
-                echo $relativePath . PHP_EOL;
+                // echo $relativePath . PHP_EOL;
                 $archiveFile->addFile($realPath, $relativePath);
             }
         }
 
         // PHP 8 có hàm này
         $archiveFile->registerProgressCallback(0.05, function ($r) {
+            $percent = round($r * 100);
             // Hiển thị tiến độ trên một dòng
             // https://www.hashbangcode.com/article/overwriting-command-line-output-php
-            echo chr(27) . "[0G";
-            echo round($r * 100, 2) . '%';
+            echo chr(27) . '[0G';
+            echo $percent . '%';
+            if ($percent == 95) {
+                echo PHP_EOL;
+            }
         });
-
-        echo PHP_EOL;
 
         $archiveFile->close();
     }

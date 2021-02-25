@@ -1,4 +1,5 @@
 <?php
+
 $cars = ['Volvo', 'BMW', 'Toyota'];
 
 // sort($cars);
@@ -6,7 +7,7 @@ rsort($cars);
 
 foreach ($cars as $c) {
 	echo $c;
-    echo PHP_EOL;
+	echo PHP_EOL;
 }
 
 $numbers = [4, 6, 2, 22, 11];
@@ -15,7 +16,7 @@ sort($numbers);
 
 foreach ($numbers as $n) {
 	echo $n;
-    echo PHP_EOL;
+	echo PHP_EOL;
 }
 
 $age = [
@@ -30,8 +31,8 @@ $age = [
 krsort($age);
 
 foreach ($age as $x => $value) {
-    echo 'Key = ' . $x . ', value = ' . $value;
-    echo PHP_EOL;
+	echo 'Key = ' . $x . ', value = ' . $value;
+	echo PHP_EOL;
 }
 
 
@@ -56,31 +57,11 @@ usort($records, function ($a, $b) {
 });
 
 foreach ($records as $e) {
-    echo $e['firstname'] . ', ' . $e['age'] . PHP_EOL;
+	echo $e['firstname'] . ', ' . $e['age'] . PHP_EOL;
 }
 
 
-$arr = ['Hello', 'World!', 'Beautiful', 'Day!'];
-echo implode(' ', $arr) . PHP_EOL;
-echo implode('+', $arr) . PHP_EOL;
-echo implode('-', $arr) . PHP_EOL; 
-echo implode('X', $arr);
 
-$str = 'one,two,three,four';
-
-// default
-print_r(explode(',', $str));
-
-// zero limit
-print_r(explode(',', $str, 0));
-echo PHP_EOL;
-
-// positive limit
-print_r(explode(',', $str, 2));
-echo PHP_EOL;
-
-// negative limit 
-print_r(explode(',', $str, -1));
 
 
 $array1 = $array2 = ['img12.png', 'img10.png', 'img2.png', 'img1.png'];
