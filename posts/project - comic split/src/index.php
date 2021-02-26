@@ -13,25 +13,28 @@ class Main
     /**
      * Xử lý một file (dùng để test).
      */
-    function processSingleFile(string $inputPath): void
+    function processSingleFile(string $filePath): void
     {
-        new ImageSpliter($inputPath);
+        echo $filePath . PHP_EOL;
+        $outputFolder = '../_output/';
+        $imageSpliter = new ImageSpliter($filePath);
+        $grid = $imageSpliter->splitImageToGrid();
+        $imageSpliter->splitFile($grid, $outputFolder);
+        $imageSpliter->freeMemory();
     }
 
 
     /**
      * Xử lý cả folder nhiều ảnh.
      */
-    function processFolder(): void
+    function processFolder(string $folder): void
     {
-        $folder = '../data-files';
         $files = scandir($folder);
         foreach ($files as $f) {
             if (!in_array($f, ['.', '..'])) {
-                $inputPath = $folder . DIRECTORY_SEPARATOR . $f;
-                if (is_file($inputPath)) {
-                    echo $inputPath . PHP_EOL;
-                    $this->processSingleFile($inputPath);
+                $filePath = $folder . DIRECTORY_SEPARATOR . $f;
+                if (is_file($filePath)) {
+                    $this->processSingleFile($filePath);
                 }
             }
         }
@@ -62,8 +65,22 @@ class Main
             return;
         }
 
-        // $this->processSingleFile('../images/origin.jpg');
-        $this->processFolder();
+        $arr = [
+            '../images/has-heading.jpg',
+            '../images/has-row-span.jpg',
+            '../data-files/001.jpg',
+            '../data-files/004.jpg',
+            '../data-files/005.jpg',
+            '../data-files/006.jpg',
+            '../data-files/011.jpg',
+            '../data-files/018.jpg',
+        ];
+        foreach ($arr as $filePath) {
+            // $this->processSingleFile($filePath);
+        }
+
+        $folder = '../data-files';
+        $this->processFolder($folder);
     }
 }
 

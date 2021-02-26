@@ -1,71 +1,74 @@
 <?php
 
+include_once('Rectangle.php');
+
+
 class ImageSpliter
 {
+    // Đường dẫn file ảnh
+    private string $filePath;
+
+    // Đuôi mở rộng của ảnh
+    private string $fileExt;
+
     // Đối tượng ảnh
     private GdImage $img;
 
-    // Đường dẫn ảnh
-    private string $inputPath;
+    // Kích thước ảnh
+    private int $imageWidth;
+    private int $imageHeight;
 
-    // Đuôi mở rộng của ảnh
-    private string $ext;
+    // Padding
+    private const PADDING = 7;
 
-    // Thư mục chứa các ảnh được cắt ra output
-    private string $outputFolder = '../_output/';
-
-    public function __construct(string $inputPath)
+    public function __construct(string $filePath)
     {
-        $this->inputPath = $inputPath;
-        $this->ext = $this->getFileExtension($this->inputPath);
-        $this->img = $this->getImageFromPath($this->inputPath, $this->ext);
+        $this->filePath = $filePath;
+        $this->fileExt = $this->getFileExtension($this->filePath);
+        $this->img = $this->getImageFromPath($this->filePath, $this->fileExt);
+        $this->imageWidth = imagesx($this->img);
+        $this->imageHeight = imagesy($this->img);
+    }
 
-        $this->checkOutputFolder();
-        $grid = $this->splitImageToGrid();
-        // var_dump($grid);
-        $grid = $this->splitFrameHorizontaly($grid);
-        $this->splitFile($grid);
-
-        // Giải phóng bộ nhớ
+    /**
+     * Giải phóng bộ nhớ.
+     */
+    public function freeMemory(): void
+    {
         imagedestroy($this->img);
     }
 
     /**
-     * Chia ảnh thành các hàng.
-     * @param $left {int} Tạo độ bên trái
-     * @param $top {int} Tạo độ bên trên
-     * @param $right {int} Tạo độ bên phải
-     * @param $bottom {int} Tạo độ bên dưới
-     * @return {array} Mảng các hàng, mỗi hàng là mảng bao gồm { left, top, right, bottom }
+     * Lấy các hàng trong một vùng chữ nhật của ảnh.
+     * @param $rect {Rectangle} Hình chữ nhật
+     * @return {array} Mảng các hàng, mỗi hàng là đối tượng Rectangle
      */
-    private function getAllRows(int $left, int $top, int $right, int $bottom): array
+    private function getAllRows(Rectangle $rect): array
     {
         $rows = [];
-        $y1 = $top;
+        $y1 = $rect->top;
 
         while (true) {
-            [$y1, $y2] = $this->getTopMostRow($left, $y1, $right, $bottom);
+            [$y1, $y2, $nextY] = $this->getTopMostRow(new Rectangle(
+                left: $rect->left,
+                top: $y1,
+                right: $rect->right,
+                bottom: $rect->bottom
+            ));
+
             if ($y1 == -1) {
                 // Không có hàng nào
                 break;
             }
-            $rows[] = [
-                'left' => $left,
-                'top' => $y1,
-                'right' => $right,
-                'bottom' => $y2
-            ];
-            // Di chuyển xuống dưới 5px (tăng tốc độ nhưng vẫn đảm bảo không vào row mới)
-            $y1 = $y2 + 5;
-        }
 
-        if (count($rows) == 0) {
-            $rows[] = [
-                'left' => $left,
-                'top' => $top,
-                'right' => $right,
-                'bottom' => $bottom
-            ];
+            $rows[] = new Rectangle(
+                left: $rect->left,
+                top: $y1,
+                right: $rect->right,
+                bottom: $y2
+            );
+
+            $y1 = $nextY;
         }
 
         return $rows;
@@ -73,145 +76,211 @@ class ImageSpliter
 
 
     /**
-     * Lấy các frame của một hàng.
-     * Lấy ra danh sách các cột của dòng (giới hạn bởi row_top và row_bottom).
-     * @param $left {int} Tạo độ bên trái
-     * @param $top {int} Tạo độ bên trên
-     * @param $right {int} Tạo độ bên phải
-     * @param $bottom {int} Tạo độ bên dưới
-     * @return {array} Mảng các frame của hàng, mỗi frame gồm { left, top, right, bottom }
+     * Lấy các cột trong một vùng chữ nhật của ảnh.
+     * @param $rect {Rectangle} Hình chữ nhật
+     * @return {array} Mảng các cột, mỗi cột là đối tượng Rectangle
      */
-    private function getAllFramesOfRow(int $left, int $top, int $right, int $bottom): array
+    private function getAllColumns(Rectangle $rect): array
     {
         $frames = [];
-        $x1 = $left;
+        $x1 = $rect->left;
+
         while (true) {
-            // Chú ý trường hợp heading
-            [$x1, $x2] = $this->getLeftMostFrame($x1, $top, $right, $bottom);
+            [$x1, $x2, $nextX] = $this->getLeftMostColumn(new Rectangle(
+                left: $x1,
+                top: $rect->top,
+                right: $rect->right,
+                bottom: $rect->bottom
+            ));
+
             if ($x1 == -1) {
                 // Không có cột nào
                 break;
             }
-            $frames[] = [
-                'left' => $x1,
-                'top' => $top,
-                'right' => $x2,
-                'bottom' => $bottom
-            ];
-            // Di chuyển sang trái 5px (cho nhanh), nhưng vẫn đảm bảo chưa sang ô khác
-            $x1 = $x2 + 5;
+
+            $frames[] = new Rectangle(
+                left: $x1,
+                top: $rect->top,
+                right: $x2,
+                bottom: $rect->bottom
+            );
+
+            // Di chuyển sang phải
+            $x1 = $nextX;
         }
+
+        // Chú ý trường hợp heading
+        if (count($frames) >= 2) {
+            $frames = $this->checkHeading($frames);
+        }
+
+        // Luôn trả về ít nhất một cột
+        if (count($frames) == 0) {
+            return [
+                $rect
+            ];
+        }
+
         return $frames;
     }
 
 
     /**
-     * Trả về hàng đầu tiên (từ trên xuống).
-     * Lấy ra hàng đầu tiên trong vùng (LEFT, TOP, RIGHT, BOTTOM).
-     * Trả về mảng, phần tử thứ nhất là chỉ số dòng trên, phần tử thứ hai là chỉ số dòng dưới.
-     * Trả về tuple (điểm bắt đầu hàng, điểm kết thúc hàng), hoặc (-1, -1) nếu không tìm thấy.
-     * We don't use page members directly 'coz this function is called to further refine each frame's top and bottom boundaries.
-     * @param $left {int} Tọa độ bên trái
-     * @param $top {int} Tạo độ bên trên
-     * @param $right {int} Tạo độ bên phải
-     * @param $bottom {int} Tạo độ bên dưới
-     * @return {array} Mảng tọa độ $y1 phía trên và $y2 phía dưới
+     * Kiểm tra một hàng mà chỉ là dòng chữ, không phải là các frame (panel).
      */
-    private function getTopMostRow(int $left, int $top, int $right, int $bottom): array
+    private function checkHeading(array $frames): array
     {
-        if ($top >= $bottom) {
-            return [-1, -1];
+        $maxColumns = 5;
+        if (count($frames) > $maxColumns) {
+            // Trả về mảng rỗng để tiếp theo xử lý không cắt
+            return [];
         }
 
-        // Tìm dòng trên
-        // Tìm điểm bắt đầu hàng
-        $y1 = $top;
+        $minFrameWidth = intval($this->imageWidth * 0.2);
+
+        $normalized = [];
+        $tag = null;
+        foreach ($frames as $current) {
+            if ($current->right - $current->left >= $minFrameWidth) {
+                if (is_null($tag)) {
+                    $normalized[] = $current;
+                } else if ($tag->right - $tag->left >= $minFrameWidth) {
+                    $normalized[] = $tag;
+                    $tag = null;
+                    $normalized[] = $current;
+                } else {
+                    $tag->right = $current->right;
+                }
+            } else {
+                if (is_null($tag)) {
+                    $tag = Rectangle::withRect($current);
+                } else {
+                    $tag->right = $current->right;
+                }
+            }
+        }
+        if (!is_null($tag)) {
+            $normalized[] = $tag;
+        }
+        return $normalized;
+    }
+
+
+    /**
+     * Lấy hàng đầu tiên (từ trên xuống) trong một vùng chữ nhật của ảnh.
+     * Trả về mảng, phần tử thứ nhất là tọa độ y1 phía trên (điểm bắt đầu hàng), phần tử thứ hai là tọa độ y2 phía dưới (điểm kết thúc hàng).
+     * Trả về mảng [-1, -1] nếu không tìm thấy.
+     * @param $rect {Rectangle} Hình chữ nhật
+     * @return {array} Mảng tọa độ y1 phía trên và y2 phía dưới và vị trí y để xét tiếp theo
+     */
+    private function getTopMostRow(Rectangle $rect): array
+    {
+        // Tìm điểm bắt đầu hàng (phía trên)
+        $y1 = $rect->top;
 
         // Di chuyển xuống dưới khi dòng vẫn là gutter
-        while ($y1 < $bottom && $this->isGutterRow($y1, $left, $right)) {
+        while ($y1 < $rect->bottom && $this->isGutterRow($y1, $rect->left, $rect->right)) {
             $y1++;
         }
 
-        if ($y1 == $bottom) {
-            return [-1, -1];
+        if ($y1 >= $rect->bottom) {
+            return [-1, -1, -1];
         }
 
         // Chiều cao tối thiểu của một frame
-        $minFrameHeight = 100;
+        $minFrameHeight = max(15, intval($this->imageHeight * 0.05));
 
-        // Tìm dòng dưới
-        // Tìm điểm kết thúc của hàng
+        // Tìm điểm kết thúc của hàng (phía dưới)
         $y2 = $y1 + $minFrameHeight;
 
-        if ($y2 > $bottom) {
-            return [-1, -1];
+        /*
+        if ($y2 > $rect->bottom) {
+            return [-1, -1, -1];
         }
+        */
 
         // Di chuyển xuống dưới khi vẫn đang trong ô (không phải là gutter)
-        while ($y2 < $bottom && !$this->isGutterRow($y2, $left, $right)) {
+        while (
+            $y2 <= $rect->bottom &&
+            !$this->isGutterRow($y2, $rect->left, $rect->right)
+        ) {
             $y2++;
         }
 
-        if ($y2 - $y1 < $minFrameHeight) {
-            return [-1, -1];
-        }
+        $nextY = $y2;
 
-        return [$y1, $y2];
+        // Có một số trường hợp có dòng chữ ở trên mà không có dòng kẻ ở trên
+        // Khi đó nếu cắt sẽ bị sát vào chữ quá, khó đọc
+        // Thêm padding cho phía trên
+        // Và cả padding phía dưới
+        $y1 = max($y1 - self::PADDING, $rect->top);
+        $y2 = min($y2 + self::PADDING, $rect->bottom);
+
+        return [$y1, $y2, $nextY];
     }
 
 
     /**
-     * Lấy vị trí ngoài cùng bên trái.
-     * Trả về cột đầu tiên trong vùng (LEFT, TOP, RIGHT, BOTTOM).
-     * Trả về tuple (điểm bắt đầu ô, điểm kết thúc ô) hoặc (-1, -1) nếu không tìm thấy ô.
-     * @param $left {int} Tọa độ bên trái
-     * @param $top {int} Tạo độ bên trên
-     * @param $right {int} Tạo độ bên phải
-     * @param $bottom {int} Tạo độ bên dưới
-     * @return {array} Tạo độ frame ngoài cùng bên trái gồm $x1 bên trái và $x2 bên phải
+     * Lấy ra cột đầu tiên ngoài cùng bên trái trong một vùng chữ nhật của ảnh.
+     * Trả về mảng [điểm bắt đầu cột, điểm kết thúc cột] hoặc [-1, -1] nếu không tìm thấy.
+     * @param $rect {Rectangle} Hình chữ nhật
+     * @return {array} Tạo độ cột ngoài cùng bên trái gồm x1 bên trái và x2 bên phải và vị trí x tiếp theo
      */
-    private function getLeftMostFrame(int $left, int $top, int $right, int $bottom): array
+    private function getLeftMostColumn(Rectangle $rect): array
     {
-        // Tìm cột bên trái
-        // Tìm điểm bắt đầu ô
-        $x1 = $left;
+        // Tìm điểm bắt đầu ô bên trái
+        $x1 = $rect->left;
 
         // Di chuyển sang phải khi cột vẫn là gutter
-        while ($x1 < $right && $this->isGutterColumn($x1, $top, $bottom)) {
+        while ($x1 < $rect->right && $this->isGutterColumn($x1, $rect->top, $rect->bottom)) {
             $x1++;
         }
-        if ($x1 >= $right) {
-            return [-1, -1];
+
+        if ($x1 >= $rect->right) {
+            return [-1, -1, -1];
         }
 
         // Chiều rộng tối thiểu của một ô
-        $minFrameWidth = 150;
+        // Chỗ này chỉ giới hạn nhỏ thôi để có thể kiểm tra heading sau này
+        $minFrameWidth = intval($this->imageWidth * 0.05);
 
-        // Tìm cột bên phải
-        // Tìm điểm kết thúc ô
+        // Tìm điểm kết thúc ô bên phải
         $x2 = $x1 + $minFrameWidth;
 
-        if ($x2 > $right) {
-            return [-1, -1];
-        }
-
         // Di chuyển sang phải khi vẫn đang trong ô (không phải là gutter)
-        while ($x2 < $right && !$this->isGutterColumn($x2, $top, $bottom)) {
+        while (
+            $x2 <= $rect->right &&
+            !$this->isGutterColumn($x2, $rect->top, $rect->bottom)
+        ) {
             $x2++;
         }
 
-        if ($x2 - $x1 < $minFrameWidth) {
+        /*
+        if ($x2 > $rect->right) {
             return [-1, -1];
         }
 
-        return [$x1, $x2];
+        if ($x2 - $x1 < 2) { // $minFrameWidth
+            return [-1, -1];
+        }
+        */
+
+        $nextX = $x2;
+
+        $x1 = max($x1 - self::PADDING, $rect->left);
+        $x2 = min($x2 + self::PADDING, $rect->right);
+
+        return [$x1, $x2, $nextX];
     }
 
 
     /**
-     * Dòng có phải là dòng trắng hay không.
-     * Kiểm tra xem dòng [left, right) ở vị trí y_cord cắt sang có phải là gutter không.
+     * Đoạn kẻ ngang có phải là đoạn màu trắng hay không.
+     * Kiểm tra xem đoạn kẻ ngang [left, right] ở vị trí row có phải là gutter không.
      * @param $row {int} Hàng
+     * @param $left {int} Trái
+     * @param $right {int} Phải
+     * @return {boolean} true nếu là đoạn màu trắng
      */
     private function isGutterRow(int $row, int $left, int $right): bool
     {
@@ -225,9 +294,12 @@ class ImageSpliter
 
 
     /**
-     * Có phải là cột trắng hay không.
-     * Kiểm tra xem cột [top, bot) ở vị trí x_cord trỏ xuống có phải là gutter không.
+     * Kiểm tra có phải là đoạn kẻ dọc trắng hay không.
+     * Kiểm tra xem cột [top, bot] ở vị trí col có phải là gutter không.
      * @param $col {int} Cột
+     * @param $top {int} Vị trí trên bắt đầu đoạn thẳng
+     * @param $bottom {int} Vị trí cuối kết thúc đoạn thẳng
+     * @return {boolan} true nếu là đoạn thẳng dọc có màu trắng
      */
     private function isGutterColumn(int $col, int $top, int $bottom): bool
     {
@@ -260,11 +332,12 @@ class ImageSpliter
 
     /**
      * Thuật toán quyết định màu trắng.
-     * @param {Integer} $red Chỉ số đỏ
-     * @param {Integer} $green Chỉ số xanh lá
-     * @param {Integer} $blue Chỉ số xanh dương
+     * @param $red {int} Chỉ số đỏ
+     * @param $green {int} Chỉ số xanh lá
+     * @param $blue {int} Chỉ số xanh dương
+     * @return {bool} true nếu là màu trắng
      */
-    private function isWhiteColor($red, $green, $blue)
+    private function isWhiteColor(int $red, int $green, int $blue): bool
     {
         $threshold = 210;
 
@@ -294,29 +367,29 @@ class ImageSpliter
 
     /**
      * Lấy đuôi mở rộng của file.
-     * @param $path {string} Đường dẫn file
-     * @return {string} Đuôi mở rộng của file.
+     * @param $filePath {string} Đường dẫn file
+     * @return {string} Đuôi mở rộng của file
      */
-    private function getFileExtension(string $path): string
+    private function getFileExtension(string $filePath): string
     {
-        $ext = strtolower(substr($path, strrpos($path, '.') + 1));
-        return $ext;
+        $fileExt = strtolower(substr($filePath, strrpos($filePath, '.') + 1));
+        return $fileExt;
     }
 
 
     /**
      * Lấy đối tượng ảnh (đối tượng PHP) từ đường dẫn file.
-     * @param $path {string} Đường dẫn file
-     * @param $ext {string} Đuôi mở rộng của file
-     * @return {resource} Đối tượng ảnh
+     * @param $filePath {string} Đường dẫn file
+     * @param $fileExt {string} Đuôi mở rộng của file
+     * @return {GdImage} Đối tượng ảnh
      */
-    private function getImageFromPath(string $path, string $ext): GdImage|false
+    private function getImageFromPath(string $filePath, string $fileExt): GdImage
     {
-        $resource = match ($ext) {
-            'jpg', 'jpeg' => imagecreatefromjpeg($path),
-            'gif' => imagecreatefromgif($path),
-            'png' => imagecreatefrompng($path),
-            default => false
+        $resource = match ($fileExt) {
+            'jpg', 'jpeg' => imagecreatefromjpeg($filePath),
+            'gif' => imagecreatefromgif($filePath),
+            'png' => imagecreatefrompng($filePath),
+            default => null
         };
         // echo gettype($resource) . PHP_EOL;
         return $resource;
@@ -324,156 +397,247 @@ class ImageSpliter
 
 
     /**
-     * Ghi ảnh ra file.
-     * @param $path {string} Đường dẫn
-     * @param $ext {string} Đuôi mở rộng
-     */
-    private function writeImageToFile(GdImage $croppedImage, string $path, string $ext): void
-    {
-        match ($ext) {
-            'jpg', 'jpeg' => imagejpeg($croppedImage, $path),
-            'gif' => imagegif($croppedImage, $path),
-            'png' => imagepng($croppedImage, $path)
-        };
-    }
-
-
-    /**
-     * Tách ảnh thành các file.
-     * @param $ext {string} Đuôi mở rộng
-     */
-    private function cropImages(array $grid, string $fileName): void
-    {
-        $idx = 0;
-        foreach ($grid as ['left' => $left, 'top' => $top, 'right' => $right, 'bottom' => $bottom]) {
-            $rect = [
-                'x' => $left,
-                'y' => $top,
-                'width' => $right - $left + 1,
-                'height' => $bottom - $top + 1
-            ];
-            $cropedImage = imagecrop($this->img, $rect);
-            $outputPath = $this->outputFolder . $fileName . '-' . str_pad($idx + 1, 3, '0', STR_PAD_LEFT) . '.' . $this->ext;
-            $this->writeImageToFile($cropedImage, $outputPath, $this->ext);
-            imagedestroy($cropedImage);
-
-            $idx++;
-        }
-    }
-
-
-    /**
-     * Tạo folder nếu chưa có.
-     */
-    private function checkOutputFolder(): void
-    {
-        if (!file_exists($this->outputFolder)) {
-            mkdir($this->outputFolder);
-        }
-    }
-
-
-    /**
      * Tách ảnh gốc thành nhiều ảnh nhỏ.
      */
-    private function splitImageToGrid(): array
+    public function splitImageToGrid(): array
     {
-        $width = imagesx($this->img);
-        $height = imagesy($this->img);
+        $rows = $this->getAllRows(new Rectangle(
+            left: 0, // có thể bỏ qua 1 số pixel ở bên trái, cho nhanh hoặc do scan lỗi (bị đen ở bên trái hoặc phải)
+            top: 0, // có thể bỏ qua 1 số dòng đầu ở đây để tăng tốc độ
+            right: $this->imageWidth - 1, // có thể bỏ qua một số pixel ở bên phải
+            bottom: $this->imageHeight - 1
+        ));
 
-        $left = 0; // có thể bỏ qua 1 số pixel ở bên trái, cho nhanh hoặc do scan lỗi (bị đen ở bên trái hoặc phải)
-        $top = 0; // có thể bỏ qua 1 số dòng đầu ở đây để tăng tốc độ
-        $right = $width - 1; // có thể bỏ qua một số pixel ở bên phải
-        $bottom = $height - 1;
-
-        $rows = $this->getAllRows($left, $top, $right, $bottom);
-
-        // Chỉ có một hàng thì không cần tách
-        // Copy ảnh thôi
-        if (count($rows) == 1) {
+        // Chỉ có một hàng dừng lại
+        if (count($rows) == 0) {
             return $rows;
         }
 
-        $grid = [];
-        foreach ($rows as ['left' => $left, 'top' => $top, 'right' => $right, 'bottom' => $bottom]) {
-            $frames = $this->getAllFramesOfRow($left, $top, $right, $bottom);
-            // print_r($frames);
-            if (count($frames) == 0) {
-                $frames = [
-                    [
-                        'left' => $left,
-                        'top' => $top,
-                        'right' => $right,
-                        'bottom' => $bottom
-                    ]
-                ];
+        // Nếu chỉ cắt theo hàng thì dừng lại luôn ở đây
+        // return $rows;
 
-                /*
-                if (panels.length < 2) {
-                    // Left trim và right trim
-                    let trimmedLeft = left;
-                    while (trimmedLeft < right && this.isGutterColumn(trimmedLeft, top, bottom)) {
-                        trimmedLeft++;
-                    }
-                    if (trimmedLeft > left) {
-                        trimmedLeft--;
-                    }
-                    let trimmedRight = right;
-                    while (trimmedRight > left && this.isGutterColumn(trimmedRight, top, bottom)) {
-                        trimmedRight--;
-                    }
-                    if (trimmedRight < right) {
-                        trimmedRight++;
-                    }
-    
-                    panels = [
-                        [trimmedLeft, top, trimmedRight, bottom]
+        return $this->splitRowsToColumns($rows);
+    }
+
+
+    /**
+     * Tách các hàng, mỗi hàng thành các cột.
+     * @param $rows {array} Các hàng
+     * @param {array} Các ô
+     */
+    private function splitRowsToColumns(array $rows): array
+    {
+        $grid = [];
+        foreach ($rows as $rect) {
+            $frames = $this->getAllColumns($rect);
+            // print_r($frames);
+            if (count($frames) == 1) {
+                $temp = $frames[0];
+
+                // Left trim và right trim
+                $temp = $this->trimLeftAndRight($temp);
+
+                // Chiều rộng tối thiểu một frame
+                $minFrameWidth = max(35, intval($this->imageWidth * 0.1));
+
+                // Kiểm tra dòng số trang
+                if ($temp->right - $temp->left < $minFrameWidth) {
+                    echo 'Loại bỏ dòng ở file ' . $this->filePath . PHP_EOL;
+                    $frames = [];
+                } else {
+                    $frames = [
+                        $temp
                     ];
                 }
-                */
             }
-
-            // 
-            
 
             $grid = array_merge($grid, $frames);
         }
+
+        // var_dump($grid);
+
+        $grid = $this->splitFramesHorizontaly($grid);
 
         return $grid;
     }
 
 
     /**
-     * Có thể cắt tiếp các frame, có trường hợp một frame trải trên 2 hàng.
-     * @param $grid {array} Mảng
-     * @return {array} Mảng
+     * Cắt bên trái và bên phải.
      */
-    private function splitFrameHorizontaly(array $grid): array
+    private function trimLeftAndRight(Rectangle $rect): Rectangle
+    {
+        // echo 'Trim' . PHP_EOL;
+        $trimmedLeft = $rect->left;
+        while (
+            $trimmedLeft <= $rect->right &&
+            $this->isGutterColumn($trimmedLeft, $rect->top, $rect->bottom)
+        ) {
+            $trimmedLeft++;
+        }
+        $trimmedLeft = max($trimmedLeft - self::PADDING, $rect->left);
+
+        $trimmedRight = $rect->right;
+        while (
+            $trimmedRight >= $rect->left &&
+            $this->isGutterColumn($trimmedRight, $rect->top, $rect->bottom)
+        ) {
+            $trimmedRight--;
+        }
+        $trimmedRight = min($trimmedRight + self::PADDING, $rect->right);
+
+        return new Rectangle(
+            left: $trimmedLeft,
+            top: $rect->top,
+            right: $trimmedRight,
+            bottom: $rect->bottom
+        );
+    }
+
+
+    /**
+     * Cắt bên trên và bên dưới.
+     */
+    private function trimTopAndBottom(Rectangle $rect): Rectangle
+    {
+        // echo 'Trim' . PHP_EOL;
+        $trimmedTop = $rect->top;
+        while (
+            $trimmedTop <= $rect->bottom &&
+            $this->isGutterRow($trimmedTop, $rect->left, $rect->right)
+        ) {
+            $trimmedTop++;
+        }
+        $trimmedTop = max($trimmedTop - self::PADDING, $rect->top);
+
+        $trimmedBottom = $rect->bottom;
+        while (
+            $trimmedBottom >= $rect->top &&
+            $this->isGutterRow($trimmedBottom, $rect->left, $rect->right)
+        ) {
+            $trimmedBottom--;
+        }
+        $trimmedBottom = min($trimmedBottom + self::PADDING, $rect->bottom);
+
+        return new Rectangle(
+            left: $rect->left,
+            top: $trimmedTop,
+            right: $rect->right,
+            bottom: $trimmedBottom
+        );
+    }
+
+
+    /**
+     * Có thể cắt tiếp các frame, có trường hợp một frame trải trên 2 hàng.
+     * @param $grid {array} Mảng các frame
+     * @return {array} Mảng các frame sau khi đã xử lý
+     */
+    private function splitFramesHorizontaly(array $grid): array
     {
         $arr = [];
-        foreach ($grid as ['left' => $left, 'top' => $top, 'right' => $right, 'bottom' => $bottom]) {
-            $subRows = $this->getAllRows($left, $top, $right, $bottom);
+        foreach ($grid as $rect) {
+            /*
+            $subRows = $this->getAllRows($rect);
+
+            // Đảm bảo trả về ít nhất một hàng
+            if (count($subRows) == 0) {
+                $subRows[] = $rect;
+            }
             $arr = array_merge($arr, $subRows);
+            */
+
+            $temp = $this->trimTopAndBottom($rect);
+            
+            /*
+            // Chiều cao tối thiểu một frame
+            $minFrameHeight = max(35, intval($this->imageWidth * 0.1));
+
+            // Kiểm tra dòng số trang
+            if ($temp->bottom - $temp->top < $minFrameHeight) {
+                echo 'Loại bỏ cột ở file ' . $this->filePath . PHP_EOL;
+            } else {
+                
+            }
+            */
+            
+            $arr[] = $temp;
         }
         return $arr;
     }
 
+    // -----------------------------------------------------------------------
+
     /**
      * Xử lý file.
+     * @param $grid {array} Mảng các frame
+     * @param $outputFolder {string} Thư mục chứa các ảnh được cắt ra output
      */
-    private function splitFile(array $grid): void
+    public function splitFile(array $grid, string $outputFolder): void
     {
-        // Tên file
-        $baseName = basename($this->inputPath);
-        // Tên file mà không có đuôi mở rộng
-        $fileName = str_replace('.' . $this->ext, '', $baseName);
+        $this->checkOutputFolder($outputFolder);
 
-        if (count($grid) == 1) {
-            // Chỉ có một hàng thì không cần tách
+        // Tên file
+        $baseName = basename($this->filePath);
+        // Tên file mà không có đuôi mở rộng
+        $fileName = str_replace('.' . $this->fileExt, '', $baseName);
+
+        if (count($grid) < 2) {
             // Copy ảnh thôi
-            copy($this->inputPath, $this->outputFolder . $baseName);
+            copy($this->filePath, $outputFolder . $baseName);
         } else {
-            $this->cropImages($grid, $fileName);
+            $this->cropImages($grid, $fileName, $outputFolder);
         }
+    }
+
+    /**
+     * Tạo folder nếu chưa có.
+     * @param $outputFolder {string} Thư mục chứa các ảnh đầu ra
+     */
+    private function checkOutputFolder($outputFolder): void
+    {
+        if (!file_exists($outputFolder)) {
+            mkdir($outputFolder);
+        }
+    }
+
+    /**
+     * Tách ảnh thành các file.
+     * @param $grid {array} Mảng các frame
+     * @param $fileName {string} Tên file, không bao gồm đuôi mở rộng
+     * @param $outputFolder {string} Thư mục chứa ảnh đầu ra
+     */
+    private function cropImages(array $grid, string $fileName, string $outputFolder): void
+    {
+        $idx = 0;
+        foreach ($grid as $rect) {
+            $dimension = [
+                'x' => $rect->left,
+                'y' => $rect->top,
+                'width' => $rect->right - $rect->left + 1,
+                'height' => $rect->bottom - $rect->top + 1
+            ];
+            $cropedImage = imagecrop($this->img, $dimension);
+            $outputPath = $outputFolder . $fileName . '-' . str_pad($idx + 1, 3, '0', STR_PAD_LEFT) . '.' . $this->fileExt;
+            $this->writeImageToFile($cropedImage, $outputPath, $this->fileExt);
+            imagedestroy($cropedImage);
+
+            $idx++;
+        }
+    }
+
+    /**
+     * Ghi ảnh ra file.
+     * @param $croppedImage {GdImage} Đối tượng ảnh nhỏ đã được cắt
+     * @param $filePath {string} Đường dẫn file
+     * @param $fileExt {string} Đuôi mở rộng
+     */
+    private function writeImageToFile(GdImage $croppedImage, string $filePath, string $fileExt): void
+    {
+        match ($fileExt) {
+            'jpg', 'jpeg' => imagejpeg($croppedImage, $filePath),
+            'gif' => imagegif($croppedImage, $filePath),
+            'png' => imagepng($croppedImage, $filePath)
+        };
     }
 }

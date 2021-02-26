@@ -11,7 +11,7 @@
   <body>
     <article>
       <h2>Split ảnh truyện tranh</h2>
-      <h3>Giới thiệu</h3>
+	    <h3>Giới thiệu</h3>
       <p><a href="viewer.html">Viewer</a></p>
       <p>Chia ảnh ra thành các panel (hàng, ô) nhỏ để dễ đọc trên các thiết bị
         như điện thoại di động.</p>
@@ -47,7 +47,7 @@
         gutter hay không nếu nó chỉ có một màu.</p>
       <p> Các bước:</p>
       <ul>
-        <li> Chuyển ảnh về dạng mono hoặc tăng độ tương phản cho đỡ nhiễu, dễ
+        <li> Có thể chuyển ảnh về dạng mono hoặc tăng độ tương phản cho đỡ nhiễu, dễ
           tách (<code>mono_creator.py</code>).</li>
         <li>Duyệt theo chiều dọc, từ trên xuống dưới, tách thành các hàng.</li>
         <li> Với mỗi hàng, duyệt theo chiều ngang, từ trái sang phải, tách thành
@@ -70,19 +70,8 @@
       <p> Một khi chúng ta đã có các dòng (rows), chúng ta lặp lại các thao tác
         trên cho từng dòng. Bây giờ chúng ta sẽ di chuyển theo chiều ngang từ
         trái qua phải.</p>
-      <p> Ảnh gốc: </p>
-      <div class="mb-3">
-        <img alt="" src="images/origin.jpg" style="max-width: 200px;">
-      </div>
-      <p> Ảnh mono 1: </p>
-      <div class="mb-3">
-        <img alt="" src="images/mono-1.jpg" style="max-width: 200px;">
-      </div>
-      <p> Ảnh mono 2: </p>
-      <div class="mb-3">
-        <img alt="" src="images/mono-2.jpg" style="max-width: 200px;">
-      </div>
-      <h3> Hạn chế</h3>
+      
+        <h3> Hạn chế</h3>
       <p> Chương trình có thể không split thành công các ô từ một trang mà bị
         xoay.</p>
       <p> Ở một số trang, một số ảnh có thể "overflow" vào vùng gutter. Trong
