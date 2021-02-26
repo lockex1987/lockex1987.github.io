@@ -14,7 +14,7 @@ class SevenZipWrapper
     /**
      * Giải nén file bằng 7z.
      */
-    public function extract7z($path, $rootFolder)
+    public function extract7z(string $path, string $rootFolder): void
     {
         $entries = $this->getEntries($path);
         $hasFolder = false;
@@ -34,7 +34,7 @@ class SevenZipWrapper
     /**
      * Giải nén file bằng PHP thuần.
      */
-    public function extractNative($archivePath, $extractFolder)
+    public function extractNative(string $archivePath, string $extractFolder): void
     {
         // $extension = substr($archivePath, strrpos($archivePath, '.') - strlen($archivePath) + 1);
         $extension = strtolower(pathinfo($archivePath, PATHINFO_EXTENSION));
@@ -54,7 +54,7 @@ class SevenZipWrapper
     /**
      * Giải nén file ZIP bằng PHP thuần.
      */
-    private function extractZipArchive($archivePath, $archiveName, $extractFolder)
+    private function extractZipArchive(string $archivePath, string $archiveName, string $extractFolder): void
     {
         $archiveFile = new ZipArchive();
         if ($archiveFile->open($archivePath)) {
@@ -77,7 +77,7 @@ class SevenZipWrapper
     /**
      * Giải nén file RAR bằng PHP thuần.
      */
-    private function extractRarArchive($archivePath, $archiveName, $extractFolder)
+    private function extractRarArchive(string $archivePath, string $archiveName, string $extractFolder): void
     {
         $archiveFile = RarArchive::open($archivePath);
         if ($archiveFile === false) {
@@ -110,7 +110,7 @@ class SevenZipWrapper
     /**
      * Lấy danh sách tên các file trong archive.
      */
-    public function getEntries($filePath)
+    public function getEntries(string $filePath): array
     {
         // Thực hiện lệnh 7z
         // $command = escapeshellcmd('7z l ' . escapeshellarg($filePath)); // thực hiện trên Windows
@@ -147,7 +147,7 @@ class SevenZipWrapper
     /**
      * Giải nén đến thư mục bằng 7z.
      */
-    public function extractToFolder($filePath, $folder)
+    public function extractToFolder(string $filePath, string $folder): void
     {
         // Ở Ubuntu, để có thể extract file rar thì cần phải cài cả gói p7zip-rar
         // Có thể sử dụng tham số -y
@@ -161,7 +161,7 @@ class SevenZipWrapper
     /**
      * Nén file bằng 7z.
      */
-    public function compress7z($folder, $archive)
+    public function compress7z(string $folder, string $archive): void
     {
         // $command = escapeshellcmd('7z a -bb3 ' . escapeshellarg($archive) . ' ' . escapeshellarg($folder)); // thực hiện trên Windows
         $command = '7z a -bb3 ' . escapeshellarg($archive) . ' ' . escapeshellarg($folder); // thực hiện trên Ubuntu
@@ -171,7 +171,7 @@ class SevenZipWrapper
     /**
      * Nén thư mục.
      */
-    public function compressFolder($compressFolder, $archivePath)
+    public function compressFolder(string $compressFolder, string $archivePath): void
     {
         echo $compressFolder . PHP_EOL;
         $rootPath = realpath($compressFolder);

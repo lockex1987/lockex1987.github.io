@@ -5,6 +5,7 @@ require_once 'CommonUtils.php';
 require_once 'Rename.php';
 require_once 'SevenZipWrapper.php';
 
+
 if (count($argv) < 3) {
     echo 'Bạn phải nhập ít nhất 2 tham số' . PHP_EOL;
 } else {
