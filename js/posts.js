@@ -319,10 +319,11 @@ const App = {
 
         /**
          * Chuẩn hóa ngày tháng khi hiển thị.
-         * @param {Date} d Đối tượng Date
+         * @param {String} d Xâu thời gian với định dạng ISO
+         * @return {String} Định dạng DD/MM/YYYY
          */
         normalizeDate(d) {
-            return CommonUtils.normalizeDate(d);
+            return moment(d).format('DD/MM/YYYY');
         },
 
         /**

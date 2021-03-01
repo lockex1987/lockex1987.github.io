@@ -24,7 +24,7 @@ new Datatable({
                 <!-- Mặc định ẩn dòng chi tiết -->
                 <tr class="detail-row" style="display: none">
                     <td class="text-center" colspan="4">
-                        ${CommonUtils.normalizeDate(dataEle.fake_date)}
+                        ${dataEle.fake_date}
                     </td>
                 </tr>
                 `;

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="date, time, moment, carbon">
+    <title>Thư viện Moment</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Thư viện Moment</h2>
+      <p>PHP dùng Carbon.</p>
+      <p>JS dùng Moment.</p>
+      <p>Trên chính trang chủ của Moment có nói thư viện sẽ không được cập nhật
+        nữa, và khuyên dùng các thư viện khác. Thư viện <a href="https://www.daterangepicker.com/"
+
+          target="_blank">daterangepicker</a> vẫn sử dụng thư viện Moment.</p>
+      <p>Đối tượng Moment là <em>mutable</em>.</p>
+      <h3>Parse</h3>
+      <p>Tạo đối tượng từ string và định dạng:</p>
+      <pre>moment(text, format)</pre>
+      <p>Ví dụ:</p>
+      <pre>moment(timeInString, 'YYYY-MM-DD HH:mm:ss')</pre>
+      <p>Nếu xâu đầu vào là định dạng ISO (YYYY-MM-DD HH:mm:ss) rồi thì chúng ta
+        có thể không cần truyền format.</p>
+      <p>Các API trả về có thể chưa là định dạng ISO, chúng ta có thể chuyển về
+        định dạng ISO như sau:</p>
+      <pre>date.replace(/\//g, '-')</pre>
+      <p>Vì đối tượng Moment là mutable nên chúng ta nên khởi tạo đối tượng mới
+        từ đối tượng cũ:</p>
+      <pre>moment(momentObject)</pre>
+      <p>Chúng ta cũng có thể khởi tạo bằng số giây hoặc số milli giây:</p>
+      <pre>moment(milliseconds)<br>moment.unix(seconds)      </pre>
+      <h3>Get set</h3>
+      <p>Trả về số milli giây cho thư viện khác sử dụng (ví dụ Highcharts):</p>
+      <pre>valueOf()</pre>
+      <h3>Manipulation</h3>
+      <p>startOf('day') // month, isoWeek</p>
+      <p>endOf('day')</p>
+      <p>add(-30, 'days')</p>
+      <p>subtract(1, 'days')</p>
+      <h3>Hiển thị</h3>
+      <p>Date to string:</p>
+      <pre>momentObject.format(format)</pre>
+      <p>Thời gian tương đối so với hiện tại:</p>
+      <pre>fromNow()</pre>
+      <h3>Khoảng cách giữa hai thời điểm</h3>
+      <p>Chúng ta sử dụng phương thức diff():</p>
+      <p>const numOfTicks = endAt.diff(startAt, 'days') + 1;</p>
+      <p>Nếu không truyền tham số thứ hai thì trả về số milli giây.</p>
+      <p>Nếu không truyền tham số thứ ba thì sẽ làm tròn xuống.</p>
+      <h3>Query</h3>
+      <p>So sánh trước thời điểm:</p>
+      <pre>momentObject.isBefore(anotherMoment)</pre>
+      <h3>i18n</h3>
+      <p>Thiết lập toàn cục:</p>
+      <pre>moment.locale('vi');</pre>
+      <h3>Các hàm thường dùng của Carbon </h3>
+      <p>Carbon::now()-&gt;addMinutes(5)</p>
+      <p>Carbon::createFromFormat('d/m/Y',
+        $request-&gt;input('start'))-&gt;toDateString() . ' 00:00:00'</p>
+      <p>Carbon::createFromTimestamp(intval($fromTime /
+        1000))-&gt;format('d/m/Y')</p>
+      <p>$fromTime = Carbon::today()-&gt;startOfDay()-&gt;format('Y/m/d H:i:s')</p>
+      <p>$toTime = Carbon::today()-&gt;endOfDay()-&gt;format('Y/m/d H:i:s')</p>
+      <p>$flow-&gt;end_date = Carbon::now()-&gt;format('Y/m/d H:i:s');</p>
+      <p>$flow-&gt;start_date =
+        Carbon::now()-&gt;subDays(13)-&gt;format('Y/m/d') . ' 00:00:00';</p>
+      <p>$now = Carbon::now();</p>
+      <h3>Demo</h3>
+      <p>script.js</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://momentjs.com/" target="_blank">Moment.js | Home</a></p>
+      <p><a href="../ui%20-%20date%20range%20picker/" target="_blank">Date range
+          picker</a></p>
+      <p><a href="../ui%20-%20datepicker/" target="_blank">jQuery UI datepicker</a></p>
+      <p><a href="../ui%20-%20datepicker%20dialog/" target="_blank">Datepicker
+          Dialog</a></p>
+      <p><a href="../php%20-%20datetime/" target="_blank">localhost/posts/php -
+          datetime/</a></p>
+    </article>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/vi.js"></script>
+    <script src="js/date-time-utils.js"></script>
+    <script src="js/script.js"></script>
+
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

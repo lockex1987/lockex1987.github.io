@@ -16,7 +16,7 @@ const datatable = new Datatable({
                         ${CommonUtils.formatThousands(dataEle.population)}
                     </td>
                     <td class="text-center">
-                        ${CommonUtils.normalizeDate(dataEle.fake_date)}
+                        ${dataEle.fake_date}
                     </td>
                 </tr>`;
     },
