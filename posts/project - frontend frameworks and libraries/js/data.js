@@ -73,13 +73,6 @@ const LIBRARIES = [
         note: 'Phụ thuộc jQuery, Moment'
     },
     {
-        code: 'jqcloud',
-        name: 'jQCloud',
-        version: '2.0.3',
-        cssPath: 'https://cdn.jsdelivr.net/npm/jqcloud2@2.0.3/dist/jqcloud.min.css',
-        jsPath: 'https://cdn.jsdelivr.net/npm/jqcloud2@2.0.3/dist/jqcloud.min.js'
-    },
-    {
         code: 'line-awesome',
         name: 'Line Awesome',
         version: '1.3.0',
@@ -177,6 +170,22 @@ const LIBRARIES = [
         code: 'highcharts-map-world',
         name: 'Highcharts (bản đồ thế giới TODO)',
         jsPath: 'TODO',
+        savePath: 'highcharts'
+    },
+    /*
+    {
+        code: 'jqcloud',
+        name: 'jQCloud',
+        version: '2.0.3',
+        cssPath: 'https://cdn.jsdelivr.net/npm/jqcloud2@2.0.3/dist/jqcloud.min.css',
+        jsPath: 'https://cdn.jsdelivr.net/npm/jqcloud2@2.0.3/dist/jqcloud.min.js'
+    },
+    */
+    {
+        code: 'highcharts-word-cloud',
+        name: 'Highcharts (word cloud)',
+        jsPath: 'https://code.highcharts.com/modules/wordcloud.js',
+        jsMap: 'wordcloud.js.map',
         savePath: 'highcharts'
     },
     {

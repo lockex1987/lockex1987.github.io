@@ -45,24 +45,28 @@ function buildHighchartsCloud(data) {
     Highcharts.chart('wordcloudContainerHighcharts', {
         chart: {
             backgroundColor: 'transparent',
-            height: 210
+            height: 250
         },
         series: [
             {
                 name: 'Số lượng tin',
                 type: 'wordcloud',
-                data: data
+                data: data,
+
+                // Màu sắc đơn
+                colors: ['#0cf', '#39d', '#90c5f0', '#90a0dd', '#a0ddff'],
 
                 // Hiển thị theo màu sắc được tính toán
                 // data: scaledData,
 
-                /*
                 // Chỉ hiển thị ngang
                 rotation: {
                     from: 0,
                     to: 0,
+                    orientations: 5
                 },
 
+                /*
                 // Hạn chế các chữ quá bé
                 minFontSize: 12,
                 maxFontSize: 32,
@@ -80,11 +84,53 @@ function buildHighchartsCloud(data) {
         credits: {
             enabled: false
         },
+
+        /*
+        tooltip: {
+            formatter() {
+                let point = this;
+                let total;
+                let negativePoint;
+                let positivePoint;
+                    
+                data.forEach(e => {
+                    if (e.name == point.key) {
+                        total = e.total_count;
+                        negativePoint = e.negative_count;
+                        positivePoint = e.positive_count;
+                    }
+                });
+                return `<b>${point.key}</b> <br> Số lượng tin: <b>${total}</b> <br>Tiêu cực: <b>${negativePoint}</b> <br>Tích cực: <b>${positivePoint}</b>`;
+            }
+        },
+        */
+
         plotOptions: {
             wordcloud: {
                 style: {
                     // Thiết lập lại font để hiển thị tiếng Việt cho đẹp
                     fontFamily: 'serif' // Arial, Helvetica, sans-serif
+                }
+            },
+
+            series: {
+                cursor: 'pointer',
+                events: {
+                    // Chuyển đến trang tin tức
+                    click: (event) => {
+                        let point = event;
+                        let keyword = point.point.name;
+                        console.log(point, keyword);
+                        /*
+                        let date = moment().subtract(1, 'days').format('YYYY-MM-DD');
+                        const params = {
+                            keyword: keyword,
+                            from_time: date,
+                            to_time: date
+                        }
+                        navigateToNewsPage(params);
+                        */
+                    }
                 }
             }
         }
