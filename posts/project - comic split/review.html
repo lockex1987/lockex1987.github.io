@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Review panels</title>
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+    <div id="app"
+        v-cloak>
+        <h2>Review panels</h2>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-9">
+                    <canvas width="600"
+                        height="400"
+                        style="cursor: crosshair; margin: 20px auto; display: block;"
+                        id="myCanvas"></canvas>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="mb-3"
+                        v-if="images">
+                        <span class="text-muted">
+                            Ảnh:
+                        </span>
+
+                        <span class="font-weight-500">
+                            {{currentImageIndex + 1}}
+                            /
+                            {{images.length}}
+                        </span>
+                    </div>
+
+                    <div class="mb-3"
+                        v-if="panels">
+                        <span class="text-muted">
+                            Panel:
+                        </span>
+
+                        <span class="font-weight-500">
+                            {{currentPanelIndex + 1}}
+                            /
+                            {{panels.length}}
+                        </span>
+                    </div>
+
+                    <div class="mb-3">
+                        <button class="btn btn-primary"
+                            @click="previousImage()">
+                            Ảnh trước
+                        </button>
+                    </div>
+
+                    <div class="mb-3">
+                        <button class="btn btn-primary"
+                            @click="nextImage()">
+                            Ảnh sau
+                        </button>
+                    </div>
+
+                    <div class="mb-3">
+                        <button class="btn btn-primary"
+                            @click="previousPanel()">
+                            Panel trước
+                        </button>
+                    </div>
+
+                    <div class="mb-3">
+                        <button class="btn btn-primary"
+                            @click="nextPanel()">
+                            Panel sau
+                        </button>
+                    </div>
+
+                    <div class="mb-3">
+                        <button class="btn btn-danger"
+                            @click="deletePanel()">
+                            Xóa panel
+                        </button>
+                    </div>
+
+                    <div class="mb-3">
+                        <button class="btn btn-success"
+                            @click="newPanel()">
+                            Thêm panel
+                        </button>
+                    </div>
+
+                    <div class="mb-3">
+                        <button class="btn btn-warning"
+                            @click="deleteLastPoint()">
+                            Xóa điểm cuối cùng
+                        </button>
+                    </div>
+
+                    <div class="mb-3">
+                        <button class="btn btn-secondary"
+                            @click="saveInfo()">
+                            Lưu lại
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+  
+  
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="../../js/common.js"></script>
+    <script src="js/review.js"></script>
+</body>
+</html>

@@ -8,6 +8,9 @@ class ImageSpliter
     // Đường dẫn file ảnh
     private string $filePath;
 
+    // Thư mục gốc
+    private string $inputFolder;
+
     // Đuôi mở rộng của ảnh
     private string $fileExt;
 
@@ -21,11 +24,12 @@ class ImageSpliter
     // Padding
     private const PADDING = 7;
 
-    public function __construct(string $filePath)
+    public function __construct(string $filePath, string $inputFolder)
     {
         $this->filePath = $filePath;
-        $this->fileExt = $this->getFileExtension($this->filePath);
-        $this->img = $this->getImageFromPath($this->filePath, $this->fileExt);
+        $this->inputFolder = $inputFolder;
+        $this->fileExt = $this->getFileExtension($this->inputFolder . $this->filePath);
+        $this->img = $this->getImageFromPath($this->inputFolder . $this->filePath, $this->fileExt);
         $this->imageWidth = imagesx($this->img);
         $this->imageHeight = imagesy($this->img);
     }
@@ -548,7 +552,7 @@ class ImageSpliter
             */
 
             $temp = $this->trimTopAndBottom($rect);
-            
+
             /*
             // Chiều cao tối thiểu một frame
             $minFrameHeight = max(35, intval($this->imageWidth * 0.1));
@@ -560,7 +564,7 @@ class ImageSpliter
                 
             }
             */
-            
+
             $arr[] = $temp;
         }
         return $arr;
@@ -639,5 +643,30 @@ class ImageSpliter
             'gif' => imagegif($croppedImage, $filePath),
             'png' => imagepng($croppedImage, $filePath)
         };
+    }
+
+
+    /**
+     * Lấy ra thông tin để lưu kết quả grid ra file.
+     */
+    public function getInfo(array $grid): string
+    {
+        $text = '{ "filename": "' . $this->filePath . '", "panels": [';
+        $text .= implode(
+            ', ',
+            array_map(
+                function ($rect) {
+                    return json_encode([
+                        ['x' => $rect->left, 'y' => $rect->top],
+                        ['x' => $rect->right, 'y' => $rect->top],
+                        ['x' => $rect->right, 'y' => $rect->bottom],
+                        ['x' => $rect->left, 'y' => $rect->bottom]
+                    ]);
+                },
+                $grid
+            )
+        );
+        $text .= '] }';
+        return $text;
     }
 }

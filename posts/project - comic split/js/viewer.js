@@ -11,6 +11,7 @@ const App = {
 
     data() {
         return {
+            // Danh sách ảnh
             images: []
         };
     },
