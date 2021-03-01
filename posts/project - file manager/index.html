@@ -130,31 +130,30 @@
     
                 <div v-else>        
                     <div v-for="(f, idx) in filteredFiles"
-                        class="d-flex justify-content-start align-items-end flex-wrap"
+                        class=""
                         :class="{ 'mt-2 pt-2': idx > 0 || folder != '/' }">
-                        <div>
-                            <span @click="openFolder(f)"
-                                class="cursor-pointer text-primary file-icon file-icon-folder text-decoration-none"
-                                v-if="f.isDir">
-                                {{f.name}}
-                            </span>
+                        
+                        <span @click="openFolder(f)"
+                            class="cursor-pointer text-primary file-icon file-icon-folder text-decoration-none"
+                            v-if="f.isDir">
+                            {{f.name}}
+                        </span>
 
-                            <a :href="'/data-drive' + folder + f.name"
-                                class="file-icon text-decoration-none"
-                                v-else>
-                                <!-- @click="f.download = true" -->
-                                {{f.name}}
-                            </a>
+                        <a :href="'/data-drive' + folder + f.name"
+                            class="file-icon text-decoration-none"
+                            v-else>
+                            <!-- @click="f.download = true" -->
+                            {{f.name}}
+                        </a>
 
-                            <download-progress
-                                :url="f.url"
-                                :file-name="f.name"
-                                v-if="f.download"/>
-                        </div>
+                        <download-progress
+                            :url="f.url"
+                            :file-name="f.name"
+                            v-if="f.download"></download-progress>
 
-                        <div class="text-right text-muted font-size-0.875 ml-2">
+                        <span class="text-muted font-size-0.875 ml-2">
                             {{f.size}}
-                        </div>
+                        </span>
                     </div>
                 </div>
             </div>
