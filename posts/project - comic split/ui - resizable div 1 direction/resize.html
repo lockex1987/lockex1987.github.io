@@ -1,0 +1,54 @@
+<html>
+
+<head>
+
+    <script type="text/javascript"
+        src="resize.js"></script>
+
+    <style type="text/css">
+        /* now relatively positioned and no longer contains #statusbar and has overflow set to auto to allow scrolling */
+        #mydiv {
+            position: relative;
+            top: 0px;
+            left: 0px;
+            width: 250px;
+            border: 1px solid #808080;
+            overflow: auto;
+        }
+
+        /* now relatively positioned also note the font-size:0px hack to force ie to do what it should--display the div with height of 5px */
+        #statusbar {
+            cursor: s-resize;
+            position: relative;
+            display: block;
+            background-color: #c0c0c0;
+            font-size: 0px;
+            margin: 0;
+            height: 5px;
+            border: 1px solid #808080;
+            padding: 0;
+            width: 250px;
+        }
+    </style>
+
+</head>
+
+<body onmousemove="getPos(event)"
+    onmouseup="mouseStatus = 'up'">
+
+    <div id="mydiv"
+        style="height:250px;">
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas aliquam massa sed dui.
+            Aliquam ornare metus a purus. Nullam pellentesque, tellus at viverra pellentesque, lorem dolor placerat
+            lectus, vitae suscipit augue lorem eu est.
+            Phasellus laoreet. Mauris tempus. Sed malesuada suscipit lacus. Fusce enim magna, pharetra sed, tincidunt
+            at, gravida auctor, neque.
+            Curabitur quis felis eu libero commodo sollicitudin.</p>
+    </div>
+
+    <div onmousedown="setPos(event)"
+        id="statusbar"></div>
+
+</body>
+
+</html>

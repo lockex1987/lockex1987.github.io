@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="comic, image, panel to panel, php gd"/>
+    <meta name="description" content="comic, image, panel to panel, php gd">
     <title>Split ảnh truyện tranh</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -11,7 +11,14 @@
   <body>
     <article>
       <h2>Split ảnh truyện tranh</h2>
-	    <h3>Giới thiệu</h3>
+      <h3>Giới thiệu</h3>
+      <p>Các bước:</p>
+      <ul>
+        <li>Sử dụng chương trình Python (OpenCV) hay PHP để tự động tách thành
+          các frame.</li>
+        <li>Sử dụng trang web (JS) để review lại.</li>
+        <li>Cắt các ảnh bằng PHP.</li>
+      </ul>
       <p><a href="viewer.html">Viewer</a></p>
       <p>Chia ảnh ra thành các panel (hàng, ô) nhỏ để dễ đọc trên các thiết bị
         như điện thoại di động.</p>
@@ -23,8 +30,7 @@
       <p>Tách ảnh, đóng gói file cbz, đọc trên iPad.</p>
       <h3>Thuật toán</h3>
       <p>Cấu trúc của 1 trang truyện là:</p>
-      <pre>
-  +---Page-------------------------------------+
+      <pre>  +---Page-------------------------------------+
   |                                            | &lt;- Gutter
   | +-----------+ +-----------+ +-----------+  |-----
   | |           | |           | |           |  |
@@ -47,8 +53,8 @@
         gutter hay không nếu nó chỉ có một màu.</p>
       <p> Các bước:</p>
       <ul>
-        <li> Có thể chuyển ảnh về dạng mono hoặc tăng độ tương phản cho đỡ nhiễu, dễ
-          tách (<code>mono_creator.py</code>).</li>
+        <li> Có thể chuyển ảnh về dạng mono hoặc tăng độ tương phản cho đỡ
+          nhiễu, dễ tách (<code>mono_creator.py</code>).</li>
         <li>Duyệt theo chiều dọc, từ trên xuống dưới, tách thành các hàng.</li>
         <li> Với mỗi hàng, duyệt theo chiều ngang, từ trái sang phải, tách thành
           các ô.</li>
@@ -70,8 +76,7 @@
       <p> Một khi chúng ta đã có các dòng (rows), chúng ta lặp lại các thao tác
         trên cho từng dòng. Bây giờ chúng ta sẽ di chuyển theo chiều ngang từ
         trái qua phải.</p>
-      
-        <h3> Hạn chế</h3>
+      <h3> Hạn chế</h3>
       <p> Chương trình có thể không split thành công các ô từ một trang mà bị
         xoay.</p>
       <p> Ở một số trang, một số ảnh có thể "overflow" vào vùng gutter. Trong
@@ -82,6 +87,17 @@
       <p> Một trang truyện thường bao gồm nhiều khung (frame) được ngăn cách
         bằng các vùng trắng ngang/dọc gọi là gutter. Trang tiêu đề có thể có
         thêm heading ở đầu.</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://github.com/njean42/kumiko" target="_blank">GitHub -
+          njean42/kumiko: Kumiko, the Comics Cutter</a></p>
+      <p><a href="https://docs.opencv.org/3.4/dc/dcf/tutorial_js_contour_features.html"
+          target="_blank">OpenCV: Contour Features</a></p>
+      <p><a href="https://www.google.com/amp/s/www.geeksforgeeks.org/opencv-python-tutorial/amp/"
+          target="_blank">OpenCV Python Tutorial - GeeksforGeeks</a></p>
+      <p><a href="https://thigiacmaytinh.com/tim-vi-tri-cua-text-trong-anh/" target="_blank">Tìm
+          vị trí của text trong ảnh - THỊ GIÁC MÁY TÍNH</a></p>
+      <p><br>
+      </p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>

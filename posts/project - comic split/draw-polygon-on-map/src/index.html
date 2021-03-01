@@ -1,0 +1,45 @@
+<div class="container">
+  <form action="#" type="GET" id="posizione">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Dati dell'immobile</h3>
+      </div>
+    </div>
+    <div class="row">      
+      <div class="col-md-4 form-group">
+        <label for="latitudine">Latitudine</label>
+        <input type="text" class="form-control" name="latitudine" id="latitudine" placeholder="Ex: 43.8643" value="43.8643"/>
+      </div>
+      <div class="col-md-4 form-group">
+        <label for="longitudine">Longitudine</label>
+        <input type="text" class="form-control" name="longitudine" id="longitudine" placeholder="Ex: 11.0608" value="11.0608"/>
+      </div>
+      <div class="col-md-4 form-group">
+        <label for="raggio">Raggio (mt)</label>
+        <input type="text" class="form-control" name="raggio" id="raggio" placeholder="Ex: 560" value="560"/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Poligono di ricerca</h3>
+      </div>
+    </div>
+    <div class="row">      
+      <div class="col-md-12 form-group">
+        <textarea name="poly" class="form-control" id="poly" placeholder="Inserire elenco: Lat1 Lng1, Lat2 Lng2...">43.86019834534347 11.06649184078367,43.86405066960325 11.05799460262449,43.86767069925247 11.059904335443093,43.86408161095903 11.068938015405251,43.86019834534347 11.06649184078367</textarea>        
+      </div>
+    </div>
+    <div class="row">      
+      <div class="col-md-12 form-group text-center">
+        <button type="button" class="btn btn-primary refreshmap">Invia alla mappa</button>
+        <button type="button" class="btn btn-danger resetmap">Reimposta</button>
+      </div>
+    </div>
+  </form>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <div id="mapid"></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Hello OpenCV.js</title>
+</head>
+
+<body>
+    <h2>Hello OpenCV.js</h2>
+
+    <p id="status">OpenCV.js is loading...</p>
+
+    <div>
+        <div class="inputoutput">
+            <img id="imageSrc"
+                alt="No Image" />
+
+            <div class="caption">
+                imageSrc
+                <input type="file"
+                    id="fileInput"
+                    name="file" />
+            </div>
+        </div>
+
+        <div class="inputoutput">
+            <canvas id="canvasInput"></canvas>
+            <div class="caption">canvas input</div>
+        </div>
+
+        <div>
+            <button onclick1="grayImage()"
+                onclick="demoContour()">
+                Gray
+            </button>
+        </div>
+
+
+        <div class="inputoutput">
+            <canvas id="canvasOutput"></canvas>
+            <div class="caption">canvas output</div>
+        </div>
+    </div>
+
+    <script>
+        let imgElement = document.getElementById("imageSrc")
+        let inputElement = document.getElementById("fileInput");
+
+        inputElement.addEventListener("change", (e) => {
+            imgElement.src = URL.createObjectURL(e.target.files[0]);
+        });
+
+        imgElement.onload = function () {
+            let mat = cv.imread(imgElement);
+            cv.imshow("canvasInput", mat);
+            mat.delete();
+        };
+
+        function grayImage() {
+            let src = cv.imread('canvasInput');
+            let dst = new cv.Mat();
+            // To distinguish the input and output, we graying the image.
+            // You can try different conversions.
+            cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY);
+            cv.imshow('canvasOutput', dst);
+            src.delete();
+            dst.delete();
+        }
+
+        function demoContour() {
+            let src = cv.imread('canvasInput');
+            let dst = cv.Mat.zeros(src.cols, src.rows, cv.CV_8UC3);
+            cv.cvtColor(src, src, cv.COLOR_RGBA2GRAY, 0);
+            cv.threshold(src, src, 120, 200, cv.THRESH_BINARY);
+
+            let contours = new cv.MatVector();
+            let hierarchy = new cv.Mat();
+            // You can try more different parameters
+            cv.findContours(
+                src,
+                contours,
+                hierarchy,
+                cv.RETR_CCOMP,
+                cv.CHAIN_APPROX_SIMPLE
+            );
+
+            // draw contours with random Scalar
+            for (let i = 0; i < contours.size(); ++i) {
+                let color = new cv.Scalar(
+                    Math.round(Math.random() * 255),
+                    Math.round(Math.random() * 255),
+                    Math.round(Math.random() * 255)
+                );
+                cv.drawContours(
+                    dst,
+                    contours,
+                    i,
+                    color,
+                    1,
+                    cv.LINE_8,
+                    hierarchy,
+                    100
+                );
+            }
+            cv.imshow('canvasOutput', dst);
+            
+            src.delete();
+            dst.delete();
+            contours.delete();
+            hierarchy.delete();
+        }
+
+        function onOpenCvReady() {
+            console.log('Ready');
+            document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
+        }
+    </script>
+
+    <script async
+        src="https://docs.opencv.org/3.4.13/opencv.js"
+        onload="onOpenCvReady();"></script>
+</body>
+
+</html>
