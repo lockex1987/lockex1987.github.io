@@ -25,8 +25,7 @@
         <div class="container-fluid mx-auto"
             style="max-width: 1000px;">
             <div class="row">
-                <div class="col-lg-5 pl-0"
-                    v-show="showList">
+                <div class="col-lg-5 pl-0">
                     <div class="top-left w-100 p-3 top-panel zindex-10">
                         <input class="form-control"
                             v-model="filterInput"
@@ -63,10 +62,6 @@
                     </div>
                 </div>
 
-                <div v-html="currentText"
-                    class="content overflow-auto custom-slim-scrollbar pl-3 pt-3"
-                    v-show="!showList"></div>
-
                 <div class="col-lg-7 px-0">
                     <div class="bottom-left w-100 p-3 bottom-panel zindex-10">
                         <div class="d-flex">
@@ -80,13 +75,12 @@
                                 </div>
                             </div>
 
-                            <div v-show="!showList"
-                                class="ml-auto">
+                            <!--div class="ml-auto">
                                 <span class="cursor-pointer text-primary"
                                     @click="returnListView()">
                                     Quay lại
                                 </span>
-                            </div>
+                            </div-->
                         </div>
                     
                         <div>

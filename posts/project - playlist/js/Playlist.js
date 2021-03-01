@@ -21,9 +21,7 @@ export default {
             })),
             currentChapterIndex: -1,
             filterInput: '',
-            firstPlay: false,
-            showList: true,
-            currentText: ''
+            firstPlay: false
         };
     },
 
@@ -61,7 +59,6 @@ export default {
             const historyStateObj = event.state;
             console.log('historyStateObj: ', historyStateObj);
             if (!historyStateObj || !historyStateObj.id) {
-                this.showList = true;
             } else {
                 // app.showStory(historyStateObj.id);
             }
@@ -112,28 +109,12 @@ export default {
             this.$nextTick(() => {
                 this.playMedia();
             });
-
-            if (currentChapter.slug) {
-                this.loadText(currentChapter.slug);
-            }
-        },
-
-        /**
-         * Load text của chương truyện.
-         * @param {String} slug Đường dẫn chương truyện
-         */
-        async loadText(slug) {
-            const url = 'text/' + slug;
-            const htmlCode = await fetch(url).then(resp => resp.text());
-            this.showList = false;
-            this.currentText = htmlCode;
         },
 
         /**
          * Chuyển về trang danh sách.
          */
         returnListView() {
-            this.showList = true;
             // history.replaceState({}, 'Main', baseUrl);
         },
 
