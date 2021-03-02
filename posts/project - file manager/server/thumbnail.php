@@ -1,18 +1,15 @@
 <?php
 
 
-
-
-
-
-
-
+/**
+ * Tạo ảnh thumbnail của các file comic (cbz, cbr).
+ */
 class ThumbnailCreator
 {
     // Link image type to correct image loader and saver
     // - makes it easier to add additional types later on
     // - makes the function easier to read
-    const IMAGE_HANDLERS = [
+    private const IMAGE_HANDLERS = [
         IMAGETYPE_JPEG => [
             'load' => 'imagecreatefromjpeg',
             'save' => 'imagejpeg',
@@ -29,85 +26,86 @@ class ThumbnailCreator
         ]
     ];
 
-    /**
-     * Tạo ảnh thumbnail bằng PHP.
-     */
-    public static function makeThumbnail($sourceImgPath, $destImgPath, $desiredWidth)
-    {
-        // Đọc ảnh và lấy kích thước
-        $sourceImage = imagecreatefromjpeg($sourceImgPath);
-        $width = imagesx($sourceImage);
-        $height = imagesy($sourceImage);
-        
-        // Tính toán chiều cao mong muốn
-        $desiredHeight = floor($height * ($desiredWidth / $width));
-        
-        // Tạo ảnh mới
-        $destImage = imagecreatetruecolor($desiredWidth, $desiredHeight);
-        
-        // Copy từ ảnh nguồn
-        imagecopyresampled(
-            $destImage,
-            $sourceImage,
-            0, 0, 0, 0,
-            $desiredWidth, $desiredHeight, $width, $height
-        );
-        
-        // Ghi ra file
-        imagejpeg($destImage, $destImgPath);
-    }
 
     /**
      * Giải nén file bằng PHP thuần.
+     * @param string $archivePath Đường dẫn file ZIP
+     * @param string $sourceImgPath Đường dẫn ảnh đầu ra
+     * @param string $extension Đuôi mở rộng của file
+     * @return void
      */
-    public static function extractNative($archivePath, $extractFolder)
+    private static function extractNative(string $archivePath, string $sourceImgPath, string $extension): void
     {
-        
+        match ($extension) {
+            'zip', 'cbz' => self::extractZipArchive($archivePath, $sourceImgPath),
+            'rar', 'cbr' => self::extractRarArchive($archivePath, $sourceImgPath)
+        };
     }
+
 
     /**
      * Giải nén file ZIP bằng PHP thuần.
+     * Giải nén ra ảnh đầu tiên.
+     * @param string $archivePath Đường dẫn file ZIP
+     * @param string $sourceImgPath Đường dẫn ảnh đầu ra
+     * @return void
      */
-    private static function extractZipArchive($archivePath, $sourceImgPath)
+    private static function extractZipArchive(string $archivePath, string $sourceImgPath): void
     {
         $archiveFile = new ZipArchive();
         if ($archiveFile->open($archivePath)) {
             $numFiles = $archiveFile->count();
             for ($i = 0; $i < $numFiles; $i++) {
                 $entry = $archiveFile->getNameIndex($i);
-                if (strpos($entry, '.jpg') !== false) {
-                    $imageData = $archiveFile->getFromName($entry);
+                if (str_contains($entry, '.jpg')) {
+                    echo $entry . PHP_EOL;
 
+                    $imageData = $archiveFile->getFromName($entry);
                     file_put_contents($sourceImgPath, $imageData);
 
                     // $imageObject = imagecreatefromstring($imageData);
                     // imagejpeg($imageObject, $sourceImgPath);
 
-                    echo $entry . PHP_EOL;
+                    break;
                 }
             }
             $archiveFile->close();
         }
     }
 
+
     /**
      * Giải nén file RAR bằng PHP thuần.
+     * Giải nén ra ảnh đầu tiên.
+     * @param string $archivePath Đường dẫn file RAR
+     * @param string $sourceImgPath Đường dẫn ảnh đầu ra
+     * @return void
      */
-    private static function extractRarArchive($archivePath, $sourceImgPath)
+    private static function extractRarArchive(string $archivePath, string $sourceImgPath): void
     {
         $archiveFile = RarArchive::open($archivePath);
         $entries = $archiveFile->getEntries();
         foreach ($entries as $entry) {
             if (strpos($entry, '/') !== false || strpos($entry, '\\') !== false) {
-                echo $entry->getName()  . PHP_EOL;
-                $entry->extract('', $sourceImgPath);
-                break;
+                if (str_contains($entry, '.jpg')) {
+                    echo $entry->getName()  . PHP_EOL;
+                    $entry->extract('', $sourceImgPath);
+                    break;
+                }
             }
         }
         $archiveFile->close();
     }
 
-    public static function createThumbnailOfComic($archivePath, $desiredWidth, $desiredHeight = null)
+
+    /**
+     * Tạo ảnh thumbnail từ file comic (cbz, cbr).
+     * @param string $archivePath Đường dẫn file comic
+     * @param string $desiredWidth Chiều rộng ảnh mong muốn
+     * @param string $desiredHeight Chiều cao ảnh muong muốn
+     * @return void
+     */
+    public static function createThumbnailOfComic(string $archivePath, int $desiredWidth, int $desiredHeight = null): void
     {
         $extractFolder = '../output/';
 
@@ -117,34 +115,26 @@ class ThumbnailCreator
         $sourceImgPath = '../data/' . $archiveName . '.jpg';
         $destImgPath = $extractFolder . '.' . $archiveName . '_thumbnail.jpg';
 
-        switch ($extension) {
-            case 'zip':
-            case 'cbz':
-                self::extractZipArchive($archivePath, $sourceImgPath);
-                break;
-            case 'rar':
-            case 'cbr':
-                self::extractRarArchive($archivePath, $sourceImgPath);
-                break;
-        }
+        // Giải nén ra ảnh đầu tiên
+        self::extractNative($archivePath, $sourceImgPath, $extension);
 
-        // ThumbnailCreator::makeThumbnail($sourceImgPath, $destImgPath, $desiredWidth);
-        ThumbnailCreator::createThumbnail($sourceImgPath, $destImgPath, $desiredWidth, $desiredHeight);
+        // self::makeThumbnail($sourceImgPath, $destImgPath, $desiredWidth);
+        self::createThumbnail($sourceImgPath, $destImgPath, $desiredWidth, $desiredHeight);
 
         // Xóa file ảnh nguồn
         unlink($sourceImgPath);
     }
 
+
     /**
      * https://pqina.nl/blog/creating-thumbnails-with-php/
-     * @param $src - a valid file location
-     * @param $dest - a valid file target
-     * @param $targetWidth - desired output width
-     * @param $targetHeight - desired output height or null
+     * @param string $src a valid file location
+     * @param string $dest a valid file target
+     * @param int $targetWidth desired output width
+     * @param int $targetHeight desired output height or null
      */
-    public static function createThumbnail($src, $dest, $targetWidth, $targetHeight = null)
+    public static function createThumbnail(string $src, string $dest, int $targetWidth, int $targetHeight = null)
     {
-
         // 1. Load the image from the given $src
         // - see if the file actually exists
         // - check if it's of a valid image type
@@ -168,7 +158,6 @@ class ThumbnailCreator
             return null;
         }
 
-
         // 2. Create a thumbnail and resize the loaded $image
         // - get the image dimensions
         // - define the output size appropriately
@@ -182,18 +171,16 @@ class ThumbnailCreator
 
         // maintain aspect ratio when no height set
         if ($targetHeight == null) {
-
             // get width to height ratio
             $ratio = $width / $height;
 
-            // if is portrait
-            // use ratio to scale height to fit in square
             if ($width > $height) {
+                // if is portrait
+                // use ratio to scale height to fit in square
                 $targetHeight = floor($targetWidth / $ratio);
-            }
-            // if is landscape
-            // use ratio to scale width to fit in square
-            else {
+            } else {
+                // if is landscape
+                // use ratio to scale width to fit in square
                 $targetHeight = $targetWidth;
                 $targetWidth = floor($targetWidth * $ratio);
             }
@@ -204,7 +191,6 @@ class ThumbnailCreator
 
         // set transparency options for GIFs and PNGs
         if ($type == IMAGETYPE_GIF || $type == IMAGETYPE_PNG) {
-
             // make image transparent
             imagecolortransparent(
                 $thumbnail,
@@ -232,7 +218,6 @@ class ThumbnailCreator
             $height
         );
 
-
         // 3. Save the $thumbnail to disk
         // - call the correct save method
         // - set the correct quality level
@@ -245,17 +230,54 @@ class ThumbnailCreator
             self::IMAGE_HANDLERS[$type]['quality']
         );
     }
+
+
+    /**
+     * Tạo ảnh thumbnail bằng PHP.
+     */
+    public static function makeThumbnail(string $sourceImgPath, string $destImgPath, int $desiredWidth): void
+    {
+        // Đọc ảnh và lấy kích thước
+        $sourceImage = imagecreatefromjpeg($sourceImgPath);
+        $width = imagesx($sourceImage);
+        $height = imagesy($sourceImage);
+
+        // Tính toán chiều cao mong muốn
+        $desiredHeight = floor($height * ($desiredWidth / $width));
+
+        // Tạo ảnh mới
+        $destImage = imagecreatetruecolor($desiredWidth, $desiredHeight);
+
+        // Copy từ ảnh nguồn
+        imagecopyresampled(
+            $destImage,
+            $sourceImage,
+            0,
+            0,
+            0,
+            0,
+            $desiredWidth,
+            $desiredHeight,
+            $width,
+            $height
+        );
+
+        // Ghi ra file
+        imagejpeg($destImage, $destImgPath);
+    }
 }
 
 
+function demo(): void
+{
+    $sourceImgPath = '../data/infinite_frontier_1.jpg';
+    $destImgPath = '../output/.infinite_frontier_1_thumbnail.jpg';
+    $comicPath = '../data/infinite_frontier_1.cbz';
+    $desiredWidth = 160;
+    $desiredHeight = 160;
+
+    ThumbnailCreator::createThumbnailOfComic($comicPath, $desiredWidth, $desiredHeight);
+}
 
 
-
-$sourceImgPath = '../data/infinite_frontier_1.jpg';
-$destImgPath = '../output/.infinite_frontier_1_thumbnail.jpg';
-
-$comicPath = '../data/infinite_frontier_1.cbz';
-$desiredWidth = 160;
-$desiredHeight = 160;
-
-ThumbnailCreator::createThumbnailOfComic($comicPath, $desiredWidth, $desiredHeight);
+demo();

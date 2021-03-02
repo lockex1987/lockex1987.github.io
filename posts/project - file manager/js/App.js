@@ -10,14 +10,21 @@ export default {
         return {
             // Xâu tìm kiếm
             searchQuery: '',
+
             // Danh sách file và folder của thư mục hiện tại
             files: null,
+
             // Thư mục hiện tại
             folder: '/',
+
             // Danh sách các file đang upload
             uploadingFiles: [],
+
             // Chỉ số file đang upload
-            currentIndex: 0
+            currentIndex: 0,
+
+            // Danh sách các file đang được mark
+            markedFiles: []
         };
     },
 
@@ -54,22 +61,175 @@ export default {
             const url = 'server/list_files.php?folder=' + encodeURIComponent(this.folder);
             const data = await fetch(url).then(resp => resp.json());
 
-            // Sap xep folder truoc file
-            // Sap xep theo ten
+            // Đầu tiên sắp xếp folder trước file
+            // Sau đó sắp xếp theo tên
             data.sort((f1, f2) => {
                 return ((f2.isDir ? 1 : 0) - (f1.isDir ? 1 : 0)) || f1.name.localeCompare(f2.name);
             });
 
             this.files = data.map(f => ({
-                name: f.name,
-                url: f.url,
-                isDir: f.isDir,
-                size: f.isDir ? '' : CommonUtils.prettifyNumber(f.size, 0) + 'B',
+                ...f,
+                size: f.isDir ? f.size : CommonUtils.prettifyNumber(f.size) + 'B',
                 download: false
             }));
 
             // Reset lại thông tin tìm kiếm để hiển thị tất cả
             this.searchQuery = '';
+        },
+
+        /**
+         * Có phải là text file hay không.
+         * @param {Object} file Đối tượng file / folder
+         */
+        isTextFile(file) {
+            const ext = file.name.split('.').pop();
+            const textFileExtensions = [
+                'txt',
+                'html',
+                'htm',
+                'svg',
+                'ini',
+                'bat',
+                'env',
+                'yml',
+                'json',
+                'sh',
+                'md',
+                'js',
+                'css',
+                'php'
+            ];
+            return textFileExtensions.includes(ext);
+        },
+
+        /**
+         * Đánh dấu file.
+         * @param {Object} file Đối tượng file / folder
+         * @param {String} type Loại (copy, cut)
+         */
+        markFile(file, type) {
+            // Kiểm tra đã tồn tại hay chưa
+            const absolutePath = this.folder + file.name;
+            const obj = this.markedFiles.find(e => e.absolutePath == absolutePath);
+            if (!obj) {
+                const markedItem = {
+                    absolutePath,
+                    file,
+                    type
+                };
+                this.markedFiles.push(markedItem);
+            } else if (obj.type != type) {
+                obj.type = type;
+            }
+        },
+
+        /**
+         * Bỏ đánh dấu file.
+         * @param {Integer} idx Chỉ số trong mảng
+         */
+        unmarkFile(idx) {
+            this.markedFiles.splice(idx, 1);
+        },
+
+        /**
+         * Xử lý paste đối tượng được đánh dấu.
+         * @param {Object} markedItem Đối tượng được đánh dấu.
+         */
+        async processPaste(markedItem, idx) {
+            const url = 'server/cmd_paste.php';
+            const params = {
+                type: markedItem.type,
+                oldPath: markedItem.absolutePath,
+                newPath: this.folder + markedItem.file.name
+            };
+            const options = {
+                method: 'POST',
+                body: JSON.stringify(params),
+                headers: { 'Content-Type': 'application/json; charset=UTF-8' }
+            };
+            const data = await fetch(url, options).then(resp => resp.json());
+            // console.log(data);
+            if (data.code == 0) {
+                noti.success((markedItem.type == 'copy' ? 'Copy' : 'Cut') + ' thành công');
+                this.unmarkFile(idx);
+                this.listFolderContent();
+            } else if (data.code == 2) {
+                noti.error(data.message);
+            } else {
+                noti.error('Đã có lỗi xảy ra');
+            }
+        },
+
+        /**
+         * Xác nhận xóa.
+         * @param {Object} f Đối tượng file / folder
+         */
+        confirmDelete(f) {
+            const message = 'Bạn có muốn xóa <b>' + f.name + '</b>?';
+            noti.confirm(message, () => {
+                this.processDelete(f);
+            });
+        },
+
+        /**
+         * Thực thi xóa.
+         * @param {Object} f Đối tượng file / folder
+         */
+        async processDelete(f) {
+            const url = 'server/cmd_delete.php';
+            const params = {
+                path: this.folder + f.name
+            };
+            const options = {
+                method: 'DELETE',
+                body: JSON.stringify(params),
+                headers: { 'Content-Type': 'application/json; charset=UTF-8' }
+            };
+            const data = await fetch(url, options).then(resp => resp.json());
+            if (data.code == 0) {
+                noti.success('Xóa thành công');
+                this.listFolderContent();
+            } else {
+                noti.error('Đã có lỗi xảy ra');
+            }
+        },
+
+        /**
+         * 
+         * @param {Object} f Đối tượng file / folder
+         */
+        confirmRename(f) {
+            // Mở hộp thoại nhập tên mới
+            const newName = prompt('Nhập tên mới', f.name);
+            // console.log(newName);
+            if (newName) {
+                this.processRename(f, newName);
+            }
+        },
+
+        /**
+         * Thực hiện đổi tên file / folder.
+         */
+        async processRename(f, newName) {
+            const url = 'server/cmd_paste.php';
+            const params = {
+                type: 'rename',
+                oldPath: this.folder + f.name,
+                newPath: this.folder + newName
+            };
+            const options = {
+                method: 'POST',
+                body: JSON.stringify(params),
+                headers: { 'Content-Type': 'application/json; charset=UTF-8' }
+            };
+            const data = await fetch(url, options).then(resp => resp.json());
+            // console.log(data);
+            if (data.code == 0) {
+                noti.success('Đổi tên thành công');
+                this.listFolderContent();
+            } else {
+                noti.error('Đã có lỗi xảy ra');
+            }
         },
 
         /**
