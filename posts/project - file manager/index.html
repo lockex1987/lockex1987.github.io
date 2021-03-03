@@ -54,7 +54,7 @@
                 </nav>
     
                 <div>
-                    <label class="btn btn-primary">
+                    <label class="btn btn-primary mb-0">
                         Upload
     
                         <input type="file"
@@ -63,6 +63,11 @@
                             class="d-none"
                             @change="startUploadFiles()">
                     </label>
+
+                    <button class="btn btn-secondary"
+                        @click="newTextFile()">
+                        Tạo file text
+                    </button>
                 </div>
             </div>
     
@@ -219,8 +224,8 @@
                                     style="width: 150px;">
                                     <i class="la la-edit text-warning cursor-pointer mr-1"
                                         title="Cập nhật"
-                                        @click="confirmRename(f)"
-                                        v-if="!f.isDir && isTextFile(f)"></i>
+                                        @click="getTextFileContent(f)"
+                                        v-if="!f.isDir && f.isTextFile"></i>
 
                                     <i class="la la-trash text-danger cursor-pointer"
                                         title="Xóa"
@@ -243,6 +248,71 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Modal sửa file text -->
+            <div class="modal"
+                ref="updateFileModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="modal-title font-weight-500">
+                                {{isNewFile ? 'Thêm mới' : 'Cập nhật'}}
+                                file
+                            </div>
+
+                            <button type="button"
+                                class="close"
+                                data-dismiss="modal">
+                                &times;
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="form-group validate-container">
+                                <label class="required">
+                                    Tên file
+                                </label>
+
+                                <input type="text"
+                                    class="form-control"
+                                    v-model="currentFilePath"
+                                    placeholder="Tên file"
+                                    data-validation="required"
+                                    v-if="isNewFile" />
+
+                                <div v-else
+                                    class="text-info">
+                                    {{currentFilePath}}
+                                </div>
+                            </div>
+
+                            <div class="form-group validate-container">
+                                <label>
+                                    Nội dung
+                                </label>
+
+                                <textarea class="form-control"
+                                    v-model="fileContent"
+                                    style="min-height: 400px;"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button"
+                                class="btn btn-primary"
+                                @click="saveFileContent()">
+                                {{isNewFile ? 'Thêm mới' : 'Cập nhật'}}
+                            </button>
+
+                            <button type="button"
+                                class="btn btn-outline-secondary"
+                                data-dismiss="modal">
+                                Đóng
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -254,6 +324,10 @@
 
     <link rel="stylesheet" href="../project - noti/css/noti.css" />
     <script src="../project - noti/js/noti.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script type="module" src="js/script.js"></script>
 </body>

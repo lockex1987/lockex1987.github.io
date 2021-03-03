@@ -1,7 +1,6 @@
 <?php
 
-include 'config.php';
-include 'FileManager.php';
+include 'bootstrap.php';
 
 // Thư mục đầu vào
 $folder = $_GET['folder'];
@@ -10,5 +9,4 @@ $folder = $_GET['folder'];
 $result = FileManager::listFolder($rootFolder . $folder);
 
 // Trả về cho client
-header('Content-type: application/json');
-echo json_encode($result);
+responseJson($result);

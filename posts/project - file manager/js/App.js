@@ -24,7 +24,16 @@ export default {
             currentIndex: 0,
 
             // Danh sách các file đang được mark
-            markedFiles: []
+            markedFiles: [],
+
+            // Nội dung file text đang chỉnh sửa
+            fileContent: '',
+
+            // Đường dẫn của file text đang chỉnh sửa
+            currentFilePath: '',
+
+            // Có phải là tạo mới file hay không
+            isNewFile: false
         };
     },
 
@@ -75,6 +84,73 @@ export default {
 
             // Reset lại thông tin tìm kiếm để hiển thị tất cả
             this.searchQuery = '';
+        },
+
+        /**
+         * Lấy nội dung file text.
+         * @param {Object} f Đối tượng file / folder
+         */
+        async getTextFileContent(f) {
+            const url = 'server/file_get_contents.php?filePath=' + encodeURIComponent(this.folder + f.name);
+            const data = await fetch(url).then(resp => resp.text());
+
+            this.currentFilePath = f.name;
+            this.fileContent = data;
+            this.isNewFile = false;
+
+            this.openUpdateFileModal();
+        },
+
+        /**
+         * Tạo mới file text.
+         */
+        newTextFile() {
+            this.currentFilePath = '';
+            this.fileContent = '';
+            this.isNewFile = true;
+
+            this.openUpdateFileModal();
+        },
+
+        /**
+         * Lưu nội dung file text.
+         */
+        async saveFileContent() {
+            const url = 'server/file_put_contents.php';
+            const params = {
+                filePath: this.folder + this.currentFilePath,
+                content: this.fileContent
+            };
+            const options = {
+                method: 'POST',
+                body: JSON.stringify(params),
+                headers: { 'Content-Type': 'application/json; charset=UTF-8' }
+            };
+            const data = await fetch(url, options).then(resp => resp.json());
+
+            if (data.code == 0) {
+                noti.success((this.isNewFile ? 'Thêm mới' : 'Cập nhật') + ' file thành công');
+                this.closeUpdateFileModal();
+                if (this.isNewFile) {
+                    this.listFolderContent();
+                }
+            } else {
+                noti.error('Đã có lỗi xảy ra');
+            }
+        },
+
+        /**
+         * Mở modal cập nhật file.
+         */
+        openUpdateFileModal() {
+            $(this.$refs.updateFileModal).modal('show');
+        },
+
+        /**
+         * Đóng modal cập nhật file.
+         */
+        closeUpdateFileModal() {
+            $(this.$refs.updateFileModal).modal('hide');
         },
 
         /**

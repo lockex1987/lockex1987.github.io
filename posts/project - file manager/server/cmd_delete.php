@@ -1,10 +1,9 @@
 <?php
 
-include 'config.php';
-include 'FileManager.php';
+include 'bootstrap.php';
 
 // Lấy tham số JSON từ request
-$params = json_decode(file_get_contents('php://input'));
+$params = getJsonParams();
 $folder = $params->folder;
 $path = $rootFolder . $params->path;
 
@@ -12,8 +11,6 @@ $path = $rootFolder . $params->path;
 $result = FileManager::delete($path);
 
 // Trả về cho client
-$resp = [
+responseJson([
     'code' => $result ? 0 : 1
-];
-header('Content-type: application/json');
-echo json_encode($resp);
+]);
