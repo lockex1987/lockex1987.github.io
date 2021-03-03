@@ -7,7 +7,6 @@
  *     https://github.com/icons8/line-awesome/tree/master/svg
  */
 const noti = (() => {
-
     // Tùy chọn mặc định
     const DEFAULT_OPTIONS = {
         // CSS class, quy định màu sắc
@@ -175,8 +174,15 @@ const noti = (() => {
      * Xác nhận.
      * @param {String} text Nội dung xác nhận
      * @param {Function} callback Hàm gọi khi người dùng đồng ý
+     * @param {String} confirmText Nhãn của nút đồng ý
+     * @param {String} cancelText Nhãn của nút đóng
+     * @param {Boolean} isPrompt Có phải là prompt để người dùng nhập liệu hay không
+     * @param {String} defaultValue Giá trị mặc định khi dùng prompt
+     * @return void
      */
-    function displayConfirm(text, callback, confirmText = 'Đồng ý', cancelText = 'Đóng') {
+    function displayConfirm(text, callback,
+        confirmText = 'Đồng ý', cancelText = 'Đóng',
+        isPrompt = false, defaultValue = '') {
         // Vùng chứa confirm
         const confirmContainer = document.createElement('div');
         confirmContainer.className = 'noti-confirm';
@@ -185,6 +191,8 @@ const noti = (() => {
                     <div class="confirm-message text-break text-left font-size-1.25 p-4">
                         ${text}
                     </div>
+
+                    ${isPrompt ? '<div class="px-4"><input type="text" class="form-control" value="' + defaultValue + '"/></div>' : ''}
 
                     <div class="confirm-buttons text-right p-3">
                         <button class="button accept btn btn-primary">
@@ -202,10 +210,14 @@ const noti = (() => {
             confirmContainer.parentNode.removeChild(confirmContainer);
         };
 
+        // Click đồng ý
         confirmContainer.querySelector('.accept').addEventListener('click', () => {
             hideConfirm();
-            callback();
+            const text = isPrompt ? confirmContainer.querySelector('input').value.trim() : '';
+            callback(text);
         });
+
+        // Click đóng
         confirmContainer.querySelector('.reject').addEventListener('click', () => {
             hideConfirm();
         });
@@ -225,6 +237,20 @@ const noti = (() => {
 
         // Focus vào nút OK, có thể nhấn Enter
         // okButton.focus();
+        if (isPrompt) {
+            confirmContainer.querySelector('input').focus();
+        }
+    }
+
+    /**
+     * Dialog prompt.
+     */
+    function displayPrompt(text, callback,
+        confirmText = 'Đồng ý', cancelText = 'Đóng',
+        defaultValue = '') {
+        displayConfirm(text, callback,
+            confirmText, cancelText,
+            true, defaultValue);
     }
 
     return {
@@ -232,6 +258,7 @@ const noti = (() => {
         success: displaySuccess,
         info: displayInfo,
         warning: displayWarning,
-        confirm: displayConfirm
+        confirm: displayConfirm,
+        prompt: displayPrompt
     };
 })();

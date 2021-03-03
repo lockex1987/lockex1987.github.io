@@ -4,7 +4,7 @@
     <meta content="text/html; charset=UTF-8" http-equiv="content-type">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="date" content="2020-02-24 22:06:00">
-    <meta name="description" content="Thay thế alert và confirm">
+    <meta name="description" content="Thay thế alert, confirm, prompt">
     <title>Noti</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -56,6 +56,11 @@
           </button>
           <br>
           <br>
+          <button onclick="alert(prompt('Nhập tên mới'));" class="btn btn-info">
+            Native Prompt
+          </button>
+          <br>
+          <br>
           <button onclick="noti.error('Bạn chưa được phân quyền thực hiện chức năng này!', { autoClose: false });"
               class="btn btn-danger">
             Error
@@ -78,7 +83,13 @@
               class="btn btn-secondary">
             Confirm
           </button>
-      </div>
+            <br>
+            <br>
+            <button onclick="noti.prompt('Nhập tên mới:', (inputValue) => { noti.success('Bạn đã nhập <b>' + inputValue + '</b>'); });"
+                class="btn btn-info">
+                Prompt
+            </button>
+    </div>
 
       <h3>Tính năng</h3>
       <p>Các tính năng hiện có:</p>

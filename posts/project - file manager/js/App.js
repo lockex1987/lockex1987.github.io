@@ -195,16 +195,17 @@ export default {
         },
 
         /**
-         * 
+         * Mở hộp thoại nhập tên mới.
          * @param {Object} f Đối tượng file / folder
          */
         confirmRename(f) {
-            // Mở hộp thoại nhập tên mới
-            const newName = prompt('Nhập tên mới', f.name);
-            // console.log(newName);
-            if (newName) {
-                this.processRename(f, newName);
-            }
+            const message = 'Nhập tên mới cho <b>' + f.name + '</b>:';
+            const callback = (newName) => {
+                if (newName) {
+                    this.processRename(f, newName);
+                }
+            };
+            noti.prompt(message, callback, 'Đổi tên', 'Đóng', f.name);
         },
 
         /**
