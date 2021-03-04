@@ -1,6 +1,6 @@
 <?php
 
-include 'bootstrap.php';
+include_once 'bootstrap.php';
 
 // Đường dẫn file đầu vào
 $filePath = $_GET['filePath'];

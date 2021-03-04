@@ -7,7 +7,9 @@
     <meta name="description" content="Upload từ iPad sang máy tính, download từ máy tính sang iPad bằng Vue và PHP;
         file type icon;
         delete, copy, cut, rename, update;
-        thumbnail" />
+        thumbnail;
+        highcharts sunburst;
+        php, redis, phpredis" />
 
     <title>File manager</title>
 
@@ -157,6 +159,10 @@
                         placeholder="Tìm kiếm"/>
                 </div>
             </div>
+
+            <!-- Biểu đồ dung lượng -->
+            <div ref="sunburstChart"
+                style="height: 500px;"></div>
             
             <!-- Danh sách file hiện tại -->
             <div v-if="files">
@@ -328,6 +334,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/sunburst.js"></script>
+    <script src="js/highcharts-settings.js"></script>
 
     <script type="module" src="js/script.js"></script>
 </body>

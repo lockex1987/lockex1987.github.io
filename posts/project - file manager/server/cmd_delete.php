@@ -1,6 +1,6 @@
 <?php
 
-include 'bootstrap.php';
+include_once 'bootstrap.php';
 
 // Lấy tham số JSON từ request
 $params = getJsonParams();

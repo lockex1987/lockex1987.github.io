@@ -84,6 +84,115 @@ export default {
 
             // Reset lại thông tin tìm kiếm để hiển thị tất cả
             this.searchQuery = '';
+
+            this.listSizes();
+        },
+
+        /**
+         * Lấy dung lượng để vẽ biểu đồ Sunburst.
+         */
+        async listSizes() {
+            const url = 'server/list_sizes.php?folder=' + encodeURIComponent(this.folder);
+            const data = await fetch(url).then(resp => resp.json());
+            // console.log(data);
+            const normalizedData = data.map(e => {
+                const arr = e.path.split('/');
+                return {
+                    id: e.path,
+                    parent: e.parent,
+                    name: e.isFile == '1' ? arr.pop() : arr[arr.length - 2],
+                    value: parseInt(e.size)
+                };
+            });
+            this.drawChart(normalizedData);
+        },
+
+        /**
+         * Vẽ biểu đồ.
+         */
+        drawChart(data) {
+            Highcharts.chart(this.$refs.sunburstChart, {
+                series: [
+                    {
+                        type: 'sunburst',
+                        data: data,
+                        // Không cho click vào tâm thì hiển thị cấp trên
+                        allowDrillToNode: false,
+                        cursor: 'pointer',
+                        // Hiển thị label
+                        dataLabels: {
+                            format: '{point.name}',
+                            filter: {
+                                property: 'innerArcLength',
+                                operator: '>',
+                                value: 16
+                            }
+                        },
+                        // Các cấp độ
+                        levels: [
+                            {
+                                level: 1,
+                                levelIsConstant: false,
+                                dataLabels: {
+                                    filter: {
+                                        property: 'outerArcLength',
+                                        operator: '>',
+                                        value: 64
+                                    }
+                                }
+                            },
+                            {
+                                level: 2,
+                                colorByPoint: true
+                            },
+                            {
+                                level: 3,
+                                colorVariation: {
+                                    key: 'brightness',
+                                    to: -0.5
+                                }
+                            },
+                            {
+                                level: 4,
+                                colorVariation: {
+                                    key: 'brightness',
+                                    to: 0.5
+                                }
+                            }
+                        ]
+                    }
+                ],
+
+                tooltip: {
+                    headerFormat: '',
+                    pointFormat: '<b>{point.name}</b>: {point.value} bytes'
+                },
+
+                plotOptions: {
+                    series: {
+                        events: {
+                            // Phải dùng arrow function thì mới lấy được Vue instance this
+                            click: (evt) => {
+                                const pointObj = evt.point;
+                                const node = pointObj.options;
+                                const path = node.id;
+
+                                // Click vào thư mục
+                                if (path.endsWith('/')) {
+                                    if (path == this.folder) {
+                                        if (this.folder != '/') {
+                                            this.gotoParentFolder();
+                                        }
+                                    } else {
+                                        this.folder = path;
+                                        this.listFolderContent();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
         },
 
         /**
@@ -328,7 +437,7 @@ export default {
         },
 
         /**
-         * Chuyen den thu muc cha.
+         * Chuyển đến thư mục cha.
          */
         gotoParentFolder() {
             const a = this.folder.split('/');

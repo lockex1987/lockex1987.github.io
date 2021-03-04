@@ -1,6 +1,6 @@
 <?php
 
-include 'bootstrap.php';
+include_once 'bootstrap.php';
 
 // Thư mục đầu vào
 $folder = $_GET['folder'];

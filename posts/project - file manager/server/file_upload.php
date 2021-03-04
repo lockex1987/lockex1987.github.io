@@ -1,6 +1,6 @@
 <?php
 
-include 'bootstrap.php';
+include_once 'bootstrap.php';
 
 $paramName = 'myFile'; // tên param của form
 $fileName = $_FILES[$paramName]['name']; // the file name
