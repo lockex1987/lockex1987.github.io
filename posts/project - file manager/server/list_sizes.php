@@ -34,7 +34,7 @@ class ListSizes
 
     private function traverseFolder(array &$resultArr, string $folderPath, int $level, float $minSize): void
     {
-        if ($level > 3) {
+        if ($level > 2) {
             return;
         }
 
