@@ -1,49 +1,73 @@
 <!doctype html>
 <html lang="en">
- <head> 
-  <meta charset="UTF-8"> 
-  <title>Mergely diff demo</title> 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"> 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.css"> 
-  <link rel="stylesheet" href="https://cdn.rawgit.com/wickedest/Mergely/3.4.0/lib/mergely.css"> 
-  <link rel="stylesheet" href="css/style.css"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <link rel="icon" href="../../images/favicon.png"> 
-  <link rel="stylesheet" href="../../css/style.css"> 
-  <meta name="description" content="Mergely diff demo">
- </head> 
- <body> 
-  <article> 
-   <div class="container"> 
-    <p>https://github.com/wickedest/Mergely</p> 
-    <div class="diffs"> 
-     <header> 
-      <h1>Visualized Diffs</h1> 
-      <button id="prev" title="Previous diff">▲</button> 
-      <button id="next" title="Next diff">▼</button> 
-      <button id="wrap" title="Toggle line wrapping"> 
-       <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 10 10"> 
-        <path d="M1 2h8M1 4.5h6A1 1 0 0 1 7 7H5v-.3l-.3.3.3.3V7M1 7h1.5" stroke-width="1.1" fill="none" stroke="#000" /> 
-       </svg> </button> 
-     </header> 
-     <div class="compare-wrapper"> 
-      <div id="compare"> 
-      </div> 
-     </div> 
-    </div> 
-    <div class="sources"> 
-     <h1>Source files</h1> 
-     <ul> 
-      <li> <a id="file1" href="https://gist.githubusercontent.com/quotient/c426a69bfa550d1a43a0/raw/645d996d8d23e48dc9b691a10238d690df845f4f/gistfile1.txt"> File 1 </a> </li> 
-      <li> <a id="file2" href="https://gist.githubusercontent.com/quotient/a9baf2c58972aa22c621/raw/c8f6caf22d330cb34fc6f70ece44699312b2b7b4/gistfile1.txt"> File 2 </a> </li> 
-     </ul> 
-    </div> 
-   </div> 
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> 
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.js"></script> 
-   <script src="https://cdn.rawgit.com/wickedest/Mergely/3.4.1/lib/mergely.js"></script> 
-   <script src="js/index.js"></script> 
-  </article> 
-  <script src="../../js/docs.js"></script>  
- </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="So sánh và highlight sự khác nhau">
+    <title>Mergely diff demo</title>
+
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <article class="mw-none">
+        <h2>Visualized Diffs</h2>
+        <p>https://github.com/wickedest/Mergely</p>
+        <div class="container">
+
+            <div class="diffs">
+                <header>
+
+                    <button id="prev"
+                        title="Previous diff">▲</button>
+                    <button id="next"
+                        title="Next diff">▼</button>
+                    <button id="wrap"
+                        title="Toggle line wrapping">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            width="1em"
+                            height="1em"
+                            viewbox="0 0 10 10">
+                            <path d="M1 2h8M1 4.5h6A1 1 0 0 1 7 7H5v-.3l-.3.3.3.3V7M1 7h1.5"
+                                stroke-width="1.1"
+                                fill="none"
+                                stroke="#000" />
+                        </svg> </button>
+                </header>
+                <div class="compare-wrapper">
+                    <div id="compare">
+                    </div>
+                </div>
+            </div>
+            <div class="sources">
+                <h1>Source files</h1>
+                <ul>
+                    <li> <a id="file1"
+                            href="https://gist.githubusercontent.com/quotient/c426a69bfa550d1a43a0/raw/645d996d8d23e48dc9b691a10238d690df845f4f/gistfile1.txt">
+                            File 1 </a> </li>
+                    <li> <a id="file2"
+                            href="https://gist.githubusercontent.com/quotient/a9baf2c58972aa22c621/raw/c8f6caf22d330cb34fc6f70ece44699312b2b7b4/gistfile1.txt">
+                            File 2 </a> </li>
+                </ul>
+            </div>
+        </div>
+
+
+    </article>
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.css">
+    <link rel="stylesheet"
+        href="https://cdn.rawgit.com/wickedest/Mergely/3.4.0/lib/mergely.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.11.0/codemirror.min.js"></script>
+    <script src="https://cdn.rawgit.com/wickedest/Mergely/3.4.1/lib/mergely.js"></script>
+    <script src="js/index.js"></script>
+    <!--script src="../../js/docs.js"></script-->
+</body>
+
 </html>
