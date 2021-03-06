@@ -1,92 +1,40 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Highcharts Example</title>
 
-		<style>
-#container {
-	min-width: 320px;
-	max-width: 600px;
-	margin: 0 auto;
-}
-		</style>
-	</head>
-	<body>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<head>
+    <meta http-equiv="Content-Type"
+        content="text/html; charset=utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+    <title>Highcharts example - Chart update</title>
 
+    <link rel="icon"
+        href="../../../../images/favicon.png" />
+    <link rel="stylesheet"
+        href="../../../../css/style.css" />
+</head>
 
-<div id="container"></div>
-<button id="plain">Plain</button>
-<button id="inverted">Inverted</button>
-<button id="polar">Polar</button>
+<body>
+    <article>
+        <div id="container"
+            class="mb-3"></div>
 
+        <div class="mb-3 d-flex">
+            <button id="plain" class="btn btn-primary">Plain</button>
+            <button id="inverted" class="btn btn-secondary ml-2">Inverted</button>
+            <button id="polar" class="btn btn-success ml-2">Polar</button>
+            <button id="updateData" class="btn btn-danger ml-auto">Update data</button>
+        </div>
 
-		<script>
+        <p>Cần gán cho một biến chart.</p>
+        <p>Sử dụng chart.update() hoặc chart.series[0].update().</p>
+    </article>
 
-var chart = Highcharts.chart('container', {
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
 
-    title: {
-        text: 'Chart.update'
-    },
+    <script src="js/script.js"></script>
+</body>
 
-    subtitle: {
-        text: 'Plain'
-    },
-
-    xAxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    },
-
-    series: [{
-        type: 'column',
-        colorByPoint: true,
-        data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-        showInLegend: false
-    }]
-
-});
-
-
-$('#plain').click(function () {
-    chart.update({
-        chart: {
-            inverted: false,
-            polar: false
-        },
-        subtitle: {
-            text: 'Plain'
-        }
-    });
-});
-
-$('#inverted').click(function () {
-    chart.update({
-        chart: {
-            inverted: true,
-            polar: false
-        },
-        subtitle: {
-            text: 'Inverted'
-        }
-    });
-});
-
-$('#polar').click(function () {
-    chart.update({
-        chart: {
-            inverted: false,
-            polar: true
-        },
-        subtitle: {
-            text: 'Polar'
-        }
-    });
-});
-
-		</script>
-	</body>
 </html>

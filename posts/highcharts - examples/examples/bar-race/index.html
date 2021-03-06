@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type"
+        content="text/html; charset=utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+
+    <title>Bar race chart</title>
+
+    <link rel="icon" href="../../../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../../../css/style.css"/>
+
+    <link rel="stylesheet" href="../../../project - frontend frameworks and libraries/src/line-awesome/css/line-awesome.min.css"/>
+</head>
+
+<body>
+    <article>
+        <div class="position-relative">
+            <div id="container"></div>
+
+            <div id="play-controls"
+                class="position-absolute"
+                style="left: 100px; top: 350px;">
+                <button id="play-pause-button"
+                    class="la la-play"
+                    style="width: 30px;
+                        height: 30px;
+                        cursor: pointer;
+                        border: 1px solid silver;
+                        border-radius: 3px;
+                        background: #f8f8f8;"></button>
+    
+                <input id="play-range"
+                    type="range"
+                    value="1960"
+                    min="1960"
+                    max="2018" 
+                    style="transform: translateY(2.5px);"/>
+            </div>
+        </div>
+
+        <p>https://flourish.studio/2019/07/15/line-chart-race/</p>
+        <p>https://flourish.studio/examples/</p>
+        <p>https://fabdevgit.github.io/barchartrace/</p>
+        <p>https://www.amcharts.com/demos/bar-chart-race/</p>
+        <p>https://www.highcharts.com/blog/tutorials/bar-chart-race/</p>
+        <p>https://www.highcharts.com/blog/tutorials/bring-static-data-to-life-with-an-animated-chart/</p>
+    </article>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/stock/modules/data.js"></script>
+
+    <script src="js/script.js"
+        type="module"></script>
+</body>
+
+</html>

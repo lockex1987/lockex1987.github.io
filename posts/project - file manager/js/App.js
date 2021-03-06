@@ -33,7 +33,10 @@ export default {
             currentFilePath: '',
 
             // Có phải là tạo mới file hay không
-            isNewFile: false
+            isNewFile: false,
+
+            // Đối tượng Highcharts, biểu đồ dung lượng
+            sizeChart: null
         };
     },
 
@@ -108,10 +111,11 @@ export default {
         },
 
         /**
-         * Vẽ biểu đồ.
+         * Vẽ mới biểu đồ.
+         * @param {Array} data Dữ liệu
          */
-        drawChart(data) {
-            Highcharts.chart(this.$refs.sunburstChart, {
+        drawNewChart(data) {
+            this.sizeChart = Highcharts.chart(this.$refs.sunburstChart, {
                 series: [
                     {
                         type: 'sunburst',
@@ -193,6 +197,27 @@ export default {
                     }
                 }
             });
+        },
+
+        /**
+         * Cập nhật biểu đồ.
+         * @param {Array} data Dữ liệu
+         */
+        updateOldChart(data) {
+            this.sizeChart.series[0].update({
+                data: data
+            });
+        },
+
+        /**
+         * Vẽ biểu đồ.
+         */
+        drawChart(data) {
+            if (!this.sizeChart) {
+                this.drawNewChart(data);
+            } else {
+                this.updateOldChart(data);
+            }
         },
 
         /**

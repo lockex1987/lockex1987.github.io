@@ -1,4 +1,26 @@
 export default [
+	{
+        title: 'Async drilldown',
+        url: 'examples/async-drilldown',
+        image: ''
+    },
+	{
+        title: 'Change bar order',
+        url: 'examples/bar-change-order',
+        image: ''
+    },
+	{
+        title: 'Animation',
+        url: 'examples/animation',
+        image: ''
+    },
+	{
+        title: 'Bar chart race',
+        url: 'examples/bar-race',
+        image: 'images/bar-chart-race.jpg'
+    },
+	
+	
     {
         title: 'Basic line',
         url: 'https://www.highcharts.com/demo/line-basic',
