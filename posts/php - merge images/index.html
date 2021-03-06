@@ -1,21 +1,77 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content=""/>
-    
-    <title></title>
-
-    <link rel="icon" href="../../images/favicon.png"/>
-    <link rel="stylesheet" href="../../css/style.css"/>
-</head>
-<body>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="gd">
+    <title>Ghép ảnh bằng PHP</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
     <article>
-        <h2>x</h2>
-        <p>y</p>
-    </article>
+      <h2>Ghép ảnh bằng PHP</h2>
+      <p>Ghép nhiều ảnh nhỏ thành một ảnh lớn với PHP.</p>
+      <p>Nhiều trang ảnh truyện bị cắt thành từng ảnh nhỏ. Ghép lại để thành một
+        trang hoàn chỉnh.</p>
+      <h3>Một số hàm hỗ trợ</h3>
+      <p><code>extension_loaded()</code>: Kiểm tra xem extension đã được load
+        hay chưa. Để thao tác với ảnh chúng ta cần load extension gd (Graphics
+        Draw).</p>
+      <p><code>getimagesize()</code>: Lấy chiều rộng, chiều cao, cũng như thông
+        tin khác (type, bits, mime) của ảnh.</p>
+      <p><code>imagesx()</code>: Lấy chiều rộng ảnh.</p>
+      <p><code>imagesy()</code>: Lấy chiều cao ảnh.</p>
+      <p><code>imagecreatefrompng()</code>, <code>imagecreatefromjpeg()</code>:
+        Tạo các đối tượng ảnh từ đường dẫn (ảnh PNG, JPG).</p>
+      <p><code>imagepng()</code>, <code>imagejpeg()</code>: Output ảnh ra file
+        hoặc trả về cho trình duyệt (ảnh PNG, JPG).</p>
+      <p><code>imagecreatetruecolor()</code>: Tạo một ảnh mới.</p>
+      <p><code>imagecopy()</code>: Copy một phần của ảnh nguồn sang ảnh đích.</p>
+      <p><code>imagecopymerge()</code>:</p>
+      <p>imagecopyresampled():<code></code></p>
+      <p>imagesavealpha():</p>
+      <p>imagecolorallocate():</p>
+      <p>imagecolorallocatealpha():</p>
+      <p>imagefill():</p>
+      <p><code>imagedestroy()</code>: Giải phóng bộ nhớ liên kết với đối tượng
+        ảnh.</p>
+      <h3>So sánh các hàm imagecopy</h3>
+      <pre class="out-of-box">imagecopy          ( resource $dst_im , resource $src_im , int $dst_x , int $dst_y , int $src_x , int $src_y , int $src_w , int $src_h ): bool
+imagecopymerge     ( resource $dst_im , resource $src_im , int $dst_x , int $dst_y , int $src_x , int $src_y , int $src_w , int $src_h , int $pct ): bool
+imagecopymergegray ( resource $dst_im , resource $src_im , int $dst_x , int $dst_y , int $src_x , int $src_y , int $src_w , int $src_h , int $pct ): bool
 
+imagecopyresampled ( resource $dst_im , resource $src_im , int $dst_x , int $dst_y , int $src_x , int $src_y , int $dst_w , int $dst_h , int $src_w , int $src_h ): bool
+imagecopyresized   ( resource $dst_im , resource $src_im , int $dst_x , int $dst_y , int $src_x , int $src_y , int $dst_w , int $dst_h , int $src_w , int $src_h ): bool</pre>
+      <p>The way these functions differ is in the last parameter: imagecopy()
+        always overwrites all the pixels in the destination with those of the
+        source, whereas imagecopymerge() merges the destination pixels with the
+        source pixels by the amount specified in the extra parameter:</p>
+      <p>0 means "keep the source picture fully"</p>
+      <p>100 means "overwrite with the source picture fully", </p>
+      <p>50 means "mix the source and destination pixel colours
+        equally"</p>
+      <p>The imagecopy() function is therefore equivalent to calling
+        imagecopymerge() and passing in 100 as the last parameter.</p>
+      <h3>Demo</h3>
+      <p><a href="merge_images_1.php" target="_blank">Demo 1</a></p>
+      <p><a href="merge_images_2.php" target="_blank">Demo 2</a></p>
+      <p><a href="merge_images_3.php" target="_blank">Demo 3</a></p>
+      <p><a href="merge_images_4.php" target="_blank">Demo 4</a></p>
+      <p><a href="merge_images_5.php" target="_blank">Demo 5</a></p>
+      <h3>Tham khảo</h3>
+      <p><a href="http://www.php.net/manual/en/function.imagecreatefromjpeg.php"
+
+          target="_blank">http://www.php.net/manual/en/function.imagecreatefromjpeg.php</a></p>
+      <p><a href="http://www.php.net/manual/en/function.imagecreatefrompng.php"
+
+          target="_blank">http://www.php.net/manual/en/function.imagecreatefrompng.php</a></p>
+      <p><a href="https://www.php.net/manual/en/function.imagecreatetruecolor.php"
+
+          target="_blank">https://www.php.net/manual/en/function.imagecreatetruecolor.php</a></p>
+      <p><a href="https://www.php.net/manual/en/function.imagecopymerge.php" target="_blank">https://www.php.net/manual/en/function.imagecopymerge.php</a>
+      </p>
+    </article>
     <script src="../../js/docs.js"></script>
-</body>
+  </body>
 </html>

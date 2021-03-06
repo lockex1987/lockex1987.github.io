@@ -1,36 +1,37 @@
 <?php 
-//define the width and height of our images
-define("WIDTH", 200);
-define("HEIGHT", 200);
 
-$dest_image = imagecreatetruecolor(WIDTH, HEIGHT);
+// define the width and height of our images
+define('WIDTH', 200);
+define('HEIGHT', 200);
 
-//make sure the transparency information is saved
-imagesavealpha($dest_image, true);
+$destImage = imagecreatetruecolor(WIDTH, HEIGHT);
 
-//create a fully transparent background (127 means fully transparent)
-$trans_background = imagecolorallocatealpha($dest_image, 0, 0, 0, 127);
+// Make sure the transparency information is saved
+imagesavealpha($destImage, true);
 
-//fill the image with a transparent background
-imagefill($dest_image, 0, 0, $trans_background);
+// Create a fully transparent background (127 means fully transparent)
+$transparentBackground = imagecolorallocatealpha($destImage, 0, 0, 0, 127);
 
-//take create image resources out of the 3 pngs we want to merge into destination image
-$a = imagecreatefrompng('1.png');
-$b = imagecreatefrompng('2.png');
-$c = imagecreatefrompng('3.png');
+// Fill the image with a transparent background
+imagefill($destImage, 0, 0, $transparentBackground);
 
-//copy each png file on top of the destination (result) png
-imagecopy($dest_image, $a, 0, 0, 0, 0, WIDTH, HEIGHT);
-imagecopy($dest_image, $b, 0, 0, 0, 0, WIDTH, HEIGHT);
-imagecopy($dest_image, $c, 0, 0, 0, 0, WIDTH, HEIGHT);
 
-//send the appropriate headers and output the image in the browser
+// Tạo 3 đối tượng ảnh từ  3 đường dẫn PNG đầu vào
+$a = imagecreatefrompng('images/1.png');
+$b = imagecreatefrompng('images/2.png');
+$c = imagecreatefrompng('images/3.png');
+
+// Copy mỗi ảnh đến ảnh đích
+imagecopy($destImage, $a, 0, 0, 0, 0, WIDTH, HEIGHT);
+imagecopy($destImage, $b, 0, 0, 0, 0, WIDTH, HEIGHT);
+imagecopy($destImage, $c, 0, 0, 0, 0, WIDTH, HEIGHT);
+
+// Send the appropriate headers and output the image in the browser
 header('Content-Type: image/png');
-imagepng($dest_image);
+imagepng($destImage);
 
-//destroy all the image resources to free up memory
+// Destroy all the image resources to free up memory
 imagedestroy($a);
 imagedestroy($b);
 imagedestroy($c);
-imagedestroy($dest_image);
-?>
+imagedestroy($destImage);
