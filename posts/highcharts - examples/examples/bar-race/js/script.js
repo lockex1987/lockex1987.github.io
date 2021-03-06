@@ -274,7 +274,7 @@ function customLabelsChangingEffect(H) {
 }
 
 
-function init() {
+async function init() {
     // Lấy dữ liệu và vẽ biểu đồ
     // Dữ liệu là danh sách các quốc gia
     // Mỗi quốc gia có các trường thông tin chung là:
@@ -285,14 +285,10 @@ function init() {
     // Ngoài ra còn có các trường có key là các năm (2016, 2017,...), value là dân số của quốc gia trong năm đó
     // Link gốc:
     //   https://api.npoint.io/d70fd8f47a70326609bb
-    Highcharts.getJSON('data/world-population.json', (data) => {
-        initialData = data;
-
-        drawChart();
-    });
-
+    const data = await fetch('data/world-population.json').then(resp => resp.json());
+    initialData = data;
+    drawChart();
     addHandlers();
-
     customLabelsChangingEffect(Highcharts);
 }
 

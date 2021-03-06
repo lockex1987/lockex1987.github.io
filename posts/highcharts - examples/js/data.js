@@ -2,17 +2,17 @@ export default [
 	{
         title: 'Async drilldown',
         url: 'examples/async-drilldown',
-        image: ''
+        image: 'images/async-drilldown.png'
     },
 	{
         title: 'Change bar order',
         url: 'examples/bar-change-order',
-        image: ''
+        image: 'images/bar-change-order.png'
     },
 	{
         title: 'Animation',
         url: 'examples/animation',
-        image: ''
+        image: 'images/animation.png'
     },
 	{
         title: 'Bar chart race',

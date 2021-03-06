@@ -30,7 +30,7 @@ const chart = Highcharts.chart('container', {
             }
         }
     },
-    exporting: false,
+    // exporting: false,
     credits: false,
     legend: false,
     series: [{

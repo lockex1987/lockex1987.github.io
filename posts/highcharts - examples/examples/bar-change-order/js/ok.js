@@ -52,7 +52,7 @@ const chart = Highcharts.chart('container', {
             borderWidth: 0
         }
     },
-    exporting: false,
+    // exporting: false,
     credits: false,
     legend: false,
     series: [{
