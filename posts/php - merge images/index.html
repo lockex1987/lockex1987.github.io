@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="gd">
+    <meta name="description" content="gd, imagecopy">
     <title>Ghép ảnh bằng PHP</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -49,8 +49,7 @@ imagecopyresized   ( resource $dst_im , resource $src_im , int $dst_x , int $dst
         source pixels by the amount specified in the extra parameter:</p>
       <p>0 means "keep the source picture fully"</p>
       <p>100 means "overwrite with the source picture fully", </p>
-      <p>50 means "mix the source and destination pixel colours
-        equally"</p>
+      <p>50 means "mix the source and destination pixel colours equally"</p>
       <p>The imagecopy() function is therefore equivalent to calling
         imagecopymerge() and passing in 100 as the last parameter.</p>
       <h3>Demo</h3>
@@ -58,7 +57,6 @@ imagecopyresized   ( resource $dst_im , resource $src_im , int $dst_x , int $dst
       <p><a href="merge_images_2.php" target="_blank">Demo 2</a></p>
       <p><a href="merge_images_3.php" target="_blank">Demo 3</a></p>
       <p><a href="merge_images_4.php" target="_blank">Demo 4</a></p>
-      <p><a href="merge_images_5.php" target="_blank">Demo 5</a></p>
       <h3>Tham khảo</h3>
       <p><a href="http://www.php.net/manual/en/function.imagecreatefromjpeg.php"
 
@@ -73,5 +71,6 @@ imagecopyresized   ( resource $dst_im , resource $src_im , int $dst_x , int $dst
       </p>
     </article>
     <script src="../../js/docs.js"></script>
+    
   </body>
 </html>
