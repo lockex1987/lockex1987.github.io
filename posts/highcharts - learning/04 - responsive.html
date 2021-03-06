@@ -3,24 +3,21 @@
 
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>04 - Responsive</title>
-    <style>
-        #container {
-            width: 100%;
-            height: 400px;
-        }
-    </style>
+
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 
 <body>
-    <div id="container"></div>
+    <div id="container"
+        style="width: 100%; height: 400px;"></div>
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
+
     <script>
-        new Highcharts.Chart({
-            chart: {
-                renderTo: 'container'
-            },
+        Highcharts.chart('container', {
             title: {
                 text: 'Chart reflow is set to true'
             },
@@ -32,7 +29,7 @@
             },
             series: [
                 {
-                    name: "Series 1 name",
+                    name: 'Series 1 name',
                     data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
                 }
             ],
@@ -42,5 +39,4 @@
         });
     </script>
 </body>
-
 </html>

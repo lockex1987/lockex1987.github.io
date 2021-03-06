@@ -2,17 +2,23 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>02 - Template</title>
+
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 
 <body>
-    <div id="container"
-            style="width: 800px; height: 300px; margin: 0 auto;"></div>
+    <article>
+        <div id="container"
+            style="height: 300px;"></div>
+    </article>
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
 
 	<script>
-        let series = [
+        const series = [
             {
                 name: 'Tokyo',
                 data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
@@ -27,7 +33,7 @@
             }
         ];
 
-        let options = {
+        const options = {
             chart: {
                 type: 'line' // line, bar
             },

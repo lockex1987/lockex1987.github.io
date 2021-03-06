@@ -3,24 +3,16 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>05 - Series (Point)</title>
-    <style>
-        #container {
-            width: 100%;
-            height: 400px;
-        }
-    </style>
+    <title>05 - Padding trục X</title>
 </head>
 
 <body>
-    <div id="container"></div>
+    <div id="container"
+        style="height: 400px;"></div>
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script>
-        new Highcharts.Chart({
-            chart: {
-                renderTo: "container"
-            },
+        Highcharts.chart('container', {
             xAxis: {
                 minPadding: 0.05,
                 maxPadding: 0.05

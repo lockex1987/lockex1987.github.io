@@ -3,21 +3,16 @@
 <head>
 	<meta charset="UTF-8"/>
 	<title>11 - Zones with colors</title>
-	<style>
-		div {
-			width: 100%; height: 400px;
-		}
-	</style>
 </head>
 
 <body>
-	<div id="container"></div>
+	<div id="container"
+		style="height: 400px;"></div>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://code.highcharts.com/highcharts.js"></script>
-	<script>
 
-	$('#container').highcharts({
+	<script>
+	Highcharts.chart('container', {
 		series: [
 			{
 				data: [-10, -5, 0, 5, 10, 15, 10, 10, 5, 0, -5],

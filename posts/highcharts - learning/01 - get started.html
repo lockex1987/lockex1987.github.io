@@ -3,18 +3,28 @@
 
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>01 - Get started</title>
+
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 
 <body>
-    <div id="container"
-            style="width: 800px; height: 300px; margin: 0 auto;"></div>
+    <article>
+        <div id="container"
+            style="height: 300px;"
+            class="mb-3"></div>
+
+        <p>Không nên khởi tạo lại chart mà hãy update bằng các hàm chart.update(), chart.series[0].update, chart.addSeries(), chart.setTitle(),...</p>
+    </article>
+    
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
 
     <script>
-        let series = [
+        const series = [
             {
                 name: 'Tokyo',
                 data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
@@ -29,7 +39,7 @@
             }
         ];
 
-        let options = {
+        const options = {
             chart: {
                 type: 'line' // line, bar
             },
@@ -70,7 +80,7 @@
         // $('#container').highcharts(options);
         // Highcharts.chart(document.querySelector('#container'), options);
 
-        options.chart.renderTo = 'container'; let chart = Highcharts.chart(options);
+        options.chart.renderTo = 'container'; const chart = Highcharts.chart(options);
 
         // Tham chiếu đến đối tượng đồ thị
         setTimeout(() => {
@@ -80,16 +90,12 @@
         }, 1000 * 5);
 
         setTimeout(() => {
-            let newData = {
+            const newData = {
                 name: 'London',
                 data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
             };
 
-            // chart.series.push(newData); // không được
-
-            // Khởi tạo lại
-            options.series.push(newData);
-            chart = Highcharts.chart(options);
+            chart.addSeries(newData);
         }, 1000 * 3);
     </script>
 </body>

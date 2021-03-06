@@ -3,14 +3,14 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Tìm hiểu Highcharts">
-    <title>Tìm hiểu Highcharts</title>
+    <meta name="description" content="Dùng Highcharts để vẽ biểu đồ, wordcloud">
+    <title>Sử dụng Highcharts</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
   </head>
   <body>
     <article>
-      <h2>Tìm hiểu Highcharts</h2>
+      <h2>Sử dụng Highcharts</h2>
       <h3>Khởi tạo biểu đồ</h3>
       <p>Khai báo thẻ div chứa biểu đồ:</p>
       <pre>&lt;div id="container"<br>    style="width: 800px; height: 300px; margin: 0 auto;"&gt;&lt;/div&gt;</pre>
@@ -19,17 +19,17 @@
       <p>Bạn không cần jQuery.</p>
       <p>Có 3 cách để tạo biểu đồ:</p>
       <p>Cách 1:</p>
-      <pre>new Highcharts.Chart('container', options);</pre>
+      <pre>new Highcharts.Chart('containerId', options);</pre>
       <p>Cách 2:</p>
-      <pre>Highchart.chart('container', options);</pre>
+      <pre>Highchart.chart('containerId', options);<br>Highchart.chart(containerNode, options);</pre>
       <p>Cách 3 (nếu bạn có jQuery):</p>
-      <pre>$('#container').highcharts(options);</pre>
+      <pre>$('#containerId').highcharts(options);</pre>
       <p>Cách 1 và cách 2 thì ta có thể đặt biến biểu đồ và thay đổi sau này.</p>
-      <p>Nên dùng cách này để không phụ thuộc jQuery.</p>
+      <p>Nên dùng cách 2 để không phụ thuộc jQuery.</p>
       <p>Chúng ta có thể truyền vào tham số thứ nhất là xâu ID của phần tử, hoặc
         chính phần tử DOM.</p>
       <p>Ví dụ:</p>
-      <pre>Highcharts.chart(document.querySelector('#container'), options);</pre>
+      <pre>Highcharts.chart(document.querySelector('#containerId'), options);</pre>
       <p>Dùng phần tử DOM này sẽ link động hơn. Chúng ta có thể dùng nó với một
         đối tượng động được tạo bởi <code>document.createElement()</code>, hoặc
         dùng với <code>$refs</code> của Vue.</p>
@@ -43,6 +43,13 @@
       <p>Bao gồm các thư viện, xử lý cơ bản hay gặp của Highcharts.</p>
       <ul>
         <li>Ẩn credit</li>
+        <li>Ẩn title</li>
+        <li>Ẩn subtitle</li>
+        <li>Chú thích</li>
+        <li>Trục X</li>
+        <li>Trục Y</li>
+        <li>Tooltip</li>
+        <li>Series</li>
         <li>...</li>
       </ul>
       <p><a target="_blank" href="02%20-%20template.html">Ví dụ 2: Template</a></p>
@@ -57,9 +64,11 @@
         <li>Font chữ, màu sắc,... (ở các vùng chú thích, tooltip,...)</li>
         <li>Danh sách màu sắc</li>
         <li>Ngôn ngữ</li>
+        <li>...</li>
       </ul>
       <p><a target="_blank" href="03%20-%20global%20options.html">Ví dụ 3:
           Global options</a></p>
+      <p> ---------------------------------------------------- </p>
       <h3>Các khái niệm cơ bản</h3>
       <p><img alt="" src="images/understanding_highcharts.png" class="img-fluid"></p>
       <h4>Title và subtitle</h4>
@@ -69,8 +78,8 @@
 subtitle: {
     text: 'My custom subtitle'
 }</pre>
-      <p>Để ẩn, chúng ta truyền text là xâu rỗng.</p>
-      <h4>Credit </h4>
+      <p>Để ẩn, chúng ta truyền text là xâu rỗng hoặc <code>null</code>?.</p>
+      <h4>Credit</h4>
       <p>Ẩn credit đi:</p>
       <pre>credits: {
     enabled: false
@@ -78,7 +87,7 @@ subtitle: {
       <h4>Chú thích </h4>
       <p>legend</p>
       <h4>Trục (xAxis, yAxis)</h4>
-      <p>Để ẩn các trục, cấu hình visible là false.</p>
+      <p>Để ẩn các trục, cấu hình <code>visible</code> là <code>false</code>.</p>
       <p>Không hiển thị số lẻ (số người đăng ký của SafeNet).</p>
       <p>xAxis mà là categories thì series phải có data là mảng có độ dài tương
         ứng.</p>
@@ -99,11 +108,19 @@ subtitle: {
         <li><span style=" font-family: SFMono-Regular,Menlo,Monaco,Consolas,&quot;Liberation Mono&quot;,&quot;Courier New&quot;,monospace;">headerFormat</span></li>
         <li><span style="  font-family: SFMono-Regular,Menlo,Monaco,Consolas,&quot;Liberation Mono&quot;,&quot;Courier New&quot;,monospace;">footerFormat</span></li>
         <li><span style="   font-family: SFMono-Regular,Menlo,Monaco,Consolas,&quot;Liberation Mono&quot;,&quot;Courier New&quot;,monospace;">pointFormat</span></li>
-        <li><span style="    font-family: SFMono-Regular,Menlo,Monaco,Consolas,&quot;Liberation Mono&quot;,&quot;Courier New&quot;,monospace;">enabled<br>
-          </span></li>
+        <li><span style="    font-family: SFMono-Regular,Menlo,Monaco,Consolas,&quot;Liberation Mono&quot;,&quot;Courier New&quot;,monospace;">enabled</span></li>
       </ul>
       <h4>Series</h4>
       <p>x</p>
+      <h4>Label dữ liệu</h4>
+      <p>Hiển thị luôn nhãn (giá trị) trên biểu đồ.</p>
+      <p><a target="_blank" href="09%20-%20data%20labels.html">Ví dụ: Label dữ
+          liệu<br>
+        </a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
       <h3>Các loại biểu đồ</h3>
       <p>chart (type)</p>
       <p>Loại biểu đồ là gì? Mặc định là line? line, bar, column</p>
@@ -150,12 +167,12 @@ subtitle: {
       <h3>Kết hợp các biểu đồ</h3>
       <p>Hiển thị nhiều biểu đồ một lúc.</p>
       <h3>Update biểu đồ</h3>
-      <p>Gọi lại khởi tạo</p>
-      <p>Sử dụng một biến options, cập nhật biến options này</p>
-      <p>Trước khi khởi tạo lại thì dùng hàm destroy</p>
-      <p>Dùng hàm set</p>
+      <p>Gọi lại khởi tạo. Sử dụng một biến options, cập nhật biến options này.
+        Trước khi khởi tạo lại thì dùng hàm destroy. Không nên làm cách này.</p>
+      <p>Dùng hàm set, update.</p>
       <h3>Responsive</h3>
       <p>Voice AI hit stats.</p>
+      <p><a target="_blank" href="04%20-%20responsive.html">Ví dụ 4: Responsive</a></p>
       <h3>Tương tác với biểu đồ</h3>
       <p>Sự kiện click</p>
       <h3>Tham khảo</h3>

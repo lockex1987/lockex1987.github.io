@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>09 - Data Labels</title>
-	<style>
-		#container {
-			height: 400px;
-		}
-	</style>
+
+	<link rel="icon" href="../../images/favicon.png">
+	<link rel="stylesheet" href="../../css/style.css">
 </head>
 
 <body>
-	<div id="container"></div>
+	<div id="container"
+		style="height: 400px;"></div>
 
 	<script src="https://code.highcharts.com/highcharts.js"></script>
+
 	<script>
 		Highcharts.chart('container', {
 			chart: {
@@ -38,7 +39,8 @@
 					dataLabels: {
 						enabled: true
 					},
-					enableMouseTracking: false // highlight the point when the mouse is over
+					// highlight the point when the mouse is over
+					enableMouseTracking: false
 				}
 			},
 			series: [

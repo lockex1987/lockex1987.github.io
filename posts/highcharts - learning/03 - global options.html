@@ -3,27 +3,24 @@
 
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>03 - Global options</title>
-    <style>
-        .container {
-            width: 800px;
-            height: 400px;
-            margin: 10px auto;
-        }
-    </style>
+    
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 
 <body>
-    <div class="container">
-        <div id="container1"></div>
-    </div>
+    <article>
+        <div id="container1"
+            style="height: 400px;"></div>
 
-    <div class="container">
-        <div id="container2"></div>
-    </div>
+        <div id="container2"
+            style="height: 400px;"></div>
+    </article>
     
-
     <script src="https://code.highcharts.com/highcharts.js"></script>
+
     <script>
         Highcharts.setOptions({
             chart: {
@@ -35,10 +32,10 @@
                     ]
                 },
 				backgroundColor: 'transparent',
-                //borderWidth: 2,
-                //plotBackgroundColor: 'rgba(255, 255, 255, .9)',
-                //plotShadow: true,
-                //plotBorderWidth: 1
+                // borderWidth: 2,
+                // plotBackgroundColor: 'rgba(255, 255, 255, .9)',
+                // plotShadow: true,
+                // plotBorderWidth: 1
             },
             credits: {
                 enabled: false
@@ -67,15 +64,12 @@
 			}
         });
 
-        new Highcharts.Chart({
-            chart: {
-                renderTo: 'container1',
-            },
+        Highcharts.chart('container1', {
             title: {
                 text: "Container 1"
             },
             subtitle: {
-                text: "NVH"
+                text: 'NVH'
             },
             xAxis: {
                 type: 'datetime'
@@ -90,16 +84,15 @@
             
         });
 
-        Highcharts.chart({
+        Highcharts.chart('container2', {
             chart: {
-                renderTo: 'container2',
                 type: 'column'
             },
             title: {
-                text: "Container 2"
+                text: 'Container 2'
             },
             subtitle: {
-                text: "CTTD"
+                text: 'CTTD'
             },
             xAxis: {
                 type: 'datetime'
@@ -111,10 +104,7 @@
                     pointInterval: 3600 * 1000 // one hour
                 }
             ],
-        });
-
-        
+        }); 
     </script>
 </body>
-
 </html>

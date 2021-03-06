@@ -58,13 +58,13 @@ year: '%Y'</pre>
     <p><br>
     </p>
     <h3>Demo</h3>
+    
     <div id="container"></div>
+
     <script src="https://code.highcharts.com/highcharts.js"></script>
+
     <script>
-        new Highcharts.Chart({
-            chart: {
-                renderTo: 'container'
-            },
+        Highcharts.chart('container', {
             tooltip: {
                 pointFormat: "Value: {point.y:,.1f} mm"
             },
@@ -90,3 +90,4 @@ year: '%Y'</pre>
     </script>
   </body>
 </html>
+
