@@ -9,6 +9,13 @@ class TraverseFileNode
     public const KEY_PREFIX = 'filenode:';
     public const CHILDREN_PREFIX = 'children:';
 
+    // Ignore các file và folder con trong các thư mục vendor, .git, node_modules,...
+    public const IGNORE_FOLDERS = [
+        'vendor',
+        '.git',
+        'node_modules'
+    ];
+
     // string
     private $rootFolder;
 
@@ -70,14 +77,14 @@ class TraverseFileNode
                         'size' => $fileSize
                     ];
                     
+                    // TODO: ignore các file và folder con trong các thư mục vendor, .git, node_modules
                     $this->insertIntoRedis(
                         $path,
                         $fileSize,
                         true,
                         null,
                         $folderPath
-                    );
-                    
+                    );   
                 }
             }
         }

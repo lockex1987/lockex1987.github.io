@@ -78,15 +78,17 @@ new Vue({
             const urlObject = new URL(this.postUrl);
             const hostname = urlObject.hostname;
             const websiteCode = this.getWebsiteCodeFromHostname(hostname);
-            const functionName = 'getImages' + GetLinksUtils.capitalizeString(websiteCode);
+            const functionNameGetImages = 'getImages' + GetLinksUtils.capitalizeString(websiteCode);
+            const functionNameGetFolder = 'getFolder' + GetLinksUtils.capitalizeString(websiteCode);
             const theModule = modules[websiteCode];
-            const fn = theModule?.['getFolder' + GetLinksUtils.capitalizeString(websiteCode)];
-            if (!fn) {
+            const fnGetFolder = theModule?.[functionNameGetFolder];
+            if (!fnGetFolder) {
                 noti.error('Website không hỗ trợ');
                 return;
             }
-            const folder = fn(this.postUrl);
-            const images = await theModule[functionName](this.postUrl, folder);
+            const fnGetImages = theModule[functionNameGetImages];
+            const folder = fnGetFolder(this.postUrl);
+            const images = await fnGetImages(this.postUrl, folder);
             const text = JSON.stringify(images);
             CommonUtils.saveTextAsFile(text, folder + '.json');
         },

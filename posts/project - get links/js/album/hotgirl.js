@@ -1,9 +1,12 @@
+import GetLinksUtils from '../utils.js';
+
+
 /**
  * Lấy các ảnh từ trang hotgirl.biz
  * https://hotgirl.biz/xiuren-vol-2006-shi-shi-kiki/
  */
 async function getImagesHotgirl(postUrl, folder) {
-    const doc = await getDocumentFromUrl(postUrl);
+    const doc = await GetLinksUtils.getDocumentFromUrl(postUrl);
 
     const images = [];
     let no = 0;
@@ -11,10 +14,10 @@ async function getImagesHotgirl(postUrl, folder) {
     a.forEach((img, i) => {
         const imageUrl = img.getAttribute('data-lazy-src');
         if (imageUrl) {
-            const extension = getImageExtension(imageUrl);
+            const extension = GetLinksUtils.getImageExtension(imageUrl);
             images.push({
                 url: imageUrl,
-                name: createLocalFileName(folder, no, extension)
+                name: GetLinksUtils.createLocalFileName(folder, no, extension)
             });
             no++;
         }

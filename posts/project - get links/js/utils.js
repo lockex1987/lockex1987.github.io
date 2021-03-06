@@ -4,8 +4,8 @@
  * @param {Boolean} firstResult Lấy kết quả đầu tiên tìm thấy
  */
 function extractChapterNumber(title, firstResult = true) {
-	// Tên có thể ngăn cách bằng dấu hai chấm
-	title = title.split(':')[0];
+    // Tên có thể ngăn cách bằng dấu hai chấm
+    title = title.split(':')[0];
 
     // Lọc ra phần số
     // Có thể có dấu chấm ở giữa

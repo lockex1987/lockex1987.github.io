@@ -1,6 +1,15 @@
 // Danh sách các website hỗ trợ
 const WEBSITE_LIST = [
     {
+        code: 'truyentranhphapbi',
+        name: 'Truyện tranh Pháp Bỉ',
+        // logo: 'images/websites/hotgirl.png',
+        actions: [
+            'getImages'
+        ],
+        isActive: false
+    },
+    {
         code: 'hotgirl',
         name: 'Hot Girl',
         logo: 'images/websites/hotgirl.png',

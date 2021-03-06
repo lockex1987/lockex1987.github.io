@@ -70,6 +70,7 @@ export default {
          * Lấy danh sách file và folder trong thư mục hiện tại.
          */
         async listFolderContent() {
+            /*
             const url = 'server/list_files.php?folder=' + encodeURIComponent(this.folder);
             const data = await fetch(url).then(resp => resp.json());
 
@@ -87,6 +88,7 @@ export default {
 
             // Reset lại thông tin tìm kiếm để hiển thị tất cả
             this.searchQuery = '';
+            */
 
             this.listSizes();
         },
@@ -107,6 +109,7 @@ export default {
                     value: parseInt(e.size)
                 };
             });
+
             this.drawChart(normalizedData);
         },
 
@@ -116,9 +119,11 @@ export default {
          */
         drawNewChart(data) {
             this.sizeChart = Highcharts.chart(this.$refs.sunburstChart, {
+                chart: {
+                    type: 'sunburst'
+                },
                 series: [
                     {
-                        type: 'sunburst',
                         data: data,
                         // Không cho click vào tâm thì hiển thị cấp trên
                         allowDrillToNode: false,
