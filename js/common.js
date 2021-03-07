@@ -171,12 +171,22 @@ CommonUtils.prettifyNumber = (num, digits) => {
     ];
     for (let i = 0; i < si.length; i++) {
         if (num >= si[i].value) {
+            if (i <= 0) {
+                digits = 3;
+            } else if (i <= 1) {
+                digits = 2;
+            } else if (i <= 2) {
+                digits = 0;
+            } else {
+                digits = 0;
+            }
             const n = (num / si[i].value).toFixed(digits);
 
             // Xóa những chữ số 0 đằng sau dấu thập phân
             // Nếu chỉ để 0+ thì sẽ không xóa được dấu .
             // Nếu chỉ để \.0+ thì sẽ không xử lý được trường hợp 123.400
-            return n.replace(/\.?0+$/, '') + si[i].symbol;
+            // .replace(/\.?0+$/, '') sẽ bị lỗi các trường hợp như là num = 80 và digit = 0
+            return parseFloat(n) + si[i].symbol;
         }
     }
     return num.toFixed(digits);
