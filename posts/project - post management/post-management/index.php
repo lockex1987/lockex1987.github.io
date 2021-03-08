@@ -34,7 +34,7 @@ function getPostList(string $rootFolder, string $adjustPath, array $oldList): ar
         if (!file_exists($indexFilePath)) {
             $modifiedTime = 0;
         } else {
-            $modifiedTime = filemtime($indexFilePath) ?? filectime($indexFilePath);
+            $modifiedTime = filemtime($indexFilePath); // ?? filectime($indexFilePath);
         }
 
         $oldObj = null;

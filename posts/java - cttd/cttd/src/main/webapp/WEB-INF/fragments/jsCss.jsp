@@ -1,4 +1,4 @@
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <!-- Nho phai them dau / o cuoi -->
 <base href="${pageContext.request.contextPath}/" />

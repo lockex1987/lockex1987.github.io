@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi">
   <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ffmpeg, slide">
     <title>Tạo slide show từ hình ảnh với ffmpeg</title>
@@ -99,9 +99,12 @@ file '/path/to/tapeworm.png'
       <h3>If your video does not show the frames correctly</h3>
       <p>Nếu bạn gặp sự cố, chẳng hạn như hình ảnh đầu tiên bị bỏ qua hoặc chỉ
         hiển thị cho một khung, sau đó sử dụng fps video filter thay vì <code>-r</code>
-        cho output framerate (see <a title="defect: variable FPS incorrect frame length (closed: fixed)"
-          href="https://trac.ffmpeg.org/ticket/1578">ticket:1578</a> and <a title="defect: fps filter changes video length (closed: fixed)"
-          href="https://trac.ffmpeg.org/ticket/2674">ticket:2674</a> / <a title="defect: First image skipped when forcing output rate (closed: duplicate)"
+        cho output framerate (see <a title="defect: variable FPS incorrect frame length (closed: fixed)"
+
+          href="https://trac.ffmpeg.org/ticket/1578">ticket:1578</a> and <a title="defect: fps filter changes video length (closed: fixed)"
+
+          href="https://trac.ffmpeg.org/ticket/2674">ticket:2674</a> / <a title="defect: First image skipped when forcing output rate (closed: duplicate)"
+
           href="https://trac.ffmpeg.org/ticket/3164">ticket:3164</a> for more
         info): </p>
       <pre>ffmpeg -framerate 1/5 -i img%03d.png -c:v libx264 -vf fps=25 -pix_fmt yuv420p out.mp4</pre>
@@ -126,7 +129,8 @@ file '/path/to/tapeworm.png'
           other supported AAC encoder</a> :</p>
       <pre>ffmpeg -loop 1 -i img.jpg -i audio.wav -c:v libx264 -c:a aac -b:a 192k -shortest out.mp4</pre>
       <p>Nếu như file âm thanh được sử dụng một codec mà output container hỗ trợ
-        (e.g. MP3 audio in AVI or M4A/AAC audio in MP4), bạn có thể sử dụng <a
+        (e.g. MP3 audio in AVI or M4A/AAC audio in MP4), bạn có thể sử dụng <a
+
           href="https://ffmpeg.org/ffmpeg.html#Stream-copy">stream copy</a>
         (re-mux) thay vì re-encoding , sữ giữ lại được audio quality:</p>
       <pre>ffmpeg -loop 1 -i img.jpg -i audio.m4a -c:v libx264 -c:a copy -shortest out.mp4</pre>

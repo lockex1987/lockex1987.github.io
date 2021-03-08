@@ -41,7 +41,7 @@ if (isset($_POST['btnExport'])) {
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Export data</title>
 </head>
 <body>

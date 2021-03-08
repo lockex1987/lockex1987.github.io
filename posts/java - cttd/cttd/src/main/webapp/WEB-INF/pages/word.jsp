@@ -10,7 +10,7 @@
 <head>
 	<title>2000+ Common English Words</title>
 	<base href="${pageContext.request.contextPath}/" />
-	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="icon" href="images/favicon.png">
 	
 	<link rel="stylesheet" href="lib/noti/css/noti.css">

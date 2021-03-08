@@ -7,7 +7,7 @@
     uri="http://www.springframework.org/security/tags"%>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Sign Up</title>
 <style>
   .error-message {

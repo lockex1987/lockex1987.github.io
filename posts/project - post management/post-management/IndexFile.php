@@ -55,12 +55,12 @@ class IndexFile
         }
 
         // Parse HTML
-        $dom = new DOMDocument();
+        $dom = new DOMDocument('1.0', 'UTF-8');
         $html = file_get_contents($this->indexFilePath);
 
         // Ẩn các thông báo lỗi thẻ HTML5 không hợp lệ
         libxml_use_internal_errors(true);
-        $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+        $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         $this->document = $dom;
 
         // Lấy tiêu đề, mô tả, ngày xuất bản
@@ -74,7 +74,7 @@ class IndexFile
         $this->checkFavicon();
 
         if ($this->needRewrite) {
-            // $this->rewrite();
+            $this->rewrite();
         }
     }
 
@@ -148,8 +148,7 @@ class IndexFile
     private function checkDescription(): void
     {
         $metaTag = (new DOMXPath($this->document))->query('//meta[@name="description"]');
-        $description = $metaTag->count() ? $metaTag[0]->getAttribute('content') : null;
-        if ($description == null) {
+        if ($metaTag->count() == 0) {
             echo 'Thiếu description ' . $this->indexFilePath . PHP_EOL;
             $newTag = $this->document->createElement('meta');
             $newTag->setAttribute('name', 'description');
@@ -165,8 +164,7 @@ class IndexFile
     private function checkMetaViewport(): void
     {
         $metaTag = (new DOMXPath($this->document))->query('//meta[@name="viewport"]');
-        $viewport = $metaTag->count() ? $metaTag[0]->getAttribute('content') : null;
-        if ($viewport == null) {
+        if ($metaTag->count() == 0) {
             echo 'Thiếu viewport ' . $this->indexFilePath . PHP_EOL;
             $newTag = $this->document->createElement('meta');
             $newTag->setAttribute('name', 'viewport');
@@ -182,8 +180,7 @@ class IndexFile
     private function checkFavicon(): void
     {
         $linkTag = (new DOMXPath($this->document))->query('//link[@rel="icon"]');
-        $favicon = $linkTag->count() ? $linkTag[0]->getAttribute('href') : null;
-        if ($favicon == null) {
+        if ($linkTag->count() == 0) {
             echo 'Thiếu favicon ' . $this->indexFilePath . PHP_EOL;
             $newTag = $this->document->createElement('link');
             $newTag->setAttribute('rel', 'icon');
@@ -209,7 +206,29 @@ class IndexFile
     private function rewrite(): void
     {
         echo 'Ghi lại file ' . $this->indexFilePath . PHP_EOL;
-        $code = $this->document->documentElement->outerHTML;
-        file_put_contents($this->indexFilePath, $code);
+
+        // Chỉ nhận dạng <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">,
+        // không nhận dạng <meta charset="UTF-8">
+        $charsetTags = (new DOMXPath($this->document))->query('//meta[@charset]');
+        if ($charsetTags->count() > 0) {
+            foreach ($charsetTags as $tag) {
+                $tag->parentNode->removeChild($tag);
+            }
+        }
+        
+        /*
+        $contentTypeTags = (new DOMXPath($this->document))->query('//meta[@http-equiv="Content-Type"]');
+        if ($contentTypeTags->count() == 0) {
+            $metaTag = $this->document->createElement('link');
+            $metaTag->setAttribute('http-equiv', 'Content-Type');
+            $metaTag->setAttribute('content', 'text/html; charset=UTF-8');
+            $this->insertAdjacentHTML($metaTag);
+        }
+        */
+
+        // Thêm cái này thì output sẽ là UTF-8, không phải HTML entity
+        $this->document->encoding = 'UTF-8';
+
+        $this->document->saveHTMLFile($this->indexFilePath);
     }
 }
