@@ -2,12 +2,12 @@
 require_once 'vendor/autoload.php';
 
 $config = HTMLPurifier_Config::createDefault();
-//$config->set('Core.Encoding', $ci->config->item('charset'));
-//$config->set('HTML.Doctype', 'XHTML 1.0 Strict');
-//$config->set('HTML.Doctype', 'HTML 4.01 Transitional');
-//$config->set('HTML.SafeIframe', true);
-//$config->set('HTML.Allowed', 'a[href|title],img[title|src|alt],em,strong,cite,blockquote,code,ul,ol,li,dl,dt,dd,p,br,h1,h2,h3,h4,h5,h6,span,*[style]');
-//$config->set('Cache.SerializerPath', storage_path('purify'));
+// $config->set('Core.Encoding', $ci->config->item('charset'));
+// $config->set('HTML.Doctype', 'XHTML 1.0 Strict');
+// $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
+// $config->set('HTML.SafeIframe', true);
+// $config->set('HTML.Allowed', 'a[href|title],img[title|src|alt],em,strong,cite,blockquote,code,ul,ol,li,dl,dt,dd,p,br,h1,h2,h3,h4,h5,h6,span,*[style]');
+// $config->set('Cache.SerializerPath', storage_path('purify'));
 $config->set('AutoFormat.AutoParagraph', TRUE);
 $config->set('AutoFormat.Linkify', TRUE);
 $config->set('AutoFormat.RemoveEmpty', TRUE);
@@ -20,7 +20,7 @@ if ($def = $config->maybeGetRawHTMLDefinition()) {
 	$def->addElement('mark', 'Inline', 'Inline', 'Common');
 	$def->addElement('figure', 'Block', 'Optional: (figcaption, Flow) | (Flow, figcaption) | Flow', 'Common');
 	$def->addElement('figcaption', 'Inline', 'Flow', 'Common');
-	
+
 	/*
 	$def->addElement('video', 'Block', 'Optional: (source, Flow) | (Flow, source) | Flow', 'Common', array(
 		'src'      => 'URI',
@@ -43,8 +43,8 @@ if ($def = $config->maybeGetRawHTMLDefinition()) {
 
 $purifier = new HTMLPurifier($config);
 
-$dirtyHtml = '
-    <p>Nguyen Anh Tuan</p>
+$dirtyHtml = <<<'HTML'
+    <p>Nguyễn Anh Tuấn</p>
     xxx
     <p>Đường link https://vnexpress.net.</p>
     <p></p>
@@ -53,6 +53,8 @@ $dirtyHtml = '
 	<figure>
 		<img src="../html/pic_trulli.jpg" alt="Trulli" style="width:100%">
 		<figcaption>Fig.1 - Trulli, Puglia, Italy.</figcaption>
-	</figure>';
+	</figure>
+HTML;
+
 $cleanHtml = $purifier->purify($dirtyHtml);
-echo $cleanHtml . "\n";
+echo $cleanHtml . PHP_EOL;
