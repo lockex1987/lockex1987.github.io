@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="DOMDocument, xss, purify, sanitize, HTML purifier">
+    <meta name="description" content="DOMDocument, xss, purify, sanitize, HTML purifier, XPath">
     <title>HTML parser</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -12,8 +12,27 @@
     <article>
       <h2>HTML parser</h2>
       <p>Sử dụng class có sẵn của PHP (PHP đúng là rất mỳ ăn liền).</p>
+      <p>Các class quan trọng là:</p>
+      <ul>
+        <li>DOMDocument (extend DOMNode): Gốc</li>
+        <li>DOMNode</li>
+        <li>DOMNodeList</li>
+        <li>DOMXPath</li>
+        <li>DOMElement (extend DOMNode): Không bao gồm text, attribute,...</li>
+      </ul>
+      <p>Chúng ta chỉ có thể select phần tử bằng một số phương thức cơ bản như <code>getElementById()</code>,
+        <code>getElementsByTagName()</code>,... Để có thể sử dụng các select
+        nâng cao như phương thức <code>querySelector(cssSelector)</code>, <code>querySelectorAll(cssSelector)</code>
+        chúng ta cần sử dụng XPath.</p>
+      <p><a href="https://devhints.io/xpath" target="_blank">Xpath cheatsheet</a></p>
+      <p>---<br>
+      </p>
       <p><a href="demo.php">demo.php</a></p>
       <h3>HTML purifier</h3>
+      <p>Sử dụng thư viện kiểu ezyang/htmlpurifier dài quá.</p>
+      <p>Sử dụng luôn DOMDocument để loại bỏ các thẻ, thuộc tính không mong
+        muốn.</p>
+      <p>Đã làm ở sso-admin.</p>
       <p>Cách khác: Sử dụng Content Security Policy để không cho phép incude
         file script từ nơi khác hoặc thực hiện inline script.</p>
       <p>Cài đặt:</p>
@@ -21,10 +40,9 @@
       <h3>Demo</h3>
       <p><a target="_blank" href="html-purifier/demo.php">demo.php</a></p>
       <h3>Tham khảo</h3>
-      <p><a href="https://www.coralnodes.com/parsing-html-in-php/" target="_blank">Parsing
-          HTML in PHP using Native Classes</a></p>
       <p><a href="https://www.php.net/manual/en/book.dom.php" target="_blank">PHP:
           DOM - Manual</a></p>
+      <p>------------</p>
       <p><a target="_blank" href="http://htmlpurifier.org/">htmlpurifier.org</a></p>
       <p><a target="_blank" href="https://packagist.org/packages/ezyang/htmlpurifier">packagist.org/packages/ezyang/htmlpurifier</a></p>
       <p><a target="_blank" href="https://github.com/mewebstudio/Purifier">github.com/mewebstudio/Purifier</a></p>
