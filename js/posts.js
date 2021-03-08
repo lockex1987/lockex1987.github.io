@@ -102,7 +102,7 @@ const App = {
             postList: null,
 
             // Tìm kiếm local (file JSON), không phải Elasticsearch
-            localSearch: false
+            localSearch: true
         };
     },
 
