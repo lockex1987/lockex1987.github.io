@@ -11,7 +11,7 @@ const template = `
             spellcheck="false"
             class="w-100 mb-2 query"
             autocomplete="off"
-            @input="processFilterPosts()"/>
+            @input="localSearch ? processFilterPosts() : debouncedProcessFilterPosts()"/>
     </form>
 
     <label class="custom-control custom-checkbox custom-control-animated custom-control-highlighted custom-control-outlined mt-3 mb-3 d-none">
@@ -102,7 +102,7 @@ const App = {
             postList: null,
 
             // Tìm kiếm local (file JSON), không phải Elasticsearch
-            localSearch: true
+            localSearch: false
         };
     },
 
@@ -180,7 +180,8 @@ const App = {
          */
         async searchElastic() {
             const size = 20;
-            const url = 'http://localhost:3001/search' +
+            const url =
+                'http://localhost/posts/php - elasticsearch client/src/search.php' +
                 '?queryText=' + encodeURIComponent(this.query) +
                 '&from=' + this.curentPostIndex +
                 '&size=' + size;
@@ -231,6 +232,13 @@ const App = {
 
             this.bindPosts();
         },
+
+        debouncedProcessFilterPosts: CommonUtils.debounce(
+            function () {
+                this.processFilterPosts();
+            },
+            500
+        ),
 
         /**
          * Đổi title.

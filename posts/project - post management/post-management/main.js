@@ -5,7 +5,7 @@
  */
 import { promises, existsSync, statSync, writeFileSync, readFileSync } from 'fs';
 import { processIndexFile } from './index-file.js';
-// import { insertPost, closeConnection } from './elasticsearch.js';
+import fetch from 'node-fetch';
 
 
 /**
@@ -47,7 +47,8 @@ async function getPostList(rootFolder, adjustPath, oldList) {
             const indexFile = await processIndexFile(indexFilePath, adjustPath);
             const { title, description, date, content } = indexFile;
 
-            const post = {
+            // Thêm vào danh sách
+            postList.push({
                 category,
                 title,
                 description,
@@ -55,14 +56,10 @@ async function getPostList(rootFolder, adjustPath, oldList) {
                 // content,
                 modifiedTime,
                 path
-            };
+            });
 
-            // Thêm vào danh sách
-            postList.push(post);
-
-            /*
             // Thêm vào Elasticsearch
-            await insertPost({
+            await insertPostIntoElasticsearch({
                 category,
                 title,
                 description,
@@ -71,15 +68,29 @@ async function getPostList(rootFolder, adjustPath, oldList) {
                 modifiedTime,
                 path
             });
-            */
         }
     }
 
-    // Đóng kết nối Elasticsearch
-    // closeConnection();
-
     return postList;
 }
+
+
+/**
+ * Thêm dữ liệu vào Elasticsearch.
+ * @param {Object} postObject Dữ liệu
+ */
+async function insertPostIntoElasticsearch(postObject) {
+    const response = await fetch('http://localhost/posts/php - elasticsearch client/src/insert-post.php', {
+        method: 'POST',
+        body: JSON.stringify(postObject),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const data = await response.json();
+    // console.log(data);
+}
+
 
 /**
  * Tính toán số bài viết của từng thể loại.
