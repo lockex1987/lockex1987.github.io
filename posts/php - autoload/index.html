@@ -1,20 +1,643 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
- <head> 
-  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
-  <title>Autoload trong PHP</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <link rel="icon" href="../../images/favicon.png"> 
-  <link rel="stylesheet" href="../../css/style.css"> 
-  <meta name="description" content="Autoload trong PHP">
- </head> 
- <body> 
-  <article> 
-   <p><br> </p> 
-   <p>Autoload</p> 
-   <p>https://kipalog.com/posts/PHP-co-the-ban-chua-biet----Auloading</p> 
-   <p>https://viblo.asia/p/php-autoloading-psr4-and-composer-V3m5Wy0QZO7</p> 
-  </article> 
-  <script src="../../js/docs.js"></script>  
- </body>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="__autoload, spl_autoload_register, PSR-0, PSR-4, Composer, dump-autoload, folder structure, Ghi đè file thư viện PHP với Composer, override vendor classes">
+    <title>Autoload trong PHP</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Autoload trong PHP</h2>
+      <h3>Giới thiệu</h3>
+      <p>Rất nhiều PHP developer hiện nay và kể cả phần lớn các framework đều
+        chọn cách viết code theo mô hình lập trình hướng đối tượng. Một trong
+        những best practice, convention khi viết OOP đó là mỗi class sẽ được
+        viết riêng vào 1 file. Nhưng có một vấn đề đối với practice này đó là
+        chúng ta phải include/require cả list dài các file class trước khi sử
+        dụng chúng.</p>
+      <p>Vâng, nhưng đó là vấn đề của PHP &lt; 5, xưa lắm rồi. Từ PHP 5 trở đi,
+        chúng ta có thể sử dụng feature autoloading để tự động load các class
+        khi chúng được gọi. Mục đích của bài viết này là thảo luận về cách hoạt
+        động, cách thực hiện autoload theo cách thông thường và thực hiện
+        autoload bằng Composer.</p>
+      <p>Một ví dụ đơn giản, thay vì viết:</p>
+      <pre>&lt;?php<br>
+include __DIR__ . '/classes/MyClass.php';
+include __DIR__ . '/classes/Foo.php';
+include __DIR__ . '/classes/Bar.php';
+
+$obj = new MyClass();
+$foo = new Foo();
+$bar = new Bar();
+</pre>
+      <p>Thì chúng ta sẽ dùng autoloading:</p>
+      <pre>&lt;?php<br>
+spl_autoload_register(function ($classname) {
+    // Hey, PHP! Nếu class mà chưa được khai báo trong file này<br>    // thì tìm nó trong folder classes nhé!!!
+    include __DIR__ . '/classes/' . $classname . '.php';
+});
+
+$obj = new MyClass();
+$foo = new Foo();
+$bar = new Bar();</pre>
+      <p>Các class sẽ tự động được load thay vì phải include/require từng file.</p>
+      <h3>Hàm __autoload vs hàm spl_autoload_register</h3>
+      <p>Để thực hiện autoloading, chúng ta phải hướng dẫn cho PHP cách load các
+        file class đó, vì có nhiều quy tắt đặt tên, cách tổ chức file, folder
+        mà, mỗi nguời mỗi ý, không nói ra thì làm sao biết?</p>
+      <p>Từ thưở mới bắt đầu, PHP 5.0, người ta sử dụng magic function <code>__autoload()</code>
+        để thực hiện ra công văn chỉ đạo cho PHP thực hiện autoload. Tuy nhiên,
+        do có nhiều hạn chế nên bắt đầu từ PHP 5.1 thì PHP đưa ra thêm function
+        <code>spl_autoload_register()</code>, khuyên dùng hàm này thay cho <code>__autoload()</code>
+        và cho đến phiên bản PHP 7.2.0 thì function <code>__autoload()</code>
+        đã bị DEPRECATED, sẽ bị xóa trong tương lai gần.</p>
+      <h4>Hàm __autoload </h4>
+      <p>Cụ thể <code>__autoload()</code> là một magic function, muốn sử dụng
+        nó bạn định nghĩa nó, tức là bạn phải viết 1 function có tên là <code>__autoload</code>,
+        nhận tham số là tên class muốn load.</p>
+      <pre>void __autoload (string $class)</pre>
+      <p>VD, convention của project là viết các file class vào thư mục <code>src/classes/</code>,
+        chúng ta sẽ thực hiện autoload như sau:</p>
+      <p>File <code>src/classes/Foo.php</code>:</p>
+      <pre>&lt;?php<br>
+class Foo 
+{
+    public function __construct() 
+    {
+        echo 'I am Foo!';
+    }
+}</pre>
+      <p>File <code>src/classes/Bar.php</code>:</p>
+      <pre>&lt;?php<br>
+class Bar 
+{
+    public function __construct() 
+    {
+        echo 'I am Bar!';
+    }
+}</pre>
+      <p>File <code>src/index.php</code>:</p>
+      <pre>&lt;?php<br>
+function __autoload($classname) 
+{
+    $filename = __DIR__ . '/classes/' . $classname . '.php';
+    include $filename;
+}
+
+$foo = new Foo();
+$bar = new Bar();</pre>
+      <p>Với cách này, bạn chỉ có thể có định nghĩa 1 function <code>__autoload()</code>,
+        vì thế nếu bạn sử dụng một thư viện nào đó cũng sử dụng function này thì
+        sẽ gây conflict và sẽ có lỗi do định nghĩa 2 hàm trùng tên.</p>
+      <h4>Hàm spl_autoload_register</h4>
+      <p>Mô tả hàm:</p>
+      <pre>bool spl_autoload_register([callable $autoload_function [, bool $throw = TRUE [, bool $prepend = FALSE ]]])</pre>
+      <p>Khác với <code>__autoload()</code> thì <code>spl_autoload_register()</code>
+        là một function thông thường, muốn sử dụng nó thì bạn gọi đến nó chứ
+        không phải định nghĩa nó, và tất nhiên là chúng ta có thể gọi nó nhiều
+        lần.</p>
+      <p>Như bạn thấy, function này sẽ nhận tham số là một callback function,
+        callback này có nhiệm vụ giống như <code>__autoload()</code>. Nếu có
+        nhiều hàm callback autoload, PHP sẽ tạo 1 queue và thực hiện lần lượt
+        theo thứ tự hàm callback được định nghĩa trong lời gọi hàm <code>spl_autoload_register()</code>
+        cho đến khi nó tìm được class, và nếu sau khi chạy qua tất cả autoload
+        mà không tìm thấy class thì sẽ có exception class not found.</p>
+      <p>VD thay thế cho <code>__autoload()</code>:</p>
+      <pre>&lt;?php<br>
+/*<br>function __autoload($classname) 
+{
+    $filename = __DIR__ . '/classes/' . $classname . '.php';
+    include $filename;
+}<br>*/
+
+spl_autoload_register(function ($classname)  {
+    $filename = __DIR__ . '/classes/' . $classname . '.php';
+    include $filename;
+});
+
+$foo = new Foo();
+$bar = new Bar();</pre>
+      <p>VD nhiều autoload callback, load class trong 2 thư mục <code>includes</code>
+        và <code>classes</code>:</p>
+      <pre>src
+├── classes
+│   └── MyClass.php
+├── includes
+├── index.php</pre>
+      <pre>&lt;?php<br>
+$autoloadIncludes = function ($classname) {
+    $filename = __DIR__ . '/includes/' . $classname . '.php';
+    echo 'Try to load ' . $filename . PHP_EOL;
+    if (file_exists($filename)) {
+        include $filename;
+    }
+};
+
+$autoloadClasses = function ($classname) {
+    $filename = __DIR__ . '/classes/' . $classname . '.php';
+    echo 'Try to load ' . $filename . PHP_EOL;
+    if (file_exists($filename)) {
+        include $filename;
+    }
+};
+
+spl_autoload_register($autoloadIncludes);
+spl_autoload_register($autoloadClasses);
+
+$myClass = new MyClass();</pre>
+      <p>Output khi chạy:</p>
+      <pre class="bg-dark text-white">Try to load /tmp/autoload/src/includes/MyClass.php
+Try to load /tmp/autoload/src/classes/MyClass.php
+I am MyClass</pre>
+      <p>Nếu thay đổi thứ tự autoload callback:</p>
+      <pre>&lt;?php<br>
+// ...<br>
+spl_autoload_register($autoloadClasses);
+spl_autoload_register($autoloadIncludes);
+
+$myClass = new MyClass();</pre>
+      <p>Output thế nào chắc các bạn cũng biết được.</p>
+      <p>Trường hợp class không tồn tại:</p>
+      <pre>&lt;?php<br>
+// ...<br>
+spl_autoload_register($autoloadClasses);
+spl_autoload_register($autoloadIncludes);
+
+$notExistClass = new NotExistClass();</pre>
+      <p>Output sẽ là:</p>
+      <pre class="bg-dark text-white">Try to load /tmp/autoload/src/classes/NotExistClass.php
+Try to load /tmp/autoload/src/includes/NotExistClass.php
+PHP Fatal error:  Uncaught Error: Class 'NotExistClass' not found in /tmp/autoload/src/spl_autoload.php:22
+Stack trace:
+#0 {main}
+  thrown in /tmp/autoload/src/spl_autoload.php on line 22</pre>
+      <h3>PSR-4</h3>
+      <p>Việc mỗi người, mỗi dự án có một cách thức thực hiện autoloading làm
+        cho việc chia sẻ dùng lại code giữa các framework, thư viện trở nên phức
+        tạp. Do đó, chuẩn PSR-4 Autoloader được tạo ra để thống nhất một quy tắc
+        trong việc thực hiện autoloading. Các framework như Laravel, Symfony,
+        Phalcon... đều dùng chuẩn này (tham khảo file <code>composer.json</code>).
+        Tiêu chuẩn này mô tả các quy tắc tổ chức namespace trong class, cũng như
+        cách tổ chức tên file, folder của class tương ứng. Trước chuẩn này còn
+        có chuẩn PSR-0, tuy nhiên nó đã lỗi thời, các bạn có thể tự tham khảo và
+        so sánh với chuẩn PSR-4.</p>
+      <p>Nội dung chính của chuẩn PSR-4 đó là: Quy tắc tổ chức các thư mục code
+        sao cho mọi class (bao gồm class, interface, trait) đều có thể được tham
+        chiếu đến bằng cách viết mã như sau:</p>
+      <pre>\&lt;NamespaceName&gt;(\&lt;SubNamespaceNames&gt;)*\&lt;ClassName&gt;</pre>
+      <ul>
+        <li><code>NamespaceName</code>: Tiền tố đầu tiên bắt buộc phải có - có
+          thể hiểu là tên vendor.</li>
+        <li><code>SubNamespaceNames</code>: Các namespace con (theo sau <code>NamespaceName</code>
+          đầu tiên). Có thể một hoặc nhiều. Các namespace liền kề nhau ở đầu có
+          thể kết hợp tạo thành namespace prefix và tương ứng với ít nhất một
+          base directory. Nhưng bắt đầu từ <code>SubNamespace</code> sau
+          namespace prefix thì nó phải tương ứng với một thư mục con bên trong
+          base directory, tên thư mục phải trùng với tên <code>SubNamespace</code>.</li>
+        <li><code>ClassName</code>: Bắt buộc phải có tên file trùng với tên lớp
+          <code>ClassName</code>, nằm trong thư mục con tương ứng với namespace
+          cuối cùng.</li>
+      </ul>
+      <p>Ví dụ về cách tổ chức:</p>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Tham chiếu đến class<br>
+              </th>
+              <th>Namespace prefix<br>
+              </th>
+              <th>Base directory<br>
+              </th>
+              <th>Class file path<br>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Acme\Log\Writer\File_Writer<br>
+              </td>
+              <td>Acme\Log\Writer<br>
+              </td>
+              <td>./src/lib/<br>
+              </td>
+              <td>./src/lib/File_Writer.php<br>
+              </td>
+            </tr>
+            <tr>
+              <td>Symfony\Core\Request<br>
+              </td>
+              <td>Symfony\Core<br>
+              </td>
+              <td>./vendor/Symfony/Core/<br>
+              </td>
+              <td>./vendor/Symfony/Core/Request.php<br>
+              </td>
+            </tr>
+            <tr>
+              <td>App\Http\Web\HomeController<br>
+              </td>
+              <td>App<br>
+              </td>
+              <td>./src/<br>
+              </td>
+              <td>./src/Http/Web/HomeController.php<br>
+              </td>
+            </tr>
+            <tr>
+              <td>App\Utility\Class_Name<br>
+              </td>
+              <td>App<br>
+              </td>
+              <td>./src/<br>
+              </td>
+              <td>./src/Utility/Class_Name.php<br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Sự khác biệt chủ yếu của PSR-0 so với PSR-4 đó là, PSR-0 không có khái
+        niệm <strong>namespace prefix</strong> nên cấu trúc namespace sẽ tương
+        ứng với cấu trúc thư mục chứa class. Ngoài ra PSR-0 còn sử dụng thêm dấu
+        gạch dưới <code>_</code> trong ClassName để thể hiện các thư mục bổ
+        sung chứa class theo sau các tên namespace. Một Lưu ý nữa đó là, dấu <code>_</code>
+        chỉ có ý nghĩa đặc biệt trong tên class, còn trong tên của namespace thì
+        không.</p>
+      <p>VD về cách tổ chức class theo PSR-0:</p>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Tham chiếu đến class</th>
+              <th>Code directory</th>
+              <th>Class file path</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Acme\Log\Writer\File_Writer</td>
+              <td>./src/lib/</td>
+              <td>./src/lib/Acme/Log/Writer/File/Writer.php</td>
+            </tr>
+            <tr>
+              <td>Symfony\Core\Request</td>
+              <td>./vendor/</td>
+              <td>./vendor/Symfony/Core/Request.php</td>
+            </tr>
+            <tr>
+              <td>App\Http\Web\HomeController</td>
+              <td>./src/</td>
+              <td>./src/App/Http/Web/HomeController.php</td>
+            </tr>
+            <tr>
+              <td>App\Utility\Class_Name</td>
+              <td>./src/</td>
+              <td>./src/App/Utility/Class/Name.php</td>
+            </tr>
+            <tr>
+              <td>App\Active_Record\Class_Name</td>
+              <td>./src/</td>
+              <td>./src/App/Active_Record/Class/Name.php</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Ngoài ra còn một yêu cầu đối với autoloader (autoload function,
+        callback) đó là: Autoloader không được ném ra bất cứ exception nào,
+        không được gây ra bất cứ lỗi hay warning nào, và không nên trả về giá
+        trị.</p>
+      <p>Đó là cách thống nhất viết bố trí code PHP trên các thư mục và theo các
+        namespace. Khi đã viết code tuân thủ theo hướng dẫn này thì các
+        framework khác nhau đều sử dụng một cơ chế tự động nạp tương tự nhau nên
+        việc chia sẻ, tích hợp là rất linh hoạt.</p>
+      <p>Ví dụ implement một autoloader (<a href="https://www.php-fig.org/psr/psr-4/examples/"
+          target="_blank">source</a>): </p>
+      <pre>&lt;?php<br>
+/**
+ *
+ * Sau khi đăng ký autoloader, thì dòng sau đây sẽ như một chỉ dẫn cho function
+ * load class \Foo\Bar\Baz\Qux từ đường dẫn /path/to/project/src/Baz/Qux.php:
+ *
+ *      new \Foo\Bar\Baz\Qux;
+ *
+ * @param string $class The fully-qualified class name.
+ * @return void
+ */
+spl_autoload_register(function ($class) {
+    // Namespace prefix
+    $prefix = 'Foo\\Bar\\';
+
+    // Base directory tương ứng cho namespace prefix, thư mục src
+    $base_dir = __DIR__ . '/src/';
+
+    // Tên Class đầy đủ có chứa Namespace prefix không?
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        // Không =&gt; Không thuộc chuẩn PSR-4 =&gt; autoloader này sẽ bị bỏ qua
+        return;
+    }
+
+    // Lấy phần còn của class name trừ namespace prefix
+    $relative_class = substr($class, $len);
+
+    /*
+      Tìm đường dẫn đến file class:
+      - Thay thế namespace prefix bằng tên base directory
+      - Thay thế ký tự namespace separators \ bằng directory separator / (Linux)
+      - Thêm ext .php
+    */
+    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+
+    // Nếu file tồn tại thì require nó
+    if (file_exists($file)) {
+        require $file;
+    }
+});</pre>
+      <h3>Autoload với Composer </h3>
+      <p>Để thực hiện autoloading với Composer bạn cần khai báo trong file <code>composer.json</code>.
+        Composer hỗ trợ các kiểu autoload PSR-4, PSR-0, classmap và files, các
+        bạn có thể tham khảo <a href="https://getcomposer.org/doc/04-schema.md#autoload"
+          target="_blank">tài liệu gốc</a>.</p>
+      <p>Ở đây, mình sẽ ví dụ autoload PSR-4 với Composer.</p>
+      <p>Ví dụ bạn có cấu trúc thư mục như sau:</p>
+      <pre>.
+├── composer.json
+├── index.php
+└── src
+    ├── Controllers
+    │   └── HomeController.php
+    ├── Models
+    │   └── User.php
+    └── Views
+        └── home.php</pre>
+      <p>File <code>src/Models/User.php</code>:</p>
+      <pre>&lt;?php<br>
+namespace Viblo\Models;
+
+class User
+{
+    public function list()
+    {
+        // TODO: get actual data
+        return [1, 2, 3];
+    }
+}</pre>
+      <p>Tương tự file <code>src/Controllers/HomeController.php</code> sẽ có
+        namespace <code>Viblo\Controllers</code>.</p>
+      <pre>&lt;?php<br>
+namespace Viblo\Controllers;
+
+use Viblo\Models\User;
+
+class HomeController 
+{
+    public function actionIndex()
+    {
+        return (new User)-&gt;list();
+    }
+}</pre>
+      <p>Thư mục <code>Views</code> gồm những file markup PHP, HTML nên sẽ
+        không thực hiện autoload.</p>
+      <p>Tiếp theo, chúng ta có file <code>composer.json</code>:</p>
+      <pre>{
+    "autoload": {
+        "psr-4": {
+            "Viblo\\": "src/"
+        }
+    }
+}</pre>
+      <p>PSR-4 và PSR-0 là cách chuẩn PSR về cách đặt tên file và folder theo
+        quy tắc cho các PHP Framework, PSR-4 là chuẩn thay thế cho PSR-0. Cấu
+        hình <code>classmap</code> là cho phép load toàn bộ các class có trong
+        một folder chỉ định. Cấu hình <code>files</code> cho phép chỉ định load
+        các file được khai báo (không phải class). Dưới đây là một số ví dụ về
+        các cách khai báo với <code>composer.json</code>:</p>
+      <pre>{
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "psr-0": {
+            "Monolog\\": "src/",
+            "Vendor\\Namespace\\": "src/",
+            "Vendor_Namespace_": "src/"
+        },
+        "classmap": [<br>            "src/",<br>            "lib/", "Something.php"<br>        ],
+        "files": [<br>            "src/MyLibrary/functions.php"<br>        ]
+    }
+}</pre>
+      <p>Sau đó chạy lệnh:</p>
+      <pre>composer dump-autoload</pre>
+      <p>Câu lệnh này sẽ tạo ra file <code>vendor/autoload.php</code>, file này
+        sẽ load các rule được implement trong <code>vendor/composer/autoload_*.php</code>.</p>
+      <pre>vendor/composer
+├── autoload_classmap.php
+├── autoload_files.php
+├── autoload_namespaces.php
+├── autoload_psr4.php
+├── autoload_real.php
+├── autoload_static.php
+├── ca-bundle
+├── ClassLoader.php
+├── installed.json
+├── installers
+└── LICENSE</pre>
+      <p>Sử dụng ở <code>index.php</code>:</p>
+      <pre>&lt;?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Viblo\Controllers\HomeController;
+
+$homeCtrl = new HomeController();
+
+print_r($homeCtrl-&gt;actionIndex());
+
+// ...</pre>
+      <h3>Autoload optimizing</h3>
+      <p>Với các quy tắc PSR-0, PSR-4, autoloader cần phải check sự tồn tại của
+        class file trong filesystem trước khi load class. Việc này có thể làm
+        chậm tốc độc của application một chút, nhưng bù lại nó làm cho việc
+        develop dễ dàng hơn khi bạn thêm một class và có thể sử dụng nó ngay lập
+        tức mà không phải rebuild autoloader.</p>
+      <p>Vấn đề ở đây là, trong môi trường production, bạn thường muốn app của
+        mình chạy nhanh nhất có thể, vì môi trường này ít khi thay đổi và bạn có
+        thể dễ dàng rebuild lại autoloader khi deploy.</p>
+      <p>Vì lý do này, Composer cung cấp vài phương pháp để optimize autoloader.
+        Mình sẽ giới thiệu 1 phương pháp thường được sử dụng nhất, đó là
+        Optimization Level 1: Class map generation.</p>
+      <h4>Làm sao để bật chế độ này?</h4>
+      <p>Có một vài tùy chọn để bạn bật chế độ optimization này:</p>
+      <p>Cách 1: Thiết lập trong file <code>composer.json</code>:</p>
+      <pre>"config": {
+    "optimize-autoloader": true
+}</pre>
+      <p>Cách 2: Chạy <code>composer install</code> hoặc <code>composer update</code>
+        với tùy chọn <code>-o</code> hay <code>--optimize-autoloader</code>.</p>
+      <p>Cách 3: Chạy <code>composer dump-autoload</code> với tùy chọn <code>-o</code>
+        hoặc <code>--optimize</code>.</p>
+      <h4>Nó hoạt động như thế nào?</h4>
+      <p>Composer sẽ convert các rule PSR-4/PSR-0 sang classmap rule. Các bạn có
+        thể xem file <code>vendor/composer/autoload_classmap.php</code> để kiểm
+        tra. File này sẽ return một array, có key là tên class đầy đủ và value
+        là đường dẫn đến class. Composer đã check sự tồn tại của các class này
+        trước và generate ra classmap, do đó, khi tham chiếu đến class thì
+        autoloader chỉ việc require file vào không cần phải check filesystem
+        nữa.</p>
+      <p>Với PHP 5.6+, Composer còn thực hiện cache classmap trong opcache, làm
+        cho việc load class có thể chạy nhanh nhất có thể.</p>
+      <h4>Nhược điểm</h4>
+      <p>Không có nhược điểm thực sự với phương pháp này, và bạn nên luôn luôn
+        dùng nó trong môi trường production.</p>
+      <p>Một vấn đề nhỏ với ở đây là, nếu class không tồn tại trong classmap, nó
+        sẽ có fallback về PSR-4 rule, tức là tiếp tục follow theo PSR-4 rule và
+        có thể phát sinh filesystem check.</p>
+      <p>Để giải quyết vấn đề này Composer cung cấp thêm 2 phương pháp optimize
+        level 2 đó là Level 2/A: Authoritative class maps (loại bỏ fallback về
+        PSR-4 rule) và Level 2/B: APCu cache (sử dụng apcu cache). Hai option
+        level 2 này không thể được sử dụng cùng 1 lúc và cũng ít được sử dụng.</p>
+      <h3>Cấu trúc thư mục của dự án dùng Composer</h3>
+      <p>Như đã biết các thư viện hiện này, và code của bạn sau này được khuyến
+        khích xây dựng sao cho đáp ứng cơ chế tự động nạp theo chuẩn PRS-4.</p>
+      <p>Tổ chức code của bạn (giống như các thư viện) được đặt tên truy cập
+        được bằng <code>namespace</code>.</p>
+      <p>Mỗi module dự án của bạn có một cái tên theo cấu trúc <code>vendor/module</code>.</p>
+      <p>Sau đó, để đảm bảo <code>vendor/autoload.php</code> được gọi, thì
+        ngoài các thư viện, thì nó cũng cấu hình để gọi được module của bạn, nếu
+        vậy bạn cần cập nhật <code>composer.json</code> ở thành phần <code>autoload</code>.</p>
+      <p>Ví dụ cụ thể như sau:</p>
+      <p>Xây dựng một lớp có tên <code>FirstClass</code>, có <code>namespace</code>
+        là <code>MyCompany/MyModule</code>. Code file lưu trong file <code>app/MyModule/FirstClass.php</code>.</p>
+      <pre>&lt;?php<br>
+namespace MyCompany\MyModule;
+
+class FirstClass<br>{
+    function helloComposer()
+    {
+
+    }
+}</pre>
+      <p>Như trên là đã đúng chuẩn PRS-4, Composer giúp bạn tích hợp vào <code>vendor/autoload.php</code>,
+        để có thể tự động include có trên khi cần dùng đến bằng đoạn code ví dụ:</p>
+      <pre>&lt;?php
+
+$cls = new MyCompany\MyModule\FirstClass();</pre>
+      <p>Hoặc</p>
+      <pre>&lt;?php<br>
+use MyCompany\MyModule\FirstClass;
+
+$cls = new FirstClass();</pre>
+      <p>Để làm được điều đó, bạn hãy cho composer biết bạn có một module chuẩn
+        tự động nạp PRS-4, bằng đoạn mã sau trong <code>composer.json</code>.</p>
+      <pre>{
+    "autoload": {
+        "psr-4": {
+            "MyCompany\\": "app/"
+         }
+    }
+}</pre>
+      <p>Điều đó có nghĩa là namespace cấp 1 - <code>MyCompany</code> sẽ trỏ
+        đến thư mục <code>app/</code>, bắt đầu từ cấp tiếp theo sẽ trỏ theo cấu
+        trức thư mục này. <code>MyCompany\MyModule\FirstClass</code> thì tương
+        ứng ở vị trí <code>app/Mymodule/FirstClass.php</code>.</p>
+      <p>Khai báo <code>composer.json</code> như trên xong, gõ lệnh:</p>
+      <pre>composer dump-autoload
+</pre>
+      <p>Giờ thì <code>vendor/autoload.php</code> có cơ chế để tự động nạp code
+        của bạn khi dùng đến!</p>
+      <h3>Ghi đè file thư viện PHP với Composer</h3>
+      <p>Bạn có nhu cầu sửa file thư viện. Ví dụ hiện tại chức năng quên mật
+        khẩu của Laravel đang gửi mail với token dài 64 ký tự. Tôi muốn chỉnh
+        token chỉ còn dài 6 ký tự.</p>
+      <p>Sửa file <code>composer.json</code> như sau:</p>
+      <pre class="out-of-box">"autoload": {
+    "classmap": [
+        "database"
+    ],
+    "exclude-from-classmap": [
+        "vendor\\laravel\\framework\\src\\Illuminate\\Auth\\Passwords\\DatabaseTokenRepository.php"
+    ],
+    "psr-4": {
+        "App\\": "app/",
+        "Illuminate\\": "app/Illuminate/"
+    }
+},
+</pre>
+      <h3>Autoload file</h3>
+      <p>Autoload theo file.</p>
+      <p>Tính năng autoload hoạt động tương tự như include hoặc require cho phép
+        bạn tải toàn bộ file nguồn. Tất cả các file sẽ được tải mỗi khi ứng dụng
+        của bạn chạy. Điều này rất hữu ích để tải các tệp nguồn không sử dụng
+        các lớp.</p>
+      <p>Để sử dụng file autoloading, chúng ta cung cấp danh sách các file được
+        chỉ ra trong file composer.json như sau:</p>
+      <pre>{
+    "autoload": {
+        "files": [<br>            "lib/Foo.php",<br>            "lib/Bar.php"<br>        ]
+    }
+}</pre>
+      <p>Ở đây chúng ta cung cấp danh sách các file mà bạn muốn được load tự
+        động bởi Composer. Sau khi tạo tệp <code>composer.json</code> trong thư
+        mục gốc của dự án với nội dung trên, bạn chỉ cần chạy lệnh <code>composer
+          dump-autoload</code> để tạo các file cần thiết được autoload. Chúng sẽ
+        được tạo trong thư mục <code>vendor</code>. Cuối cùng bạn cần thêm câu
+        lệnh <code>require 'vendor/autoload.php'</code> vào đầu tiên của file,
+        nơi bạn muốn thực hiện autoload với Composer. Code ví dụ như sau:</p>
+      <pre>&lt;?php<br>
+require 'vendor/autoload.php';
+  
+// code which uses things declared in the "lib/Foo.php"<br>// or "lib/Bar.php" file</pre>
+      <p>Classmap, PSR-0, and PSR-4 deal with classes only. If you want to
+        autoload functions, you can use files autoloading. This can be useful to
+        load your helper functions. These files will be loaded on every request.</p>
+      <pre>{
+    "autoload": {
+        "files": ["src/helpers.php"]
+    }
+}</pre>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Autoload classmap</h3>
+      <p>Autoload theo thư mục.</p>
+      <p>Thay vì tải từng file tự động, chúng ta có thể để Composer tải tự động
+        tất cả các file có trong 1 thư mục được chỉ định. Cú pháp lệnh như sau
+        (chỉnh sửa nội dung file <code>composer.json</code>):</p>
+      <pre>{
+    "autoload": {
+        "classmap": ["lib"]
+    }
+}</pre>
+      <p>Chạy lệnh <code>composer dump-autoload</code> và Composer sẽ đọc các
+        file trong thư mục lib để tạo “bản đồ” các lớp có thể autoload.</p>
+      <p>Classmap as its name implies creates a mapping of all the classes
+        inside the specified directories into a single key =&gt; value array,
+        which can be found in the generated file
+        vendor/composer/autoload_classmap.php. The automatic file generation
+        happens on composer install/update.</p>
+      <pre>{
+    "autoload": {
+        "classmap": ["src/", "lib/", "Something.php"]
+    }
+}</pre>
+      <p>The mapping is done by scanning for all classes inside .php and .inc
+        files in the specified directories. This is the fastest way of
+        autoloading since it uses array lookup for finding the classes.</p>
+      <p><br>
+      </p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://viblo.asia/p/php-autoloading-psr4-and-composer-V3m5Wy0QZO7"
+          target="_blank">PHP Autoloading, PSR4 and Composer</a></p>
+      <p><a target="_blank" href="https://stackoverflow.com/questions/46543379/laravel-5-4-password-reset-token-custom-length">Laravel:
+          Password reset token custom length</a></p>
+      <p><a target="_blank" href="http://shyammakwana.me/php/laravel-override-vendor-classes.html">Laravel:
+          How to override vendor classes using composer</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
 </html>
