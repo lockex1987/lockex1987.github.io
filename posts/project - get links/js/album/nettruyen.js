@@ -1,8 +1,10 @@
+import GetLinksUtils from '../utils.js';
+
 /**
  * Lấy danh sách chương.
  */
 function getChaptersNettruyen(doc) {
-    return getChaptersFromCssSelector('#nt_listchapter a', doc);
+    return GetLinksUtils.getChaptersFromCssSelector('#nt_listchapter a', doc);
 }
 
 /**
@@ -22,15 +24,15 @@ async function processChapterNettruyen(chapterUrl, chapterNo, callbackFunc) {
         'tuyenns'
     ];
 
-    const doc = await getDocumentFromUrl(chapterUrl);
+    const doc = await GetLinksUtils.getDocumentFromUrl(chapterUrl);
     const images = [];
     doc.querySelectorAll('.page-chapter img').forEach(imgTag => {
         const imageUrl = imgTag.src;
-        if (!isExtraImage(imageUrl, blackList)) {
-            const fileExtension = getImageExtension(imageUrl);
+        if (!GetLinksUtils.isExtraImage(imageUrl, blackList)) {
+            const fileExtension = GetLinksUtils.getImageExtension(imageUrl);
             images.push({
                 url: imageUrl,
-                name: createLocalFileName(chapterNo, images.length, fileExtension)
+                name: GetLinksUtils.createLocalFileName(chapterNo, images.length, fileExtension)
             });
         }
     });
@@ -43,15 +45,16 @@ async function processChapterNettruyen(chapterUrl, chapterNo, callbackFunc) {
  * Lấy ảnh của một chương truyện cụ thể nào đó.
  */
 function getImagesOfSingleChapter() {
-    const chapterNo = extractChapterNumber(document.title);
+    const chapterNo = GetLinksUtils.extractChapterNumber(document.title);
     const images = [];
+    const blackList = [];
     document.querySelectorAll('.page-chapter img').forEach(imgTag => {
         const url = imgTag.src;
-        if (!isExtraImage(url, blackList)) {
-            const fileExtension = getImageExtension(url);
+        if (!GetLinksUtils.isExtraImage(url, blackList)) {
+            const fileExtension = GetLinksUtils.getImageExtension(url);
             images.push({
                 url: url,
-                name: createLocalFileName(chapterNo, images.length, fileExtension)
+                name: GetLinksUtils.createLocalFileName(chapterNo, images.length, fileExtension)
             });
         }
     });

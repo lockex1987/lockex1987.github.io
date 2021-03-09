@@ -1,8 +1,10 @@
+import GetLinksUtils from '../utils.js';
+
 /**
  * Lấy danh sách chương.
  */
 function getChaptersManhwa18(doc) {
-    return getChaptersFromCssSelector('#tab-chapper a.chapter', doc);
+    return GetLinksUtils.getChaptersFromCssSelector('#tab-chapper a.chapter', doc);
 }
 
 /**
@@ -13,7 +15,7 @@ function getChaptersManhwa18(doc) {
  */
 function processChapterManhwa18(chapterUrl, chapterNo, callbackFunc) {
     const cssSelector = '.chapter-content .chapter-img';
-    processChapterFromCssSelector(chapterUrl, chapterNo, callbackFunc,
+    GetLinksUtils.processChapterFromCssSelector(chapterUrl, chapterNo, callbackFunc,
         cssSelector);
 }
 

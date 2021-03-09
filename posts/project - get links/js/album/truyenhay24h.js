@@ -1,10 +1,11 @@
 // https://truyenhay24h.com/tieu-ngao-giang-ho.html
+import GetLinksUtils from '../utils.js';
 
 /**
  * Lấy danh sách chương.
  */
 function getChaptersTruyenhay24h() {
-    return getChaptersFromCssSelector('.chapname a');
+    return GetLinksUtils.getChaptersFromCssSelector('.chapname a');
 }
 
 /**
@@ -27,7 +28,7 @@ async function processChapterTruyenhay24h(chapterUrl, chapterNo, callbackFunc) {
     const regex = /GI2017\((\d+),([^,]+),'([^']+)','([^']+)','([^']+)'\);/g;
     const result = regex.exec(htmlCode);
     if (!result) {
-        writeLog('Không tìm thấy hàm LImg');
+        GetLinksUtils.writeLog('Không tìm thấy hàm LImg');
     } else {
         const pid = result[1];
         const chapter = result[2];
@@ -63,12 +64,12 @@ async function processChapterTruyenhay24h(chapterUrl, chapterNo, callbackFunc) {
                 d = 'http://truyenhay24h.com' + d;
             }
 
-            if (!isExtraImage(d, blackList)) {
-                const fileExtension = getImageExtension(d);
+            if (!GetLinksUtils.isExtraImage(d, blackList)) {
+                const fileExtension = GetLinksUtils.getImageExtension(d);
                 images.push({
                     url: d,
                     // name: createLocalFileName(chapterNo, images.length, fileExtension)
-                    name: `${chapterNo}/${paddingZero(images.length + 1)}.${fileExtension}`
+                    name: `${chapterNo}/${GetLinksUtils.paddingZero(images.length + 1)}.${fileExtension}`
                 });
             }
         });

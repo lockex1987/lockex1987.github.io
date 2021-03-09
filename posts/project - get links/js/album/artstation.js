@@ -11,6 +11,7 @@
  *
  * https://art-py.tumblr.com/archive
  */
+import GetLinksUtils from '../utils.js';
 
 class ArtStation {
     /**
@@ -28,7 +29,7 @@ class ArtStation {
         const projects = await this.getAllProjects();
         let images = [];
         for (let i = 0; i < projects.length; i++) {
-            writeLog((i + 1) + '/' + projects.length);
+            GetLinksUtils.writeLog((i + 1) + '/' + projects.length);
             const temp = await this.getSingleProject(projects[i].hash_id);
             images = images.concat(temp);
         }
@@ -47,13 +48,13 @@ class ArtStation {
             const resp = await fetch(url).then(r => r.json());
             const totalCount = resp.total_count;
             if (totalCount == 0) {
-                writeLog('[Error] Không tồn tại project');
+                GetLinksUtils.writeLog('[Error] Không tồn tại project');
                 break;
             }
             const projectsPerPage = 50;
             const totalPage = Math.ceil(totalCount / projectsPerPage);
             projects = projects.concat(resp.data);
-            writeLog(`Get page ${page} / ${totalPage}`);
+            GetLinksUtils.writeLog(`Get page ${page} / ${totalPage}`);
             if (page >= totalPage) {
                 break;
             }

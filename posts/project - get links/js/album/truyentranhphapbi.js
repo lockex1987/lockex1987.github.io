@@ -4,7 +4,7 @@ import GetLinksUtils from '../utils.js';
 /**
  * Lấy các ảnh từ trang truyentranhphapbi.com
  * https://www.truyentranhphapbi.com/2020/12/dragon-ball-hoi-cellandroid-tap-7.html
- */ 
+ */
 async function getImagesTruyentranhphapbi(postUrl, folder) {
     const doc = await GetLinksUtils.getDocumentFromUrl(postUrl);
 

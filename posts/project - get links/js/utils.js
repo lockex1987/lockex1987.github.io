@@ -9,7 +9,7 @@ function extractChapterNumber(title, firstResult = true) {
 
     // Lọc ra phần số
     // Có thể có dấu chấm ở giữa
-    const regex = /\d[\d\.]*/g;
+    const regex = /\d[\d.]*/g;
 
     if (firstResult) {
         // Làm thế này sẽ lấy ra kết quả tìm thấy đầu tiên
@@ -261,5 +261,8 @@ export default {
     createLocalFileName,
     extractChapterNumber,
     getImageExtension,
-    paddingZero
+    paddingZero,
+    writeLog,
+    normalizeSpaces,
+    isExtraImage
 };

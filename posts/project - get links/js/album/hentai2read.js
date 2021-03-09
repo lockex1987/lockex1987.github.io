@@ -1,3 +1,5 @@
+import GetLinksUtils from '../utils.js';
+
 /**
  * Lấy link ảnh của một chương.
  * @param {String} postUrl
@@ -10,10 +12,10 @@ async function getImagesHentai2read(postUrl, folder) {
     const links = JSON.parse(arr[1]);
 
     const images = links.map((s, i) => {
-        const fileExtension = getImageExtension(s);
+        const fileExtension = GetLinksUtils.getImageExtension(s);
         return {
             url: 'https://static.hentaicdn.com/hentai' + s,
-            name: createLocalFileName(folder, i, fileExtension)
+            name: GetLinksUtils.createLocalFileName(folder, i, fileExtension)
         };
     });
     return images;

@@ -1,9 +1,11 @@
+import GetLinksUtils from '../utils.js';
+
 /**
  * Các link dạng: 'https://mrcong.com/page/' + page
  * @param {DOM} doc
  */
 function getChaptersMrcong(doc) {
-    return getChaptersFromCssSelector('#main-content .post-box-title a', doc);
+    return GetLinksUtils.getChaptersFromCssSelector('#main-content .post-box-title a', doc);
 }
 
 /**

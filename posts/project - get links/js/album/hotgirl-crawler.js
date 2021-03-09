@@ -26,6 +26,7 @@ https://hotgirl.biz/wp-json/wp/v2/posts?page=2
 https://hotgirl.biz/wp-json/wp/v2/posts/404688
 https://hotgirl.biz/wp-json/wp/v2/media/404212
 */
+import GetLinksUtils from '../utils.js';
 
 function extractImages(xml, folderName) {
     const regex = /<a href="(.*?)">/g;
@@ -34,8 +35,8 @@ function extractImages(xml, folderName) {
     const images = [];
     while ((arr = regex.exec(xml)) != null) {
         const url = arr[1];
-        const fileName = paddingZero(count);
-        const extension = getImageExtension(url);
+        const fileName = GetLinksUtils.paddingZero(count);
+        const extension = GetLinksUtils.getImageExtension(url);
         const filePath = folderName + '/' + fileName + '.' + extension;
         images.push({
             name: filePath,
@@ -100,7 +101,7 @@ class WordPressPosts {
     }
 
     async getThumbnailImage(post) {
-        const apiUrl = `${rootUrl}/wp-json/wp/v2/media/${post.thumbnailId}`;
+        const apiUrl = `${this.rootUrl}/wp-json/wp/v2/media/${post.thumbnailId}`;
         const data = await fetch(apiUrl).then(resp => resp.json());
         const imageUrl = data.source_url;
         return imageUrl;
