@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="date" content="2020-02-19 22:41:00">
+    <meta name="description" content="Thiết lập môi trường lab">
+    <title>Thiết lập môi trường lab</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Thiết lập môi trường lab</h2>
+      <h3>Mục tiêu</h3>
+      <p>Tôi muốn xây dựng cho mình một môi trường lab để thực hành về mạng cũng
+        như việc deploy các ứng dụng web.</p>
+      <p>Tôi sẽ cài đặt hai server Ubuntu 18.04. Phần mềm sử dụng là VirtualBox.
+        Các máy ảo có RAM 1024 MB và ổ cứng 10 GB.</p>
+      <p>Thông tin server 1:</p>
+      <ul>
+        <li>Tên máy ảo: Ubuntu-Server-1</li>
+        <li>Tên đầy đủ người dùng: Admin 1</li>
+        <li>Tên server: ubuntu1</li>
+        <li>Username: admin1</li>
+        <li>Password: abc123a@</li>
+        <li>IP: 192.168.1.116</li>
+      </ul>
+      <p>Thông tin server 2:</p>
+      <ul>
+        <li>Tên máy ảo: Ubuntu-Server-2</li>
+        <li>Tên đầy đủ người dùng: Admin 2</li>
+        <li>Tên server: ubuntu2</li>
+        <li>Username: admin2</li>
+        <li>Password: abc123a@</li>
+        <li>IP: 192.168.1.174</li>
+      </ul>
+      <p> </p>
+      <p>Thông tin server 3:</p>
+      <ul>
+        <li>Tên máy ảo: Ubuntu-Server-3</li>
+        <li>Tên đầy đủ người dùng: Admin 3</li>
+        <li>Tên server: ubuntu3</li>
+        <li>Username: admin3</li>
+        <li>Password: abc123a@</li>
+        <li>IP: 192.168.1.176</li>
+        <li>Thông tin truy cập MySQL: huyennv9 / abc123a@</li>
+      </ul>
+      <ul>
+      </ul>
+      <p>Máy thật của mình:</p>
+      <ul>
+        <li>Username: lockex1987</li>
+        <li>Password: 123456a@</li>
+        <li>IP: 192.168.1.111</li>
+      </ul>
+      <p>Server 1 và 2 sẽ để cài web. Server 3 sẽ để cài DB.</p>
+      <p>Sửa file <code>/etc/hosts</code> để truy cập các server bằng tên cho
+        dễ:</p>
+      <pre>192.168.1.131   my-ipad.tk
+192.168.1.116   ubuntu-server-1.tk
+192.168.1.174   ubuntu-server-2.tk
+192.168.1.176   ubuntu-server-3.tk
+192.168.1.111   real-machine.tk</pre>
+      <ul>
+      </ul>
+      <h3>Cấu hình mạng cho server ở VirtualBox</h3>
+      <p>Mặc định cấu hình mạng của máy ảo đang là kiểu NAT.</p>
+      <p>Chúng ta hãy thay đổi kiểu mạng là "Bridged Adapter". Khi đó mỗi máy ảo
+        sẽ có IP riêng, như một máy độc lập.</p>
+      <div class="out-of-box text-center"><img src="images/bridged%20adapter.png"
+          alt=""></div>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>
