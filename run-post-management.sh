@@ -1,1 +1,1 @@
-node post-management.js
+php post-management

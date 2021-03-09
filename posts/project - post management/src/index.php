@@ -4,8 +4,27 @@
  * Chương trình này dùng để liệt kê danh sách các bài viết.
  * Các post thì liệt kê thêm ngày xuất bản.
  * Thống kê mỗi chuyên mục có bao nhiêu bài viết.
+ * 
+ * Tạo file phar:
+ *   php phar-composer-1.2.0.phar build src
+ * Hoặc:
+ *   sh compile.sh
+ * Tham khảo:
+ *   https://github.com/clue/phar-composer
+ *   https://www.mon-code.net/post/126/Package-code-in-a-PHP-archive:-PHAR
+ * 
+ * Sau đó đổi tên file src.phar thành post-management và chuyển ra ngoài thư mục gốc
+ *   
+ * Nếu ở thư mục trong, thực hiện lệnh:
+ *    php index.php "../../../"
+ * Hoặc
+ *    php src.phar "../../"
+ * Nếu ở thư mục gốc, thực hiện lệnh:
+ *    php post-management
  */
-include 'IndexFile.php';
+include 'vendor/autoload.php';
+
+use App\IndexFile;
 
 
 /**
@@ -31,10 +50,10 @@ function getPostList(string $rootFolder, string $adjustPath, array $oldList): ar
         $indexFilePath = $rootFolder . '/' . $path . '/index.html';
 
         // Lấy thông tin thời gian chỉnh sửa file
-        if (!file_exists($indexFilePath)) {
+        if (!file_exists(realpath($indexFilePath))) {
             $modifiedTime = 0;
         } else {
-            $modifiedTime = filemtime($indexFilePath); // ?? filectime($indexFilePath);
+            $modifiedTime = filemtime(realpath($indexFilePath)); // ?? filectime($indexFilePath);
         }
 
         $oldObj = null;
@@ -165,7 +184,7 @@ function getCategoryCountMapJson(array $categoryCountMap): string
  */
 function writeDataFile(string $filePath, string $content): void
 {
-    file_put_contents($filePath, $content);
+    file_put_contents(realpath($filePath), $content);
 }
 
 
@@ -179,7 +198,7 @@ function main(string $adjustPath): void
 
     // Dữ liệu cũ
     $listFilePath = $adjustPath . 'data/post-list.json';
-    $fileContent = file_get_contents($listFilePath);
+    $fileContent = file_get_contents(realpath($listFilePath));
     $oldList = json_decode($fileContent);
     // var_dump($oldList);
 
@@ -201,6 +220,4 @@ function main(string $adjustPath): void
 }
 
 
-// Nếu ở thư mục trong, thực hiện lệnh php index.php "../../../"
-// Nếu ở thư mục gốc, thực hiện lệnh php index.php
 main((count($argv) > 1) ? $argv[1] : '');

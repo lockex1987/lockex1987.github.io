@@ -1,5 +1,10 @@
 <?php
 
+namespace App;
+
+use DOMXPath;
+use DOMDocument;
+
 /**
  * Đối tượng file index.html.
  */
@@ -47,7 +52,7 @@ class IndexFile
     public function process(): void
     {
         // Nếu file không tồn tại thì tạo file
-        if (!file_exists($this->indexFilePath)) {
+        if (!file_exists(realpath($this->indexFilePath))) {
             echo 'File không tồn tại: ' . $this->indexFilePath . PHP_EOL;
             $this->existsIndexFile = false;
             $this->createDefaultIndexFile();
@@ -55,8 +60,8 @@ class IndexFile
         }
 
         // Parse HTML
-        $dom = new DOMDocument('1.0', 'UTF-8');
-        $html = file_get_contents($this->indexFilePath);
+        $dom = new DOMDocument(); // '1.0', 'UTF-8'
+        $html = file_get_contents(realpath($this->indexFilePath));
 
         // Ẩn các thông báo lỗi thẻ HTML5 không hợp lệ
         libxml_use_internal_errors(true);
@@ -96,7 +101,7 @@ class IndexFile
     private function createDefaultIndexFile(): void
     {
         $source = $this->adjustPath . 'template/index.html';
-        copy($source, $this->indexFilePath);
+        copy(realpath($source), realpath($this->indexFilePath));
     }
 
     /**
@@ -229,6 +234,6 @@ class IndexFile
         // Thêm cái này thì output sẽ là UTF-8, không phải HTML entity
         $this->document->encoding = 'UTF-8';
 
-        $this->document->saveHTMLFile($this->indexFilePath);
+        $this->document->saveHTMLFile(realpath($this->indexFilePath));
     }
 }
