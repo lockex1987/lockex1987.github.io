@@ -149,6 +149,17 @@ Switched to a new branch 'version1'</pre>
         xem có thấy sự khác nhau của nó không? Ở bài nói về branch mình sẽ giải
         thích cho bạn kỹ hơn. Đại loại là bạn tạo một phân nhánh khác để sửa
         code riêng mà không ảnh hưởng đến code chính.</p>
+      <h3>Xóa tag</h3>
+      <p>Liệt kê danh sách tag:</p>
+      <pre>git tag -l</pre>
+      <p>Xóa tất cả local tag:</p>
+      <pre>git tag -d $(git tag -l)</pre>
+      <p>Lấy tất cả các remote tag:</p>
+      <pre>git fetch</pre>
+      <p>Xóa tất cả remote tag:</p>
+      <pre>git push origin --delete $(git tag -l)</pre>
+      <p>Xóa tất cả local tag (một lần nữa):</p>
+      <pre>git tag -d $(git tag -l)</pre>
       <h3>Lời kết</h3>
       <p>Trong bài này chắc bạn đã thấy được sức mạnh của Git là như thế nào và
         khi nó kết hợp với branch thì sẽ rất tuyệt vời trong việc phân chia
