@@ -1,3 +1,6 @@
+import LIBRARIES from './data.js';
+import OptionItem from './option-item.js';
+
 new Vue({
     el: '#app',
 
@@ -95,7 +98,7 @@ new Vue({
 
         /**
          * Lấy tên file từ URL.
-         * @param {String} url 
+         * @param {String} url
          */
         extractFilename(url) {
             return url.split('/').pop();

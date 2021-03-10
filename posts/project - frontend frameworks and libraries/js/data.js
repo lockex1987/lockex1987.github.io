@@ -1,4 +1,4 @@
-const LIBRARIES = [
+export default [
     {
         code: 'jquery',
         name: 'jQuery',
@@ -25,7 +25,7 @@ const LIBRARIES = [
         cssPath: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
         jsPath: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js',
         jsMap: 'bootstrap.min.js.map',
-        link: 'https://lockex1987.github.io/archive/bootstrap%20-%20get%20started/',
+        link: 'https://lockex1987.github.io/posts/bootstrap%20-%20get%20started/',
         note: 'File JS phụ thuộc jQuery, Popper'
     },
     {
@@ -51,8 +51,8 @@ const LIBRARIES = [
         link: 'https://lockex1987.github.io/posts/project%20-%20common%20validation/'
     },
 	{
-        code: 'common.js',
-        name: 'Common JS',
+        code: 'CommonUtils',
+        name: 'CommonUtils',
         jsPath: '../../js/common.js',
         link: 'https://lockex1987.github.io/posts/js%20-%20common/'
     },
@@ -61,7 +61,7 @@ const LIBRARIES = [
         name: 'Datatable',
         cssPath: '../project - datatable/css/datatable.css',
         jsPath: '../project - datatable/js/datatable.js',
-        note: 'Đã bao gồm common.js và Pagi',
+        note: 'Đã bao gồm CommonUtils và Pagi',
         link: 'https://lockex1987.github.io/posts/project%20-%20datatable/'
     },
     {
@@ -144,7 +144,7 @@ const LIBRARIES = [
         jsPath: 'https://code.highcharts.com/highcharts.js',
         jsMap: 'highcharts.js.map',
         savePath: 'highcharts',
-        link: 'https://lockex1987.github.io/archive/highcharts%20-%20learning/'
+        link: 'https://lockex1987.github.io/posts/highcharts%20-%20learning/'
     },
     {
         code: 'highcharts-exporting',
@@ -199,7 +199,7 @@ const LIBRARIES = [
         name: 'Vue',
         version: '2.6.11',
         jsPath: 'https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js',
-        link: 'https://lockex1987.github.io/archive/vue%20-%20get%20started/'
+        link: 'https://lockex1987.github.io/posts/vue%20-%20get%20started/'
     },
     {
         code: 'vue-router',
