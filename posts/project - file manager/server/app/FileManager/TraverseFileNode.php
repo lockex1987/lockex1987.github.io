@@ -59,7 +59,8 @@ class TraverseFileNode
 
         $arr = scandir($this->rootFolder . $folderPath);
         foreach ($arr as $f) {
-            if (!in_array($f, ['.', '..'])) {
+            // Các thư mục .Trash-1000 và lost+found là trên ổ cứng Linux
+            if (!in_array($f, ['.', '..', '.Trash-1000', 'lost+found'])) {
                 $path = $folderPath . $f;
                 
                 if (is_dir($this->rootFolder . $path)) {
