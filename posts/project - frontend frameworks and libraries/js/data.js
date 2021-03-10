@@ -50,6 +50,12 @@ const LIBRARIES = [
         jsPath: '../project - common validation/js/common-validation.js',
         link: 'https://lockex1987.github.io/posts/project%20-%20common%20validation/'
     },
+	{
+        code: 'common.js',
+        name: 'Common JS',
+        jsPath: '../../js/common.js',
+        link: 'https://lockex1987.github.io/posts/js%20-%20common/'
+    },
     {
         code: 'datatable',
         name: 'Datatable',

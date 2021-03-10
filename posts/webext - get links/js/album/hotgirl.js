@@ -4,6 +4,7 @@ import GetLinksUtils from '../utils.js';
 /**
  * Lấy các ảnh từ trang hotgirl.biz
  * https://hotgirl.biz/xiuren-vol-2006-shi-shi-kiki/
+ * https://hotgirl.biz/xiuren-no-3121/
  */
 async function getImagesHotgirl(postUrl, folder) {
     const doc = await GetLinksUtils.getDocumentFromUrl(postUrl);

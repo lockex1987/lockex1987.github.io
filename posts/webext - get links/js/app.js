@@ -1,10 +1,16 @@
-/**
- * Manga downloader (download được mangakakalot):
- *     https://chrome.google.com/webstore/detail/manga-downloader/fojcpnmhelbpakmgaakfhjlmjokocgjg/related?hl=en
- */
+/*
+Manga downloader (download được mangakakalot):
+    https://chrome.google.com/webstore/detail/manga-downloader/fojcpnmhelbpakmgaakfhjlmjokocgjg/related?hl=en
+
+Chuyển get links thành web extension để không phải sử dụng CORS Unblock
+
+Muốn chạy được Vue trong web extension cần thêm cấu hình sau ở manifest.json:
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+*/
 
 import { WEBSITE_LIST } from './websites.js';
 import GetLinksUtils from './utils.js';
+
 
 const modules = {};
 
