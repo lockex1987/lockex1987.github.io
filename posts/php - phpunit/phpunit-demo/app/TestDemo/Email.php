@@ -1,11 +1,15 @@
 <?php
-declare(strict_types=1);
 
-final class Email
+namespace Cttd\TestDemo;
+
+use InvalidArgumentException;
+
+
+class Email
 {
-    private $email;
+    private string $email;
 
-    private function __construct(string $email)
+    public function __construct(string $email)
     {
         $this->ensureIsValidEmail($email);
         $this->email = $email;

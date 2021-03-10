@@ -1,9 +1,13 @@
 <?php
-declare(strict_types=1);
+
+namespace Tests\Cttd\TestDemo;
 
 use PHPUnit\Framework\TestCase;
+use Cttd\TestDemo\Email;
+use InvalidArgumentException;
 
-final class EmailTest extends TestCase
+
+class EmailTest extends TestCase
 {
     public function testCanBeCreatedFromValidEmailAddress(): void
     {
@@ -16,7 +20,6 @@ final class EmailTest extends TestCase
     public function testCannotBeCreatedFromInvalidEmailAddress(): void
     {
         $this->expectException(InvalidArgumentException::class);
-
         Email::fromString('invalid');
     }
 

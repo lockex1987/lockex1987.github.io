@@ -1,8 +1,10 @@
 <?php
-namespace Test;
+
+namespace Tests\Cttd\TestDemo;
 
 use PHPUnit\Framework\TestCase;
-use App\URL;
+use Cttd\TestDemo\URL;
+
 
 class URLTest extends TestCase
 {

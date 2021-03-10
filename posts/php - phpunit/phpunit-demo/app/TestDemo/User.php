@@ -1,5 +1,7 @@
 <?php
-namespace App;
+
+namespace Cttd\TestDemo;
+
 
 class User
 {

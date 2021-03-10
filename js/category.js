@@ -14,17 +14,17 @@ const CAT_THUMBS = {
     vue: 'programming/vue.svg',
     project: 'programming/app store.svg',
     story: 'programming/epub.svg',
-    docker: 'programming/docker.svg',
     git: 'programming/git.svg',
-    elasticsearch: 'programming/elasticsearch.svg',
     redis: 'programming/redis.svg',
-    nginx: 'programming/nginx.svg',
     node: 'programming/node.svg',
-    python: 'programming/python.svg',
-    webrtc: 'programming/webrtc.svg',
-    composer: 'programming/composer.svg',
     webext: 'programming/web-extension.png',
-    it: 'programming/it.png'
+    it: 'programming/it.png',
+	
+	// Gộp các mục sau
+	python: 'programming/python.svg',
+    webrtc: 'programming/webrtc.svg',
+	nginx: 'programming/nginx.svg',
+	elasticsearch: 'programming/elasticsearch.svg',
 };
 
 /**

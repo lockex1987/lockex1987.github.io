@@ -1,9 +1,11 @@
 <?php
-namespace App;
+
+namespace Cttd\TestDemo;
+
 
 class URL
 {
-    public function sluggify($string, $separator = '-', $maxLength = 96)
+    public function sluggify(string $string, string $separator = '-', int $maxLength = 96): string
     {
         $title = $this->filterVietnamese($string);
         $title = preg_replace("%[^-/+|\w ]%", '', $title);
@@ -12,7 +14,8 @@ class URL
         return $title;
     }
 
-    private function filterVietnamese($str) {
+    private function filterVietnamese(string $str): string
+    {
         $unicode = [
             'a' => 'á|à|ả|ã|ạ|ă|ắ|ặ|ằ|ẳ|ẵ|â|ấ|ầ|ẩ|ẫ|ậ',
             'd' => 'đ',
@@ -21,7 +24,7 @@ class URL
             'o' => 'ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ',
             'u' => 'ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự',
             'y' => 'ý|ỳ|ỷ|ỹ|ỵ',
-			'A' => 'Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ',
+            'A' => 'Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ',
             'D' => 'Đ',
             'E' => 'É|È|Ẻ|Ẽ|Ẹ|Ê|Ế|Ề|Ể|Ễ|Ệ',
             'I' => 'Í|Ì|Ỉ|Ĩ|Ị',
@@ -29,10 +32,10 @@ class URL
             'U' => 'Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự',
             'Y' => 'Ý|Ỳ|Ỷ|Ỹ|Ỵ',
         ];
-        
+
         foreach ($unicode as $nonUnicode => $uni) {
             $str = preg_replace("/($uni)/i", $nonUnicode, $str);
         }
-		return $str;
+        return $str;
     }
 }

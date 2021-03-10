@@ -2,7 +2,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Cài đặt">
+    <meta name="description" content="Cài đặt, proxy">
     <title>Sử dụng Composer</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -381,6 +381,17 @@ class Convert<br>{
       <p>Bạn hãy thử kiểm tra xem thư viện trên tải về như thế nào, nó sẽ nằm
         trong <code>vendor</code> của bạn, dễ dàng sử dụng với namespace <code>XuanthuLab\Tools\Convert</code></p>
       <p>Chúc thành công!</p>
+      <h3>Cấu trúc thư mục</h3>
+      <p>Nếu <code>type</code> là <code>project</code> thì nên để thư mục <code>app</code>.</p>
+      <p>Nếu <code>type</code> là <code>library</code> thì nên để thư mục <code>src</code>.</p>
+      <pre>{
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "MyCompany\\": "app/"
+        }
+    }
+}</pre>
       <h3>Tham khảo</h3>
       <p><a href="https://xuanthulab.net/su-dung-composer-trong-lap-trinh-php.html"
           target="_blank">Sử dụng Composer trong lập trình PHP</a></p>

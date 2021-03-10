@@ -1,8 +1,11 @@
 <?php
-namespace Test;
 
-use App\User;
+namespace Tests\Cttd\TestDemo;
+
+
 use PHPUnit\Framework\TestCase;
+use Cttd\TestDemo\User;
+
 
 class UserTest extends TestCase
 {
@@ -17,7 +20,7 @@ class UserTest extends TestCase
         $this->assertEquals($expectedPasswordResult, $currentUser['password']);
 
         $cryptedPassword = $this->invokeMethod($user, 'cryptPassword', array('passwordToCrypt'));
-        //echo "\ncryptedPassword " . $cryptedPassword . "\n";
+        // echo "\ncryptedPassword " . $cryptedPassword . "\n";
     }
 
     /**
