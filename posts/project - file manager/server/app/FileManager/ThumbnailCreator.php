@@ -1,5 +1,6 @@
 <?php
 
+namespace Cttd\FileManager;
 
 /**
  * Tạo ảnh thumbnail của các file comic (cbz, cbr).

@@ -1,8 +1,16 @@
 <?php
 
-include_once 'bootstrap.php';
+include_once 'vendor/autoload.php';
+
+use Cttd\FileManager\TraverseFileNode;
 
 
-$fileNode = new TraverseFileNode();
-// $rootFolder = $argv[1];
-$fileNode->scanFolder($rootFolder);
+function scanFolderAndInsertIntoRedis(): void
+{
+    $fileNode = new TraverseFileNode();
+    // $rootFolder = $argv[1];
+    $rootFolder = ROOT_FOLDER;
+    $fileNode->scanFolder($rootFolder);
+}
+
+scanFolderAndInsertIntoRedis();

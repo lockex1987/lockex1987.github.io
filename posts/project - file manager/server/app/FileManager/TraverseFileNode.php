@@ -1,5 +1,7 @@
 <?php
 
+namespace Cttd\FileManager;
+
 
 // https://github.com/phpredis/phpredis/
 // Nên dùng phpredis extension thay cho thư viện Predis

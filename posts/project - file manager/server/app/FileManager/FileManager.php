@@ -1,5 +1,8 @@
 <?php
 
+namespace Cttd\FileManager;
+
+
 class FileManager
 {
     // Các thư mục hệ thống, không hiển thị cho người dùng
@@ -31,7 +34,7 @@ class FileManager
                     'isDir' => $isDir,
                     'size' => $isDir ? count(array_diff(scandir($absPath), ['.', '..'])) : filesize($absPath), // dung lượng file, tính theo byte (B)
                     // 'url' => '/data-drive/' . $absPath
-                    'isTextFile' => $isDir ? false : isTextFile($absPath)
+                    'isTextFile' => $isDir ? false : CommonUtils::isTextFile($absPath)
                     // 'mime' => $isDir ? 'folder' : mime_content_type($absPath)
                 ]);
             }

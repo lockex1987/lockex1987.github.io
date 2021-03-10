@@ -1,12 +1,16 @@
 <?php
 
-include_once 'bootstrap.php';
+include_once 'vendor/autoload.php';
 
-// Thư mục đầu vào
-$folder = $_GET['folder'];
+use Cttd\FileManager\FileManager;
+use Cttd\FileManager\CommonUtils;
 
-// Liệt kê thư mục
-$result = FileManager::listFolder($rootFolder . $folder);
 
-// Trả về cho client
-responseJson($result);
+function handleRequest()
+{
+    $folder = $_GET['folder'];
+    $result = FileManager::listFolder(ROOT_FOLDER . $folder);
+    CommonUtils::responseJson($result);
+}
+
+handleRequest();

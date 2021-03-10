@@ -1,16 +1,24 @@
 <?php
 
-include_once 'bootstrap.php';
+include_once 'vendor/autoload.php';
 
-// Lấy tham số JSON từ request
-$params = getJsonParams();
-$content = $params->content;
-$filePath = $rootFolder . $params->filePath;
+use Cttd\FileManager\CommonUtils;
 
-$result = file_put_contents($filePath, $content);
-$code = $result ? 0 : 1;
 
-// Trả về cho client
-responseJson([
-    'code' => $code
-]);
+function handleRequest(): void
+{
+    // Lấy tham số JSON từ request
+    $params = CommonUtils::getJsonParams();
+    $content = $params->content;
+    $filePath = ROOT_FOLDER . $params->filePath;
+
+    $result = file_put_contents($filePath, $content);
+    $code = $result ? 0 : 1;
+
+    // Trả về cho client
+    CommonUtils::responseJson([
+        'code' => $code
+    ]);
+}
+
+handleRequest();

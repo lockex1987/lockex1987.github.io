@@ -1,5 +1,9 @@
 <?php
 
+namespace Cttd\FileManager;
+
+use Redis;
+
 class RedisConnection
 {
     public static function connectRedis(): Redis

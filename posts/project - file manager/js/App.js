@@ -70,7 +70,6 @@ export default {
          * Lấy danh sách file và folder trong thư mục hiện tại.
          */
         async listFolderContent() {
-            /*
             const url = 'server/list_files.php?folder=' + encodeURIComponent(this.folder);
             const data = await fetch(url).then(resp => resp.json());
 
@@ -88,9 +87,8 @@ export default {
 
             // Reset lại thông tin tìm kiếm để hiển thị tất cả
             this.searchQuery = '';
-            */
 
-            this.listSizes();
+            // this.listSizes();
         },
 
         /**

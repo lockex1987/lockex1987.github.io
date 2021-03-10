@@ -1,7 +1,14 @@
 <?php
 
-include_once 'bootstrap.php';
+include_once 'vendor/autoload.php';
 
-$redis = RedisConnection::connectRedis();
+use Cttd\FileManager\RedisConnection;
 
-$redis->publish('chan-1', 'hello, world!'); // send message
+
+function publishToRedis(): void
+{
+    $redis = RedisConnection::connectRedis();
+    $redis->publish('chan-1', 'hello, world!');
+}
+
+publishToRedis();
