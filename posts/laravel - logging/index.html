@@ -83,7 +83,7 @@
       <p>Lựa chọn <code>debug</code> bên trong <code>config/app.php</code> cho
         phép thông tin về error thực sự hiển thị cho người dùng. Mặc định, cấu
         hình này thiết lập dựa trên biến môi trường <code>APP_DEBUG</code>, lưu
-        trong file <code>.env</code>. </p>
+        trong file <code>.env</code>.</p>
       <p>Trong môi trường phát triển local, bạn nên đặt giá trị biến <code>APP_DEBUG</code>
         thành <code>true</code>. Đối với môi trường production, giá trị này
         phải luôn luôn là <code>false</code>. Nếu giá trị này là <code>true</code>
@@ -99,8 +99,8 @@
       <pre><code>'log' =&gt; 'daily'</code></pre>
       <h3>Giới hạn thời gian file daily log</h3>
       <p>Khi bạn sử dụng chế độ <code>daily</code> log, mặc định Laravel chỉ để
-        lại files log năm ngày gần nhất. Nếu bạn muốn thay đổi số ngày đó, bạn
-        cần thêm 1 dòng <code>log_max_files</code> vào trong file <code>app</code>:</p>
+        lại files log 5 ngày gần nhất. Nếu bạn muốn thay đổi số ngày đó, bạn cần
+        thêm 1 dòng <code>log_max_files</code> vào trong file <code>app</code>:</p>
       <pre><code>'log_max_files' =&gt; 30</code></pre>
       <h3>Các mức độ của log</h3>
       <p>Khi sử dụng Monolog, nội dung tin nhắn log có thể khác cấp độ với nhau.
@@ -109,8 +109,8 @@
         thêm <code>log_level</code> trong file <code>app.php</code>.</p>
       <p>Khi tùy biến đã được cấu hình, Laravel sẽ log tất cả những cấp độ cao
         hơn hoặc bằng cấp độ tùy biến. Ví dụ, mặc định <code>log_level</code>
-        của <code>error</code> sẽ log nội dung <strong>error</strong>, <strong>critical</strong>,
-        <strong>alert</strong>, and <strong>emergency</strong>:</p>
+        của <code>error</code> sẽ log nội dung <code>error</code>, <code>critical</code>,
+        <code>alert</code>, và <code>emergency</code>:</p>
       <pre><code>'log_level' =&gt; env('APP_LOG_LEVEL', 'error'),</code></pre>
       <p> Monolog quy định mức độ theo thứ tự từ nhỏ đến theo theo thứ tự sau:</p>
       <ul>
@@ -125,8 +125,8 @@
       </ul>
       <h3>Tùy biến cấu hình Monolog</h3>
       <p>Nếu bạn muốn điều chỉnh toàn bộ quy trình Monolog trong ứng dụng của
-        bạn, bạn có thể sử dụng phương thức <code>configureMonologUsing</code>
-        method. Bạn nên gọi phương thức xử lý này trong file <code>bootstrap/app.php</code>
+        bạn, bạn có thể sử dụng phương thức <code>configureMonologUsing</code>.
+        Bạn nên gọi phương thức xử lý này trong file <code>bootstrap/app.php</code>
         ngay trước biến <code>$app</code> được trả về:</p>
       <pre>$app-&gt;configureMonologUsing(function ($monolog) {
     $monolog-&gt;pushHandler(...);
@@ -135,7 +135,7 @@
 return $app;</pre>
       <h3>Logging</h3>
       <p>Laravel cung cấp một lớp abstraction đơn giản ở trên thư viện <a href="http://github.com/seldaek/monolog">Monolog</a>.
-        Mặc định, Laravel cấu hình tạo ra file log cho ứng dụng cuản bạn trong
+        Mặc định, Laravel cấu hình tạo ra file log cho ứng dụng của bạn trong
         thư mục <code>storage/logs</code>. Bạn có thể viết thêm nội dung vào
         trong logs sử dụng <code>Log</code> facade:</p>
       <pre class="text-pre-wrap">&lt;?php
@@ -145,18 +145,18 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-
+<br>
 class UserController extends Controller
 {
     /**
      * Show the profile for the given user.
      *
-     * @param    int  $id
-     * @return  Response
+     * @param int $id ID người dùng
+     * @return Response
      */
     public function showProfile($id)
     {
-        Log::info('Showing user profile for user: '.$id);
+        Log::info('Showing user profile for user: ' . $id);
 
         return view('user.profile', ['user' =&gt; User::findOrFail($id)]);
     }
@@ -178,9 +178,9 @@ class UserController extends Controller
         log. Các dữ liệu này sẽ được format và hiển thị cùng với nội dung log:</p>
       <pre>Log::info('User failed to login.', ['id' =&gt; $user-&gt;id]);</pre>
       <h4>Truy cập vào đối tượng phía dưới Monolog</h4>
-      <p>Monolog có một số hander bổ sung mà bạn có thể sử dụng nó cho việc log.
-        Nếu cần thiết, bạn có thể truy cập vào đối tường phía dưới của Monolog
-        bằng cách:</p>
+      <p>Monolog có một số handler bổ sung mà bạn có thể sử dụng nó cho việc
+        log. Nếu cần thiết, bạn có thể truy cập vào đối tượng phía dưới của
+        Monolog bằng cách:</p>
       <pre><code>$monolog = Log::getMonolog();</code></pre>
       <h3>Ghi log cho tiến trình</h3>
       <p>Nhiều lúc, bạn có nhu cầu ghi log cho các tiến trình. Bạn thiết lập

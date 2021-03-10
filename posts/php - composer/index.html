@@ -1,0 +1,392 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cài đặt">
+    <title>Sử dụng Composer</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Sử dụng Composer</h2>
+      <p>Tìm hiểu Composer; cài đặt và sử dụng Composer để quản lý, cài đặt các
+        thư viện; phân phối thư viện lên Packagist.</p>
+      <h3>Composer là gì</h3>
+      <p>Composer là một công cụ quản lý các dependency trong PHP. Composer quản
+        lý thư viện dựa trên từng project PHP riêng biệt của bạn, nó cài đặt các
+        thư viện này vào một thư mục có tên <code>vendor</code> trong dự án
+        (mỗi dự án có một thư mục <code>vendor</code> riêng). Composer tự động
+        sinh ra file <code>vendor/autoload.php</code>, từ file này giúp bạn nạp
+        các thư viện đã cài đặt. Nó áp dụng cơ chế tự động nạp theo chuẩn <a href="https://xuanthulab.net/psr-4-autoloader-tieu-chuan-viet-tu-dong-nap-khoi-tao-php.html"
+          target="_blank">PSR-4 Autoloader</a> và cả <code>PSR-0</code> (lỗi
+        thời).</p>
+      <h3>Lợi ích khi sử dụng Composer</h3>
+      <p>Nói chung là các dự án PHP ngày nay là không thể thiếu Composer, vì
+        chúng thường sử dụng rất nhiều loại thự viện. Nếu cài đặt thư viện thủ
+        công thật sự là ác mộng (<i>tích hợp, cập nhật cực cừ mệt mỏi</i>). Khi
+        có Composer dùng thư viện nào chỉ việc khai báo hay gõ tích hợp, khi cập
+        nhật thự viện nào đó, nó cũng tự động giúp bạn cập nhật luôn các thư
+        viện khác mà thư viện cập nhật dùng tới.</p>
+      <h3>Cài đặt Composer</h3>
+      <p>Composer được viết bằng PHP mã đóng gói dạng <code>PHAR</code>, nên
+        muốn dùng Composer phải chắc chắn máy đã cài đặt PHP. Từ terminal gõ
+        lệnh sau kiểm tra xem máy có PHP hay chưa, nếu chưa có bạn phài cài PHP
+        trước.</p>
+      <pre>php --version</pre>
+      <h4>Trên Linux</h4>
+      <p>Dùng các lệnh sau:</p>
+      <pre>curl -sS https://getcomposer.org/installer \<br>    | sudo php -- --install-dir=/usr/local/bin \<br>    --filename=composer
+<br>sudo chown -R $USER $HOME/.composer</pre>
+      <h4>Trên Windows</h4>
+      <p>Download file <code>composer.phar</code> ở địa chỉ sau:</p>
+      <p><a href="https://getcomposer.org/download/" target="_blank">Download
+          Composer</a></p>
+      <p>Tạo file <code>composer.bat</code> bên cạnh file composer.phar với nội
+        dung sau:</p>
+      <pre>@php "%~dp0composer.phar" %*
+</pre>
+      <p>Thiết lập biến môi trường PATH trỏ đến thư mục chứa 2 file trên.</p>
+      <h4>Kiểm tra</h4>
+      <pre>composer --version</pre>
+      <h4>Tham khảo</h4>
+      <p><a href="https://getcomposer.org/doc/00-intro.md" target="_blank">Introduction
+          Composer</a></p>
+      <h3>Kiểm tra Composer và vài lệnh tổng quan</h3>
+      <p>Từ dòng lệnh terminal gõ cách lệnh:</p>
+      <pre># Kiểm tra phiên bản Composer
+composer --version
+
+# Cập nhật bản thân Composer
+composer selfupdate
+
+# Xóa cache composer<br># Xóa đi các thư viện tải sẵn trong cache để bắt nó tải lại
+composer clearcache
+
+# Tìm các gói thư viện
+composer search &lt;từ tìm kiếm&gt;
+</pre>
+      <h3>Composer cho một dự án mới</h3>
+      <p>Mọi thiết lập Composer cho dự án đều chứa trong file <code>composer.json</code>,
+        nếu chưa có file này cho dự án thì bắt đầu khởi tạo như sau:</p>
+      <pre>composer init
+</pre>
+      <p>Sau lệnh này nó yêu cầu bạn nhập một số thông tin của dự án, hãy nhập
+        thông tin của bạn vào.</p>
+      <p>Ví dụ:</p>
+      <pre>{
+    "name": "huyennv9/demo-composer",
+    "description": "Demo",
+    "require": {}
+}</pre>
+      <p>Sau này, các tùy biến, thiết lập, tích hợp thư viện trên dự án của bạn
+        sẽ tự động cập nhật vào file này.</p>
+      <h3>Tích hợp thư viện vào dự án bằng Composer</h3>
+      <p>Trước hết xác định xem dự án của bạn cần thư viện nào, tìm tại <a href="https://packagist.org/"
+          target="_blank">packagist.org</a>.</p>
+      <p>Ví dụ, bạn muốn sử dụng thư viện <a href="https://packagist.org/packages/monolog/monolog"
+          target="_blank">monolog/monolog</a> phiên bản mới nhất (thư viện lưu
+        log thông dụng cho PHP), thì từ dòng lệnh gõ:</p>
+      <pre>composer require monolog/monolog
+</pre>
+      <p>Sau lệnh này, Composer sẽ tải tất cả các thành phần để dùng được thư
+        viện <code>monolog/monolog</code> vào dự án của bạn, nó lưu tại <code>vendor</code>,
+        đồng thời cũng có luôn file <code>vendor/autoload.php</code>.</p>
+      <p>Mở lại file <code>composer.json</code> bạn thấy đã có thêm đoạn mã:</p>
+      <pre>{
+    "require": {
+        "monolog/monolog": "^1.24"
+    }
+}</pre>
+      <p>Điều này cho biết, dự án bạn dùng thư viện nào, sau này bạn chia sẻ dự
+        án (copy dự án đi cho khác) bạn không cần phải copy cả thư mục <code>vendor</code>,
+        mà chỉ cần file <code>composer.json</code>, Composer sẽ cập nhật lại <code>vendor</code>
+        cho bạn.</p>
+      <p>Ngoài cách gõ lệnh như trên, bạn cũng có thể viết thư viện cần dùng vào
+        <code>composer.json</code> rồi gọi lệnh:</p>
+      <pre>composer update
+</pre>
+      <p>Nó cũng sẽ kiểm tra và cài đặt tất cả các thư viện cần thiết nếu chưa
+        có. Ví dụ, giờ bạn lại muốn dùng thêm thư viên <a href="https://packagist.org/packages/filp/whoops"
+          target="_blank">filp/whoops</a>, phiên bản 2.3.1 (thư viện chuyên hiện
+        thị thông báo lỗi đẹp mắt - tiện dụng để debug).</p>
+      <p>Thay vì cách gõ lệnh như trên, bạn sẽ chỉnh sửa <code>composer.json</code>
+        thêm vào nội dung phần <code>require</code> nội dung mô tả thư viện
+        whoops: <code>"tên-thư-viện":"^phiên-bản-nhỏ-nhất"</code></p>
+      <pre>{
+    "require": {
+        "monolog/monolog": "^1.24",
+        "filp/whoops": "^2.3.1"
+    }
+}</pre>
+      <p>Sau đó gõ lệnh <code>composer update</code>, để cài đặt thư viện. Với
+        cách này bạn có thể liệt kê tất cả các thư viện cần dùng, rồi gõ một
+        lệnh để cài đặt.</p>
+      <p>Như trên đã nói, Composer sinh ra file <code>vendor/autoload.php</code>,
+        bạn chỉ việc <code>include</code>, là có thể sử dụng các thư viện.</p>
+      <p>Ví dụ, sử dụng thư viện <code>monolog/monolog</code> ở trên trong file
+        <code>index.php</code>:</p>
+      <pre class="out-of-box">&lt;?php
+include 'vendor/autoload.php';
+
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+$log = new Logger('name');
+$log-&gt;pushHandler(new StreamHandler('mylogfile.log', Logger::WARNING));
+
+$log-&gt;warning('ghi log');
+$log-&gt;error('ghi log abc');</pre>
+      <h3>Xóa thư viện khỏi dự án</h3>
+      <p>Nếu một thư viện nào đã tích hợp vào dự án (<code>vendor</code>) mà giờ
+        không muốn dùng đến nữa, thì loại bỏ bằng 1 trong hai cách sau:</p>
+      <p>Cách 1: Gõ lệnh <code>composer</code>:</p>
+      <pre>composer remove vendor/package
+</pre>
+      <p>Ví dụ, không muốn dùng đến <code>filp/whoops</code> thì gõ:</p>
+      <pre>composer remove filp/whoops
+</pre>
+      <p>Sau lệnh này, nó sẽ xóa thư viện ra khỏi <code>vendor</code>, cập nhật
+        lại <code>vendor/autoload.php</code>, <code>composer.json</code>, đảm
+        bảo thư viện không còn tồn tại.</p>
+      <p>Cách 2: Cập nhật <code>composer.json</code>:</p>
+      <p>Muốn loại bỏ thư viện nào, mở file <code>composer.json</code>, xóa tên
+        thư viện đó trong phần <code>require</code>, cuối cùng gõ lệnh:</p>
+      <pre>composer update</pre>
+      <h3>Locking trong Composer</h3>
+      <p>Locking là một trong những tính năng hữu ích nhất của Composer. Trước
+        tiên ta sẽ nói đến <code>composer.lock</code>. Công việc của nó là khóa
+        lại các version của các component đã sử dụng. Lock file có thể chắc chắn
+        rằng mọi người làm việc với các version giống nhau của các file.</p>
+      <p>Khi lần đầu tiên sử dụng Composer để lấy một dependency nó sẽ ghi chính
+        xác version vào file <code>composer.lock</code>. Ví dụ như nếu bạn chỉ
+        rõ <code>2.3.*</code> và <code>2.3.5</code> là version mới nhất thì
+        version được cài đặt sẽ là <code>2.3.5</code> và nó sẽ được đưa vào
+        trong lock file.</p>
+      <p>Giả sử sau 1 tuần có một developer gia nhập team của bạn. Trong thời
+        gian này dependency đã được update lên <code>2.3.6</code>. Nếu anh ta
+        sử dụng câu lệnh (<code>composer install</code>) thì sẽ nhận được <code>2.3.5</code>
+        vì nó đã được ghi trong file lock.</p>
+      <p>Tất nhiên bạn có thể quyết định việc update các dependency của mình.
+        Trong trường hợp đó, bạn sẽ thực hiện lệnh:</p>
+      <pre>composer update</pre>
+      <p>Nó sẽ lấy các version mới nhất và ghi chúng vào file lock.</p>
+      <p><strong>Chú ý</strong>: Không bao giờ chạy lệnh <code>composer update</code>
+        trong môi trường thực tế (production) mà hãy kiểm tra trên máy để tránh
+        tình trạng không tương thích.</p>
+      <h3>Chỉ định version cho các package trong Composer</h3>
+      <p>Trong <code>composer.json</code> trên chúng ta thấy ta đang sử dụng
+        version <code>1.12.0</code> nhưng nếu muốn dùng phiên bản khác thì sao?
+        Có 6 cách để xác định version mà bạn muốn, hãy tìm hiểu xem:</p>
+      <h4>Version range</h4>
+      <p>Bằng cách sử dụng các toán tử so sánh bạn có thể lấy version cao hơn,
+        thấp hơn hoặc tuân theo một số các nguyên tắc thậm chí phức tạp hơn như
+        sử dụng <code>AND</code> và <code>OR</code>. Các toán tử có thể là <code>&gt;</code>,
+        <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code> và <code>!=</code>.
+        <code>AND</code> được biểu diễn bằng một dấu cách hoặc dấu phẩy, <code>OR</code>
+        được biểu diễn bằng hai dấu gạch dọc: <code>||</code>.</p>
+      <p>Ví dụ <code>&gt;2.7</code> nghĩa là bất kỳ version nào trên <code>2.7.
+          &gt;2.7 &lt;=3.5</code> bao gồm các version từ <code>2.7</code> trở
+        lên tới <code>3.5</code> (bao gồm cả <code>3.5</code>).</p>
+      <h4>Wildcard version</h4>
+      <p>Bằng cách sử dụng một ký tự đại diện, bạn có thể xác định một pattern.
+        <code>x.x.*</code> sẽ bao gồm tất cả các version <code>x.x.0</code> trở
+        lên và trở xuống (tất nhiên cả <code>x.x</code>, nhưng không bao gồm <code>x.y.0</code>).</p>
+      <p>Ví dụ <code>2.3.*</code> sẽ bao gồm từ <code>2.3.0</code> trở lên và
+        trừ <code>2.4</code> Nó tương đương với <code>&gt;=2.3.0 &lt;2.4</code>.</p>
+      <h4>Hyphen range</h4>
+      <p>Hyphen range cho phép bạn xác định range dễ dàng hơn, mặc dù bạn sẽ cảm
+        thấy bối rối hơn một chút vì cách nó xử lý các partial version. Full
+        version gồm ba số trong trường hợp hyphen ranges thực hiện đầy đủ ý
+        nghĩa của nó</p>
+      <p><code>2.0.0 - 3.0.0</code> nghĩa là tất cả các version bao gồm <code>2.0.0</code>
+        trở lên và bao gồm <code>3.0.0</code> trở xuống.</p>
+      <p><code>2.0 - 3.0</code> bao gồm bất kỳ version nào kể cả <code>2.0</code>
+        trở lên nhưng không bao gồm version <code>3.1</code>.</p>
+      <p>Lý do cho hành động tưởng chừng như kỳ lạ này là phần bên trái dấu gạch
+        ngang nghĩa là bao gồm, còn phần bên phải hoàn toàn chỉ là một ký tự đại
+        diện. Biểu thức trên sẽ tương đương với <code>&gt;=2.1 &lt;3.1.0</code>.</p>
+      <h4>Tiddle range</h4>
+      <p>Tiddle range rất tuyệt vời để đáp ứng các yêu cầu nhỏ nhất cho việc xác
+        định version và chấp nhận bất kỳ version nào trở lên, nhưng không bao
+        gồm chính nó. Nếu chỉ rõ là <code>~3.6</code> thì bạn chấp nhận các
+        version từ <code>3.6</code> trở lên nhưng không bao gồm <code>4.0.</code></p>
+      <p>Method này tương đương với <code>&gt;-3.6 &lt;4.0</code>.</p>
+      <h4>Caret range</h4>
+      <p>Caret range có nghĩa là chấp nhận tất cả các phiên bản hiện tại tính từ
+        nó nhưng không bao gồm phiên bản lớn hơn. Ví dụ <code>^3.3.5</code> bạn
+        chấp nhận bất kỳ version nào trở lên, nhưng không bao gồm <code>4.0</code>.</p>
+      <h4>Dev-Master</h4>
+      <p>Với dev-master bạn đang giữ version mới nhất được phát triển nhưng
+        không được tag với một version number cụ thể. Điều này có thể tốt trong
+        khi phát triển nhưng bạn cần nhận thức được sự tiềm tàng về bug là cao
+        hơn so với các version kia.</p>
+      <h3>Composer require-dev</h3>
+      <p>Các package chỉ phục vụ lúc phát triển.</p>
+      <p>Composer cho phép bạn xác định các dependency cho môi trường dev. Điều
+        này được thực hiện bằng cách xác định các dependency của bạn trong mảng
+        <code> require-dev</code> thay vì mảng <code>require</code>.</p>
+      <pre>{
+    "name": "freetuts/my_project",
+    "description": "My New Project",
+    "authors": [
+        {
+            "name": "Dinh Quoc Han",
+            "email": "admin@freetuts.net"
+        }<br>    ],
+    "require": {
+        "monolog/monolog": "1.12.0"
+    },
+    "require-dev" : {<br>        "fzaninotto/faker": "^1.4"
+    }
+}</pre>
+      <p><code>Faker</code> là một thư viện tạo ra các dữ liệu mẫu. Điều này là
+        rất tốt trong khi bạn đang dev để test thử nhưng khi đã public sản phẩm
+        thì nó lại không thực sự cần thiết. Nếu muốn loại trừ các yêu cầu phát
+        triển, bạn cần thực hiện lệnh install hoặc update với tùy chọn –no-dev:</p>
+      <pre>composer install --no-dev</pre>
+      <h3>Cấu hình proxy cho Composer</h3>
+      <p>Thiết lập proxy cho shell.</p>
+      <h4>Windows</h4>
+      <pre>set http_proxy=http://192.168.103.25:80
+set https_proxy=http://192.168.103.25:80
+
+echo %http_proxy%
+echo %https_proxy%
+
+set http_proxy=
+set https_proxy=</pre>
+      <h4>Linux</h4>
+      <pre>export http_proxy=http://192.168.103.25:80
+export https_proxy=http://192.168.103.25:80
+
+echo $http_proxy
+echo $https_proxy
+
+unset http_proxy
+unset https_proxy</pre>
+      <h3>Đưa thư viện lưu trên Packagist</h3>
+      <p>Nếu bạn có một thư viện và muốn lưu trên <a href="https://packagist.org/"
+          target="_blank">packagist.org</a> để mọi người có thể cài vào dự án
+        của họ bằng Composer thì làm thế nào?</p>
+      <p>Đây là các bước làm</p>
+      <ul>
+        <li>Phát triển thư viện, có file <code>composer.json</code> rõ ràng.</li>
+        <li>Bạn sử dụng git để commit thư viện của bạn, sau khi hoàn thành push
+          toàn bộ lên một server, chẳng hạn GitHub.</li>
+        <li>Đăng ký một tài khoản trên packagist.org, đăng nhập vào, rồi vào mục
+          <a href="https://packagist.org/packages/submit" target="_blank">Submit</a>.
+          Đơn giản là dán đường link của GitHub đến dự án của bạn, nhấn Check!
+          Thế là xong.</li>
+      </ul>
+      <p>Bây giờ thực hiện thử đăng một thư viện, các bước làm từ đầu.</p>
+      <h4>Code PHP thư viện</h4>
+      <p>Ví dụ đơn giản này, sẽ tạo một thư viện có chức năng convert chữ tiếng
+        Việt có dấu sang dạng không dấu, ví dụ <code>Xin Chào</code> thành <code>xin
+          chao</code>.</p>
+      <p>Thư viện sẽ đặt tên như sau: chọn tên vendor là <code>XuanthuLab</code>
+        (sẽ dùng làm namespace cấp 1), thư viện lưu ở thư mục <code>src/</code>,
+        trong thư mục này tạo ra thư mục <code>Tools</code>, trong đó có file
+        php <code>src/Tools/Convert.php</code> với nội dung là xây dựng một lớp
+        Convert như sau:</p>
+      <pre>&lt;?php<br>
+namespace XuanthuLab\Tools;
+<br>
+class Convert<br>{
+    public static  $decomposed  = ["à","á","ạ","ả","ã","â","ầ","ấ","ậ","ẩ","ẫ","ă", "ằ","ắ","ặ","ẳ","ẵ","è","é","ẹ","ẻ","ẽ","ê","ề" ,"ế","ệ","ể","ễ", "ì","í","ị","ỉ","ĩ", "ò","ó","ọ","ỏ","õ","ô","ồ","ố","ộ","ổ","ỗ","ơ" ,"ò","ớ","ợ","ở","õ", "ù","ú","ụ","ủ","ũ","ư","ừ","ứ","ự","ử","ữ", "ỳ","ý","ỵ","ỷ","ỹ", "đ", "À","À","Ạ","Ả","Ã","Â","Ầ","Ấ","Ậ","Ẩ","Ẫ","Ă" ,"Ằ","Ắ","Ặ","Ẳ","Ẵ", "È","É","Ẹ","Ẻ","Ẽ","Ê","Ề","Ế","Ệ","Ể","Ễ", "Ì","Í","Ị","Ỉ","Ĩ", "Ò","Ó","Ọ","Ỏ","Õ","Ô","Ồ","Ố","Ộ","Ổ","Ỗ","Ơ" ,"Ờ","Ớ","Ợ","Ở","Ỡ", "Ù","Ú","Ụ","Ủ","Ũ","Ư","Ừ","Ứ","Ự","Ử","Ữ", "Ỳ","Ý","Ỵ","Ỷ","Ỹ", "Đ"];
+    public static  $precomposed = ["à","á","ạ","ả","ã","â","ầ","ấ","ậ","ẩ","ẫ","ă", "ằ","ắ","ặ","ẳ","ẵ","è","é","ẹ","ẻ","ẽ","ê","ề" ,"ế","ệ","ể","ễ", "ì","í","ị","ỉ","ĩ", "ò","ó","ọ","ỏ","õ","ô","ồ","ố","ộ","ổ","ỗ","ơ" ,"ờ","ớ","ợ","ở","ỡ", "ù","ú","ụ","ủ","ũ","ư","ừ","ứ","ự","ử","ữ", "ỳ","ý","ỵ","ỷ","ỹ", "đ", "À","Á","Ạ","Ả","Ã","Â","Ầ","Ấ","Ậ","Ẩ","Ẫ","Ă" ,"Ằ","Ắ","Ặ","Ẳ","Ẵ", "È","É","Ẹ","Ẻ","Ẽ","Ê","Ề","Ế","Ệ","Ể","Ễ", "Ì","Í","Ị","Ỉ","Ĩ", "Ò","Ó","Ọ","Ỏ","Õ","Ô","Ồ","Ố","Ộ","Ổ","Ỗ","Ơ" ,"Ờ","Ớ","Ợ","Ở","Ỡ", "Ù","Ú","Ụ","Ủ","Ũ","Ư","Ừ","Ứ","Ự","Ử","Ữ", "Ỳ","Ý","Ỵ","Ỷ","Ỹ", "Đ"];
+    public static  $latin       = ["a","a","a","a","a","a","a","a","a","a","a" ,"a","a","a","a","a","a", "e","e","e","e","e","e","e","e","e","e","e", "i","i","i","i","i", "o","o","o","o","o","o","o","o","o","o","o","o" ,"o","o","o","o","o", "u","u","u","u","u","u","u","u","u","u","u", "y","y","y","y","y", "d", "a","a","a","a","a","a","a","a","a","a","a","a" ,"a","a","a","a","a", "e","e","e","e","e","e","e","e","e","e","e", "i","i","i","i","i", "o","o","o","o","o","o","o","o","o","o","o","o" ,"o","o","o","o","o", "u","u","u","u","u","u","u","u","u","u","u", "y","y","y","y","y", "d"];
+
+    public static function convertLatin($str)<br>    {
+        $str = str_replace(self::$decomposed, self::$latin, str_replace(self::$precomposed, self::$latin, $str));
+        return mb_strtolower($str);
+    }
+}</pre>
+      <h4>Cấu hình Composer</h4>
+      <p>Chạy lệnh khởi tạo Composer và nhập các thông tin cần thiết để có được
+        file <code>composer.json</code>:</p>
+      <pre>composer init
+</pre>
+      <p>Giả sử thư viện này yêu cầu cài đặt một thư viện khác ví dụ <code>monolog/monolog</code>,
+        chạy lệnh:</p>
+      <pre>composer require monolog/monolog
+</pre>
+      <p>Mở <code>composer.json</code> ra, thêm vào autoload PSR-4 cho thư viện
+        của bạn, bằng đoạn code:</p>
+      <pre>"autoload": {
+    "psr-4": {
+        "XuanthuLab\\": "src/"
+    }
+}</pre>
+      <p>File <code>composer.json</code> cuối cùng như sau:</p>
+      <pre>{
+    "name": "xuanthulabnet/latinurl",
+    "description": "Convert VietNam Url",
+    "authors": [
+        {
+            "name": "XTLAB",
+            "email": "xuanthulab.net@gmail.com"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "^1.24"
+    },
+    "autoload": {
+        "psr-4": {
+            "XuanthuLab\\": "src/"
+        }
+    }
+}</pre>
+      <h4>Tạo một repo GitHub để lưu code dự án</h4>
+      <p>Đơn giản, bạn đăng ký một tài khoản GitHub, tạo ra một repo để lưu
+        code. Mình đã tạo một Repo trên GitHub <a href="https://github.com/xuanthulabnet/latinurl"
+          target="_blank">https://github.com/xuanthulabnet/latinurl</a> để lưu
+        dự án này. Địa chỉ git là <code>git@github.com:xuanthulabnet/latinurl.git</code>.</p>
+      <p>Sử dụng GitHub như thế nào, làm thế nào để truy cập GitHub từ SSH hãy
+        tham khảo tại: <a href="https://xuanthulab.net/su-dung-github-de-lam-remote-repo-chua-code-du-an.html"
+          target="_blank">SỬ DỤNG GITHUB</a>.</p>
+      <h4>Tạo git local repo cho dự án và push lên GitHub</h4>
+      <p>Thực hiện các lệnh git sau:</p>
+      <pre># Khởi tạo local repo
+# git init
+
+# Chuẩn bị commit
+# git add .
+# git add -A
+
+# Thực hiện commit
+# git commit -m 'Init'
+
+# Tạo 1 tag, đánh dấu phiên bản (Ví dụ V1.0.0)
+# git tag v1.0.0
+
+# Thêm remote vào local
+# git remote add origin git@github.com:xuanthulabnet/latinurl.git
+
+# Push tất cả lên GitHub
+# git push --all
+# git push --tag
+</pre>
+      <p>Đến đây, tất cả code đã được chuyển lưu trên GitHub ở địa chỉ <code>https://github.com/xuanthulabnet/latinurl</code>.</p>
+      <h4>Submit vào Packagist</h4>
+      <p>Bạn đăng nhập vào <a href="https://packagist.org/" target="_blank">Packagist</a>,
+        sau đó bấm vào <a href="https://packagist.org/packages/submit" target="_blank">Submit</a></p>
+      <p>Dán địa chỉ GitHub của dự án <code>https://github.com/xuanthulabnet/latinurl</code>
+        vào hộp <code>Repository URL (Git/Svn/Hg)</code>, bấm nút <code>Check</code>,
+        chờ một chút là thư viện của bạn được chuyển vào <code>Packagist</code></p>
+      <p>Dự án trên sau khi submit, đã có tại địa chỉ <a target="_blank" href="https://packagist.org/packages/xuanthulabnet/latinurl">xuanthulabnet/latinurl</a></p>
+      <p>Giờ muốn tích hợp vào dự án bất kỳ, chỉ việc gõ:</p>
+      <pre>composer require xuanthulabnet/latinurl
+</pre>
+      <p>Bạn hãy thử kiểm tra xem thư viện trên tải về như thế nào, nó sẽ nằm
+        trong <code>vendor</code> của bạn, dễ dàng sử dụng với namespace <code>XuanthuLab\Tools\Convert</code></p>
+      <p>Chúc thành công!</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://xuanthulab.net/su-dung-composer-trong-lap-trinh-php.html"
+          target="_blank">Sử dụng Composer trong lập trình PHP</a></p>
+      <p><a href="https://freetuts.net/huong-dan-su-dung-composer-php-699.html"
+          target="_blank">Hướng dẫn sử dụng Composer PHP - Freetuts</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>
