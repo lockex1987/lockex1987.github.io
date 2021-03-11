@@ -94,7 +94,7 @@ function getPostList(string $rootFolder, string $adjustPath, array $oldList): ar
 
             // Thêm vào Elasticsearch
             // $postObject->content = $content;
-            insertPostIntoElasticsearch($postObject);
+            // insertPostIntoElasticsearch($postObject);
         }
     }
 
