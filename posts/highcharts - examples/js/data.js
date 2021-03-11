@@ -1,4 +1,14 @@
 export default [
+    {
+        title: 'Các thành phần của biểu đồ',
+        url: 'examples/components',
+        image: 'examples/components/images/components.png'
+    },
+	{
+        title: 'Tooltip',
+        url: 'examples/tooltip',
+        image: ''
+    },
 	{
         title: 'Async drilldown',
         url: 'examples/async-drilldown',

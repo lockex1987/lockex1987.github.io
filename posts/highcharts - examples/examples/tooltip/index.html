@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tooltip</title>
+
+    <link rel="icon" href="../../../../images/favicon.png">
+    <link rel="stylesheet" href="../../../../css/style.css">
+</head>
+
+<body>
+    <article>
+        <h2>Tooltip</h2>
+
+        <p>Dùng tùy chọn tooltip. Trong đó, chúng ta cũng có thể sử dụng tiếp các
+            tùy chọn như:</p>
+        <ul>
+        <li>formatter</li>
+        <li>pointFormat</li>
+        <li>headerFormat</li>
+        <li>footerFormat</li>
+        <li>shared</li>
+        <li>useHTML</li>
+        <li>enabled</li>
+        </ul>
+        <p>Xuất hiện</p>
+        <p>Format</p>
+        <p>Crosshair</p>
+        <p>Tham khảo <a href="https://www.highcharts.com/docs/chart-concepts/tooltip"
+
+            target="_blank">https://www.highcharts.com/docs/chart-concepts/tooltip</a>.</p>
+
+        <h3>Bắt đầu</h3>
+        <div id="container1"
+            style="height: 400px;"></div>
+
+        <h3>Point format number, decimal precision, two decimal places</h3>
+        <div id="container2"
+            style="height: 400px;"></div>
+
+        <h3>Point format, thousands separator, no decimal place</h3>
+        <div id="container3"
+            style="height: 400px;"></div>
+
+        <h3>Point format, thousands separator, one decimal place</h3>
+        <div id="container4"
+            style="height: 400px;"></div>
+    </article>
+    
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+
+    <script>
+        function drawChart1() {
+            Highcharts.chart('container1', {
+                tooltip: {
+                    // Tùy chỉnh hiển thị
+                    backgroundColor: {
+                        linearGradient: [0, 0, 0, 60],
+                        stops: [
+                            [0, '#FFFFFF'],
+                            [1, '#E0E0E0']
+                        ]
+                    },
+                    borderWidth: 1,
+                    borderColor: '#AAA',
+
+                    // Tùy chỉnh format
+                    // Sử dụng formatter
+                    formatter: function () {
+                        return 'The value for <b>' + this.x + '</b> is <b>' + this.y + '</b>, in series ' + this.series.name;
+                    }
+                },
+                xAxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                },
+                series: [{
+                        data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+                }]
+            });
+        }
+
+        function drawChart2() {
+            Highcharts.chart('container2', {
+                xAxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                },
+                tooltip: {
+                    pointFormat: 'Value: {point.y:.2f} mm'
+                },
+                series: [{
+                    data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+                }]
+            });
+        }
+
+        function drawChart3() {
+            Highcharts.chart('container3', {
+                xAxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                },
+                tooltip: {
+                    pointFormat: 'Value: {point.y:,.0f} mm'
+                },
+                series: [{
+                    data: [1029.9, 1071.5, 1106.4, 1129.2, 1144.0, 1176.0, 1135.6, 1148.5, 1216.4, 1194.1, 1095.6, 1054.4]
+                }]
+            });
+        }
+
+        function drawChart4() {
+            Highcharts.setOptions({
+                lang: {
+                    decimalPoint: ',',
+                    thousandsSep: ' '
+                }
+            });
+
+            Highcharts.chart('container4', {
+                xAxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                },
+                tooltip: {
+                    pointFormat: 'Value: {point.y:,.1f} mm'
+                },
+                series: [
+                    {
+                        data: [1029.9, 1071.5, 1106.4, 1129.2, 1144.0, 1176.0, 1135.6, 1148.5, 1216.4, 1194.1, 1095.6, 1054.4]
+                    }
+                ]
+            });
+        }
+
+        drawChart1();
+        drawChart2();
+        drawChart3();
+        drawChart4();
+    </script>
+</body>
+
+</html>
