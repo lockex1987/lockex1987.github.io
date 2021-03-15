@@ -86,16 +86,23 @@ function convertFromVietnameseToGregorian(viDay, viMonth, viYear, viLeapMonth) {
     }
 }
 
+
+/**
+ * Lấy thông tin cảnh báo.
+ * @returns Mã HTML
+ */
 function getWarning() {
+    // Cảnh báo trước 2 ngày
     const checkDates = [
         { diff: 0, label: 'Hôm nay' },
         { diff: 1, label: 'Ngày mai' },
         { diff: 2, label: 'Ngày kia' }
     ];
     const today = new Date();
+    const oneDay = 24 * 60 * 60 * 1000;
     let html = '';
     checkDates.forEach(e => {
-        const greDate = CommonUtils.addDate(today, e.diff);
+        const greDate = new Date(today.getTime() + e.diff * oneDay);
         const greDay = greDate.getDate();
         const greMonth = greDate.getMonth() + 1;
         const greYear = greDate.getFullYear();
@@ -108,6 +115,10 @@ function getWarning() {
     return html;
 }
 
+
+/**
+ * Hiển thị cảnh báo.
+ */
 function processWarning() {
     const warning = getWarning();
     if (warning) {

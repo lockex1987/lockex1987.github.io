@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="insert or update">
+    <title>Upsert trong MySQL</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Upsert trong MySQL</h2>
+      <p>Upsert có nghĩa là sẽ cập nhật (update) nếu bản ghi đã tồn tại hoặc
+        thêm mới (insert) nếu bản ghi chưa tồn tại.</p>
+      <h3>Chuẩn bị DB</h3>
+      <p>Tạo bảng:</p>
+      <pre>create table post(
+    id int not null auto_increment primary key,
+    title varchar(60) unique,
+    description varchar(255),
+    published_date date
+);<br><br>-- Sau khi test xong có thể xóa<br>-- drop table post;</pre>
+      <p>Dữ liệu mẫu:</p>
+      <pre>insert into post(id, title, description, published_date)
+values
+(1, 'Python Tutorial', '', '2019-07-21'),
+(2, 'CSharp Tutorial', '', '2019-07-14'),
+(3, 'MySQL Tutorial', '', '2019-08-01'),
+(4, 'Java Tutorial', '', '2019-08-05');<br><br>select * from post;</pre>
+      <p>Giả sử bạn insert một bản ghi trùng title:</p>
+      <pre>insert into post(title, description, published_date)
+values ('Python Tutorial', 'Test insert', '2019-08-04');</pre>
+      <p>Thì sẽ bị lỗi sau:</p>
+      <pre>SQL Error (1062): Duplicate entry 'Python Tutorial' for key 'title'</pre>
+      <h3>Sử dụng insert ignore</h3>
+      <p>Câu lệnh:</p>
+      <pre>insert ignore into post(title, description, published_date)
+values ('Python Tutorial', 'insert ignore', '2019-08-04');<br><br>select * from post;</pre>
+      <p>Nếu bị trùng thì sẽ không báo lỗi, nhưng cũng không update.</p>
+      <h3>Sử dụng replace</h3>
+      <p>Câu lệnh:</p>
+      <pre>replace into post(title, description, published_date)
+values('Python Tutorial', 'replace', '2019-08-04');<br><br>select * from post;</pre>
+      <h3>Sử dụng on duplicate key update</h3>
+      <p>Câu lệnh:</p>
+      <pre>insert into post(title, description, published_date)
+values('Python Tutorial', 'on duplicate key', '2019-08-04')
+on duplicate key update
+    title = 'Python Tutorial',
+    description = 'on duplicate key',
+    published_date = '2019-08-04';<br><br>select * from post;</pre>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

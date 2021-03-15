@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="vi">
   <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="pass-by-reference, pass-by-value">
-    <title>Pass-by-reference và pass-by-value</title>
+    <meta name="description" content="pass by reference, pass by value, php, js, immutable, mutable, foreach">
+    <title>Tham chiếu và tham trị</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
   </head>
   <body>
     <article>
-      <h2>Pass-by-reference và pass-by-value</h2>
-      <p><img src="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/fsoeqeefut_pass-by-reference-vs-pass-by-value-animation.gif">
-      </p>
+      <h2>Tham chiếu và tham trị</h2>
+      <div class="mb-3"> <img src="images/fsoeqeefut_pass-by-reference-vs-pass-by-value-animation.gif">
+      </div>
       <p>Link gốc bài viết <a target="_blank" href="https://blog.daovanhung.com/post/giai-thich-ve-pass-by-reference-va-pass-by-value">tại
           đây</a>.</p>
       <h3>Mở đầu</h3>
@@ -23,17 +23,17 @@
         người đang code một ngôn ngữ quen rồi nhảy sang ngôn ngữ khác học.</p>
       <p>Ví dụ 2 đoạn code dưới đây giống nhau nhưng kết quả lại trả về khác
         nhau cho mỗi ngôn ngữ:</p>
-      <p>JavaScript</p>
+      <p>JS:</p>
       <pre>function test(b) {
-    b[0] = 3
+    b[0] = 3;
 }
 
-var a = [1, 2]
-test(a)
+const a = [1, 2];
+test(a);
 console.log(a)  // [3, 2]
 </pre>
-      <p>PHP</p>
-      <pre>function test($b) {
+      <p>PHP:</p>
+      <pre>function test($b)<br>{
     $b[0] = 3;
 }
 
@@ -42,10 +42,11 @@ test($a);
 var_dump($a)  // [1, 2]
 </pre>
       <p>Các ngôn ngữ khác nhau có cách xử lý với các tham số truyền vào khác
-        nhau nhưng có 2 loại truyền tham số đó là truyền theo giá trị <strong>(pass-by-value)</strong>
-        hay truyền theo tham chiếu <strong>(pass-by-reference)</strong>. Có một
-        số ngôn ngữ có thêm khái niệm <strong>pass-by-sharing</strong> nhưng
-        khái niệm này thực chất cùng bản chất với 2 khái niệm trên.</p>
+        nhau nhưng có 2 loại truyền tham số đó là truyền theo giá trị <strong>(pass
+          by value)</strong> hay truyền theo tham chiếu <strong>(pass by
+          reference)</strong>. Có một số ngôn ngữ có thêm khái niệm <strong>pass
+          by sharing</strong> nhưng khái niệm này thực chất cùng bản chất với 2
+        khái niệm trên.</p>
       <p>Trước khi đọc bài này, cần nắm được cơ bản một số thứ sau:</p>
       <ul>
         <li><a target="_blank" href="https://blog.daovanhung.com/post/ban-da-thuc-su-hieu-mutable-va-immutable">Mutable
@@ -53,22 +54,21 @@ var_dump($a)  // [1, 2]
         <li><a target="_blank" href="https://blog.daovanhung.com/post/ngon-ngu-lap-trinh-luu-tru-bien-nhu-the-nao">Biến
             được lưu trữ trên stack như thế nào?</a></li>
       </ul>
-      <p>Mình sẽ trình bày cho một số ngôn ngữ là C, C++, JavaScript, Ruby,
-        Java, PHP.</p>
+      <p>Mình sẽ trình bày cho một số ngôn ngữ là C, C++, JS, Ruby, Java, PHP.</p>
       <h3>Kiến thức chung</h3>
       <ul>
         <li>CPU xử lý dữ liệu thông qua địa chỉ bộ nhớ nên thứ được truyền vào
           hàm luôn luôn là địa chỉ bộ nhớ chứ không phải là giá trị.</li>
-        <li>Pass-by-value và pass-by-reference không có định nghĩa cụ thể nào và
+        <li>Pass by value và pass by reference không có định nghĩa cụ thể nào và
           có thể hiểu khác nhau với từng ngôn ngữ. Nhưng đều có chung một nguyên
           lý là:
           <ul>
-            <li>Pass-by-value được hiểu là khi bạn thay đổi biến trong hàm thì
+            <li>Pass by value được hiểu là khi bạn thay đổi biến trong hàm thì
               ngoài hàm sẽ không bị ảnh hưởng. Nó giống như bạn copy giá trị của
               biến vào biến khác rồi truyền vào hàm.</li>
           </ul>
           <ul>
-            <li>Pass-by-reference là khi bạn thay đổi biến trong hàm cũng làm
+            <li>Pass by reference là khi bạn thay đổi biến trong hàm cũng làm
               ngoài hàm bị ảnh hưởng. Nó giống như bạn truyền đúng địa chỉ của
               biến đó vào hàm.</li>
           </ul>
@@ -81,35 +81,34 @@ var_dump($a)  // [1, 2]
           thể khác hoặc trùng với tên biến được truyền vào hàm.</li>
       </ul>
       <p>Ví dụ 2 đoạn code dưới đây là hoàn toàn như nhau:</p>
-      <pre>var a = 1
-pass(a)
+      <pre>const a = 1;
+pass(a);
 
-// tham số cũng có tên là a, trùng với tên biến sẽ được truyền vào
+// Tham số cũng có tên là a,<br>// trùng với tên biến sẽ được truyền vào
 function pass(a) {
-    // dùng a ở đây
-}
-
-var a = 1
-pass(a)
+    // Dùng a ở đây
+}</pre>
+      <pre>const a = 1;
+pass(a);
 
 function pass(b) {
-    // dùng b ở đây
+    // Dùng b ở đây
 }
 </pre>
       <h3>C, C++</h3>
-      <p>C luôn truyền theo giá trị (pass-by-value).</p>
-      <p>C++ có thể truyền theo giá trị (pass-by-value) hoặc truyền theo tham
-        chiếu (pass-by-reference).</p>
-      <h4>C và C++ pass-by-value như thế nào?</h4>
+      <p>C luôn truyền theo giá trị (pass by value).</p>
+      <p>C++ có thể truyền theo giá trị (pass by value) hoặc truyền theo tham
+        chiếu (pass by reference).</p>
+      <h4>C và C++ pass by value như thế nào?</h4>
       <pre>// Đoạn code này giống nhau trong C và C++
 
 #include &lt;iostream&gt;
 #include &lt;string&gt;
 
-void test(int b) {
-  printf("Địa chỉ của b trước khi gán: %d\n", &amp;b);
-  b = 2;
-  printf("Địa chỉ của b sau khi gán: %d\n", &amp;b);
+void test(int b)<br>{
+    printf("Địa chỉ của b trước khi gán: %d\n", &amp;b);
+    b = 2;
+    printf("Địa chỉ của b sau khi gán: %d\n", &amp;b);
 }
 
 int main()
@@ -124,7 +123,7 @@ int main()
 }
 </pre>
       <p>Biến <code>a</code> trên trong bảng symbol table sẽ như sau:</p>
-      <table>
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th>Tên biến</th>
@@ -143,7 +142,7 @@ int main()
       <p>Khi gọi hàm <code>test(a)</code> từ hàm <code>main</code> thì biến <code>a</code>
         sẽ được copy thành một biến mới và địa chỉ của biến mới này sẽ được
         truyền vào hàm <code>test</code>:</p>
-      <table>
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th>Tên biến</th>
@@ -166,7 +165,7 @@ int main()
       </table>
       <p>Vì C và C++ có kiểu <code>int</code> là <strong>mutable</strong> nên
         câu lệnh <code>b = 2</code> sẽ tạo:</p>
-      <table>
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th>Tên biến</th>
@@ -198,23 +197,23 @@ Giá trị của a sau khi gọi hàm: 1
 </pre>
       <p>Nhưng nếu ai đã code C sẽ biết C có thể thay đổi giá trị của biến ngoài
         hàm bằng cách truyền con trỏ (pointer), điều này vẫn đúng khi nói C là
-        pass-by-value vì:</p>
-      <h4>Con trỏ (pointer) có phải là pass-by-value không?</h4>
+        pass by value vì:</p>
+      <h4>Con trỏ (pointer) có phải là pass by value không?</h4>
       <pre>// Đoạn code này giống nhau trong C và C++
 
 #include &lt;iostream&gt;
 #include &lt;string&gt;
 
-void test(int* b) {
-  printf("Địa chỉ của b trước khi gán: %d\n", &amp;b);
-  printf("Giá trị của b trước khi gán: %d\n", b);
-  printf("Giá trị của a ở trong hàm trước khi gán: %d\n\n", *b);
+void test(int* b)<br>{
+   printf("Địa chỉ của b trước khi gán: %d\n", &amp;b);
+   printf("Giá trị của b trước khi gán: %d\n", b);
+   printf("Giá trị của a ở trong hàm trước khi gán: %d\n\n", *b);
 
-  *b = 2;
+   *b = 2;
 
-  printf("Địa chỉ của b sau khi gán: %d\n", &amp;b);
-  printf("Giá trị của b sau khi gán: %d\n", b);
-  printf("Giá trị của a ở trong hàm sau khi gán: %d\n\n", *b);
+   printf("Địa chỉ của b sau khi gán: %d\n", &amp;b);
+   printf("Giá trị của b sau khi gán: %d\n", b);
+   printf("Giá trị của a ở trong hàm sau khi gán: %d\n\n", *b);
 }
 
 int main()
@@ -222,7 +221,7 @@ int main()
     int a = 1;
     printf("Địa chỉ của a trước khi truyền vào hàm: %d\n\n", &amp;a);
 
-    test(&amp;a); // vì b trong test() đã là kiểu con trỏ nên phải truyền địa chỉ của a vào.
+    test(&amp;a);<br>    // vì b trong test() đã là kiểu con trỏ nên<br>    // phải truyền địa chỉ của a vào
 
     printf("Địa chỉ của a sau khi gọi hàm: %d\n", &amp;a);
     printf("Giá trị của a sau khi gọi hàm: %d\n", a);
@@ -235,7 +234,7 @@ int main()
           biến khác này vào hàm <code>test</code> (trong hàm <code>test</code>
           thì địa chỉ của biến khác này chính là <code>b</code>).</li>
       </ul>
-      <table>
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th>Tên biến</th>
@@ -263,7 +262,7 @@ int main()
       <p><code>*b = 2</code> sẽ gán giá trị vào ô nhớ mà <code>b</code> đang
         trỏ tới (chứ không phải giá trị ô nhớ của <code>b</code>).</p>
       <p>Sau khi gán câu lệnh trên xong thì symbol table sẽ như sau:</p>
-      <table>
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th>Tên biến</th>
@@ -299,26 +298,27 @@ Giá trị của a ở trong hàm sau khi gán: 2
 Giá trị của a sau khi gọi hàm: 2
 </pre>
       <p>Như bạn thấy đấy, khi truyền con trỏ vào hàm thì vẫn copy địa chỉ sang
-        biến khác rồi truyền vào hàm nên nó vẫn là pass-by-value (một số người
-        gọi truyền theo pointer là pass-by-address).</p>
-      <h4>C++ có thêm pass-by-reference</h4>
+        biến khác rồi truyền vào hàm nên nó vẫn là pass by value (một số người
+        gọi truyền theo pointer là pass by address).</p>
+      <h4>C++ có thêm pass by reference</h4>
       <p>Trong C nếu muốn thay đổi giá trị của biến ngoài hàm từ trong hàm thì
         phải truyền con trỏ như giải thích ở trên. Nhược điểm của phương pháp
         này là:</p>
       <ul>
         <li>Phải tạo thêm một vùng không gian nhớ cho pointer trong stack</li>
-        <li>Cú pháp xấu vì luôn phải gắn asterisk (dấu *) vào trước tên biến</li>
+        <li>Cú pháp xấu vì luôn phải gắn asterisk (dấu <code>*</code>) vào
+          trước tên biến</li>
       </ul>
       <p>VD:</p>
       <pre>#include &lt;iostream&gt;
 #include &lt;string&gt;
 
-void test(int* x, int* y) {
+void test(int* x, int* y)<br>{
     *x = *x + 5;
     *y = *y + 5;
 }
 
-int main() {
+int main()<br>{
     int x = 1;
     int y = 2;
     test(&amp;x, &amp;y);
@@ -326,36 +326,36 @@ int main() {
     printf("y: %d\n", y);  // 7
 }
 </pre>
-      <p>Trong C++ có giải pháp thay thế là pass-by-reference giúp ít nhất là
+      <p>Trong C++ có giải pháp thay thế là pass by reference giúp ít nhất là
         tránh các nhược điểm trên:</p>
       <pre>#include &lt;iostream&gt;
 #include &lt;string&gt;
 
-void test(int &amp;x, int &amp;y) {
-  x = x + 5;
-  y = y + 5;
+void test(int &amp;x, int &amp;y)<br>{
+    x = x + 5;
+    y = y + 5;
 }
 
-int main() {
-  int x = 1;
-  int y = 2;
-  test(x, y);
-  printf("x: %d\n", x);  // 6
-  printf("y: %d\n", y);  // 7
+int main()<br>{
+    int x = 1;
+    int y = 2;
+    test(x, y);
+    printf("x: %d\n", x);  // 6
+    printf("y: %d\n", y);  // 7
 }
 </pre>
-      <p>Với đoạn code ở phần trên dùng pass-by-reference:</p>
+      <p>Với đoạn code ở phần trên dùng pass by reference:</p>
       <pre>#include &lt;iostream&gt;
 #include &lt;string&gt;
 
-void test(int &amp;b) {
-  printf("Địa chỉ của b trước khi gán: %d\n", &amp;b);
-  printf("Giá trị của b trước khi gán: %d\n", b);
+void test(int &amp;b)<br>{
+    printf("Địa chỉ của b trước khi gán: %d\n", &amp;b);
+    printf("Giá trị của b trước khi gán: %d\n", b);
 
-  b = 2;
+    b = 2;
 
-  printf("Địa chỉ của b sau khi gán: %d\n", &amp;b);
-  printf("Giá trị của b sau khi gán: %d\n\n", b);
+    printf("Địa chỉ của b sau khi gán: %d\n", &amp;b);
+    printf("Giá trị của b sau khi gán: %d\n\n", b);
 }
 
 int main()
@@ -370,7 +370,7 @@ int main()
 }
 </pre>
       <p>Lúc này symbol table trước khi thực thi sẽ như sau:</p>
-      <table>
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th>Tên biến</th>
@@ -392,7 +392,7 @@ int main()
         </tbody>
       </table>
       <p>Sau khi thực thi sẽ như sau:</p>
-      <table>
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th>Tên biến</th>
@@ -419,26 +419,26 @@ int main()
       <p>Trong bảng symbol table trên có thêm biến <code>b</code> nhưng trong
         stack không phải cấp phát thêm một vùng bộ nhớ cho <code>b</code> vì sử
         dụng chung <code>ssss1</code> với <code>a</code>.</p>
-      <h3>JavaScript</h3>
+      <h3>JS</h3>
       <pre>function changeStuff(a, b, c) {
-  a = a * 10;
-  b = {item: "changed"};
-  c.item = "changed";
+    a = a * 10;
+    b = {<br>        item: "changed"<br>    };
+    c.item = "changed";
 }
 
 num = 10;
-obj1 = {item: "unchanged"};
-obj2 = {item: "unchanged"};
+obj1 = { item: "unchanged" };
+obj2 = { item: "unchanged" };
 
 changeStuff(num, obj1, obj2);
 
-console.log(num)       // 10
-console.log(obj1)      // {item: "unchanged"}
-console.log(obj2)      // {item: "changed"}
+console.log(num);       // 10
+console.log(obj1);      // { item: "unchanged" }
+console.log(obj2);      // { item: "changed" }
 </pre>
-      <p>Một số thứ cần biết trong JavaScript:</p>
+      <p>Một số thứ cần biết trong JS:</p>
       <ul>
-        <li>Tất cả các kiểu primitive trong JavaScript đều là immutable.</li>
+        <li>Tất cả các kiểu primitive trong JS đều là immutable.</li>
         <li>Khi so sánh 2 biến có kiểu primitive với nhau thì chúng sẽ so sánh
           giá trị:</li>
       </ul>
@@ -456,27 +456,26 @@ test(a)
         <li>Nhưng khi so sánh 2 kiểu object (không phải các kiểu primitive) thì
           chúng sẽ so sánh địa chỉ của 2 object đó với nhau:</li>
       </ul>
-      <pre>var a = {item: [1, 2]}
+      <pre>var a = { item: [1, 2] }
 
 function test(b) {
     console.log(a === b)   // true
-    var b = {item: [1, 2]}
+    var b = { item: [1, 2] }
     console.log(a === b)   // false
 }
 
 test(a)
 </pre>
-      <h4>Javascript pass-by-value hay pass-by-reference</h4>
-      <p>Nhiều người nói JavaScript chỉ pass-by-value, cũng nhiều người nói
-        JavaScript vừa có pass-by-value, vừa có pass-by-reference. Nhưng thứ bạn
-        quan tâm không phải là nó pass theo cái gì mà phép gán trong JavaScript
-        hoạt động như thế nào.</p>
-      <p>Javascript truyền cùng một địa chỉ với biến vào hàm chứ không copy sang
-        biến khác giống C.</p>
+      <h4>JS pass by value hay pass by reference</h4>
+      <p>Nhiều người nói JS chỉ pass by value, cũng nhiều người nói JS vừa có
+        pass by value, vừa có pass by reference. Nhưng thứ bạn quan tâm không
+        phải là nó pass theo cái gì mà phép gán trong JS hoạt động như thế nào.</p>
+      <p>JS truyền cùng một địa chỉ với biến vào hàm chứ không copy sang biến
+        khác giống C.</p>
       <p>Ở ví dụ trên, trước khi <code>b</code> bị gán lại thì object <code>a</code>
         và object <code>b</code> bằng nhau nên chúng sẽ có chung một địa chỉ
         trên stack.</p>
-      <table>
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th>Tên biến</th>
@@ -488,12 +487,12 @@ test(a)
           <tr>
             <td>a</td>
             <td>ssss1</td>
-            <td>{item: [1, 2]}</td>
+            <td>{ item: [1, 2] }</td>
           </tr>
           <tr>
             <td>b</td>
             <td>ssss1</td>
-            <td>{item: [1, 2]}</td>
+            <td>{ item: [1, 2] }</td>
           </tr>
           <tr>
             <td>ssss1.item</td>
@@ -502,9 +501,9 @@ test(a)
           </tr>
         </tbody>
       </table>
-      <p>Sau khi bị gán lại bằng câu lệnh <code>b = {item: [1, 2]}</code> thì
+      <p>Sau khi bị gán lại bằng câu lệnh <code>b = { item: [1, 2] }</code> thì
         thành:</p>
-      <table>
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th>Tên biến</th>
@@ -516,7 +515,7 @@ test(a)
           <tr>
             <td>a</td>
             <td>ssss1</td>
-            <td>{item: [1, 2]}</td>
+            <td>{ item: [1, 2] }</td>
           </tr>
           <tr>
             <td>ssss1.item</td>
@@ -526,7 +525,7 @@ test(a)
           <tr>
             <td>b</td>
             <td>ssss2</td>
-            <td>{item: [1, 2]}</td>
+            <td>{ item: [1, 2] }</td>
           </tr>
           <tr>
             <td>ssss2.item</td>
@@ -550,9 +549,9 @@ test(a)
 
 console.log(a)   // 3
 </pre>
-      <p>Bởi vì trong JavaScript, các kiểu primitive là immutable.</p>
+      <p>Bởi vì trong JS, các kiểu primitive là immutable.</p>
       <p>Trước khi phép gán <code>b = 4</code> được gọi:</p>
-      <table>
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th>Tên biến</th>
@@ -574,7 +573,7 @@ console.log(a)   // 3
         </tbody>
       </table>
       <p>Sau khi phép gán <code>b = 4</code> được gọi:</p>
-      <table>
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th>Tên biến</th>
@@ -599,25 +598,25 @@ console.log(a)   // 3
         không ảnh hưởng gì tới <code>a</code>.</p>
       <p>Giải thích tương tự với đoạn code sau:</p>
       <pre>function test(b) {
-  b = {item: "changed"}
+  b = { item: "changed" };
 }
 
-var a = {item: "unchanged"}
-test(a)
-console.log(a)      // {item: "unchanged"}
+var a = { item: "unchanged" };
+test(a);
+console.log(a)'      // { item: "unchanged" }
 </pre>
       <p>Nhưng khi bạn gán thuộc tính của object thì chuyện gì sẽ xảy ra:</p>
       <pre>function test(b) {
-  b.item = "changed"
+    b.item = "changed";
 }
 
-var a = {item: "unchanged"}
-test(a)
-console.log(a)      // {item: "changed"}
+var a = { item: "unchanged" };
+test(a);
+console.log(a);      // { item: "changed" }
 </pre>
       <p>Để giải thích cho ví dụ trên cần phân tích <code>{item: "unchaged"}</code>
         trong stack:</p>
-      <table>
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th>Tên biến</th>
@@ -648,7 +647,7 @@ console.log(a)      // {item: "changed"}
       <p>Khi gán <code>b.item = "changed"</code> nghĩa là mình đã gán giá trị
         mà <code>item</code> trỏ tới (hiện tại đang là <code>yyyy1</code>)
         thành <code>"changed"</code>, lúc đó stack sẽ thành:</p>
-      <table>
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th>Tên biến</th>
@@ -679,19 +678,19 @@ console.log(a)      // {item: "changed"}
         </tbody>
       </table>
       <p>Lưu ý là phép gán sẽ không ghi đè giá trị tại <code>yyyy1</code> mà
-        tạo một <code>yyyy2</code> mới vì string trong JavaScript (cụ thể ở đây
-        là <code>ssss1.item</code>) là immutable.</p>
+        tạo một <code>yyyy2</code> mới vì string trong JS (cụ thể ở đây là <code>ssss1.item</code>)
+        là immutable.</p>
       <p>Như bạn thấy <code>a</code> và <code>b</code> cùng trỏ tới <code>ssss1</code>,
         <code>ssss1</code> trỏ tới thằng <code>item</code> tại <code>yyyy2</code>,
         nên khi thay đổi <code>item</code> ngay trong <code>a</code> hoặc <code>b</code>
         thì thằng còn lại cũng sẽ bị thay đổi.</p>
-      <p>Giờ thì bạn hiểu đoạn code ở đầu mục JavaScript rồi đấy :))</p>
+      <p>Giờ thì bạn hiểu đoạn code ở đầu mục JS rồi đấy :))</p>
       <h3>Ruby</h3>
-      <p>Viết lại đoạn code JavaScript phía trên thành Ruby:</p>
+      <p>Viết lại đoạn code JS phía trên thành Ruby:</p>
       <pre>def changeStuff(a, b, c)
-  a = a * 10
-  b = {item: "changed"}
-  c[:item] = "changed"
+    a = a * 10
+    b = {item: "changed"}
+    c[:item] = "changed"
 end
 
 num = 10
@@ -704,8 +703,8 @@ p num   # 10
 p obj1  # {item: "unchanged"}
 p obj2  # {item: "changed"}
 </pre>
-      <p>Ruby giải thích hoàn toàn tương tự như JavaScript, thậm chí còn dễ kiểm
-        chứng hơn vì biết được <code>object_id</code> của từng object:</p>
+      <p>Ruby giải thích hoàn toàn tương tự như JS, thậm chí còn dễ kiểm chứng
+        hơn vì biết được <code>object_id</code> của từng object:</p>
       <pre>a = {item: [1, 2]}
 p "Before test:"
 p a.object_id
@@ -755,59 +754,75 @@ p "After test:", a[:item].object_id
       <h3>PHP</h3>
       <p>PHP giống C++, cũng copy ra biến mới rồi mới truyền vào hàm (kể cả
         array).</p>
-      <p>Nhưng từ PHP5 trở đi thì kiểu object truyền vào hàm sẽ giống như
-        JavaScript là truyền tham chiếu vào.</p>
-      <pre>class Test {
-    public $item = "unchanged";
+      <h4>Kiểu object</h4>
+      <p>Nhưng từ PHP5 trở đi thì kiểu object truyền vào hàm sẽ giống như JS là
+        truyền tham chiếu vào.</p>
+      <pre>class Test<br>{
+    public $item = 'unchanged';
 }
 
-function changeStuff($a, $b, $c, $d) {
-  $a = $a * 10;
-  $b = new Test;
-  $c-&gt;item = "changed";
-  $d[0] = 3;
+function changeStuff($a, $b, $c, $d)<br>{
+    $a = $a * 10;
+    $b = new Test();
+    $c-&gt;item = 'changed';
+    $d[0] = 3;
 }
 
 $num = 10;
-$obj1 = new Test;
-$obj2 = new Test;
+$obj1 = new Test();
+$obj2 = new Test();
 $array = [1, 2];
 
 changeStuff($num, $obj1, $obj2, $array);
 
 var_dump($num);   // 10
-var_dump($obj1);  // {"item" =&gt; "unchanged"}
-var_dump($obj2);  // {"item" =&gt; "changed"}
-var_dump($array);  // [1, 2]
+var_dump($obj1);  // { 'item' =&gt; 'unchanged' }
+var_dump($obj2);  // { 'item' =&gt; 'changed' }
+var_dump($array); // [1, 2]
 </pre>
-      <p>Giải thích cho kiểu object tương tự như JavaScript, còn giải thích cho
-        các kiểu còn lại tương tự như C và C++.</p>
+      <p>Giải thích cho kiểu object tương tự như JS, còn giải thích cho các kiểu
+        còn lại tương tự như C và C++.</p>
+      <h4>Vòng lặp foreach</h4>
+      <p>Vòng lập foreach tự copy giá trị vào biến mới.</p>
+      <p>Khi cần thay đổi giá trị của từng phần tử trong mảng, luôn sử dụng vòng
+        for bình thường, và sử dụng chỉ số để thay đổi:</p>
+      <pre>for ($i = 0; $i &lt; $countArr; $i++) {
+    $arr[$i]['age'] = 30;
+}</pre>
+      <p>Tham khảo:</p>
+      <p><a href="https://www.php.net/manual/en/language.oop5.references.php" target="_blank">PHP:
+          Objects and references - Manual</a></p>
+      <p><a href="https://stackoverflow.com/questions/15024616/php-foreach-change-original-array-values/15024638"
+          target="_blank">PHP foreach change original array values - Stack
+          Overflow</a></p>
+      <p><a href="https://www.php.net/manual/en/language.references.php" target="_blank">https://www.php.net/manual/en/language.references.php</a></p>
+      <p><a href="https://www.toptal.com/php/10-most-common-mistakes-php-programmers-make"
+          target="_blank">https://www.toptal.com/php/10-most-common-mistakes-php-programmers-make</a></p>
       <h3>Java</h3>
       <pre>import java.util.Arrays;
 
 public class HelloWorld
 {
-  public static void main(String[] args)
-  {
-    int num = 10;
-    Test obj1 = new Test();
-    Test obj2 = new Test();
-    int[] array = {1, 2}; // [1, 2]
+    public static void main(String[] args)
+    {
+        int num = 10;
+        Test obj1 = new Test();
+        Test obj2 = new Test();
+        int[] array = {1, 2}; // [1, 2]
 
-    changeStuff(num, obj1, obj2, array);
-    System.out.println(num);
-    System.out.println(obj1.item);
-    System.out.println(obj2.item);
-    System.out.println(Arrays.toString(array));
-  }
+        changeStuff(num, obj1, obj2, array);
+        System.out.println(num);
+        System.out.println(obj1.item);
+        System.out.println(obj2.item);
+        System.out.println(Arrays.toString(array));
+    }
 
-  public static void changeStuff(int a, Test b, Test c, int[] d)
-  {
-    a = a * 10;
-    b = new Test();
-    c.item = "changed";
-    d[0] = 3;
-  }
+    public static void changeStuff(int a, Test b, Test c, int[] d) {
+        a = a * 10;
+        b = new Test();
+        c.item = "changed";
+        d[0] = 3;
+    }
 }
 
 public class Test
@@ -821,15 +836,15 @@ unchanged  // obj1.item
 changed    // obj2.item
 [3, 2]     // array
 </pre>
-      <p>Java giải thích hoàn toàn giống JavaScript.</p>
+      <p>Java giải thích hoàn toàn giống JS.</p>
       <p>Lưu ý là trong Java ta có thể gán bằng các phương thức mutable hoặc
         immutable nên symbol table có thể khác nhau phụ thuộc vào phép gán.</p>
       <h3>Mô tả bằng hình ảnh</h3>
-      <p>Mình chỉ minh họa bằng hình ảnh đại diện cho đoạn JavaScript sau:</p>
+      <p>Mình chỉ minh họa bằng hình ảnh đại diện cho đoạn JS sau:</p>
       <pre>function changeStuff(a, b, c) {
-  a = a * 10;
-  b = {item: "changed"};
-  c.item = "changed";
+    a = a * 10;
+    b = {item: "changed"};
+    c.item = "changed";
 }
 
 num = 10;
@@ -842,18 +857,17 @@ console.log(num)       // 10
 console.log(obj1)      // {item: "unchanged"}
 console.log(obj2)      // {item: "changed"}
 </pre>
-      <p>Trước khi phép gán xảy ra: </p>
-      <a href="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/rriuh2s0g6_Screen%20Shot%202018-07-12%20at%2022.33.48.png"><img
-          src="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/rriuh2s0g6_Screen%20Shot%202018-07-12%20at%2022.33.48.png">
-      </a>
-      <p>Hình ảnh mô tả cho đoạn code JavaScript phía trên tương tự với phần lớn
-        các ngôn ngữ khác nhưng khác với C/C++. Như đã nói ở phần trên, trong
-        C/C++ thì biến <code>a, b, c</code> sẽ được copy nên không trỏ vào cùng
-        một ô nhớ với các biến khai báo giống trong hình ảnh.</p>
+      <p>Trước khi phép gán xảy ra:</p>
+      <div class="mb-3"> <img src="images/rriuh2s0g6_Screen%20Shot%202018-07-12%20at%2022.33.48.png">
+      </div>
+      <p>Hình ảnh mô tả cho đoạn code JS phía trên tương tự với phần lớn các
+        ngôn ngữ khác nhưng khác với C/C++. Như đã nói ở phần trên, trong C/C++
+        thì biến <code>a, b, c</code> sẽ được copy nên không trỏ vào cùng một ô
+        nhớ với các biến khai báo giống trong hình ảnh.</p>
       <p>Sau khi phép gán xảy ra:</p>
-      <a href="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/t28eo67fgf_Screen%20Shot%202018-07-12%20at%2022.35.39.png"><img
-          src="https://s3-ap-southeast-1.amazonaws.com/kipalog.com/t28eo67fgf_Screen%20Shot%202018-07-12%20at%2022.35.39.png">
-      </a> </article>
+      <div class="mb-3"> <img src="images/t28eo67fgf_Screen%20Shot%202018-07-12%20at%2022.35.39.png">
+      </div>
+    </article>
     <script src="../../js/docs.js"></script>
   </body>
 </html>
