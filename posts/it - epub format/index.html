@@ -3,7 +3,8 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="epub reader, bibi, futurepress, convert html to epub">
+    <meta name="date" content="2021-03-16 11:10:00">
+    <meta name="description" content="epub reader, bibi, futurepress, convert html to epub, convert html to xhtml">
     <title>Cấu trúc file epub</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -66,8 +67,8 @@
         theo thứ tự và chứa metadata (tác giả, tên sách, ...). Tên file <code>content.opf</code>
         có thể thay đổi nhưng phải được định nghĩa trong <code>container.xml</code>.</p>
       <pre class="out-of-box"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;package xmlns="http://www.idpf.org/2007/opf"<br>        unique-identifier="BookID"<br>        version="2.0"&gt;
-    &lt;metadata xmlns:dc="http://purl.org/dc/elements/1.1/"<br>            xmlns:opf="http://www.idpf.org/2007/opf"&gt;
+&lt;package xmlns="http://www.idpf.org/2007/opf"<br>    unique-identifier="BookID"<br>    version="2.0"&gt;
+    &lt;metadata xmlns:dc="http://purl.org/dc/elements/1.1/"<br>        xmlns:opf="http://www.idpf.org/2007/opf"&gt;
         &lt;dc:title&gt;Sample .epub eBook&lt;/dc:title&gt; 
         &lt;dc:creator opf:role="aut"&gt;Yoda47&lt;/dc:creator&gt;
         &lt;dc:language&gt;en-US&lt;/dc:language&gt; 
@@ -81,9 +82,9 @@
         &lt;item id="style" href="stylesheet.css" media-type="text/css" /&gt;
         &lt;item id="pagetemplate" href="page-template.xpgt" media-type="application/vnd.adobe-page-template+xml" /&gt;
         &lt;item id="titlepage" href="title_page.xhtml" media-type="application/xhtml+xml" /&gt;
-        &lt;item  href="chap01.xhtml" media-type="application/xhtml+xml" /&gt;
-        &lt;item  href="chap02.xhtml" media-type="application/xhtml+xml" /&gt;
-        &lt;item  href="images/sample.png" media-type="image/png" /&gt;
+        &lt;item id="chap01.xhtml" href="chap01.xhtml" media-type="application/xhtml+xml" /&gt;
+        &lt;item id</code><code><code>="chap02.xhtml"</code> href="chap02.xhtml" media-type="application/xhtml+xml" /&gt;
+        &lt;item id</code><code><code>="sample.png"</code> href="images/sample.png" media-type="image/png" /&gt;
     &lt;/manifest&gt;
 
     &lt;spine toc="ncx"&gt;
@@ -102,11 +103,11 @@
           biệt sách này với sách khác. Tiếp theo là manifest khai báo các file
           nội dung. Tuy nhiên có thể xem ở trong file NCX.</li>
       </ul>
-      <p>Spine là phần khai báo mục lục.</p>
+      <p>Spine là phần khai báo mục lục (hay là thứ tự đọc?).</p>
       <h4>File toc.ncx</h4>
       <p>Đây là file xác định mục lục cuốn sách.</p>
       <pre class="out-of-box"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1"&gt;
+&lt;ncx xmlns="http://www.daisy.org/z3986/2005/ncx/"<br>    version="2005-1"&gt;
     &lt;head&gt;
         &lt;meta name="dtb:uid" content="jedisaber.com06282007214712"/&gt;
         &lt;meta name="dtb:depth" content="1"/&gt;
@@ -144,6 +145,9 @@
 </code></pre>
       <p>Lưu ý: Bảo đảm rằng <code>uid</code> khớp với bên trong <code>content.opf</code>
         và phải có tag <code>navPoint</code>.</p>
+      <p>Trang web sinh UUID online:</p>
+      <p><a href="https://www.uuidgenerator.net/" target="_blank">Online UUID
+          Generator Tool</a></p>
       <p>Ví dụ một thẻ <code>navPoint</code>:</p>
       <pre><code>&lt;navPoint id="chapter01" playOrder="1"&gt;
      &lt;navLabel&gt;
@@ -167,12 +171,12 @@
         nếu như đã chỉ định rõ ràng).</p>
       <h3>Nội dung XHTML</h3>
       <p>Nội dung của sách phải ở trong file <code>xhtml</code>. Khung như sau:</p>
-      <pre class="out-of-box">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;
+      <pre class="out-of-box">&lt;!DOCTYPE html<br>    PUBLIC<br>    "-//W3C//DTD XHTML 1.1//EN"<br>    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;
 &lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
     &lt;head&gt;
         &lt;meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" /&gt;
         &lt;title&gt;[]&lt;/title&gt;
-        &lt;link rel="stylesheet" href="css/style.css" type="text/css"/&gt;
+        &lt;link rel="stylesheet" href="css/style.css" type="text/css" /&gt;
     &lt;/head&gt;<br>
     &lt;body&gt;
         ...

@@ -10,18 +10,13 @@
 
     <link rel="icon" href="../../images/favicon.png" />
     <link rel="stylesheet" href="../../css/style.css" />
-
-    <style>
-        pre > code.hljs {
-          background: #fafafa;
-        }
-      </style>
 </head>
 
 <body>
     <article>
         <h2>Highlight Syntax</h2>
-        <div class="form-group">
+
+        <div class="form-group out-of-box">
             <label>
                 Code
             </label>
@@ -56,7 +51,8 @@
         
 
         <div class="mb-3">Output</div>
-        <pre><code id="output"></code></pre>
+
+        <pre class="out-of-box"><code id="output"></code></pre>
     </article>
 
     <link rel="stylesheet" href="https://lockex1987.github.io/posts/project%20-%20noti/css/noti.css" />
@@ -65,13 +61,21 @@
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/css/line-awesome.min.css" />
     <link rel="preload"
-        href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/fonts/la-solid-900.woff2" as="font"
-        type="font/woff2" crossorigin="anonymous" />
+        href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/fonts/la-solid-900.woff2"
+        as="font"
+        type="font/woff2"
+        crossorigin="anonymous" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="lib/highlight/css/solarized-dark.css" />
-    <script src="lib/highlight/js/highlight.pack.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.0.3/build/styles/solarized-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.0.3/build/highlight.min.js"></script>
+
+    <style>
+        pre > code.hljs {
+          background: #fafafa;
+        }
+    </style>
 
     <script src="js/script.js"></script>
 

@@ -7,27 +7,13 @@
     <title>Highlight source code syntax</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
-
-    <!-- default, solarized-dark, xcode, idea -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.0.3/build/styles/solarized-dark.min.css">
-    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.0.3/build/highlight.min.js"></script>
-
-    <style>
-      pre > code.hljs {
-        background: #fafafa;
-      }
-    </style>
-
-    <script>hljs.initHighlightingOnLoad();</script>
   </head>
   <body>
     <article>
       <h2>Highlight source code syntax</h2>
-      <p>Cool!</p>
-      <p>You can write tutorials with code snippets.</p>
-      <p>This is a code that is highlighted by <code>highlight.js</code>
-        library:</p>
-      <pre><code class="html text-pre-wrap">&lt;!doctype html&gt;
+      <p>Cool! Bạn có thể viết các bài hướng dẫn với các đoạn code được highlight.</p>
+      <p>Demo:</p>
+      <pre class="out-of-box border rounded bg-white"><code class="html text-pre-wrap">&lt;!doctype html&gt;
 &lt;html&gt;
 &lt;head&gt;
     &lt;meta charset="UTF-8" /&gt;
@@ -70,19 +56,28 @@
 &lt;/html&gt;
 </code></pre>
       
-      <p><strong>Getting started</strong></p>
-      <p>The bare minimum for using <code>highlight.js</code> on a web page is
-        linking to the library along with one of the styles and calling <code>initHighlightingOnLoad</code>:</p>
-      <pre><code class="html">&lt;link rel="stylesheet" href="/path/to/styles/default.css"&gt;<br>&lt;script src="/path/to/highlight.pack.js"&gt;&lt;/script&gt;<br>&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;</code></pre>
-      <p>This will find and highlight code inside of <code>&lt;pre&gt;&lt;code&gt;</code>
-        tags.</p>
-      <p><strong>Usage</strong></p>
-      <p>Copy color-formatted text from webpages (HTML, highlight.js) to DOC
-        documents or create PDF file by wk&lt;HTML&gt;toPDF.</p>
+      <p><strong>Bắt đầu</strong></p>
+      <p>Cách sử dụng thư viện <code>highlight.js</code> đơn giản nhất đó là thêm các file CSS, JS và gọi phương thức <code>hljs.initHighlightingOnLoad()</code>.</p>
+      <pre class="bg-white"><code class="html">&lt;link rel="stylesheet" href="/path/to/styles/default.css"&gt;<br>&lt;script src="/path/to/highlight.min.js"&gt;&lt;/script&gt;<br>&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;</code></pre>
+      <p>Các đoạn code bên trong <code>&lt;pre&gt;&lt;code&gt;</code> sẽ được highlight.</p>
+      <p><strong>Sử dụng</strong></p>
+      <p>Copy đoạn code có màu từ các trang web vào file DOC hoặc tạo file PDF bằng công cụ wk&lt;HTML&gt;toPDF.</p>
       <p><a href="demo.html">Demo</a></p>
-      <p><strong>Reference</strong></p>
+      <p><strong>Tham khảo</strong></p>
       <p><a href="https://highlightjs.org/" target="_blank">highlightjs.org</a></p>
     </article>
+
+    <!-- default, solarized-dark, xcode, idea, vs -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.0.3/build/styles/vs.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.0.3/build/highlight.min.js"></script>
+
+    <style>
+      pre > code.hljs {
+        /* background: #fafafa; */
+      }
+    </style>
+
+    <script>hljs.initHighlightingOnLoad();</script>
     <script src="../../js/docs.js"></script>
   </body>
 </html>
