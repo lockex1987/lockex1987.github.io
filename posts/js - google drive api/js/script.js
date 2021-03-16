@@ -2,7 +2,7 @@
 // https://developers.google.com/drive
 // https://developers.google.com/identity/protocols/oauth2
 // https://codepen.io/ravi-shukla/pen/ywQdYw
-// https://github.com/lockex1987/lockex1987.github.io/blob/master/archive/project%20-%20money%20manager/js/app.js
+// https://github.com/lockex1987/lockex1987.github.io/blob/master/posts/project%20-%20money%20manager/js/app.js
 
 /**
  * Khởi tạo Vue.

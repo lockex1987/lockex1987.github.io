@@ -17,7 +17,7 @@ function convertHtmlToXhtml(string $htmlCode): string
     $tidy->parseString($htmlCode, $options, 'utf8');
     $tidy->cleanRepair();
 
-    /*
+    
     if ($tidy->errorBuffer) {
         echo 'There are some errors!' . PHP_EOL;
         $errors = explode(PHP_EOL, $tidy->errorBuffer);
@@ -28,11 +28,12 @@ function convertHtmlToXhtml(string $htmlCode): string
     } else {
         echo 'There are no errors.';
     }
-    */
 
     return tidy_get_output($tidy);
 }
 
 
-$htmlCode = 'syntax <strong>error</small> <myowntag>my text</myowntag>';
-echo convertHtmlToXhtml($htmlCode) . PHP_EOL;
+// $htmlCode = 'syntax <strong>error</small> <myowntag>my text</myowntag>';
+$htmlCode = file_get_contents('boilerplate/text/10.html');
+$xhtml = convertHtmlToXhtml($htmlCode);
+// echo $xhtml . PHP_EOL;

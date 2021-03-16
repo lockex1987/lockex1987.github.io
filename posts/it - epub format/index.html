@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="date" content="2021-03-16 11:10:00">
-    <meta name="description" content="epub reader, bibi, futurepress, convert html to epub, convert html to xhtml">
+    <meta name="description" content="create epub, convert html to xhtml">
     <title>Cấu trúc file epub</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -145,6 +145,11 @@
 </code></pre>
       <p>Lưu ý: Bảo đảm rằng <code>uid</code> khớp với bên trong <code>content.opf</code>
         và phải có tag <code>navPoint</code>.</p>
+      <p>ID không nhất thiết phải là UUID. ID có thể do chúng ta tự định nghĩa,
+        ví dụ:</p>
+      <pre>unique-identifier="motsach_url"<br><br>&lt;dc:identifier id="motsach_url"&gt;http://isach.info/story.php?story=de_men_phieu_luu_ky__to_hoai&lt;/dc:identifier&gt;<br><br>&lt;meta name="dtb:uid" content="http://isach.info/story.php?story=de_men_phieu_luu_ky__to_hoai" /&gt;</pre>
+      <p>Chỉ định UUID:</p>
+      <pre>&lt;dc:identifier id="uuid_id" opf:scheme="uuid"&gt;d11c74a2-22cd-41cf-b382-5bcc522aaf57&lt;/dc:identifier&gt;</pre>
       <p>Trang web sinh UUID online:</p>
       <p><a href="https://www.uuidgenerator.net/" target="_blank">Online UUID
           Generator Tool</a></p>
@@ -211,7 +216,7 @@
         của thẻ <code>aside</code>. Thuộc tính <code>epub:type</code> là <code>noteref</code>.</p>
       <p>Chú ý, thẻ html phải thêm thuộc tính <code>xmlns:epub</code> để có thể
         hợp lệ thuộc tính <code>epub:type</code>.</p>
-      <pre class="out-of-box">&lt;html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"&gt;<br>    ...<br>&lt;/html&gt;</pre>
+      <pre>&lt;html xmlns="http://www.w3.org/1999/xhtml"<br>    xmlns:epub="http://www.idpf.org/2007/ops"&gt;<br>    ...<br>&lt;/html&gt;</pre>
       <h3>Phiên bản 3</h3>
       <p>Phiên bản 3 có nhiều nâng cấp so với phiên bản 2:</p>
       <ul>
@@ -230,7 +235,8 @@
       <h3>Tham khảo</h3>
       <p><a href="https://en.wikipedia.org/wiki/EPUB" target="_blank">EPUB -
           Wikipedia</a></p>
-      <p><a href="https://lockex1987.github.io/archive/it%20-%20convert%20html%20to%20epub/"
+      <p><a href="https://lockex1987.github.io/archive/it%20-%20convert%20html%20to%20epub/"
+
           target="_blank">Convert HTML to EPUB</a> </p>
       <p><a href="http://idpf.github.io/epub3-samples/30/samples.html" target="_blank">EPUB
           3 Samples | EPUB 3 Samples Project</a> </p>
