@@ -3,11 +3,11 @@
 // https://en.wikipedia.org/wiki/XHTML
 // http://www.w3.org/People/Raggett/tidy/
 // http://tidy.sourceforge.net/libintro.html
+// http://tidy.sourceforge.net/docs/quickref.html
 // https://www.php.net/tidy
 function convertHtmlToXhtml(string $htmlCode): string
 {
     $tidy = new Tidy();
-    // http://tidy.sourceforge.net/docs/quickref.html
     $options = [
         'indent' => true,
         'output-xhtml' => true,
@@ -26,7 +26,7 @@ function convertHtmlToXhtml(string $htmlCode): string
             echo $error . PHP_EOL;
         }
     } else {
-        echo 'There are no errors.';
+        // echo 'There are no errors.';
     }
 
     return tidy_get_output($tidy);
@@ -34,6 +34,10 @@ function convertHtmlToXhtml(string $htmlCode): string
 
 
 // $htmlCode = 'syntax <strong>error</small> <myowntag>my text</myowntag>';
-$htmlCode = file_get_contents('boilerplate/text/10.html');
-$xhtml = convertHtmlToXhtml($htmlCode);
-// echo $xhtml . PHP_EOL;
+for ($i = 9; $i <= 99; $i++) {
+    $htmlCode = file_get_contents('boilerplate/text/' . $i . '.html');
+    echo $i . PHP_EOL;
+    $xhtml = convertHtmlToXhtml($htmlCode);
+    echo PHP_EOL;
+    // echo $xhtml . PHP_EOL;
+}
