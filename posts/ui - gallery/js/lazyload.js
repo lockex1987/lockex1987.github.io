@@ -1,16 +1,15 @@
-
 // https://github.com/tuupola/jquery_lazyload
 function lazyloadOld(images) {
-    let observerConfig = {
+    const observerConfig = {
         root: null,
         rootMargin: '0px',
         threshold: [0]
     };
-    let observer = new IntersectionObserver(entries => {
+    const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.intersectionRatio > 0) {
                 // Lấy đối tượng img
-                let img = entry.target;
+                const img = entry.target;
 
                 // Bỏ không theo dõi nữa
                 observer.unobserve(img);
@@ -30,11 +29,11 @@ function lazyloadOld(images) {
 document.addEventListener('DOMContentLoaded', () => {
     let images = [...document.querySelectorAll('img[data-src]')];
     let processing = false;
-	let threshold = 200;
+    const threshold = 200;
 
     function createPrefetchLinks() {
         images.forEach(e => {
-            let prefetchLink = document.createElement('link');
+            const prefetchLink = document.createElement('link');
             prefetchLink.rel = 'prefetch';
             prefetchLink.href = e.dataset.src;
             document.body.appendChild(prefetchLink);
@@ -47,9 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             setTimeout(() => {
                 images.forEach((img) => {
-                    let rect = img.getBoundingClientRect();
-                    //if (rect.top <= window.innerHeight && rect.bottom >= 0) {
-					if (rect.top <= window.innerHeight + threshold) {
+                    const rect = img.getBoundingClientRect();
+                    // if (rect.top <= window.innerHeight && rect.bottom >= 0) {
+                    if (rect.top <= window.innerHeight + threshold) {
                         // Cập nhật ảnh
                         img.src = img.dataset.src;
 
