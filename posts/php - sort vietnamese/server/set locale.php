@@ -1,4 +1,5 @@
 <?php
+
 //phpinfo();
 
 // Thiết lập thông tin locale
