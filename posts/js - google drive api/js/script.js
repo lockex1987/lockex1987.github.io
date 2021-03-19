@@ -110,6 +110,7 @@ function initVueApp(GoogleAuth) {
                         Authorization: `Bearer ${accessToken}`,
                         'Content-Type': 'application/json'
                     }
+                    // mode: 'no-cors'
                 });
                 const location = resp.headers.get('Location');
                 // console.log(location);
