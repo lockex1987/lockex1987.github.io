@@ -32,6 +32,7 @@ function readExistingFile()
 
 /**
  * Dùng Html Reader của PhpSpreadsheet.
+ * https://github.com/tijsverkoyen/CssToInlineStyles.
  */
 function generateFromHtml()
 {
@@ -78,24 +79,38 @@ function generateFromHtml()
 }
 
 
+/**
+ * Tham khảo:
+ *     https://github.com/PHPOffice/PhpSpreadsheet/blob/master/samples/Chart/
+ * Phải dùng Reader và Writer để có tùy chọn setIncludeCharts().
+ */
 function drawChart()
 {
     $inputFilePath = 'chart_input.xlsx';
-    $spreadsheet = IOFactory::load($inputFilePath);
+    
+    // $spreadsheet = IOFactory::load($inputFilePath);
 
-    /*
+    $reader = IOFactory::createReader('Xlsx');
+    $reader->setIncludeCharts(true);
+    $spreadsheet = $reader->load($inputFilePath);
+
+    
     $sheet = $spreadsheet->setActiveSheetIndex(1);
     $sheet->setCellValue('A3', 'Bình');
     $sheet->setCellValue('B3', 200);
-    */
 
     $outputFilePath = 'chart_output.xlsx';
-    $writer = new Xlsx($spreadsheet);
+    
+    // $writer = new Xlsx($spreadsheet);
+
+    $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+    $writer->setIncludeCharts(true);
+    
     $writer->save($outputFilePath);
 }
 
 
 // simpleDemo();
 // readExistingFile();
-generateFromHtml();
+// generateFromHtml();
 drawChart();
