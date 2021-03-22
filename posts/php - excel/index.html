@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="vi">
   <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Thao tác file Excel với PHP">
+    <meta name="description" content="phpspreadsheet, export from template, merge cell, chart">
     <title>Thao tác file Excel với PHP</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -11,6 +11,89 @@
   <body>
     <article>
       <h2>Thao tác file Excel với PHP</h2>
+      <h3>Roadmap dự án</h3>
+      <p>Làm chức năng export thôi.</p>
+      <p>Chức năng import sẽ dùng exceljs đọc từng dòng, insert từng dòng.</p>
+      <p>Chức năng export của exceljs có API khá là tiện, nhưng nếu dùng được
+        bằng template thì tốt.</p>
+      <p><a href="../../posts.html?searchAll=true&amp;query=excel" target="_blank">Posts
+          "excel"</a></p>
+      <p>Ở dự án TTCD, export Excel bằng thư viện Laravel Excel phiên bản 2 với
+        Blade template cùng CSS rất là tiện.</p>
+      <p>Tuy nhiên, Laravel Excel phiên bản 2 chỉ hỗ trợ các framework Laravel
+        phiên bản thấp (Laravel 8 sẽ không có). Laravel Excel phiên bản 3 thì
+        lại bỏ tính năng này (không format bằng CSS được).</p>
+      <p>Chúng ta sẽ tự viết bằng PHPSpreadsheet.</p>
+      <p>Chúng ta cần nắm các khái niệm:</p>
+      <h4>Template engine</h4>
+      <p>Template engine: từ template và dữ liệu sẽ sinh ra xâu đầu ra với dữ
+        liệu được thể hiển. Có hỗ trợ các block như if-else, for loop,...</p>
+      <p>Template được hỗ trợ nhiều ngôn ngữ lập trình nhất là Mustache.</p>
+      <p>Có thể tự viết:</p>
+      <p><a href="../js%20-%20my%20own%20repeat%20template/" target="_blank">Repeat
+          template</a></p>
+      <p><a href="https://www.w3schools.com/w3js/w3js_w3data.asp" target="_blank">W3.JS
+          W3Data</a></p>
+      <p><a href="https://github.com/janl/mustache.js/blob/master/mustache.js" target="_blank">mustache.js/mustache.js
+          at master · janl/mustache.js · GitHub</a></p>
+      <p><a href="https://en.wikipedia.org/wiki/Mustache_%28template_system%29"
+
+          target="_blank">Mustache (template system) - Wikipedia</a></p>
+      <p>Thư viện Jxls có sử dụng template ở file Excel (trong comment của ô?):</p>
+      <p><a href="http://jxls.sourceforge.net/" target="_blank">JXLS<br>
+        </a></p>
+      <p><a href="https://github.com/jxlsteam/jxls" target="_blank">GitHub -
+          jxlsteam/jxls: Java library for creating Excel reports using Excel
+          templates</a></p>
+      <h3>Cấu trúc file xlsx</h3>
+      <p>File xlsx là file ZIP của các file xml, đo đó chúng ta cần biết các
+        thao tác với file ZIP (nén, giải nén, đọc, cập nhật).</p>
+      <p><a href="https://lockex1987.github.io/posts/js%20-%20export%20docx/" target="_blank">Xuất
+          file docx với JS</a></p>
+      <p><a href="https://lockex1987.github.io/posts/php%20-%20zip/" target="_blank">Thao
+          tác với ZIP file bằng PHP</a></p>
+      <p>Mô tả Office Open XML:</p>
+      <p><a href="http://officeopenxml.com/anatomyofOOXML-xlsx.php" target="_blank">Office
+          Open XML - Anatomy of an OOXML SpreadsheetML File</a></p>
+      <p><a href="http://officeopenxml.com/SScontentOverview.php" target="_blank">Office
+          Open XML (OOXML) - Word Processing - Overview of Content</a></p>
+      <h3>Các thư viện tham khảo</h3>
+      <p><a href="https://github.com/linways/table-to-excel" target="_blank">GitHub
+          - linways/table-to-excel: Javascript library to create "valid" excel
+          file from html table with styles</a></p>
+      <p><a href="https://github.com/optilude/xlsx-template" target="_blank">GitHub
+          - optilude/xlsx-template: A NodeJS module to generate Excel files in
+          .xlsx format from a template created with Excel itself</a></p>
+      <p><a href="https://docs.laravel-excel.com/2.1/blade/styling.html" target="_blank">Styling
+          sheets | Laravel Excel</a></p>
+      <p><a href="https://docs.laravel-excel.com/2.1/blade/load-view.html" target="_blank">@Blade
+          to Excel | Laravel Excel</a></p>
+      <p><br>
+      </p>
+      <p>Code Java do tôi viết:</p>
+      <p><a href="https://github.com/lockex1987/lockex1987.github.io/blob/master/posts/java%20-%20cttd/cttd/src/main/java/common/util/ExportExcel.java"
+
+          target="_blank">https://github.com/lockex1987/lockex1987.github.io/blob/master/posts/java%20-%20cttd/cttd/src/main/java/common/util/ExportExcel.java</a></p>
+      <p><a href="https://github.com/lockex1987/lockex1987.github.io/blob/master/posts/java%20-%20cttd/cttd/src/main/java/common/util/ExcelValidator.java"
+
+          target="_blank">https://github.com/lockex1987/lockex1987.github.io/blob/master/posts/java%20-%20cttd/cttd/src/main/java/common/util/ExcelValidator.java</a></p>
+      <p><a href="https://github.com/lockex1987/lockex1987.github.io/blob/master/posts/java%20-%20cttd/cttd/src/main/java/common/util/ExcelToDatabase.java"
+
+          target="_blank">https://github.com/lockex1987/lockex1987.github.io/blob/master/posts/java%20-%20cttd/cttd/src/main/java/common/util/ExcelToDatabase.java</a></p>
+      <h3>Chức năng</h3>
+      <ul>
+        <li>Xuất từ template</li>
+        <ul>
+          <li>Có if-else, for, merge cell</li>
+        </ul>
+        <li>Có thể vẽ biểu đồ</li>
+      </ul>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Các thư viện PHP<br>
+      </h3>
       <p>Đọc, ghi file Excel.</p>
       <p>Có thể ghi với định dạng PDF.</p>
       <p>Có 3 thư viện hay được dùng:</p>
@@ -23,6 +106,7 @@
       <p>Thư viện thứ 3 sử dụng cho framework Laravel.</p>
       <p>Sử dụng thư viện phpspreadsheet. Thư viện này là thư viện mới của
         PHPExcel, được chính nhà phát triển thư viện PHPExcel đề nghị.</p>
+      <h3>Thư viện PHPSpreadsheet</h3>
       <p>Các định dạng cho phép đọc:</p>
       <ul>
         <li>Office Open XML (.xlsx) Excel 2007 trở lên</li>
