@@ -22,3 +22,7 @@ h4:before {
     counter-increment: h4Counter;
     content: counter(h3Counter) "." counter(h4Counter) ".";
 }
+
+.no-before::before {
+	display: none !important;
+}

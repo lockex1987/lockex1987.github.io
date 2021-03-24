@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>Liên hoàn họa</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+</head>
+
+<body>
+    <div id="app"
+        class="p-3"
+        v-cloak>
+        <div v-show="screen == 'home'">
+            <h1>
+                Liên hoàn họa
+            </h1>
+
+            <template v-for="(story, storyIdx) in stories">
+                <div v-for="(version, versionIdx) in story.versions"
+                    class="hover:bg-light d-flex cursor-pointer mb-3"
+                    @click="viewVersion(storyIdx, versionIdx)">
+                    <img :src="'http://ebook.lienhoanhoa.net/online/' + story.folder + '/' + version.folder + '/000.jpg'"
+                        style="max-width: 130px;"/>
+
+                    <div class="pl-3">
+                        <h3 class="no-before">{{story.name}}</h3>
+                        <div class="text-muted">{{version.name}}</div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <div v-show="screen == 'version'">
+            <h1 @click="screen = 'home'"
+                class="cursor-pointer">
+                {{currentStory.name}}: {{currentVersion.name}}
+            </h1>
+
+            <div v-for="(chapter, chapterIdx) in currentVersion.chapters"
+                class="hover:bg-light d-flex cursor-pointer mb-3"
+                @click="viewChapter(chapterIdx)">
+                <img :src="'http://ebook.lienhoanhoa.net/online/' + currentStory.folder + '/' + currentVersion.folder + '/' + chapter.folder + '/000.jpg'"
+                    style="max-width: 130px;"/>
+                
+                <div class="pl-3">
+                    <h3 class="no-before">{{chapter.name}}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div v-show="screen == 'chapter'">
+            <h1 @click="screen = 'version'"
+                class="cursor-pointer">
+                {{currentChapter.name}}
+            </h1>
+
+            <img v-for="img in images"
+                :src="img"
+                class="d-block mb-2"/>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

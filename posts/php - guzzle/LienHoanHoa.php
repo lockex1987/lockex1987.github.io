@@ -52,7 +52,12 @@ class ApiClient
         }
         $options = [
             'headers' => $headers,
-            'json' => $params
+            'json' => $params,
+            'proxy' => [
+                'http'  => 'http://192.168.103.25:80',
+                'https' => 'http://192.168.103.25:80',
+                'no' => ['.mit.edu', 'foo.com'] 
+            ]
         ];
         $response = $client->post(self::API_URL, $options);
         $body = $response->getBody();
@@ -68,6 +73,8 @@ function crawl(): void
     $apiClient = new ApiClient();
 
     // Cấu trúc: Truyện -> Bộ -> Tập
+    // API lấy tất cả các truyện có vẻ không trả về hết
+    // Có thể lấy bộ của các truyện có ID là 9, 10, 11,...
     $allTruyen = $apiClient->getAllTruyen();
     $data = [];
     // print_r($allTruyen);
@@ -106,7 +113,8 @@ function crawl(): void
     }
 
     $jsonData = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-    file_put_contents('data_php_new.json', $jsonData);
+    echo $jsonData . PHP_EOL;
+    // file_put_contents('data/data_php_new.json', $jsonData);
 }
 
 
