@@ -55,17 +55,20 @@ function mergeImages(array $paths, ?string $oputputFilePath): void
 }
 
 
-function main(): void
+/**
+ * Đọc file 'merge-couples.json' là kết quả của script check_images_in_folder.php.
+ * Nối các file ảnh.
+ * @param string $folderPath Đường dẫn thư mục đầu ra
+ */
+function main(string $folderPath): void
 {
     $filePath = 'merge-couples.json';
 	$mergeCouples = json_decode(file_get_contents($filePath));
-	$folderPath = 'D:/new/mickey en tam giac quy bermuda truyen' . ' (merged)';
 	if (!file_exists($folderPath)) {
 		mkdir($folderPath);
 	}
 	foreach ($mergeCouples as $idx => $couple) {
 		$oputputFilePath = $folderPath . '/' . str_pad($idx + 1, 3, '0', STR_PAD_LEFT,) . '.jpg';
-
 		if (count($couple) == 1) {
 			copy($couple[0], $oputputFilePath);
 		} else {
@@ -76,4 +79,6 @@ function main(): void
 }
 
 
-main();
+// 'D:/new/mickey en tam giac quy bermuda truyen' . ' (merged)'
+$folderPath = $argv[1];
+main($folderPath);
