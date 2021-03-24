@@ -185,6 +185,7 @@ $r = $client-&gt;request('POST', 'http://httpbin.org/post', [<br>    'body' =&gt
 $body = \GuzzleHttp\Psr7\stream_for('hello!');
 $r = $client-&gt;request('POST', 'http://httpbin.org/post', [<br>    'body' =&gt; $body<br>]);
 </pre>
+      <h3>Gửi JSON</h3>
       <p>Nếu bạn muốn upload dữ liệu JSON, hãy sử dụng tùy chọn <code>json</code>:</p>
       <pre>$r = $client-&gt;request('PUT', 'http://httpbin.org/put', [
     'json' =&gt; ['foo' =&gt; 'bar']

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Gọi SOAP, có thêm header.
+ */
 function setHeaders()
 {
 	$wsdl = 'http://yoururl.com/service.asmx?WSDL';
@@ -14,6 +17,7 @@ function setHeaders()
 	print_r($data);
 }
 
+
 /**
  * Kiểm tra username và password có chính xác hay không.
  * Gọi SSO của Viettel.
@@ -22,9 +26,9 @@ function setHeaders()
  * @param string $password Mật khẩu
  * @return int 0 - Thành công, 1 - Thất bại, 2 - Lỗi gọi web service
  */
-function authen(string $username, string $password)
+function authen(string $username, string $password): int
 {
-	libxml_disable_entity_loader(false);
+	// libxml_disable_entity_loader(false);
 
 	try {
 		$wsdl = 'http://10.60.7.126:8660/passportv3/passportWS?wsdl';
@@ -44,7 +48,7 @@ function authen(string $username, string $password)
 		$status = ($status == 0) ? 0 : 1;
 		return $status;
 	} catch (SoapFault $fault) {
-		// error_log("Call SSO fault: " . $fault->getMessage());
+		// error_log('Call SSO fault: ' . $fault->getMessage());
 		return 2;
 	}
 }
