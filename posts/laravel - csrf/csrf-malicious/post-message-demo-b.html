@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Trang B</title>
+</head>
+
+<body>
+    <p>Trang B</p>
+
+    <script>
+        const targetOrigin = 'http://csrf-main.io';
+        const iframe = document.createElement('iframe');
+        // iframe.style.display = 'none';
+        iframe.addEventListener('load', () => {
+            iframe.contentWindow.postMessage('get-token', targetOrigin);
+        });
+        iframe.src = 'http://csrf-main.io/check-login';
+        document.body.appendChild(iframe);
+        window.addEventListener('message', (evt) => {
+            if (evt.origin !== targetOrigin) {
+                return;
+            }
+            const data = evt.data;
+            if (data.startsWith('token:')) {
+                console.log('Token là: ' + data.split(':')[1]);
+            }
+            // document.body.removeChild(iframe);
+        });
+    </script>
+</body>
+
+</html>

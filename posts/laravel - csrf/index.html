@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="cookie samesite">
+    <meta name="description" content="cookie samesite, iframe postMessage demo, sso check login">
     <title>Phòng chống lỗi ATTT CSRF</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -54,6 +54,8 @@
         fastcgi_index              index.php;
         fastcgi_param              SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include                    fastcgi_params;
+    }<br><br>    location = /favicon.ico {
+        log_not_found off;
     }
 }
 </pre>
@@ -62,7 +64,9 @@
     listen 80;
     server_name csrf-malicious.to;
     root D:/htdocs/csrf-malicious;
-    index index.html;
+    index index.html;<br><br>    location = /favicon.ico {
+        log_not_found off;
+    }
 }
 </pre>
       <p>Sửa file <code>C:/Windows/System32/drivers/etc/hosts</code>:</p>
@@ -111,8 +115,6 @@ Route::get('/call-api/{path}', function (string $path) {
         để thực thi. Đây là request hợp lệ.</p>
       <p>Truy cập trang <a href="http://csrf-malicious.to/" target="_blank">csrf-malicious.to</a>
         và request đổi email sẽ tự được thực thi.</p>
-      <p><br>
-      </p>
       <h3>Cách fix với Laravel</h3>
       <p>Laravel rất dễ dàng để bảo vệ các ứng dụng của bạn từ tấn công giả mạo
         <a href="http://en.wikipedia.org/wiki/Cross-site_request_forgery" target="_blank">cross-site
@@ -201,22 +203,17 @@ class VerifyCsrfToken extends BaseVerifier
       <p>Cấu hình cookie là SameSite strict bằng cách sửa cấu hình <code>same_site</code>
         trong file <code>config/session.php</code> từ <code>lax</code> thành <code>strict</code>.</p>
       <p>Demo vẫn bị lợi dụng.</p>
+      <p>Vẫn phải sử dụng token.</p>
       <h3>Token</h3>
       <p>Bạn cũng có thể ngăn lỗi CSRF bằng cách không xác thực dựa vào cookie
         mà dựa vào token.</p>
       <h3>Tham khảo</h3>
       <p><a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery" target="_blank">Cross-site
           request forgery - Wikipedia</a></p>
-      <p><br>
-      </p>
       <p><a href="https://laravel.com/docs/master/csrf" target="_blank">laravel.com/docs/master/csrf</a></p>
-      <p><a href="https://viblo.asia/p/cross-site-request-forgery-csrf-sap-het-thoi-oOVlYyEyl8W"
+      <p><a href="https://viblo.asia/p/cross-site-request-forgery-csrf-sap-het-thoi-oOVlYyEyl8W"
+
           target="_blank">Cross-Site Request Forgery (CSRF) sắp hết thời?!!</a></p>
-      <p>x</p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>

@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="sso, cookie, session, login">
+    <meta name="description" content="sso, cookie, session, login, iframe postMessage">
     <title>Single Sign-on</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -106,8 +106,6 @@
         nhập hay chưa.</p>
       <h4>Cách 1</h4>
       <p>Sửa dụng iframe đến một trang đặc biệt của SSO, hiển thị dạng widget.</p>
-      <p>Cấu hình X-Frame-Options của trang SSO đặc biệt đó để không phải trang
-        nào cũng nhúng được.</p>
       <p>Cần CSS background cho iframe.</p>
       <p>Cách này chỉ được một phần trong trang. Giả sử chỗ khác cũng cần kiểm
         tra người dùng đã đăng nhập hay chưa thì không được.</p>
@@ -120,23 +118,16 @@
         kiểm tra thông tin xem token có hợp lệ hay không và lấy thông tin người
         dùng luôn.</p>
       <p>SSO lưu token ở cookie. Lại phải quản lý thêm cookie.</p>
-      <p><a href="https://stackoverflow.com/questions/46288437/set-cookies-for-cross-origin-requests"
-          target="_blank">authentication - Set cookies for cross origin requests
-          - Stack Overflow</a></p>
       <h4>Cách 3</h4>
       <p>Sử dụng iframe và cơ chế postMessage.</p>
-      <p>Chú ý kiểm tra ATTT để không lộ token.</p>
+      <p>Chú ý kiểm tra ATTT để không lộ token:</p>
+      <ul>
+        <li>Kiểm tra origin của postMessage</li>
+        <li>Kiểm tra referer để không phải trang web nào cũng nhúng được</li>
+      </ul>
       <h3>Tham khảo</h3>
       <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage"
           target="_blank">Window.postMessage() - Web APIs | MDN</a></p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>
