@@ -11,7 +11,109 @@
   <body>
     <article>
       <h2>Phòng chống lỗi ATTT CSRF</h2>
-      <h3>Giới thiệu</h3>
+      <h3>Giải thích lỗi</h3>
+      <p>Trong trường hợp bạn không quen thuộc với lỗi CSRF, hãy cùng tìm hiểu
+        một ví dụ về cách mà lỗi này bị lợi dụng. Tưởng tượng bạn có một ứng
+        dụng và có đường dẫn <code>/user/email</code> phương thức <code>POST</code>
+        để thay đổi địa chỉ email của người dùng. Đường dẫn này có trường thông
+        tin <code>email</code> chứa địa chỉ email mà người dùng sử dụng.</p>
+      <p>Nếu không có sự bảo vệ CSRF, một trang web độc có thể tạo một form HTML
+        trỏ tới đường dẫn <code>/user/email</code> của bạn và submit địa chỉ
+        bất kỳ.</p>
+      <pre>&lt;form action="https://your-application.com/user/email"<br>    method="POST"&gt;
+    &lt;input type="email"<br>        value="malicious-email@example.com" /&gt;
+&lt;/form&gt;<br><br>&lt;script&gt;
+    document.forms[0].submit();
+&lt;/script&gt;</pre>
+      <p>Nếu trang web độc tự động submit form khi trang được load, kẻ xấu chỉ
+        cần dụ người dùng truy cập trang của chúng và địa chỉ email của người
+        dùng sẽ tự động thay đổi trên ứng dụng của bạn.</p>
+      <p>Để ngăn chặn lỗi trên, chúng ta cần kiểm tra tất cả các request POST,
+        PUT, PATH, DELETE về một giá trị bí mật trong session mà trang web độc
+        không thể truy cập.</p>
+      <h3>Demo lỗi</h3>
+      <p>Tạo hai ứng dụng nginx là <a href="http://csrf-main.io/" target="_blank">csrf-main.io</a>
+        và <a href="http://csrf-malicious.to/" target="_blank">csrf-malicious.to</a>.
+        Cấu hình nginx lần lượt là:</p>
+      <p><code>csrf-main.conf</code>:</p>
+      <pre>server {
+    listen 80;
+    server_name csrf-main.io;
+    root D:/htdocs/csrf-main/public;
+    index index.php index.html;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        fastcgi_split_path_info    ^(.+\.php)(/.+)$;
+        fastcgi_pass               127.0.0.1:9000;
+        fastcgi_index              index.php;
+        fastcgi_param              SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include                    fastcgi_params;
+    }
+}
+</pre>
+      <p><code>csrf-malicious.conf</code>:</p>
+      <pre>server {
+    listen 80;
+    server_name csrf-malicious.to;
+    root D:/htdocs/csrf-malicious;
+    index index.html;
+}
+</pre>
+      <p>Sửa file <code>C:/Windows/System32/drivers/etc/hosts</code>:</p>
+      <pre>127.0.0.1    csrf-main.io
+127.0.0.1    csrf-malicious.to</pre>
+      <p>Cấu hình <code>routes/web.php</code> của ứng dụng main như sau:</p>
+      <pre>&lt;?php
+
+use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+
+Route::get('/', function () {
+    return 'Đây là trang CSRF Main';
+});
+
+Route::post('/user/email', function (Request $request) {
+    $email = $request-&gt;email;
+    echo 'Email của bạn đã được sửa thành ' . $email;
+});
+
+// Gọi API thông qua PHP
+Route::get('/call-api/{path}', function (string $path) {
+    echo 'Gọi API ' . $path;
+})-&gt;where('path', '(.*)');
+</pre>
+      <p>Tắt cấu hình CSRF của Laravel bằng cách sửa file <code>app/Http/Kernel.php</code>,
+        comment middleware <code>VerifyCsrfToken</code>.</p>
+      <p>Ứng dụng malicious chỉ có một trang <code>index.html</code> như sau:</p>
+      <pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+    &lt;form action="http://csrf-main.io/user/email"
+        method="POST"&gt;
+        &lt;input name="email"
+            value="malicious-email@example.com" /&gt;
+    &lt;/form&gt;
+
+    &lt;script&gt;
+        document.forms[0].submit();
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+      <p>Ở ứng dụng main, chúng ta cũng có file <code>update-email.html</code>
+        có nội dung tương tự. Truy cập đường dẫn <a href="http://csrf-main.io/update-email.html">csrf-main.io/update-email.html</a>
+        để thực thi. Đây là request hợp lệ.</p>
+      <p>Truy cập trang <a href="http://csrf-malicious.to/" target="_blank">csrf-malicious.to</a>
+        và request đổi email sẽ tự được thực thi.</p>
+      <p><br>
+      </p>
+      <h3>Cách fix với Laravel</h3>
       <p>Laravel rất dễ dàng để bảo vệ các ứng dụng của bạn từ tấn công giả mạo
         <a href="http://en.wikipedia.org/wiki/Cross-site_request_forgery" target="_blank">cross-site
           request forgery</a> (CSRF). Cross-site request forgery là một loại mã
@@ -30,7 +132,7 @@
 &lt;/form&gt;</pre>
       <p>Middleware <code>VerifyCsrfToken</code>, ở trong nhóm middleware <code>web</code>,
         sẽ tự động xác minh token từ request input giống với token lưu trong
-        session.</p>
+        session. Middleware này mặc định là hiệu lực.</p>
       <p>Middleware VerifyCsrfToken sẽ kiểm tra token ở:</p>
       <ul>
         <li>Tham số <code>_token</code> trong request</li>
@@ -95,13 +197,26 @@ class VerifyCsrfToken extends BaseVerifier
       <h3>Cookie SameSite</h3>
       <p>Giờ đây, chúng ta có thể ngăn chặn lỗi CSRF một cách đơn giản bằng cách
         thiết lập cookie là SameSite.</p>
+      <p>Yêu cầu trình duyệt phải hỗ trợ, và cookie phải có thuộc tính Secure?</p>
+      <p>Cấu hình cookie là SameSite strict bằng cách sửa cấu hình <code>same_site</code>
+        trong file <code>config/session.php</code> từ <code>lax</code> thành <code>strict</code>.</p>
+      <p>Demo vẫn bị lợi dụng.</p>
       <h3>Token</h3>
       <p>Bạn cũng có thể ngăn lỗi CSRF bằng cách không xác thực dựa vào cookie
         mà dựa vào token.</p>
       <h3>Tham khảo</h3>
-      <p><a href="https://laravel.com/docs/master/csrf" target="_blank">https://laravel.com/docs/master/csrf</a></p>
+      <p><a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery" target="_blank">Cross-site
+          request forgery - Wikipedia</a></p>
+      <p><br>
+      </p>
+      <p><a href="https://laravel.com/docs/master/csrf" target="_blank">laravel.com/docs/master/csrf</a></p>
       <p><a href="https://viblo.asia/p/cross-site-request-forgery-csrf-sap-het-thoi-oOVlYyEyl8W"
           target="_blank">Cross-Site Request Forgery (CSRF) sắp hết thời?!!</a></p>
+      <p>x</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>

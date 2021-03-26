@@ -16,28 +16,28 @@
         thống, họ sẽ đăng nhập vào tất cả các hệ thống khác liên quan.</p>
       <p>Một ví dụ điển hình cho việc ứng dụng thuật ngữ này là Google. Google
         sử dụng cho những sản phẩm của họ như: Gmail, YouTube, Maps... Điều này
-        được thực hiển bởi một "dịch vụ trung tâm" (trong trường hợp Google là <a
+        được thực hiển bởi một "dịch vụ trung tâm" (trong trường hợp Google là <a
           href="https://accounts.google.com" target="_blank">accounts.google.com</a>).</p>
       <br>
       <h3>Xác thực SSO</h3>
       <p>Ban đầu, chúng ta có hai ứng dụng ở domain1.com và domain2.com. Mỗi ứng
         dụng tự quản lý đăng nhập bằng cookie của trình duyệt.</p>
-      <p><img src="https://cdn.auth0.com/blog/sso/non-sso-scenario.png"></p>
+      <p><img src="images/non-sso-scenario.png"></p>
       <p>Chúng ta có thể chia sẻ cookie giữa hai domain nếu cả hai có cùng một
         root. Ví dụ domain thứ nhất là <code>xxx.abc.com</code> và domain thứ
         hai là <code>yyy.abc.com</code>. Chúng ta có thể thiết lập cookie cho
         root là <code>.abc.com</code>.</p>
       <p>Nếu hai ứng dụng không cùng domain thì không thể chia sẻ cookie.</p>
-      <p><img src="https://cdn.auth0.com/blog/sso/same-origin-policy-forbids-this.png"></p>
+      <p><img src="images/same-origin-policy-forbids-this.png"></p>
       <p>Để giải quyết vấn đề, chúng ta có thể thêm một ứng dụng đăng nhập tập
         trung.</p>
-      <p><img src="https://cdn.auth0.com/blog/sso/using-central-auth-domain.png"></p>
+      <p><img src="images/using-central-auth-domain.png"></p>
       <p>Bất cứ khi nào người dùng tới một domain yêu cầu phải xác thực, anh ta
         hay cô ta sẽ được chuyển đến domain xác thực (authentication domain).
         Nếu người dùng đã đăng nhập tại domain xác thực, anh ta hay cô ta sẽ
         ngay lập tức được chuyển hướng trở lại domain gốc với token để xác thực
         các request tiếp theo.</p>
-      <p><img src="https://cdn.auth0.com/blog/sso/typical-sso-v2.png"></p>
+      <p><img src="images/typical-sso-v2.png"></p>
       <h3>Mô hình</h3>
       <p>Chúng ta sẽ thử trên 2 app: Passport và Consumer.</p>
       <p>Ứng dụng Consumer là ứng dụng tập trung vào nghiệp vụ của chúng ta.
@@ -87,6 +87,9 @@
           Consumer</li>
         <li>Đăng xuất xóa bỏ session ở Consumer cũng như Passport</li>
       </ul>
+      <p><a href="laravel-implement.html">SSO với Laravel</a></p>
+      <ul>
+      </ul>
       <h3>Chú ý</h3>
       <p>Nếu các ứng dụng con mà triển khai trên các sub-domain khác nhau thì
         chúng ta có thể áp dụng phương pháp share cookie cho đơn giản.</p>
@@ -96,6 +99,42 @@
         phải lưu tooken trong session hoặc cookie.</p>
       <p>Đúng là không có mô hình nào là tuyệt đối. Chúng ta cần hiểu các nguyên
         lý và áp dụng tùy chỉnh trong từng trường hợp cụ thể.</p>
+      <h3>Kiểm tra đã login ở ứng dụng con</h3>
+      <p>Giả sử chúng ta sử dụng SSO cho hai ứng dụng: ứng dụng A và ứng dụng B.
+        Người dùng đã đăng nhập SSO thông qua ứng dụng A. Giờ người dùng vào ứng
+        dụng trang chủ của B. Làm thế nào để ứng dụng B biết người dùng đã đăng
+        nhập hay chưa.</p>
+      <h4>Cách 1</h4>
+      <p>Sửa dụng iframe đến một trang đặc biệt của SSO, hiển thị dạng widget.</p>
+      <p>Cấu hình X-Frame-Options của trang SSO đặc biệt đó để không phải trang
+        nào cũng nhúng được.</p>
+      <p>Cần CSS background cho iframe.</p>
+      <p>Cách này chỉ được một phần trong trang. Giả sử chỗ khác cũng cần kiểm
+        tra người dùng đã đăng nhập hay chưa thì không được.</p>
+      <h4>Cách 2</h4>
+      <p>Gọi AJAX kiểm tra tới SSO. SSO cấu hình CORS cho phép ứng dụng A, B
+        gọi.</p>
+      <p>Đường dẫn là <code>/check-login</code>. Trả về token vừa thông tin
+        người dùng trong trường hợp đã đăng nhập.</p>
+      <p>Đường dẫn <code>/check-token</code> (hoặc <code>/user-info</code>) để
+        kiểm tra thông tin xem token có hợp lệ hay không và lấy thông tin người
+        dùng luôn.</p>
+      <p>SSO lưu token ở cookie. Lại phải quản lý thêm cookie.</p>
+      <p><a href="https://stackoverflow.com/questions/46288437/set-cookies-for-cross-origin-requests"
+          target="_blank">authentication - Set cookies for cross origin requests
+          - Stack Overflow</a></p>
+      <h4>Cách 3</h4>
+      <p>Sử dụng iframe và cơ chế postMessage.</p>
+      <p>Chú ý kiểm tra ATTT để không lộ token.</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage"
+          target="_blank">Window.postMessage() - Web APIs | MDN</a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
       <p><br>
       </p>
     </article>

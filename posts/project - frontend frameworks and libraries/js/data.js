@@ -18,6 +18,13 @@ export default [
         version: '2.24.0',
         jsPath: 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'
     },
+	{
+        code: 'moment-vi',
+        name: 'Moment (giao diện tiếng Việt)',
+        version: '2.24.0',
+        jsPath: 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/vi.js',
+		savePath: 'moment'
+    },
     {
         code: 'bootstrap',
         name: 'Bootstrap',
