@@ -1,4 +1,5 @@
 <?php
+
 require_once 'vendor/autoload.php';
 
 $config = HTMLPurifier_Config::createDefault();
@@ -54,6 +55,8 @@ $dirtyHtml = <<<'HTML'
 		<img src="../html/pic_trulli.jpg" alt="Trulli" style="width:100%">
 		<figcaption>Fig.1 - Trulli, Puglia, Italy.</figcaption>
 	</figure>
+	<a href="javascript:alert(1);">Link 1</a>
+	<a href="http://vnexpress.net">Link 2</a>
 HTML;
 
 $cleanHtml = $purifier->purify($dirtyHtml);
