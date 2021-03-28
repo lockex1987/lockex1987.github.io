@@ -4,14 +4,41 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
 
+/**
+ * Trang chủ.
+ */
 Route::get('/', function () {
     return 'Đây là trang CSRF Main';
 });
 
 
+/**
+ * Vào trang đổi email.
+ */
+Route::get('/user/email', function () {
+    return view('update-email');
+});
+
+
+/**
+ * Thực hiện giả lập người dùng đã đăng nhập rồi.
+ */
+Route::get('/fake-login', function (Request $request) {
+    $request->session->setAttribute('isLogin', true);
+    return 'Login';
+});
+
+
+/**
+ * Thực hiện đổi email.
+ */
 Route::post('/user/email', function (Request $request) {
+    $isLogin = $request->session->getAttribute('isLogin');
+    if (!$isLogin) {
+        return 'Ban chua login';
+    }
     $email = $request->email;
-    echo 'Email của bạn đã được sửa thành ' . $email;
+    return 'Email của bạn đã được sửa thành ' . $email;
 });
 
 
