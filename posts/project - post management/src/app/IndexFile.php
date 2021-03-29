@@ -111,7 +111,10 @@ class IndexFile
      */
     private function getDescriptionFromDoc(): ?string
     {
-        return $this->getMetaTagContent('description');
+        $description = $this->getMetaTagContent('description');
+        // Trim dấu cách ở 2 đầu của từng dòng
+        $description = preg_replace('/^\s+|\s+$/m', '', $description);
+        return $description;
     }
 
     /**

@@ -44,7 +44,7 @@ const template = `
                     </a>
                 </div>
                 
-                <div class="text-muted mt-1"
+                <div class="text-muted mt-1 text-pre-wrap"
                     v-html="highlightText(p.description)"></div>
 
                 <div class="mt-1">
