@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval' 'unsafe-inline' ">
+    <meta name="description" content="Crawl chuyên mục Hồ sơ phá án của vnexpress" />
+
+    <title>Crawl chuyên mục Hồ sơ phá án của vnexpress</title>
+
+    <link rel="icon" href="images/icon-64.png" />
+    <link rel="stylesheet" href="libs/bootstrap/css/style.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+    <article id="app"
+        v-cloak>
+        <h2>Crawl chuyên mục Hồ sơ phá án của vnexpress</h2>
+
+        <div class="form-group">
+            <label class="required">
+                Từ trang
+            </label>
+
+            <input type="number"
+                class="form-control"
+                placeholder=""
+                v-model.trim="fromPage"/>
+        </div>
+
+        <div class="form-group">
+            <label class="required">
+                Đến trang
+            </label>
+
+            <input type="number"
+                class="form-control"
+                placeholder=""
+                v-model.trim="toPage"/>
+        </div>
+
+        <div>
+            <button type="button"
+                class="btn btn-primary"
+                @click="crawlMultiplePages()">
+                Crawl
+            </button>
+        </div>
+    </article>
+
+    <link rel="stylesheet" href="libs/noti/css/noti.css" />
+    <script src="libs/noti/js/noti.js"></script>
+
+    <script src="libs/common.js/js/common.js"></script>
+    <script src="libs/vue/js/vue.min.js"></script>
+
+    <script src="js/crawler/vnexpress-hosophaan.js"
+        type="module"></script>
+</body>
+
+</html>

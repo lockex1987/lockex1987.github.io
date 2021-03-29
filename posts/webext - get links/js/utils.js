@@ -142,6 +142,7 @@ function normalizeSpaces(text) {
  * Parse mã HTML để sử dụng các hàm xử lý DOM.
  * Nếu sử dụng cách tạo 1 thẻ div, sau đó thiết lập innerHTML thì sẽ request đến cả ảnh, có thể chậm.
  * @param {String} htmlCode Mã HTML
+ * @param {String} baseUri Uri gốc, để sửa lại src của các ảnh cho đúng nếu đang dùng đường dẫn tương đối trong mã HTML
  */
 function parseDocumentFromString(htmlCode, baseUri = '') {
     const parser = new DOMParser();
@@ -264,5 +265,6 @@ export default {
     paddingZero,
     writeLog,
     normalizeSpaces,
-    isExtraImage
+    isExtraImage,
+    parseDocumentFromString
 };
