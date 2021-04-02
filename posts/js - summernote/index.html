@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="vi">
   <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A simple editor">
+    <meta name="description" content="A simple WYSIWYG editor">
     <title>Summernote</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -11,49 +11,25 @@
   <body>
     <article>
       <h2>Summernote</h2>
-      <p>Đơn giản hơn CKEditor.</p>
+      <p>Đơn giản, đầy đủ chức năng.</p>
       <p>Trang chủ: <a href="https://summernote.org/" target="_blank">summernote.org</a>.</p>
+      <p>Tính năng:</p>
+      <ul>
+        <li>Sử dụng Bootstrap 4</li>
+        <li>Giao diện tiếng Việt</li>
+        <li>Cấu hình toolbar</li>
+        <li>Upload ảnh lên server</li>
+        <li><a href="https://github.com/lockex1987/sso-admin/blob/master/app/Http/Controllers/ContentController.php"
+
+            target="_blank">Xử lý upload ảnh ở Controller</a></li>
+        <li>Copy-paste text</li>
+        <li>Xử lý khi paste, bỏ qua các thuộc tính style, chỉ giữ cấu trúc</li>
+        <li>Hint</li>
+        <li>Tạo plugin</li>
+        <li>Emoji</li>
+      </ul>
       <p><a href="demo.html">Demo</a></p>
-      <h3>Sửa lỗi copy ảnh bị duplicate</h3>
-      <p>Thời điểm hiện tại (15/10/2019), thư viện Summernote đang bị lỗi: khi
-        bạn nhấn chuột phải và copy ảnh ở một trang web và paste vào editor thì
-        sẽ bị duplicate thành 2 ảnh.</p>
-      <p>Để sửa lỗi này cần sửa trực tiếp thư viện. Sửa file <code>summernote.js</code>
-        hoặc <code>summernote-bs4.js</code> (tùy bạn sử dụng file nào).</p>
-      <p>Tìm đến chỗ module Clipboard, comment lại dòng <code>this.context.invoke('editor.insertImagesOrCallback',
-          [item.getAsFile()]);</code> như sau:</p>
-<div class="out-of-box"><pre>var Clipboard = /** @class */ (function () {
-    function Clipboard(context) {
-        this.context = context;
-        this.$editable = context.layoutInfo.editable;
-    }
-    Clipboard.prototype.initialize = function () {
-        this.$editable.on('paste', this.pasteByEvent.bind(this));
-    };
-    /**
-     * paste by clipboard event
-     *
-     * @param {Event} event
-     */
-    Clipboard.prototype.pasteByEvent = function (event) {
-        var clipboardData = event.originalEvent.clipboardData;
-        if (clipboardData &amp;&amp; clipboardData.items &amp;&amp; clipboardData.items.length) {
-            // paste img file
-            var item = clipboardData.items.length &gt; 1 ? clipboardData.items[1] : lists.head(clipboardData.items);
-            if (item.kind === 'file' &amp;&amp; item.type.indexOf('image/') !== -1) {
-                console.log('HuyenNV9 sua loi duplicate copy anh');
-                // this.context.invoke('editor.insertImagesOrCallback', [item.getAsFile()]);
-            }
-            this.context.invoke('editor.afterCommand');
-        }
-    };
-    return Clipboard;
-}());</pre></div>
-      <h3>Thêm phương thức innerText để validate maxlength</h3><p>Để lấy nội dung văn bản của editor.</p><p>Thêm đoạn như sau:</p><pre>Context.prototype.innerText = function () {
-    return this.layoutInfo.editable[0].innerText;
-};</pre><p>Khi đó chúng ta có thể gọi:</p><pre>$('#content').summernote('innerText');</pre>
     </article>
     <script src="../../js/docs.js"></script>
-  
-
-</body></html>
+  </body>
+</html>

@@ -1,130 +1,50 @@
-$('#content').summernote({
-    minHeight: 300,
-    maxHeight: null, // Tự động điều chỉnh độ dài theo nội dung
-    placeholder: 'Hello bootstrap 4',
-    lang: 'vi-VN', // Tiếng Việt
+import HtmlEditor from './HtmlEditor.js';
 
-    // Không kéo thả ảnh
-    disableDragAndDrop: true,
+new Vue({
+    el: '#app',
 
-    toolbar: [
-        // ['style', ['style']],
-        ['font', ['bold', 'italic', 'underline', 'clear']],
-        // ['fontname', ['fontname']],
-        // ['fontsize', ['fontsize']],
-        // ['color', ['color']],
-        // ['para', ['ul', 'ol', 'paragraph']],
-        // ['height', ['height']],
-        // ['table', ['table']],
-        ['insert', ['link' /*, 'picture', 'video', 'hr'*/]],
-        // ['view', ['fullscreen', 'codeview' /*, 'help'*/]],
-    ],
+    components: {
+        HtmlEditor
+    },
 
-    callbacks: {
-        onPasteX: function (evt) {
-            // Chèn văn bản, bỏ qua các format
-            evt.preventDefault();
-            const originalHtmlCode = ((evt.originalEvent || evt).clipboardData || window.clipboardData).getData('text/html');
-            // console.log(originalHtmlCode);
+    data() {
+        return {
+            content: ''
+        };
+    },
 
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(originalHtmlCode, 'text/html');
-
-            const attributes = [
-                'style',
-                'class',
-                'id',
-                // 'name',
-                'ng-if',
-                'ng-click',
-                'ng-non-bindable',
-                'spellcheck',
-                'border',
-                'cellpadding',
-                'cellspacing',
-                'data-lazy-type',
-                'data-lazy-src',
-                'data-lazy-srcset',
-                'data-lazy-sizes',
-                'data-file',
-                'data-filename',
-                // 'rel',
-                'height',
-                'width',
-                'alt',
-                'scope',
-                'srcset'
-            ];
-
-            attributes.forEach(attr => {
-                doc.querySelectorAll(`[${attr}]`).forEach(ele => ele.removeAttribute(attr));
-            });
-
-            let cleanedHtmlCode = doc.body.innerHTML;
-            cleanedHtmlCode = cleanedHtmlCode.replace(/&nbsp;/gi, ' ');
-            // cleanedHtmlCode = cleanedHtmlCode.replace(/<!--StartFragment-->/gi, '');
-            // cleanedHtmlCode = cleanedHtmlCode.replace(/<!--EndFragment-->/gi, '');
-
-            $('#content').summernote('pasteHTML', cleanedHtmlCode);
+    methods: {
+        /**
+         * Thiết lập mã HTML.
+         */
+        setCode() {
+            const code = '<p>hello world</p>';
+            this.content = code;
         },
 
         /**
-         * Paste text bình thường (không ảnh, không định dạng).
+         * Lấy mã HTML.
          */
-        onPaste: function (evt) {
-            evt.preventDefault();
-            const bufferText = ((evt.originalEvent || evt).clipboardData || window.clipboardData).getData('text');
-            document.execCommand('insertText', false, bufferText);
+        getCode() {
+            const code = this.content;
+            alert(code);
         },
 
         /**
-         * Khi thay đổi thì kiểm tra độ dài lớn nhất.
-         * @param contents 
-         * @param $editable 
+         * Thiết lập mã HTML.
          */
-        onChange: function (contents, $editable) {
-            const text = $editable[0].innerText;
-            // console.log('onChange:', contents, $editable);
-            // console.log('onChange:', text);
+        setCodeByReference() {
+            const code = '<p>hello world</p>';
+            this.$refs.editor.setCode(code);
+            this.content = code;
         },
 
-        onImageUploadx: function (files) {
-            // Upload ảnh lên server
-            const data = new FormData();
-            data.append('image', files[0]);
-
-            $.ajax({
-                url: '/media/upload-image',
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: data,
-                type: 'post',
-                success: function (response) {
-                    // Tạo thẻ img và thêm vào editor
-                    const url = '/storage/' + response.path;
-                    const image = $('<img class="preview-image">').attr('src', url).addClass('img-responsive');
-                    $('#content').summernote('insertNode', image[0]);
-                }
-            });
+        /**
+         * Lấy mã HTML.
+         */
+        getCodeByReference() {
+            const code = this.$refs.editor.getCode();
+            alert(code);
         }
     }
 });
-
-
-/**
- * Thiết lập mã HTML.
- */
-function setCode() {
-    const markupStr = '<p>hello world</p>';
-    $('#content').summernote('code', markupStr);
-}
-
-
-/**
- * Lấy mã HTML.
- */
-function getCode() {
-    const markupStr = $('#content').summernote('code');
-    alert(markupStr);
-}
