@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tìm các ảnh bị trùng">
+    <title>Tìm các ảnh bị trùng</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Tìm các ảnh bị trùng</h2>
+      <p>Có nhiều ảnh truyện download về thường bị trùng, thường là các ảnh
+        credit. Các ảnh có thể khác nhau về kích thước và dung lượng file.</p>
+      <p>Với mỗi ảnh, chúng ta sẽ xử lý:</p>
+      <ul>
+        <li>Resize về cùng kích thước</li>
+        <li>Chuyển về ảnh grayscale</li>
+        <li>Tính hash
+          <ul>
+            <li>Perceptual hashing (PHash)</li>
+            <li>Difference hashing (DHash)</li>
+            <li>Wavelet hashing (WHash)</li>
+            <li>Average hashing (AHash)</li>
+          </ul>
+        </li>
+      </ul>
+      <p>Nếu 2 ảnh mà so sánh hash khác nhau dưới một ngưỡng nào đó thì coi như
+        là trùng.</p>
+      <p>Tham khảo:</p>
+      <p>Các API cần chìa ra:</p>
+      <p><a href="https://github.com/idealo/imagededup" target="_blank">idealo/imagededup:
+          😎 Finding duplicate images made easy!</a></p>
+      <p>Mô tả thuật toán:</p>
+      <p><a href="http://www.hackerfactor.com/blog/index.php?/archives/432-Looks-Like-It.html"
+          target="_blank">Looks Like It - The Hacker Factor Blog</a></p>
+      <p>Tool chạy được:</p>
+      <p><a href="https://tn123.org/simimages/" target="_blank">SimilarImages -
+          Find duplicate images and videos</a></p>
+      <p>PHP code:</p>
+      <p><a href="https://dev.to/bdelespierre/perception-hashing-in-php-3pma" target="_blank">Perception
+          Hashing in PHP - DEV Community</a></p>
+      <p><a href="https://github.com/bdelespierre/php-phash" target="_blank">bdelespierre/php-phash:
+          pHash implementation in PHP</a></p>
+      <p>(Thư viện trên không chạy được với PHP 8)</p>
+      <p><a href="https://github.com/jenssegers/imagehash" target="_blank">jenssegers/imagehash:
+          🌄 Perceptual image hashing for PHP</a></p>
+      <p>Tăng hiệu năng so với thư viện trên:</p>
+      <p><a href="https://github.com/Tom64b/dHash" target="_blank">Tom64b/dHash:
+          dHash = Difference Hash = a quick algorithm to compare images visually</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>
