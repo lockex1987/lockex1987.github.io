@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Lọc các ảnh bị trùng" />
+    <title>Lọc các ảnh bị trùng</title>
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+    <article>
+        <h2>Lọc các ảnh bị trùng</h2>
+
+        <div id="app">
+            <div v-for="dup in duplicates"
+                class="py-3 border-bottom d-flex flex-wrap">
+                <div class="mb-2 mr-2"
+                    v-for="img in dup">
+                    <img :src="img.url"
+                        style="width: 14rem; height: 19rem;"
+                        :style="{ filter: img.isDeleted ? 'grayscale(100%)' : '' }"
+                        @error="img.isDeleted = true" />
+                    <div class="mt-1">
+                        <i class="la la-trash text-danger cursor-pointer mr-2"
+                            title="Xóa"
+                            @click="deleteSingleImage(img)"></i>
+
+                        <span class="text-muted"
+                            :style="{ 'text-decoration': img.isDeleted ? 'line-through' : '' }">
+                            {{img.name}}
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </article>
+
+    <link rel="stylesheet" href="../project%20-%20frontend%20frameworks%20and%20libraries/src/line-awesome/css/line-awesome.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="js/duplicates.js"></script>
+</body>
+
+</html>
