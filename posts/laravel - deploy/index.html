@@ -45,7 +45,7 @@ chmod -R 777 storage</pre>
       <p>Tạo file <code>sso.conf</code> như sau:</p>
       <pre class="out-of-box">server {
     listen 80;
-    listen 443;
+    # listen 443;
     server_name sso.cttd.tk;
     root "/var/www/html/sso/public";
     index index.php index.html;
