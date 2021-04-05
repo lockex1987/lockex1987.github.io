@@ -61,6 +61,7 @@ function removeAttributes() {
         'data-lazy-sizes',
         'data-file',
         'data-filename',
+		'data-reactid',
         // 'rel',
         'height',
         'width',
