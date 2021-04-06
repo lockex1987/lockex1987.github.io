@@ -1,43 +1,112 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
- <head> 
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-  <title>Demo Roboto</title> 
-  <meta name="description" content=""> 
-  <meta name="viewport" content="width=device-width"> 
-  <link rel="stylesheet" href="roboto/css/stylesheet.css"> 
-  <style>
-      body {  font-family: 'Roboto', sans-serif;
-		-webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
-}
-      h1 {  font-weight: 200; }
-      .container { max-width: 700px; margin: 30px auto; }
-    </style> 
-  <link rel="icon" href="../../images/favicon.png">
-  <link rel="stylesheet" href="../../css/style.css">
- </head> 
- <body>
-  <article>
-   <div class="container"> 
-    <h1>This is a Header 1</h1> 
-    <h2>This is a Header 2</h2> 
-    <h2>Tổng hợp tiếng nói Nhận dạng tiếng nói Voice wake-up tài liệu</h2> 
-    <h3>This is a Header 3</h3> 
-    <h4>This is a Header 4</h4> 
-    <h5>This is a Header 5</h5> 
-    <h6>This is a Header 6</h6> 
-    <p>This is paragraph with a <strong>bold word</strong> and some <em>italics</em></p> 
-    <ul> 
-     <li>item1</li> 
-     <li>item2</li> 
-     <li>item3</li> 
-     <li>item4</li> 
-     <li>item5</li> 
-    </ul> 
-   </div>
-  </article>
-  <script src="../../js/docs.js"></script>
- </body>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="roboto, averta, opensans, proxima nova, google font, font faux">
+    <title>Web font</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Web font</h2>
+      <p>Kiểm tra font đã được load bằng JS</p>
+      <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/FontFaceSet/check"
+          target="_blank">FontFaceSet.check() - Web APIs | MDN</a> </p>
+      <p><a href="https://gist.github.com/alloyking/4154494" target="_blank">Check
+          if font exists · GitHub</a></p>
+      <p><br>
+      </p>
+      <p>Sử dụng local() trong danh sách file font để lấy luôn từ máy, không
+        phải download lại.</p>
+      <p>Chúng ta cần chỉ định đầy đủ <a href="https://www.smashingmagazine.com/2013/02/setting-weights-and-styles-at-font-face-declaration/"
+          target="_blank">font style (italic, normal), font weight (100,...,
+          900)</a> nếu không sẽ bị hiện tượng <a href="https://www.smashingmagazine.com/2012/07/avoiding-faux-weights-styles-google-web-fonts/"
+          target="_blank">font faux</a>.</p>
+      <p>Nên sử dụng <a href="https://fonts.google.com/" target="_blank">Google
+          Fonts</a>.</p>
+      <p>Thuộc tính font-display có thể là swap, block, optional.</p>
+      <p>Các thuộc tính khác như font-style, font-stretch, font-weight,
+        font-optical-sizing.</p>
+      <p>Các file font bắt buộc phải load về client nên chúng ta có thể lấy dễ
+        dàng:</p>
+      <div class="mb-3"> <img src="images/get%20the%20font.png"> </div>
+      <p>Không phải font nào cũng hỗ trợ tiếng Việt.</p>
+      <p>sans-serif (không đuôi), serif (có đuôi).</p>
+      <p>Hãy sử dụng font Roboto để chúng ta có một giao diện thống nhất
+        (desktop, applet, mobile).</p>
+      <p>Web font nên sử dụng định dạng <a href="https://stackoverflow.com/questions/11002820/why-should-we-include-ttf-eot-woff-svg-in-a-font-face"
+          target="_blank">WOFF2</a>.</p>
+      <p>Sử dụng unicode-range để tiết kiệm bandwidth.</p>
+      <p>Demo Roboto, Averta, OpenSans, Proxima Nova.</p>
+      <p><a href="demo.html">Demo</a></p>
+      <h3>Sử dụng Google Fonts API</h3>
+      <p>Trang web để chọn font:</p>
+      <p><a href="https://fonts.google.com/" target="_blank">Google Fonts</a></p>
+      <p>Thêm một link stylesheet:</p>
+      <pre>&lt;link rel="stylesheet"<br>    href="https://fonts.googleapis.com/css?family=Font+Name" /&gt;</pre>
+      <p>Style thành phần với thuộc tính font-family:</p>
+      <pre>.css-selector {
+  &nbsp; font-family: 'Font Name', serif;
+}</pre>
+      <p>Bạn có thể request nhiều font một lúc, cách nhau bằng dấu |:</p>
+      <pre>https://fonts.googleapis.com/css?family=Tangerine|Inconsolata|Droid+Sans</pre>
+      <p>Request kiểu font:</p>
+      <pre>https://fonts.googleapis.com/css?family=Tangerine:bold,bolditalic</pre>
+      <p>Bạn có thể viết rõ ràng hoặc viết tắt hoặc dùng số:</p>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td>Kiểu font</td>
+            <td>Cấu hình</td>
+          </tr>
+          <tr>
+            <td>Nghiêng</td>
+            <td>italic hoặc i</td>
+          </tr>
+          <tr>
+            <td>Đậm</td>
+            <td>bold hoặc b hoặc số ví dụ 700</td>
+          </tr>
+          <tr>
+            <td>Đậm nghiêng</td>
+            <td>bolditalic hoặc bi</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Ví dụ:</p>
+      <pre>https://fonts.googleapis.com/css?family=Cantarell:italic|Droid+Serif:bold
+https://fonts.googleapis.com/css?family=Cantarell:i|Droid+Serif:b
+https://fonts.googleapis.com/css?family=Cantarell:i|Droid+Serif:700</pre>
+      <p>Một số font có chia thành các tập con (Latin, Cyrillic, Greek,
+        Vietnamese).</p>
+      <p>Thêm thuộc tính subset</p>
+      <pre>https://fonts.googleapis.com/css?family=Roboto+Mono&amp;subset=cyrillic
+https://fonts.googleapis.com/css?family=Roboto+Mono&amp;subset=greek
+https://fonts.googleapis.com/css?family=Roboto+Mono&amp;subset=greek,cyrillic</pre>
+      <p>Nếu trình duyệt hỗ trợ thuộc tính unicode-range thì subset bị bỏ qua.</p>
+      <p>Các định dạng: Regular, Regular Italic, Bold, Bold Italic.</p>
+      <p>Set: Latin, Vietnamese</p>
+      <p>URL:</p>
+      <pre>https://fonts.googleapis.com/css?family=<span class="collection-drawer-emphasized-code ng-binding">Roboto:400,400i,700,700i</span>&amp;amp;subset=vietnamese</pre>
+      <p>Tham khảo</p>
+      <p><a href="https://developers.google.com/fonts/docs/getting_started" target="_blank">Get
+          Started with the Google Fonts API &nbsp;|&nbsp; Google Developers</a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p> </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
 </html>

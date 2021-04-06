@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Demo</title>
+    <link rel="icon" href="../../images/favicon.png">
+    
+    <link rel="stylesheet" href="libs/roboto-condensed/css/stylesheet.css" />
+    
+    <link rel="stylesheet" href="libs/roboto/css/stylesheet.css" />
+    <!--link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300;1,400;1,500&display=swap" /-->
+
+    <link rel="stylesheet" href="libs/averta/css/stylesheet.css" />
+
+    <link rel="stylesheet" href="libs/opensans/css/stylesheet-2.css" />
+
+    <link rel="stylesheet" href="libs/proxima nova/css/stylesheet.css" />
+
+    <style>
+        .roboto-condensed {
+            font-family: 'RobotoCondensed', sans-serif;
+        }
+
+        .roboto {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .stack {
+            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+        }
+
+        .averta {
+            font-family: 'Averta', sans-serif;
+        }
+
+        .opensans {
+            font-family: 'OpenSans', sans-serif;
+        }
+
+        .proxima-nova {
+            font-family: 'Proxima Nova', sans-serif;
+        }
+
+        h1 {
+            font-weight: 200;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 30px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container"
+        id="app">
+        <div v-for="font in fonts">
+            <demo-area :font="font"></demo-area>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
