@@ -3,8 +3,11 @@ new Vue({
 
     data() {
         return {
+            // Đường dẫn trên máy tính
             folderPath: 'D:/',
+            // Đường dẫn tương ứng trên web
             basePath: '/data-drive-x/',
+            // Danh sách các ảnh trùng.
             duplicates: null
         };
     },
@@ -14,14 +17,20 @@ new Vue({
     },
 
     methods: {
+        /**
+         * Lấy danh sách các ảnh trùng.
+         */
         async getDuplicates() {
             const data = await fetch('data/duplicates.json').then(resp => resp.json());
             this.duplicates = data.map(dup => {
-                const arr = dup.map(s => ({
-                    url: s.replace(this.folderPath, this.basePath),
-                    name: s.split('/').pop(),
-                    isDeleted: false
-                }));
+                const arr = dup.map(s => {
+                    s = s.replace(/\\/g, '/');
+                    return {
+                        url: s.replace(this.folderPath, this.basePath),
+                        name: s.split('/').pop(),
+                        isDeleted: false
+                    };
+                });
                 return arr;
             });
         },

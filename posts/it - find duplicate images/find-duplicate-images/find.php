@@ -8,6 +8,9 @@ use Jenssegers\ImageHash\Implementations\DifferenceHash;
 use Jenssegers\ImageHash\Implementations\AverageHash;
 
 
+/**
+ * Class xử lý core.
+ */
 class Finder
 {
     private ImageHash $hasher;
@@ -19,7 +22,12 @@ class Finder
         $this->hasher = new ImageHash($implement);
     }
 
-    private function scanImagesInFolder(string $folderPath): array
+    /**
+     * Gọi đệ quy, lấy danh sách file ảnh trong thư mục.
+     * @param string $folderPath Đường dẫn thư mục
+     * @return array Danh sách đường dẫn ảnh
+     */
+    public function scanImagesInFolder(string $folderPath): array
     {
         $files = scandir($folderPath);
         $images = [];
@@ -31,18 +39,23 @@ class Finder
                     $images = array_merge($images, $subResult);
                 } else {
                     // Kiểm tra là file ảnh
-                    $images[] = $relativePath;
+                    $ext = strtolower(pathinfo($relativePath, PATHINFO_EXTENSION));
+                    if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif'])) {
+                        $images[] = $relativePath;
+                    }
                 }
             }
         }
         return $images;
     }
 
-    public function calculateHash(string $folderPath): array
+    /**
+     * Tính toán hash của ảnh.
+     * @param array $images Danh sách đường dẫn ảnh
+     * @return array Mảng các phần tử gồm có path và hash
+     */
+    public function calculateHash(array $images): array
     {
-        $startTime = microtime(true);
-        $normalizedPath = rtrim($folderPath, '/') . '/';
-        $images = $this->scanImagesInFolder($normalizedPath);
         $hasher = $this->hasher;
         $hashes = array_map(function ($path) use ($hasher) {
             $hash = 1;
@@ -58,14 +71,16 @@ class Finder
             $obj->hash = $hash;
             return $obj;
         }, $images);
-        $endTime = microtime(true);
-        echo 'Calculate finish after ' . ($endTime - $startTime) . 's' . PHP_EOL;
         return $hashes;
     }
 
+    /**
+     * Tìm các ảnh trùng nhau.
+     * @param array $hashes Danh sách các phần tử gồm có hash và path
+     * @return array Mảng có key là ảnh và value là các ảnh trùng với ảnh đó
+     */
     public function findDuplicateImages(array $hashes): array
     {
-        $startTime = microtime(true);
         foreach ($hashes as $e) {
             $e->isDuplicated = false;
         }
@@ -95,11 +110,12 @@ class Finder
                 }
             }
         }
-        $endTime = microtime(true);
-        echo 'Find finish after ' . ($endTime - $startTime) . 's' . PHP_EOL;
         return $duplicates;
     }
 
+    /**
+     * So sánh hash của hai ảnh.
+     */
     public function compareHash(string $path1, string $path2): void
     {
         $hash1 = $this->hasher->hash($path1);
@@ -110,20 +126,40 @@ class Finder
 }
 
 
+/**
+ * Class thực thi.
+ */
 class Main
 {
+    // Đường dẫn file JSON chứa hash và path
     private string $jsonFile = '../data/hashes.json';
 
+    /**
+     * Tính toán hash.
+     */
     function calculateHash(string $folderPath): void
     {
+        $startTime = microtime(true);
         $finder = new Finder();
-        $hashes = $finder->calculateHash($folderPath);
+        $normalizedPath = rtrim($folderPath, '/') . '/';
+        $images = $finder->scanImagesInFolder($normalizedPath);
+        $endTime = microtime(true);
+        echo 'Tìm thấy ' . count($images) . ' ảnh sau ' . ($endTime - $startTime) . ' giây' . PHP_EOL; // 0.18224501609802
+
+        $startTime = microtime(true);
+        $hashes = $finder->calculateHash($images);
         $data = json_encode($hashes);
         file_put_contents($this->jsonFile, $data);
+        $endTime = microtime(true);
+        echo 'Tính toán hash trong ' . ($endTime - $startTime) . ' giây' . PHP_EOL; // 863.96802020073
     }
 
+    /**
+     * Tìm các ảnh trùng.
+     */
     function findDuplicateImages(): void
     {
+        $startTime = microtime(true);
         $finder = new Finder();
         $data = file_get_contents($this->jsonFile);
         $hashes = json_decode($data);
@@ -136,8 +172,13 @@ class Main
         // print_r($list);
         $data = json_encode($list);
         file_put_contents('../data/duplicates.json', $data);
+        $endTime = microtime(true);
+        echo 'Tìm các ảnh trùng trong ' . ($endTime - $startTime) . ' giây' . PHP_EOL; // 15.619441986084
     }
 
+    /**
+     * Kiểm tra.
+     */
     function test(): void
     {
         $finder = new Finder();
@@ -148,7 +189,8 @@ class Main
 }
 
 
+$folderPath = 'D:/archive/last comani/dragon ball color';
 $main = new Main();
-// $main->calculateHash('D:/archive/last comani/thien long bat bo');
+// $main->calculateHash($folderPath);
 $main->findDuplicateImages();
 // $main->test();
