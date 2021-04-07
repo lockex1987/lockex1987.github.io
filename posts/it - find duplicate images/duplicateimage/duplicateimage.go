@@ -12,6 +12,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/corona10/goimagehash"
@@ -30,6 +31,7 @@ type PathHashDuplicate struct {
 }
 
 func ScanImagesInFolder(folderPath string) []string {
+	startTime := time.Now()
 	var images []string
 	filepath.Walk(folderPath, func(path string, info os.FileInfo, err error) error {
 		extension := filepath.Ext(path)
@@ -38,7 +40,8 @@ func ScanImagesInFolder(folderPath string) []string {
 		}
 		return nil
 	})
-
+	elapsed := time.Since(startTime)
+	fmt.Println("Tìm thấy", len(images), "ảnh trong", elapsed) // 34.2355ms
 	return images
 }
 
@@ -66,30 +69,28 @@ func CalculateHashOfImage(path string) string {
 	return hash.ToString()
 }
 
-func CalculateHash(folderPath string) {
-	startTime := time.Now()
-	images := ScanImagesInFolder(folderPath)
-	elapsed := time.Since(startTime)
-	fmt.Println("Tìm thấy", len(images), "ảnh trong", elapsed) // 34.2355ms
+// Biến toàn cục
+var hashes []PathAndHash
+var numberOfImages int
 
-	startTime = time.Now()
-	idx := len(images)
-	var hashes []PathAndHash
-	for _, path := range images {
-		hash := CalculateHashOfImage(path)
-		fmt.Println(idx, hash)
-		idx--
-		obj := PathAndHash{
-			path,
-			hash,
+/**
+ * Sử dụng Go goroutine cho nhanh.
+ */
+func CalculateHash(images []string, goroutineIndex int, goroutineNumber int, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	for i, path := range images {
+		if i%goroutineNumber == goroutineIndex {
+			hash := CalculateHashOfImage(path)
+			fmt.Println(numberOfImages, hash)
+			numberOfImages--
+			obj := PathAndHash{
+				path,
+				hash,
+			}
+			hashes = append(hashes, obj)
 		}
-		hashes = append(hashes, obj)
 	}
-	elapsed = time.Since(startTime)
-	fmt.Println("Tính toán hash của ảnh trong", elapsed) // 5m22.0392643s, 5m20.4359442s, 5m55.8138841s
-
-	data, _ := json.Marshal(hashes)
-	ioutil.WriteFile("../data/hashes-go.json", data, 0777)
 }
 
 func FindDuplicateImages() {
@@ -153,7 +154,32 @@ func FindDuplicateImages() {
 	fmt.Println("Tìm các ảnh trùng trong", elapsed) // 25.5646ms
 }
 
+func CalculateHashConcurrently(images []string) {
+	numberOfImages = len(images)
+	startTime := time.Now()
+	goroutineNumber := 4 // bằng số core của máy
+	var wg sync.WaitGroup
+	for i := 0; i < goroutineNumber; i++ {
+		fmt.Println(i)
+		wg.Add(1)
+		go CalculateHash(images, i, goroutineNumber, &wg)
+	}
+	wg.Wait()
+	data, _ := json.Marshal(hashes)
+	ioutil.WriteFile("../data/hashes-go.json", data, 0777)
+	elapsed := time.Since(startTime)
+	// Không dùng goroutine hết 5m22.0392643s, 5m20.4359442s, 5m55.8138841s
+	// Dùng 4 goroutine hết 2m9.8319182s
+	// Dùng 10 goroutine hết 1m53.8043867s
+	// Dùng 8 goroutine hết 2m3.3053772s
+	fmt.Println("Tính toán hash của ảnh trong", elapsed)
+}
+
 func main() {
-	// CalculateHash("D:/archive/last comani/dragon ball color")
+	/*
+		folderPath := "D:/archive/last comani/dragon ball color"
+		images := ScanImagesInFolder(folderPath)
+		CalculateHashConcurrently(images)
+	*/
 	FindDuplicateImages()
 }
