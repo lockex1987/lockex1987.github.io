@@ -1,3 +1,9 @@
+import {
+    getCookie,
+    setCookie,
+    deleteCookie
+} from './cookie.js';
+
 /**
  * Hiển thị thông tin hiện tại.
  */
@@ -37,3 +43,4 @@ function resetCount() {
 }
 
 displayInfo();
+document.querySelector('#resetButton').addEventListener('click', resetCount)

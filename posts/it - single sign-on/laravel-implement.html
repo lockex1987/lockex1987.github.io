@@ -21,7 +21,7 @@
         ta khai báo như sau ở <code>routes/web.php</code>:</p>
       <pre>&lt;?php
 
-Route::get('/', function() {
+Route::get('/', function () {
     return view('welcome');
 });
 
@@ -49,12 +49,11 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')-&gt;name('pa
       <p>Chúng ta cũng thêm luôn một người dùng test bằng cách sau:</p>
       <pre>php artisan make:seeder UsersTableSeeder</pre>
       <p>Sửa nội dung file <code>UsersTableSeeder.php</code>:</p>
-      <pre>&lt;?php
+      <pre>&lt;?php<br>
 use Illuminate\Database\Seeder;
 use App\User as User;
 
 class UsersTableSeeder extends Seeder<br>{
-
     public function run() {
         User::create([
             'name' =&gt; 'lockex1987',
@@ -78,7 +77,7 @@ COLLATE='utf8_unicode_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1;</pre>
       <p>Thêm dữ liệu test:</p>
-      <pre>INSERT INTO sso_app (<br>    id,<br>    name,<br>    secret,<br>    login_redirect,<br>    logout_redirect<br>)<br>VALUES (<br>    1,<br>    'consumer.cttd.tk',<br>    '123',<br>    'http://consumer.cttd.tk/login-callback',<br>    'http://consumer.cttd.tk/logout-callback'<br>);</pre>
+      <pre>INSERT INTO sso_app (<br>    id,<br>    name,<br>    secret,<br>    login_redirect,<br>    logout_redirect<br>) VALUES (<br>    1,<br>    'consumer.cttd.tk',<br>    '123',<br>    'http://consumer.cttd.tk/login-callback',<br>    'http://consumer.cttd.tk/logout-callback'<br>);</pre>
       <p>Có thể thấy ở file <code>routes/web.php</code> chúng ta thêm 2 route
         POST mới. Nhưng hai route này sẽ không cần bảo vệ CSRF, do đó thêm 2
         exception vào <code>VerifyCsrfToken.php</code> ở <code>app/Http/Middleware</code>:</p>
@@ -93,7 +92,7 @@ AUTO_INCREMENT=1;</pre>
       <p>Nếu người dùng đã đăng nhập hoặc đăng nhập thành công thì forward về
         trang của consumer.cttd.tk.</p>
       <p>Nếu người dùng chưa đăng nhập thì hiển thị trang đăng nhập.</p>
-      <p>Session passport trong 2 tiếng</p>
+      <p>Session passport trong 2 tiếng.</p>
       <p>Sửa <code>login.blade.php</code>, thêm trường sau:</p>
       <pre>&lt;input type="hidden" name="app" value="{{ $app }}"&gt;</pre>
       <h3>Ứng dụng Consumer</h3>
@@ -132,12 +131,10 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email'
+        'name',<br>        'email'
     ];
 
-    protected $hidden = [
-        
-    ];
+    protected $hidden = [];
 
     public $timestamps = false;
 }</pre>

@@ -13,22 +13,29 @@
 <body>
     <article>
         <h2>Cookie</h2>
-        <div class="mb-3" id="div-1"></div>
-        <div class="mb-3" id="div-2"></div>
+
+        <div class="mb-3"
+            id="div-1"></div>
+
+        <div class="mb-3"
+            id="div-2"></div>
 
         <div class="mb-3">
-            <button type="button" onclick="resetCount()" class="btn btn-primary">
+            <button type="button"
+                id="resetButton"
+                class="btn btn-primary">
                 Reset counter
             </button>
         </div>
+
+        <hr />
 
         <p>Code server thiết lập cookie bằng header của response.</p>
         <p>Tham khảo:</p>
         <p><a href="https://en.wikipedia.org/wiki/HTTP_cookie">HTTP cookie - Wikipedia</a></p>
     </article>
 
-    <script src="js/cookie.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/script.js" type="module"></script>
     <script src="../../js/docs.js"></script>
 </body>
 

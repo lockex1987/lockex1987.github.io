@@ -13,15 +13,16 @@
       <h2>Single Sign-on</h2>
       <h3>Single Sign On (SSO) là gì?</h3>
       <p>Một cách đơn giản SSO nghĩa là khi người dùng đăng nhập vào một hệ
-        thống, họ sẽ đăng nhập vào tất cả các hệ thống khác liên quan.</p>
+        thống, họ sẽ tự động đăng nhập vào tất cả các hệ thống khác liên quan.</p>
       <p>Một ví dụ điển hình cho việc ứng dụng thuật ngữ này là Google. Google
         sử dụng cho những sản phẩm của họ như: Gmail, YouTube, Maps... Điều này
-        được thực hiển bởi một "dịch vụ trung tâm" (trong trường hợp Google là <a
+        được thực hiển bởi một "dịch vụ trung tâm" (trong trường hợp Google là <a
+
           href="https://accounts.google.com" target="_blank">accounts.google.com</a>).</p>
       <br>
       <h3>Xác thực SSO</h3>
-      <p>Ban đầu, chúng ta có hai ứng dụng ở domain1.com và domain2.com. Mỗi ứng
-        dụng tự quản lý đăng nhập bằng cookie của trình duyệt.</p>
+      <p>Ban đầu, chúng ta có hai ứng dụng ở <code>domain1.com</code> và <code>domain2.com</code>.
+        Mỗi ứng dụng tự quản lý đăng nhập bằng cookie của trình duyệt.</p>
       <p><img src="images/non-sso-scenario.png"></p>
       <p>Chúng ta có thể chia sẻ cookie giữa hai domain nếu cả hai có cùng một
         root. Ví dụ domain thứ nhất là <code>xxx.abc.com</code> và domain thứ
@@ -77,10 +78,9 @@
           Passport</li>
         <li>Passport redirect người dùng trở lại Consumer với một <code>token</code>
           được sinh ra ngẫu nhiên</li>
-        <li><strong>Consumer sử dụng <code>token</code> đó để tạo lời gọi API
-            tới Passport cùng với ID và Secret Key tạo nên <code>Access Token</code></strong></li>
-        <li><strong>Những request sau được xác minh thông qua <code>Access
-              Token</code></strong></li>
+        <li>Consumer sử dụng <code>token</code> đó để tạo lời gọi API tới
+          Passport cùng với ID và Secret Key tạo nên <code>Access Token</code></li>
+        <li>Những request sau được xác minh thông qua <code>Access Token</code></li>
         <li>Consumer sử dụng token đó để gọi API của Passport, được trả về thông
           tin của người dùng</li>
         <li>Consumer lưu thông tin đăng nhập của người dùng ở nội tại ứng dụng
@@ -126,7 +126,8 @@
         <li>Kiểm tra referer để không phải trang web nào cũng nhúng được</li>
       </ul>
       <h3>Tham khảo</h3>
-      <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage"
+      <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage"
+
           target="_blank">Window.postMessage() - Web APIs | MDN</a></p>
     </article>
     <script src="../../js/docs.js"></script>
