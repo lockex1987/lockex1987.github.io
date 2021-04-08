@@ -9,8 +9,6 @@ import org.jsoup.select.Elements;
 
 /**
  * Download and standardize word-only story.
- *
- * @author lockex1987
  */
 public class DownloadEnglishThreeKingdom extends BaseBookDownloader {
 

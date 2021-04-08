@@ -3,14 +3,17 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="DOMDocument, xss, purify, sanitize, HTML purifier, XPath">
-    <title>HTML parser</title>
+    <meta name="description" content="HTML parser, DOMDocument, XPath
+        HTML purifier, purify, sanitize, xss
+        HTML cleaner">
+    <title>HTML parser và purifier</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
   </head>
   <body>
     <article>
-      <h2>HTML parser</h2>
+      <h2>HTML parser và purifier</h2>
+      <h3>HTML parser</h3>
       <p>Sử dụng class có sẵn của PHP (PHP đúng là rất mỳ ăn liền).</p>
       <p>Các class quan trọng là:</p>
       <ul>
@@ -24,28 +27,48 @@
         <code>getElementsByTagName()</code>,... Để có thể sử dụng các select
         nâng cao như phương thức <code>querySelector(cssSelector)</code>, <code>querySelectorAll(cssSelector)</code>
         chúng ta cần sử dụng XPath.</p>
-      <p><a href="https://devhints.io/xpath" target="_blank">Xpath cheatsheet</a></p>
-      <p>---<br>
-      </p>
+      <p>Cách sử dụng XPath:</p>
+      <p><a href="https://devhints.io/xpath" target="_blank">XPath cheatsheet</a></p>
+      <p>Demo: </p>
       <p><a href="demo.php">demo.php</a></p>
+      <p>Tham khảo</p>
+      <p><a href="https://www.php.net/manual/en/book.dom.php" target="_blank">PHP:
+          DOM - Manual</a></p>
       <h3>HTML purifier</h3>
-      <p>Sử dụng thư viện kiểu ezyang/htmlpurifier dài quá.</p>
+      <p>Sử dụng thư viện kiểu <code>ezyang/htmlpurifier</code> dài quá.</p>
       <p>Sử dụng luôn DOMDocument để loại bỏ các thẻ, thuộc tính không mong
         muốn.</p>
       <p>Đã làm ở sso-admin.</p>
       <p>Cách khác: Sử dụng Content Security Policy để không cho phép incude
         file script từ nơi khác hoặc thực hiện inline script.</p>
+      <p><a href="https://github.com/ezyang/htmlpurifier" target="_blank">ezyang/htmlpurifier:
+          Standards compliant HTML filter written in PHP</a></p>
+      <p><a href="https://github.com/mewebstudio/Purifier" target="_blank">mewebstudio/Purifier:
+          HTMLPurifier for Laravel 5/6/7/8</a></p>
+      <p>Cấu hình:</p>
+      <p><a href="https://github.com/mewebstudio/Purifier/blob/master/config/purifier.php"
+
+          target="_blank">Purifier/purifier.php at master · mewebstudio/Purifier</a></p>
+      <p>Code xử lý:</p>
+      <p><a href="https://github.com/mewebstudio/Purifier/blob/master/src/Purifier.php"
+
+          target="_blank">Purifier/Purifier.php at master · mewebstudio/Purifier</a></p>
       <p>Cài đặt:</p>
       <pre>composer require ezyang/htmlpurifier</pre>
-      <h3>Demo</h3>
-      <p><a target="_blank" href="html-purifier/demo.php">demo.php</a></p>
-      <h3>Tham khảo</h3>
-      <p><a href="https://www.php.net/manual/en/book.dom.php" target="_blank">PHP:
-          DOM - Manual</a></p>
-      <p>------------</p>
+      <p><a target="_blank" href="html-purifier/demo.php">Demo PHP</a></p>
+      <p>Tham khảo</p>
       <p><a target="_blank" href="http://htmlpurifier.org/">htmlpurifier.org</a></p>
-      <p><a target="_blank" href="https://packagist.org/packages/ezyang/htmlpurifier">packagist.org/packages/ezyang/htmlpurifier</a></p>
-      <p><a target="_blank" href="https://github.com/mewebstudio/Purifier">github.com/mewebstudio/Purifier</a></p>
+      <h3>HTML sanitizer bằng JS</h3>
+      <p>TODO: Chuyển sang code PHP.</p>
+      <p>Credit:</p>
+      <p><a target="_blank" href="https://www.quaxio.com/html_white_listed_sanitizer/">https://www.quaxio.com/html_white_listed_sanitizer/</a></p>
+      <p>Reference:</p>
+      <p><a target="_blank" href="https://github.com/cure53/DOMPurify">https://github.com/cure53/DOMPurify</a></p>
+      <p><a target="_blank" href="https://github.com/apostrophecms/sanitize-html">https://github.com/apostrophecms/sanitize-html</a></p>
+      <p>Demo:</p>
+      <p><a target="_blank" href="demo.html">Demo JS</a></p>
+      <p>Source:</p>
+      <p><a target="_blank" href="js/HtmlWhitelistedSanitizer.js">Html.js</a></p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>

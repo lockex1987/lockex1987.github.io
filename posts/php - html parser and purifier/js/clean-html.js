@@ -1,3 +1,5 @@
+// Chỉ giữ những thẻ cần thiết nhất.
+
 /**
  * Chuyển nội dung của thẻ ra ngoài (xóa thẻ nhưng vẫn giữ nội dung bên trong).
  * @param {DOMNode} el Phần tử hiện tại.

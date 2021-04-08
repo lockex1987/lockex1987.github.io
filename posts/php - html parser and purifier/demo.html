@@ -28,37 +28,44 @@
             Can you get the page to run <code>alert(1)</code>?
         </p>
 
-        <div>
-            <textarea id="input" style="width: 800px; height: 100px; border: 1px solid black">    <div>
+        <div class="out-of-box">
+            <textarea id="inputHtml"
+                class="form-control"
+                style="height: 300px;"><div>
       <b>Lorem</b> <i>Ipsum</i>
-      <div style="border: 1px solid green; padding: 5px">
+      <div style="padding: 5px">
         <a href="http://quaxio.com/html_white_listed_sanitizer/">a link</a> and an image:
         <p><img src="http://quaxio.com/files/2015/html_white_listed_sanitizer/success.jpeg"></p>
       </div>
       <!-- self-closing tags work --> <br/>
-      <div style="border: 1px solid red; padding: 5px">
+      <div style="padding: 5px">
         <a href="javascript:alert(1)">this won't run</a>
         and neither will this: <script>alert(1);</script>
       </div>
-    </div></textarea>
+</div></textarea>
         </div>
 
         <div>
-            <button onclick="runSanitizer()">sanitize!</button>
+            <button id="sanitizeButton"
+                class="btn btn-primary">Sanitize</button>
         </div>
         <div>
             <br />
         </div>
 
         <p>Output as string:</p>
-        <pre id="output_as_string"></pre>
+        <pre id="outputAsString"></pre>
+
+        <hr />
 
         <p>Output as HTML:</p>
-        <div id="output_as_node" style="border: 1px solid black; padding: 10px"></div>
+        <div id="outputAsHtml"
+            class="border p-1"></div>
     </article>
 
     <script src="js/HtmlWhitelistedSanitizer.js"></script>
-    <script src="js/HtmlWhitelistedSanitizer_test.js"></script>
+    <script src="js/script.js"
+        type="module"></script>
 </body>
 
 </html>

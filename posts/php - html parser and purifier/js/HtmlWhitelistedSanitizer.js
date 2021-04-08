@@ -22,7 +22,7 @@ function HtmlWhitelistedSanitizer(escape, tags, css, urls) {
     this.doc = document.implementation.createHTMLDocument();
 
     if (urls == null) {
-        urls = ['http://', 'https://'];
+        urls = ['http://', 'https://', '/'];
     }
 
     if (this.allowedTags == null) {
@@ -37,13 +37,13 @@ function HtmlWhitelistedSanitizer(escape, tags, css, urls) {
             title: unconstrainted
         };
 
-        const url_sanitizer = HtmlWhitelistedSanitizer.makeUrlSanitizer(urls);
+        const urlSanitizer = HtmlWhitelistedSanitizer.makeUrlSanitizer(urls);
         this.allowedTags = {
             a: HtmlWhitelistedSanitizer.mergeMap(globalAttributes, {
                 download: unconstrainted,
-                href: url_sanitizer,
+                href: urlSanitizer,
                 hreflang: unconstrainted,
-                ping: url_sanitizer,
+                ping: urlSanitizer,
                 rel: unconstrainted,
                 target: unconstrainted,
                 type: unconstrainted
@@ -51,7 +51,7 @@ function HtmlWhitelistedSanitizer(escape, tags, css, urls) {
             img: HtmlWhitelistedSanitizer.mergeMap(globalAttributes, {
                 alt: unconstrainted,
                 height: unconstrainted,
-                src: url_sanitizer,
+                src: urlSanitizer,
                 width: unconstrainted
             }),
             p: globalAttributes,
