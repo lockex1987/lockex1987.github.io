@@ -2,10 +2,14 @@
 <html lang="vi">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!-- 'unsafe-eval' 'unsafe-inline' -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'nonce-8IBTHwOdqNKAWeKl7plt8g=='" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="HTML parser, DOMDocument, XPath
-        HTML purifier, purify, sanitize, xss
-        HTML cleaner">
+        HTML purifier, purify, sanitize
+        HTML cleaner
+        Convert html to xhtml
+        XSS, Content Security Policy">
     <title>HTML parser và purifier</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -17,11 +21,12 @@
       <p>Sử dụng class có sẵn của PHP (PHP đúng là rất mỳ ăn liền).</p>
       <p>Các class quan trọng là:</p>
       <ul>
-        <li>DOMDocument (extend DOMNode): Gốc</li>
-        <li>DOMNode</li>
-        <li>DOMNodeList</li>
-        <li>DOMXPath</li>
-        <li>DOMElement (extend DOMNode): Không bao gồm text, attribute,...</li>
+        <li><code>DOMDocument</code> (extend <code>DOMNode</code>): Gốc</li>
+        <li><code>DOMNode</code>: Node tổng quát</li>
+        <li><code>DOMNodeList</code>: Danh sách node</li>
+        <li><code>DOMXPath</code>: Để truy vấn XPath</li>
+        <li><code>DOMElement</code> (extend <code>DOMNode</code>): Không bao
+          gồm text, attribute,...</li>
       </ul>
       <p>Chúng ta chỉ có thể select phần tử bằng một số phương thức cơ bản như <code>getElementById()</code>,
         <code>getElementsByTagName()</code>,... Để có thể sử dụng các select
@@ -29,47 +34,79 @@
         chúng ta cần sử dụng XPath.</p>
       <p>Cách sử dụng XPath:</p>
       <p><a href="https://devhints.io/xpath" target="_blank">XPath cheatsheet</a></p>
-      <p>Demo: </p>
-      <p><a href="demo.php">demo.php</a></p>
-      <p>Tham khảo</p>
-      <p><a href="https://www.php.net/manual/en/book.dom.php" target="_blank">PHP:
-          DOM - Manual</a></p>
+      <p>Demo parser:</p>
+      <p><a href="demo_parser.php">demo_parser.php</a></p>
+      <p>Tham khảo:</p>
+      <p><a href="https://www.php.net/manual/en/book.dom.php" target="_blank">PHP: DOM - Manual</a></p>
+      
       <h3>HTML purifier</h3>
-      <p>Sử dụng thư viện kiểu <code>ezyang/htmlpurifier</code> dài quá.</p>
-      <p>Sử dụng luôn DOMDocument để loại bỏ các thẻ, thuộc tính không mong
-        muốn.</p>
-      <p>Đã làm ở sso-admin.</p>
-      <p>Cách khác: Sử dụng Content Security Policy để không cho phép incude
-        file script từ nơi khác hoặc thực hiện inline script.</p>
-      <p><a href="https://github.com/ezyang/htmlpurifier" target="_blank">ezyang/htmlpurifier:
-          Standards compliant HTML filter written in PHP</a></p>
-      <p><a href="https://github.com/mewebstudio/Purifier" target="_blank">mewebstudio/Purifier:
-          HTMLPurifier for Laravel 5/6/7/8</a></p>
-      <p>Cấu hình:</p>
-      <p><a href="https://github.com/mewebstudio/Purifier/blob/master/config/purifier.php"
-
-          target="_blank">Purifier/purifier.php at master · mewebstudio/Purifier</a></p>
-      <p>Code xử lý:</p>
-      <p><a href="https://github.com/mewebstudio/Purifier/blob/master/src/Purifier.php"
-
-          target="_blank">Purifier/Purifier.php at master · mewebstudio/Purifier</a></p>
-      <p>Cài đặt:</p>
-      <pre>composer require ezyang/htmlpurifier</pre>
-      <p><a target="_blank" href="html-purifier/demo.php">Demo PHP</a></p>
-      <p>Tham khảo</p>
+      <p>Thư viện gốc:</p>
       <p><a target="_blank" href="http://htmlpurifier.org/">htmlpurifier.org</a></p>
-      <h3>HTML sanitizer bằng JS</h3>
-      <p>TODO: Chuyển sang code PHP.</p>
-      <p>Credit:</p>
-      <p><a target="_blank" href="https://www.quaxio.com/html_white_listed_sanitizer/">https://www.quaxio.com/html_white_listed_sanitizer/</a></p>
-      <p>Reference:</p>
-      <p><a target="_blank" href="https://github.com/cure53/DOMPurify">https://github.com/cure53/DOMPurify</a></p>
-      <p><a target="_blank" href="https://github.com/apostrophecms/sanitize-html">https://github.com/apostrophecms/sanitize-html</a></p>
-      <p>Demo:</p>
-      <p><a target="_blank" href="demo.html">Demo JS</a></p>
-      <p>Source:</p>
-      <p><a target="_blank" href="js/HtmlWhitelistedSanitizer.js">Html.js</a></p>
+      <p>Thư viện PHP:</p>
+      <p><a href="https://github.com/ezyang/htmlpurifier" target="_blank">ezyang/htmlpurifier:
+        Standards compliant HTML filter written in PHP</a></p>
+    <p>Thư viện Laravel:</p>
+    <p><a href="https://github.com/mewebstudio/Purifier" target="_blank">mewebstudio/Purifier:
+        HTMLPurifier for Laravel 5/6/7/8</a></p>
+        <p>Cấu hình mẫu:</p>
+        <p><a href="https://github.com/mewebstudio/Purifier/blob/master/config/purifier.php"
+  
+            target="_blank">Purifier/purifier.php at master · mewebstudio/Purifier</a></p>
+        
+        <p>Code xử lý mẫu:</p>
+        <p><a href="https://github.com/mewebstudio/Purifier/blob/master/src/Purifier.php"
+  
+            target="_blank">Purifier/Purifier.php at master · mewebstudio/Purifier</a></p>
+        <p>Có cả cấu hình và code mẫu ở dự án TTCD nữa.</p>
+        <p>Mô tả cấu hình:</p>
+        <p><a href="http://htmlpurifier.org/live/configdoc/plain.html"
+            target="_blank">Configuration Documentation</a></p>
+      
+      <p>Sử dụng thư viện kiểu <code>ezyang/htmlpurifier</code> dài quá.
+    Phải cấu hình nhiều.
+    Thư viện này còn sửa các lỗi cấu trúc HTML, tự động bỏ thẻ span mà không có thuộc tính nào,...</p>
+      
+    <p>Sử dụng luôn DOMDocument để loại bỏ các thẻ, thuộc tính không mong
+        muốn. Đã làm ở sso-admin.</p>
+      <p><a target="_blank" href="html-purifier/demo.php">Demo htmlpurifier</a></p>
+      <p>Chú ý:</p>
+      <ul>
+          <li>Cần bỏ cả ảnh đuôi SVG</li>
+          <li>Ảnh mà có style width theo % thì bị mất, theo px thì không bị mất</li>
+          <li>Bị mất thuộc tính target="_blank" của link</li>
+          <li>Output XHTML</li>
+          <li>Cần giới hạn phạm vị href của thẻ A?</li>
+      </ul>
+
+      <h3>Content Security Policy</h3>
+      <p>Ngoài ra, sử dụng Content Security Policy để không cho phép include
+        file script từ nơi khác hoặc thực hiện inline script, javascript của thuộc tính href của thẻ a, onload của SVG.</p>
+    <p>Content Security Policy chỉ là một lớp bảo vệ nữa. Bạn vẫn cần escape các ký tự đặc biệt khi hiển thị như cách fix bug XSS bình thường.</p>
+        <p>Ảnh SVG:</p>
+        <div class="mb-3">
+            <!-- Sự kiện onload sẽ không chạy khi thiết lập Content-Security-Policy -->
+            <img src="images/nike-logo.svg"
+                onload="console.log('SVG loaded')"/>
+        </div>
+        <p>Khi mở ảnh SVG trực tiếp sẽ bị lỗi.</p>
+        <p><a href="images/nike-logo.svg" target="_blank">images/nike-logo.svg</a></p>
+        <p>Không cho phép upload ảnh SVG (hoặc file HTML). Không cho phép để src là ảnh SVG?</p>
+        <!-- Thuộc tính href javascript sẽ không chạy khi thiết lập Content-Security-Policy -->
+        <p><a href="javascript:alert('test')">click me</a></p>
+        <p>Tham khảo:</p>
+        <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" target="_blank">Content Security Policy (CSP) | MDN</a></p>
+        <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src" target="_blank">CSP: script-src | MDN</a></p>
+        <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce" target="_blank">nonce | MDN</a></p>
     </article>
+
+    <script>
+        console.log('Inline script không chạy khi có Content-Security-Policy');
+    </script>
+
+    <script nonce="8IBTHwOdqNKAWeKl7plt8g==">
+        console.log('Để chạy inline script thì cần có nonce');
+    </script>
+
     <script src="../../js/docs.js"></script>
   </body>
 </html>

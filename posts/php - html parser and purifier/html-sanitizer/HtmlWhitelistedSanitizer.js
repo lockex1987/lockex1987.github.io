@@ -1,3 +1,7 @@
+// https://www.quaxio.com/html_white_listed_sanitizer/
+// https://github.com/cure53/DOMPurify
+// https://github.com/apostrophecms/sanitize-html
+
 /**
  * Sanitizer which filters a set of whitelisted tags, attributes and css.
  * For now, the whitelist is small but can be easily extended.
@@ -159,3 +163,11 @@ HtmlWhitelistedSanitizer.prototype.sanitizeNode = function (node) {
 
     return copy;
 };
+
+
+document.querySelector('#sanitizeButton').addEventListener('click', () => {
+    const sanitizer = new HtmlWhitelistedSanitizer(true);
+    const sanitizedHtml = sanitizer.sanitizeString(document.querySelector('#inputHtml').value);
+    document.querySelector('#outputAsString').textContent = sanitizedHtml;
+    document.querySelector('#outputAsHtml').innerHTML = sanitizedHtml;
+});

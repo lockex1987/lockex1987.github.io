@@ -33,11 +33,22 @@ function convertHtmlToXhtml(string $htmlCode): string
 }
 
 
-// $htmlCode = 'syntax <strong>error</small> <myowntag>my text</myowntag>';
+
+/*
 for ($i = 9; $i <= 99; $i++) {
     $htmlCode = file_get_contents('boilerplate/text/' . $i . '.html');
     echo $i . PHP_EOL;
-    $xhtml = convertHtmlToXhtml($htmlCode);
-    echo PHP_EOL;
-    // echo $xhtml . PHP_EOL;
 }
+*/
+
+$htmlCode = <<<'HTML'
+    syntax <strong>error</small> <myowntag>my text</myowntag>
+    <select name="pet" size="3" multiple>
+        <option selected>mouse</option>
+        <option>bird</option>
+        <option>cat</option>
+    </select>
+    HTML;
+$xhtml = convertHtmlToXhtml($htmlCode);
+echo PHP_EOL;
+echo $xhtml . PHP_EOL;

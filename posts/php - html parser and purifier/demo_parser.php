@@ -4,12 +4,12 @@
  * Duyệt các dòng của bảng.
  * Sử dụng phương thức getElementsByTagName.
  */
-function traverseRows(DOMDocument $dom): void
+function traverseRows(DOMDocument $doc): void
 {
-    $tables = $dom->getElementsByTagName('table');
+    $tables = $doc->getElementsByTagName('table');
     $rows = $tables->item(0)->getElementsByTagName('tr');
-    $rowCount = $rows->length - 1;
-    echo 'No. of rows in the table is ' . $rowCount;
+    $rowCount = $rows->length - 1; // trừ dòng header
+    echo 'Số hàng của bảng là ' . $rowCount;
     foreach ($rows as $row) {
         $cols = $row->getElementsByTagName('td');
         echo 'Designation: ' . $cols->item(0)->nodeValue . PHP_EOL;
@@ -24,13 +24,13 @@ function traverseRows(DOMDocument $dom): void
  * Cập nhật thuộc tính của thẻ.
  * Sử dụng phương thức setAttribute và getAttribute.
  */
-function updateAttribute(DOMDocument $dom): void
+function updateAttribute(DOMDocument $doc): void
 {
-    $images = $dom->getElementsByTagName('img');
+    $images = $doc->getElementsByTagName('img');
     foreach ($images as $image) {
         $image->setAttribute('src', 'http://example.com/' . $image->getAttribute('src'));
     }
-    echo $dom->saveHTML();
+    echo $doc->saveHTML();
     echo PHP_EOL;
 }
 
@@ -39,12 +39,12 @@ function updateAttribute(DOMDocument $dom): void
  * Lấy các đường dẫn.
  * Sử dụng phương thức getElementsByTagName và getAttribute.
  */
-function getAllLinks(DOMDocument $dom): void
+function getAllLinks(DOMDocument $doc): void
 {
-    $links = $dom->getElementsByTagName('a');
+    $links = $doc->getElementsByTagName('a');
     foreach ($links as $link) {
         $url = $link->getAttribute('href');
-        echo $url;
+        echo $url . PHP_EOL;
         $parsedUrl = parse_url($url);
         var_dump($parsedUrl);
         // if( isset($parsed_url['host']) && $parsed_url['host'] === 'wordpress.org' ) {
@@ -57,10 +57,10 @@ function getAllLinks(DOMDocument $dom): void
  * Select phần tử dựa vào XPath.
  * XPath tương tự CSS selector.
  */
-function getByXpath(DOMDocument $dom): void
+function getByXpath(DOMDocument $doc): void
 {
-    // Returns a list of all links with rel=nofollow
-    $xpath = new DOMXPath($dom);
+    // Trả về danh sách các link mà có thuộc tính rel bằng nofollow
+    $xpath = new DOMXPath($doc);
     $links = $xpath->query("//a[@rel='nofollow']"); // "//table[contains(@class,'tablepress')]"
     $count = $links->length;
     print_r($links);
@@ -75,9 +75,9 @@ function getByXpath(DOMDocument $dom): void
  * Select phần tử dựa vào ID.
  * Sử dụng phương thức getElementById().
  */
-function getById(DOMDocument $dom): void
+function getById(DOMDocument $doc): void
 {
-    $testVietnamese = $dom->getElementById('testVietnamese');
+    $testVietnamese = $doc->getElementById('testVietnamese');
     if ($testVietnamese) {
         echo $testVietnamese->nodeValue;
         echo PHP_EOL;
@@ -89,29 +89,28 @@ function getById(DOMDocument $dom): void
  * Tạo các ảnh thành responsive.
  * Sử dụng các phương thức như createElement(), cloneNode(), replaceChild(), appendChild(), saveHTML().
  */
-function makeResposiveImages(DOMDocument $dom): string
+function makeResposiveImages(DOMDocument $doc): string
 {
-    // Create the div wrapper
-    $div = $dom->createElement('div');
+    // Tạo thẻ div wrapper
+    $div = $doc->createElement('div');
     $div->setAttribute('class', 'responsive-img');
 
-    // Get all the images
-    $images = $dom->getElementsByTagName('img');
+    // Lấy tất cả ảnh
+    $images = $doc->getElementsByTagName('img');
 
-    // Loop the images
+    // Duyệt danh sách ảnh
     foreach ($images as $image) {
-        // Clone our created div
+        // Clone thẻ div
         $newDivClone = $div->cloneNode();
 
-        // Replace image with wrapper div
+        // Thay thế ảnh với thẻ div
         $image->parentNode->replaceChild($newDivClone, $image);
 
-        // Append image to wrapper div
+        // Thêm ảnh vào thẻ div
         $newDivClone->appendChild($image);
     }
 
-    // Save the HTML
-    $html = $dom->saveHTML();
+    $html = $doc->saveHTML();
     return $html;
 }
 
@@ -120,11 +119,11 @@ function makeResposiveImages(DOMDocument $dom): string
  * Xóa các thẻ style.
  * Sử dụng phương thức removeAttribute(), getAttribute(), hasAttribute().
  */
-function stripStyleTags(DOMDocument $dom): string
+function stripStyleTags(DOMDocument $doc): string
 {
-    $xpath = new DOMXPath($dom);
+    $xpath = new DOMXPath($doc);
 
-    // Find any element with the style attribute
+    // Tìm tất cả các phần tử có thuộc tính style
     $nodes = $xpath->query('//*[@style]');
 
     $attr = 'style';
@@ -134,7 +133,7 @@ function stripStyleTags(DOMDocument $dom): string
             $node->removeAttribute($attr);
         }
     }
-    $html = $dom->saveHTML();
+    $html = $doc->saveHTML();
     return $html;
 }
 
@@ -142,9 +141,9 @@ function stripStyleTags(DOMDocument $dom): string
 /**
  * Thêm một phần tử mới.
  */
-function insertNewElement(DomDocument $dom): void
+function insertNewElement(DomDocument $doc): void
 {
-    $ps = $dom->getElementsByTagName('p');
+    $ps = $doc->getElementsByTagName('p');
     $firstPara = $ps->item(0);
 
     $htmlToAdd = '<div><a hreh="#"><img src="image.jpeg"/></a></div>';
@@ -159,7 +158,7 @@ function insertNewElement(DomDocument $dom): void
 
     $newElement = $domToAdd->documentElement;
 
-    $importedElement = $dom->importNode($newElement, true);
+    $importedElement = $doc->importNode($newElement, true);
 
     $firstPara->parentNode->insertBefore($importedElement, $firstPara->nextSibling);
 
@@ -167,7 +166,7 @@ function insertNewElement(DomDocument $dom): void
     // <html><body><div><a hreh="#"><img src="image.jpeg"></a></div></body></html>
     // TODO: Tiếng Việt đang hiển thị xấu
     // Ti&#7871;ng Vi&#7879;t: Nguy&#7877;n V&#259;n Huy&ecirc;n, Cao Th&#7883; Th&ugrave;y D&#432;&#417;ng, Nguy&#7877;n Anh Tu&#7845;n &lt; &gt;
-    $output = @$dom->saveHTML();
+    $output = @$doc->saveHTML();
     echo $output;
 }
 
@@ -179,35 +178,35 @@ function insertNewElement(DomDocument $dom): void
 function deleteElement(): void
 {
     $html = <<<'HTML'
-    <p>This is our first paragraph</p>
-    <div class="del">Delete this</div>
-    <p>This is our second paragraph</p>
-    <p>This is our third paragraph</p>
-    <div class="del">Delete this too</div>
-    HTML;
+        <p>This is our first paragraph</p>
+        <div class="del">Delete this</div>
+        <p>This is our second paragraph</p>
+        <p>This is our third paragraph</p>
+        <div class="del">Delete this too</div>
+        HTML;
 
-    $dom = new DomDocument();
-    @$dom->loadHTML($html);
-    $documentElement = $dom->documentElement;
-    echo $dom->saveHTML();
+    $doc = new DomDocument();
+    @$doc->loadHTML($html);
+    $documentElement = $doc->documentElement;
+    echo $doc->saveHTML();
 
-    $xpath = new DOMXpath($dom);
+    $xpath = new DOMXpath($doc);
     $elems = $xpath->query("//div[@class='del']");
 
     foreach ($elems as $elem) {
         $elem->parentNode->removeChild($elem);
     }
     echo PHP_EOL . '------- after deletion --------' . PHP_EOL;
-    echo $dom->saveHTML();
+    echo $doc->saveHTML();
 }
 
 
 /**
  * Lấy tiêu đề.
  */
-function getTitle(DomDocument $dom): void
+function getTitle(DomDocument $doc): void
 {
-    $xpath = new DOMXPath($dom);
+    $xpath = new DOMXPath($doc);
     $titleNode = $xpath->query('//title');
     // var_dump($titleNode->item(0));
     // print_r($titleNode->item(0));
@@ -220,107 +219,106 @@ function main(): void
     // Xâu HTML đầu vào
     // Phải có <meta content="text/html; charset=utf-8" http-equiv="Content-Type"> thì khi saveHtml mới có tiếng Việt đẹp
     $html = <<<'HTML'
-    <!DOCTYPE html>
-    <head>
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <!--meta charset="utf-8" /-->
-        <title>Tutorialspoint</title>
-    </head>
+        <!DOCTYPE html>
+        <head>
+            <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+            <!--meta charset="utf-8" /-->
+            <title>Tutorialspoint</title>
+        </head>
 
-    <body>
-        <h2>Course details</h2>
+        <body>
+            <h2>Course details</h2>
 
-        <table>
-            <tbody>
-                <tr>
-                    <td>Android</td>
-                    <td>Gopal</td>
-                    <td>Sairam</td>
-                </tr>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Android</td>
+                        <td>Gopal</td>
+                        <td>Sairam</td>
+                    </tr>
 
-                <tr>
-                    <td>Hadoop</td>
-                    <td>Gopal</td>
-                    <td>Satish</td>
-                </tr>
+                    <tr>
+                        <td>Hadoop</td>
+                        <td>Gopal</td>
+                        <td>Satish</td>
+                    </tr>
 
-                <tr>
-                    <td>HTML</td>
-                    <td>Gopal</td>
-                    <td>Raju</td>
-                </tr>
+                    <tr>
+                        <td>HTML</td>
+                        <td>Gopal</td>
+                        <td>Raju</td>
+                    </tr>
 
-                <tr>
-                    <td>Web technologies</td>
-                    <td>Gopal</td>
-                    <td>Javed</td>
-                </tr>
+                    <tr>
+                        <td>Web technologies</td>
+                        <td>Gopal</td>
+                        <td>Javed</td>
+                    </tr>
 
-                <tr>
-                    <td>Graphic</td>
-                    <td>Gopal</td>
-                    <td>Satish</td>
-                </tr>
+                    <tr>
+                        <td>Graphic</td>
+                        <td>Gopal</td>
+                        <td>Satish</td>
+                    </tr>
 
-                <tr>
-                    <td>Writer</td>
-                    <td>Kiran</td>
-                    <td>Amith</td>
-                </tr>
+                    <tr>
+                        <td>Writer</td>
+                        <td>Kiran</td>
+                        <td>Amith</td>
+                    </tr>
 
-                <tr>
-                    <td>Writer</td>
-                    <td>Kiran</td>
-                    <td>Vineeth      Space</td>
-                </tr>
-            </tbody>
-        </table>
+                    <tr>
+                        <td>Writer</td>
+                        <td>Kiran</td>
+                        <td>Vineeth      Space</td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <p>
-            <a href="https://lockex1987.github.io" rel=nofollow>
-                My website
-            </a>
-        </p>
+            <p>
+                <a href="https://lockex1987.github.io" rel=nofollow>
+                    My website
+                </a>
+            </p>
 
-        <p>
-            <img src="xxx.jpg"/>
-        </p>
+            <p>
+                <img src="xxx.jpg"/>
+            </p>
 
-        <p id="testVietnamese" style="font-weight: bold">
-            Tiếng Việt: Nguyễn Văn Huyên, Cao Thị Thùy Dương, Nguyễn Anh Tuấn &lt; &gt;
-        </p>
-    </body>
-    </html>
-    HTML;
+            <p id="testVietnamese" style="font-weight: bold">
+                Tiếng Việt: Nguyễn Văn Huyên, Cao Thị Thùy Dương, Nguyễn Anh Tuấn &lt; &gt;
+            </p>
+        </body>
+        </html>
+        HTML;
 
     // $html = file_get_contents('sample_2.html');
 
-
     // Khởi tạo đối tượng DOMDocument
-    $dom = new DOMDocument();
-    // $dom = new DOMDocument('1.0', 'UTF-8');
+    $doc = new DOMDocument();
+    // $doc = new DOMDocument('1.0', 'UTF-8');
 
     // Việc parse có thể có cảnh báo (warning), như tên tag không hợp lệ, không có thẻ đóng,...
     // Để không hiển thị các warning, thêm ký tự @ ở phía trước
     // Thêm cả hàm mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8') để hỗ trợ Unicode (tiếng Việt)
-    // $dom->loadHTML($html);
-    @$dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-    // $dom->loadHTMLFile('path/to/htmlfile.html');
+    // $doc->loadHTML($html);
+    @$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+    // $doc->loadHTMLFile('path/to/htmlfile.html');
 
     // Có xóa các khoảng trắng thừa
     // Loại bỏ khoảng trắng
-    $dom->preserveWhiteSpace = false;
+    $doc->preserveWhiteSpace = false;
 
-    // traverseRows($dom);
-    // updateAttribute($dom);
-    // getAllLinks($dom);
-    // getByXpath($dom);
-    // getById($dom);
-    // echo makeResposiveImages($dom) . PHP_EOL;
-    echo stripStyleTags($dom) . PHP_EOL;
-    // insertNewElement($dom);
+    // traverseRows($doc);
+    // updateAttribute($doc);
+    // getAllLinks($doc);
+    // getByXpath($doc);
+    // getById($doc);
+    // echo makeResposiveImages($doc) . PHP_EOL;
+    echo stripStyleTags($doc) . PHP_EOL;
+    // insertNewElement($doc);
     // deleteElement();
-    // getTitle($dom);
+    // getTitle($doc);
 }
 
 main();
