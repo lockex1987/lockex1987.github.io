@@ -116,29 +116,6 @@ function makeResposiveImages(DOMDocument $doc): string
 
 
 /**
- * Xóa các thẻ style.
- * Sử dụng phương thức removeAttribute(), getAttribute(), hasAttribute().
- */
-function stripStyleTags(DOMDocument $doc): string
-{
-    $xpath = new DOMXPath($doc);
-
-    // Tìm tất cả các phần tử có thuộc tính style
-    $nodes = $xpath->query('//*[@style]');
-
-    $attr = 'style';
-    foreach ($nodes as $node) {
-        if ($node->hasAttribute($attr)) {
-            echo $node->getAttribute($attr) . PHP_EOL;
-            $node->removeAttribute($attr);
-        }
-    }
-    $html = $doc->saveHTML();
-    return $html;
-}
-
-
-/**
  * Thêm một phần tử mới.
  */
 function insertNewElement(DomDocument $doc): void
@@ -151,9 +128,9 @@ function insertNewElement(DomDocument $doc): void
     // @$domToAdd->loadHTML($htmlToAdd);
     // it loads the content without adding enclosing html/body tags and also the doctype declaration
     // LIBXML_HTML_NOIMPLIED (int)
-    //     Sets HTML_PARSE_NOIMPLIED flag, which turns off the automatic adding of implied html/body... elements.
+    //     Sets HTML_PARSE_NOIMPLIED flag, không tự động thêm các phần tử html/body....
     // LIBXML_HTML_NODEFDTD (int)
-    //     Sets HTML_PARSE_NODEFDTD flag, which prevents a default doctype being added when one is not found.
+    //     Sets HTML_PARSE_NODEFDTD flag, ngăn không thêm DOCTYPE mặc định khi không có.
     @$domToAdd->loadHTML($htmlToAdd, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
     $newElement = $domToAdd->documentElement;
@@ -315,7 +292,6 @@ function main(): void
     // getByXpath($doc);
     // getById($doc);
     // echo makeResposiveImages($doc) . PHP_EOL;
-    echo stripStyleTags($doc) . PHP_EOL;
     // insertNewElement($doc);
     // deleteElement();
     // getTitle($doc);
