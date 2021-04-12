@@ -18,12 +18,12 @@ export default [
         version: '2.24.0',
         jsPath: 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'
     },
-	{
+    {
         code: 'moment-vi',
         name: 'Moment (giao diện tiếng Việt)',
         version: '2.24.0',
         jsPath: 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/vi.js',
-		savePath: 'moment'
+        savePath: 'moment'
     },
     {
         code: 'bootstrap',
@@ -57,7 +57,7 @@ export default [
         jsPath: '../project - common validation/js/common-validation.js',
         link: 'https://lockex1987.github.io/posts/project%20-%20common%20validation/'
     },
-	{
+    {
         code: 'CommonUtils',
         name: 'CommonUtils',
         jsPath: '../../js/common.js',
@@ -107,6 +107,19 @@ export default [
             'la-solid-900.svg',
             'la-solid-900.woff'
         ].map(s => 'src/line-awesome/fonts/' + s)
+    },
+    {
+        code: 'font-awesome',
+        name: 'Font Awesome',
+        version: '4.7.0',
+        cssPath: 'src/font-awesome/css/font-awesome.min.css',
+        fontPaths: [
+            'fontawesome-webfont.eot',
+            'fontawesome-webfont.ttf',
+            'fontawesome-webfont.woff2',
+            'fontawesome-webfont.svg',
+            'fontawesome-webfont.woff'
+        ].map(s => 'src/font-awesome/fonts/' + s)
     },
     {
         code: 'summernote',
