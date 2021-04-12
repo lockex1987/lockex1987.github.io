@@ -3,7 +3,8 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="windows, nginx, mariadb, php">
+    <meta name="description" content="Cài đặt Nginx, Mariadb, PHP trên Windows.
+        Chạy nhiều phiên bản PHP với Nginx; multiple PHP versions.">
     <title>Cài đặt WEMP stack</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -56,7 +57,8 @@
       <p><a href="https://windows.php.net/download/" target="_blank">PHP For
           Windows: Binaries and sources Releases</a></p>
       <p>Chọn phiên bản 7.2, 64bit, Non Thread Safe.</p>
-      <p><a href="https://windows.php.net/downloads/releases/php-7.2.28-nts-Win32-VC15-x64.zip"
+      <p><a href="https://windows.php.net/downloads/releases/php-7.2.28-nts-Win32-VC15-x64.zip"
+
           target="_blank">https://windows.php.net/downloads/releases/php-7.2.28-nts-Win32-VC15-x64.zip</a></p>
       <p>Giải nén vào thư mục <code>D:\program\php72</code>.</p>
       <p>Cấu hình biến môi trường <code>PATH</code>.</p>
@@ -98,25 +100,14 @@ C:\Users\VTCC-&gt;</pre>
       <h3>Chạy PHP với nginx</h3>
       <p>Bạn có thể chạy PHP trên nginx thông qua FastCGI bằng giao thức TCP.</p>
       <h4>Cấu hình nginx</h4>
-      <p>Sửa lại cấu hình file <code>nginx.conf</code> ở thư mục <code>D:\program\nginx\conf</code>.</p>
-      <ul>
-        <li>Loại bỏ dấu <code>#</code> ở trước mỗi dòng vùng <code>location ~
-            \.php$</code>.</li>
-        <li>Thay đổi <code>/scripts</code> thành <code>$document_root</code>.</li>
-        <li>Thêm <code>index.php</code> vào <code>location /</code>.</li>
-      </ul>
-      <pre># Thêm index.php
+      <p>Sửa lại cấu hình file <code>D:\program\nginx\conf\servers\default.conf</code>.</p>
+      <pre>root  html;<br><br>index  index.php index.html;<br>
 location / {
-    root   html;
-    index  index.php index.html;
+    try_files  $uri $uri/ /index.php?$query_string;
 }
 
-
-# Pass the PHP scripts to FastCGI server listening<br># on 127.0.0.1:9000<br># Sửa /scripts thành $document_root
 location ~ \.php$ {
-    root           html;
     fastcgi_pass   127.0.0.1:9000;
-    fastcgi_index  index.php;
     fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
     include        fastcgi_params;
 }</pre>
@@ -143,11 +134,11 @@ echo Starting nginx...
 cd /d D:\program\nginx
 start nginx
 
-echo .
 echo Starting PHP FastCGI...
 set PHP_FCGI_MAX_REQUESTS=0
 set PHP_FCGI_CHILDREN=5
-php72-cgi.exe -b 127.0.0.1:9000
+start php72-cgi.exe -b 127.0.0.1:9000
+start php80-cgi.exe -b 127.0.0.1:9080
 </pre>
       <p><code>stop-nginx.bat</code></p>
       <pre>@ECHO OFF
@@ -158,6 +149,7 @@ taskkill /f /IM nginx.exe
 echo .
 echo Stopping PHP FastCGI...
 taskkill /f /IM php72-cgi.exe
+taskkill /f /IM php80-cgi.exe
 
 echo Stopped
 pause
@@ -168,5 +160,6 @@ REM EXIT
           dẫn cài đặt Nginx, PHP và MySQL trên Windows</a></p>
     </article>
     <script src="../../js/docs.js"></script>
+    
   </body>
 </html>
