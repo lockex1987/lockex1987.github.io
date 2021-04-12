@@ -4,7 +4,8 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="date" content="2020-02-18 22:48:00">
-    <meta name="description" content="From zero to deployment">
+    <meta name="description" content="From zero to deployment.
+        Tập trung tìm hiểu những cái ở đây, không lan man những cái khác.        Solve problems use programming language (tool). Không chạy theo language, framework.">
     <title>Web development roadmap</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -14,29 +15,17 @@
       <h2>Web development roadmap</h2>
       <p>From zero to deployment.</p>
       <p>Bài viết này mô tả các bước để phát triển một ứng dụng web.</p>
-      <p>Solve problems use programming language (tool). Không chạy theo
-        language, framework.</p>
-      <h3>Bước 1: Setup</h3>
+      <h3>Setup môi trường dev</h3>
       <p>Các bước nhỏ:</p>
       <ul>
-        <li><a href="../it%20-%20virtualbox/index.html">Sử dụng VirtualBox</a></li>
-        <li><a href="../linux%20-%20setup%20lab%20environment/index.html">Tạo
-            môi trường lab</a></li>
-        <li><a href="../linux%20-%20install%20ubuntu%20server/index.html">Cài
-            đặt Ubuntu server</a></li>
-        <li><a href="../linux%20-%20ssh/index.html">Sử dụng SSH để kểt nối đến
-            server</a></li>
         <li><a href="../linux%20-%20install%20php/index.html">Cài đặt PHP</a></li>
-        <li><a href="../linux%20-%20install%20nginx/index.html">Cài đặt nginx</a></li>
-        <li><a href="../linux%20-%20run%20php%20with%20nginx/index.html">Chạy
+        <li><a href="../linux%20-%20install%20nginx/index.html">Cài đặt nginx</a> và <a href="../linux%20-%20run%20php%20with%20nginx/index.html">Chạy
             PHP với nginx</a></li>
         <li><a href="../linux%20-%20install%20node/index.html">Cài đặt Node</a></li>
         <li><a href="../linux%20-%20install%20mysql/index.html">Cài đặt MySQL</a></li>
         <li><a href="../redis%20-%20installation/index.html">Cài đặt Redis</a></li>
-        <li><a href="../linux%20-%20install%20glusterfs/index.html">Cài đặt
-            GlusterFS</a></li>
       </ul>
-      <h3>Bước 2: Development</h3>
+      <h3>Phát triển các ứng dụng</h3>
       <h4>sso-passport</h4>
       <p>Quản lý người dùng, đăng nhập tập trung.</p>
       <ul>
@@ -44,20 +33,23 @@
         <li>Đăng nhập</li>
         <li>Đăng xuất</li>
         <li>Thêm throttle</li>
-        <li>Đổi thông tin (mật khẩu, tên, số điện thoại, email, avatar)</li>
-        <ul>
-          <li>Avatar lưu ở trong DB</li>
-        </ul>
+        <li>Đổi thông tin (mật khẩu, tên, số điện thoại, email, avatar)
+          <ul>
+            <li>Avatar lưu ở trong DB</li>
+          </ul>
+        </li>
         <li>Lịch sử đăng nhập (OS, Browser, IP, time)</li>
         <li>Danh sách các ứng dụng được phân quyền</li>
-        <li>Email đổi mật khẩu thành công</li>
-        <ul>
-          <li>Giới hạn số lần đổi tối đa trong một ngày</li>
-        </ul>
-        <li>Quên mật khẩu</li>
-        <ul>
-          <li>Giới hạn số lần thao tác tối đa trong một ngày</li>
-        </ul>
+        <li>Email đổi mật khẩu thành công
+          <ul>
+            <li>Giới hạn số lần đổi tối đa trong một ngày</li>
+          </ul>
+        </li>
+        <li>Quên mật khẩu
+          <ul>
+            <li>Giới hạn số lần thao tác tối đa trong một ngày</li>
+          </ul>
+        </li>
         <li>Đăng ký, TODO:
           <ul>
             <li>Đăng ký qua Facebook, Google</li>
@@ -79,7 +71,6 @@
         </li>
         <li>Gán ứng dụng cho người dùng</li>
       </ul>
-      <h4>uw-admin (sso-admin)</h4>
       <p>Không mất công làm lại các bài toán cũ.</p>
       <p>Làm luôn trên project <strong>sso-admin</strong>.</p>
       <p>Tham khảo Voyager.</p>
@@ -110,56 +101,65 @@
             <li>Send file</li>
           </ul>
         </li>
-        <li>Notification</li>
-        <ul>
-          <li>TODO: Notification dạng hệ thống, k phải là noti.info</li>
-          <li>TODO: Khi đánh dấu đã đọc thì cập nhật lại số thông báo mới</li>
-        </ul>
-        <li>Múi giờ Việt Nam (lưu DB không bị lệch với trường timestamp)</li>
-        <ul>
-          <li>Thiết lập <code>'timezone' =&gt; 'Asia/Ho_Chi_Minh'</code> ở file
-            <code>config/app.php</code>, mặc định đang là <code>UTC</code></li>
-        </ul>
+        <li>Notification
+          <ul>
+            <li>TODO: Notification dạng hệ thống, k phải là noti.info</li>
+            <li>TODO: Khi đánh dấu đã đọc thì cập nhật lại số thông báo mới</li>
+          </ul>
+        </li>
+        <li>Múi giờ Việt Nam (lưu DB không bị lệch với trường timestamp)
+          <ul>
+            <li>Thiết lập <code>'timezone' =&gt; 'Asia/Ho_Chi_Minh'</code> ở
+              file <code>config/app.php</code>, mặc định đang là <code>UTC</code></li>
+          </ul>
+        </li>
         <li>i18n: tiếng Việt (các thông báo lỗi validate)</li>
-        <li>Danh mục dùng chung (tham khảo Voyage)</li>
-        <ul>
-          <li>Quốc gia, thể loại phim (dùng để quản lý movie)</li>
-        </ul>
-        <li>Tham số hệ thống:</li>
-        <ul>
-          <li>Động (thêm, sửa, xóa)</li>
-        </ul>
+        <li>Danh mục dùng chung (tham khảo Voyage)
+          <ul>
+            <li>Quốc gia, thể loại phim (dùng để quản lý movie)</li>
+          </ul>
+        </li>
+        <li>Tham số hệ thống:
+          <ul>
+            <li>Động (thêm, sửa, xóa)</li>
+          </ul>
+        </li>
         <li>Import Excel</li>
         <li>Export Excel</li>
-        <li>Tổ chức (dữ liệu dạng cây)</li>
-        <ul>
-          <li>Ở form người dùng có chọn tổ chức</li>
-        </ul>
-        <li>Quản lý nội dung</li>
-        <ul>
-          <li>Dùng editor Summernote</li>
-          <li>HTML purify chống lỗi XSS</li>
-          <li>Nội dung chứa ảnh</li>
-        </ul>
-        <li>Upload đính kèm file</li>
-        <ul>
-          <li>Giới hạn dung lượng</li>
-          <li>Giới hạn định dạng file</li>
-          <li>TODO: file service, CDN, có HA</li>
-        </ul>
-        <li>Log hệ thống (log tác động)</li>
-        <ul>
-          <li>Response log</li>
-        </ul>
+        <li>Tổ chức (dữ liệu dạng cây)
+          <ul>
+            <li>Ở form người dùng có chọn tổ chức</li>
+          </ul>
+        </li>
+        <li>Quản lý nội dung
+          <ul>
+            <li>Dùng editor Summernote</li>
+            <li>HTML purify chống lỗi XSS</li>
+            <li>Nội dung chứa ảnh</li>
+          </ul>
+        </li>
+        <li>Upload đính kèm file
+          <ul>
+            <li>Giới hạn dung lượng</li>
+            <li>Giới hạn định dạng file</li>
+            <li>TODO: file service, CDN, có HA</li>
+          </ul>
+        </li>
+        <li>Log hệ thống (log tác động)
+          <ul>
+            <li>Response log</li>
+          </ul>
+        </li>
         <li>Logging: cấu hình log Laravel theo ngày, tách log lỗi ra file riêng,
-          đẩy log lỗi vào DB, liệt kê và download file log</li>
-        <ul>
-          <li>Log service: Xem log ở các server có load balancer (không biết lỗi
-            ở server nào), cảnh báo log lỗi</li>
-          <li>Xem log lỗi nginx</li>
-          <li>Log lỗi hệ thống đẩy vào DB, có chức năng view
-            (https://laravel.com/docs/master/errors)</li>
-        </ul>
+          đẩy log lỗi vào DB, liệt kê và download file log
+          <ul>
+            <li>Log service: Xem log ở các server có load balancer (không biết
+              lỗi ở server nào), cảnh báo log lỗi</li>
+            <li>Xem log lỗi nginx</li>
+            <li>Log lỗi hệ thống đẩy vào DB, có chức năng view
+              (https://laravel.com/docs/master/errors)</li>
+          </ul>
+        </li>
         <li>Components demo:
           <ul>
             <li>Week picker</li>
@@ -171,14 +171,15 @@
       </ul>
       <p>Ứng dụng thật:</p>
       <ul>
-        <li>Mail</li>
-        <ul>
-          <li>Mail cảnh báo hoạt động</li>
-          <li>Mail truyền thông</li>
-          <li>Mail báo cáo tuần, báo cáo ngày</li>
-          <li>Mail service: Gửi mail tập trung, gọi REST POST với các tham số
-            (app, secret, to, title, body)</li>
-        </ul>
+        <li>Mail
+          <ul>
+            <li>Mail cảnh báo hoạt động</li>
+            <li>Mail truyền thông</li>
+            <li>Mail báo cáo tuần, báo cáo ngày</li>
+            <li>Mail service: Gửi mail tập trung, gọi REST POST với các tham số
+              (app, secret, to, title, body)</li>
+          </ul>
+        </li>
         <li>Quản lý movie</li>
         <li>Quản lý truyện tranh</li>
         <li>Quản lý sách</li>
@@ -193,47 +194,52 @@
             <li>Tìm kiếm dữ liệu post</li>
           </ul>
         </li>
-        <li>Hỗ trợ PWA</li>
-        <ul>
-          <li>Notification?</li>
-        </ul>
+        <li>Hỗ trợ PWA
+          <ul>
+            <li>Notification?</li>
+          </ul>
+        </li>
       </ul>
-      <h4>uw-frontend</h4>
+      <h4>landing-page</h4>
       <p>Server render, hỗ trợ SEO.</p>
       <ul>
-        <li>Trang landing page (đối tượng hướng tới là doanh nghiệp nhỏ)</li>
-        <ul>
-          <li>Giới thiệu thông tin chung, liên hệ, đội ngũ, bản đồ địa chỉ</li>
-          <li>Chuyên môn, ảnh sản phẩm</li>
-          <li>Link chat với chúng tôi (FB Messenger)</li>
-          <li>Link tin tức</li>
-          <li>Link đăng nhập (sso-admin)</li>
-        </ul>
-        <li>Trang danh sách tin tức</li>
-        <ul>
-          <li>Có phân trang</li>
-        </ul>
-        <li>Trang chi tiết tin tức</li>
-        <ul>
-          <li>Các bài liên quan</li>
-          <li>FB comment</li>
-          <li>Dùng Share API để share link</li>
-        </ul>
-        <li>Tính năng comment:</li>
-        <ul>
-          <li>Lấy danh sách (sắp xếp: mới nhất, cũ nhất, phổ biến)</li>
-          <li>Thêm comment (HTML)</li>
-          <li>Trả lời (comment lồng nhau)</li>
-          <li>Sửa comment</li>
-          <li>Xóa comment</li>
-          <li>Phê duyệt comment</li>
-          <li>Có thông báo</li>
-          <li>Giới hạn comment dài quá, comment dài quá thì có nút xem thêm</li>
-          <li>Like (bình chọn) comment</li>
-          <li>Thêm đính kèm (thêm ảnh, video)</li>
-          <li>Hash tag</li>
-          <li>Pinging user (@ người dùng)</li>
-        </ul>
+        <li>Trang landing page (đối tượng hướng tới là doanh nghiệp nhỏ)
+          <ul>
+            <li>Giới thiệu thông tin chung, liên hệ, đội ngũ, bản đồ địa chỉ</li>
+            <li>Chuyên môn, ảnh sản phẩm</li>
+            <li>Link chat với chúng tôi (FB Messenger)</li>
+            <li>Link tin tức</li>
+            <li>Link đăng nhập (sso-admin)</li>
+          </ul>
+        </li>
+        <li>Trang danh sách tin tức
+          <ul>
+            <li>Có phân trang</li>
+          </ul>
+        </li>
+        <li>Trang chi tiết tin tức
+          <ul>
+            <li>Các bài liên quan</li>
+            <li>FB comment</li>
+            <li>Dùng Share API để share link</li>
+          </ul>
+        </li>
+        <li>Tính năng comment:
+          <ul>
+            <li>Lấy danh sách (sắp xếp: mới nhất, cũ nhất, phổ biến)</li>
+            <li>Thêm comment (HTML)</li>
+            <li>Trả lời (comment lồng nhau)</li>
+            <li>Sửa comment</li>
+            <li>Xóa comment</li>
+            <li>Phê duyệt comment</li>
+            <li>Có thông báo</li>
+            <li>Giới hạn comment dài quá, comment dài quá thì có nút xem thêm</li>
+            <li>Like (bình chọn) comment</li>
+            <li>Thêm đính kèm (thêm ảnh, video)</li>
+            <li>Hash tag</li>
+            <li>Pinging user (@ người dùng)</li>
+          </ul>
+        </li>
       </ul>
       <h4>websocket-server</h4>
       <ul>
@@ -242,20 +248,88 @@
         <li>Chat</li>
         <li>Notification thông báo mới</li>
       </ul>
-      <h3>Bước 3: Deployment</h3>
-      <p><a href="https://lockex1987.github.io/archive/it%20-%20auto%20deploy/">Deploy
+      <h3>Setup môi trường deploy</h3>
+      <p>Chúng ta cũng cần cài PHP, nginx, Redis, MySQL, Node như môi trường
+        dev.</p>
+      <ul>
+        <li><a href="../it%20-%20virtualbox/index.html">Hướng dẫn sử dụng
+            VirtualBox</a></li>
+        <li><a href="../linux%20-%20install%20ubuntu%20server/index.html">Cài
+            đặt Ubuntu server</a></li>
+        <li><a href="../linux%20-%20ssh/index.html">Sử dụng SSH để kểt nối đến
+            server</a></li>
+        <li><a href="../linux%20-%20install%20glusterfs/index.html">Cài đặt
+            GlusterFS</a></li>
+      </ul>
+      <h4>Mục tiêu</h4>
+      <p>Tôi muốn xây dựng cho mình một môi trường lab để thực hành về mạng cũng
+        như việc deploy các ứng dụng web.</p>
+      <p>Tôi sẽ cài đặt hai server Ubuntu 18.04. Phần mềm sử dụng là VirtualBox.
+        Các máy ảo có RAM 1024 MB và ổ cứng 10 GB.</p>
+      <p>Thông tin server 1:</p>
+      <ul>
+        <li>Tên máy ảo: Ubuntu-Server-1</li>
+        <li>Tên đầy đủ người dùng: Admin 1</li>
+        <li>Tên server: ubuntu1</li>
+        <li>Username: admin1</li>
+        <li>Password: abc123a@</li>
+        <li>IP: 192.168.1.116</li>
+      </ul>
+      <p>Thông tin server 2:</p>
+      <ul>
+        <li>Tên máy ảo: Ubuntu-Server-2</li>
+        <li>Tên đầy đủ người dùng: Admin 2</li>
+        <li>Tên server: ubuntu2</li>
+        <li>Username: admin2</li>
+        <li>Password: abc123a@</li>
+        <li>IP: 192.168.1.174</li>
+      </ul>
+      <p>Thông tin server 3:</p>
+      <ul>
+        <li>Tên máy ảo: Ubuntu-Server-3</li>
+        <li>Tên đầy đủ người dùng: Admin 3</li>
+        <li>Tên server: ubuntu3</li>
+        <li>Username: admin3</li>
+        <li>Password: abc123a@</li>
+        <li>IP: 192.168.1.176</li>
+        <li>Thông tin truy cập MySQL: huyennv9 / abc123a@</li>
+      </ul>
+      <p>Máy thật của mình:</p>
+      <ul>
+        <li>Username: lockex1987</li>
+        <li>Password: 123456a@</li>
+        <li>IP: 192.168.1.111</li>
+      </ul>
+      <p>Server 1 và 2 sẽ để cài web. Server 3 sẽ để cài DB.</p>
+      <p>Sửa file <code>/etc/hosts</code> để truy cập các server bằng tên cho
+        dễ:</p>
+      <pre>192.168.1.131   my-ipad.tk
+192.168.1.116   ubuntu-server-1.tk
+192.168.1.174   ubuntu-server-2.tk
+192.168.1.176   ubuntu-server-3.tk
+192.168.1.111   real-machine.tk</pre>
+      <h4>Cấu hình mạng cho server ở VirtualBox</h4>
+      <p>Mặc định cấu hình mạng của máy ảo đang là kiểu NAT.</p>
+      <p>Chúng ta hãy thay đổi kiểu mạng là "Bridged Adapter". Khi đó mỗi máy ảo
+        sẽ có IP riêng, như một máy độc lập.</p>
+      <div class="out-of-box text-center"><img src="images/bridged%20adapter.png"
+
+          alt=""></div>
+      <h3>Triển khai ứng dụng</h3>
+      <p>TODO: Các link đang bị lỗi hết</p>
+      <p><a href="https://lockex1987.github.io/posts/it%20-%20auto%20deploy/">Deploy
           tự động</a></p>
-      <p><a href="https://lockex1987.github.io/archive/it%20-%20check%20application%20alive/">Theo
+      <p><a href="https://lockex1987.github.io/posts/it%20-%20check%20application%20alive/">Theo
           dõi tiến trình luôn chạy</a></p>
-      <p><a href="https://lockex1987.github.io/archive/web%20-%20ngrok/">Publish
+      <p><a href="https://lockex1987.github.io/posts/web%20-%20ngrok/">Publish
           ứng dụng lên internet</a></p>
-      <p><a href="https://lockex1987.github.io/archive/web%20-%20security%20checklist/">Checklist
+      <p><a href="https://lockex1987.github.io/posts/web%20-%20security%20checklist/">Checklist
           an toàn thông tin</a></p>
-      <p><a href="https://lockex1987.github.io/archive/web%20-%20load%20balancer/">HA
+      <p><a href="https://lockex1987.github.io/posts/web%20-%20load%20balancer/">HA
           (load balancer)</a></p>
-      <p><a href="https://lockex1987.github.io/archive/web%20-%20config%20https/">Cấu
+      <p><a href="https://lockex1987.github.io/posts/web%20-%20config%20https/">Cấu
           hình HTTPS</a></p>
-      <p><a href="https://lockex1987.github.io/archive/docker%20-%20laravel%20container/">Tạo
+      <p><a href="https://lockex1987.github.io/posts/docker%20-%20laravel%20container/">Tạo
           Docker container</a></p>
     </article>
     <script src="../../js/docs.js"></script>

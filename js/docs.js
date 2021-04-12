@@ -361,7 +361,8 @@ class FooterSummary {
         const description = PageInfo.getDescription();
 
         const content = document.createElement('div');
-        content.textContent = description;
+		content.className = 'text-pre-wrap';
+        content.textContent = description.replace(/^\s+|\s+$/m, '');
 
         const container = document.createElement('div');
         container.className = 'mt-3';
