@@ -1,0 +1,22 @@
+@mixin baseGrid {
+    @media (min-width: 992px) {
+        display: grid;
+        grid-column-gap: 1rem;
+        grid-row-gap: 1rem;
+    }
+}
+
+.grid-2 {
+    @include baseGrid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.grid-3 {
+    @include baseGrid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.grid-4 {
+    @include baseGrid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}

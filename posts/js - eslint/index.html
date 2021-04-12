@@ -25,8 +25,7 @@
       </ul>
       <h3>Cài đặt</h3>
       <p>Cài extension cho VSCode:</p>
-      <p><a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint"
-
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint"
           target="_blank">Link</a></p>
       <p>Cài Node package:</p>
       <pre>npm install --save-dev eslint
@@ -153,16 +152,12 @@ found 0 vulnerabilities
       <pre>{
     "env": {
         "browser": true,
-        "es6": true
-    },<br>
+        "es2021": true
+    },
     "extends": [
         "plugin:vue/essential",
         "standard"
-    ],<br>
-    "plugins": [
-        "vue"
     ],
-
     "globals": {
         "Vue": "readonly",
         "Vuex": "readonly",
@@ -171,16 +166,23 @@ found 0 vulnerabilities
         "Highcharts": "readonly",
         "$": "readonly",
         "ExcelJS": "readonly",
-        "moment": "readonly"
+        "moment": "readonly",
+
+        "CV": "readonly",
+        "noti": "readonly",
+        "Datatable": "readonly",
+        "Pagi": "readonly",
+        "CommonUtils": "readonly",
+        "SSO_CONSUMER_DOMAIN": "readonly",
+        "SSO_PASSPORT_URL": "readonly",
     },
-    
-    "parser": "vue-eslint-parser",
     "parserOptions": {
-        "parser": "babel-eslint",
-        "ecmaVersion": 2018,
+        "ecmaVersion": 12,
         "sourceType": "module"
     },
-
+    "plugins": [
+        "vue"
+    ],
     "rules": {
         "semi": ["error", "always"],
         "indent": ["error", 4],
@@ -192,8 +194,9 @@ found 0 vulnerabilities
         "eqeqeq": "off",
         "no-new": "off",
         "no-multiple-empty-lines": "off",
-        "vue/require-valid-default-prop": "off",
-        "vue/require-v-for-key": "off"
+        "operator-linebreak": ["error", "before"],
+        "vue/require-v-for-key": "off",
+        "vue/require-valid-default-prop": "off"
     }
 }</pre>
       <h3>Đánh dấu không kiểm tra file</h3>
@@ -217,12 +220,35 @@ found 0 vulnerabilities
       <h3>Tự động fix trong VSCode</h3>
       <p>Bạn có thể sử dụng lệnh trong VSCode để fix các bug có thể tự động của
         file hiện tại.</p>
-      <div class="mb-3"> <img src="images/eslint%20fix%20all%20auto-fixable%20problems.png"
-
+      <div class="mb-3"> <img src="images/eslint%20fix%20all%20auto-fixable%20problems.png"
           alt=""> </div>
+      <p>Ngoài ra, thêm file <code>.vscode/settings.json</code> như sau để tự
+        động format, lint khi lưu file:</p>
+      <pre>{
+    "[javascript]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        }
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "octref.vetur",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        }
+    },
+    "vetur.format.defaultFormatter.html": "js-beautify-html",
+	"vetur.format.defaultFormatterOptions": {
+        "js-beautify-html": {
+            "wrap_attributes": "force"
+        }
+    },
+    "vetur.format.defaultFormatter.js": "none",
+    "vetur.format.options.tabSize": 4
+}</pre>
       <h3>Tham khảo</h3>
-      <p><a href="https://viblo.asia/p/hay-su-dung-eslint-cho-du-an-cua-ban-bJzKm07O59N"
-
+      <p><a href="https://viblo.asia/p/hay-su-dung-eslint-cho-du-an-cua-ban-bJzKm07O59N"
           target="_blank">Hãy sử dụng ESLint cho dự án của bạn! - Viblo</a></p>
       <p><a href="https://eslint.org/docs/user-guide/getting-started" target="_blank">Getting
           Started with ESLint - ESLint</a></p>

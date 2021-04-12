@@ -1,0 +1,17 @@
+@mixin lineClampEllipsis {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-ellipsis-1 {
+    @include lineClampEllipsis;
+
+    -webkit-line-clamp: 1;
+}
+
+.line-clamp-ellipsis-5 {
+    @include lineClampEllipsis;
+
+    -webkit-line-clamp: 5;
+}
