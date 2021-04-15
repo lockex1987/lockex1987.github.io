@@ -20,7 +20,8 @@ $srtPath = str_replace('.mp4x', '.srt', $uri);
 	<link rel="stylesheet" href="/css/style.css"/>
 </head>
 
-<body class="py-3" style="background-color: #000;">
+<body class="py-3"
+	style="background-color: #000;">
     <!-- .media-container -->
     <div>
         <video id="myVideo" controls preload="metadata">

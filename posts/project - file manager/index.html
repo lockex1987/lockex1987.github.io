@@ -16,6 +16,20 @@
     <link rel="icon" href="../../images/favicon.png" />
     <link rel="stylesheet" href="../../css/style.css" />
     <link rel="stylesheet" href="css/file-icon.css" />
+
+    <style>
+        .list-item .list-item__actions {
+            visibility: hidden;
+        }
+
+        .list-item:hover {
+            background-color: rgba(200, 200, 200, 0.1);
+        }
+
+        .list-item:hover .list-item__actions {
+            visibility: visible;
+        }
+    </style>
 </head>
 
 <body>
@@ -172,86 +186,84 @@
                 </div>
     
                 <div v-else>
-                    <table class="table table-bordered table-sm">
-                        <tbody>
-                            <tr v-for="(f, idx) in filteredFiles"
-                                class="list-item"
-                                classx="{ 'mt-2 pt-2': idx > 0 || folder != '/' }">
-                                <td class="align-middle">
-                                    <div class="d-flex">
-                                        <!-- Icon -->
-                                        <div>
-                                            <span class="file-icon file-icon-folder"
-                                                v-if="f.isDir">
-                                            </span>
+                        <div v-for="(f, idx) in filteredFiles"
+                            class="d-flex list-item align-items-center">
+                            <div class="d-flex">
+                                <!-- Icon -->
+                                <div>
+                                    <span class="file-icon file-icon-folder"
+                                        v-if="f.isDir">
+                                    </span>
 
-                                            <span :href="'/data-drive' + folder + f.name"
-                                                class="file-icon"
-                                                v-else>
-                                            </span>
-                                        </div>
+                                    <span :href="'/data-drive' + folder + f.name"
+                                        class="file-icon"
+                                        v-else>
+                                    </span>
+                                </div>
 
-                                        <div>
-                                            <span @click="openFolder(f)"
-                                                class="cursor-pointer text-primary"
-                                                v-if="f.isDir">
-                                                <span class="d-block">
-                                                    {{f.name}}
-                                                </span>
+                                <div>
+                                    <span @click="openFolder(f)"
+                                        class="cursor-pointer text-primary"
+                                        v-if="f.isDir">
+                                        <span class="d-block">
+                                            {{f.name}}
+                                        </span>
 
-                                                <span class="text-muted font-size-0.875">
-                                                    {{f.size}} item
-                                                </span>
-                                            </span>
+                                        <span class="text-muted font-size-0.875">
+                                            {{f.size}} item
+                                        </span>
+                                    </span>
 
-                                            <a :href="'/data-drive' + folder + f.name"
-                                                class="text-decoration-none"
-                                                v-else>
-                                                <!-- @click="f.download = true" -->
-                                                <span class="d-block">
-                                                    {{f.name}}
-                                                </span>
+                                    <a :href="'/data-drive' + folder + f.name"
+                                        class="text-decoration-none"
+                                        v-else>
+                                        <!-- @click="f.download = true" -->
+                                        <span class="d-block">
+                                            {{f.name}}
+                                        </span>
 
-                                                <span class="text-muted font-size-0.875">
-                                                    {{f.size}}
-                                                </span>
-                                            </a>
-                                        </div>
+                                        <span class="text-muted font-size-0.875">
+                                            {{f.size}}
+                                        </span>
+                                    </a>
+                                </div>
 
-                                        <download-progress
-                                            :url="f.url"
-                                            :file-name="f.name"
-                                            v-if="f.download"></download-progress>
-                                    </div>
-                                </td>
+                                <download-progress
+                                    :url="f.url"
+                                    :file-name="f.name"
+                                    v-if="f.download"></download-progress>
+                            </div>
 
-                                <!-- Các hành động -->
-                                <td class="text-right align-middle"
-                                    style="width: 150px;">
-                                    <i class="la la-edit text-warning cursor-pointer mr-1"
-                                        title="Cập nhật"
-                                        @click="getTextFileContent(f)"
-                                        v-if="!f.isDir && f.isTextFile"></i>
+                            <!-- Các hành động -->
+                            <div class="text-right ml-auto list-item__actions"
+                                style="width: 150px;">
+                                <i class="la la-edit text-warning cursor-pointer mr-1"
+                                    title="Cập nhật"
+                                    @click="getTextFileContent(f)"
+                                    v-if="!f.isDir && f.isTextFile"></i>
 
-                                    <i class="la la-trash text-danger cursor-pointer"
-                                        title="Xóa"
-                                        @click="confirmDelete(f)"></i>
+                                <i class="fa fa-play font-size-0.875 text-secondary cursor-pointer mr-1"
+                                    title="Play"
+                                    @click="openMp4File(f)"
+                                    v-if="f.name.endsWith('.mp4')"></i>
 
-                                    <i class="la la-copy text-primary cursor-pointer ml-1"
-                                        title="Copy"
-                                        @click="markFile(f, 'copy')"></i>
+                                <i class="la la-trash text-danger cursor-pointer"
+                                    title="Xóa"
+                                    @click="confirmDelete(f)"></i>
 
-                                    <i class="la la-cut text-info cursor-pointer ml-1"
-                                        title="Cut"
-                                        @click="markFile(f, 'cut')"></i>
+                                <i class="la la-copy text-primary cursor-pointer ml-1"
+                                    title="Copy"
+                                    @click="markFile(f, 'copy')"></i>
 
-                                    <i class="la la-arrow-right text-success cursor-pointer ml-1"
-                                        title="Đổi tên"
-                                        @click="confirmRename(f)"></i>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                <i class="la la-cut text-info cursor-pointer ml-1"
+                                    title="Cut"
+                                    @click="markFile(f, 'cut')"></i>
+
+                                <i class="la la-arrow-right text-success cursor-pointer ml-1"
+                                    title="Đổi tên"
+                                    @click="confirmRename(f)"></i>
+                            </div>
+                        </div>
                 </div>
             </div>
 
@@ -324,6 +336,7 @@
 
     
     <link rel="stylesheet" href="../project - frontend frameworks and libraries/src/line-awesome/css/line-awesome.min.css" />
+    <link rel="stylesheet" href="../project - frontend frameworks and libraries/src/font-awesome/css/font-awesome.min.css" />
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
     <script src="../../js/common.js"></script>

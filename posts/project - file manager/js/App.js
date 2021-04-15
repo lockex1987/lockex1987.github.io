@@ -539,6 +539,15 @@ export default {
 
                 this.listFolderContent();
             }
+        },
+
+        /**
+         * Mở file mp4 để play.
+         * Gọi đến file player.php.
+         * @param {Object} f Đối tượng file
+         */
+        openMp4File(f) {
+
         }
     }
 };
