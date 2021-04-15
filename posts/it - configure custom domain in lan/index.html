@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="dnsmasq">
+    <title>Cấu hình domain cho mạng LAN</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Cấu hình domain cho mạng LAN</h2>
+      <h3>Giới thiệu</h3>
+      <p>Giả sử bạn có một ứng dụng web triển khai trên một máy PC. Bạn đặt
+        domain cho ứng dụng đó là sso-admin.cttd.tk. Domain này không được đăng
+        ký trên Internet. Muốn truy cập ứng dụng bạn phải sửa file <code>hosts</code>
+        ở máy PC.</p>
+      <pre>127.0.0.1    sso-admin.cttd.tk</pre>
+      <p>Bây giờ, bạn muốn test ứng dụng với domain đó trên iPad và điện thoại
+        Android.</p>
+      <p>Trên các thiết bị đó, chúng ta khó (hoặc không thể) sửa file <code>hosts</code>
+        như PC.</p>
+      <p>Giá như có cách nào mapping IP với domain trên router thì tốt (nhưng
+        tôi không tìm thấy).</p>
+      <p>Chúng ta có thể cài proxy trên máy PC và cấu hình proxy cho iPad và
+        Android. Tuy nhiên với cách này thì khi chúng ta lướt web bình thường
+        cũng phải có proxy và yêu cầu máy PC phải luôn bật.</p>
+      <p>Cách tôi áp dụng và đã thành công đó là cài đặt máy PC làm DNS server
+        và thêm DNS server là máy PC đó cho iPad và điện thoại Android. Cài tiện
+        ích dnsmasq cho đơn giản và nhẹ.</p>
+      <h3>Cài đặt dnsmasq trên Ubuntu</h3>
+      <p>Đầu tiên, chúng ta phải tắt và disable dịch vụ <code>systemd-resolved</code>
+        để không bị xung đột.</p>
+      <pre class="text-white bg-dark">$ <span class="font-weight-700">sudo systemctl status systemd-resolved</span>
+● systemd-resolved.service - Network Name Resolution
+     Loaded: loaded (/lib/systemd/system/systemd-resolved.service; enabled; vendor preset: enabled)
+     Active: <span class="text-success">active (running)</span> since Wed 2021-04-14 20:19:58 +07; 1h 34min ago
+       Docs: man:systemd-resolved.service(8)
+             https://www.freedesktop.org/wiki/Software/systemd/resolved
+             https://www.freedesktop.org/wiki/Software/systemd/writing-network-configuration-managers
+             https://www.freedesktop.org/wiki/Software/systemd/writing-resolver-clients
+   Main PID: 666 (systemd-resolve)
+     Status: "Processing requests..."
+      Tasks: 1 (limit: 9318)
+     Memory: 9.8M
+     CGroup: /system.slice/systemd-resolved.service
+             └─666 /lib/systemd/systemd-resolved
+
+Thg 4 14 20:19:58 cttd systemd[1]: Starting Network Name Resolution...
+Thg 4 14 20:19:58 cttd systemd-resolved[666]: Positive Trust Anchors:
+Thg 4 14 20:19:58 cttd systemd-resolved[666]: . IN DS 20326 8 2 e06d44b80b8f1d39a95c0b0d7c65d08458e880409bbc683457104237c7f8ec8d
+Thg 4 14 20:19:58 cttd systemd-resolved[666]: Negative trust anchors: 10.in-addr.arpa 16.172.in-addr.arpa 17.172.in-addr.arpa 18.172.in-addr.arpa 19.172.in-addr.arpa 20.172.in-addr.arpa 21.172.in-addr.a&gt;
+Thg 4 14 20:19:58 cttd systemd-resolved[666]: Using system hostname 'cttd'.
+Thg 4 14 20:19:58 cttd systemd[1]: Started Network Name Resolution.<br><br>$ <span
+class="font-weight-700">sudo systemctl disable systemd-resolved</span>
+Removed /etc/systemd/system/multi-user.target.wants/systemd-resolved.service.
+Removed /etc/systemd/system/dbus-org.freedesktop.resolve1.service.<br>
+$ <span class="font-weight-700">sudo systemctl stop systemd-resolved</span><br>
+$ <span class="font-weight-700">sudo systemctl status systemd-resolved</span>
+● systemd-resolved.service - Network Name Resolution
+     Loaded: loaded (/lib/systemd/system/systemd-resolved.service; disabled; vendor preset: enabled)
+     Active: <span class="text-danger">inactive (dead)</span>
+       Docs: man:systemd-resolved.service(8)
+             https://www.freedesktop.org/wiki/Software/systemd/resolved
+             https://www.freedesktop.org/wiki/Software/systemd/writing-network-configuration-managers
+             https://www.freedesktop.org/wiki/Software/systemd/writing-resolver-clients
+
+Thg 4 14 20:19:58 cttd systemd[1]: Starting Network Name Resolution...
+Thg 4 14 20:19:58 cttd systemd-resolved[666]: Positive Trust Anchors:
+Thg 4 14 20:19:58 cttd systemd-resolved[666]: . IN DS 20326 8 2 e06d44b80b8f1d39a95c0b0d7c65d08458e880409bbc683457104237c7f8ec8d
+Thg 4 14 20:19:58 cttd systemd-resolved[666]: Negative trust anchors: 10.in-addr.arpa 16.172.in-addr.arpa 17.172.in-addr.arpa 18.172.in-addr.arpa 19.172.in-addr.arpa 20.172.in-addr.arpa 21.172.in-addr.a&gt;
+Thg 4 14 20:19:58 cttd systemd-resolved[666]: Using system hostname 'cttd'.
+Thg 4 14 20:19:58 cttd systemd[1]: Started Network Name Resolution.
+Thg 4 14 21:58:17 cttd systemd[1]: Stopping Network Name Resolution...
+Thg 4 14 21:58:17 cttd systemd[1]: systemd-resolved.service: Succeeded.
+Thg 4 14 21:58:17 cttd systemd[1]: Stopped Network Name Resolution.</pre>
+      <p>Backup và xóa file <code>/etc/resolv.conf</code> (đây là một link):</p>
+      <pre>$ sudo cp resolv.conf bk_resolv.conf
+$ sudo rm /etc/resolv.conf</pre>
+      <p>Tạo file <code>/etc/resolv.conf</code> mới chứa DNS của Google:</p>
+      <pre>$ echo "nameserver 8.8.8.8" &gt; /etc/resolv.conf</pre>
+      <p>Cài đặt <code>dnsmasq</code>:</p>
+      <pre>$ sudo apt-get install dnsmasq</pre>
+      <p>Tiện ích dnsmasq sẽ đọc file <code>/etc/hosts</code>. Chúng ta chỉnh
+        file đó như sau (chú ý có thêm dòng tương ứng với IP trong mạng LAN):</p>
+      <pre>127.0.0.1       sso-admin.cttd.tk<br>192.168.1.48    sso-admin.cttd.tk</pre>
+      <p>Khởi động lại tiện ích:</p>
+      <pre>$ sudo systemctl restart dnsmasq<br>$ sudo systemctl enable dnsmasq
+</pre>
+      <h3>Cấu hình DNS trên iPad và Android</h3>
+      <p><a href="https://quantrimang.com/doi-dns-tren-dien-thoai-android-iphone-110760"
+          target="_blank">Cách đổi DNS trên điện thoại iPhone, Android -
+          Quantrimang.com</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>
