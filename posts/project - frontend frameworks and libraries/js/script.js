@@ -37,6 +37,7 @@ new Vue({
 
         /**
          * Lọc các file được chọn.
+         * TODO: Nếu là CDN thì dùng luôn link CDN, không download về thư mục libs.
          */
         getChosenFiles() {
             const files = [];
