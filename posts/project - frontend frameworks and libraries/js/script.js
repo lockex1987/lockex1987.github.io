@@ -12,8 +12,8 @@ new Vue({
         return {
             libraries: LIBRARIES.map(e => ({
                 ...e,
-                cssChosen: false,
-                jsChosen: false
+                cssChosen: !!e.cssPath,
+                jsChosen: !!e.jsPath
             }))
         };
     },
@@ -41,25 +41,40 @@ new Vue({
         getChosenFiles() {
             const files = [];
             this.libraries.forEach(e => {
+                // Thư mục lưu
+                const folder = 'libs/' + this.getSaveFolder(e);
+
+                // Chọn file CSS
                 if (e.cssChosen) {
                     files.push({
                         url: e.cssPath,
-                        path: 'libs/' + this.getSaveFolder(e) + '/css/' + this.extractFilename(e.cssPath)
+                        path: folder + '/css/' + this.extractFilename(e.cssPath)
                     });
+
+                    if (e.cssMap) {
+                        files.push(this.getMapFile('css', e, folder));
+                    }
+
                     if (e.fontPaths) {
                         e.fontPaths.forEach(s => {
                             files.push({
                                 url: s,
-                                path: 'libs/' + this.getSaveFolder(e) + '/fonts/' + this.extractFilename(s)
+                                path: folder + '/fonts/' + this.extractFilename(s)
                             });
                         });
                     }
                 }
+
+                // Chọn file JS
                 if (e.jsChosen) {
                     files.push({
                         url: e.jsPath,
-                        path: 'libs/' + this.getSaveFolder(e) + '/js/' + this.extractFilename(e.jsPath)
+                        path: folder + '/js/' + this.extractFilename(e.jsPath)
                     });
+
+                    if (e.jsMap) {
+                        files.push(this.getMapFile('js', e, folder));
+                    }
                 }
             });
 
@@ -102,6 +117,50 @@ new Vue({
          */
         extractFilename(url) {
             return url.split('/').pop();
+        },
+
+        /**
+         * Lấy đường dẫn URL, bỏ đi phần tên file.
+         * @param {String} url
+         */
+        extractBaseUrl(url) {
+            const idx = url.lastIndexOf('/');
+            return url.substring(0, idx + 1);
+        },
+
+        /**
+         * Trả về đối tượng { url, path }.
+         * @param {String} type Loại (js, css)
+         * @param {Object} e Bản ghi
+         */
+        getMapFile(type, e, folder) {
+            if (type == 'css') {
+                if (e.cssMap.startsWith('http')) {
+                    return {
+                        url: e.cssMap,
+                        path: folder + '/css/' + this.extractFilename(e.cssMap)
+                    };
+                }
+
+                return {
+                    url: this.extractBaseUrl(e.cssPath) + e.cssMap,
+                    path: folder + '/css/' + e.cssMap
+                };
+            }
+
+            if (type == 'js') {
+                if (e.jsMap.startsWith('http')) {
+                    return {
+                        url: e.jsMap,
+                        path: folder + '/js/' + this.extractFilename(e.jsMap)
+                    };
+                }
+
+                return {
+                    url: this.extractBaseUrl(e.jsPath) + e.jsMap,
+                    path: folder + '/js/' + e.jsMap
+                };
+            }
         },
 
         /**

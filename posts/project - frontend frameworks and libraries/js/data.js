@@ -29,7 +29,7 @@ export default [
         code: 'bootstrap',
         name: 'Bootstrap',
         version: '4.3.1',
-        cssPath: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
+        // cssPath: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
         jsPath: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js',
         jsMap: 'bootstrap.min.js.map',
         link: 'https://lockex1987.github.io/posts/bootstrap%20-%20get%20started/',
@@ -57,12 +57,14 @@ export default [
         jsPath: '../project - common validation/js/common-validation.js',
         link: 'https://lockex1987.github.io/posts/project%20-%20common%20validation/'
     },
+    /*
     {
         code: 'CommonUtils',
         name: 'CommonUtils',
         jsPath: '../../js/common.js',
         link: 'https://lockex1987.github.io/posts/js%20-%20common/'
     },
+    */
     {
         code: 'datatable',
         name: 'Datatable',
@@ -82,8 +84,10 @@ export default [
         name: 'Date range picker',
         version: '^3.0.5',
         cssPath: 'https://cdn.jsdelivr.net/npm/daterangepicker@3.0.5/daterangepicker.min.css',
+        cssMap: 'https://cdn.jsdelivr.net/sm/977d76daee7276d0fb7eb98d2d7dcb01c5e058f63c51d94902d4394e65335f6e.map',
         jsPath: 'https://cdn.jsdelivr.net/npm/daterangepicker@3.0.5/daterangepicker.min.js',
-        note: 'Phụ thuộc jQuery, Moment'
+        jsMap: 'https://cdn.jsdelivr.net/sm/3a884fe0bdb97cb3a94b410e67cf38fdc248890d5581232077b3e6241e25cd21.map',
+        note: 'Phụ thuộc jQuery, Moment. Phải sửa lại đường dẫn file map.'
     },
     {
         code: 'line-awesome',
@@ -173,12 +177,14 @@ export default [
         jsMap: 'exporting.js.map',
         savePath: 'highcharts'
     },
+    /*
     {
         code: 'highcharts-offline-exporting',
         name: 'Highcharts (offline exporting)',
         jsPath: 'https://code.highcharts.com/modules/offline-exporting.js',
         savePath: 'highcharts'
     },
+    */
     {
         code: 'highcharts-map',
         name: 'Highcharts (map)',
@@ -192,12 +198,14 @@ export default [
         jsPath: 'src/highcharts/maps/map-vn-all.js',
         savePath: 'highcharts'
     },
+    /*
     {
         code: 'highcharts-map-world',
         name: 'Highcharts (bản đồ thế giới TODO)',
         jsPath: 'TODO',
         savePath: 'highcharts'
     },
+    */
     /*
     {
         code: 'jqcloud',
@@ -235,18 +243,21 @@ export default [
         jsPath: 'https://cdn.jsdelivr.net/npm/vuex@3.1.2/dist/vuex.min.js',
         savePath: 'vue'
     },
+    /*
     {
         code: 'faker',
         name: 'Faker',
         version: '3.1.0',
         jsPath: 'https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js'
     },
+    */
     {
         code: 'exceljs',
         name: 'ExcelJS',
         version: '3.8.0',
         jsPath: 'https://cdnjs.cloudflare.com/ajax/libs/exceljs/3.8.0/exceljs.min.js'
     },
+    /*
     {
         code: 'jquery-ui',
         name: 'jQuery UI',
@@ -254,4 +265,5 @@ export default [
         cssPath: 'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css',
         jsPath: 'https://code.jquery.com/ui/1.12.1/jquery-ui.js'
     }
+    */
 ];
