@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="date" content="2021-01-29 10:11:00">
-    <meta name="description" content="ssh key, git, github, ssh-agent, ssh-add">
+    <meta name="description" content="ssh key, git, github, ssh-agent, ssh-add, ssh proxy">
     <title>Sử dụng SSH key với Git</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -218,6 +218,7 @@ Host github-acc1
       <pre class="out-of-box">git remote set-url origin ssh://git@bitbucket.cyberspace.vn:7999/sn/safenet_front.git<br><br>git remote set-url origin ssh://git@github.com/lockex1987/lockex1987.github.io</pre>
       <p> Clone:</p>
       <pre class="out-of-box">git clone ssh://git@bitbucket.cyberspace.vn:7999/sn/safenet_front.git</pre>
+      <h3>Sử dụng proxy trên Windows</h3>
       <p>Trên máy Windows, nếu chúng ta cài đặt Git Bash thì sẽ có sẵn tool <code>connect.exe</code>.</p>
       <p>Sửa lại file <code>~/.ssh/config</code> như sau:</p>
       <pre>Host github.com
@@ -232,6 +233,7 @@ Host github-acc1
     # TCPKeepAlive yes
     # IdentitiesOnly yes
 </pre>
+      <h3>Sử dụng ssh-add trên Linux</h3>
       <p>Trên môi trường Linux, bạn cần phải làm các việc sau:</p>
       <pre class="bg-dark text-white"><span class="text-warning"># Khởi động ssh-agent (nếu không dùng passphrase thì không cần)</span>
 $ <span class="text-success">eval "$(ssh-agent -s)"</span>
@@ -328,18 +330,14 @@ All identities removed.
 $ <span class="text-success">ssh-add -l</span>
 The agent has no identities.</pre>
       <h3>Tham khảo</h3>
-      <p><a href="https://techmaster.vn/posts/34411/github-su-dung-ssh-hay-https"
-
+      <p><a href="https://techmaster.vn/posts/34411/github-su-dung-ssh-hay-https"
           target="_blank">Github: sử dụng ssh hay https</a></p>
-      <p><a href="https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/"
-
+      <p><a href="https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/"
           target="_blank">Token authentication requirements for Git operations -
           The GitHub Blog</a></p>
-      <p><a href="https://docs.github.com/en/github/authenticating-to-github/about-authentication-to-github"
-
+      <p><a href="https://docs.github.com/en/github/authenticating-to-github/about-authentication-to-github"
           target="_blank">About authentication to GitHub - GitHub Docs</a></p>
-      <p><a href="https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account"
-
+      <p><a href="https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account"
           target="_blank">Adding a new SSH key to your GitHub account - GitHub
           Docs</a> </p>
       <p><br>
@@ -350,6 +348,5 @@ The agent has no identities.</pre>
       </p>
     </article>
     <script src="../../js/docs.js"></script>
-    
   </body>
 </html>
