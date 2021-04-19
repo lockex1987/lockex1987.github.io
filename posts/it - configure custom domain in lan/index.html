@@ -16,7 +16,7 @@
         domain cho ứng dụng đó là sso-admin.cttd.tk. Domain này không được đăng
         ký trên Internet. Muốn truy cập ứng dụng bạn phải sửa file <code>hosts</code>
         ở máy PC.</p>
-      <pre>127.0.0.1    sso-admin.cttd.tk</pre>
+      <pre>127.0.0.1  sso-admin.cttd.tk</pre>
       <p>Bây giờ, bạn muốn test ứng dụng với domain đó trên iPad và điện thoại
         Android.</p>
       <p>Trên các thiết bị đó, chúng ta khó (hoặc không thể) sửa file <code>hosts</code>
@@ -75,16 +75,38 @@ Thg 4 14 20:19:58 cttd systemd[1]: Started Network Name Resolution.
 Thg 4 14 21:58:17 cttd systemd[1]: Stopping Network Name Resolution...
 Thg 4 14 21:58:17 cttd systemd[1]: systemd-resolved.service: Succeeded.
 Thg 4 14 21:58:17 cttd systemd[1]: Stopped Network Name Resolution.</pre>
-      <p>Backup và xóa file <code>/etc/resolv.conf</code> (đây là một link):</p>
-      <pre>$ sudo cp resolv.conf bk_resolv.conf
-$ sudo rm /etc/resolv.conf</pre>
-      <p>Tạo file <code>/etc/resolv.conf</code> mới chứa DNS của Google:</p>
-      <pre>$ echo "nameserver 8.8.8.8" &gt; /etc/resolv.conf</pre>
       <p>Cài đặt <code>dnsmasq</code>:</p>
       <pre>$ sudo apt-get install dnsmasq</pre>
+      <p>Bạn không nên động chạm đến file <code>/etc/resolv.conf</code>. File
+        này sẽ bị ghi đè bởi Network Manager.</p>
+      <p>Cấu hình file <code>/etc/dnsmasq.conf</code> (nếu không có thể bị lỗi
+        không vào được mạng):</p>
+      <pre style="background-color: #1e1e1e;"><span style="color: #6a9955;"># Never forward plain names (without a domain)</span>
+<span style="color: #d4d4d4;">domain-needed</span>
+
+<span style="color: #6a9955;"># Never forward addresses in the non-routed address spaces.</span>
+<span style="color: #d4d4d4;">bogus-priv</span>
+
+<span style="color: #6a9955;"># Don't read /etc/resolv.conf (I deleted it).</span>
+<span style="color: #6a9955;"># Get the external name server from this file, see 'server' below</span>
+<span style="color: #d4d4d4;">no-resolv</span>
+
+<span style="color: #6a9955;"># External server, works with no-resolv</span>
+<span style="color: #9cdcfe;">server</span><span style="color: #d4d4d4;">=</span><span
+style="color: #b5cea8;">8.8.8.8</span>
+<span style="color: #9cdcfe;">server</span><span style="color: #d4d4d4;">=</span><span
+style="color: #b5cea8;">8.8.4.4</span>
+
+<span style="color: #6a9955;"># If you want dnsmasq to listen for DHCP and DNS requests only on</span>
+<span style="color: #6a9955;"># specified interfaces (and the loopback) give the name of the</span>
+<span style="color: #6a9955;"># interface (eg eth0) here.</span>
+<span style="color: #6a9955;"># Repeat the line for more than one interface.</span>
+<span style="color: #9cdcfe;">interface</span><span style="color: #d4d4d4;">=enp2s0</span></pre>
+      <p>File <a href="dnsmasq.conf">dnsmasq.conf</a> mà máy tôi đang chạy
+        thành công.</p>
       <p>Tiện ích dnsmasq sẽ đọc file <code>/etc/hosts</code>. Chúng ta chỉnh
         file đó như sau (chú ý có thêm dòng tương ứng với IP trong mạng LAN):</p>
-      <pre>127.0.0.1       sso-admin.cttd.tk<br>192.168.1.48    sso-admin.cttd.tk</pre>
+      <pre>127.0.0.1     sso-admin.cttd.tk<br>192.168.1.48  sso-admin.cttd.tk</pre>
       <p>Khởi động lại tiện ích:</p>
       <pre>$ sudo systemctl restart dnsmasq<br>$ sudo systemctl enable dnsmasq
 </pre>

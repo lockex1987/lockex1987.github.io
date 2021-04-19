@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="date" content="2021-03-16 11:10:00">
-    <meta name="description" content="create epub, write text to the image using TrueType fonts">
+    <meta name="description" content="create epub, write text to the image using TrueType fonts, simplexml_load_string, preg_replace, regex">
     <title>Cấu trúc file epub</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -93,17 +93,32 @@
         &lt;itemref idref="chapter02" /&gt;
     &lt;/spine&gt;
 &lt;/package&gt;
-</code></pre>
-      <p>Trong đó:</p>
+</code></pre><br>
+      <p>File này có 4 phần chính:</p>
       <ul>
-        <li><code>dc:title</code> là tiêu đề của sách.</li>
-        <li><code>dc:language</code> để xác định ngôn ngữ sử dụng trong nội dung
-          sách. Xác định ngôn ngữ theo mã code ISO 639-1.</li>
-        <li><code>dc:identifier</code> là mã sách. Mã này là duy nhất và để phân
-          biệt sách này với sách khác. Tiếp theo là manifest khai báo các file
-          nội dung. Tuy nhiên có thể xem ở trong file NCX.</li>
+        <li><code>metadata</code>: thông tin</li>
+        <li><code>manifest</code>: danh sách các file</li>
+        <li><code>spine</code>: thứ tự đọc các phần</li>
+        <li><code>guide</code>: cover</li>
       </ul>
-      <p>Spine là phần khai báo mục lục (hay là thứ tự đọc?).</p>
+      <p>Trong đó phần <code>metadata</code>: </p>
+      <ul>
+        <li><code>dc:identifier</code> là mã sách. Mã này là duy nhất và để phân
+          biệt sách này với sách khác. Thẻ này có thuộc tính <code>id</code>
+          bằng với thuộc tính <code>unique-identifier</code> của thẻ gốc <code>package</code>.
+          Ngoài ra còn có thuộc tính <code>opf:scheme</code>, có thể có giá trị
+          là UUID.</li>
+        <li><code>dc:title</code> là tiêu đề của sách.</li>
+        <li><code>dc:creator</code> với <code>opf:role</code> bằng <code>aut</code>
+          nghĩa là tác giả.</li>
+        <li><code>dc:language</code> để xác định ngôn ngữ sử dụng trong nội dung
+          sách. Xác định ngôn ngữ theo mã code ISO 639-1. Thường để vi_VN.</li>
+        <li>--------------------------</li>
+        <li><code>dc:rights</code> là bản quyền, quyền tác giả.</li>
+        <li><code>dc:publisher</code> là nhà xuất bản.</li>
+      </ul>
+      <p>Tiếp theo là manifest khai báo các file nội dung. Tuy nhiên có thể xem
+        ở trong file NCX có <code>media-type</code> là <code>application/x-dtbncx+xml</code>.</p>
       <h4>File toc.ncx</h4>
       <p>Đây là file xác định mục lục cuốn sách.</p>
       <pre class="out-of-box"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -143,8 +158,8 @@
     &lt;/navMap&gt;
 &lt;/ncx&gt;
 </code></pre>
-      <p>Lưu ý: Bảo đảm rằng <code>uid</code> khớp với bên trong <code>content.opf</code>
-        và phải có tag <code>navPoint</code>.</p>
+      <p>Lưu ý: Bảo đảm rằng <code>uid</code> khớp với <code>dc:identifier</code>
+        bên trong file <code>content.opf</code> và phải có tag <code>navPoint</code>.</p>
       <p>ID không nhất thiết phải là UUID. ID có thể do chúng ta tự định nghĩa,
         ví dụ:</p>
       <pre>unique-identifier="motsach_url"<br><br>&lt;dc:identifier id="motsach_url"&gt;http://isach.info/story.php?story=de_men_phieu_luu_ky__to_hoai&lt;/dc:identifier&gt;<br><br>&lt;meta name="dtb:uid" content="http://isach.info/story.php?story=de_men_phieu_luu_ky__to_hoai" /&gt;</pre>
@@ -217,6 +232,12 @@
       <p>Chú ý, thẻ html phải thêm thuộc tính <code>xmlns:epub</code> để có thể
         hợp lệ thuộc tính <code>epub:type</code>.</p>
       <pre>&lt;html xmlns="http://www.w3.org/1999/xhtml"<br>    xmlns:epub="http://www.idpf.org/2007/ops"&gt;<br>    ...<br>&lt;/html&gt;</pre>
+      <p>Trên điện thoại Android, các ứng dụng đọc sách như FBReader, Lithium
+        vẫn hiển thị thẻ aside. Nên cấu hình CSS để mặc định là ẩn đi:</p>
+      <pre>/* [epub\:type=footnote] */
+aside {
+    display: none;
+}</pre>
       <h3>Phiên bản 3</h3>
       <p>Phiên bản 3 có nhiều nâng cấp so với phiên bản 2:</p>
       <ul>
@@ -235,8 +256,7 @@
       <h3>Tham khảo</h3>
       <p><a href="https://en.wikipedia.org/wiki/EPUB" target="_blank">EPUB -
           Wikipedia</a></p>
-      <p><a href="https://lockex1987.github.io/archive/it%20-%20convert%20html%20to%20epub/"
-
+      <p><a href="https://lockex1987.github.io/archive/it%20-%20convert%20html%20to%20epub/"
           target="_blank">Convert HTML to EPUB</a> </p>
       <p><a href="http://idpf.github.io/epub3-samples/30/samples.html" target="_blank">EPUB
           3 Samples | EPUB 3 Samples Project</a> </p>

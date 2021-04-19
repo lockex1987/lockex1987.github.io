@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500&display=block');
 
 html {
-    font-size: 15px;
+	@include media-breakpoint-up(md) {
+		font-size: 15px;
+	}
 }
 
 /**
@@ -121,10 +123,10 @@ h2, h3, h4 {
 
 h2 {
     text-align: center;
+	font-weight: 100;
 
     @include media-breakpoint-up(md) {
         font-size: 3rem;
-        font-weight: 100;
     }
 }
 
