@@ -11,35 +11,395 @@
   <body>
     <article>
       <h2>Cấu hình HTTPS cho ứng dụng web</h2>
-	  <p>Nhiều tính năng yêu cầu HTTPS:</p>
-	  <ul>
-		<li>Đăng nhập qua Facebook, Google</li>
-		<li>Sử dụng camera, microphone</li>
-		<li>Push Notification API</li>
-		<li>PWA, service worker</li>
-		<li>Mã hóa, bảo mật</li>
-		<li>...</li>
-	  </ul>
-      <p>Sử dụng Let's encrypt (HTTPS miễn phí):</p>
+      <p>Nhiều tính năng yêu cầu HTTPS:</p>
       <ul>
-        <li>https://en.wikipedia.org/wiki/Let's_Encrypt</li>
-        <li>https://letsencrypt.org/</li>
-        <li>https://kipalog.com/posts/Tao-chung-chi-SSL-mien-phi-voi-Let-s-Encrypt</li>
-        <li>https://kipalog.com/posts/Cau-hinh-HTTPS-voi-nginx-va-Let-s-Enscrypt</li>
+        <li>Đăng nhập qua Facebook, Google</li>
+        <li>Sử dụng camera, microphone</li>
+        <li>Push Notification API</li>
+        <li>PWA, service worker</li>
+        <li>Mã hóa, bảo mật</li>
+        <li>...</li>
       </ul>
-      <p>Let's encrypt thì yêu cầu server phải public ra Internet.</p>
-      <p>Có thể dùng chứng chỉ tự ký:</p>
-	  <p>https://deliciousbrains.com/ssl-certificate-authority-for-local-https-development/</p>
-      <p>
-        <a href="https://viblo.asia/p/tao-ssl-certificate-authority-cho-https-tren-local-1VgZvpQY5Aw"
-          target="_blank">Tạo SSL Certificate Authority cho HTTPS trên local -
-          Viblo</a></p>
-      <div><div class="mb-2"><span class="text-muted mr-2 d-block">matthewhoelter.com</span> <a href="https://matthewhoelter.com/2019/10/21/how-to-setup-https-on-your-local-development-environment-localhost-in-minutes.html" target="_blank">How to setup HTTPS (SSL) on your local development environment (localhost) in minutes | Matthew Hoelter</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">dev.to</span> <a href="https://dev.to/rhymes/really-easy-way-to-use-https-on-localhost-341m" target="_blank">Really easy way to use HTTPS on localhost - DEV Community 👩‍💻👨‍💻</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">dev.to</span> <a href="https://dev.to/drevispas/common-ssl-commands-13i1" target="_blank">Common SSL Commands - DEV Community 👩‍💻👨‍💻</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">freecodecamp.org</span> <a href="https://www.freecodecamp.org/news/how-to-get-https-working-on-your-local-development-environment-in-5-minutes-7af615770eec/" target="_blank">How to get HTTPS working on your local development environment in 5 minutes</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">letsencrypt.org</span> <a href="https://letsencrypt.org/vi/docs/certificates-for-localhost/" target="_blank">Certificates for localhost - Let's Encrypt - Free SSL/TLS Certificates</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">gist.github.com</span> <a href="https://gist.github.com/cecilemuller/9492b848eb8fe46d462abeb26656c4f8" target="_blank">How to create an HTTPS certificate for localhost domains · GitHub</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">aboutssl.org</span> <a href="https://aboutssl.org/how-to-create-and-import-self-signed-certificate-to-android-device/" target="_blank">How to&nbsp;Create and Import Self Sign SSL Certificate on Android</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">viblo.asia</span> <a href="https://viblo.asia/p/tao-ssl-certificate-authority-cho-https-tren-local-1VgZvpQY5Aw" target="_blank">Tạo SSL Certificate Authority cho HTTPS trên local - Viblo</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">viblo.asia</span> <a href="https://viblo.asia/p/https-va-ssl-OeVKBg4AZkW" target="_blank">https và SSL - Viblo</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">youtube.com</span> <a href="https://www.youtube.com/watch?v=iQsKdtjwtYI" target="_blank">How SSL works tutorial - with HTTPS example - YouTube</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">youtube.com</span> <a href="https://www.youtube.com/watch?v=T4Df5_cojAs" target="_blank">How does HTTPS work? What's a CA? What's a self-signed Certificate? - YouTube</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">keycdn.com</span> <a href="https://www.keycdn.com/blog/openssl-tutorial" target="_blank">A 6 Part Introductory OpenSSL Tutorial - KeyCDN</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">phoenixnap.com</span> <a href="https://phoenixnap.com/kb/openssl-tutorial-ssl-certificates-private-keys-csrs" target="_blank">OpenSSL Tutorial: How Do SSL Certificates, Private Keys, &amp; CSRs Work?</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">digitalocean.com</span> <a href="https://www.digitalocean.com/community/tutorials/openssl-essentials-working-with-ssl-certificates-private-keys-and-csrs" target="_blank">OpenSSL Essentials: Working with SSL Certificates, Private Keys and CSRs | DigitalOcean</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">en.wikipedia.org</span> <a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function" target="_blank">Cryptographic hash function - Wikipedia</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">lockex1987.github.io</span> <a href="https://lockex1987.github.io/archive/it%20-%20cryptography/" target="_blank">Cryptography</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">lockex1987.github.io</span> <a href="https://lockex1987.github.io/archive/it%20-%20cryptography/cryptography%20-%20sha/index.html" target="_blank">SHA</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">lockex1987.github.io</span> <a href="https://lockex1987.github.io/posts/linux%20-%20ssh/" target="_blank">Sử dụng SSH</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">viblo.asia</span> <a href="https://viblo.asia/p/http2-with-nginx-1Je5EJMwKnL" target="_blank">HTTP2 with NginX - Viblo</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">viblo.asia</span> <a href="https://viblo.asia/p/tong-quan-http2-aWj53OEQ56m" target="_blank">Tổng quan HTTP/2 - Viblo</a></div><div class="mb-2"><span class="text-muted mr-2 d-block">developers.google.com</span> <a href="https://developers.google.com/web/fundamentals/performance/resource-prioritization" target="_blank">Resource Prioritization – Getting the Browser to Help You</a></div></div>
+      <p>Với những ứng dụng public có thể truy cập ngoài Internet, chúng ta có
+        thể sử dụng Let's encrypt (miễn phí).</p>
+      <p>Để thiết lập môi trường test, chúng ta có thể tự ký hoặc dùng tool
+        mkcert.</p>
+      <h3>Tool mkcert</h3>
+      <p><a href="https://github.com/FiloSottile/mkcert" target="_blank">FiloSottile/mkcert:
+          A simple zero-config tool to make locally trusted development
+          certificates with any names you'd like.</a></p>
+      <p><a href="https://matthewhoelter.com/2019/10/21/how-to-setup-https-on-your-local-development-environment-localhost-in-minutes.html"
+
+          target="_blank">How to setup HTTPS (SSL) on your local development
+          environment (localhost) in minutes | Matthew Hoelter</a></p>
+      <h3>Tự làm từng bước</h3>
+      <p>Trên đây cũng có khá nhiều bài viết làm sao để tạo self-signed SSL cho
+        localhost để có thể test thử HTTPS. Nhưng những cách đó đều có một nhược
+        điểm là khi vào trang sẽ có cảnh báo<span> </span><strong>NET::ERR_CERT_AUTHORITY_INVALID</strong><span>
+        </span>do không ai chứng thực cho SSL của chúng ta. Và chúng ta không
+        thể test những công nghệ mới như PWA hay HTTP2 trên localhost. Hôm nay
+        mình xin giới thiệu một cách tạo SSL "xanh lét lèn lẹt" cho localhost để
+        chúng ta có thể thử các công nghệ như PWA hay HTTP2 hoặc đơn giản là
+        nhìn cho nó ha oai<span> :)</span>. Chúng ta cùng bắt đầu thực hiện nhé.</p>
+      <h4>Tạo Certificate Authority</h4>
+      <p>Đầu tiên, chúng ta phải tự trở thành một nhà cung cấp chứng chỉ (giống
+        như các nhà cung cấp chứng chỉ hiện tại như GlobalSign, Comodo,
+        DigiCert, ...) và thông báo cho trình duyệt rằng những chứng chỉ được
+        tạo bởi Certificate Authority do chúng ta cung cấp là hợp lệ.</p>
+      <p>Thực hiện tạo root Certificate Authority (CA) bằng việc đầu tiên là tạo
+        private key:</p>
+      <pre>openssl genrsa -des3 -out rootCA.key 2048
+</pre>
+      <p><code>-des3</code> nghĩa là ?. <code>2048</code> là kích thước key
+        (tính theo bit). Thuật toán là RSA.</p>
+      <p>Sau khi nhập lệnh này, chúng ta thực hiện nhập pass phrase để tạo. Kết
+        quả có dạng:</p>
+      <pre>Generating RSA private key, 2048 bit long modulus
+.........+++
+......................................+++
+e is 65537 (0x10001)
+Enter pass phrase for rootCA.key:
+Verifying - Enter pass phrase for rootCA.key:
+</pre>
+      <p>Câu lệnh trên sẽ tạo file <code>rootCA.key</code>.</p>
+      <p>Sau khi đã có private key, chúng ta tạo root certificate:</p>
+      <pre class="text-break">openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1825 -out rootCA.pem</pre>
+      <p>Khi thực hiện lệnh này, nó sẽ hỏi pass phrase của file<span> </span><code>rootCA.key</code><span>
+        </span>mà chúng ta vừa nhập ban nãy. Bạn hãy nhập chính xác vào và thực
+        hiện điền một số thông tin nó yêu cầu, kết quả có dạng như sau (dữ liệu
+        demo do mình nhập):</p>
+      <pre><code>Enter pass phrase for rootCA.key:
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:VN
+State or Province Name (full name) [Some-State]:Ha Noi    
+Locality Name (eg, city) []:Ha Noi
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:NNVSvc
+Organizational Unit Name (eg, section) []:Information Technology
+Common Name (e.g. server FQDN or YOUR name) []:NNVSvc
+Email Address []:namnv609@gmail.com
+</code></pre>
+      <p>Sau khi thực hiện xong, bạn sẽ có được hai files là<span> </span><code>rootCA.key</code><span>
+        </span>và<span> </span><code>rootCA.pem</code>. Từ bây giờ, bạn đã trở
+        thành một Certificate Authority (tất nhiên chỉ là ở local thôi chứ không
+        được như các nhà cung cấp nổi tiếng hiện tại đâu nhá<span> </span><img
+
+          draggable="false" src="https://twemoji.maxcdn.com/2/72x72/1f923.png">)
+        rồi. Và cũng từ bây giờ, chúng ta có thể tạo SSL cho chính bản thân mình
+        từ hai files trên. Nhưng đến bước này vẫn chưa hẳn là bạn đã được một
+        SSL xanh lét vì các trình duyệt chưa có thông tin về root certificate
+        (chứng chỉ gốc) của chúng ta. Chúng ta sẽ sang bước tiếp theo, nó cực kỳ
+        quan trọng để SSL của chúng ta trở nên xanh lét.</p>
+      <h2>Cài đặt Root Certificate cho các trình duyệt</h2>
+      <p>Với bài viết này, mình sẽ hướng dẫn cho mọi người làm sao để cài đặt
+        root certitficate cho Chrome và FireFox nhé.</p>
+      <h3>Google Chrome</h3>
+      <p>Đầu tiên, mở Google Chrome và truy cập vào đường dẫn sau:<span> </span><code>chrome://settings/certificates</code>.
+        Sau đó, bạn chọn tab<span> </span><strong>Authorities</strong><span> </span>và
+        nhấp vào<span> </span><strong>IMPORT</strong><span> </span>rồi chọn
+        file<span> </span><code>rootCA.pem</code><span> </span>mà chúng ta vừa
+        tạo ban nãy. Sau khi chọn file đó, chúng ta sẽ có màn hình sau:</p>
+      <p><img src="https://images.viblo.asia/ff07ec1f-52ad-4602-b62e-a3c7d30c01b9.png"
+
+          data-src="https://images.viblo.asia/ff07ec1f-52ad-4602-b62e-a3c7d30c01b9.png"
+
+          data-zoom-src="https://images.viblo.asia/full/ff07ec1f-52ad-4602-b62e-a3c7d30c01b9.png"></p>
+      <p>Bạn chọn tất và bấm<span> </span><strong>OK</strong><span> </span>là
+        xong.</p>
+      <p><img src="https://images.viblo.asia/d07f6987-4f7c-49b1-9ba5-a8e15a947848.png"
+
+          data-src="https://images.viblo.asia/d07f6987-4f7c-49b1-9ba5-a8e15a947848.png"
+
+          data-zoom-src="https://images.viblo.asia/full/d07f6987-4f7c-49b1-9ba5-a8e15a947848.png"></p>
+      <h3>Mozilla Firefox</h3>
+      <p>Đầu tiên, mở Mozilla Firefox lên và truy cập vào đường dẫn sau:<span> </span><code>about:preferences#privacy</code>.
+        Sau đó, bạn kéo xuống dưới cùng của trang, tại phần<span> </span><strong>Certificates</strong><span>
+        </span>chúng ta nhấp vào<span> </span><strong>View Certificates...</strong>,
+        tại popup này, bạn chọn tab<span> </span><strong>Authorities</strong><span>
+        </span>rồi nhấp vào<span> </span><strong>Import...</strong><span> </span>và
+        chọn file<span> </span><code>rootCA.pem</code><span> </span>mà chúng
+        ta vừa tạo ban nãy. Sau khi chọn file, chúng ta sẽ có màn hình sau:</p>
+      <p><img src="https://images.viblo.asia/5f866c60-d0ac-4993-8df8-6c547f81cb7c.png"
+
+          data-src="https://images.viblo.asia/5f866c60-d0ac-4993-8df8-6c547f81cb7c.png"
+
+          data-zoom-src="https://images.viblo.asia/full/5f866c60-d0ac-4993-8df8-6c547f81cb7c.png"></p>
+      <p>Thực hiện chọn tất cả và bấm<span> </span><strong>OK</strong><span> </span>là
+        xong.</p>
+      <p><img src="https://images.viblo.asia/3a74bfdd-48fa-4aa5-bdf9-9138ca5c2c38.png"
+
+          data-src="https://images.viblo.asia/3a74bfdd-48fa-4aa5-bdf9-9138ca5c2c38.png"
+
+          data-zoom-src="https://images.viblo.asia/full/3a74bfdd-48fa-4aa5-bdf9-9138ca5c2c38.png"></p>
+      <p>Vậy là bây giờ, với hai trình duyệt này (trên máy của chúng ta) thì
+        chúng ta đã được ngồi cùng mâm với các CA lớn trên thế giới rồi đấy<span>
+        </span><img draggable="false" src="https://twemoji.maxcdn.com/2/72x72/1f923.png">!</p>
+      <p>Giờ chúng ta thử thực hiện tạo HTTPS cho một website ở local để xem kết
+        quả như thế nào nhá<span> </span><img draggable="false" src="https://twemoji.maxcdn.com/2/72x72/1f604.png">.</p>
+      <h2>Tạo HTTPS cho local site</h2>
+      <p>Đầu tiên, chúng ta tạo một private key cho domain local (mình sẽ chọn
+        domain là<span> </span><code>test-ssl.local</code>):</p>
+      <pre><code>openssl genrsa -out test-ssl.local.key 2048
+</code></pre>
+      <p>Sau đó tạo CSR (<a href="https://en.wikipedia.org/wiki/Certificate_signing_request"
+
+          target="_blank">Certificate Signing Request</a>):</p>
+      <pre><code>openssl req -new -key test-ssl.local.key -out test-ssl.local.csr
+</code></pre>
+      <p>Chúng ta sẽ được hỏi các thông tin như lần trước tạo root CA:</p>
+      <pre><code>You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:VN
+State or Province Name (full name) [Some-State]:Ha Noi
+Locality Name (eg, city) []:Ha Noi
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Test SSL
+Organizational Unit Name (eg, section) []:Information Technology
+Common Name (e.g. server FQDN or YOUR name) []:test-ssl.local
+Email Address []:namnv609@gmail.com
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:
+An optional company name []:
+</code></pre>
+      <p>Các bạn có thể tùy nhập các thông tin mà các bạn muốn. Phần<span> </span><strong>A
+          challegen password</strong><span> </span>và<span> </span><strong>An
+          optional company name</strong><span> </span>các bạn có thể bỏ rỗng.</p>
+      <p>Bước tiếp theo, chúng ta thực hiện tạo một file config để định nghĩa<span>
+        </span><a href="https://en.wikipedia.org/wiki/Subject_Alternative_Name"
+
+          target="_blank">Subject Alternative Name (SAN)</a><span> </span>cho
+        SSL này. Chúng ta thực hiện tạo file:</p>
+      <pre><code>vi test-ssl.local.ext
+</code></pre>
+      <p>Và nhập nội dung bên dưới:</p>
+      <pre><code>authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = test-ssl.local
+</code></pre>
+      <p>Bạn có thể thêm nhiều<span> </span><code>DNS.x = &lt;Domain bạn
+          muốn&gt;</code>. Nhưng ở đây mình chỉ sử dụng cho chính domain này
+        thôi. Giờ chúng ta sẽ tạo certificate cho domain:</p>
+      <pre><code>openssl x509 -req -in test-ssl.local.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial \
+-out test-ssl.local.crt -days 1825 -sha256 -extfile test-ssl.local.ext
+</code></pre>
+      <p>Khi này chúng ta sẽ được hỏi pass phase của<span> </span><code>rootCA.pem</code>,
+        bạn nhập pass phase mà bạn đã sử dụng lúc tạo<span> </span><code>rootCA.key</code>.
+        Vậy là xong, lúc này chúng ta sẽ có các file sau:</p>
+      <ul>
+        <li><code>test-ssl.local.key</code>: Private key</li>
+        <li><code>test-ssl.local.csr</code>: Certificate Signing Request</li>
+        <li><code>test-ssl.local.crt</code>: Signed certificate</li>
+      </ul>
+      <p>Vậy là xong. Bây giờ chúng ta có thể thêm HTTPS cho local domain của
+        chúng ta với private key file và certificate file rồi. Mình sẽ thực hiện
+        luôn demo với NginX (mặc định là bạn đã cài đặt NginX rồi).</p>
+      <h2>Cài đặt HTTPS với NginX</h2>
+      <p>Đầu tiên, tạo thư mục để chứa code:</p>
+      <pre><code>mkdir -p /var/www/test-ssl
+</code></pre>
+      <p>Sau đó, tạo file<span> </span><code>index.html</code><span> </span>với
+        nội dung đơn giản để hiển thị:</p>
+      <pre><code>vi /var/www/test-ssl/index.html
+</code></pre>
+      <p>Nội dung file<span> </span><code>index.html</code>:</p>
+      <pre><code><span>&lt;!DOCTYPE html&gt;</span>
+<span><span><span>&lt;</span>html</span><span>&gt;</span></span>
+<span><span><span>&lt;</span>head</span><span>&gt;</span></span>
+  <span><span><span>&lt;</span>meta</span> <span>charset</span><span><span>=</span><span>"</span>utf-8<span>"</span></span><span>&gt;</span></span>
+  <span><span><span>&lt;</span>title</span><span>&gt;</span></span>Test SSL Local<span><span><span>&lt;/</span>title</span><span>&gt;</span></span>
+<span><span><span>&lt;/</span>head</span><span>&gt;</span></span>
+<span><span><span>&lt;</span>body</span><span>&gt;</span></span>
+  <span><span><span>&lt;</span>h1</span><span>&gt;</span></span>Hello, HTTPS :D<span><span><span>&lt;/</span>h1</span><span>&gt;</span></span>
+<span><span><span>&lt;/</span>body</span><span>&gt;</span></span>
+<span><span><span>&lt;/</span>html</span><span>&gt;</span></span>
+</code></pre>
+      <p>Tiếp theo, chúng ta tạo một virtual host cho NginX:</p>
+      <pre><code>sudo vi /etc/nginx/sites-available/test-ssl
+</code></pre>
+      <p>Nội dung file virtual host:</p>
+      <pre><code>server {
+  listen 443 ssl;
+
+  server_name test-ssl.local;
+
+  ssl_certificate     /path/to/test-ssl.local.crt;
+  ssl_certificate_key /path/to/test-ssl.local.key;
+  ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+  ssl_ciphers         HIGH:!aNULL:!MD5;
+
+  location / {
+    root /var/www/test-ssl;
+    index index.html index.htm;
+  }
+}
+</code></pre>
+      <p>Sau đó, tạo symlink đến thư mục<span> </span><code>/etc/nginx/site-enabled</code><span>
+        </span>để enable virtual host (trên thực tế, bạn có thể tạo file trực
+        tiếp vào thư mục này mà không cần phải tạo vào<span> </span><code>site-available</code>,
+        nhưng mình khuyến khích các bạn không nên làm trực tiếp như thế. Để lúc
+        mình muốn disable virtual host chỉ cần xóa symlink là xong mà không hề
+        ảnh hưởng đến file virtual host gốc):</p>
+      <pre><code>sudo ln -s /etc/nginx/site-available/test-ssl /etc/nginx/site-enabled
+</code></pre>
+      <p>Khởi động lại NginX:</p>
+      <pre><code>sudo service nginx restart
+</code></pre>
+      <p>Tiếp theo, chúng ta sẽ trỏ domain của chúng ta về localhost bằng cách
+        thêm nội dung sau vào file<span> </span><code>/etc/hosts</code>:</p>
+      <pre><code>sudo vi /etc/hosts
+</code></pre>
+      <p>Thêm dòng sau:</p>
+      <pre><code>127.0.0.1    test-ssl.local
+</code></pre>
+      <p>Vậy là xong, bây giờ bạn thử truy cập vào<span> </span><a href="https://test-ssl.local/"
+
+          target="_blank">https://test-ssl.local</a><span> </span>để xem kết
+        quả nhá. Chúng ta sẽ được một trang HTTPS hoàn hảo mà không hề bị màn
+        hình warning và cũng không có dấu gạch chéo đỏ lòm ở trên thanh địa chỉ.</p>
+      <p><img src="https://images.viblo.asia/2a8b9c52-7fe0-461e-9682-bbc42f2fc797.png"
+
+          data-src="https://images.viblo.asia/2a8b9c52-7fe0-461e-9682-bbc42f2fc797.png"
+
+          data-zoom-src="https://images.viblo.asia/full/2a8b9c52-7fe0-461e-9682-bbc42f2fc797.png"></p>
+      <p><img src="https://images.viblo.asia/afe25b26-fa51-4e4e-93f5-2bdb6519a9db.png"
+
+          data-src="https://images.viblo.asia/afe25b26-fa51-4e4e-93f5-2bdb6519a9db.png"
+
+          data-zoom-src="https://images.viblo.asia/full/afe25b26-fa51-4e4e-93f5-2bdb6519a9db.png"></p>
+      <p><img src="https://images.viblo.asia/35efe8d2-daf8-45a9-b7ee-baa058119f28.png"
+
+          data-src="https://images.viblo.asia/35efe8d2-daf8-45a9-b7ee-baa058119f28.png"
+
+          data-zoom-src="https://images.viblo.asia/full/35efe8d2-daf8-45a9-b7ee-baa058119f28.png"></p>
+      <p>Vâng, bạn có nhìn thấy màu xanh lét ở Firefox không ạ<span> </span><img
+
+          draggable="false" src="https://twemoji.maxcdn.com/2/72x72/1f604.png">?
+        Nhìn ha oai phết, nhề<span> </span><img draggable="false" src="https://twemoji.maxcdn.com/2/72x72/1f923.png">.
+        Còn với Chrome thì từ phiên bản 69 trở đi nó đã xóa bỏ secure indicator
+        cho các trang HTTPS rồi nên chúng ta không thấy màu xanh đẹp mắt đó<span>
+        </span><img draggable="false" src="https://twemoji.maxcdn.com/2/72x72/1f603.png">!</p>
+      <h2>Lời kết</h2>
+      <p>Từ bây giờ, bạn có thể tự tạo thêm nhiều HTTPS cho local site với root
+        CA mà chúng ta đã tạo (bạn chỉ cần thực hiện từ bước<span> </span><strong>Tạo
+          HTTPS cho local site</strong><span> </span>trở đi). Và bạn có thể
+        thoải mái thử các công nghệ mới như PWA hay HTTP2 mà không cần phải có
+        SSL chính chủ. Bài viết của mình đến đây là kết thúc. Hy vọng nó sẽ có
+        ích cho các bạn trong tương lai không xa. Chào thân ái vào quyết thắng<span>
+        </span><img draggable="false" src="https://twemoji.maxcdn.com/2/72x72/1f44b.png">!</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Cài đặt</h3>
+      <p>Windows</p>
+      <p>Chrome</p>
+      <p>iPad</p>
+      <p>Android</p>
+      <p><br>
+      </p>
+      <p>Cấu hình nginx</p>
+      <p><br>
+      </p>
+      <h3>Cấu hình http sang https</h3>
+      <p><br>
+      </p>
+      <p>Để cấu hình redirect HTTP sang HTTPS trên nginx, ta cần tạo 3 block
+        config:</p>
+      <ul>
+        <li>một cho HTTP</li>
+        <li>một cho HTTPS mà link không có www</li>
+        <li>và cuối cùng cho HTTPS mà link có www</li>
+      </ul>
+      <p>Để redirect HTTP và HTTPS với non-www sang HTTPS www, sử dụng đoạn code
+        sau:</p>
+      <pre># Lắng nghe traffic qua port 80 của giao thức HTTP và trả về thành HTTPS với domain có www
+server {
+    listen [::]:80;
+    listen 80;
+    server_name yourdomain.com www.yourdomain.com;
+    # redirect http to https www
+    return 301 https://www.yourdomain.com$request_uri;
+}
+
+# Lắng nghe traffic qua port 443 của giao thức HTTPS và trả về thành HTTPS với domain có www
+server {
+    listen [::]:443 ssl http2;
+    listen 443 ssl http2;
+    server_name yourdomain.com;
+    # redirect https non-www to https www
+    return 301 https://www.yourdomain.com$request_uri;
+}
+
+server {
+    listen [::]:443 ssl http2;
+    listen 443 ssl http2;
+    server_name www.yourdomain.com;
+}</pre>
+      <p>Ngoài ra để redirect từ HTTP và HTTPS www sang HTTPS non-www, ta sử
+        dụng đoạn code sau:</p>
+      <pre># Lắng nghe traffic qua port 80 của giao thức HTTP và trả về thành HTTPS với domain không có www
+server {
+    listen [::]:80;
+    listen 80
+    server_name yourdomain.com www.yourdomain.com;
+    # redirect http to https non-www
+    return 301 https://yourdomain.com$request_uri;
+}
+
+# Lắng nghe traffic qua port 443 của giao thức HTTPS và trả về thành HTTPS với domain không có www
+server {
+    listen [::]:443 ssl http2;
+    listen 443 ssl http2;
+    server_name www.yourdomain.com;
+    # redirect https non-www to https www
+    return 301 https://yourdomain.com$request_uri;
+}
+
+server {
+    listen [::]:443 ssl http2;
+    listen 443 ssl http2;
+    server_name yourdomain.com;
+    # Other code
+}</pre>
+      <p>Có cần domain www?</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://viblo.asia/p/tao-ssl-certificate-authority-cho-https-tren-local-1VgZvpQY5Aw"
+
+          target="_blank">Tạo SSL Certificate Authority cho HTTPS trên local</a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
       <p><br>
       </p>
       <p><br>
       </p>
     </article>
-    <script src="../../js/docs.js"></script>
+    <script src="../../js/docs.js">
+  </body>
+</html>
+  </body>
+</html>
   </body>
 </html>
