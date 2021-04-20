@@ -25,19 +25,18 @@
         đuôi <code>m3u8</code> và download về.</p>
       <p>Dùng <a href="m3u8_parser.php">m3u8_parser.php</a> để lấy ra danh sách
         các file nhỏ.</p>
-      <p>Dùng web extension <a href="https://lockex1987.github.io/archive/webext%20-%20batch%20downloader/"
+      <p>Dùng web extension <a href="https://lockex1987.github.io/archive/webext%20-%20batch%20downloader/"
           target="_blank">Batch downloader</a> để download các file.</p>
       <p>Dùng <a href="ts-joiner.sh">ts-joiner.sh</a> để nối các file <code>ts</code>
         thành một file to.</p>
-<p>Hoặc dùng lệnh:</p>
-<pre>for (( i = 13; i <= 3627; i++ )) do echo $i; cat "seg_720_$i.ts" >> all.ts; done</pre>
+      <p>Hoặc dùng lệnh:</p>
+      <pre>for (( i = 13; i &lt;= 3627; i++ )) do echo $i; cat "seg_720_$i.ts" &gt;&gt; all.ts; done</pre>
       <p>Dùng <a href="ts-to-mp4.sh">ts-to-mp4.sh</a> để convert file <code>ts</code>
         thành file <code>mp4</code>.</p>
-<p>Hoặc dùng lệnh:</p>
-<pre>ffmpeg -i all.ts -map 0 -c copy output.mp4</pre>
-<p>Hoặc:</p>
-<pre>ffmpeg -i all.ts -strict -2 -bsf:a aac_adtstoasc -vcodec copy output.mp4</pre>
-
+      <p>Hoặc dùng lệnh:</p>
+      <pre>ffmpeg -i all.ts -map 0 -c copy output.mp4</pre>
+      <p>Hoặc:</p>
+      <pre>ffmpeg -i all.ts -strict -2 -bsf:a aac_adtstoasc -vcodec copy output.mp4</pre>
       <p>Các trang web xem trực tuyến thường chia stream video và audio riêng,
         có hai file <code>m3u8</code>. Bạn cần xử lý riêng video và audio (các
         bước vẫn giống nhau). Sau đó nối hai file <code>mp4</code> lại như sau:</p>
@@ -49,6 +48,19 @@
         Open Network Stream, sau đó nhập đường dẫn:</p>
       <pre>rtsp://admin:abc123456@192.168.1.83:554/onvif1</pre>
       <p>Để lưu thành file video trên máy, bạn có thể sử dụng lệnh <code>ffmpeg</code>.</p>
+      <p>Camera ở trường của Tuấn là loại KCE.</p>
+      <p>Để xem camera, chúng ta có thể cài ứng dụng MV3000 trên điện thoại,
+        hoặc xem trên web.</p>
+      <p>Cấu hình điện thoại:</p>
+      <ul>
+        <li>IP/Address: mamnonncecoso2.dynlink.net</li>
+        <li>Port: 9010</li>
+        <li>Web port: 80:</li>
+        <li>User ID / User PW: k / y</li>
+      </ul>
+      <p>Xem trên Internet Explorer, cấu hình ActiveX như sau:</p>
+      <p><a href="http://sieuthidienthongminh.vn/media/lib/huong_dan_xem_camera_qua_mang_dau_ghi_kce_k5.pdf"
+          target="_blank">huong_dan_xem_camera_qua_mang_dau_ghi_kce_k5.pdf</a></p>
       <h3>Thực hành với nginx</h3>
       <p>Bình thường nginx chưa được build với module rtmp, bạn phải dùng nginx
         plus (có tính phí) hoặc build từ source.</p>
@@ -75,7 +87,7 @@ mail_ssl_module</pre>
         improvements over the <a href="https://github.com/arut/nginx-rtmp-module">original
           one</a>.</p>
       <h3>ffmpeg</h3>
-<p>Xem camera trên máy tính:</p>
+      <p>Xem camera trên máy tính:</p>
       <ul>
         <li>Bật tính năng NVR trên camera</li>
         <li>Bật VLC, mở network stream:</li>
@@ -83,7 +95,6 @@ mail_ssl_module</pre>
           <li>rtsp://admin:abc123456@192.168.1.83:554/onvif1</li>
         </ul>
       </ul>
-
       <p>Một số lệnh:</p>
       <p>RTSP thành m3u8:</p>
       <pre>ffmpeg \
@@ -124,28 +135,20 @@ mail_ssl_module</pre>
       <h3>Tham khảo</h3>
       <p><a href="https://en.wikipedia.org/wiki/M3U" target="_blank">M3U -
           Wikipedia</a></p>
-      <p><a href="https://medium.com/canal-tech/how-video-streaming-works-on-the-web-an-introduction-7919739f7e1"
+      <p><a href="https://medium.com/canal-tech/how-video-streaming-works-on-the-web-an-introduction-7919739f7e1"
           target="_blank">How video streaming works on the web: An introduction
           | by Paul Berberian | CANAL+ TECH | Medium</a></p>
       <p><a href="https://videojs.com/" target="_blank">Video.js - Make your
           player yours | Video.js</a></p>
-      <p>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <a href="https://viblo.asia/p/streaming-videos-server-su-dung-nginx-rtmp-va-hls-maGK7q4Llj2"
+      <p> <a href="https://viblo.asia/p/streaming-videos-server-su-dung-nginx-rtmp-va-hls-maGK7q4Llj2"
           target="_blank">Streaming videos server sử dụng NGINX RTMP và HLS -
           Viblo</a></p>
-      <p>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <a href="https://github.com/keepwalking86/streaming" target="_blank">keepwalking86/streaming:
+      <p> <a href="https://github.com/keepwalking86/streaming" target="_blank">keepwalking86/streaming:
           Deploying Media Streaming Server</a></p>
-      <p>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <a href="https://github.com/hoangdh/ghichep-StreamingVideo/blob/master/Script/convert-ts.sh"
+      <p> <a href="https://github.com/hoangdh/ghichep-StreamingVideo/blob/master/Script/convert-ts.sh"
           target="_blank">ghichep-StreamingVideo/convert-ts.sh at master ·
           hoangdh/ghichep-StreamingVideo</a></p>
-      <p>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <a href="https://docs.peer5.com/guides/setting-up-hls-live-streaming-server-using-nginx/"
+      <p> <a href="https://docs.peer5.com/guides/setting-up-hls-live-streaming-server-using-nginx/"
           target="_blank">Setting up HLS live streaming server using NGINX -
           Peer5 P2P Docs</a></p>
     </article>

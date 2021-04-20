@@ -2,6 +2,8 @@
 
 require 'vendor/autoload.php';
 
+// Lấy thông tin meta (cập nhật?)
+// Tạo một file danh sách ảnh riêng (gallery.xhtml).
 use lywzx\epub\EpubParser;
 
 $filePath = 'D:/new/tu binh phong - robert van gulik/tu binh phong - robert van gulik.epub';
