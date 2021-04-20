@@ -1,115 +1,52 @@
 <?php
 
-namespace lywzx\epub;
+namespace Cttd\Epub;
 
-class EpubParser
+use SimpleXMLElement;
+
+class EpubParser extends EpubFile
 {
     /**
-     * @var string epub file path
+     * Danh sách các item manifest.
      */
-    private $filePath;
+    private array $manifest = [];
+
+    
 
     /**
-     * @var array
+     * Chứa các metadata thuộc namespace dc.
      */
-    private $manifest = [];
+    private array $dcElements;
 
     /**
-     * Holds the (relative to $ebookDir) path to the OPF file
-     * @var string Location + name of OPF file
+     * Chứa các itemref ở phần spine.
      */
-    private $opfFile;
+    private array $spine;
 
     /**
-     * Relative (to $ebookDir) OPF (ePub files) dir
-     * @var string Files dir
+     * Các phần tử mục lục.
      */
-    private $opfDir;
+    private array $toc;
 
     /**
-     * Đối tượng file ZIP
-     * @var \ZipArchive
-     */
-    private $zipArchive;
-
-    /**
-     * Holds all the found DC elements in the OPF file
-     * @var array All found DC elements in the OPF file
-     */
-    private $dcElements;
-
-    /**
-     * Holds all the spin data
-     * @var array Spine data
-     */
-    private $spine;
-
-    /**
-     * Holds the ToC data
-     * @var array Array with ToC items
-     */
-    private $toc;
-
-    /**
-     * image extract static root
-     * @var null|string
-     */
-    private $imageWebRoot = null;
-
-    /**
-     * Root của đường dẫn thẻ A
-     * @var null|string
-     */
-    private $linkWebRoot = null;
-
-    /**
-     * @var string Ký tự ngăn cách đường dẫn
-     */
-    private $directorySeparator = '/';
-
-    /**
-     * EpubParser constructor.
-     * @param $filePath
-     * @param null $imageWebRoot
-     * @param null $linkWebRoot
-     * @throws \Exception
+     * Khởi tạo.
+     * @param string $filePath
+     * @param string|null $imageWebRoot
+     * @param string|null $linkWebRoot
      */
     public function __construct(string $filePath, ?string $imageWebRoot = null, ?string $linkWebRoot = null)
     {
-        $this->filePath = $filePath;
-        $this->imageWebRoot = $imageWebRoot;
-        $this->linkWebRoot  = $linkWebRoot;
-
-        $this->zipArchive = new \ZipArchive();
-
+        parent::__construct($filePath, $imageWebRoot, $linkWebRoot);
         $this->parse();
     }
 
-    // -------------------------------------------- Private functions --------------------------------------------
-
-    /**
-     * Check file is validated.
-     * @throws \Exception
-     */
-    private function fileCheck()
-    {
-        $mimetype = $this->_getFileContentFromZipArchive('mimetype');
-        if (strtolower($mimetype) !== 'application/epub+zip') {
-            throw new \Exception('The epub file is not validated');
-        }
-    }
+    // -------------------------------------------- Các phương thức private --------------------------------------------
 
     /**
      * Parse epub file info.
-     * @throws \Exception
      */
-    private function parse()
+    private function parse(): void
     {
-        $this->open();
-
-        $this->fileCheck();
-
-        $this->_getOPF();
         $this->_getDcData();
         $this->_getManifest();
         $this->_getSpine();
@@ -119,22 +56,14 @@ class EpubParser
     }
 
     /**
-     * Lấy đường dẫn đến file OPF từ file META-INF/container.xml.
-     * Lấy luôn thư mục chứa file OPF.
-     * @return void Thiết lập các thuộc tính opfFile và opfDir
+     * Đóng file ZIP.
      */
-    private function _getOPF()
+    private function close(): void
     {
-        $file = 'META-INF' . $this->directorySeparator . 'container.xml';
-        $buf = $this->_getFileContentFromZipArchive($file);
-        $opfContents = simplexml_load_string($buf);
-        $opfAttributes = $opfContents->rootfiles->rootfile->attributes();
-        $this->opfFile = (string) $opfAttributes->{'full-path'}; // typecasting to string to get rid of the XML object
-
-        // Set also the dir to the OPF (and ePub files)
-        $opfDirParts = explode($this->directorySeparator, $this->opfFile);
-        unset($opfDirParts[(count($opfDirParts) - 1)]); // remove the last part (it's the .opf file itself)
-        $this->opfDir = implode($this->directorySeparator, $opfDirParts);
+        // $this->xml->formatOutput = true;
+        // $zip->addFromString($this->meta, $this->xml->saveXML());
+        // $zip->addFromString(ltrim($path, '/'), file_get_contents($this->imagetoadd));
+        $this->zip->close();
     }
 
     /**
@@ -143,16 +72,15 @@ class EpubParser
      */
     private function _getDcData(): void
     {
-        $buf = $this->_getFileContentFromZipArchive($this->opfFile);
-        $opfContents = simplexml_load_string($buf);
-        $dcList = $opfContents->metadata->children('dc', true);
-        $arr = json_decode(json_encode($dcList, JSON_UNESCAPED_UNICODE), true);
-        $this->dcElements = array_map(function ($item) {
-            if (is_array($item) && empty($item)) {
-                return '';
+        $data = $this->zip->getFromName($this->opfFile);
+        $xml = new SimpleXMLElement($data);
+        $dcList = $xml->metadata->children('dc', true);
+        $this->dcElements = [];
+        foreach ($dcList as $key => $value) {
+            if (!is_array($value) && !empty($value)) {
+                $this->dcElements[$key] = (string) $value;
             }
-            return $item;
-        }, $arr);
+        }
     }
 
     /**
@@ -161,12 +89,12 @@ class EpubParser
      */
     private function _getManifest(): void
     {
-        $buf = $this->_getFileContentFromZipArchive($this->opfFile);
-        $opfContents = simplexml_load_string($buf);
+        $buf = $this->zip->getFromName($this->opfFile);
+        $opfContents = new SimpleXMLElement($buf);
         foreach ($opfContents->manifest->item as $item) {
             $attr = $item->attributes();
             $id = (string) $attr->id;
-            $this->manifest[$id]['href'] = Util::directoryConcat($this->opfDir, urldecode((string) $attr->href));
+            $this->manifest[$id]['href'] = Util::directoryConcat($this->oebpsFolder, urldecode((string) $attr->href));
             $this->manifest[$id]['media-type'] = (string) $attr->{'media-type'};
         }
     }
@@ -177,8 +105,8 @@ class EpubParser
      */
     private function _getSpine(): void
     {
-        $buf = $this->_getFileContentFromZipArchive($this->opfFile);
-        $opfContents = simplexml_load_string($buf);
+        $buf = $this->zip->getFromName($this->opfFile);
+        $opfContents = new SimpleXMLElement($buf);
         foreach ($opfContents->spine->itemref as $item) {
             $attr = $item->attributes();
             $this->spine[] = (string) $attr->idref;
@@ -200,15 +128,15 @@ class EpubParser
         }
         // var_dump($tocFile);
 
-        $buf = $this->_getFileContentFromZipArchive($tocFile);
-        $tocContents = simplexml_load_string($buf);
+        $buf = $this->zip->getFromName($tocFile);
+        $tocContents = new SimpleXMLElement($buf);
 
         $callback = function ($navPoints) use (&$callback) {
             $ret = [];
             foreach ($navPoints as $navPoint) {
                 $attributes = $navPoint->attributes();
                 // $payOrder = (string) $attributes['playOrder'];
-                $src = Util::directoryConcat($this->opfDir, (string) $navPoint->content->attributes());
+                $src = Util::directoryConcat($this->oebpsFolder, (string) $navPoint->content->attributes());
                 $explodeUrl = strpos($src, '#') ? explode('#', $src) : [$src, null];
                 $current = [
                     'id' => (string) $attributes['id'],
@@ -231,57 +159,7 @@ class EpubParser
         $this->toc = $toc;
     }
 
-    /**
-     * Đọc nội dung file từ file ZIP.
-     * @param string $fileName Tên file
-     * @return string Nội dung file
-     * @throws \Exception
-     */
-    private function _getFileContentFromZipArchive(string $fileName): string
-    {
-        $fp = $this->zipArchive->getStream($fileName);
-        if (!$fp) {
-            throw new \Exception('Error: cannot get stream to epub file');
-        }
-        // $stat = $zip->statName($fileName);
-
-        $buf = ''; // file buffer
-        ob_start(); // to capture CRC error message
-        while (!feof($fp)) {
-            $buf .= fread($fp, 2048); // reading more than 2156 bytes seems to disable internal CRC32 verification (bug?)
-        }
-        $s = ob_get_contents();
-        ob_end_clean();
-        if (stripos($s, 'CRC error') != false) {
-            throw new \Exception('CRC error');
-            /*echo 'CRC32 mismatch, current ';
-            printf('%08X', crc32($buf)); //current CRC
-            echo ', expected ';
-            printf('%08X', $stat['crc']); //expected CRC*/
-        }
-        fclose($fp);
-        return $buf;
-    }
-
-    /**
-     * Mở file ZIP.
-     * @throws \Exception
-     */
-    private function open(): void
-    {
-        $zip_status = $this->zipArchive->open($this->filePath);
-        if ($zip_status !== true) {
-            throw new \Exception('Failed opening ebook: ' . @$this->zipArchive->getStatusString(), $zip_status);
-        }
-    }
-
-    /**
-     * Đóng file ZIP.
-     */
-    private function close(): void
-    {
-        $this->zipArchive->close();
-    }
+    
 
     // ------------------------------------ Các phương thức public ------------------------------------
 
@@ -312,10 +190,10 @@ class EpubParser
 
     /**
      * Get the specified DC item.
-     * @param string $item The DC Item key
+     * @param string|null $item The DC Item key
      * @return string|boolean|array String when DC item exists, otherwise false
      */
-    public function getDcItem($item = null)
+    public function getDcItem(?string $item = null)
     {
         if (is_null($item)) {
             return $this->dcElements;
@@ -324,6 +202,36 @@ class EpubParser
         } else {
             return false;
         }
+    }
+
+    /**
+     * Set or get the book title
+     *
+     * @param string $title
+     */
+    public function getTitle($title = false)
+    {
+        return $this->getDcItem('title', $title);
+    }
+
+    /**
+     * Set or get the book's language
+     *
+     * @param string $lang
+     */
+    public function getLanguage($lang = false)
+    {
+        return $this->getDcItem('language', $lang);
+    }
+
+    /**
+     * Set or get the book' publisher info
+     *
+     * @param string $publisher
+     */
+    public function getPublisher($publisher = false)
+    {
+        return $this->getDcItem('publisher', $publisher);
     }
 
     /**
@@ -359,28 +267,28 @@ class EpubParser
      */
     private function getFileRealPath($href)
     {
-        $opfDir = $this->opfDir;
-        $href   = str_replace(array('/', '\\'), $this->directorySeparator, $href);
+        $oebpsFolder = $this->oebpsFolder;
+        $href   = str_replace(array('/', '\\'), '/', $href);
 
-        $path = [rtrim($opfDir, $this->directorySeparator), ltrim($href, $this->directorySeparator)];
+        $path = [rtrim($oebpsFolder, '/'), ltrim($href, '/')];
 
-        return implode($this->directorySeparator, array_filter($path));
+        return implode('/', array_filter($path));
     }
 
     /**
      * Returns the OPF/Data dir
      * @return string The OPF/data dir
      */
-    private function getOPFDir()
+    private function getoebpsFolder()
     {
-        return $this->opfDir;
+        return $this->oebpsFolder;
     }
 
     /**
      * get chapter html text
      * @param $chapterId string chapterId
      * @return string
-     * @throws \Exception
+     *
      */
     public function getChapter($chapterId)
     {
@@ -456,7 +364,7 @@ class EpubParser
      * get chapter html text
      * @param $chapterId string chapterId
      * @return string
-     * @throws \Exception
+     *
      */
     public function getChapterRaw($chapterId)
     {
@@ -467,7 +375,7 @@ class EpubParser
             }
             $filePath = $chapter['href'];
             $this->open();
-            $result = $this->_getFileContentFromZipArchive($filePath);
+            $result = $this->zip->getFromName($filePath);
             $this->close();
             return $result;
         }
@@ -477,7 +385,7 @@ class EpubParser
     /**
      * @param $imageId
      * @return string
-     * @throws \Exception
+     *
      */
     public function getImage($imageId)
     {
@@ -487,7 +395,7 @@ class EpubParser
                 throw new \Exception('Invalid mime type for image');
             }
             $this->open();
-            $result = $this->_getFileContentFromZipArchive($image['href']);
+            $result = $this->zip->getFromName($image['href']);
             $this->close();
             return $result;
         }
@@ -497,7 +405,7 @@ class EpubParser
     /**
      * @param $fileId string
      * @return string
-     * @throws \Exception
+     *
      */
     public function getFile($fileId)
     {
@@ -505,7 +413,7 @@ class EpubParser
             $file = $this->manifest[$fileId];
             $this->open();
             try {
-                $result = $this->_getFileContentFromZipArchive($file['href']);
+                $result = $this->zip->getFromName($file['href']);
                 $this->close();
                 return $result;
             } catch (\Exception $e) {
@@ -518,7 +426,7 @@ class EpubParser
      * @param string $path the epub file extract destination
      * @param null|array|string $fileType file mimetype will extract or except
      * @param bool $except
-     * @throws \Exception
+     *
      */
     public function extract($path, $fileType = null, $except = false)
     {
@@ -543,9 +451,9 @@ class EpubParser
         }
 
         if (is_null($fileLimit)) {
-            $this->zipArchive->extractTo($path);
+            $this->zip->extractTo($path);
         } else {
-            $this->zipArchive->extractTo($path, array_values($fileLimit));
+            $this->zip->extractTo($path, array_values($fileLimit));
         }
 
         $needReplacePath = array_values(array_column(array_filter($this->manifest, function ($item) {
@@ -558,7 +466,7 @@ class EpubParser
         }
 
         foreach ($needReplacePath as $file) {
-            $this->_replaceExtractFile(implode($this->directorySeparator, [rtrim($path, $this->directorySeparator), $file]), $file);
+            $this->_replaceExtractFile(implode('/', [rtrim($path, '/'), $file]), $file);
         }
 
         $this->close();
@@ -568,7 +476,7 @@ class EpubParser
     /**
      * @param $realPath
      * @param $fileBasePath
-     * @throws \Exception
+     *
      */
     private function _replaceExtractFile($realPath, $fileBasePath)
     {
