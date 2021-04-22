@@ -26,7 +26,7 @@ class FileManager
      * Hàm này đang chạy chậm trên máy ở nhà, có thể là do gọi nhiều hàm quá (scandir, is_dir, filesize, mime_content_type)
      * Có thể tách làm 2 bước, hoặc là sử dụng DirectoryIterator.
      */
-    public static function listFolderOld(string $folder): array
+    public static function listFolder(string $folder): array
     {
         // Đọc các file trong thư mục và đẩy vào mảng
         $files = scandir($folder);
@@ -51,7 +51,9 @@ class FileManager
     }
 
 
-    public static function listFolder(string $folder): array
+    // Chạy bị lỗi trên Linux
+    // TODO: Chuyển sang dùng Golang cho nhanh
+    public static function listFolderNew(string $folder): array
     {
         $result = [];
         $noOfFolder = 0;
@@ -92,10 +94,13 @@ class FileManager
             }
         }
 
+        /*
         return [
             'list' => $result,
             'folderSize' => $folderSize
         ];
+        */
+        return $result;
     }
 
 
