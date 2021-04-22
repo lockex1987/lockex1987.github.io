@@ -78,11 +78,11 @@ export default {
 
             // Đầu tiên sắp xếp folder trước file
             // Sau đó sắp xếp theo tên
-            data.sort((f1, f2) => {
+            data.list.sort((f1, f2) => {
                 return ((f2.isDir ? 1 : 0) - (f1.isDir ? 1 : 0)) || f1.name.localeCompare(f2.name);
             });
 
-            this.files = data.map(f => ({
+            this.files = data.list.map(f => ({
                 ...f,
                 size: f.isDir ? f.size : CommonUtils.prettifyNumber(f.size) + 'B',
                 download: false
@@ -90,6 +90,10 @@ export default {
 
             // Reset lại thông tin tìm kiếm để hiển thị tất cả
             this.searchQuery = '';
+
+            if (!data.folderSize) {
+                // TODO: Lấy số lượng file trong từng folder
+            }
 
             // this.listSizes();
         },

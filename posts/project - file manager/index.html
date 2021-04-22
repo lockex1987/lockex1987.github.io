@@ -9,7 +9,8 @@
         delete, copy, cut, rename, update;
         thumbnail;
         highcharts sunburst;
-        php, redis, phpredis" />
+        php, redis, phpredis;
+        DirectoryIterator, SplFileInfo;" />
 
     <title>File manager</title>
 
@@ -209,7 +210,8 @@
                                             {{f.name}}
                                         </span>
 
-                                        <span class="text-muted font-size-0.875">
+                                        <span class="text-muted font-size-0.875"
+                                            v-if="f.size">
                                             {{f.size}} item
                                         </span>
                                     </span>

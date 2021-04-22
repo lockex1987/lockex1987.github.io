@@ -2,6 +2,7 @@
 
 namespace Cttd\FileManager;
 
+use DirectoryIterator;
 
 class FileManager
 {
@@ -17,8 +18,15 @@ class FileManager
 
     /**
      * Liệt kê thư mục.
+     * Mỗi phần tử gồm các thông tin:
+     * - tên
+     * - có phải là thư mục hay file
+     * - kích thước hoặc số file
+     * - có phải là file text hay không
+     * Hàm này đang chạy chậm trên máy ở nhà, có thể là do gọi nhiều hàm quá (scandir, is_dir, filesize, mime_content_type)
+     * Có thể tách làm 2 bước, hoặc là sử dụng DirectoryIterator.
      */
-    public static function listFolder(string $folder): array
+    public static function listFolderOld(string $folder): array
     {
         // Đọc các file trong thư mục và đẩy vào mảng
         $files = scandir($folder);
@@ -40,6 +48,54 @@ class FileManager
             }
         }
         return $result;
+    }
+
+
+    public static function listFolder(string $folder): array
+    {
+        $result = [];
+        $noOfFolder = 0;
+        foreach (new DirectoryIterator($folder) as $fileInfo) {
+            if ($fileInfo->isDot()) {
+                continue;
+            }
+
+            $f = $fileInfo->getFilename();
+
+            if (!in_array($f, self::HIDDEN_FOLDERS)) {
+                $absPath = $folder . $f; // $fileInfo->getRealPath()
+                $isDir = $fileInfo->isDir();
+
+                array_push($result, [
+                    'name' => $f,
+                    'isDir' => $isDir,
+                    'size' => $isDir ? null : $fileInfo->getSize(),
+                    'isTextFile' => $isDir ? false : CommonUtils::isTextFile($absPath)
+                ]);
+
+                if ($isDir) {
+                    $noOfFolder++;
+                }
+            }
+        }
+
+        if ($noOfFolder > 10) {
+            $folderSize = false;
+        } else {
+            $folderSize = true;
+            for ($i = 0; $i < count($result); $i++) {
+                $e = $result[$i];
+                if (['isDir']) {
+                    $absPath = $folder . $e['name'];
+                    $result[$i]['size'] = count(array_diff(scandir($absPath), ['.', '..']));
+                }
+            }
+        }
+
+        return [
+            'list' => $result,
+            'folderSize' => $folderSize
+        ];
     }
 
 
