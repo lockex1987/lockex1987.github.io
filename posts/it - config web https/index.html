@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Cấu hình HTTPS cho ứng dụng web">
+    <meta name="description" content="openssl, cryptography, ca, self-signed cerfiticate">
     <title>Cấu hình HTTPS cho ứng dụng web</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -35,12 +35,14 @@
       <h3>Tự làm từng bước</h3>
       <p>Trên đây cũng có khá nhiều bài viết làm sao để tạo self-signed SSL cho
         localhost để có thể test thử HTTPS. Nhưng những cách đó đều có một nhược
-        điểm là khi vào trang sẽ có cảnh báo<span> </span><strong>NET::ERR_CERT_AUTHORITY_INVALID</strong><span>
+        điểm là khi vào trang sẽ có cảnh báo<span> </span><code>NET::ERR_CERT_AUTHORITY_INVALID</code><span>
         </span>do không ai chứng thực cho SSL của chúng ta. Và chúng ta không
-        thể test những công nghệ mới như PWA hay HTTP2 trên localhost. Hôm nay
-        mình xin giới thiệu một cách tạo SSL "xanh lét lèn lẹt" cho localhost để
-        chúng ta có thể thử các công nghệ như PWA hay HTTP2 hoặc đơn giản là
-        nhìn cho nó ha oai<span> :)</span>. Chúng ta cùng bắt đầu thực hiện nhé.</p>
+        thể test những công nghệ mới như PWA hay HTTP2 trên localhost.</p>
+      <div class="mb-3"> <img src="images/cert_invalid.png" alt=""> </div>
+      <p>Hôm nay mình xin giới thiệu một cách tạo SSL "xanh lét lèn lẹt" cho
+        localhost để chúng ta có thể thử các công nghệ như PWA hay HTTP2 hoặc
+        đơn giản là nhìn cho nó ha oai<span> :)</span>. Chúng ta cùng bắt đầu
+        thực hiện nhé.</p>
       <h4>Tạo Certificate Authority</h4>
       <p>Đầu tiên, chúng ta phải tự trở thành một nhà cung cấp chứng chỉ (giống
         như các nhà cung cấp chứng chỉ hiện tại như GlobalSign, Comodo,
@@ -50,25 +52,35 @@
         private key:</p>
       <pre>openssl genrsa -des3 -out rootCA.key 2048
 </pre>
-      <p><code>-des3</code> nghĩa là ?. <code>2048</code> là kích thước key
-        (tính theo bit). Thuật toán là RSA.</p>
-      <p>Sau khi nhập lệnh này, chúng ta thực hiện nhập pass phrase để tạo. Kết
-        quả có dạng:</p>
-      <pre>Generating RSA private key, 2048 bit long modulus
-.........+++
-......................................+++
+      <p><code>-des3</code> nghĩa là mã hóa key bằng DES3 trước khi output nó.</p>
+      <p><code>2048</code> là kích thước key (tính theo bit)</p>
+      <p>Tạo RSA private key.</p>
+      <p>Sau khi nhập lệnh này, chúng ta thực hiện nhập pass phrase (do tham số
+        <code>-des3</code>) để tạo. Kết quả có dạng:</p>
+      <pre>$ openssl genrsa -des3 -out rootCA.key 2048
+Generating RSA private key, 2048 bit long modulus
+.................................................................+++
+.................................................+++
 e is 65537 (0x10001)
 Enter pass phrase for rootCA.key:
 Verifying - Enter pass phrase for rootCA.key:
 </pre>
       <p>Câu lệnh trên sẽ tạo file <code>rootCA.key</code>.</p>
       <p>Sau khi đã có private key, chúng ta tạo root certificate:</p>
-      <pre class="text-break">openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1825 -out rootCA.pem</pre>
+      <pre class="text-wrap">openssl req -x509 \<br>
+        &nbsp;&nbsp;&nbsp; -new \<br>
+        &nbsp;&nbsp;&nbsp; -nodes \<br>
+        &nbsp;&nbsp;&nbsp; -key rootCA.key \<br>
+        &nbsp;&nbsp;&nbsp; -sha256 \<br>
+        &nbsp;&nbsp;&nbsp; -days 1825 \<br>
+        &nbsp;&nbsp;&nbsp; -out rootCA.pem</pre>
+      <p><code>days</code> là số ngày hiệu lực</p>
       <p>Khi thực hiện lệnh này, nó sẽ hỏi pass phrase của file<span> </span><code>rootCA.key</code><span>
         </span>mà chúng ta vừa nhập ban nãy. Bạn hãy nhập chính xác vào và thực
         hiện điền một số thông tin nó yêu cầu, kết quả có dạng như sau (dữ liệu
         demo do mình nhập):</p>
-      <pre><code>Enter pass phrase for rootCA.key:
+      <pre><code>$ openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1825 -out rootCA.pem
+Enter pass phrase for rootCA.key:
 You are about to be asked to enter information that will be incorporated
 into your certificate request.
 What you are about to enter is what is called a Distinguished Name or a DN.
@@ -76,29 +88,31 @@ There are quite a few fields but you can leave some blank
 For some fields there will be a default value,
 If you enter '.', the field will be left blank.
 -----
-Country Name (2 letter code) [AU]:VN
-State or Province Name (full name) [Some-State]:Ha Noi    
-Locality Name (eg, city) []:Ha Noi
-Organization Name (eg, company) [Internet Widgits Pty Ltd]:NNVSvc
+Country Name (2 letter code) [XX]:VN
+State or Province Name (full name) []:Ha Noi
+Locality Name (eg, city) [Default City]:Ha Noi
+Organization Name (eg, company) [Default Company Ltd]:HDT
 Organizational Unit Name (eg, section) []:Information Technology
-Common Name (e.g. server FQDN or YOUR name) []:NNVSvc
-Email Address []:namnv609@gmail.com
+Common Name (eg, your name or your server's hostname) []:HDT
+Email Address []:lockex1987@gmail.com
 </code></pre>
       <p>Sau khi thực hiện xong, bạn sẽ có được hai files là<span> </span><code>rootCA.key</code><span>
         </span>và<span> </span><code>rootCA.pem</code>. Từ bây giờ, bạn đã trở
         thành một Certificate Authority (tất nhiên chỉ là ở local thôi chứ không
-        được như các nhà cung cấp nổi tiếng hiện tại đâu nhá<span> </span><img
-
-          draggable="false" src="https://twemoji.maxcdn.com/2/72x72/1f923.png">)
-        rồi. Và cũng từ bây giờ, chúng ta có thể tạo SSL cho chính bản thân mình
-        từ hai files trên. Nhưng đến bước này vẫn chưa hẳn là bạn đã được một
-        SSL xanh lét vì các trình duyệt chưa có thông tin về root certificate
-        (chứng chỉ gốc) của chúng ta. Chúng ta sẽ sang bước tiếp theo, nó cực kỳ
-        quan trọng để SSL của chúng ta trở nên xanh lét.</p>
-      <h2>Cài đặt Root Certificate cho các trình duyệt</h2>
+        được như các nhà cung cấp nổi tiếng hiện tại đâu nhá<span></span>) rồi.
+        Và cũng từ bây giờ, chúng ta có thể tạo SSL cho chính bản thân mình từ
+        hai file trên. Nhưng đến bước này vẫn chưa hẳn là bạn đã được một SSL
+        xanh lét vì các trình duyệt chưa có thông tin về root certificate (chứng
+        chỉ gốc) của chúng ta. Chúng ta sẽ sang bước tiếp theo, nó cực kỳ quan
+        trọng để SSL của chúng ta trở nên xanh lét.</p>
+      <p>Tạo file <code>rootCA.crt</code> để cài đặt cho dễ:</p>
+      <pre>openssl x509 \<br>    -outform pem \<br>    -in rootCA.pem \<br>    -out rootCA.crt</pre>
+      <p><br>
+      </p>
+      <h3>Cài đặt Root Certificate cho hệ điều hành, trình duyệt</h3>
       <p>Với bài viết này, mình sẽ hướng dẫn cho mọi người làm sao để cài đặt
-        root certitficate cho Chrome và FireFox nhé.</p>
-      <h3>Google Chrome</h3>
+        root certitficate cho Chrome và Firefox nhé.</p>
+      <h5>Google Chrome</h5>
       <p>Đầu tiên, mở Google Chrome và truy cập vào đường dẫn sau:<span> </span><code>chrome://settings/certificates</code>.
         Sau đó, bạn chọn tab<span> </span><strong>Authorities</strong><span> </span>và
         nhấp vào<span> </span><strong>IMPORT</strong><span> </span>rồi chọn
@@ -116,7 +130,7 @@ Email Address []:namnv609@gmail.com
           data-src="https://images.viblo.asia/d07f6987-4f7c-49b1-9ba5-a8e15a947848.png"
 
           data-zoom-src="https://images.viblo.asia/full/d07f6987-4f7c-49b1-9ba5-a8e15a947848.png"></p>
-      <h3>Mozilla Firefox</h3>
+      <h5>Mozilla Firefox</h5>
       <p>Đầu tiên, mở Mozilla Firefox lên và truy cập vào đường dẫn sau:<span> </span><code>about:preferences#privacy</code>.
         Sau đó, bạn kéo xuống dưới cùng của trang, tại phần<span> </span><strong>Certificates</strong><span>
         </span>chúng ta nhấp vào<span> </span><strong>View Certificates...</strong>,
@@ -137,35 +151,94 @@ Email Address []:namnv609@gmail.com
 
           data-zoom-src="https://images.viblo.asia/full/3a74bfdd-48fa-4aa5-bdf9-9138ca5c2c38.png"></p>
       <p>Vậy là bây giờ, với hai trình duyệt này (trên máy của chúng ta) thì
-        chúng ta đã được ngồi cùng mâm với các CA lớn trên thế giới rồi đấy<span>
-        </span><img draggable="false" src="https://twemoji.maxcdn.com/2/72x72/1f923.png">!</p>
+        chúng ta đã được ngồi cùng mâm với các CA lớn trên thế giới rồi đấy<span></span>!</p>
       <p>Giờ chúng ta thử thực hiện tạo HTTPS cho một website ở local để xem kết
-        quả như thế nào nhá<span> </span><img draggable="false" src="https://twemoji.maxcdn.com/2/72x72/1f604.png">.</p>
-      <h2>Tạo HTTPS cho local site</h2>
+        quả như thế nào nhá<span></span>.</p>
+      <p><br>
+      </p>
+      <p>There are two ways to get the CA trusted in Firefox.</p>
+      <p>The simplest is to make Firefox use the Windows trusted Root CAs by
+        going to about:config, and setting security.enterprise_roots.enabled to
+        true.</p>
+      <p>The other way is to import the certificate by going to
+        about:preferences#privacy &gt; Certificats &gt; Import &gt; RootCA.pem
+        &gt; Confirm for websites.</p>
+      <p><br>
+      </p>
+      <h4>Windows</h4>
+      <p>Windows 10 recognizes .crt files, so you can right-click on <code>rootCA.crt</code>
+        &gt; Install to open the import dialog.</p>
+      <img src="images/right_click_rootca_crt.png" alt=""><br>
+      Cài cho user hiện tại:<br>
+      <img src="file:///D:/htdocs/lockex1987.github.io/posts/it%20-%20config%20web%20https/images/install_rootca_crt_1.png"
+
+        alt=""><br>
+      <p><br>
+      </p>
+      <p>Make sure to select "Trusted Root Certification Authorities" and
+        confirm.</p>
+      <img src="images/install_rootca_crt_2b.png" alt=""><br>
+      <br>
+      <img src="images/install_rootca_crt_2c.png" alt=""><br>
+      <br>
+      <img src="images/install_rootca_crt_2d.png" alt=""><br>
+      <br>
+      Chọn next:<br>
+      <img src="images/install_rootca_crt_3b.png" alt=""><br>
+      <br>
+      Confirm:<br>
+      <br>
+      <img src="images/install_rootca_crt_3c.png" alt=""><br>
+      <br>
+      Kết thúc:<br>
+      <img src="images/install_rootca_crt_4.png" alt=""><br>
+      <p><br>
+      </p>
+      <p>You should now get a green lock in Chrome, IE11 and Edge.</p>
+      <img src="images/test_chrome.png" alt="">
+      <p><br>
+      </p>
+      <h4>Mac</h4>
+      <p>Open Keychain Access on your Mac and go to the Certificates category in
+        your System keychain. Once there, import the rootCA.pem using File &gt;
+        Import Items. Double click the imported certificate and change the “When
+        using this certificate:” dropdown to Always Trust in the Trust section.</p>
+      <p>Your certificate should look something like this inside Keychain Access
+        if you’ve correctly followed the instructions till now.</p>
+      <div class="mb-3"> <img src="images/trust_root_mac.png"> </div>
+      <p>Chrome</p>
+      <p>iPad</p>
+      <p>Android</p>
+      <h3>Tạo HTTPS cho local site</h3>
       <p>Đầu tiên, chúng ta tạo một private key cho domain local (mình sẽ chọn
         domain là<span> </span><code>test-ssl.local</code>):</p>
-      <pre><code>openssl genrsa -out test-ssl.local.key 2048
+      <pre><code>$ openssl genrsa -out test-ssl.local.key 2048
+Generating RSA private key, 2048 bit long modulus
+.........................+++
+...............+++
+e is 65537 (0x10001)
 </code></pre>
       <p>Sau đó tạo CSR (<a href="https://en.wikipedia.org/wiki/Certificate_signing_request"
 
           target="_blank">Certificate Signing Request</a>):</p>
-      <pre><code>openssl req -new -key test-ssl.local.key -out test-ssl.local.csr
+      <pre><code>openssl req -new \<br>    -key test-ssl.local.key \<br>    -out test-ssl.local.csr
 </code></pre>
       <p>Chúng ta sẽ được hỏi các thông tin như lần trước tạo root CA:</p>
-      <pre><code>You are about to be asked to enter information that will be incorporated
+      <pre><code>$ openssl req -new -key test-ssl.local.key -out test-ssl.local.csr
+You are about to be asked to enter information that will be incorporated
 into your certificate request.
 What you are about to enter is what is called a Distinguished Name or a DN.
 There are quite a few fields but you can leave some blank
 For some fields there will be a default value,
 If you enter '.', the field will be left blank.
 -----
-Country Name (2 letter code) [AU]:VN
-State or Province Name (full name) [Some-State]:Ha Noi
-Locality Name (eg, city) []:Ha Noi
-Organization Name (eg, company) [Internet Widgits Pty Ltd]:Test SSL
-Organizational Unit Name (eg, section) []:Information Technology
-Common Name (e.g. server FQDN or YOUR name) []:test-ssl.local
-Email Address []:namnv609@gmail.com
+Country Name (2 letter code) [XX]:VN
+State or Province Name (full name) []:Hung Yen
+Locality Name (eg, city) [Default City]:Van Giang
+Organization Name (eg, company) [Default Company Ltd]:Van Giang Pharmacy
+Organizational Unit Name (eg, section) []:IT
+Common Name (eg, your name or your server's hostname) []:test-ssl.local
+Email Address []:admin@test-ssl.local
 
 Please enter the following 'extra' attributes
 to be sent with your certificate request
@@ -174,7 +247,10 @@ An optional company name []:
 </code></pre>
       <p>Các bạn có thể tùy nhập các thông tin mà các bạn muốn. Phần<span> </span><strong>A
           challegen password</strong><span> </span>và<span> </span><strong>An
-          optional company name</strong><span> </span>các bạn có thể bỏ rỗng.</p>
+          optional company name</strong><span> </span>các bạn có thể bỏ trống.</p>
+      <p>Bạn có thể sử dụng tham số <code>-subj</code> để không phải nhập từng
+        bước:</p>
+      <pre>-subj "/C=US/ST=New York/L=Brooklyn/O=Example Brooklyn Company/CN=examplebrooklyn.com"</pre>
       <p>Bước tiếp theo, chúng ta thực hiện tạo một file config để định nghĩa<span>
         </span><a href="https://en.wikipedia.org/wiki/Subject_Alternative_Name"
 
@@ -183,32 +259,47 @@ An optional company name []:
       <pre><code>vi test-ssl.local.ext
 </code></pre>
       <p>Và nhập nội dung bên dưới:</p>
-      <pre><code>authorityKeyIdentifier=keyid,issuer
+      <pre>authorityKeyIdentifier=keyid,issuer
 basicConstraints=CA:FALSE
-keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
-subjectAltName = @alt_names
+keyUsage=digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName=@alt_names
 
 [alt_names]
-DNS.1 = test-ssl.local
-</code></pre>
-      <p>Bạn có thể thêm nhiều<span> </span><code>DNS.x = &lt;Domain bạn
-          muốn&gt;</code>. Nhưng ở đây mình chỉ sử dụng cho chính domain này
-        thôi. Giờ chúng ta sẽ tạo certificate cho domain:</p>
-      <pre><code>openssl x509 -req -in test-ssl.local.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial \
--out test-ssl.local.crt -days 1825 -sha256 -extfile test-ssl.local.ext
-</code></pre>
+DNS.1=test-ssl.local
+DNS.2=cttd.tk
+DNS.3=sso-admin.cttd.tk
+DNS.4=sso-passport.cttd.tk
+DNS.5=landing-page.cttd.tk</pre>
+      <p>Bạn có thể thêm nhiều <code>DNS.x=&lt;Domain bạn muốn&gt;</code>.</p>
+      <h3>CA ký</h3>
+      <p>Giờ chúng ta lại đóng vai trò là CA và tự ký.</p>
+      <p>Giờ chúng ta sẽ tạo certificate cho domain:</p>
+      <pre class="text-wrap">openssl x509 -req \<br>
+        &nbsp;&nbsp;&nbsp; -in test-ssl.local.csr \<br>
+        &nbsp;&nbsp;&nbsp; -CA rootCA.pem \<br>
+        &nbsp;&nbsp;&nbsp; -CAkey rootCA.key \<br>
+        &nbsp;&nbsp;&nbsp; -CAcreateserial \<br>
+        &nbsp;&nbsp;&nbsp; -out test-ssl.local.crt \<br>
+        &nbsp;&nbsp;&nbsp; -days 1825 \<br>
+        &nbsp;&nbsp;&nbsp; -sha256 \<br>
+        &nbsp;&nbsp;&nbsp; -extfile test-ssl.local.ext</pre>
       <p>Khi này chúng ta sẽ được hỏi pass phase của<span> </span><code>rootCA.pem</code>,
-        bạn nhập pass phase mà bạn đã sử dụng lúc tạo<span> </span><code>rootCA.key</code>.
-        Vậy là xong, lúc này chúng ta sẽ có các file sau:</p>
+        bạn nhập pass phase mà bạn đã sử dụng lúc tạo<span> </span><code>rootCA.key</code>.</p>
+      <pre>$ openssl x509 -req -in test-ssl.local.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out test-ssl.local.crt -days 1825 -sha256 -extfile test-ssl.local.ext
+Signature ok
+subject=/C=VN/ST=Hung Yen/L=Van Giang/O=Van Giang Pharmacy/OU=IT/CN=test-ssl.local/emailAddress=admin@test-ssl.local
+Getting CA Private Key
+Enter pass phrase for rootCA.key:</pre>
+      <p>Vậy là xong, lúc này chúng ta sẽ có các file sau:</p>
       <ul>
         <li><code>test-ssl.local.key</code>: Private key</li>
         <li><code>test-ssl.local.csr</code>: Certificate Signing Request</li>
         <li><code>test-ssl.local.crt</code>: Signed certificate</li>
       </ul>
-      <p>Vậy là xong. Bây giờ chúng ta có thể thêm HTTPS cho local domain của
-        chúng ta với private key file và certificate file rồi. Mình sẽ thực hiện
-        luôn demo với NginX (mặc định là bạn đã cài đặt NginX rồi).</p>
-      <h2>Cài đặt HTTPS với NginX</h2>
+      <p>Bây giờ chúng ta có thể thêm HTTPS cho local domain của chúng ta với
+        private key file và certificate file rồi. Mình sẽ thực hiện luôn demo
+        với Nginx (mặc định là bạn đã cài đặt Nginx rồi).</p>
+      <h3>Cài đặt HTTPS với Nginx</h3>
       <p>Đầu tiên, tạo thư mục để chứa code:</p>
       <pre><code>mkdir -p /var/www/test-ssl
 </code></pre>
@@ -264,8 +355,7 @@ DNS.1 = test-ssl.local
       <pre><code>sudo vi /etc/hosts
 </code></pre>
       <p>Thêm dòng sau:</p>
-      <pre><code>127.0.0.1    test-ssl.local
-</code></pre>
+      <pre>127.0.0.1    test-ssl.local</pre>
       <p>Vậy là xong, bây giờ bạn thử truy cập vào<span> </span><a href="https://test-ssl.local/"
 
           target="_blank">https://test-ssl.local</a><span> </span>để xem kết
@@ -286,44 +376,22 @@ DNS.1 = test-ssl.local
           data-src="https://images.viblo.asia/35efe8d2-daf8-45a9-b7ee-baa058119f28.png"
 
           data-zoom-src="https://images.viblo.asia/full/35efe8d2-daf8-45a9-b7ee-baa058119f28.png"></p>
-      <p>Vâng, bạn có nhìn thấy màu xanh lét ở Firefox không ạ<span> </span><img
-
-          draggable="false" src="https://twemoji.maxcdn.com/2/72x72/1f604.png">?
-        Nhìn ha oai phết, nhề<span> </span><img draggable="false" src="https://twemoji.maxcdn.com/2/72x72/1f923.png">.
-        Còn với Chrome thì từ phiên bản 69 trở đi nó đã xóa bỏ secure indicator
-        cho các trang HTTPS rồi nên chúng ta không thấy màu xanh đẹp mắt đó<span>
-        </span><img draggable="false" src="https://twemoji.maxcdn.com/2/72x72/1f603.png">!</p>
+      <p>Vâng, bạn có nhìn thấy màu xanh lét ở Firefox không ạ<span></span>?
+        Nhìn ha oai phết, nhề<span></span>. Còn với Chrome thì từ phiên bản 69
+        trở đi nó đã xóa bỏ secure indicator cho các trang HTTPS rồi nên chúng
+        ta không thấy màu xanh đẹp mắt đó<span></span>!</p>
       <h2>Lời kết</h2>
       <p>Từ bây giờ, bạn có thể tự tạo thêm nhiều HTTPS cho local site với root
         CA mà chúng ta đã tạo (bạn chỉ cần thực hiện từ bước<span> </span><strong>Tạo
           HTTPS cho local site</strong><span> </span>trở đi). Và bạn có thể
         thoải mái thử các công nghệ mới như PWA hay HTTP2 mà không cần phải có
         SSL chính chủ. Bài viết của mình đến đây là kết thúc. Hy vọng nó sẽ có
-        ích cho các bạn trong tương lai không xa. Chào thân ái vào quyết thắng<span>
-        </span><img draggable="false" src="https://twemoji.maxcdn.com/2/72x72/1f44b.png">!</p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
+        ích cho các bạn trong tương lai không xa. Chào thân ái vào quyết thắng<span></span>!</p>
       <h3>Cài đặt</h3>
-      <p>Windows</p>
-      <p>Chrome</p>
-      <p>iPad</p>
-      <p>Android</p>
-      <p><br>
-      </p>
+      <br>
       <p>Cấu hình nginx</p>
-      <p><br>
-      </p>
       <h3>Cấu hình http sang https</h3>
-      <p><br>
-      </p>
+      <p>Phải cấu hình nếu không sẽ bị lỗi 404 không tìm thấy.</p>
       <p>Để cấu hình redirect HTTP sang HTTPS trên nginx, ta cần tạo 3 block
         config:</p>
       <ul>
@@ -383,23 +451,59 @@ server {
     # Other code
 }</pre>
       <p>Có cần domain www?</p>
+      <h3>Thuật ngữ</h3>
+      <p>DN: Distinguised Name</p>
+      <p>CN: Common Name</p>
+      <p>FQDN: Fully Qualified Domain Name</p>
+      <p>CA: Certificate Authority</p>
+      <p>CSR: Certificate Signing Request</p>
+      <p>DER: Distinguished Encoding Rules</p>
+      <p>PEM: Privacy Enhanced Mail</p>
+      <p>PKCS: Public-Key Cryptography Standards</p>
+      <p>PKI: Public Key Infrastructure</p>
+      <p>SHA: Secure Hash Algorithm</p>
+      <p>SSL: Secure Socket Layer</p>
+      <p>TLS: Transport Layer Security</p>
+      <p>RSA: Rivest–Shamir–Adleman. is a public-key cryptosystem that is widely
+        used for secure data transmission.</p>
+      <p>DES: Data Encryption Standard. is a symmetric-key algorithm for the
+        encryption of digital data.</p>
       <h3>Tham khảo</h3>
+      <p><br>
+      </p>
+      <p><a href="https://www.openssl.org/docs/manmaster/man1/" target="_blank">OpenSSL
+          commands</a></p>
+      <p><br>
+      </p>
+      <p><a href="https://www.digitalocean.com/community/tutorials/openssl-essentials-working-with-ssl-certificates-private-keys-and-csrs"
+
+          target="_blank">OpenSSL Essentials: Working with SSL Certificates,
+          Private Keys and CSRs | DigitalOcean</a></p>
+      <p><a href="https://www.youtube.com/watch?v=-f4Gbk-U758&amp;list=WL&amp;index=11"
+
+          target="_blank">A complete overview of SSL/TLS and its cryptographic
+          system - YouTube</a></p>
+      <p><a href="https://www.youtube.com/watch?v=7YgaZIFn7mY&amp;list=WL&amp;index=10"
+
+          target="_blank">Create &amp; sign SSL/TLS certificates with openssl -
+          YouTube</a></p>
+      <p><a href="https://www.keycdn.com/blog/openssl-tutorial" target="_blank">A
+          6 Part Introductory OpenSSL Tutorial - KeyCDN</a></p>
+      <p><a href="https://deliciousbrains.com/ssl-certificate-authority-for-local-https-development/"
+
+          target="_blank">How to Create Your Own SSL Certificate Authority for
+          Local HTTPS Development</a></p>
+      <p><a href="https://crypto.stackexchange.com/questions/43697/what-is-the-difference-between-pem-csr-key-and-crt-and-other-such-file-ext"
+
+          target="_blank">tls - What is the difference between .pem, .csr, .key
+          and .crt and other such file extensions? - Cryptography Stack Exchange</a></p>
+      <p><a href="https://viblo.asia/p/https-va-ssl-OeVKBg4AZkW" target="_blank">https
+          và SSL</a></p>
       <p><a href="https://viblo.asia/p/tao-ssl-certificate-authority-cho-https-tren-local-1VgZvpQY5Aw"
 
           target="_blank">Tạo SSL Certificate Authority cho HTTPS trên local</a></p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
     </article>
-    <script src="../../js/docs.js">
-  </body>
-</html>
-  </body>
-</html>
+    <script src="../../js/docs.js"></script>
+    
   </body>
 </html>
