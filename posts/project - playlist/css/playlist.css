@@ -1,13 +1,13 @@
-body {
-  background: url("https://www.toptal.com/designers/subtlepatterns/patterns/groovepaper.png"); }
+:root {
+  --window-height: 100vh; }
 
 .playlist {
-  margin-top: 90px;
-  height: calc(100vh - 310px); }
+  margin-top: 80px;
+  height: calc(var(--window-height) - 80px - 100px); }
   @media (min-width: 992px) {
     .playlist {
       margin-top: 0px;
-      height: calc(100vh - 90px); } }
+      height: calc(var(--window-height) - 90px); } }
   @media (min-width: 992px) {
     .playlist .chapter-item::before {
       content: '+';
@@ -35,7 +35,7 @@ body {
       border-top: none; } }
 
 .content {
-  max-height: calc(100vh - 170px);
+  max-height: calc(var(--window-height) - 170px);
   padding-right: 1rem; }
   .content h3::before {
     display: none; }

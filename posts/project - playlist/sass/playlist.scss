@@ -1,20 +1,24 @@
 $desktop: "(min-width: 992px)";
 
 body {
-	background: url("https://www.toptal.com/designers/subtlepatterns/patterns/groovepaper.png");
+	// background: url("https://www.toptal.com/designers/subtlepatterns/patterns/groovepaper.png");
+}
+
+:root {
+    --window-height: 100vh;
 }
 
   
 .playlist {
-	margin-top: 90px;
+	margin-top: 80px;
 	// Audio
-	height: calc(100vh - 310px);
+	height: calc(var(--window-height) - 80px - 100px);
 	// Video
-	// height: calc(100vh - 500px);
+	// height: calc( - 500px);
 
 	@media #{$desktop} {
 		margin-top: 0px;
-		height: calc(100vh - 90px);
+		height: calc(var(--window-height) - 90px);
 	}
 
 	.chapter-item {
@@ -53,7 +57,7 @@ body {
 }
 
 .content {
-	max-height: calc(100vh - 170px);
+	max-height: calc(var(--window-height) - 170px);
 	padding-right: 1rem;
 
 	h3 {
