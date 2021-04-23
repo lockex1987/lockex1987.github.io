@@ -28,8 +28,7 @@
       <p><a href="https://github.com/FiloSottile/mkcert" target="_blank">FiloSottile/mkcert:
           A simple zero-config tool to make locally trusted development
           certificates with any names you'd like.</a></p>
-      <p><a href="https://matthewhoelter.com/2019/10/21/how-to-setup-https-on-your-local-development-environment-localhost-in-minutes.html"
-
+      <p><a href="https://matthewhoelter.com/2019/10/21/how-to-setup-https-on-your-local-development-environment-localhost-in-minutes.html"
           target="_blank">How to setup HTTPS (SSL) on your local development
           environment (localhost) in minutes | Matthew Hoelter</a></p>
       <h3>Tự làm từng bước</h3>
@@ -68,12 +67,12 @@ Verifying - Enter pass phrase for rootCA.key:
       <p>Câu lệnh trên sẽ tạo file <code>rootCA.key</code>.</p>
       <p>Sau khi đã có private key, chúng ta tạo root certificate:</p>
       <pre class="text-wrap">openssl req -x509 \<br>
-        &nbsp;&nbsp;&nbsp; -new \<br>
-        &nbsp;&nbsp;&nbsp; -nodes \<br>
-        &nbsp;&nbsp;&nbsp; -key rootCA.key \<br>
-        &nbsp;&nbsp;&nbsp; -sha256 \<br>
-        &nbsp;&nbsp;&nbsp; -days 1825 \<br>
-        &nbsp;&nbsp;&nbsp; -out rootCA.pem</pre>
+        -new \<br>
+        -nodes \<br>
+        -key rootCA.key \<br>
+        -sha256 \<br>
+        -days 1825 \<br>
+        -out rootCA.pem</pre>
       <p><code>days</code> là số ngày hiệu lực</p>
       <p>Khi thực hiện lệnh này, nó sẽ hỏi pass phrase của file<span> </span><code>rootCA.key</code><span>
         </span>mà chúng ta vừa nhập ban nãy. Bạn hãy nhập chính xác vào và thực
@@ -110,6 +109,26 @@ Email Address []:lockex1987@gmail.com
       <p><br>
       </p>
       <h3>Cài đặt Root Certificate cho hệ điều hành, trình duyệt</h3>
+      <h4>Linux</h4>
+      <p>Cài đặt package:</p>
+      <pre>sudo apt-get install ca-certificates -y</pre>
+      <p>Copy file cert:</p>
+      <pre>sudo cp CERTIFICATE.crt /usr/local/share/ca-certificates</pre>
+      <p>Nếu bạn có file PEM, hãy chuyển nó sang file CRT:</p>
+      <pre>openssl x509 -outform der -in CERTIFICATE.pem -out CERTIFICATE.crt</pre>
+      <p>Cập nhật:</p>
+      <pre>sudo update-ca-certificates</pre>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><a href="https://askubuntu.com/questions/73287/how-do-i-install-a-root-certificate"
+          target="_blank">How do I install a root certificate? - Ask Ubuntu</a></p>
+      <p><a href="https://www.techrepublic.com/article/how-to-install-ca-certificates-in-ubuntu-server/"
+          target="_blank">How to install CA certificates in Ubuntu server -
+          TechRepublic</a></p>
+      <p><br>
+      </p>
       <p>Với bài viết này, mình sẽ hướng dẫn cho mọi người làm sao để cài đặt
         root certitficate cho Chrome và Firefox nhé.</p>
       <h5>Google Chrome</h5>
@@ -118,17 +137,13 @@ Email Address []:lockex1987@gmail.com
         nhấp vào<span> </span><strong>IMPORT</strong><span> </span>rồi chọn
         file<span> </span><code>rootCA.pem</code><span> </span>mà chúng ta vừa
         tạo ban nãy. Sau khi chọn file đó, chúng ta sẽ có màn hình sau:</p>
-      <p><img src="https://images.viblo.asia/ff07ec1f-52ad-4602-b62e-a3c7d30c01b9.png"
-
-          data-src="https://images.viblo.asia/ff07ec1f-52ad-4602-b62e-a3c7d30c01b9.png"
-
+      <p><img src="https://images.viblo.asia/ff07ec1f-52ad-4602-b62e-a3c7d30c01b9.png"
+          data-src="https://images.viblo.asia/ff07ec1f-52ad-4602-b62e-a3c7d30c01b9.png"
           data-zoom-src="https://images.viblo.asia/full/ff07ec1f-52ad-4602-b62e-a3c7d30c01b9.png"></p>
       <p>Bạn chọn tất và bấm<span> </span><strong>OK</strong><span> </span>là
         xong.</p>
-      <p><img src="https://images.viblo.asia/d07f6987-4f7c-49b1-9ba5-a8e15a947848.png"
-
-          data-src="https://images.viblo.asia/d07f6987-4f7c-49b1-9ba5-a8e15a947848.png"
-
+      <p><img src="https://images.viblo.asia/d07f6987-4f7c-49b1-9ba5-a8e15a947848.png"
+          data-src="https://images.viblo.asia/d07f6987-4f7c-49b1-9ba5-a8e15a947848.png"
           data-zoom-src="https://images.viblo.asia/full/d07f6987-4f7c-49b1-9ba5-a8e15a947848.png"></p>
       <h5>Mozilla Firefox</h5>
       <p>Đầu tiên, mở Mozilla Firefox lên và truy cập vào đường dẫn sau:<span> </span><code>about:preferences#privacy</code>.
@@ -138,17 +153,13 @@ Email Address []:lockex1987@gmail.com
         </span>rồi nhấp vào<span> </span><strong>Import...</strong><span> </span>và
         chọn file<span> </span><code>rootCA.pem</code><span> </span>mà chúng
         ta vừa tạo ban nãy. Sau khi chọn file, chúng ta sẽ có màn hình sau:</p>
-      <p><img src="https://images.viblo.asia/5f866c60-d0ac-4993-8df8-6c547f81cb7c.png"
-
-          data-src="https://images.viblo.asia/5f866c60-d0ac-4993-8df8-6c547f81cb7c.png"
-
+      <p><img src="https://images.viblo.asia/5f866c60-d0ac-4993-8df8-6c547f81cb7c.png"
+          data-src="https://images.viblo.asia/5f866c60-d0ac-4993-8df8-6c547f81cb7c.png"
           data-zoom-src="https://images.viblo.asia/full/5f866c60-d0ac-4993-8df8-6c547f81cb7c.png"></p>
       <p>Thực hiện chọn tất cả và bấm<span> </span><strong>OK</strong><span> </span>là
         xong.</p>
-      <p><img src="https://images.viblo.asia/3a74bfdd-48fa-4aa5-bdf9-9138ca5c2c38.png"
-
-          data-src="https://images.viblo.asia/3a74bfdd-48fa-4aa5-bdf9-9138ca5c2c38.png"
-
+      <p><img src="https://images.viblo.asia/3a74bfdd-48fa-4aa5-bdf9-9138ca5c2c38.png"
+          data-src="https://images.viblo.asia/3a74bfdd-48fa-4aa5-bdf9-9138ca5c2c38.png"
           data-zoom-src="https://images.viblo.asia/full/3a74bfdd-48fa-4aa5-bdf9-9138ca5c2c38.png"></p>
       <p>Vậy là bây giờ, với hai trình duyệt này (trên máy của chúng ta) thì
         chúng ta đã được ngồi cùng mâm với các CA lớn trên thế giới rồi đấy<span></span>!</p>
@@ -170,8 +181,7 @@ Email Address []:lockex1987@gmail.com
         &gt; Install to open the import dialog.</p>
       <img src="images/right_click_rootca_crt.png" alt=""><br>
       Cài cho user hiện tại:<br>
-      <img src="file:///D:/htdocs/lockex1987.github.io/posts/it%20-%20config%20web%20https/images/install_rootca_crt_1.png"
-
+      <img src="file:///D:/htdocs/lockex1987.github.io/posts/it%20-%20config%20web%20https/images/install_rootca_crt_1.png"
         alt=""><br>
       <p><br>
       </p>
@@ -208,7 +218,11 @@ Email Address []:lockex1987@gmail.com
       <div class="mb-3"> <img src="images/trust_root_mac.png"> </div>
       <p>Chrome</p>
       <p>iPad</p>
+      <p><br>
+      </p>
       <p>Android</p>
+      <p><br>
+      </p>
       <h3>Tạo HTTPS cho local site</h3>
       <p>Đầu tiên, chúng ta tạo một private key cho domain local (mình sẽ chọn
         domain là<span> </span><code>test-ssl.local</code>):</p>
@@ -218,8 +232,7 @@ Generating RSA private key, 2048 bit long modulus
 ...............+++
 e is 65537 (0x10001)
 </code></pre>
-      <p>Sau đó tạo CSR (<a href="https://en.wikipedia.org/wiki/Certificate_signing_request"
-
+      <p>Sau đó tạo CSR (<a href="https://en.wikipedia.org/wiki/Certificate_signing_request"
           target="_blank">Certificate Signing Request</a>):</p>
       <pre><code>openssl req -new \<br>    -key test-ssl.local.key \<br>    -out test-ssl.local.csr
 </code></pre>
@@ -252,8 +265,7 @@ An optional company name []:
         bước:</p>
       <pre>-subj "/C=US/ST=New York/L=Brooklyn/O=Example Brooklyn Company/CN=examplebrooklyn.com"</pre>
       <p>Bước tiếp theo, chúng ta thực hiện tạo một file config để định nghĩa<span>
-        </span><a href="https://en.wikipedia.org/wiki/Subject_Alternative_Name"
-
+        </span><a href="https://en.wikipedia.org/wiki/Subject_Alternative_Name"
           target="_blank">Subject Alternative Name (SAN)</a><span> </span>cho
         SSL này. Chúng ta thực hiện tạo file:</p>
       <pre><code>vi test-ssl.local.ext
@@ -265,7 +277,7 @@ keyUsage=digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
 subjectAltName=@alt_names
 
 [alt_names]
-DNS.1=test-ssl.local
+DNS.1=localhost
 DNS.2=cttd.tk
 DNS.3=sso-admin.cttd.tk
 DNS.4=sso-passport.cttd.tk
@@ -275,14 +287,14 @@ DNS.5=landing-page.cttd.tk</pre>
       <p>Giờ chúng ta lại đóng vai trò là CA và tự ký.</p>
       <p>Giờ chúng ta sẽ tạo certificate cho domain:</p>
       <pre class="text-wrap">openssl x509 -req \<br>
-        &nbsp;&nbsp;&nbsp; -in test-ssl.local.csr \<br>
-        &nbsp;&nbsp;&nbsp; -CA rootCA.pem \<br>
-        &nbsp;&nbsp;&nbsp; -CAkey rootCA.key \<br>
-        &nbsp;&nbsp;&nbsp; -CAcreateserial \<br>
-        &nbsp;&nbsp;&nbsp; -out test-ssl.local.crt \<br>
-        &nbsp;&nbsp;&nbsp; -days 1825 \<br>
-        &nbsp;&nbsp;&nbsp; -sha256 \<br>
-        &nbsp;&nbsp;&nbsp; -extfile test-ssl.local.ext</pre>
+        -in test-ssl.local.csr \<br>
+        -CA rootCA.pem \<br>
+        -CAkey rootCA.key \<br>
+        -CAcreateserial \<br>
+        -out test-ssl.local.crt \<br>
+        -days 1825 \<br>
+        -sha256 \<br>
+        -extfile test-ssl.local.ext</pre>
       <p>Khi này chúng ta sẽ được hỏi pass phase của<span> </span><code>rootCA.pem</code>,
         bạn nhập pass phase mà bạn đã sử dụng lúc tạo<span> </span><code>rootCA.key</code>.</p>
       <pre>$ openssl x509 -req -in test-ssl.local.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out test-ssl.local.crt -days 1825 -sha256 -extfile test-ssl.local.ext
@@ -356,25 +368,18 @@ Enter pass phrase for rootCA.key:</pre>
 </code></pre>
       <p>Thêm dòng sau:</p>
       <pre>127.0.0.1    test-ssl.local</pre>
-      <p>Vậy là xong, bây giờ bạn thử truy cập vào<span> </span><a href="https://test-ssl.local/"
-
+      <p>Vậy là xong, bây giờ bạn thử truy cập vào<span> </span><a href="https://test-ssl.local/"
           target="_blank">https://test-ssl.local</a><span> </span>để xem kết
         quả nhá. Chúng ta sẽ được một trang HTTPS hoàn hảo mà không hề bị màn
         hình warning và cũng không có dấu gạch chéo đỏ lòm ở trên thanh địa chỉ.</p>
-      <p><img src="https://images.viblo.asia/2a8b9c52-7fe0-461e-9682-bbc42f2fc797.png"
-
-          data-src="https://images.viblo.asia/2a8b9c52-7fe0-461e-9682-bbc42f2fc797.png"
-
+      <p><img src="https://images.viblo.asia/2a8b9c52-7fe0-461e-9682-bbc42f2fc797.png"
+          data-src="https://images.viblo.asia/2a8b9c52-7fe0-461e-9682-bbc42f2fc797.png"
           data-zoom-src="https://images.viblo.asia/full/2a8b9c52-7fe0-461e-9682-bbc42f2fc797.png"></p>
-      <p><img src="https://images.viblo.asia/afe25b26-fa51-4e4e-93f5-2bdb6519a9db.png"
-
-          data-src="https://images.viblo.asia/afe25b26-fa51-4e4e-93f5-2bdb6519a9db.png"
-
+      <p><img src="https://images.viblo.asia/afe25b26-fa51-4e4e-93f5-2bdb6519a9db.png"
+          data-src="https://images.viblo.asia/afe25b26-fa51-4e4e-93f5-2bdb6519a9db.png"
           data-zoom-src="https://images.viblo.asia/full/afe25b26-fa51-4e4e-93f5-2bdb6519a9db.png"></p>
-      <p><img src="https://images.viblo.asia/35efe8d2-daf8-45a9-b7ee-baa058119f28.png"
-
-          data-src="https://images.viblo.asia/35efe8d2-daf8-45a9-b7ee-baa058119f28.png"
-
+      <p><img src="https://images.viblo.asia/35efe8d2-daf8-45a9-b7ee-baa058119f28.png"
+          data-src="https://images.viblo.asia/35efe8d2-daf8-45a9-b7ee-baa058119f28.png"
           data-zoom-src="https://images.viblo.asia/full/35efe8d2-daf8-45a9-b7ee-baa058119f28.png"></p>
       <p>Vâng, bạn có nhìn thấy màu xanh lét ở Firefox không ạ<span></span>?
         Nhìn ha oai phết, nhề<span></span>. Còn với Chrome thì từ phiên bản 69
@@ -475,35 +480,28 @@ server {
           commands</a></p>
       <p><br>
       </p>
-      <p><a href="https://www.digitalocean.com/community/tutorials/openssl-essentials-working-with-ssl-certificates-private-keys-and-csrs"
-
+      <p><a href="https://www.digitalocean.com/community/tutorials/openssl-essentials-working-with-ssl-certificates-private-keys-and-csrs"
           target="_blank">OpenSSL Essentials: Working with SSL Certificates,
           Private Keys and CSRs | DigitalOcean</a></p>
-      <p><a href="https://www.youtube.com/watch?v=-f4Gbk-U758&amp;list=WL&amp;index=11"
-
+      <p><a href="https://www.youtube.com/watch?v=-f4Gbk-U758&amp;list=WL&amp;index=11"
           target="_blank">A complete overview of SSL/TLS and its cryptographic
           system - YouTube</a></p>
-      <p><a href="https://www.youtube.com/watch?v=7YgaZIFn7mY&amp;list=WL&amp;index=10"
-
+      <p><a href="https://www.youtube.com/watch?v=7YgaZIFn7mY&amp;list=WL&amp;index=10"
           target="_blank">Create &amp; sign SSL/TLS certificates with openssl -
           YouTube</a></p>
       <p><a href="https://www.keycdn.com/blog/openssl-tutorial" target="_blank">A
           6 Part Introductory OpenSSL Tutorial - KeyCDN</a></p>
-      <p><a href="https://deliciousbrains.com/ssl-certificate-authority-for-local-https-development/"
-
+      <p><a href="https://deliciousbrains.com/ssl-certificate-authority-for-local-https-development/"
           target="_blank">How to Create Your Own SSL Certificate Authority for
           Local HTTPS Development</a></p>
-      <p><a href="https://crypto.stackexchange.com/questions/43697/what-is-the-difference-between-pem-csr-key-and-crt-and-other-such-file-ext"
-
+      <p><a href="https://crypto.stackexchange.com/questions/43697/what-is-the-difference-between-pem-csr-key-and-crt-and-other-such-file-ext"
           target="_blank">tls - What is the difference between .pem, .csr, .key
           and .crt and other such file extensions? - Cryptography Stack Exchange</a></p>
       <p><a href="https://viblo.asia/p/https-va-ssl-OeVKBg4AZkW" target="_blank">https
           và SSL</a></p>
-      <p><a href="https://viblo.asia/p/tao-ssl-certificate-authority-cho-https-tren-local-1VgZvpQY5Aw"
-
+      <p><a href="https://viblo.asia/p/tao-ssl-certificate-authority-cho-https-tren-local-1VgZvpQY5Aw"
           target="_blank">Tạo SSL Certificate Authority cho HTTPS trên local</a></p>
     </article>
     <script src="../../js/docs.js"></script>
-    
   </body>
 </html>

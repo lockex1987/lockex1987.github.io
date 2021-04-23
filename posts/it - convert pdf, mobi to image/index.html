@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="pdfimages, calibre, ebook-convert">
+    <title>Convert truyện tranh định dạng PDF, MOBI sang ảnh</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Convert truyện tranh định dạng PDF, MOBI sang ảnh</h2>
+      <p>Tôi tìm được một kho truyện tranh ở <a href="https://www.dtv-ebook.com/"
+          target="_blank">DTV eBook</a>. bao gồm các truyện quý hiếm như Dũng sĩ
+        Hesman, Võ sĩ đạo Samurai,... Tuy nhiên, các truyện lại có định dạng là
+        PDF và MOBI. Tôi muốn chuyển về các ảnh, sau đó chuyển sang định dạng
+        CBZ để đọc trên iPad.</p>
+      <h3>Chuyển PDF sang ảnh</h3>
+      <p>Chúng ta sử dụng tool <code>pdfimages</code>. <code>pdfimages</code>
+        là một tiện ích dòng lệnh dùng để trích xuất các file ảnh từ PDF. Nó là
+        một phần của poppler-utils và xpdf-utils, có trên nhiều bản phân phối
+        Linux.</p>
+      <p>Chúng ta có thể sử dụng bản cài trên Windows <a href="https://blog.alivate.com.au/poppler-windows/"
+          target="_blank">ở đây</a>.</p>
+      <p>Cài đặt trên Linux (Ubuntu):</p>
+      <pre>sudo apt install poppler-utils</pre>
+      <p>Câu lệnh:</p>
+      <pre>pdfimages -j &lt;file pdf&gt; &lt;prefix&gt;</pre>
+      <p>Thêm tham số <code>-j</code> để lưu ảnh thành định dạng JPEG, không
+        phải định dạng PBM hoặc PPM.</p>
+      <h3>Chuyển MOBI sang ảnh</h3>
+      <p>Chúng ta chuyển MOBI sang EPUB trước.</p>
+      <p>Chúng ta sử dụng công cụ dòng lệnh <code>ebook-convert</code>, là một
+        phần của <a href="https://calibre-ebook.com/" target="_blank">Calibre</a>.</p>
+      <p>Câu lệnh:</p>
+      <pre>ebook-convert "book.mobi" "book.epub"</pre>
+      <p>Sau khi được file EPUB, chúng ta chỉ việc giải nén và lấy các ảnh. File
+        EPUB thực chất là file ZIP.</p>
+      <h3>Script để tạo file batch</h3>
+      <p><a href="generate_batch_pdf.php">generate_batch_pdf.php</a></p>
+      <p><a href="generate_batch_mobi.php">generate_batch_mobi.php</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>
