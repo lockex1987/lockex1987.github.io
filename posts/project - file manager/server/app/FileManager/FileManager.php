@@ -40,7 +40,8 @@ class FileManager
                 array_push($result, [
                     'name' => $f,
                     'isDir' => $isDir,
-                    'size' => $isDir ? count(array_diff(scandir($absPath), ['.', '..'])) : filesize($absPath), // dung lượng file, tính theo byte (B)
+                    // count(array_diff(scandir($absPath), ['.', '..']))
+                    'size' => $isDir ? null : filesize($absPath), // dung lượng file, tính theo byte (B)
                     // 'url' => '/data-drive/' . $absPath
                     'isTextFile' => $isDir ? false : CommonUtils::isTextFile($absPath)
                     // 'mime' => $isDir ? 'folder' : mime_content_type($absPath)

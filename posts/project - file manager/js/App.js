@@ -39,7 +39,13 @@ export default {
             isNewFile: false,
 
             // Đối tượng Highcharts, biểu đồ dung lượng
-            sizeChart: null
+            sizeChart: null,
+
+            // Đang xử lý
+            isProcessing: false,
+
+            // Có hiển thị các nút chức năng hay không
+            showActions: false
         };
     },
 
@@ -74,6 +80,9 @@ export default {
          */
         async listFolderContent() {
             try {
+                // Đánh dấu đang xử lý
+                this.isProcessing = true;
+
                 const url = 'server/list_files.php?folder=' + encodeURIComponent(this.folder);
                 const data = await fetch(url).then(resp => resp.json());
                 // alert(data);
@@ -92,6 +101,9 @@ export default {
 
                 // Reset lại thông tin tìm kiếm để hiển thị tất cả
                 this.searchQuery = '';
+
+                // Đánh dấu đã xử lý xong
+                this.isProcessing = false;
 
                 if (!data.folderSize) {
                     // TODO: Lấy số lượng file trong từng folder
@@ -463,6 +475,11 @@ export default {
          * @param {Object} f Đối tượng thư mục, gồm có thuộc tính name
          */
         openFolder(f) {
+            // Nếu đang xử lý rồi thì dừng lại
+            // Hạn chế lỗi khi người dùng click liên tiếp
+            if (this.isProcessing) {
+                return;
+            }
             this.folder = this.folder + f.name + '/';
             this.listFolderContent();
         },

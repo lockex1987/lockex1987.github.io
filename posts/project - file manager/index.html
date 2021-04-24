@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="css/file-icon.css" />
 
     <style>
+        /*
         .list-item .list-item__actions {
             visibility: hidden;
         }
@@ -30,6 +31,7 @@
         .list-item:hover .list-item__actions {
             visibility: visible;
         }
+        */
     </style>
 </head>
 
@@ -40,7 +42,7 @@
         <div id="app"
             v-cloak>
             <!-- Breadcrumb và nút upload -->
-            <div class="mb-3 d-flex justify-content-between flex-wrap">
+            <div class="mb-3 d-flex align-items-center flex-wrap">
                 <nav>
                     <ol class="font-size-1.25 font-weight-500 breadcrumb bg-transparent pt-0 pl-0 pb-0">
                         <li class="breadcrumb-item"
@@ -67,25 +69,37 @@
                                 {{p}}
                             </span>
                         </li>
+
+                        <li v-if="isProcessing">
+                            <i class="spinner-border spinner-border-sm text-primary ml-3"
+                                style="vertical-align: baseline;"></i>
+                        </li>
                     </ol>
                 </nav>
     
-                <div>
-                    <label class="btn btn-primary mb-0">
-                        Upload
-    
-                        <input type="file"
-                            ref="uploadFileInput"
-                            multiple
-                            class="d-none"
-                            @change="startUploadFiles()">
-                    </label>
+                <label class="btn btn-primary mb-0 ml-auto mr-2"
+                    v-show="showActions">
+                    Upload
 
-                    <button class="btn btn-secondary"
-                        @click="newTextFile()">
-                        Tạo file text
-                    </button>
-                </div>
+                    <input type="file"
+                        ref="uploadFileInput"
+                        multiple
+                        class="d-none"
+                        @change="startUploadFiles()">
+                </label>
+
+                <button class="btn btn-secondary mr-2"
+                    @click="newTextFile()"
+                    v-show="showActions">
+                    Tạo file text
+                </button>
+
+                <label class="custom-control custom-control-lg custom-control-animated custom-control-highlighted custom-control-outlined custom-checkbox custom-control-inline ml-auto">
+                    <input type="checkbox"
+                        class="custom-control-input"
+                        v-model="showActions"/>
+                    <span class="custom-control-label">Show actions</span>
+                </label>
             </div>
     
             <!-- Vùng danh sách file ĐANG upload -->
@@ -187,85 +201,86 @@
                 </div>
     
                 <div v-else>
-                        <div v-for="(f, idx) in filteredFiles"
-                            class="d-flex list-item align-items-center">
-                            <div class="d-flex">
-                                <!-- Icon -->
-                                <div>
-                                    <span class="file-icon file-icon-folder"
-                                        v-if="f.isDir">
-                                    </span>
+                    <div v-for="(f, idx) in filteredFiles"
+                        class="d-flex list-item align-items-center">
+                        <div class="d-flex">
+                            <!-- Icon -->
+                            <div>
+                                <span class="file-icon file-icon-folder"
+                                    v-if="f.isDir">
+                                </span>
 
-                                    <span :href="'/data-drive' + folder + f.name"
-                                        class="file-icon"
-                                        v-else>
-                                    </span>
-                                </div>
-
-                                <div>
-                                    <span @click="openFolder(f)"
-                                        class="cursor-pointer text-primary"
-                                        v-if="f.isDir">
-                                        <span class="d-block">
-                                            {{f.name}}
-                                        </span>
-
-                                        <span class="text-muted font-size-0.875"
-                                            v-if="f.size">
-                                            {{f.size}} item
-                                        </span>
-                                    </span>
-
-                                    <a :href="'/data-drive' + folder + f.name"
-                                        class="text-decoration-none"
-                                        v-else>
-                                        <!-- @click="f.download = true" -->
-                                        <span class="d-block">
-                                            {{f.name}}
-                                        </span>
-
-                                        <span class="text-muted font-size-0.875">
-                                            {{f.size}}
-                                        </span>
-                                    </a>
-                                </div>
-
-                                <download-progress
-                                    :url="f.url"
-                                    :file-name="f.name"
-                                    v-if="f.download"></download-progress>
+                                <span :href="'/data-drive' + folder + f.name"
+                                    class="file-icon"
+                                    v-else>
+                                </span>
                             </div>
 
-                            <!-- Các hành động -->
-                            <div class="text-right ml-auto list-item__actions"
-                                style="width: 150px;">
-                                <i class="la la-edit text-warning cursor-pointer mr-1"
-                                    title="Cập nhật"
-                                    @click="getTextFileContent(f)"
-                                    v-if="!f.isDir && f.isTextFile"></i>
+                            <div>
+                                <span @click="openFolder(f)"
+                                    class="cursor-pointer text-primary"
+                                    v-if="f.isDir">
+                                    <span class="d-block">
+                                        {{f.name}}
+                                    </span>
 
-                                <i class="fa fa-play font-size-0.875 text-secondary cursor-pointer mr-1"
-                                    title="Play"
-                                    @click="openMp4File(f)"
-                                    v-if="f.name.endsWith('.mp4')"></i>
+                                    <span class="text-muted font-size-0.875"
+                                        v-if="f.size">
+                                        {{f.size}} item
+                                    </span>
+                                </span>
 
-                                <i class="la la-trash text-danger cursor-pointer"
-                                    title="Xóa"
-                                    @click="confirmDelete(f)"></i>
+                                <a :href="'/data-drive' + folder + f.name"
+                                    class="text-decoration-none"
+                                    v-else>
+                                    <!-- @click="f.download = true" -->
+                                    <span class="d-block">
+                                        {{f.name}}
+                                    </span>
 
-                                <i class="la la-copy text-primary cursor-pointer ml-1"
-                                    title="Copy"
-                                    @click="markFile(f, 'copy')"></i>
-
-                                <i class="la la-cut text-info cursor-pointer ml-1"
-                                    title="Cut"
-                                    @click="markFile(f, 'cut')"></i>
-
-                                <i class="la la-arrow-right text-success cursor-pointer ml-1"
-                                    title="Đổi tên"
-                                    @click="confirmRename(f)"></i>
+                                    <span class="text-muted font-size-0.875">
+                                        {{f.size}}
+                                    </span>
+                                </a>
                             </div>
+
+                            <download-progress
+                                :url="f.url"
+                                :file-name="f.name"
+                                v-if="f.download"></download-progress>
                         </div>
+
+                        <!-- Các hành động -->
+                        <div class="text-right ml-auto list-item__actions"
+                            style="width: 150px;"
+                            v-show="showActions">
+                            <i class="la la-edit text-warning cursor-pointer mr-1"
+                                title="Cập nhật"
+                                @click="getTextFileContent(f)"
+                                v-if="!f.isDir && f.isTextFile"></i>
+
+                            <i class="fa fa-play font-size-0.875 text-secondary cursor-pointer mr-1"
+                                title="Play"
+                                @click="openMp4File(f)"
+                                v-if="f.name.endsWith('.mp4')"></i>
+
+                            <i class="la la-trash text-danger cursor-pointer"
+                                title="Xóa"
+                                @click="confirmDelete(f)"></i>
+
+                            <i class="la la-copy text-primary cursor-pointer ml-1"
+                                title="Copy"
+                                @click="markFile(f, 'copy')"></i>
+
+                            <i class="la la-cut text-info cursor-pointer ml-1"
+                                title="Cut"
+                                @click="markFile(f, 'cut')"></i>
+
+                            <i class="la la-arrow-right text-success cursor-pointer ml-1"
+                                title="Đổi tên"
+                                @click="confirmRename(f)"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
 

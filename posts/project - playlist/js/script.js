@@ -13,6 +13,7 @@ init();
 
 /**
  * Sửa lỗi 100vh trên thiết bị iOS Safari:
+ *   https://dev.to/maciejtrzcinski/100vh-problem-with-ios-safari-3ge9
  *   https://viblo.asia/p/sua-loi-100vh-tren-thiet-bi-ios-safari-gGJ59GEjZX2.
  */
 function calculateWindowHeight() {

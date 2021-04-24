@@ -12,7 +12,8 @@ const CAT_THUMBS = {
     highmaps: 'programming/highcharts.svg',
     php: 'programming/php.svg',
     vue: 'programming/vue.svg',
-    project: 'programming/app store.svg',
+    // project: 'programming/app store.svg',
+    project: 'programming/phpdocument.svg',
     story: 'programming/epub.svg',
     git: 'programming/git.svg',
     redis: 'programming/redis.svg',
@@ -20,11 +21,11 @@ const CAT_THUMBS = {
     webext: 'programming/web-extension.png',
     it: 'programming/it.png',
 	
-	// Gộp các mục sau
-	python: 'programming/python.svg',
+    // Gộp các mục sau
+    python: 'programming/python.svg',
     webrtc: 'programming/webrtc.svg',
-	nginx: 'programming/nginx.svg',
-	elasticsearch: 'programming/elasticsearch.svg',
+    nginx: 'programming/nginx.svg',
+    elasticsearch: 'programming/elasticsearch.svg',
 };
 
 /**
