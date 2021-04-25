@@ -31,7 +31,7 @@
       <p><a href="https://matthewhoelter.com/2019/10/21/how-to-setup-https-on-your-local-development-environment-localhost-in-minutes.html"
           target="_blank">How to setup HTTPS (SSL) on your local development
           environment (localhost) in minutes | Matthew Hoelter</a></p>
-      <h3>Tự làm từng bước</h3>
+      <h3>Tự tạo Certificate Authority</h3>
       <p>Trên đây cũng có khá nhiều bài viết làm sao để tạo self-signed SSL cho
         localhost để có thể test thử HTTPS. Nhưng những cách đó đều có một nhược
         điểm là khi vào trang sẽ có cảnh báo<span> </span><code>NET::ERR_CERT_AUTHORITY_INVALID</code><span>
@@ -42,17 +42,16 @@
         localhost để chúng ta có thể thử các công nghệ như PWA hay HTTP2 hoặc
         đơn giản là nhìn cho nó ha oai<span> :)</span>. Chúng ta cùng bắt đầu
         thực hiện nhé.</p>
-      <h4>Tạo Certificate Authority</h4>
       <p>Đầu tiên, chúng ta phải tự trở thành một nhà cung cấp chứng chỉ (giống
         như các nhà cung cấp chứng chỉ hiện tại như GlobalSign, Comodo,
         DigiCert, ...) và thông báo cho trình duyệt rằng những chứng chỉ được
         tạo bởi Certificate Authority do chúng ta cung cấp là hợp lệ.</p>
       <p>Thực hiện tạo root Certificate Authority (CA) bằng việc đầu tiên là tạo
         private key:</p>
-      <pre>openssl genrsa -des3 -out rootCA.key 2048
+      <pre>openssl genrsa \<br>-des3 \<br>-out rootCA.key \<br>2048
 </pre>
       <p><code>-des3</code> nghĩa là mã hóa key bằng DES3 trước khi output nó.</p>
-      <p><code>2048</code> là kích thước key (tính theo bit)</p>
+      <p><code>2048</code> là kích thước key (tính theo bit).</p>
       <p>Tạo RSA private key.</p>
       <p>Sau khi nhập lệnh này, chúng ta thực hiện nhập pass phrase (do tham số
         <code>-des3</code>) để tạo. Kết quả có dạng:</p>
@@ -66,16 +65,18 @@ Verifying - Enter pass phrase for rootCA.key:
 </pre>
       <p>Câu lệnh trên sẽ tạo file <code>rootCA.key</code>.</p>
       <p>Sau khi đã có private key, chúng ta tạo root certificate:</p>
-      <pre class="text-wrap">openssl req -x509 \<br>
+      <pre class="text-wrap">openssl req \<br>
+        -x509 \<br>
         -new \<br>
         -nodes \<br>
         -key rootCA.key \<br>
         -sha256 \<br>
         -days 365 \<br>
         -out rootCA.pem</pre>
-      <p><code>days</code> là số ngày hiệu lực</p>
+      <p><code>days</code> là số ngày hiệu lực.</p>
       <p>Bạn nên chọn số ngày có hiệu lực nhỏ hơn 398 ngày, nếu không sẽ bị cảnh
-        bảo NET::ERR_CERT_VALIDITY_TOO_LONG trên iPad.</p>
+        bảo NET::ERR_CERT_VALIDITY_TOO_LONG trên iPad. Lỗi này có thể dẫn đến
+        lỗi không download được file trên iPad. Chỗ này không bị, chỗ ký mới bị?</p>
       <p>Khi thực hiện lệnh này, nó sẽ hỏi pass phrase của file<span> </span><code>rootCA.key</code><span>
         </span>mà chúng ta vừa nhập ban nãy. Bạn hãy nhập chính xác vào và thực
         hiện điền một số thông tin nó yêu cầu, kết quả có dạng như sau (dữ liệu
@@ -106,8 +107,28 @@ Email Address []:lockex1987@gmail.com
         xanh lét vì các trình duyệt chưa có thông tin về root certificate (chứng
         chỉ gốc) của chúng ta. Chúng ta sẽ sang bước tiếp theo, nó cực kỳ quan
         trọng để SSL của chúng ta trở nên xanh lét.</p>
+      <p>Nếu bạn không muốn nhập câu trả lời từng bước, có thể thêm tham số <code>-subj</code>
+        như sau:</p>
+      <pre>-subj "/C=VN/ST=Ha Noi/L=Ha Noi/O=HDT/OU=Information Technology/CN=HDT/emailAddress=lockex1987@gmail.com"</pre>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        Tên viết tắt của các đơn vị là:</p>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <a href="https://www.ibm.com/docs/en/ibm-mq/7.5?topic=certificates-distinguished-names"
+          target="_blank">Distinguished Names - IBM Documentation</a></p>
+      <p>Câu lệnh đầu đủ:</p>
+      <pre>openssl req \
+-x509 \
+-new \
+-nodes \
+-key rootCA.key \
+-sha256 \
+-days 365 \
+-subj "/C=VN/ST=Ha Noi/L=Ha Noi/O=HDT/OU=Information Technology/CN=HDT/emailAddress=lockex1987@gmail.com" \
+-out rootCA.pem</pre>
       <p>Tạo file <code>rootCA.crt</code> để cài đặt cho dễ:</p>
-      <pre>openssl x509 \<br>    -outform pem \<br>    -in rootCA.pem \<br>    -out rootCA.crt</pre>
+      <pre>openssl x509 \<br>-outform pem \<br>-in rootCA.pem \<br>-out rootCA.crt</pre>
       <h3>Cài đặt Root Certificate cho hệ điều hành, trình duyệt</h3>
       <h4>Linux</h4>
       <p>Cài đặt package:</p>
@@ -193,24 +214,67 @@ sudo cp CERTIFICATE.crt /usr/share/ca-certificates/extra</pre>
         if you’ve correctly followed the instructions till now.</p>
       <div class="mb-3"> <img src="images/trust_root_mac.png"> </div>
       <h4>iPad</h4>
-      <p>TODO </p>
+      <p>If you’d like to add the root certificate to your iOS devices, you can
+        do so fairly easily by following these steps:</p>
+      <p>Email the root certificate to yourself so you can access it on your iOS
+        device</p>
+      <p>Click on the attachment in the email on your iOS device</p>
+      <p>Go to the settings app and click ‘Profile Downloaded’ near the top</p>
+      <p>Click install in the top right</p>
+      <p>Once installed, hit close and go back to the main Settings page</p>
+      <p>Go to “General” &gt; “About”</p>
+      <p>Scroll to the bottom and click on “Certificate Trust Settings”</p>
+      <p>Enable your root certificate under “ENABLE FULL TRUST FOR ROOT
+        CERTIFICATES”</p>
+      <img src="images/iphone-screenshot.jpg" alt="">
+      <p><br>
+      </p>
       <h4>Android</h4>
-      <p>TODO</p>
+      <h5>Install a certificate</h5>
+      <p>Open your phone's <code>Settings</code> app.</p>
+      <p>Tap <code>Security</code> And then Advanced And then Encryption &amp;
+        credentials.</p>
+      <p>Under "<code>Credential storage</code>", tap Install a certificate And
+        then Wi-Fi certificate.</p>
+      <p>In the top left, tap Menu .</p>
+      <p>Under "Open from," tap where you saved the certificate.</p>
+      <p>Tap the file.</p>
+      <p>If needed, enter the key store password. Tap OK.</p>
+      <p>Enter a name for the certificate.</p>
+      <p>Tap OK.</p>
+      <p>Tip: If you haven't already set a PIN, pattern, or password for your
+        phone, you'll be asked to set one up.</p>
+      <h5>Remove custom certificates</h5>
+      <p>Important: Removing certificates you've installed doesn't remove the
+        permanent system certificates that your phone needs to work. But if you
+        remove a certificate that a certain Wi-Fi connection requires, your
+        phone may not connect to that Wi-Fi network anymore.</p>
+      <p>Open your phone's <code>Settings</code> app.</p>
+      <p>Tap <code>Security</code> And then Advanced And then Encryption &amp;
+        credentials.</p>
+      <p>Under "<code>Credential storage</code>":</p>
+      <p>To clear all certificates: Tap Clear credentials And then OK.</p>
+      <p>To clear specific certificates: Tap <code>User</code> credentials And
+        then Choose the credentials you want to remove.</p>
+      <p><br>
+      </p>
       <h3>Tạo HTTPS cho local site</h3>
       <p>Đầu tiên, chúng ta tạo một private key cho domain local (mình sẽ chọn
         domain là<span> </span><code>test-ssl.local</code>):</p>
-      <pre><code>$ openssl genrsa -out test-ssl.local.key 2048
+      <pre>$ openssl genrsa \<br>-out test-ssl.local.key \<br>2048
 Generating RSA private key, 2048 bit long modulus
 .........................+++
 ...............+++
 e is 65537 (0x10001)
-</code></pre>
+</pre>
       <p>Sau đó tạo CSR (<a href="https://en.wikipedia.org/wiki/Certificate_signing_request"
           target="_blank">Certificate Signing Request</a>):</p>
-      <pre><code>openssl req -new \<br>    -key test-ssl.local.key \<br>    -out test-ssl.local.csr
-</code></pre>
-      <p>Chúng ta sẽ được hỏi các thông tin như lần trước tạo root CA:</p>
-      <pre><code>$ openssl req -new -key test-ssl.local.key -out test-ssl.local.csr
+      <pre>openssl req -new \<br>-key test-ssl.local.key \<br>-out test-ssl.local.csr \<br>-subj "/C=VN/ST=Hung Yen/L=Van Giang/O=Van Giang Pharmacy/OU=IT/CN=cttd/emailAddress=admin@cttd.tk"
+</pre>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        Chúng ta sẽ được hỏi các thông tin như lần trước tạo root CA:</p>
+      <pre>$ openssl req -new -key test-ssl.local.key -out test-ssl.local.csr
 You are about to be asked to enter information that will be incorporated
 into your certificate request.
 What you are about to enter is what is called a Distinguished Name or a DN.
@@ -230,17 +294,16 @@ Please enter the following 'extra' attributes
 to be sent with your certificate request
 A challenge password []:
 An optional company name []:
-</code></pre>
+</pre>
       <p>Các bạn có thể tùy nhập các thông tin mà các bạn muốn. Phần<span> </span><strong>A
           challegen password</strong><span> </span>và<span> </span><strong>An
           optional company name</strong><span> </span>các bạn có thể bỏ trống.</p>
       <p>Bạn có thể sử dụng tham số <code>-subj</code> để không phải nhập từng
         bước:</p>
-      <pre>-subj "/C=US/ST=New York/L=Brooklyn/O=Example Brooklyn Company/CN=examplebrooklyn.com"</pre>
       <p>Bước tiếp theo, chúng ta thực hiện tạo một file config để định nghĩa<span>
         </span><a href="https://en.wikipedia.org/wiki/Subject_Alternative_Name"
           target="_blank">Subject Alternative Name (SAN)</a><span> </span>cho
-        SSL này. Chúng ta thực hiện tạo file:</p>
+        SSL này. Chúng ta thực hiện tạo file text:</p>
       <pre><code>vi test-ssl.local.ext
 </code></pre>
       <p>Và nhập nội dung bên dưới:</p>
@@ -256,6 +319,7 @@ DNS.3=sso-admin.cttd.tk
 DNS.4=sso-passport.cttd.tk
 DNS.5=landing-page.cttd.tk</pre>
       <p>Bạn có thể thêm nhiều <code>DNS.x=&lt;Domain bạn muốn&gt;</code>.</p>
+      <p>Bạn sẽ gửi file <code>csr</code> và file <code>ext</code> cho CA.</p>
       <h3>CA ký</h3>
       <p>Giờ chúng ta lại đóng vai trò là CA và tự ký.</p>
       <p>Giờ chúng ta sẽ tạo certificate cho domain:</p>
@@ -265,12 +329,13 @@ DNS.5=landing-page.cttd.tk</pre>
         -CAkey rootCA.key \<br>
         -CAcreateserial \<br>
         -out test-ssl.local.crt \<br>
-        -days 1825 \<br>
+        -days 365 \<br>
         -sha256 \<br>
-        -extfile test-ssl.local.txt</pre>
+        -extfile test-ssl.local.ext</pre>
+      <p>Chú ý nhập days nhỏ thôi (365) nếu không bị lỗi trên iPad.</p>
       <p>Khi này chúng ta sẽ được hỏi pass phase của<span> </span><code>rootCA.pem</code>,
         bạn nhập pass phase mà bạn đã sử dụng lúc tạo<span> </span><code>rootCA.key</code>.</p>
-      <pre>$ openssl x509 -req -in test-ssl.local.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out test-ssl.local.crt -days 1825 -sha256 -extfile test-ssl.local.ext
+      <pre>$ openssl x509 -req -in test-ssl.local.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out test-ssl.local.crt -days 365 -sha256 -extfile test-ssl.local.ext
 Signature ok
 subject=/C=VN/ST=Hung Yen/L=Van Giang/O=Van Giang Pharmacy/OU=IT/CN=test-ssl.local/emailAddress=admin@test-ssl.local
 Getting CA Private Key
@@ -365,7 +430,7 @@ Enter pass phrase for rootCA.key:</pre>
         thoải mái thử các công nghệ mới như PWA hay HTTP2 mà không cần phải có
         SSL chính chủ. Bài viết của mình đến đây là kết thúc. Hy vọng nó sẽ có
         ích cho các bạn trong tương lai không xa. Chào thân ái vào quyết thắng<span></span>!</p>
-      <h3>Cấu hình http sang https</h3>
+      <h3>Cấu hình HTTP sang HTTPS</h3>
       <p>Phải cấu hình nếu không sẽ bị lỗi 404 không tìm thấy hoặc không connect
         được.</p>
       <p>Để cấu hình redirect HTTP sang HTTPS trên nginx, ta cần tạo 2 block
