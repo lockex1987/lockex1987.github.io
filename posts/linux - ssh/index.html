@@ -36,61 +36,6 @@
       </ul>
       <p>Các key sẽ được lưu vào thư mục <code>~/.ssh</code>. Tên các key
         thường là <code>id_rsa</code> và <code>id_rsa.pub</code>.</p>
-      <h3>Copy file lên server<br>
-      </h3>
-      <p>Tạo thư mục <code>~/.ssh</code> trên server:</p>
-      <pre>ssh admin1@192.168.1.116 mkdir -p .ssh</pre>
-      <p>Chuyển public key (<code>id_rsa.pub</code>) vào file <code>authorized_keys</code>
-        trên server:</p>
-      <pre class="text-pre-wrap">cat .ssh/id_rsa.pub | ssh admin1@192.168.1.116 'cat &gt;&gt; .ssh/authorized_keys'</pre>
-      <p>Thiết lập quyền cho thư mục và file, không cho phép người khác đọc:</p>
-      <pre class="text-pre-wrap">ssh admin1@192.168.1.116 "chmod 700 .ssh; chmod 600 .ssh/authorized_keys"</pre>
-      <p>Câu lệnh gộp:</p>
-      <pre class="text-pre-wrap">cat ~/.ssh/id_rsa.pub | ssh admin1@192.168.1.116 "mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; cat &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys"</pre>
-      <p>Từ giờ mỗi lần tuy cập lại sẽ không cần dùng password nữa.</p>
-      <pre>ssh admin1@192.168.1.116</pre>
-      <h3>Một số file trong thư mục .ssh</h3>
-      <p>File <code>known_hosts</code>:</p>
-      <pre>[bitbucket.cyberspace.vn]:7999,[10.30.152.24]:7999 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDpWlLsJMdkWaXkb2dq+9sE2205w4Q7P4tbDkwmRntgRHbs0dh1lBaHxXTilzsDLMDNXKgCteLxy38ni6nQWmLhAm1d+K4fZt4LqHhb+h9OwadJYY5jJl/lS2ksnhpKTpS9hFxilmf6FTrVg8EYdKFiSWnCRmyQ8b+fl9GZ0O9578ktqArG/hfurN/j4Awm1NHxJWs8H7xjlRDejsBbrZ7y4R+WK2Ghjw7gyYYQE951zviJGNBQ9lqb88jkUlIeg+6GXE/frSgVP1gMB9ym6GohOqGG9P20O+OXTL7E00rwS02HMWDmKnel4yERPQiuBFajo5WkNxi4Yw7szBz6grAT
-bitbucket.cyberspace.vn,10.30.152.24 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMgxyMkUFJr+W83w1gd6/O/gJEy55+XL8EI1qfVchX25UAIU2UaHtq6WYYZd8kmkzknEMQJgLdo0vNp9JzSVr+w=
-source.cyberspace.vn,10.30.152.17 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHctn+maU69t3+JkOBj2I08PeZRMt3aftzzAPfYgRdQFw6mVetJwXhUNg80WYMkgmqZtP6PdlProdBFEKIoejCg=</pre>
-      <p>File <code>.ssh/config</code> để mỗi server sử dụng key khác nhau:</p>
-      <pre>Host bitbucket.cyberspace.vn
- IdentityFile ~/.ssh/id_rsa
-
-Host 192.168.101.20
- IdentityFile ~/.ssh/zid_rsa</pre>
-      <h3>Tham khảo</h3>
-<!DOCTYPE html>
-<html lang="vi">
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="date" content="2020-02-19 23:27:00">
-    <meta name="description" content="passwordless">
-    <title>Sử dụng SSH</title>
-    <link rel="icon" href="../../images/favicon.png">
-    <link rel="stylesheet" href="../../css/style.css">
-  </head>
-  <body>
-    <article>
-      <h2>Sử dụng SSH</h2>
-      <p>Cấu hình và sử dụng SSH để không phải gõ password.</p>
-      <p>Sử dụng lệnh <code>ssh</code> để thực hiện lệnh.</p>
-      <p>Sử dụng lệnh <code>scp</code> để copy file (upload hoặc download).</p>
-      <p>Không dùng password nữa để có thể thực hiện các script tự động. Nếu
-        dùng password thì script sẽ dừng lại, chờ chúng ta nhập password.</p>
-      <h3>Generate key mới</h3>
-      <p>Thực hiện câu lệnh:</p>
-      <pre>ssh-keygen -t rsa<br>ssh-keygen -t rsa -b 4096 -C "lockex1987@gmail.com"</pre>
-      <p>Nhớ không nhập passphrase.</p>
-      <p>Các tham số:</p>
-      <ul>
-        <li><code>-b</code>: số bit</li>
-        <li><code>-C</code>: comment</li>
-      </ul>
-      <p>Các key sẽ được lưu vào thư mục <code>~/.ssh</code>. Tên các key
-        thường là <code>id_rsa</code> và <code>id_rsa.pub</code>.</p>
       <p>Ví dụ:</p>
       <pre class="out-of-box text-white bg-dark">$ ssh-keygen -t rsa -b 4096 -C "lockex1987@gmail.com"
 Generating public/private rsa key pair.
@@ -116,8 +61,7 @@ The key's randomart image is:
       <p>Trong ví dụ trên, tôi đặt lại tên file là <code>lockex1987</code> nên
         trong thư mục <strong>hiện tại</strong> sẽ có hai file là <code>lockex1987</code>
         và <code>lockex1987.pub</code>.</p>
-      <h3>Copy file lên server<br>
-      </h3>
+      <h3>Copy file lên server </h3>
       <p>Tạo thư mục <code>~/.ssh</code> trên server:</p>
       <pre>ssh admin1@192.168.1.116 mkdir -p .ssh</pre>
       <p>Chuyển public key (<code>id_rsa.pub</code>) vào file <code>authorized_keys</code>
@@ -127,7 +71,7 @@ The key's randomart image is:
       <pre class="text-pre-wrap">ssh admin1@192.168.1.116 "chmod 700 .ssh; chmod 600 .ssh/authorized_keys"</pre>
       <p>Câu lệnh gộp:</p>
       <pre class="text-pre-wrap">cat ~/.ssh/id_rsa.pub | ssh admin1@192.168.1.116 "mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; cat &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys"</pre>
-      <p>Từ giờ mỗi lần tuy cập lại sẽ không cần dùng password nữa.</p>
+      <p>Từ giờ mỗi lần truy cập lại sẽ không cần dùng password nữa.</p>
       <pre>ssh admin1@192.168.1.116</pre>
       <h3>Một số file trong thư mục .ssh</h3>
       <p>File <code>known_hosts</code>:</p>
@@ -147,17 +91,7 @@ Host 192.168.101.20
           đặt dịch vụ SSH trên Server Linux và Windows</a></p>
       <p><a target="_blank" href="https://xuanthulab.net/su-dung-rsync-dong-bo-thu-muc-tren-linux-va-windows.html">Sử
           dụng Rsync đồng bộ thư mục trên Linux và Windows</a></p>
-      <p><a target="_blank" href="https://xuanthulab.net/gioi-thieu-ve-docker-lam-quen-voi-docker-tao-container.html">Giới
-<<<<<<< HEAD
-          thiệu về Docker làm quen với Docker tạo container</a></p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>
 </html>
-=======
-          thiệu về Docker làm quen với Docker tạo container</a></p>
-    </article>
-    <script src="../../js/docs.js"></script>
-  </body>
-</html>
->>>>>>> ac991b0cb20738579cabb768e2501145f0bf896c
