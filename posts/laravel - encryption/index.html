@@ -10,37 +10,38 @@
   </head>
   <body>
     <article>
-      <h2>Encryption</h2>
+      <h2>Laravel Encryption</h2>
       <p>Encrypter của Laravel sử dụng OpenSSL để cung cấp mã hóa AES-256 và
         AES-128. Bạn nên sử dụng mã hóa của Laravel được xây dựng trong thuật
         toán mã hóa. Tất cả giá trị mã hóa của Laravel được đăng ký sử dụng một
         mã (MAC) để phát hiện chỉnh sửa ở chuỗi được mã hóa.</p>
       <h3>Cấu hình</h3>
-      <p>Trước khi sử dụng mã hõa của Laravel, bạn phải đặt một <code>key</code>
-        trong file cấu hình <code>config/app.php</code>. Bạn có dùng lệnh <code>php
-          artisan key:generate</code> để tạo ra key này vì lệnh Artisan command
-        sẽ sử dụng secure random bytes của PHP để tạo ra key. Nếu giá trị này
-        không được đặt, tất cả mã hóa của Laravel sẽ không an toàn.</p>
+      <p>Trước khi sử dụng mã hóa của Laravel, bạn phải đặt một <code>key</code>
+        trong file cấu hình <code>config/app.php</code> (file này lại lấy từ
+        cấu hình <code>APP_KEY</code> ở file <code>.env</code>).
+        Bạn có dùng lệnh <code>php artisan key:generate</code> để tạo ra key
+        này vì lệnh Artisan command sẽ sử dụng secure random bytes của PHP để
+        tạo ra key. Nếu giá trị này không được đặt, tất cả mã hóa của Laravel sẽ
+        không an toàn.</p>
       <h3>Sử dụng encrypter</h3>
       <h4>Mã hóa một giá trị</h4>
-      <p>Bạn có thể mã hoá một giá trị sử dụng <code>enrypt</code>. Tất cả các
-        giá trị được mã hoá sử dụng OpenSSL và thuật toán <code>AES-256-CBC</code>
+      <p>Bạn có thể mã hoá một giá trị sử dụng hàm <code>enrypt</code>. Tất cả
+        các giá trị được mã hoá sử dụng OpenSSL và thuật toán <code>AES-256-CBC</code>
         cipher. Thêm nữa, các giá trị này được kí với mã MAC (Message
         Authetication Code) để phát hiện chỉnh sửa ở chuỗi đã được mã hoá:</p>
-      <pre>&lt;?php
+      <pre>&lt;?php<br>
 namespace App\Http\Controllers;
 <br>use Illuminate\Http\Request;
 use App\User;
-use App\Http\Controllers\Controller;
-<br>
+use App\Http\Controllers\Controller;<br>
 class UserController extends Controller
 {
     /**
      * Store a secret message for the user.
      *
-     * @param    Request  $request
-     * @param    int  $id
-     * @return  Response
+     * @param Request $request
+     * @param int $id
+     * @return Response
      */
     public function storeSecret(Request $request, $id)
     {
@@ -54,14 +55,13 @@ class UserController extends Controller
         quá trình mã hóa, nó có thể mã hóa đối tượng và mảng. Vì vậy, các phía
         nhận giá trị mã hoá không phải từ PHP thì sẽ cần phải <code>unserialize</code>
         dữ liệu.</p>
-      <p>Bạn có thể sử dụng facade Crypt (Illuminate\Support\Facades\Crypt).</p>
+      <p>Bạn cũng có thể sử dụng facade <code>Crypt</code> (<code>Illuminate\Support\Facades\Crypt</code>).</p>
       <pre>use Illuminate\Support\Facades\Crypt;
 
-$encrypted = Crypt::encryptString('Hello world.');
-
+$encrypted = Crypt::encryptString('Hello world.');<br>
 $decrypted = Crypt::decryptString($encrypted);</pre>
       <p>Mỗi lần thực hiện <code>Crypt::encryptString()</code> sẽ cho ra kết
-        quả khác nhau do có sử dụng IV (Initial Vector).</p>
+        quả khác nhau do có sử dụng <code>IV</code> (Initial Vector).</p>
       <h4>Giải mã một giá trị</h4>
       <p>Bạn có thể giải mã bằng phương thức <code>decrypt</code>. Nếu như giá
         trị không thể giải mã hoàn chỉnh, ví dụ như mã MAC là không hợp lệ, thì
@@ -71,13 +71,14 @@ $decrypted = Crypt::decryptString($encrypted);</pre>
 
 try {
     $decrypted = decrypt($encryptedValue);
-} catch (DecryptException $e) {
+} catch (DecryptException $ex) {
     //
 }</pre>
       <h3>Tham khảo</h3>
-      <p><a href="https://laravel.com/docs/master/encryption">laravel.com/docs/master/encryption</a></p>
-      <p><a href="https://github.com/laravel/framework/blob/7.x/src/Illuminate/Encryption/Encrypter.php"
-          target="_blank">https://github.com/laravel/framework/blob/7.x/src/Illuminate/Encryption/Encrypter.php</a></p>
+      <p><a href="https://laravel.com/docs/master/encryption" target="_blank">laravel.com/docs/master/encryption</a></p>
+      <p><a href="https://github.com/laravel/framework/blob/master/src/Illuminate/Encryption/Encrypter.php"
+
+          target="_blank">https://github.com/laravel/framework/blob/master/src/Illuminate/Encryption/Encrypter.php</a></p>
       <p><br>
       </p>
       <p><br>

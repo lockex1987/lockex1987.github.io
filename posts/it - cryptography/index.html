@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
-    <meta name="description" content="Cryptography">
+    <meta name="description" content="cryptography, hash, md5, sha, bcrypt, des, aes, rsa, json web token">
   </head>
   <body>
     <article>
@@ -16,65 +16,328 @@
       <ul>
         <li>Mã hóa một chiếu, hàm băm, hash function:</li>
         <ul>
-          <li><a href="cryptography%20-%20md5/index.html">MD5</a></li>
-          <li><a href="cryptography%20-%20sha/index.html">SHA</a></li>
-          <li><a href="cryptography%20-%20bcrypt/index.html">bcrypt</a></li>
+          <li>MD5</li>
+          <li>SHA</li>
+          <li>bcrypt</li>
           <li>HMAC</li>
         </ul>
         <li>Khóa đối xứng, Symmetric:</li>
         <ul>
-          <li><a href="cryptography%20-%20des/index.html">DES</a></li>
-          <li><a href="cryptography%20-%20aes/index.html">AES</a></li>
+          <li>DES</li>
+          <li>AES</li>
         </ul>
         <li>Khóa công khai, Asymmetric Cryptography, Public Key Cryptography:</li>
         <ul>
-          <li><a href="cryptography%20-%20rsa/index.html">RSA</a></li>
+          <li>RSA</li>
         </ul>
       </ul>
-      <p>Hàm băm để kiểm tra tính toàn vẹn của thông tin.</p>
+      <p>Các thao tác với cryptography đều xử lý trên kiểu dữ liệu là byte,
+        không phải string.</p>
+      <p>Có thể thao tác bằng dòng lệnh với open_ssl.</p>
+      <p>Ứng dụng HTTPS nữa.</p>
+      <h3>Hàm hash</h3>
+      <p>Hàm băm để kiểm tra tính toàn vẹn của thông tin. Hàm hash chuyển dữ
+        liệu đầu vào thành một giá trị hash có độ dài cố định. MD5 và SHA1 chạy
+        nhanh, thường dùng để kiểm tra checksum cho file. Tuy nhiên, vì nó nhanh
+        nên có thể bị dò mật khẩu bằng brute force. Nên sử dụng các thuật toán
+        chậm hơn như bcrypt hoặc Argon2.</p>
+      <h4>Hàm băm MD5</h4>
+      <p> MD5 (Message-Digest algorithm 5) là một hàm băm không khóa.</p>
+      <p> Tất cả đầu vào (file, text,…) sau khi được băm bằng thuật toán MD5 sẽ
+        cho ra một chuỗi đầu ra 128 bit (16 byte) và thường được biểu diễn thành
+        32 chữ số hexa.</p>
+      <p> Ứng dụng của MD5:</p>
+      <ul>
+        <li> Đảm bảo tính toàn vẹn, tạo chuỗi kiểm tra lỗi. Ví dụ khi download
+          một file trên mạng bạn thường thấy người ta cung cấp kèm một chuỗi MD5
+          tương ứng. Sau khi download về ta sẽ băm lại file để kiểm tra chuỗi
+          MD5 có bị thay đổi không. Nếu đã bị thay đổi tức là trong quá trình
+          download file đã bị thiếu một phần nào đó hoặc file đã bị chỉnh sửa
+          (chèn virus, crack…). </li>
+        <li> Mã hóa mật khẩu. Các thông tin nhạy cảm như mật khẩu, thẻ ngân
+          hàng… thường sẽ được mã hóa trước khi lưu vào database. Nếu hacker
+          truy cập được vào database cũng sẽ không lấy được các thông tin đó.
+          Khi sử dụng, ví dụ khi đăng nhập ta sẽ băm mật khẩu thành một chuỗi
+          MD5 và so sánh nó với chuỗi MD5 trong database để xác thực.</li>
+      </ul>
+      <p> Để băm một đối tượng trong Java sử dụng MD5 ta sử dụng class <code>
+          java.security.MessageDigest</code>. Nó nhận đầu vào là một mảng byte
+        và kết quả trả về là một mảng byte đã được băm.</p>
+      <pre>MessageDigest md = MessageDigest.getInstance("MD5");
+md.update(dataInput);
+byte[] hashedData= md.digest();</pre>
+      <p> Sau đó để hiển thị ta sẽ chuyển mảng byte sau khi băm thành một chuỗi
+        hexa.</p>
+      <p> Tham khảo:</p>
+      <p><a href="%20https://stackjava.com/demo/md5-la-gi-code-vi-du-md5-voi-java.html"
+
+          target="_blank">
+          https://stackjava.com/demo/md5-la-gi-code-vi-du-md5-voi-java.html</a></p>
+
+
+          <h4>SHA</h4>
+          <p>SHA (Secure Hash Algorithm) là một thuật toán băm dùng để chuyển một
+            đoạn dữ liệu nhất định thành một đoạn dữ liệu có chiều dài không đổi với
+            xác suất khác biệt cao.</p>
+          <p>Họ hàm băm SHA gồm: SHA-0, SHA-1, SHA-2, SHA-3.</p>
+          <ul>
+            <li>SHA0 ít được sử dụng trên thực tế.</li>
+            <li>SHA1 tương tự SHA0, nhưng đã khắc phục một số lỗi, chuỗi đầu ra của
+              SHA1 có kích thước 160 bit (20 byte) và thường được biểu diễn thành 40
+              chữ số hexa.</li>
+            <li>SHA2 khắc phục lỗi của SHA1 và có nhiều thay đổi. Kích thước chuỗi
+              đầu ra có thể là 224, 256, 384 và 512 bit.</li>
+            <li>SHA3 cho phép chuỗi đầu ra có kích thước không cố định.</li>
+          </ul>
+          <p>SHA được sử dụng rộng rãi để đảm bảo tính xác thực và toàn vẹn thông
+            điệp.</p>
+          <p>Để băm một đối tượng trong Java sử dụng SHA ta sử dụng class <code>java.security.MessageDigest</code>.
+            Nó nhận đầu vào là một mảng byte và kết quả trả về là một mảng byte đã
+            được băm.</p>
+          <p>Tham số đầu vào của phương thức <code>MessageDigest.getInstance()</code>
+            sẽ tương ứng với thuật toán băm, ví dụ SHA-1 (SHA1), SHA-224, SHA-256,
+            SHA-384, SHA-512 (SHA2).</p>
+          <p>Ví dụ băm một đoạn text đầu vào và hiển thị kết quả:</p>
+          <pre>MessageDigest md = MessageDigest.getInstance("SHA-1");
+    byte[] messageDigest = md.digest(dataInput);</pre>
+          <p>Tham khảo:</p>
+          <p><a href="https://stackjava.com/demo/sha-la-gi-code-vi-du-sha1-sha2-voi-java.html"
+    
+              target="_blank">https://stackjava.com/demo/sha-la-gi-code-vi-du-sha1-sha2-voi-java.html</a></p>
+
+
+
+              <h4>bcrypt</h4>
+              <p>bcrypt là một thuật toán mã hóa mật khẩu được thiết kế bởi Niels Provos
+                và David Mazières.</p>
+              <p>bcrypt được đánh giá là bảo mật và an toàn hơn so với MD5 và SHA bởi
+                mỗi lần thực hiện băm nó lại cho một giá trị khác nhau, việc này khiến
+                cho việc dò tìm mật khẩu trở nên khó hơn.</p>
+              <p>Ở đây mình sử dụng thư viện JBCrypt để thực hiện băm và so sánh giá
+                băm.</p>
+              <p>Maven:</p>
+              <pre class="">&lt;dependency&gt;
+            &lt;groupId&gt;org.mindrot&lt;/groupId&gt;
+            &lt;artifactId&gt;jbcrypt&lt;/artifactId&gt;
+            &lt;version&gt;0.4&lt;/version&gt;
+        &lt;/dependency&gt;</pre>
+              <p>Ví dụ:</p>
+              <pre>String password = "123456a@";
+        String hashed = BCrypt.hashpw(password, BCrypt.gensalt(12));
+        </pre>
+              <p>Trong đó <code>BCrypt.gensalt()</code> xác định số vòng. Số vòng dao
+                động từ 4-30. Số vòng càng lớn thì thời gian thực hiện băm càng lâu.</p>
+              <p>Kết quả:</p>
+              <pre>$2a$12$hWa.AZxY/31OesIk5Wk8qOwo4haff28ueNXyJ5ybfJM.X2E7CxF5e</pre>
+              <p>Thực hiện chạy lại một lần nữa ta được một chuỗi khác:</p>
+              <pre>$2a$12$meORPYos7QBc8o2rFAsf.efeUuWm0P4vj22XBJXnxudVtA0veT5mq</pre>
+              <p>Ví dụ thực hiện xác nhận mật khẩu với một đoạn mã băm (BCrypt hash)</p>
+              <pre>String candidate = "123456a@";
+        String hashed = "$2y$10$bTvm6wAADzfptlHuufxbDuF9QJMtX0W9ly.kb.FpottRB0tp5xeDu";
+        boolean check = BCrypt.checkpw(candidate, hashed);
+        System.out.println(check);</pre>
+              <p>Kết quả:</p>
+              <pre>true</pre>
+              <p>Tham khảo:</p>
+              <p><a href="https://stackjava.com/demo/bcrypt-la-gi-code-vi-du-bcrypt-bang-java-jbcrypt.html"
+        
+                  target="_blank">https://stackjava.com/demo/bcrypt-la-gi-code-vi-du-bcrypt-bang-java-jbcrypt.html</a></p>
+
+
+
+      <h3>Khóa đối xứng</h3>
       <p>Khóa đối xứng (có một key) để che dấu thông tin.</p>
+
+      <h4>DES</h4>
+      <p>DES (Data Encryption Standard) là một thuật toán mã hóa dữ liệu.</p>
+      <p>Đặc điểm:</p>
+      <ul>
+        <li>Là dạng mã hóa khối, kích thước khối vào 64 bit.</li>
+        <li>Khóa 64 bit, trong đó thực sử dụng 56 bit, 8 bit dùng cho kiểm tra
+          chẵn lẻ.</li>
+        <li>DES sử dụng chung một giải thuật cho mã hóa và giải mã.</li>
+      </ul>
+      <p>Hiện nay DES không được coi là an toàn do:</p>
+      <ul>
+        <li>Không gian khóa nhỏ (khóa 64 bit, trong đó thực sử dụng 56 bit).</li>
+        <li>Tốc độ tính toán của các hệ thống máy tính ngày càng nhanh.</li>
+      </ul>
+      <p>DES là loại mã hóa đối xứng (mã hóa khóa bí mật), sử dụng một khóa bí
+        mật duy nhất cho cả quá trình mã hóa và giải mã.</p>
+      <div class="mb-3"><img src="https://stackjava.com/wp-content/uploads/2018/03/Picture1.png"></div>
+      <h5>Ví dụ mã hóa, giải mã với DES</h5>
+      <p>Tạo key (tạo khóa mã hóa/giải mã)</p>
+      <pre>String SECRET_KEY = "12345678";
+SecretKeySpec skeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "DES");</pre>
+      <p>Tạo một đối tượng Cipher (đối tượng này dùng để mã hóa, giải mã) và chỉ
+        rõ các thông tin:</p>
+      <ul>
+        <li>Tên thuật toán</li>
+        <li><a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation"
+
+            target="_blank">Mode</a> (tùy chọn)</li>
+        <li>Padding scheme (tùy chọn)</li>
+      </ul>
+      <pre>Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5PADDING");</pre>
+      <p>Chú thích:</p>
+      <ul>
+        <li>DES = Data Encryption Standard</li>
+        <li>ECB = Electronic Codebook mode</li>
+        <li>PKCS5Padding = PKCS #5-style padding</li>
+      </ul>
+      <p>Mã hóa:</p>
+      <pre>String original = "stackjava.com";
+Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5PADDING");
+cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
+byte[] byteEncrypted = cipher.doFinal(original.getBytes());
+String encrypted = Base64.getEncoder().encodeToString(byteEncrypted);</pre>
+      <p>Khi thực hiện mã hóa hay giải mã nó sẽ thực hiện trên <code>byte[]</code>.</p>
+      <p>Ở đây mình ví dụ mã hóa text nên chuyển text sang byte, các bạn có thể
+        mã hóa tương tự với file.</p>
+      <p>Ở đây mình chuyển byte sang dạng base64 để hiển thị.</p>
+      <p>Giải mã:</p>
+      <pre>cipher.init(Cipher.DECRYPT_MODE, skeySpec);
+byte[] byteDecrypted = cipher.doFinal(byteEncrypted);
+String decrypted = new String(byteDecrypted);</pre>
+      <p>Tham khảo:</p>
+      <p><a href="https://stackjava.com/demo/code-java-vi-du-ma-hoa-giai-ma-voi-des.html"
+
+          target="_blank">https://stackjava.com/demo/code-java-vi-du-ma-hoa-giai-ma-voi-des.html</a></p>
+
+
+          <h4>AES</h4>
+          <p>AES (Advanced Encryption Standard) là một thuật toán mã hóa, được dùng
+            làm tiêu chuẩn mã hóa.</p>
+          <p>Đặc điểm:</p>
+          <ul>
+            <li>Kích thước khối dữ liệu của AES là 128 bit</li>
+            <li>Kích thước khóa có thể là 128, 192, hoặc 256 bit (là bội của 32 và
+              lớn nhất là 256 bit)</li>
+          </ul>
+          <p>AES là loại mã hóa đối xứng, sử dụng một khóa bí mật duy nhất cho cả
+            quá trình mã hóa và giải mã</p>
+          <div class="mb-3"><img src="https://stackjava.com/wp-content/uploads/2018/03/Picture1.png"></div>
+          <h5>Ví dụ mã hóa, giải mã với AES</h5>
+          <p>Tạo key (tạo khóa mã hóa/giải mã):</p>
+          <pre>String SECRET_KEY = "stackjava.com.if";
+    SecretKeySpec skeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "AES");</pre>
+          <p>Tạo một đối tượng Cipher (đối tượng này dùng để mã hóa, giải mã) và chỉ
+            rõ các thông tin:</p>
+          <ul>
+            <li>Tên thuật toán</li>
+            <li><a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation"
+    
+                target="_blank">Mode</a> (tùy chọn)</li>
+            <li>Padding scheme (tùy chọn)</li>
+          </ul>
+          <pre>Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");</pre>
+          <p>Chú thích:</p>
+          <ul>
+            <li>AES = Advanced Encryption Standard</li>
+            <li>ECB = Electronic Codebook mode</li>
+            <li>PKCS5Padding = PKCS #5-style padding</li>
+          </ul>
+          <p>Mã hóa:</p>
+          <pre>String original = "stackjava.com";
+    Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
+    cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
+    byte[] byteEncrypted = cipher.doFinal(original.getBytes());
+    String encrypted = Base64.getEncoder().encodeToString(byteEncrypted);</pre>
+          <p>Khi thực hiện mã hóa hay giải mã nó sẽ thực hiện trên <code>byte[]</code>.</p>
+          <p>Ở đây mình ví dụ mã hóa text nên chuyển text sang byte, các bạn có thể
+            mã hóa tương tự với file.</p>
+          <p>Ở đây mình chuyển byte sang dạng base64 để hiển thị.</p>
+          <p>Giải mã:</p>
+          <pre>cipher.init(Cipher.DECRYPT_MODE, skeySpec);
+    byte[] byteDecrypted = cipher.doFinal(byteEncrypted);
+    String decrypted = new String(byteDecrypted);</pre>
+          <p>Lưu ý, AES chỉ chấp nhận các key có độ dài là 128, 192, hoặc 256 bit.</p>
+          <p>Ví dụ mình dùng key là “<code>stackjava.com.ifdf</code>” có độ dài là
+            18 byte, nó sẽ báo lỗi:</p>
+          <div class="mb-3"><img src="https://stackjava.com/wp-content/uploads/2018/03/aes-invalid-key.png"></div>
+          <p>Các phiên bản Java trước phiên bản 8 u162 mặc định sẽ không hỗ trợ AES
+            256-bit mà chỉ AES 128-bit, có nghĩa là sẽ không hỗ trợ key có độ dài 32
+            ký tự (Laravel sử dụng key 32 ký tự). Ghi giải mã bằng Java có thể bị
+            lỗi "Illegal key size". Khi đó cần download <em>Java Cryptography
+              Extension (JCE) Unlimited Strength Jurisdiction Policy Files</em> ở <a
+    
+              href="https://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip"
+    
+              target="_blank">đây</a>.</p>
+          <p>Sau khi download, hãy giải nén file, copy các file jar (<code>local_policy.jar</code>,
+            <code>US_export_policy.jar</code>) vào thư mục <code>${java.home}/jre/lib/security/</code>.</p>
+          <p>Các phiên bản Java mới thì mặc định đã hỗ trợ.</p>
+          
+          <p>Tham khảo:</p>
+          <p><a href="https://stackjava.com/demo/code-java-vi-du-ma-hoa-giai-ma-voi-aes.html"
+    
+              target="_blank">https://stackjava.com/demo/code-java-vi-du-ma-hoa-giai-ma-voi-aes.html</a></p>
+
+      <h3>Khóa công khai</h3>
       <p>Khóa công khai (có hai key) để che dấu thông tin, ký.</p>
       <p>Ứng dụng:</p>
       <ul>
         <li>Mã hóa, che giấu thông tin</li>
         <li>Ký điện tử</li>
       </ul>
-      <h3>Code mẫu Java</h3>
-      <p>Luồng là:</p>
+      
+      <h4>RSA</h4>
+      <p><a href="https://en.wikipedia.org/wiki/RSA_%28cryptosystem%29" target="_blank">RSA</a>
+        là một giải thuật mã hóa được 3 nhà khoa học Ronald Rivest, Adi Shamir
+        và Leonard Adleman phát minh năm 1977. Tên giải thuật RSA lấy theo chữ
+        cái đầu của tên 3 ông.</p>
+      <p>Độ an toàn của RSA dựa trên tính khó của việc phân tích số nguyên rất
+        lớn (số có hàng trăm chữ số thập phân).</p>
+      <p>Kích thước khóa của RSA:</p>
       <ul>
-        <li>Có xâu đầu vào kiểu String plainText</li>
-        <li>Chuyển plainText thành mảng byte inputBytes</li>
-        <li>Khởi tạo đối tượng MessageDigest với thuật toán cụ thể (MD5, SHA)</li>
-        <li>Sử dụng phương thức update của đối tượng MessageDigest với mảng byte
-          đầu vào</li>
-        <li>Sử dụng phương thức digest của đối tượng MessageDigest để ra mảng
-          byte đầu ra</li>
-        <li>Chuyển mảng byte đầu ra thành String</li>
+        <li>Khóa &lt; 1024 bit không an toàn hiện nay.</li>
+        <li>Khuyến nghị dùng khóa &gt;= 2048 bit. Tương lai nên dùng khóa 3072
+          bit.</li>
       </ul>
-      <p>Trong đó:</p>
+      <p>RSA là mã hóa bất đối xứng, sử dụng một cặp khóa:</p>
       <ul>
-        <li>MessageDigest : là một class ,MessageDigest này cung cấp các ứng
-          dụng các chức năng của một thông điệp tiêu hóa thuật toán, chẳng hạn
-          như SHA-1 hoặc SHA-256 hay MD5.Khi chúng ta mã hóa thì nó sẽ mã hóa
-          một chiều,không thể mã hóa ngược lại, đây là lý do bảo mật cho người
-          sử dụng.</li>
-        <li>getInstance : đây là method để truyền vào chuỗi muốn mã hóa,ví dụ
-          md5.</li>
-        <li>update : update là một method của lớp MessageDigest giúp cập nhật
-          lại chuỗi cần mã hóa.</li>
-        <li>BigInteger :&nbsp; BigInteger là một class cung cấp tương tự cho tất
-          cả các nhà khai thác nguyên nguyên thủy của Java, và tất cả các phương
-          pháp có liên quan từ java.lang.Math. BigInteger lớp phân bổ bộ nhớ
-          nhiều như nó cần cho tất cả các bit của dữ liệu và đặc biệt là nó
-          không giới hạn toString(16) : giúp đồng bộ chuỗ i mã hóa md5
-          trong&nbsp; mysql.</li>
+        <li>Khóa công khai (public key) dùng để mã hóa.</li>
+        <li>Khóa riêng (private key) dùng để giải mã.</li>
+        <li>Chỉ khóa riêng cần giữ bí mật. Khóa công khai có thể công bố rộng
+          rãi.</li>
       </ul>
-      <p>Sử dụng thư viện common-codec chúng ta có thể gọi MD5 dễ dàng như sau:</p>
-      <p>String md5Hex = DigestUtils.md5Hex(password).toUpperCase();</p>
-      <p>Source code: cttd-encryption.zip (EncryptUtil, EncryptUtilTests)</p>
-      <h3>Tham khảo:</h3>
+      <div class="mb-3"><img src="https://stackjava.com/wp-content/uploads/2018/03/Picture2.png"></div>
+      <h5>Code ví dụ RSA</h5>
+      <h6>Tạo cặp khóa private-public</h6>
+      <p>RsaGenerateKeys.java</p>
+      
+      <p>Kết quả: 2 file <code>privateKey</code> và <code>publicKey</code>
+        được tạo ra. </p>
+      <h6>Mã hóa và giải mã</h6>
+      <p>Mỗi lần thực hiện mã hóa ta sẽ đọc file <code>publicKey</code> để lấy
+        public key thực hiện mã hóa, tương tự ta sẽ đọc file <code>privatekey</code>
+        để lấy private key thực hiện giải mã.</p>
+      
+      <p>Kết quả:</p>
+      
+      <p><a href="https://stackjava.com/demo/code-java-vi-du-ma-hoa-giai-ma-voi-rsa.html"
+
+          target="_blank">https://stackjava.com/demo/code-java-vi-du-ma-hoa-giai-ma-voi-rsa.html</a></p>
+
+    <h3>JSON Web Token</h3>
+   <p>https://en.wikipedia.org/wiki/JSON_Web_Token</p> 
+   <p>https://jwt.io/</p>
+   <p>https://github.com/auth0/java-jwt</p> 
+   <p>https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/</p> 
+
+      <h3>Cryptography in PHP</h3>
+      <p>http://php.net/manual/en/function.openssl-verify.php</p>
+      <p>http://php.net/manual/en/function.openssl-private-decrypt.php</p>
+      <p>http://php.net/manual/en/function.openssl-public-encrypt.php</p>
+      <p>https://www.php.net/manual/en/function.openssl-get-cipher-methods.php</p>
+      <p>https://www.php.net/manual/en/function.openssl-encrypt.php</p>
+      <p>https://www.php.net/manual/en/function.openssl-decrypt.php</p>
+      <h3>HTTPS</h3>
+      <p><a href="../it%20-%20config%20web%20https/">Cấu hình HTTPS cho ứng dụng web</a></p>
+      <h3>Tham khảo</h3>
       <p><a href="https://github.com/lt/php-cryptopals" target="_blank">GitHub -
           lt/php-cryptopals: The Matasano crypto challenges completed using PHP</a></p>
+          <p>TODO: Xóa thư mục "cryptography - viettel encrypt".</p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>
