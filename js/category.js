@@ -12,14 +12,13 @@ const CAT_THUMBS = {
     highmaps: 'programming/highcharts.svg',
     php: 'programming/php.svg',
     vue: 'programming/vue.svg',
-    // project: 'programming/app store.svg',
     project: 'programming/phpdocument.svg',
     story: 'programming/epub.svg',
     git: 'programming/git.svg',
     redis: 'programming/redis.svg',
     node: 'programming/node.svg',
     webext: 'programming/web-extension.png',
-    it: 'programming/it.png',
+	it: 'programming/open-source.webp',
 	
     // Gộp các mục sau
     python: 'programming/python.svg',
