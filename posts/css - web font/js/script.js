@@ -44,7 +44,8 @@ new Vue({
                 { name: 'Font stack', code: 'stack' },
                 { name: 'Averta', code: 'averta' },
                 { name: 'Open Sans', code: 'opensans' },
-                { name: 'Proxima Nova', code: 'proxima-nova' }
+                { name: 'Proxima Nova', code: 'proxima-nova' },
+				{ name: 'Thư pháp', code: 'thuphap' }
             ]
         };
     }
