@@ -11,13 +11,38 @@
 
 <body>
     <article>
+        <h2>Datatable demo: sử dụng AJAX</h2>
+        <p>Trường hợp lấy dữ liệu AJAX từ server, có thể thêm các tiêu chí tìm kiếm.</p>
+        <p>Cần một server PHP để chạy.</p>
+        <p>Vẫn hiển thị phân trang là sao?</p>
+
         <h2>Datatable demo: sử dụng với Vue</h2>
         <p>Có cả footer summary nữa.</p>
 
-        <div id="vueDemo"
-                v-cloak>
-            <table ref="myTable"
-                    class="table table-bordered table-striped table-hover">
+
+        <div id="app"
+            v-cloak>
+            <div class="d-flex mb-2 justify-content-end align-items-center">
+                <span class="spinner-border spinner-border-sm mr-2"
+                    v-show="isLoading"></span>
+
+                <!-- Nên thêm debounce ở đây -->
+                <input type="text"
+                    class="form-control d-inline w-auto"
+                    placeholder="Tìm kiếm AJAX"
+                    autocomplete="off"
+                    v-model.trim="searchText"
+                    @input="search()"/>
+        
+                <!-- Khi người dùng thêm / sửa / xóa xong thì tìm kiếm lại -->
+                <button type="button"
+                    class="ml-2 btn btn-primary"
+                    @click="search()">
+                    Tìm kiếm
+                </button>
+            </div>
+
+            <table class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
                         <th class="text-right">
@@ -36,19 +61,19 @@
                 </thead>
 
                 <tbody>
-                    <tr v-for="dataEle in items"
-                            :class="{ 'bg-danger': dataEle.checked }">
+                    <tr v-for="(dataEle, i) in items"
+                        :class="{ 'bg-danger': dataEle.checked }">
                         <td class="text-right">
-                            {{dataEle.stt}}
+                            {{$refs.pagi.startIndex + i + 1}}
                         </td>
                         <td>
                             {{dataEle.country}}
                         </td>
                         <td class="text-right">
-                            {{formatThousandsVue(dataEle.population)}}
+                            {{dataEle.population}}
                         </td>
                         <td class="text-center">
-                            {{normalizeDateVue(dataEle.fake_date)}}
+                            {{dataEle.fake_date}}
                         </td>
                     </tr>
                 </tbody>
@@ -56,11 +81,11 @@
                 <tfood>
                     <tr>
                         <td colspan="2"
-                                class="font-weight-bold">
+                            class="font-weight-bold">
                             Tổng hợp
                         </td>
                         <td class="text-right font-weight-bold">
-                            {{summary.totalPopulation ? formatThousandsVue(summary.totalPopulation) : ''}}
+                            {{totalPopulation}}
                         </td>
                         <td>
 
@@ -68,15 +93,16 @@
                     </tr>
                 </tfood>
             </table>
+
+            <pagi :callback-func="gotoPage"
+                ref="pagi"></pagi>
         </div>
     </article>
 
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
     <link rel="stylesheet" href="css/datatable.css">
-    <script src="libs/libs.js"></script>
-    <script src="src/datatable.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+    <script src="../project - pagi/js/pagi.js"></script>
     
-    <script type="module" src="js/script_5_vue.js"></script>
+    <script type="module" src="js/script_4_use_ajax.js"></script>
 </body>
 </html>

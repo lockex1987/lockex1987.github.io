@@ -1,242 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="date" content="2020-04-16 18:21:00">
-    <meta name="description" content="A pagination library written by myself in Vue">
-    <title>Pagi</title>
+    <meta name="date" content="2020-02-24 22:35:00">
+    <meta name="description" content="decorator pattern: sort, search, pagination, bootstrap, table, fixed header, fixed column">
+    <title>Datatable</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
   </head>
   <body>
     <article>
-      <h2>Pagi</h2>
-
+      <h2>Datatable</h2>
+      <h3> Tính năng</h3>
+      <ul>
+        <li>Phân trang</li>
+        <li>Sử dụng AJAX </li>
+        <li>Sử dụng với Vue</li>
+        <li>Hiển thị loading</li>
+        <li>Sắp xếp theo cột</li>
+        <li>Merge header được</li>
+        <li>Tìm kiếm theo từ khóa</li>
+        <li>Footer summary</li>
+        <li>-------------------</li>
+        <li>Fixed header, fixed column</li>
+        <li>Expandable</li>
+        <li>Selectable</li>
+        <li>Ẩn hiện cột</li>
+      </ul>
+      <h3>Hướng dẫn migrate thư viện Datatable sang Pagi</h3>
+      <p>Bỏ không sử dụng Datatable nữa, sửa dụng thư viện Pagi thôi.</p>
+      <p>Thêm <code>&lt;pagi :callback-func="gotoPage"
+          ref="pagi"&gt;&lt;/pagi&gt;</code>. </p>
+      <p>Chỗ <code>this.datatable.reload()</code> chuyển thành <del><code>this.gotoPage(1)</code></del>
+        <code>this.$refs.pagi.reload()</code> (gọi thế này để có tham số <code>pageSize</code>,
+        sortColumn, sortDirection).</p>
+      <p>Chỗ <code>showLoading</code> thì thêm một biến <code>isLoading</code>,
+        hiển thị spinner như kiểu <code>isProcessing</code> khi thêm mới / cập
+        nhật.</p>
+      <p>Các tùy chọn <code>ajax</code>, <code>startSearchCallback</code>, <code>finishSearchCallback</code>,
+        <code>getTotalAndData</code>, <code>bindItemsCallback</code> sử dụng
+        khó, giờ thì chỉ cần dùng tùy chọn <code>callbackFunc</code> là đủ. Chú
+        ý trong <code>callbackFunc</code> cần gọi <code>this.$refs.pagi.update(total,
+          page)</code>.</p>
+      <p>Thay <code>{{dataEle.stt}}</code> bằng <code>{{$refs.pagi.startIndex
+          + i + 1}}</code>.</p>
+      <p>Chú ý chỗ thẻ <code>&lt;table&gt;</code> cần thêm <code>v-show="items.length
+          &gt; 0"</code> để ẩn đi khi không có dữ liệu. Thông báo không có dữ
+        liệu nằm trong thẻ <code>&lt;pagi&gt;</code> luôn rồi.</p>
+      <ul>
+      </ul>
       <h3>Demo</h3>
-      <div class="mb-3"
-        id="app">
-        <div class="mb-3">
-            <div v-for="s in items">
-                {{s}}
-            </div>
-        </div>
-
-        <pagi class="pagination-wrapper d-lg-flex align-items-center justify-content-between mb-3"
-            :callback-func="gotoPage"
-            ref="pagi"></pagi>
-      </div>
-
+      <ul>
+        <li><a target="_blank" href="demo_1_no_ajax.html">Phân trang, không sử
+            dụng AJAX, merge header</a></li>
+        <li><a target="_blank" href="demo_4_use_ajax.html">Sử dụng AJAX và
+            showLoading, sử dụng với Vue</a></li>
+        <li>-------------------</li>
+        <li><a target="_blank" href="demo_6_fixed_header.html">Header cố định</a></li>
+        <li><a target="_blank" href="demo_7_expandable.html">Expandable</a></li>
+        <li><a target="_blank" href="demo_8_selectable.html">Selectable</a></li>
+        <li><a target="_blank" href="demo_9_toggle_column.html">Ẩn hiện cột</a></li>
+      </ul>
       <h3>Hướng dẫn sử dụng</h3>
-      <p>Khai báo sử dụng thư viện:</p>
-      <pre>&lt;script src="js/pagi.js"&gt;&lt;/script&gt;</pre>
-      <p>Khai báo một đối tượng DOM:</p>
-      <pre>&lt;pagi class="pagination-wrapper"
-    :callback-func="gotoPage"
-    ref="pagi"&gt;&lt;/pagi&gt;</pre>
-      <p>Khai báo hàm xử lý khi click vào link từng trang.
-        Hàm này sẽ có một tham số <code>page</code> là số thứ tự trang được click (số thứ tự bắt đầu bằng 1).</p>
-      <pre>gotoPage(page) {
-    const { total, items } = this.callServer(page);
-    this.$refs.pagi.update(total, page);
-    this.bindItems(items);
-}</pre>
-
-    <h3>Các tham số khi khởi tạo</h3>
-
-    <div class="out-of-box">
-    <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th class="align-middle" style="width: 170px">Tham số</th>
-            <th class="align-middle" style="width: 100px">Kiểu dữ
-              liệu</th>
-            <th class="align-middle">Mô tả</th>
-            
-          </tr>
-        </thead>
-        <tbody>
-            
-              <tr>
-                <td><code>callbackFunc</code></td>
-                <td><code>Function</code></td>
-                <td>Hàm callback</td>
-                
-              </tr>
-
-              <tr>
-                <td><code>options</code></td>
-                <td><code>Object</code></td>
-                <td>Các tùy chọn của người dùng</td>
-                
-              </tr>
-        </tbody>
-    </table>
-</div>
-      
-      <h3>Các tùy chọn</h3>
-      <div class="out-of-box">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th class="align-middle" style="width: 170px">Tham số</th>
-              <th class="align-middle" style="width: 100px">Kiểu dữ
-                liệu</th>
-              <th class="align-middle">Mô tả</th>
-              <th class="align-middle" style="width: 100px">Giá trị
-                mặc định</th>
-            </tr>
-          </thead>
-          <tbody>
-            
-            <tr>
-              <td><code>showGotoPage</code></td>
-              <td><code>boolean</code></td>
-              <td>Có hiển thị ô nhập chuyển đến trang hay không</td>
-              <td><code>true</code></td>
-            </tr>
-            <tr>
-              <td><code>showFirst</code></td>
-              <td><code>boolean</code></td>
-              <td>Hiển thị link đến trang đầu tiên hay không</td>
-              <td><code>true</code><br>
-              </td>
-            </tr>
-            <tr>
-              <td><code>showPrevious</code></td>
-              <td><code>boolean</code></td>
-              <td>Hiển thị link đến trang trước hay không</td>
-              <td><code>true</code><br>
-              </td>
-            </tr>
-            <tr>
-              <td><code>showNext</code></td>
-              <td><code>boolean</code> </td>
-              <td>Hiển thị link đến trang tiếp theo hay không</td>
-              <td><code>true</code><br>
-              </td>
-            </tr>
-            <tr>
-              <td><code>showLast</code></td>
-              <td><code>boolean</code></td>
-              <td>Hiển thị link đến trang cuối cùng hay không</td>
-              <td><code>true</code><br>
-              </td>
-            </tr>
-            <tr>
-              <td><code>showNumbers</code></td>
-              <td><code>boolean</code></td>
-              <td>Có hiển thị các trang hay không. Nhiều khi đơn giản thì chỉ
-                hiển thị trang trước và trang sau.</td>
-              <td><code>true</code><br>
-              </td>
-            </tr>
-            <tr>
-              <td><code>previousText</code></td>
-              <td><code>string</code></td>
-              <td>Nhãn của trang trước</td>
-              <td><code>«</code></td>
-            </tr>
-            <tr>
-              <td><code>nextText</code></td>
-              <td><code>string</code></td>
-              <td>Nhãn của trang tiếp theo</td>
-              <td><code>»</code></td>
-            </tr>
-            <tr>
-              <td><code>showNoRecordText</code></td>
-              <td><code>boolean</code></td>
-              <td>Có hiển thị thông báo khi không tìm thấy bản ghi nào không</td>
-              <td><code>true</code><br>
-              </td>
-            </tr>
-            <tr>
-              <td><code>noRecordText</code></td>
-              <td><code>string</code></td>
-              <td>Nội dung thông báo hiển thị khi không tìm thấy bản ghi nào</td>
-              <td><code>Không có bản ghi nào</code><br>
-              </td>
-            </tr>
-            <tr>
-              <td><code>showTotalNumber</code></td>
-              <td><code>boolean</code></td>
-              <td>Có hiển thị tổng số bản ghi hay không</td>
-              <td><code>true</code><br>
-              </td>
-            </tr>
-            <tr>
-              <td><code>pageSize</code></td>
-              <td><code>int</code></td>
-              <td>Số lượng bản ghi trên một trang</td>
-              <td><code>10</code><br>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <h3>Các thuộc tính</h3>
-      <div class="out-of-box">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Thuộc tính</th>
-              <th>Mô tả</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>startIndex</code></td>
-              <td>Chỉ số bắt đầu, rất tiện để in số thứ tự khi phân trang, bắt
-                đầu từ 0</td>
-            </tr>
-            <tr>
-              <td><code>currentPage</code></td>
-              <td>Trang hiện tại, bắt đầu từ 1</td>
-            </tr>
-            <tr>
-              <td><code>totalNumber</code></td>
-              <td>Tổng số bản ghi</td>
-            </tr>
-            <tr>
-              <td><code>totalPage</code></td>
-              <td>Tổng số trang</td>
-            </tr>
-            <tr>
-              <td><code>startPage</code></td>
-              <td>Trang bắt đầu</td>
-            </tr>
-            <tr>
-              <td><code>endPage</code></td>
-              <td>Trang kết thúc</td>
-            </tr>
-            <tr>
-              <td><code>pages</code></td>
-              <td>Mảng các số bắt đầu từ trang đầu tiên đến trang kết thúc</td>
-            </tr>
-            
-          </tbody>
-        </table>
-      </div>
-      <h3>Phương thức</h3>
-      <p>Bạn cần gọi phương thức <code>this.$refs.pagi.update(totalPage, currentPage)</code>
-        để cập nhật.</p>
-      <h3>Style</h3>
-      <p>Thư viện pagi sinh ra các phần tử phân trang theo chuẩn của Bootstrap 4.</p>
-
-        <h3>Roadmap</h3>
-        <ul>
-            <li>v2.1.0: Sử dụng JS thuần. Thêm phụ thuộc noti để thông báo lỗi khi nhập gotoPage</li>
-            <li>v3.0.0 (28/04/2021): Sử dụng Vue để code gọn và dễ maintain, bỏ CommonUtils</li>
-        </ul>
+      <p>Thêm các file CSS và JS của thư viện:</p>
+      <pre>&lt;link rel="stylesheet" href="css/datatable.css"/&gt;
+&lt;script src="js/datatable.js"&gt;&lt;/script&gt;</pre>
+      <p>Phần phân trang đang theo chuẩn Bootstrap, do đó bạn nên thêm cả CSS
+        của Bootstrap:</p>
+      <pre class="text-pre-wrap">&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/&gt;</pre>
+      <p>Thư viện không còn ràng buộc nào khác.</p>
+      <p>Chúng ta khai báo một table với các header bình thường (bắt buộc có thẻ
+        <code>thead</code>), nội dung thì bỏ trống (có thể có thẻ <code>tbody</code>
+        hoặc không).</p>
+      <p>Với các cột mà có thể sắp xếp, chúng ta thêm thuộc tính <code>data-sort-column</code>
+        với giá trị là thuộc tính sắp xếp:</p>
+      <pre>&lt;table class="table table-bordered table-striped table-hover"&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt; Stt &lt;/th&gt;
+            &lt;th data-sort-column="country"&gt; Quốc gia &lt;/th&gt;
+            &lt;th data-sort-column="population"&gt; Dân số &lt;/th&gt;
+            &lt;th data-sort-column="fake_date"&gt; Ngày nào đó &lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+<br>    &lt;tbody&gt;<br>
+    &lt;/tbody&gt;
+&lt;/table&gt;</pre>
+      <p>Tiếp đó, chúng ta khởi tạo đối tượng Datatable như sau:</p>
+      <pre>const datatable = new Datatable(options);</pre>
     </article>
-
-    <link rel="stylesheet" href="https://lockex1987.github.io/posts/project%20-%20noti/css/noti.css"/>
-    <script src="https://lockex1987.github.io/posts/project%20-%20noti/js/noti.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
-    <script src="js/pagi.js"></script>
-    <script src="js/demo.js"></script>
-
     <script src="../../js/docs.js"></script>
+    
   </body>
 </html>

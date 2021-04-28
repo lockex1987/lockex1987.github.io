@@ -47,8 +47,9 @@ const PagiItem = {
  * @author lockex1987
  */
 const Pagi = {
+    // Nếu mà để ở trên thì cần mb-3
     template: `
-        <div>
+        <div class="d-lg-flex align-items-center justify-content-between">
             <template v-if="isInit">
                 <!-- Nếu rỗng thì hiển thị thông báo -->
                 <template v-if="totalNumber <= 0">
@@ -63,7 +64,7 @@ const Pagi = {
                 <template v-else>
                     <!-- Hiển thị tổng số bản ghi -->
                     <template v-if="appliedOptions.showTotalNumber">
-                        <div class="pagination-info text-muted small mb-2 mb-md-0">
+                        <div class="text-muted small mb-2 mb-md-0">
                             Tổng số {{formatThousands(totalNumber)}} bản ghi
                         </div>
                     </template>
@@ -77,7 +78,7 @@ const Pagi = {
                                     && startPage > 1">
                                 <pagi-item :text="'1'"
                                     :page="1"
-                                    @goto="callbackFunc($event)"></pagi-item>
+                                    @goto="callbackFunc($event, appliedOptions.pageSize)"></pagi-item>
                             </template>
 
                             <!-- Link đến trang trước -->
@@ -85,7 +86,7 @@ const Pagi = {
                                     && currentPage > 1">
                                 <pagi-item :text="appliedOptions.previousText"
                                     :page="currentPage - 1"
-                                    @goto="callbackFunc($event)"></pagi-item>
+                                    @goto="callbackFunc($event, appliedOptions.pageSize)"></pagi-item>
                             </template>
 
                             <template v-if="appliedOptions.showNumbers">
@@ -95,13 +96,12 @@ const Pagi = {
                                         <!-- Hiển thị ô chuyển đến trang nào đó -->
                                         <li class="page-item">
                                             <input type="text"
-                                                class="form-control d-inline-block mb-2 mb-md-0 mx-1 text-center"
+                                                class="form-control d-inline-block mb-2 mb-md-0 mx-1 text-center goto-page-input"
                                                 style="width: 50px;"
                                                 placeholder="#"
                                                 :value="currentPage"
-                                                @blur="gotoPage()"
-                                                @keydown.enter.prevent="gotoPage()"
-                                                ref="gotoPageInput"/>
+                                                @blur="gotoUserEnterPage()"
+                                                @keydown.enter.prevent="gotoUserEnterPage()"/>
                                         </li>
                                     </template>
 
@@ -110,7 +110,7 @@ const Pagi = {
                                         <pagi-item :text="formatThousands(i)"
                                             :page="i"
                                             :class-name="i === currentPage ? 'active' : ''"
-                                            @goto="if (i !== currentPage) { callbackFunc($event); }"></pagi-item>
+                                            @goto="if (i !== currentPage) { callbackFunc($event, appliedOptions.pageSize); }"></pagi-item>
                                     </template>
                                 </template>
                             </template>
@@ -120,7 +120,7 @@ const Pagi = {
                                     && currentPage < totalPage">
                                 <pagi-item :text="appliedOptions.nextText"
                                     :page="currentPage + 1"
-                                    @goto="callbackFunc($event)"></pagi-item>
+                                    @goto="callbackFunc($event, appliedOptions.pageSize)"></pagi-item>
                             </template>
 
                             <!-- Link đến trang cuối cùng -->
@@ -129,7 +129,7 @@ const Pagi = {
                                     && endPage < totalPage">
                                 <pagi-item :text="formatThousands(totalPage)"
                                     :page="totalPage"
-                                    @goto="callbackFunc($event)"></pagi-item>
+                                    @goto="callbackFunc($event, appliedOptions.pageSize)"></pagi-item>
                             </template>
                         </ul>
                     </template>
@@ -143,7 +143,7 @@ const Pagi = {
 
     props: {
         // Hàm gọi khi click vào từng trang
-        // Hàm có các tham số là page
+        // Hàm có các tham số là page và pageSize
         callbackFunc: {
             type: Function
         },
@@ -171,9 +171,11 @@ const Pagi = {
             showGotoPage: true
         };
 
+        const appliedOptions = Object.assign(defaultOptions, this.options);
+
         return {
             // Tùy chọn được áp dụng
-            appliedOptions: Object.assign(defaultOptions, this.options),
+            appliedOptions: appliedOptions,
 
             // Tổng số bản ghi
             totalNumber: 0,
@@ -249,9 +251,9 @@ const Pagi = {
         /**
          * Chuyển đến một trang do người dùng nhập.
          */
-        gotoPage() {
+        gotoUserEnterPage() {
             // Validate chỉ số trang
-            const value = this.$refs.gotoPageInput.value.trim();
+            const value = this.$el.querySelector('.goto-page-input').value.trim();
             if (value === '') {
                 return;
             }
@@ -269,7 +271,14 @@ const Pagi = {
                 noti.error('Trang vượt quá tổng số trang');
                 return;
             }
-            this.callbackFunc(page);
+            this.callbackFunc(page, this.appliedOptions.pageSize);
+        },
+
+        /**
+         * Load (lại) dữ liệu, chuyển đến trang 1.
+         */
+        reload() {
+            this.callbackFunc(1, this.appliedOptions.pageSize);
         }
     }
 };

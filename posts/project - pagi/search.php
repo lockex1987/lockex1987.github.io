@@ -1,31 +1,34 @@
 <?php
 
-// Lấy các tham số tìm kiếm
-$page = $_GET['page'];
-$pageSize = $_GET['pageSize'];
-$orderBy = $_GET['orderBy'];
-$orderType = $_GET['orderType'];
-$search = $_GET['search'];
-
-// Đọc dữ liệu từ file dùng chung mock_data.js
-function getDataFromFile()
+/**
+ * Đọc dữ liệu từ file dùng chung mock_data.js.
+ */
+function getDataFromFile(): array
 {
-    $inputFilePath = 'js/mock_data.js';
+    $inputFilePath = 'data/mock_data.js';
     $content = file_get_contents($inputFilePath);
+
+    // Bỏ câu lệnh export default []; của JS
     $content = str_replace('export default ', '', $content);
     $content = str_replace(';', '', $content);
+
     // Xâu JSON hợp lệ yêu cầu phải dấu "
     $content = str_replace('country:', '"country":', $content);
     $content = str_replace('population:', '"population":', $content);
     $content = str_replace('fake_date:', '"fake_date":', $content);
     $content = str_replace('\'', '"', $content);
+
     // echo $content;
     $data = json_decode($content);
     // echo $data;
     return $data;
 }
 
-function filterData($data, $search)
+
+/**
+ * Lọc dữ liệu theo xâu người dùng nhập.
+ */
+function filterData(array $data, string $search): array
 {
     // Tìm kiếm
     if (empty($search)) {
@@ -47,7 +50,11 @@ function filterData($data, $search)
     return $filteredData;
 }
 
-function sortFilteredData($filteredData, $orderBy, $orderType)
+
+/**
+ * Sắp xếp dữ liệu.
+ */
+function sortFilteredData(array $filteredData, string $orderBy, string $orderType): array
 {
     // Sắp xếp
     if (count($filteredData) > 0 && !empty($orderBy)) {
@@ -68,6 +75,14 @@ function sortFilteredData($filteredData, $orderBy, $orderType)
     }
     return $filteredData;
 }
+
+
+// Lấy các tham số tìm kiếm
+$page = $_GET['page'];
+$pageSize = $_GET['pageSize'];
+$orderBy = $_GET['orderBy'];
+$orderType = $_GET['orderType'];
+$search = $_GET['search'];
 
 $data = getDataFromFile();
 $filteredData = filterData($data, $search);
