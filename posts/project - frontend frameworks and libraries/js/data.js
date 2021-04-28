@@ -57,21 +57,19 @@ export default [
         jsPath: '../project - common validation/js/common-validation.js',
         link: 'https://lockex1987.github.io/posts/project%20-%20common%20validation/'
     },
-    /*
     {
-        code: 'CommonUtils',
+        code: 'common-utils',
         name: 'CommonUtils',
         jsPath: '../../js/common.js',
         link: 'https://lockex1987.github.io/posts/js%20-%20common/'
     },
-    */
     {
-        code: 'datatable',
-        name: 'Datatable',
-        cssPath: '../project - datatable/css/datatable.css',
-        jsPath: '../project - datatable/js/datatable.js',
-        note: 'Phụ thuộc Pagi, Pagi phụ thuộc noti, không phụ thuộc CommonUtils nữa',
-        link: 'https://lockex1987.github.io/posts/project%20-%20datatable/'
+        code: 'pagi',
+        name: 'Pagi',
+        cssPath: '../project - pagi/css/pagi.css',
+        jsPath: '../project - pagi/js/pagi.js',
+        note: 'Phụ thuộc noti',
+        link: 'https://lockex1987.github.io/posts/project%20-%20pagi/'
     },
     {
         code: 'animate',

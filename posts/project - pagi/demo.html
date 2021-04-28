@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo</title>
+
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+    <article>
+    <h2>Demo</h2>
+      <div class="mb-3"
+        id="app">
+        <div class="mb-3">
+            <div v-for="(s, i) in items">
+                {{$refs.pagi.startIndex + i + 1}}.
+                {{s}}
+            </div>
+        </div>
+
+        <pagi :callback-func="gotoPage"
+            ref="pagi"></pagi>
+      </div>
+    </article>
+
+      <link rel="stylesheet" href="https://lockex1987.github.io/posts/project%20-%20noti/css/noti.css"/>
+    <script src="https://lockex1987.github.io/posts/project%20-%20noti/js/noti.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="js/pagi.js"></script>
+    <script src="js/demo.js"></script>
+</body>
+</html>
