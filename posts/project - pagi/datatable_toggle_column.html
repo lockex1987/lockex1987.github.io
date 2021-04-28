@@ -11,23 +11,22 @@
 <body>
     <article>
         <h2>Datatable demo: ẩn hiện cột</h2>
-        <p>Truyền thuộc tính <code>columnListNamespace</code>.</p>
 
         <div id="app">
             <table ref="theTable"
                 class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
-                        <th class="text-right">
+                        <th>
                             Stt
                         </th>
-                        <th data-sort-column="country">
+                        <th v-show="checkColumn('country')">
                             Quốc gia
                         </th>
-                        <th class="text-right" data-sort-column="population">
+                        <th v-show="checkColumn('population')">
                             Dân số
                         </th>
-                        <th class="text-center" data-sort-column="fake_date">
+                        <th v-show="checkColumn('fake_date')">
                             Ngày nào đó
                         </th>
                     </tr>
@@ -35,21 +34,35 @@
 
                 <tbody>
                     <tr v-for="(dataEle, i) in items">
-                        <td class="text-right">
+                        <td>
                             {{i + 1}}
                         </td>
-                        <td>
+                        <td v-show="checkColumn('country')">
                             {{dataEle.country}}
                         </td>
-                        <td class="text-right">
+                        <td v-show="checkColumn('population')">
                             {{dataEle.population}}
                         </td>
-                        <td class="text-center">
+                        <td v-show="checkColumn('fake_date')">
                             {{dataEle.fake_date}}
                         </td>
                     </tr>
                 </tbody>
             </table>
+
+            <div>
+                <span class="text-muted">
+                    Hiển thị các cột:
+                </span>
+
+                <label v-for="col in columns"
+                    class="ml-3">
+                    <input type="checkbox"
+                        v-model="col.isSelected"
+                        @change="saveColumnList()">
+                        {{col.name}}
+                </label>
+            </div>
         </div>
     </article>
 

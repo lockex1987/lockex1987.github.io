@@ -101,28 +101,26 @@
   border-top: 1px solid #AAA;
   border-left: 1px solid #AAA; }
 
-.table-expandable .table-expandable-arrow {
+.datatable-expandable .datatable-expandable-arrow {
   border: solid #555;
   border-width: 0 2px 2px 0;
   display: inline-block;
   padding: 3px;
   transition: all 0.5s;
-  transform: rotate(-45deg);
-  cursor: pointer; }
-  .table-expandable .table-expandable-arrow.expanded {
+  cursor: pointer;
+  transform: rotate(-45deg); }
+  .datatable-expandable .datatable-expandable-arrow.expanded {
     transform: rotate(45deg); }
-.table-expandable .detail-row:hover {
-  background-color: white; }
 
-.table-selectable td:first-child:before {
+.datatable-selectable td:first-child:before {
   content: '✔';
   margin-right: 10px;
   visibility: hidden;
   font-size: smaller;
   color: #FF6700; }
-.table-selectable .selected-row {
+.datatable-selectable .selected-row {
   background-color: #c8ffca; }
-  .table-selectable .selected-row td:first-child:before {
+  .datatable-selectable .selected-row td:first-child:before {
     visibility: visible; }
 
 /*# sourceMappingURL=datatable.css.map */

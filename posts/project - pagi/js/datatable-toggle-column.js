@@ -7,72 +7,41 @@ new Vue({
         return {
             items: serverData.slice(0, 10),
 
-            columnListNamespace: 'table.column.'
+            columnListNamespace: 'table-columns',
+
+            columns: [
+                { id: 'country', name: 'Quốc gia', isSelected: true },
+                { id: 'population', name: 'Dân số', isSelected: true },
+                { id: 'fake_date', name: 'Ngày nào đó', isSelected: true }
+            ]
         };
     },
 
     mounted() {
-        // Hiển thị danh sách cột để ẩn hiện
         this.bindColumnList();
+        this.saveColumnList();
     },
 
     methods: {
-        /**
-         * Hiển thị danh sách các cột để ẩn hiện.
-         */
-        bindColumnList() {
-            if (this.columnListNamespace) {
-                // Thêm vùng div
-                const columList = document.createElement('div');
-                columList.className = 'datatable-column-list';
-                columList.innerHTML = '<span class="text-muted">Hiển thị các cột:</span>';
-                this.$refs.theTable.querySelectorAll('thead th').forEach((th, idx) => {
-                    const labelTag = document.createElement('label');
-                    labelTag.className = 'ml-3';
-                    labelTag.innerHTML = `<input type="checkbox" checked data-index="${idx}"> ${th.textContent.trim()}`;
-                    if (localStorage.getItem(this.columnListNamespace + idx) == 'hide') {
-                        labelTag.querySelector('input').checked = false;
-                    }
-                    columList.appendChild(labelTag);
-                });
-
-                const wrapper = this.$refs.theTable.parentNode;
-                wrapper.parentNode.insertBefore(columList, wrapper.nextSibling);
-
-                // Thêm sự kiện
-                columList.addEventListener('change', (evt) => {
-                    const checkbox = evt.target;
-                    const index = checkbox.dataset.index;
-                    const rows = this.$refs.theTable.querySelectorAll('tr');
-                    if (checkbox.checked) {
-                        localStorage.removeItem(this.columnListNamespace + index);
-                        rows.forEach(r => {
-                            r.cells[index].style.display = '';
-                        });
-                    } else {
-                        localStorage.setItem(this.columnListNamespace + index, 'hide');
-                        rows.forEach(r => {
-                            r.cells[index].style.display = 'none';
-                        });
-                    }
-                });
-            }
+        checkColumn(col) {
+            const obj = this.columns.find(e => e.id == col);
+            return obj.isSelected;
         },
 
-        /**
-         * Sau khi hiển thị xong dữ liệu của cột thì cần gọi hàm này để ẩn các cột cần ẩn.
-         */
-        hideShouldBeHiddenColumns() {
-            if (this.columnListNamespace) {
-                const rows = this.$refs.theTable.querySelectorAll('tr');
-                const numOfColumns = rows[0].cells.length;
-                for (let index = 0; index < numOfColumns; index++) {
-                    if (localStorage.getItem(this.columnListNamespace + index) == 'hide') {
-                        rows.forEach(r => {
-                            r.cells[index].style.display = 'none';
-                        });
+        saveColumnList() {
+            const data = JSON.stringify(this.columns);
+            localStorage.setItem(this.columnListNamespace, data);
+        },
+
+        bindColumnList() {
+            const data = localStorage.getItem(this.columnListNamespace);
+            if (data) {
+                JSON.parse(data).forEach(col => {
+                    if (!col.isSelected) {
+                        const obj = this.columns.find(e => e.id == col.id);
+                        obj.isSelected = false;
                     }
-                }
+                });
             }
         }
     }

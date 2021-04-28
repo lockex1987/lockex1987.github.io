@@ -11,13 +11,12 @@
 <body>
     <article>
         <h2>Datatable demo: selectable</h2>
-        <p>Thêm class <code>table-selectable</code>.</p>
+        <p>Thêm class <code>datatable-selectable</code>.</p>
         <p>Nên bỏ các class <code>table-striped</code> và <code>table-hover</code> để không xung đột màu nền.</p>
-        <p>Lấy các giá trị được chọn bằng phương thức <code>getSelectedRows()</code>.</p>
 
         <div id="app">
             <table ref="theTable"
-                class="table table-bordered table-selectable">
+                class="table table-bordered datatable-selectable">
                 <thead>
                     <tr>
                         <th>
@@ -36,18 +35,20 @@
                 </thead>
 
                 <tbody>
-                    <tr v-for="(dataEle, i) in items">
+                    <tr v-for="(e, i) in items"
+                        :class="e.isSelected ? 'selected-row' : ''"
+                        @click="e.isSelected = !e.isSelected">
                         <td class="text-right">
                             {{i + 1}}
                         </td>
                         <td>
-                            {{dataEle.country}}
+                            {{e.country}}
                         </td>
-                        <td class="text-right">
-                            {{dataEle.population}}
+                        <td>
+                            {{e.population}}
                         </td>
-                        <td class="text-center">
-                            {{dataEle.fake_date}}
+                        <td>
+                            {{e.fake_date}}
                         </td>
                     </tr>
                 </tbody>

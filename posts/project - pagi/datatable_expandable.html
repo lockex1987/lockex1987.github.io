@@ -11,20 +11,20 @@
 <body>
     <article>
         <h2>Datatable demo: expandable</h2>
-        <p>Bảng có thêm class <code>table-expandable</code>. Nên bỏ class <code>table-striped</code>.</p>
-        <p>Tạo mũi tên bằng một thẻ span với class là <code>table-expandable-arrow</code>.</p>
+        <p>Bảng có thêm class <code>datatable-expandable</code>. Nên bỏ class <code>table-striped</code>.</p>
+        <p>Tạo mũi tên bằng một thẻ span với class là <code>datatable-expandable-arrow</code>.</p>
         
         <table id="app"
-            class="table table-bordered table-hover table-expandable">
+            class="table table-bordered table-hover datatable-expandable">
             <thead>
                 <tr>
                     <th>
                         Stt
                     </th>
-                    <th data-sort-column="country">
+                    <th>
                         Quốc gia
                     </th>
-                    <th data-sort-column="population">
+                    <th>
                         Dân số
                     </th>
                     <th></th>
@@ -33,25 +33,27 @@
 
             <tbody>
                 <template v-for="(dataEle, i) in items">
-                    <tr class="main-row expanded">
-                        <td class="text-right">
+                    <tr>
+                        <td>
                             {{i + 1}}
                         </td>
                         <td>
                             {{dataEle.country}}
                         </td>
-                        <td class="text-right">
+                        <td>
                             {{dataEle.population}}
                         </td>
-                        <td class="text-center">
-                            <!-- Mũi tên expander -->
-                            <span class="table-expandable-arrow"></span>
+                        <td>
+                            <!-- Mũi tên -->
+                            <span class="datatable-expandable-arrow"
+                                :class="dataEle.isShowDetail ? 'expanded' : ''"
+                                @click="toggleShowDetail(dataEle)"></span>
                         </td>
                     </tr>
                     
                     <!-- Mặc định ẩn dòng chi tiết -->
                     <tr class="detail-row"
-                        style="display: none">
+                        v-show="dataEle.isShowDetail">
                         <td class="text-center"
                             colspan="4">
                             {{dataEle.fake_date}}
