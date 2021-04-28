@@ -70,7 +70,7 @@ export default [
         name: 'Datatable',
         cssPath: '../project - datatable/css/datatable.css',
         jsPath: '../project - datatable/js/datatable.js',
-        note: 'Đã bao gồm CommonUtils và Pagi',
+        note: 'Phụ thuộc Pagi, Pagi phụ thuộc noti, không phụ thuộc CommonUtils nữa',
         link: 'https://lockex1987.github.io/posts/project%20-%20datatable/'
     },
     {
