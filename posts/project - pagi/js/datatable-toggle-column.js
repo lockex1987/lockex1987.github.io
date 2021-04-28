@@ -28,6 +28,7 @@ new Vue({
                 columList.innerHTML = '<span class="text-muted">Hiển thị các cột:</span>';
                 this.$refs.theTable.querySelectorAll('thead th').forEach((th, idx) => {
                     const labelTag = document.createElement('label');
+                    labelTag.className = 'ml-3';
                     labelTag.innerHTML = `<input type="checkbox" checked data-index="${idx}"> ${th.textContent.trim()}`;
                     if (localStorage.getItem(this.columnListNamespace + idx) == 'hide') {
                         labelTag.querySelector('input').checked = false;

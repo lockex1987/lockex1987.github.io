@@ -1,0 +1,42 @@
+.datatable-sortable {
+    [data-sort-column] {
+        cursor: pointer;
+        position: relative;
+        padding-right: 30px;
+
+        &:hover {
+            // color: blue;
+        }
+
+        &:before,
+        &:after {
+            position: absolute;
+            bottom: .3em;
+            display: block;
+            opacity: .3;
+        }
+
+        &:before {
+            right: 1em;
+            content: "\2191";
+
+            // Thêm các thuộc tính này để xử lý xung đột với fixed-header
+            border-right: none;
+            top: unset;
+        }
+        
+        &:after {
+            right: .5em;
+            content: "\2193";
+
+            // Thêm các thuộc tính này để xử lý xung đột với fixed-header
+            border-bottom: none;
+            left: unset;
+        }
+
+        &.sorting_asc:before,
+        &.sorting_desc:after {
+            opacity: 1;
+        }
+    }
+}

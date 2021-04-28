@@ -1,35 +1,127 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demo</title>
+    <title>Demo Pagi</title>
 
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
     <article>
-    <h2>Demo</h2>
-      <div class="mb-3"
-        id="app">
-        <div class="mb-3">
-            <div v-for="(s, i) in items">
-                {{$refs.pagi.startIndex + i + 1}}.
-                {{s}}
-            </div>
-        </div>
+    <h2>Demo Pagi</h2>
 
-        <pagi :callback-func="gotoPage"
-            ref="pagi"></pagi>
-      </div>
+        
+
+        <div id="app"
+            v-cloak>
+            <label class="custom-control custom-control-lg custom-control-animated custom-control-highlighted custom-control-outlined custom-checkbox mb-3">
+                <input type="checkbox"
+                    class="custom-control-input"
+                    v-model="useAjax">
+                <span class="custom-control-label">Sử dụng AJAX</span>
+            </label>
+
+            <div class="d-flex mb-2 justify-content-end align-items-center">
+                <span class="spinner-border spinner-border-sm mr-2"
+                    v-show="isLoading"></span>
+
+                <!-- Thêm ô search -->
+                <!-- Nên thêm debounce ở đây -->
+                <input type="text"
+                    class="form-control form-control-max-width"
+                    placeholder="Tìm kiếm"
+                    autocomplete="off"
+                    v-model.trim="searchText"
+                    @input="search()"/>
+        
+                <!-- Khi người dùng thêm / sửa / xóa xong thì tìm kiếm lại -->
+                <button type="button"
+                    class="ml-2 btn btn-primary"
+                    @click="search()">
+                    Tìm kiếm
+                </button>
+            </div>
+
+            <table class="table table-bordered table-striped table-hover datatable-sortable"
+                v-show="items.length > 0"
+                ref="theTable">
+                <!--thead>
+                    <tr>
+                        <th>
+                            Stt
+                        </th>
+                        <th data-sort-column="country">
+                            Quốc gia
+                        </th>
+                        <th data-sort-column="population">
+                            Dân số
+                        </th>
+                        <th data-sort-column="fake_date">
+                            Ngày nào đó
+                        </th>
+                    </tr>
+                </thead-->
+
+                <thead>
+                    <tr>
+                        <th rowspan="2">
+                            Stt
+                        </th>
+                        <!-- Mặc định là sắp xếp theo quốc gia, tăng dần -->
+                        <th data-sort-column="country" rowspan="2"
+                            class="sorting_asc">
+                            Quốc gia
+                        </th>
+                        <th colspan="2">
+                            Thống kê
+                        </th>
+                    </tr>
+                    <tr>
+                        <th data-sort-column="population">
+                            Dân số
+                        </th>
+                        <th data-sort-column="fake_date">
+                            Ngày nào đó
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr v-for="(dataEle, i) in items">
+                        <td class="text-right">
+                            {{$refs.pagi.startIndex + i + 1}}
+                        </td>
+                        <td>
+                            {{dataEle.country}}
+                        </td>
+                        <td class="text-right">
+                            {{dataEle.population}}
+                        </td>
+                        <td class="text-center">
+                            {{dataEle.fake_date}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <pagi :callback-func="gotoPage"
+                ref="pagi"
+                :options="{ pageSize: 5 }"></pagi>
+        </div>
+        
     </article>
 
-      <link rel="stylesheet" href="https://lockex1987.github.io/posts/project%20-%20noti/css/noti.css"/>
-    <script src="https://lockex1987.github.io/posts/project%20-%20noti/js/noti.js"></script>
-
+    <link rel="stylesheet" href="../project%20-%20noti/css/noti.css"/>
+    <script src="../project%20-%20noti/js/noti.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    
+    <link rel="stylesheet" href="css/datatable.css"/>
+    <script src="js/datatable-sortable.js"></script>
+
     <script src="js/pagi.js"></script>
-    <script src="js/demo.js"></script>
+
+    <script src="js/demo.js" type="module"></script>
 </body>
 </html>

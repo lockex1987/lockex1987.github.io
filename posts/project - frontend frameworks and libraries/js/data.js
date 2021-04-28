@@ -66,10 +66,15 @@ export default [
     {
         code: 'pagi',
         name: 'Pagi',
-        cssPath: '../project - pagi/css/pagi.css',
         jsPath: '../project - pagi/js/pagi.js',
-        note: 'Phụ thuộc noti',
+        note: 'Phụ thuộc noti, Vue',
         link: 'https://lockex1987.github.io/posts/project%20-%20pagi/'
+    },
+	{
+        code: 'datatable',
+        name: 'Datatable',
+        cssPath: '../project - pagi/css/datatable.css',
+        jsPath: '../project - pagi/js/datatable-sortable.js'
     },
     {
         code: 'animate',

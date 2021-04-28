@@ -13,29 +13,23 @@
     <article>
       <h2>Pagi</h2>
       <h3>Hướng dẫn sử dụng</h3>
-      <p>Khai báo sử dụng thư viện:</p>
-      <p>Thêm các file CSS và JS của thư viện:</p>
-      <pre>&lt;link rel="stylesheet" href="css/datatable.css"/&gt;<br>&lt;script src="js/pagi.js"&gt;&lt;/script&gt;</pre>
-      <p>Thư viện pagi sinh ra các phần tử phân trang theo chuẩn của Bootstrap
-        4.</p>
-      <p>Phần phân trang đang theo chuẩn Bootstrap, do đó bạn nên thêm cả CSS
-        của Bootstrap: </p>
+      <p>Khai báo các file CSS và JS của thư viện và các phụ thuộc (noti, Vue):</p>
+      <pre>&lt;link rel="stylesheet" href="css/datatable.css"/&gt;<br><br>&lt;script src="js/pagi.js"&gt;&lt;/script&gt;</pre>
+      <p>Thư viện Pagi sinh ra các phần tử phân trang theo chuẩn của Bootstrap
+        4, do đó bạn nên thêm cả CSS của Bootstrap (hoặc bootstrap-extended): </p>
       <pre>&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/&gt;</pre>
-      <p>Thư viện không còn ràng buộc nào khác.</p>
-      <p>Khai báo một đối tượng DOM:</p>
+      <p>Khai báo một component <code>&lt;pagi&gt;</code>:</p>
       <pre>&lt;pagi :callback-func="gotoPage"
     ref="pagi"&gt;&lt;/pagi&gt;</pre>
-      <p>Khai báo hàm xử lý khi click vào link từng trang. Hàm này sẽ có một
-        tham số <code>page</code> là số thứ tự trang được click (số thứ tự bắt
-        đầu bằng 1).</p>
+      <p>Khai báo hàm xử lý khi click vào link từng trang. Hàm này sẽ có tham số
+        <code>page</code> là số thứ tự trang được click (số thứ tự bắt đầu bằng
+        1) và <code>pageSize</code> là số phần tử trong một trang.</p>
       <pre>gotoPage(page, pageSize) {
     const { total, items } = this.callServer(page, pageSize);
     this.$refs.pagi.update(total, page);
     this.bindItems(items);
 }</pre>
-      <p>Chúng ta khai báo một table với các header bình thường (bắt buộc có thẻ
-        <code>thead</code>), nội dung thì bỏ trống (có thể có thẻ <code>tbody</code>
-        hoặc không).</p>
+      <p>Chúng ta khai báo một table với các header bình thường.</p>
       <p>Với các cột mà có thể sắp xếp, chúng ta thêm thuộc tính <code>data-sort-column</code>
         với giá trị là thuộc tính sắp xếp:</p>
       <pre>&lt;table class="table table-bordered table-striped table-hover"&gt;
@@ -223,34 +217,15 @@
         <li>v3.0.0 (28/04/2021): Sử dụng Vue để code gọn và dễ maintain, bỏ
           CommonUtils</li>
       </ul>
-      <h3>Tính năng</h3>
+      <h3>Demo tính năng</h3>
       <ul>
-        <li>Phân trang</li>
-        <li>Sử dụng AJAX </li>
-        <li>Sử dụng với Vue</li>
-        <li>Hiển thị loading</li>
-        <li>Sắp xếp theo cột</li>
-        <li>Merge header được</li>
-        <li>Tìm kiếm theo từ khóa</li>
-        <li>Footer summary</li>
+        <li><a target="_blank" href="demo.html">Demo sử dụng dữ liệu có sẵn hoặc
+            AJAX, merge header, show loading</a></li>
         <li>-------------------</li>
-        <li>Fixed header, fixed column</li>
-        <li>Expandable</li>
-        <li>Selectable</li>
-        <li>Ẩn hiện cột</li>
-      </ul>
-      <h3>Demo</h3>
-      <ul>
-        <li><a target="_blank" href="demo.html">Demo</a></li>
-        <li><a target="_blank" href="demo_1_no_ajax.html">Phân trang, không sử
-            dụng AJAX, merge header</a></li>
-        <li><a target="_blank" href="demo_4_use_ajax.html">Sử dụng AJAX và
-            showLoading, sử dụng với Vue</a></li>
-        <li>-------------------</li>
-        <li><a target="_blank" href="demo_6_fixed_header.html">Header cố định</a></li>
-        <li><a target="_blank" href="demo_7_expandable.html">Expandable</a></li>
-        <li><a target="_blank" href="demo_8_selectable.html">Selectable</a></li>
-        <li><a target="_blank" href="demo_9_toggle_column.html">Ẩn hiện cột</a></li>
+        <li><a target="_blank" href="datatable_fixed_header.html">Header cố định</a></li>
+        <li><a target="_blank" href="datatable_expandable.html">Expandable</a></li>
+        <li><a target="_blank" href="datatable_selectable.html">Selectable</a></li>
+        <li><a target="_blank" href="datatable_toggle_column.html">Ẩn hiện cột</a></li>
       </ul>
       <h3>Hướng dẫn migrate thư viện Datatable sang Pagi</h3>
       <p>Bỏ không sử dụng Datatable nữa, sửa dụng thư viện Pagi thôi.</p>

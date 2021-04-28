@@ -3,7 +3,6 @@
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Datatable demo">
     <title>Datatable demo</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -11,26 +10,24 @@
 
 <body>
     <article>
-        <h2>Datatable demo: selectable</h2>
-        <p>Thêm class <code>table-selectable</code>.</p>
-        <p>Nên bỏ các class <code>table-striped</code> và <code>table-hover</code> để không xung đột màu nền.</p>
-        <p>Lấy các giá trị được chọn bằng phương thức <code>getSelectedRows()</code>.</p>
+        <h2>Datatable demo: ẩn hiện cột</h2>
+        <p>Truyền thuộc tính <code>columnListNamespace</code>.</p>
 
         <div id="app">
             <table ref="theTable"
-                class="table table-bordered table-selectable">
+                class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>
+                        <th class="text-right">
                             Stt
                         </th>
-                        <th>
+                        <th data-sort-column="country">
                             Quốc gia
                         </th>
-                        <th>
+                        <th class="text-right" data-sort-column="population">
                             Dân số
                         </th>
-                        <th>
+                        <th class="text-center" data-sort-column="fake_date">
                             Ngày nào đó
                         </th>
                     </tr>
@@ -53,19 +50,11 @@
                     </tr>
                 </tbody>
             </table>
-
-            <div class="mt-3">
-                <button class="btn btn-primary"
-                    @click="getSelectedRows()">
-                    Get selected
-                </button>
-            </div>
         </div>
     </article>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
-    <link rel="stylesheet" href="css/datatable.css">
     
-    <script type="module" src="js/script_8_selectable.js"></script>
+    <script type="module" src="js/datatable-toggle-column.js"></script>
 </body>
 </html>
