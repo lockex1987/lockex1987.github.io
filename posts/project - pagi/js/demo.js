@@ -5,6 +5,8 @@ new Vue({
 
     data() {
         return {
+            pagi: {},
+
             items: [],
 
             data: serverData,
@@ -64,15 +66,14 @@ new Vue({
 
     methods: {
         /**
-         * Chuyển đến trang nào đó.
+         * Search dữ liệu ở trang nào đó.
          * @param {Integer} page Số thứ tự trang
-         * @param {Integer} pageSize Số bản ghi mỗi trang
          */
-        gotoPage(page, pageSize) {
+        search(page = 1) {
             if (this.useAjax) {
-                this.getDataAjax(page, pageSize);
+                this.getDataAjax(page);
             } else {
-                this.getDataLocal(page, pageSize);
+                this.getDataLocal(page);
             }
         },
 
@@ -80,10 +81,9 @@ new Vue({
          * Giả lập viecj gọi server.
          * Lấy dữ liệu của một trang nào đó trong trường hợp không sử dụng AJAX.
          * @param {Integer} page Số thứ tự trang (bắt đầu từ 1)
-         * @param {Integer} pageSize Số bản ghi mỗi trang
          * @returns Tổng số bản ghi và danh sách dữ liệu
          */
-        getDataLocal(page, pageSize) {
+        getDataLocal(page, pageSize = 10) {
             const startIndex = (page - 1) * pageSize;
             const total = this.filteredData.length;
             const items = [];
@@ -92,11 +92,15 @@ new Vue({
                 items.push(this.filteredData[i]);
             }
 
-            this.$refs.pagi.update(total, page);
+            this.pagi = {
+                total: total,
+                current_page: page,
+                per_page: pageSize
+            };
             this.items = items;
         },
 
-        async getDataAjax(page, pageSize) {
+        async getDataAjax(page, pageSize = 10) {
             const sortColumn = '';
             const sortDirection = '';
 
@@ -113,14 +117,14 @@ new Vue({
             const total = resp.total_x;
             const data = resp.data_x;
 
-            this.$refs.pagi.update(total, page);
+            this.pagi = {
+                total: total,
+                current_page: page,
+                per_page: pageSize
+            };
             this.items = data;
 
             this.isLoading = false;
-        },
-
-        search() {
-            this.$refs.pagi.reload();
         },
 
         /**

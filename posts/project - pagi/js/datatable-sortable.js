@@ -2,6 +2,9 @@ const Datatable = {};
 
 /**
  * Cho phép một bảng có thể sắp xếp được.
+ * Chúng ta khai báo một table với các header bình thường.
+ * Với các cột mà có thể sắp xếp, chúng ta thêm thuộc tính data-sort-column với giá trị là thuộc tính sắp xếp, ví dụ:
+ *     <th data-sort-column="country"> Quốc gia </th>
  * TODO: Cho vào mixin?
  * @param {DOMNode} table DOM node của bảng
  * @param {Function} callback Hàm callback, có 2 tham số là column và direction

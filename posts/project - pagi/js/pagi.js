@@ -14,7 +14,7 @@ const PagiItem = {
             <a v-else
                 class="page-link"
                 href="javascript:;"
-                @click.stop.prevent="$emit('goto', page)"
+                @click.stop.prevent="$emit('change')"
                 v-html="text">
             </a>
         </li>`,
@@ -23,11 +23,6 @@ const PagiItem = {
         // Nhãn
         text: {
             type: String
-        },
-
-        // Chỉ số trang
-        page: {
-            type: Number // Integer
         },
 
         // CSS class
@@ -51,88 +46,72 @@ const Pagi = {
     template: `
         <div class="d-lg-flex align-items-center justify-content-between">
             <template v-if="isInit">
-                <!-- Nếu rỗng thì hiển thị thông báo -->
-                <template v-if="totalNumber <= 0">
-                    <template v-if="appliedOptions.showNoRecordText">
-                        <!-- Thông báo không tồn tại dữ liệu -->
-                        <span class="no-record text-danger">
-                            {{appliedOptions.noRecordText}}
-                        </span>
-                    </template>
-                </template>
+                <!-- Nếu rỗng thì hiển thị thông báo không tồn tại dữ liệu -->
+                <span v-if="value.total <= 0
+                        && appliedOptions.showNoRecordText"
+                    class="no-record text-danger">
+                    {{appliedOptions.noRecordText}}
+                </span>
 
                 <template v-else>
                     <!-- Hiển thị tổng số bản ghi -->
-                    <template v-if="appliedOptions.showTotalNumber">
-                        <div class="text-muted small mb-2 mb-md-0">
-                            Tổng số {{formatThousands(totalNumber)}} bản ghi
-                        </div>
-                    </template>
+                    <div v-if="appliedOptions.showTotalNumber"
+                        class="text-muted small mb-2 mb-md-0">
+                        Tổng số {{formatThousands(value.total)}} bản ghi
+                    </div>
 
-                    <template v-if="totalPage > 1">
-                        <!-- Thẻ UL bao bên ngoài -->
-                        <ul class="pagination mb-0">
-                            <!-- Link đến trang đầu tiên -->
-                            <template v-if="appliedOptions.showFirst
-                                    && currentPage > 2
-                                    && startPage > 1">
-                                <pagi-item :text="'1'"
-                                    :page="1"
-                                    @goto="callbackFunc($event, appliedOptions.pageSize)"></pagi-item>
+                    <!-- Thẻ UL bao bên ngoài -->
+                    <ul class="pagination mb-0"
+                        v-if="value.last_page > 1">
+                        <!-- Link đến trang đầu tiên -->
+                        <pagi-item v-if="appliedOptions.showFirst
+                                && value.current_page > 2
+                                && startPage > 1"
+                            :text="'1'"
+                            @change="$emit('change', 1)"></pagi-item>
+
+                        <!-- Link đến trang trước -->
+                        <pagi-item v-if="appliedOptions.showPrevious
+                                && value.current_page > 1"
+                            :text="appliedOptions.previousText"
+                            @change="$emit('change', value.current_page - 1)"></pagi-item>
+
+                        <template v-if="appliedOptions.showNumbers">
+                            <template v-for="i in pages">
+                                <!-- Hiển thị ô chuyển đến trang nào đó -->
+                                <li v-if="i === value.current_page
+                                        && appliedOptions.showGotoPage"
+                                    class="page-item">
+                                    <input type="text"
+                                        class="form-control d-inline-block mb-2 mb-md-0 mx-1 text-center goto-page-input"
+                                        style="width: 50px;"
+                                        placeholder="#"
+                                        :value="value.current_page"
+                                        @blur="gotoUserEnterPage()"
+                                        @keydown.enter.prevent="gotoUserEnterPage()"/>
+                                </li>
+
+                                <!-- Link đến các trang ở tầm giữa -->
+                                <pagi-item v-else
+                                    :text="formatThousands(i)"
+                                    :class-name="i === value.current_page ? 'active' : ''"
+                                    @change="if (i !== value.current_page) { $emit('change', i); }"></pagi-item>
                             </template>
+                        </template>
 
-                            <!-- Link đến trang trước -->
-                            <template v-if="appliedOptions.showPrevious
-                                    && currentPage > 1">
-                                <pagi-item :text="appliedOptions.previousText"
-                                    :page="currentPage - 1"
-                                    @goto="callbackFunc($event, appliedOptions.pageSize)"></pagi-item>
-                            </template>
+                        <!-- Link đến trang tiếp theo -->
+                        <pagi-item v-if="appliedOptions.showNext
+                                && value.current_page < value.last_page"
+                            :text="appliedOptions.nextText"
+                            @change="$emit('change', value.current_page + 1)"></pagi-item>
 
-                            <template v-if="appliedOptions.showNumbers">
-                                <template v-for="i in pages">
-                                    <template v-if="i === currentPage
-                                            && appliedOptions.showGotoPage">
-                                        <!-- Hiển thị ô chuyển đến trang nào đó -->
-                                        <li class="page-item">
-                                            <input type="text"
-                                                class="form-control d-inline-block mb-2 mb-md-0 mx-1 text-center goto-page-input"
-                                                style="width: 50px;"
-                                                placeholder="#"
-                                                :value="currentPage"
-                                                @blur="gotoUserEnterPage()"
-                                                @keydown.enter.prevent="gotoUserEnterPage()"/>
-                                        </li>
-                                    </template>
-
-                                    <template v-else>
-                                        <!-- Link đến các trang ở tầm giữa -->
-                                        <pagi-item :text="formatThousands(i)"
-                                            :page="i"
-                                            :class-name="i === currentPage ? 'active' : ''"
-                                            @goto="if (i !== currentPage) { callbackFunc($event, appliedOptions.pageSize); }"></pagi-item>
-                                    </template>
-                                </template>
-                            </template>
-
-                            <!-- Link đến trang tiếp theo -->
-                            <template v-if="appliedOptions.showNext
-                                    && currentPage < totalPage">
-                                <pagi-item :text="appliedOptions.nextText"
-                                    :page="currentPage + 1"
-                                    @goto="callbackFunc($event, appliedOptions.pageSize)"></pagi-item>
-                            </template>
-
-                            <!-- Link đến trang cuối cùng -->
-                            <template v-if="appliedOptions.showLast
-                                    && currentPage < totalPage - 1
-                                    && endPage < totalPage">
-                                <pagi-item :text="formatThousands(totalPage)"
-                                    :page="totalPage"
-                                    @goto="callbackFunc($event, appliedOptions.pageSize)"></pagi-item>
-                            </template>
-                        </ul>
-                    </template>
+                        <!-- Link đến trang cuối cùng -->
+                        <pagi-item v-if="appliedOptions.showLast
+                                && value.current_page < value.last_page - 1
+                                && endPage < value.last_page"
+                            :text="formatThousands(value.last_page)"
+                            @change="$emit('change', value.last_page)"></pagi-item>
+                    </ul>
                 </template>
             </template>
         </div>`,
@@ -142,16 +121,25 @@ const Pagi = {
     },
 
     props: {
-        // Hàm gọi khi click vào từng trang
-        // Hàm có các tham số là page và pageSize
-        callbackFunc: {
-            type: Function
-        },
-
         // Tùy chọn người dùng cấu hình
         options: {
             type: Object,
             default: {}
+        },
+
+        value: {
+            type: Object,
+            default: {}
+            // Số bản ghi mỗi trang
+            // per_page: 10,
+            // Index bắt đầu, tiện khi hiển thị số thứ tự phân trang
+            // from: 1,
+            // Tổng số bản ghi
+            // total: 0,
+            // Trang hiện tại, bắt đầu từ 1
+            // current_page: 1,
+            // Tổng số trang
+            // last_page: 0,
         }
     },
 
@@ -167,7 +155,6 @@ const Pagi = {
             showNoRecordText: true,
             noRecordText: 'Không có bản ghi nào',
             showTotalNumber: true,
-            pageSize: 10,
             showGotoPage: true
         };
 
@@ -177,18 +164,11 @@ const Pagi = {
             // Tùy chọn được áp dụng
             appliedOptions: appliedOptions,
 
-            // Tổng số bản ghi
-            totalNumber: 0,
-            // Tổng số trang
-            totalPage: 0,
-            // Trang hiện tại, bắt đầu từ 1
-            currentPage: 1,
             // Trang đầu tiên
             startPage: 1,
             // Trang cuối cùng
             endPage: 1,
-            // Index bắt đầu, tiện khi hiển thị số thứ tự phân trang
-            startIndex: 0,
+
             // Danh sách các trang hiển thị
             pages: [],
 
@@ -197,46 +177,53 @@ const Pagi = {
         };
     },
 
-    methods: {
-        /**
-         * Phân cách dấu phảy phần ngàn.
-         * Tham khảo gốc ở CommonUtils.
-         */
-        formatThousands(num) {
-            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-        },
-
+    watch: {
         /**
          * Cập nhật.
          * Thiết lập lại thông tin, tính toán lại.
          * Server cần trả về số bản ghi và trang hiện tại là trang nào.
-         * @param {Integer} totalNumber Tổng số trang
-         * @param {Integer} currentPage Trang hiện tại
          */
-        update(totalNumber, currentPage) {
-            this.totalNumber = totalNumber;
-            this.totalPage = Math.ceil(this.totalNumber / this.appliedOptions.pageSize);
-            this.currentPage = Math.min(currentPage, this.totalPage);
+        value(oldValue, newValue) {
+            const updateValue = {
+                ...this.value
+            };
+            let shouldUpdate = false;
+            if (this.value.last_page === undefined) {
+                shouldUpdate = true;
+                updateValue.last_page = Math.ceil(this.value.total / this.value.per_page);
+            }
+            if (this.value.from === undefined) {
+                shouldUpdate = true;
+                updateValue.from = (this.value.current_page - 1) * this.value.per_page + 1;
+            }
+            // this.value.current_page = Math.min(this.value.page, this.value.last_page);
+            if (shouldUpdate) {
+                this.$emit('input', updateValue);
+            }
+
+            if (oldValue.total == newValue.total
+                && oldValue.current_page == newValue.current_page
+                && oldValue.per_page == newValue.per_page) {
+                return;
+            }
+
+            console.log('Cap nhat');
 
             // Hiển thị 5 trang (trừ khi có ít hơn 5 trang)
             // Trang hiện tại ở vị trí giữa (thứ 3), trừ khi trang hiện tại nhỏ hơn 3 hoặc cách trang cuối cùng ít hơn 2 trang
-            if (this.totalPage <= 5) {
+            if (this.value.last_page <= 5) {
                 this.startPage = 1;
-                this.endPage = this.totalPage;
-            } else if (this.currentPage <= 3) {
+                this.endPage = this.value.last_page;
+            } else if (this.value.current_page <= 3) {
                 this.startPage = 1;
                 this.endPage = 5;
-            } else if (this.currentPage + 2 >= this.totalPage) {
-                this.startPage = this.totalPage - 4;
-                this.endPage = this.totalPage;
+            } else if (this.value.current_page + 2 >= this.value.last_page) {
+                this.startPage = this.value.last_page - 4;
+                this.endPage = this.value.last_page;
             } else {
-                this.startPage = this.currentPage - 2;
-                this.endPage = this.currentPage + 2;
+                this.startPage = this.value.current_page - 2;
+                this.endPage = this.value.current_page + 2;
             }
-
-            // Index bắt đầu, tiện khi hiển thị số thứ tự phân trang
-            this.startIndex = (this.currentPage - 1) * this.appliedOptions.pageSize;
-            // console.log(this.totalPage, currentPage, this.currentPage, this.appliedOptions, this.startIndex);
 
             // Tạo mảng các trang
             this.pages = [];
@@ -246,6 +233,16 @@ const Pagi = {
 
             // Đã khởi tạo xong
             this.isInit = true;
+        }
+    },
+
+    methods: {
+        /**
+         * Phân cách dấu phảy phần ngàn.
+         * Tham khảo gốc ở CommonUtils.
+         */
+        formatThousands(num) {
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
         },
 
         /**
@@ -267,18 +264,11 @@ const Pagi = {
                 noti.error('Trang phải lớn hơn 0');
                 return;
             }
-            if (page > this.totalPage) {
+            if (page > this.value.last_page) {
                 noti.error('Trang vượt quá tổng số trang');
                 return;
             }
-            this.callbackFunc(page, this.appliedOptions.pageSize);
-        },
-
-        /**
-         * Load (lại) dữ liệu, chuyển đến trang 1.
-         */
-        reload() {
-            this.callbackFunc(1, this.appliedOptions.pageSize);
+            this.$emit('change', page);
         }
     }
 };

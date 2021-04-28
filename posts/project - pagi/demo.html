@@ -89,25 +89,25 @@
                 </thead>
 
                 <tbody>
-                    <tr v-for="(dataEle, i) in items">
+                    <tr v-for="(e, i) in items">
                         <td class="text-right">
-                            {{$refs.pagi.startIndex + i + 1}}
+                            {{pagi.from + i}}
                         </td>
                         <td>
-                            {{dataEle.country}}
+                            {{e.country}}
                         </td>
                         <td class="text-right">
-                            {{dataEle.population}}
+                            {{e.population}}
                         </td>
                         <td class="text-center">
-                            {{dataEle.fake_date}}
+                            {{e.fake_date}}
                         </td>
                     </tr>
                 </tbody>
             </table>
 
-            <pagi :callback-func="gotoPage"
-                ref="pagi"
+            <pagi @change="search"
+                v-model="pagi"
                 :options="{ pageSize: 5 }"></pagi>
         </div>
         

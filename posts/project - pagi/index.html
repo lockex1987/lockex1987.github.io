@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="date" content="2020-02-24 22:35:00">
-    <meta name="description" content="A pagination library written by myself in Vue. Datatable: sort, search, pagination, bootstrap, table, fixed header, fixed column">
+    <meta name="description" content="A pagination library written by myself in Vue. Datatable: sort, search, select, fixed header, fixed column, show - hide column">
     <title>Pagi</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -14,36 +14,23 @@
       <h2>Pagi</h2>
       <h3>Hướng dẫn sử dụng</h3>
       <p>Khai báo các file CSS và JS của thư viện và các phụ thuộc (noti, Vue):</p>
-      <pre>&lt;link rel="stylesheet" href="css/datatable.css"/&gt;<br><br>&lt;script src="js/pagi.js"&gt;&lt;/script&gt;</pre>
+      <pre>&lt;link rel="stylesheet" href="../project%20-%20noti/css/noti.css"/&gt;
+&lt;script src="../project%20-%20noti/js/noti.js"&gt;&lt;/script&gt;
+<br>&lt;script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"&gt;&lt;/script&gt;<br><br>&lt;script src="js/pagi.js"&gt;&lt;/script&gt;</pre>
       <p>Thư viện Pagi sinh ra các phần tử phân trang theo chuẩn của Bootstrap
         4, do đó bạn nên thêm cả CSS của Bootstrap (hoặc bootstrap-extended): </p>
       <pre>&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/&gt;</pre>
       <p>Khai báo một component <code>&lt;pagi&gt;</code>:</p>
-      <pre>&lt;pagi :callback-func="gotoPage"
-    ref="pagi"&gt;&lt;/pagi&gt;</pre>
+      <pre>&lt;pagi @change="search"
+    v-model="pagi"&gt;&lt;/pagi&gt;</pre>
       <p>Khai báo hàm xử lý khi click vào link từng trang. Hàm này sẽ có tham số
         <code>page</code> là số thứ tự trang được click (số thứ tự bắt đầu bằng
-        1) và <code>pageSize</code> là số phần tử trong một trang.</p>
-      <pre>gotoPage(page, pageSize) {
-    const { total, items } = this.callServer(page, pageSize);
-    this.$refs.pagi.update(total, page);
-    this.bindItems(items);
+        1).</p>
+      <pre>search(page = 1) {
+    const data = this.callServer(page);
+    this.pagi = data;
+    this.items = data.data;
 }</pre>
-      <p>Chúng ta khai báo một table với các header bình thường.</p>
-      <p>Với các cột mà có thể sắp xếp, chúng ta thêm thuộc tính <code>data-sort-column</code>
-        với giá trị là thuộc tính sắp xếp:</p>
-      <pre>&lt;table class="table table-bordered table-striped table-hover"&gt;
-    &lt;thead&gt;
-        &lt;tr&gt;
-            &lt;th&gt; Stt &lt;/th&gt;
-            &lt;th data-sort-column="country"&gt; Quốc gia &lt;/th&gt;
-            &lt;th data-sort-column="population"&gt; Dân số &lt;/th&gt;
-            &lt;th data-sort-column="fake_date"&gt; Ngày nào đó &lt;/th&gt;
-        &lt;/tr&gt;
-    &lt;/thead&gt;
-<br>    &lt;tbody&gt;<br>
-    &lt;/tbody&gt;
-&lt;/table&gt;</pre>
       <h3>Các tham số khi khởi tạo</h3>
       <div class="out-of-box">
         <table class="table table-bordered">
@@ -56,9 +43,17 @@
           </thead>
           <tbody>
             <tr>
-              <td><code>callbackFunc</code></td>
+              <td><code>v-model</code></td>
+              <td><code>Object</code></td>
+              <td>Dữ liệu cấu hình, gồm các trường: { <code>total</code>, <code>current_page</code>,
+                <code>per_page</code>, <code>from</code>, <code>last_page</code>
+                } như là hàm paginate của Laravel trả về.</td>
+            </tr>
+            <tr>
+              <td><code>change</code></td>
               <td><code>Function</code></td>
-              <td>Hàm callback</td>
+              <td>Hàm callback, có tham số là <code>page</code> (số thứ tự
+                trang).</td>
             </tr>
             <tr>
               <td><code>options</code></td>
@@ -155,17 +150,10 @@
               <td><code>true</code><br>
               </td>
             </tr>
-            <tr>
-              <td><code>pageSize</code></td>
-              <td><code>int</code></td>
-              <td>Số lượng bản ghi trên một trang</td>
-              <td><code>10</code><br>
-              </td>
-            </tr>
           </tbody>
         </table>
       </div>
-      <h3>Các thuộc tính</h3>
+      <h3>Các thuộc tính của pagi</h3>
       <div class="out-of-box">
         <table class="table table-bordered">
           <thead>
@@ -176,40 +164,32 @@
           </thead>
           <tbody>
             <tr>
-              <td><code>startIndex</code></td>
+              <td><code>total</code></td>
+              <td>Tổng số bản ghi</td>
+            </tr>
+            <tr>
+              <td><code>current_page</code></td>
+              <td>Trang hiện tại, bắt đầu từ 1</td>
+            </tr>
+            <tr>
+              <td><code>per_page</code></td>
+              <td>Số bản ghi một trang</td>
+            </tr>
+            <tr>
+              <td><code>from</code></td>
               <td>Chỉ số bắt đầu, rất tiện để in số thứ tự khi phân trang, bắt
                 đầu từ 0</td>
             </tr>
             <tr>
-              <td><code>currentPage</code></td>
-              <td>Trang hiện tại, bắt đầu từ 1</td>
-            </tr>
-            <tr>
-              <td><code>totalNumber</code></td>
-              <td>Tổng số bản ghi</td>
-            </tr>
-            <tr>
-              <td><code>totalPage</code></td>
+              <td><code>last_page</code></td>
               <td>Tổng số trang</td>
-            </tr>
-            <tr>
-              <td><code>startPage</code></td>
-              <td>Trang bắt đầu</td>
-            </tr>
-            <tr>
-              <td><code>endPage</code></td>
-              <td>Trang kết thúc</td>
-            </tr>
-            <tr>
-              <td><code>pages</code></td>
-              <td>Mảng các số bắt đầu từ trang đầu tiên đến trang kết thúc</td>
             </tr>
           </tbody>
         </table>
       </div>
       <h3>Phương thức</h3>
-      <p>Bạn cần gọi phương thức <code>this.$refs.pagi.update(totalPage,
-          currentPage)</code> để cập nhật.</p>
+      <p>Bạn cần cập nhật thuộc tính <code>pagi</code> <code></code> để cập
+        nhật lại vùng phân trang.</p>
       <h3>Roadmap</h3>
       <ul>
         <li>v2.1.0: Sử dụng JS thuần. Thêm phụ thuộc noti để thông báo lỗi khi
@@ -229,21 +209,21 @@
       </ul>
       <h3>Hướng dẫn migrate thư viện Datatable sang Pagi</h3>
       <p>Bỏ không sử dụng Datatable nữa, sửa dụng thư viện Pagi thôi.</p>
-      <p>Thêm <code>&lt;pagi :callback-func="gotoPage"
-          ref="pagi"&gt;&lt;/pagi&gt;</code>. </p>
-      <p>Chỗ <code>this.datatable.reload()</code> chuyển thành <del><code>this.gotoPage(1)</code></del>
-        <code>this.$refs.pagi.reload()</code> (gọi thế này để có tham số <code>pageSize</code>,
-        sortColumn, sortDirection).</p>
+      <p>Thêm <code>&lt;pagi @change="search" v-model="pagi"&gt;&lt;/pagi&gt;</code>.
+      </p>
+      <p>Chỗ <code>this.datatable.reload()</code>, <code>this.initDatatable()</code>
+        chuyển thành <code>this.search()</code>. Phương thức <code>search</code>
+        có tham số mặc định <code>page</code> bằng 1.</p>
       <p>Chỗ <code>showLoading</code> thì thêm một biến <code>isLoading</code>,
         hiển thị spinner như kiểu <code>isProcessing</code> khi thêm mới / cập
         nhật.</p>
       <p>Các tùy chọn <code>ajax</code>, <code>startSearchCallback</code>, <code>finishSearchCallback</code>,
         <code>getTotalAndData</code>, <code>bindItemsCallback</code> sử dụng
-        khó, giờ thì chỉ cần dùng tùy chọn <code>callbackFunc</code> là đủ. Chú
-        ý trong <code>callbackFunc</code> cần gọi <code>this.$refs.pagi.update(total,
-          page)</code>.</p>
-      <p>Thay <code>{{dataEle.stt}}</code> bằng <code>{{$refs.pagi.startIndex
-          + i + 1}}</code>.</p>
+        khó, giờ thì chỉ cần dùng tùy chọn <code>@change</code> là đủ. Chú ý
+        trong <code>@change</code> (<code>search</code>) cần cập nhật lại <code>this.pagi
+          = { total, current_page, per_page }</code>. Có thể thêm <code>from</code>
+        và <code>last_page</code>. Phân trang theo Laravel thì đã đầy đủ.</p>
+      <p>Thay <code>{{e.stt}}</code> bằng <code>{{pagi.from + i}}</code>.</p>
       <p>Chú ý chỗ thẻ <code>&lt;table&gt;</code> cần thêm <code>v-show="items.length
           &gt; 0"</code> để ẩn đi khi không có dữ liệu. Thông báo không có dữ
         liệu nằm trong thẻ <code>&lt;pagi&gt;</code> luôn rồi.</p>
