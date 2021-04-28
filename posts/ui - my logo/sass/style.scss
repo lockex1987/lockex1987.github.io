@@ -38,7 +38,7 @@
             background-position: 0px 0px;
             background-repeat: repeat-y;
             transform: rotate(155deg);
-            animation: flavours 100s linear infinite;
+            animation: flavours 10s linear infinite;
         }
     }
 
@@ -66,6 +66,9 @@
 
 @keyframes flavours {
     to {
-        background-position: 0 -1000vh;
+        // Chú ý bị flick khi kết thúc chu kỳ
+        // Cách tunning để tạo cảm giác liên tục đó là để thời gian thực hiện chu kỳ thật lớn,
+        // để sau một khoảng thời gian lớn nó mới bị flick, tần suất thấp
+        background-position: 0 -100vh;
     }
 }

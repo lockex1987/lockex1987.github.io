@@ -26,11 +26,13 @@
     }
 })();
 
+
 /**
  * Nếu sử dụng từ khóa "const" ở đây
  * thì trên Safari, chỗ DownloadProgress (module script) sẽ bị lỗi không tìm thấy biến CommonUtils.
  */
 const CommonUtils = {};
+
 
 /**
  * Trả về một phần tử.
@@ -40,6 +42,7 @@ CommonUtils.$ = (selector) => {
     return document.querySelector(selector);
 };
 
+
 /**
  * Trả về mảng luôn để có thể thực hiện các hàm như map, reduce,...
  * @param {String} selector
@@ -48,6 +51,7 @@ CommonUtils.$ = (selector) => {
 CommonUtils.$$ = (selector, rootNode = document) => {
     return [...rootNode.querySelectorAll(selector)];
 };
+
 
 /**
  * Bắt sự kiện.
@@ -61,6 +65,7 @@ CommonUtils.delegateDocument = (type, selector, callback) => {
         }
     });
 };
+
 
 /**
  * Tạo một phần tử.
@@ -85,6 +90,7 @@ CommonUtils.createElement = (tag, attributes, children) => {
     return ele;
 };
 
+
 /**
  * Tạo một phần tử.
  * @param {Object} obj Đối tượng, có các thuộc tính như "tag", "children",...
@@ -97,6 +103,7 @@ CommonUtils.create = (obj) => {
     return CommonUtils.createElement(tag, obj, children);
 };
 
+
 /**
  * Lấy các tham số của form.
  * Các giá trị được encode.
@@ -106,6 +113,7 @@ CommonUtils.getFormAsString = (formId) => {
     const formElement = document.getElementById(formId);
     return new URLSearchParams(new FormData(formElement)).toString();
 };
+
 
 /**
  * Chuyển đối tượng JS thành xâu tham số.
@@ -118,6 +126,7 @@ CommonUtils.jsonToQueryString = (json) => {
                 encodeURIComponent(json[key]);
         }).join('&');
 };
+
 
 /**
  * Escape các ký tự đặc biệt thành mã HTML entity tương ứng.
@@ -133,6 +142,7 @@ CommonUtils.escapeHtml = (s) => {
     return s;
 };
 
+
 /**
  * Phân cách dấu phảy phần ngàn.
  */
@@ -140,6 +150,10 @@ CommonUtils.formatThousands = (num) => {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 };
 
+
+/**
+ * Hiển thị số.
+ */
 CommonUtils.prettifyNumber = (num, digits) => {
     if (digits === undefined) {
         digits = 1;
@@ -157,81 +171,27 @@ CommonUtils.prettifyNumber = (num, digits) => {
     ];
     for (let i = 0; i < si.length; i++) {
         if (num >= si[i].value) {
+            if (i <= 0) {
+                digits = 3;
+            } else if (i <= 1) {
+                digits = 2;
+            } else if (i <= 2) {
+                digits = 0;
+            } else {
+                digits = 0;
+            }
             const n = (num / si[i].value).toFixed(digits);
 
             // Xóa những chữ số 0 đằng sau dấu thập phân
             // Nếu chỉ để 0+ thì sẽ không xóa được dấu .
             // Nếu chỉ để \.0+ thì sẽ không xử lý được trường hợp 123.400
-            return n.replace(/\.?0+$/, '') + si[i].symbol;
+            // .replace(/\.?0+$/, '') sẽ bị lỗi các trường hợp như là num = 80 và digit = 0
+            return parseFloat(n) + si[i].symbol;
         }
     }
     return num.toFixed(digits);
 };
 
-/**
- * Tính toán số ngày giữa hai ngày (toDate - fromDate).
- * @param {Date} fromDate Từ ngày
- * @param {Date} toDate Đến ngày
- * @return {Integer} Số ngày giữa 2 ngày (ví dụ từ ngày 1/1 đến 10/1 có 9 ngày)
- */
-CommonUtils.dateDiff = (fromDate, toDate) => {
-    const oneDay = 24 * 60 * 60 * 1000;
-    return Math.round((toDate.getTime() - fromDate.getTime()) / oneDay);
-};
-
-/**
- * Thêm bao nhiêu ngày vào một ngày có sẵn.
- * @param {Date} fromDate Ngày bắt đầu
- * @param {Integer} numberOfDate Số ngày thêm vào
- */
-CommonUtils.addDate = (fromDate, numberOfDate) => {
-    const oneDay = 24 * 60 * 60 * 1000;
-    return new Date(fromDate.getTime() + numberOfDate * oneDay);
-};
-
-/**
- * Trả về một đối tượng Date từ một xâu có định dạng (dd/MM/yyyy).
- * @param {String} dateString Xâu ngày tháng
- * @retun {Date} Một đối tượng Date
- */
-CommonUtils.converStringToDate = (dateString) => {
-    const a = dateString.split(/\/|-/);
-    const date = a[0];
-    const month = a[1];
-    const year = a[2];
-    return new Date(year + '-' + month + '-' + date);
-};
-
-/**
- * Trả về đối tượng Date từ xâu dạng YYYY-MM-DDTHH:MM:SSZ
- * @param {String} isoString Xâu ngày tháng, định dạng ISO 8601
- */
-CommonUtils.convertStringWithTimeToDate = (isoString) => {
-    return new Date(isoString);
-};
-
-/**
- * Chuyển đối tượng Date sang xâu dạng dd/MM/yyyy.
- * @param {Date} date Một đối tượng Date
- * @return {String} Một xâu dạng dd/MM/yyyy tương ứng
- */
-CommonUtils.convertDateToString = (date) => {
-    return CommonUtils.paddingTwoZero(date.getDate()) + '/' +
-        CommonUtils.paddingTwoZero(date.getMonth() + 1) + '/' +
-        date.getFullYear();
-};
-
-/**
- * Chuyển đối tượng Date sang xâu dạng "dd/MM/yyyy h24:mi:ss".
- * @param {Date} date Một đối tượng Date
- * @return {String} Một xâu dạng "dd/MM/yyyy h24:mi:ss" tương ứng
- */
-CommonUtils.convertDateToStringWithTime = (date) => {
-    return CommonUtils.convertDateToString(date) + ' ' +
-        CommonUtils.paddingTwoZero(date.getHours()) + ':' +
-        CommonUtils.paddingTwoZero(date.getMinutes()) + ':' +
-        CommonUtils.paddingTwoZero(date.getSeconds());
-};
 
 /**
  * Thêm các chữ số 0 ở đầu để có độ dài là 2 ký tự.
@@ -240,14 +200,6 @@ CommonUtils.paddingTwoZero = (n) => {
     return (n < 10) ? ('0' + n) : n;
 };
 
-/**
- * Chuẩn hóa ngày tháng về định dạng dd/MM/yyyy.
- * @param s Xâu định dạng ISO 8601
- */
-CommonUtils.normalizeDate = (s) => {
-    const d = CommonUtils.convertStringWithTimeToDate(s);
-    return CommonUtils.convertDateToString(d);
-};
 
 /**
  * Download dữ liệu Blob.
@@ -271,6 +223,7 @@ CommonUtils.downloadBlob = (blob, fileName) => {
     a.click();
 };
 
+
 /**
  * Hàm save as do mình tự làm.
  * @param text Nội dung của văn bản cần lưu
@@ -283,6 +236,7 @@ CommonUtils.saveTextAsFile = (text, fileName) => {
     CommonUtils.downloadBlob(textFileAsBlob, fileName);
 };
 
+
 /**
  * Lấy tham số từ URL.
  */
@@ -290,6 +244,7 @@ CommonUtils.getUrlParameter = (param) => {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
 };
+
 
 /**
  * Không thực hiện hàm luôn khi người dùng đang thao tác,
@@ -310,6 +265,7 @@ CommonUtils.debounce = (func, delay) => {
         }, delay);
     };
 };
+
 
 /**
  * Giới hạn số lần gọi hàm.
@@ -334,13 +290,13 @@ CommonUtils.throttle = (func, limit) => {
     };
 };
 
+
 CommonUtils.addCssStyles = (styles) => {
     const styleSheet = document.createElement('style');
     styleSheet.type = 'text/css';
     styleSheet.innerText = styles;
     document.head.appendChild(styleSheet);
 };
-
 
 
 /**
@@ -351,6 +307,7 @@ CommonUtils.addCssStyles = (styles) => {
 CommonUtils.getRandomIndex = (n) => {
     return Math.floor(Math.random() * n);
 };
+
 
 CommonUtils.getRandomBetween = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;

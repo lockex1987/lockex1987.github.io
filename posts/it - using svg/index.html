@@ -1,164 +1,291 @@
 <!DOCTYPE html>
 <html lang="vi">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="map" />
-
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="map">
     <title>Sử dụng SVG</title>
-
-    <link rel="icon" href="../../images/favicon.png" />
-    <link rel="stylesheet" href="../../css/style.css" />
-    <link rel="stylesheet" href="css/style.css" />
-</head>
-
-<body>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
     <article>
-        <h2>Sử dụng SVG</h2>
+      <h2>Sử dụng SVG</h2>
+      <h3>Như ảnh bình thường</h3>
+      <div class="mb-3 text-center"> <img src="images/kiwi.svg" style="width: 250px;">
+      </div>
+      <h3>Như thuộc tính background-image</h3>
+      <div class="mb-3" style="width: 100px;
+                height: 82px;                background-image: url(images/kiwi.svg);                background-size: 100px 82px;"></div>
+      <div class="mb-3" style="width: 48px;
+                height: 48px;                background-image: url(images/twitter.svg);                background-size: cover;"></div>
+      <h3>Sử dụng inline, trực tiếp thẻ svg</h3>
+      <svg enable-background="new 0 65.326 612 502.174" width="612px" height="502.174px"
 
-        <h3>Như ảnh bình thường</h3>
+        version="1.1" viewBox="0 65.326 612 502.174" x="0px" y="0px" xml:space="preserve"
 
-        <div class="mb-3">
-            <img class="papa" src="images/kiwi.svg" style="width: 250px;"/>
-        </div>
-        <div class="mb-3">
-            <img class="mama" src="images/kiwi.svg" style="width: 100px; "/>
-        </div>
-        <div class="mb-3">
-            <img class="baby" src="images/kiwi.svg" style="width: 50px; "/>
-        </div>
+        xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink"
 
-        <h3>Như thuộc tính background-image</h3>
+        class="mb-3 mw-100">
+        <ellipse class="ground" cx="283.5" cy="487.5" fill="#C6C6C6" rx="259" ry="80">
+        </ellipse>
+        <path class="kiwi" d="M210.333,65.331C104.367,66.105-12.349,150.637,1.056,276.449c4.303,40.393,18.533,63.704,52.171,79.03
+                    c36.307,16.544,57.022,54.556,50.406,112.954c-9.935,4.88-17.405,11.031-19.132,20.015c7.531-0.17,14.943-0.312,22.59,4.341                    c20.333,12.375,31.296,27.363,42.979,51.72c1.714,3.572,8.192,2.849,8.312-3.078c0.17-8.467-1.856-17.454-5.226-26.933                    c-2.955-8.313,3.059-7.985,6.917-6.106c6.399,3.115,16.334,9.43,30.39,13.098c5.392,1.407,5.995-3.877,5.224-6.991                    c-1.864-7.522-11.009-10.862-24.519-19.229c-4.82-2.984-0.927-9.736,5.168-8.351l20.234,2.415c3.359,0.763,4.555-6.114,0.882-7.875                    c-14.198-6.804-28.897-10.098-53.864-7.799c-11.617-29.265-29.811-61.617-15.674-81.681c12.639-17.938,31.216-20.74,39.147,43.489                    c-5.002,3.107-11.215,5.031-11.332,13.024c7.201-2.845,11.207-1.399,14.791,0c17.912,6.998,35.462,21.826,52.982,37.309                    c3.739,3.303,8.413-1.718,6.991-6.034c-2.138-6.494-8.053-10.659-14.791-20.016c-3.239-4.495,5.03-7.045,10.886-6.876                    c13.849,0.396,22.886,8.268,35.177,11.218c4.483,1.076,9.741-1.964,6.917-6.917c-3.472-6.085-13.015-9.124-19.18-13.413                    c-4.357-3.029-3.025-7.132,2.697-6.602c3.905,0.361,8.478,2.271,13.908,1.767c9.946-0.925,7.717-7.169-0.883-9.566                    c-19.036-5.304-39.891-6.311-61.665-5.225c-43.837-8.358-31.554-84.887,0-90.363c29.571-5.132,62.966-13.339,99.928-32.156                    c32.668-5.429,64.835-12.446,92.939-33.85c48.106-14.469,111.903,16.113,204.241,149.695c3.926,5.681,15.819,9.94,9.524-6.351                    c-15.893-41.125-68.176-93.328-92.13-132.085c-24.581-39.774-14.34-61.243-39.957-91.247                    c-21.326-24.978-47.502-25.803-77.339-17.365c-23.461,6.634-39.234-7.117-52.98-31.273C318.42,87.525,265.838,64.927,210.333,65.331                    z M445.731,203.01c6.12,0,11.112,4.919,11.112,11.038c0,6.119-4.994,11.111-11.112,11.111s-11.038-4.994-11.038-11.111                    C434.693,207.929,439.613,203.01,445.731,203.01z"
 
-        <div class="kiwi-logo mb-3"></div>
-		
-		<div class="twitter-logo" href="https://twitter.com/Snapsvg"></div>
+          id="bird"> </path>
+        <filter id="pictureFilter">
+          <feGaussianBlur stdDeviation="5"> </feGaussianBlur> </filter> </svg>
+      <h3>Dùng AJAX để load thành inline</h3>
+      <p>Sau khi trở thành inline thì chúng ta có thể style bằng CSS bình
+        thường.</p>
+      <div id="demo" class="mb-3"></div>
+      <h3>Xử lý với JS</h3>
+      <div id="map"></div>
+      <div class="map-tooltip"></div>
+      <h3>Bản đồ thế giới</h3>
+      <div id="countries"></div>
+      <h3>Các hình đơn giản</h3>
+      <svg width="500" height="1600">
+        <!-- Hình tròn -->
+        <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow"></circle>
+        <!-- Hình chữ nhật -->
+        <rect x="10" y="100" width="80" height="30" rx="5" ry="10" style="fill:rgb(0, 0, 255); stroke-width: 3; stroke:rgb(0, 0, 0)"></rect>
+        <!-- Hình E líp -->
+        <ellipse cx="50" cy="250" rx="20" ry="50" style="fill: yellow; stroke: purple; stroke-width: 2"></ellipse>
+        <line x1="10" y1="300" x2="100" y2="350" style="stroke: rgb(255, 0, 0); stroke-width: 2"></line>
+        <polygon points="200,410 250,590 160,610" style="fill: lime; stroke: purple; stroke-width: 1"></polygon>
+        <polygon points="220,710 300,910 170,950 123,934" style="fill: lime; stroke: purple; stroke-width: 1"></polygon>
+        <polygon points="100,1010 40,1198 190,1078 10,1078 160,1198" style="fill: lime; stroke: purple; stroke-width: 5; fill-rule: nonzero;"></polygon>
+        <polygon points="100,1210 40,1398 190,1278 10,1278 160,1398" style="fill: lime; stroke: purple; stroke-width: 5; fill-rule: evenodd;"></polygon>
+        <polyline points="20,1420 40,1425 60,1440 80,1520 120,1540 200,1580" style="fill: none; stroke: black; stroke-width: 3"></polyline>
+      </svg>
+      <h3>Path</h3>
+      <p>The &lt;path&gt; element is used to define a path.</p>
+      <p>The following commands are available for path data:</p>
+      <ul>
+        <li>M = moveto</li>
+        <li>L = lineto</li>
+        <li>H = horizontal lineto</li>
+        <li>V = vertical lineto</li>
+        <li>C = curveto</li>
+        <li>S = smooth curveto</li>
+        <li>Q = quadratic Bézier curve</li>
+        <li>T = smooth quadratic Bézier curveto</li>
+        <li>A = elliptical Arc</li>
+        <li>Z = closepath</li>
+      </ul>
+      <p>Note: All of the commands above can also be expressed with lower
+        letters. Capital letters means absolutely positioned, lower cases means
+        relatively positioned.</p>
+      <p>The example below defines a path that starts at position 150,0 with a
+        line to position 75,200 then from there, a line to 225,200 and finally
+        closing the path back to 150,0:</p>
+      <svg height="210" width="400">
+        <path d="M150 0 L75 200 L225 200 Z"></path> </svg>
+      <p>Bézier curves are used to model smooth curves that can be scaled
+        indefinitely. Generally, the user selects two endpoints and one or two
+        control points. A Bézier curve with one control point is called a
+        quadratic Bézier curve and the kind with two control points is called
+        cubic.</p>
+      <p>The following example creates a quadratic Bézier curve, where A and C
+        are the start and end points, B is the control point:</p>
+      <svg height="400" width="450">
+        <path id="lineAB" d="M 100 350 l 150 -300" stroke="red" stroke-width="3"
 
-        <h3>Sử dụng inline, trực tiếp thẻ svg</h3>
+          fill="none"></path>
+        <path id="lineBC" d="M 250 50 l 150 300" stroke="red" stroke-width="3" fill="none"></path>
+        <path d="M 175 200 l 150 0" stroke="green" stroke-width="3" fill="none"></path>
+        <path d="M 100 350 q 150 -300 300 0" stroke="blue" stroke-width="5" fill="none"></path>
+        <!-- Mark relevant points -->
+        <g stroke="black" stroke-width="3" fill="black">
+          <circle id="pointA" cx="100" cy="350" r="3"></circle>
+          <circle id="pointB" cx="250" cy="50" r="3"></circle>
+          <circle id="pointC" cx="400" cy="350" r="3"></circle> </g>
+        <!-- Label the points -->
+        <g font-size="30" font-family="sans-serif" fill="black" stroke="none" text-anchor="middle">
+          <text x="100" y="350" dx="-30">A</text>
+          <text x="250" y="50" dy="-10">B</text>
+          <text x="400" y="350" dx="30">C</text> </g> </svg>
+      <h3>Text<br>
+      </h3>
+      <p>The &lt;text&gt; element is used to define a text.</p>
+      <svg height="30" width="200">
+        <text x="0" y="15" fill="red">I love SVG!</text> </svg>
+      <p>Rotate the text:</p>
+      <svg height="60" width="200">
+        <text x="0" y="15" fill="red" transform="rotate(30 20,40)">I love SVG</text>
+      </svg>
+      <p>The &lt;text&gt; element can be arranged in any number of sub-groups
+        with the &lt;tspan&gt; element. Each &lt;tspan&gt; element can contain
+        different formatting and position. (Như thẻ <code>&lt;span&gt;</code>)</p>
+      <p>Text on several lines (with the &lt;tspan&gt; element):</p>
+      <svg height="90" width="200">
+        <text x="10" y="20" style="fill:red;">Several lines:
+          <tspan x="10" y="45">First line.</tspan>
+          <tspan x="10" y="70">Second line.</tspan> </text> </svg>
+      <p>Text as a link (with the &lt;a&gt; element). Thuộc tính là <code>xlink:href</code>
+        chứ không phải <code>href</code>. Phải thêm khai báo namespace <code>xlink="http://www.w3.org/1999/xlink"</code>.</p>
+      <svg height="30" width="200" xlink="http://www.w3.org/1999/xlink">
+        <a xlink:href="https://www.w3schools.com/graphics/" target="_blank">
+          <text x="0" y="15" fill="red">I love SVG!</text> </a> </svg>
+      <h3>Các thuộc tính stroke</h3>
+      <p>SVG offers a wide range of stroke properties. In this chapter we will
+        look at the following:</p>
+      <ul>
+        <li>stroke</li>
+        <li>stroke-width</li>
+        <li>stroke-linecap</li>
+        <li>stroke-dasharray</li>
+      </ul>
+      <p>All the stroke properties can be applied to any kind of lines, text and
+        outlines of elements like a circle.</p>
+      <h4>SVG stroke Property</h4>
+      <p>The stroke property defines the color of a line, text or outline of an
+        element:</p>
+      <svg height="80" width="300">
+        <g fill="none">
+          <path stroke="red" d="M5 20 l215 0"></path>
+          <path stroke="black" d="M5 40 l215 0"></path>
+          <path stroke="blue" d="M5 60 l215 0"></path> </g> </svg>
+      <h4>SVG stroke-width Property</h4>
+      <p>The stroke-width property defines the thickness of a line, text or
+        outline of an element:</p>
+      <svg height="80" width="300">
+        <g fill="none" stroke="black">
+          <path stroke-width="2" d="M5 20 l215 0"></path>
+          <path stroke-width="4" d="M5 40 l215 0"></path>
+          <path stroke-width="6" d="M5 60 l215 0"></path> </g>
+      </svg>
+      <h4>SVG stroke-linecap Property</h4>
+      <p>The stroke-linecap property defines different types of endings to an
+        open path:</p>
+      <svg height="80" width="300">
+        <g fill="none" stroke="black" stroke-width="6">
+          <path stroke-linecap="butt" d="M5 20 l215 0"></path>
+          <path stroke-linecap="round" d="M5 40 l215 0"></path>
+          <path stroke-linecap="square" d="M5 60 l215 0"></path> </g>
+      </svg>
+      <h4>SVG stroke-dasharray Property</h4>
+      <p>The stroke-dasharray property is used to create dashed lines:</p>
+      <svg height="80" width="300">
+        <g fill="none" stroke="black" stroke-width="4">
+          <path stroke-dasharray="5,5" d="M5 20 l215 0"></path>
+          <path stroke-dasharray="10,10" d="M5 40 l215 0"></path>
+          <path stroke-dasharray="20,10,5,5,5,10" d="M5 60 l215 0"></path> </g>
+      </svg>
+      <h3>SVG Filters</h3>
+      <p>SVG Filters are used to add special effects to SVG graphics.</p>
+      <p>In the next chapters, we will only demonstrate a touch of the filter
+        effects that are possible - and give you an idea of what can be done
+        with SVG.</p>
+      <p>The available filter elements in SVG are:</p>
+      <ul>
+        <li>&lt;feBlend&gt; - filter for combining images</li>
+        <li>&lt;feColorMatrix&gt; - filter for color transforms</li>
+        <li>&lt;feComponentTransfer&gt;</li>
+        <li>&lt;feComposite&gt;</li>
+        <li>&lt;feConvolveMatrix&gt;</li>
+        <li>&lt;feDiffuseLighting&gt;</li>
+        <li>&lt;feDisplacementMap&gt;</li>
+        <li>&lt;feFlood&gt;</li>
+        <li>&lt;feGaussianBlur&gt;</li>
+        <li>&lt;feImage&gt;</li>
+        <li>&lt;feMerge&gt;</li>
+        <li>&lt;feMorphology&gt;</li>
+        <li>&lt;feOffset&gt; - filter for drop shadows</li>
+        <li>&lt;feSpecularLighting&gt;</li>
+        <li>&lt;feTile&gt;</li>
+        <li>&lt;feTurbulence&gt;</li>
+        <li>&lt;feDistantLight&gt; - filter for lighting</li>
+        <li>&lt;fePointLight&gt; - filter for lighting</li>
+        <li>&lt;feSpotLight&gt; - filter for lighting<br>
+        </li>
+      </ul>
+      <p>Tip: You can use multiple filters on each SVG element!<br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Tham khảo</h3>
+      <ul>
+        <li> <span class="text-muted mr-2">w3schools.com</span> <a href="https://www.w3schools.com/graphics/svg_intro.asp"
+
+            target="_blank"> SVG Tutorial </a> </li>
         
-        <svg enable-background="new 0 65.326 612 502.174"
-                height="502.174px"
-                id="Layer_1"
-                version="1.1"
-                viewbox="0 65.326 612 502.174"
-                width="612px"
-                x="0px"
-                xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                y="0px"
-                class="mb-3 mw-100">
-            <ellipse class="ground"
-                    cx="283.5"
-                    cy="487.5"
-                    fill="#C6C6C6"
-                    rx="259"
-                    ry="80">
-            </ellipse>
+        <li> <span class="text-muted mr-2">flaviocopes.com</span> <a href="https://flaviocopes.com/svg/"
 
-            <path class="kiwi" d="M210.333,65.331C104.367,66.105-12.349,150.637,1.056,276.449c4.303,40.393,18.533,63.704,52.171,79.03
-		c36.307,16.544,57.022,54.556,50.406,112.954c-9.935,4.88-17.405,11.031-19.132,20.015c7.531-0.17,14.943-0.312,22.59,4.341
-		c20.333,12.375,31.296,27.363,42.979,51.72c1.714,3.572,8.192,2.849,8.312-3.078c0.17-8.467-1.856-17.454-5.226-26.933
-		c-2.955-8.313,3.059-7.985,6.917-6.106c6.399,3.115,16.334,9.43,30.39,13.098c5.392,1.407,5.995-3.877,5.224-6.991
-		c-1.864-7.522-11.009-10.862-24.519-19.229c-4.82-2.984-0.927-9.736,5.168-8.351l20.234,2.415c3.359,0.763,4.555-6.114,0.882-7.875
-		c-14.198-6.804-28.897-10.098-53.864-7.799c-11.617-29.265-29.811-61.617-15.674-81.681c12.639-17.938,31.216-20.74,39.147,43.489
-		c-5.002,3.107-11.215,5.031-11.332,13.024c7.201-2.845,11.207-1.399,14.791,0c17.912,6.998,35.462,21.826,52.982,37.309
-		c3.739,3.303,8.413-1.718,6.991-6.034c-2.138-6.494-8.053-10.659-14.791-20.016c-3.239-4.495,5.03-7.045,10.886-6.876
-		c13.849,0.396,22.886,8.268,35.177,11.218c4.483,1.076,9.741-1.964,6.917-6.917c-3.472-6.085-13.015-9.124-19.18-13.413
-		c-4.357-3.029-3.025-7.132,2.697-6.602c3.905,0.361,8.478,2.271,13.908,1.767c9.946-0.925,7.717-7.169-0.883-9.566
-		c-19.036-5.304-39.891-6.311-61.665-5.225c-43.837-8.358-31.554-84.887,0-90.363c29.571-5.132,62.966-13.339,99.928-32.156
-		c32.668-5.429,64.835-12.446,92.939-33.85c48.106-14.469,111.903,16.113,204.241,149.695c3.926,5.681,15.819,9.94,9.524-6.351
-		c-15.893-41.125-68.176-93.328-92.13-132.085c-24.581-39.774-14.34-61.243-39.957-91.247
-		c-21.326-24.978-47.502-25.803-77.339-17.365c-23.461,6.634-39.234-7.117-52.98-31.273C318.42,87.525,265.838,64.927,210.333,65.331
-		z M445.731,203.01c6.12,0,11.112,4.919,11.112,11.038c0,6.119-4.994,11.111-11.112,11.111s-11.038-4.994-11.038-11.111
-		C434.693,207.929,439.613,203.01,445.731,203.01z" id="bird">
-            </path>
+            target="_blank">An in-depth SVG tutorial</a></li>
+        
+        <li> <span class="text-muted mr-2">svgpocketguide.com</span> <a href="http://svgpocketguide.com/book/"
 
-            <filter id="pictureFilter">
-                <fegaussianblur stddeviation="5">
-                </fegaussianblur>
-            </filter>
-        </svg>
+            target="_blank">Pocket Guide to Writing SVG</a></li>
+        
+        <li> <span class="text-muted mr-2">developer.mozilla.org</span> <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial"
 
-        <h3>Dùng AJAX để load thành inline</h3>
+            target="_blank">SVG Tutorial | MDN</a></li>
+        
+        <li> <span class="text-muted mr-2">tutorials.jenkov.com</span> <a href="http://tutorials.jenkov.com/svg/g-element.html"
 
-        <p>Sau khi trở thành inline thì chúng ta có thể style bằng CSS bình thường.</p>
-        <div id="demo" class="mb-3"></div>
+            target="_blank">SVG g element</a></li>
+        
+        <li> <span class="text-muted mr-2">youtube.com</span> <a href="https://www.youtube.com/watch?v=PQxtlY19kto&amp;list=PLL8woMHwr36F2tCFnWTbVBQAGQ6nTcXOO"
 
-        <h3>Xử lý với JS</h3>
+            target="_blank"> SVG Jenkov tutorial </a> </li>
+        
+        
+        <li> <span class="text-muted mr-2">tutorialspoint.com</span> <a href="https://www.tutorialspoint.com/svg/svg_quick_guide.htm"
 
-        <div id="map"></div>
+            target="_blank">SVG Quick Guide</a> </li>
+        <li> <span class="text-muted mr-2">tutorialspoint.com</span> <a href="https://www.tutorialspoint.com/svg/walkway.htm"
 
-        <div class="map-tooltip"></div>
+            target="_blank">SVG Walkway.js Effects</a> </li>
+        
+        
+        
+        
+        <li> <span class="text-muted mr-2">webdesign.tutsplus.com</span> <a href="https://webdesign.tutsplus.com/tutorials/how-to-hand-code-svg--cms-30368"
 
-        <h3>Bản đồ thế giới</h3>
+            target="_blank">How to Hand Code SVG</a></li>
+        <li> <span class="text-muted mr-2">github.com</span> <a href="https://github.com/danklammer/bytesize-icons"
 
-        <div id="countries"></div>
+            target="_blank"> bytesize icons </a> </li>
+        
+        <li> <span class="text-muted mr-2">css-tricks.com</span> <a href="https://css-tricks.com/svg-path-syntax-illustrated-guide/"
 
-
-        <h3>Tham khảo</h3>
-        <ul>
-            <li>
-                <span class="text-muted mr-2">tutorialspoint.com</span>
-                <a
-                    href="https://www.tutorialspoint.com/svg/svg_quick_guide.htm" target="_blank">SVG Quick Guide</a>
-            </li>
-            <li>
-                <span class="text-muted mr-2">tutorialspoint.com</span>
-                <a
-                    href="https://www.tutorialspoint.com/svg/walkway.htm" target="_blank">SVG Walkway.js Effects</a>
-            </li>
-            <li>
-                <span class="text-muted mr-2">developer.mozilla.org</span>
-                <a
-                    href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial" target="_blank">SVG Tutorial | MDN</a></li>
-            <li>
-                <span class="text-muted mr-2">flaviocopes.com</span>
-                <a href="https://flaviocopes.com/svg/"
-                    target="_blank">An in-depth SVG tutorial</a></li>
-            <li>
-                <span class="text-muted mr-2">tutorials.jenkov.com</span>
-                <a
-                    href="http://tutorials.jenkov.com/svg/g-element.html" target="_blank">SVG g element</a></li>
-            <li>
-                <span class="text-muted mr-2">svgpocketguide.com</span>
-                <a href="http://svgpocketguide.com/book/"
-                    target="_blank">Pocket Guide to Writing SVG</a></li>
-            <li>
-                <span class="text-muted mr-2">webdesign.tutsplus.com</span>
-                <a
-                    href="https://webdesign.tutsplus.com/vi/tutorials/how-to-hand-code-svg--cms-30368"
-                    target="_blank">Cách xử lý code SVG bằng tay</a></li>
-			<li>
-                <span class="text-muted mr-2">github.com</span>
-                <a href="https://github.com/danklammer/bytesize-icons" target="_blank">
-					bytesize icons
-				</a>
-            </li>
-            <li>
-                <span class="text-muted mr-2">youtube.com</span>
-                <a href="https://www.youtube.com/watch?v=PQxtlY19kto&list=PLL8woMHwr36F2tCFnWTbVBQAGQ6nTcXOO" target="_blank">
-					SVG Jenkov tutorial
-				</a>
-            </li>
-            <li>
-                <span class="text-muted mr-2">css-tricks.com</span>
-                <a href="https://css-tricks.com/svg-path-syntax-illustrated-guide/" target="_blank">
-					The SVG `path` Syntax: An Illustrated Guide
-				</a>
-            </li>
-            <li>
-                <span class="text-muted mr-2">w3schools.com</span>
-                <a href="https://www.w3schools.com/graphics/svg_intro.asp" target="_blank">
-					SVG Tutorial
-				</a>
-            </li>
-        </ul>
+            target="_blank"> The SVG `path` Syntax: An Illustrated Guide </a> </li>
+      </ul>
     </article>
-
     <script src="js/script.js"></script>
     <script src="../../js/docs.js"></script>
-    
-</body>
-
+  </body>
 </html>

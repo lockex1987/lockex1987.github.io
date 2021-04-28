@@ -26,11 +26,13 @@
     }
 })();
 
+
 /**
  * Nếu sử dụng từ khóa "const" ở đây
  * thì trên Safari, chỗ DownloadProgress (module script) sẽ bị lỗi không tìm thấy biến CommonUtils.
  */
 const CommonUtils = {};
+
 
 /**
  * Trả về một phần tử.
@@ -40,6 +42,7 @@ CommonUtils.$ = (selector) => {
     return document.querySelector(selector);
 };
 
+
 /**
  * Trả về mảng luôn để có thể thực hiện các hàm như map, reduce,...
  * @param {String} selector
@@ -48,6 +51,7 @@ CommonUtils.$ = (selector) => {
 CommonUtils.$$ = (selector, rootNode = document) => {
     return [...rootNode.querySelectorAll(selector)];
 };
+
 
 /**
  * Bắt sự kiện.
@@ -61,6 +65,7 @@ CommonUtils.delegateDocument = (type, selector, callback) => {
         }
     });
 };
+
 
 /**
  * Tạo một phần tử.
@@ -85,6 +90,7 @@ CommonUtils.createElement = (tag, attributes, children) => {
     return ele;
 };
 
+
 /**
  * Tạo một phần tử.
  * @param {Object} obj Đối tượng, có các thuộc tính như "tag", "children",...
@@ -97,6 +103,7 @@ CommonUtils.create = (obj) => {
     return CommonUtils.createElement(tag, obj, children);
 };
 
+
 /**
  * Lấy các tham số của form.
  * Các giá trị được encode.
@@ -106,6 +113,7 @@ CommonUtils.getFormAsString = (formId) => {
     const formElement = document.getElementById(formId);
     return new URLSearchParams(new FormData(formElement)).toString();
 };
+
 
 /**
  * Chuyển đối tượng JS thành xâu tham số.
@@ -118,6 +126,7 @@ CommonUtils.jsonToQueryString = (json) => {
                 encodeURIComponent(json[key]);
         }).join('&');
 };
+
 
 /**
  * Escape các ký tự đặc biệt thành mã HTML entity tương ứng.
@@ -133,6 +142,7 @@ CommonUtils.escapeHtml = (s) => {
     return s;
 };
 
+
 /**
  * Phân cách dấu phảy phần ngàn.
  */
@@ -140,6 +150,10 @@ CommonUtils.formatThousands = (num) => {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 };
 
+
+/**
+ * Hiển thị số.
+ */
 CommonUtils.prettifyNumber = (num, digits) => {
     if (digits === undefined) {
         digits = 1;
@@ -157,81 +171,27 @@ CommonUtils.prettifyNumber = (num, digits) => {
     ];
     for (let i = 0; i < si.length; i++) {
         if (num >= si[i].value) {
+            if (i <= 0) {
+                digits = 3;
+            } else if (i <= 1) {
+                digits = 2;
+            } else if (i <= 2) {
+                digits = 0;
+            } else {
+                digits = 0;
+            }
             const n = (num / si[i].value).toFixed(digits);
 
             // Xóa những chữ số 0 đằng sau dấu thập phân
             // Nếu chỉ để 0+ thì sẽ không xóa được dấu .
             // Nếu chỉ để \.0+ thì sẽ không xử lý được trường hợp 123.400
-            return n.replace(/\.?0+$/, '') + si[i].symbol;
+            // .replace(/\.?0+$/, '') sẽ bị lỗi các trường hợp như là num = 80 và digit = 0
+            return parseFloat(n) + si[i].symbol;
         }
     }
     return num.toFixed(digits);
 };
 
-/**
- * Tính toán số ngày giữa hai ngày (toDate - fromDate).
- * @param {Date} fromDate Từ ngày
- * @param {Date} toDate Đến ngày
- * @return {Integer} Số ngày giữa 2 ngày (ví dụ từ ngày 1/1 đến 10/1 có 9 ngày)
- */
-CommonUtils.dateDiff = (fromDate, toDate) => {
-    const oneDay = 24 * 60 * 60 * 1000;
-    return Math.round((toDate.getTime() - fromDate.getTime()) / oneDay);
-};
-
-/**
- * Thêm bao nhiêu ngày vào một ngày có sẵn.
- * @param {Date} fromDate Ngày bắt đầu
- * @param {Integer} numberOfDate Số ngày thêm vào
- */
-CommonUtils.addDate = (fromDate, numberOfDate) => {
-    const oneDay = 24 * 60 * 60 * 1000;
-    return new Date(fromDate.getTime() + numberOfDate * oneDay);
-};
-
-/**
- * Trả về một đối tượng Date từ một xâu có định dạng (dd/MM/yyyy).
- * @param {String} dateString Xâu ngày tháng
- * @retun {Date} Một đối tượng Date
- */
-CommonUtils.converStringToDate = (dateString) => {
-    const a = dateString.split(/\/|-/);
-    const date = a[0];
-    const month = a[1];
-    const year = a[2];
-    return new Date(year + '-' + month + '-' + date);
-};
-
-/**
- * Trả về đối tượng Date từ xâu dạng YYYY-MM-DDTHH:MM:SSZ
- * @param {String} isoString Xâu ngày tháng, định dạng ISO 8601
- */
-CommonUtils.convertStringWithTimeToDate = (isoString) => {
-    return new Date(isoString);
-};
-
-/**
- * Chuyển đối tượng Date sang xâu dạng dd/MM/yyyy.
- * @param {Date} date Một đối tượng Date
- * @return {String} Một xâu dạng dd/MM/yyyy tương ứng
- */
-CommonUtils.convertDateToString = (date) => {
-    return CommonUtils.paddingTwoZero(date.getDate()) + '/' +
-        CommonUtils.paddingTwoZero(date.getMonth() + 1) + '/' +
-        date.getFullYear();
-};
-
-/**
- * Chuyển đối tượng Date sang xâu dạng "dd/MM/yyyy h24:mi:ss".
- * @param {Date} date Một đối tượng Date
- * @return {String} Một xâu dạng "dd/MM/yyyy h24:mi:ss" tương ứng
- */
-CommonUtils.convertDateToStringWithTime = (date) => {
-    return CommonUtils.convertDateToString(date) + ' ' +
-        CommonUtils.paddingTwoZero(date.getHours()) + ':' +
-        CommonUtils.paddingTwoZero(date.getMinutes()) + ':' +
-        CommonUtils.paddingTwoZero(date.getSeconds());
-};
 
 /**
  * Thêm các chữ số 0 ở đầu để có độ dài là 2 ký tự.
@@ -240,14 +200,6 @@ CommonUtils.paddingTwoZero = (n) => {
     return (n < 10) ? ('0' + n) : n;
 };
 
-/**
- * Chuẩn hóa ngày tháng về định dạng dd/MM/yyyy.
- * @param s Xâu định dạng ISO 8601
- */
-CommonUtils.normalizeDate = (s) => {
-    const d = CommonUtils.convertStringWithTimeToDate(s);
-    return CommonUtils.convertDateToString(d);
-};
 
 /**
  * Download dữ liệu Blob.
@@ -271,6 +223,7 @@ CommonUtils.downloadBlob = (blob, fileName) => {
     a.click();
 };
 
+
 /**
  * Hàm save as do mình tự làm.
  * @param text Nội dung của văn bản cần lưu
@@ -283,6 +236,7 @@ CommonUtils.saveTextAsFile = (text, fileName) => {
     CommonUtils.downloadBlob(textFileAsBlob, fileName);
 };
 
+
 /**
  * Lấy tham số từ URL.
  */
@@ -290,6 +244,7 @@ CommonUtils.getUrlParameter = (param) => {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
 };
+
 
 /**
  * Không thực hiện hàm luôn khi người dùng đang thao tác,
@@ -310,6 +265,7 @@ CommonUtils.debounce = (func, delay) => {
         }, delay);
     };
 };
+
 
 /**
  * Giới hạn số lần gọi hàm.
@@ -334,13 +290,13 @@ CommonUtils.throttle = (func, limit) => {
     };
 };
 
+
 CommonUtils.addCssStyles = (styles) => {
     const styleSheet = document.createElement('style');
     styleSheet.type = 'text/css';
     styleSheet.innerText = styles;
     document.head.appendChild(styleSheet);
 };
-
 
 
 /**
@@ -351,6 +307,7 @@ CommonUtils.addCssStyles = (styles) => {
 CommonUtils.getRandomIndex = (n) => {
     return Math.floor(Math.random() * n);
 };
+
 
 CommonUtils.getRandomBetween = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -677,14 +634,13 @@ class Pagi {
     }
 }
 class Datatable {
-
     /**
      * Khởi tạo đối tượng.
      * @param {Object} options Các tùy chọn
      */
     constructor(options = {}) {
         // Khởi tạo các thuộc tính
-        let defaultOptions = {};
+        const defaultOptions = {};
         Object.assign(this, defaultOptions, options);
 
         // Người dùng có thể truyền vào xâu CSS selector của bảng hoặc trực tiếp DOM node của bảng
@@ -708,7 +664,7 @@ class Datatable {
         }
 
         // Vùng phân trang
-        let pagiContainer = this.createPagiContainer();
+        const pagiContainer = this.createPagiContainer();
 
         this.pagi = new Pagi({
             container: pagiContainer,
@@ -722,7 +678,7 @@ class Datatable {
         // Xử lý các sự kiện:
         // - Click vào mũi tên expand
         // - Chọn dòng
-        
+
         this.handleClickExpandableArrow();
         this.handleClickSelectableRow();
 
@@ -738,7 +694,7 @@ class Datatable {
             return;
         }
 
-        let wrapper = document.createElement('div');
+        const wrapper = document.createElement('div');
         wrapper.className = 'datatable-wrapper';
         this.table.parentNode.insertBefore(wrapper, this.table);
         wrapper.appendChild(this.table);
@@ -760,7 +716,7 @@ class Datatable {
      * Tạo icon đang xử lý.
      */
     createLoader() {
-        let loader = document.createElement('div');
+        const loader = document.createElement('div');
         loader.className = 'loader';
         loader.innerHTML = `<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                     width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
@@ -794,7 +750,7 @@ class Datatable {
                 this.startSearchCallback();
             }
 
-            var obj = this.getDataLocal(page);
+            const obj = this.getDataLocal(page);
             this.pagi.update(obj.total, page);
             this.bindItems(obj.data);
         };
@@ -820,7 +776,7 @@ class Datatable {
 
         this.filterDataLocal();
     }
-    
+
     /**
      * Khởi tạo trong trường hợp sử dụng AJAX.
      */
@@ -853,8 +809,8 @@ class Datatable {
                     if (this.getTotalAndData) {
                         ({ total, data } = this.getTotalAndData(resp));
                     } else {
-                        total = resp['total'];
-                        data = resp['data'];
+                        total = resp.total;
+                        data = resp.data;
                     }
 
                     this.pagi.update(total, page);
@@ -892,13 +848,13 @@ class Datatable {
             wrapper.parentNode.insertBefore(pagiContainer, wrapper);
         } else {
             // Kiểm tra xem tùy chỉnh ở chỗ nào không
-			const slot = wrapper.querySelector('.pagination-slot');
-			if (slot) {
-				slot.parentNode.replaceChild(pagiContainer, slot);
-			} else {
-				// Mặc định là ở dưới
-				wrapper.parentNode.insertBefore(pagiContainer, wrapper.nextSibling);
-			}
+            const slot = wrapper.querySelector('.pagination-slot');
+            if (slot) {
+                slot.parentNode.replaceChild(pagiContainer, slot);
+            } else {
+                // Mặc định là ở dưới
+                wrapper.parentNode.insertBefore(pagiContainer, wrapper.nextSibling);
+            }
         }
         return pagiContainer;
     }
@@ -921,7 +877,7 @@ class Datatable {
             if (items.length == 0) {
                 this.table.style.display = 'none';
             } else {
-                var html = '';
+                let html = '';
                 items.forEach((e, idx) => {
                     html += this.rowTemplate(e);
                 });
@@ -939,20 +895,20 @@ class Datatable {
             this.bindItemsCallback(items);
         }
     }
-    
+
     /**
      * Thêm ô search.
      */
     createSearchInput() {
-        let searchWrapper = document.createElement('div');
+        const searchWrapper = document.createElement('div');
         searchWrapper.className = 'py-2 d-flex justify-content-end';
-        let searchInput = document.createElement('input');
+        const searchInput = document.createElement('input');
         searchInput.className = 'form-control';
         searchInput.style.width = '200px';
         searchInput.placeholder = 'Tìm kiếm nhanh';
         searchWrapper.appendChild(searchInput);
 
-        let wrapper = this.table.parentNode;
+        const wrapper = this.table.parentNode;
         wrapper.parentNode.insertBefore(searchWrapper, wrapper);
 
         return searchInput;
@@ -986,7 +942,7 @@ class Datatable {
         } else {
             searchText = searchText.toLowerCase();
             this.filteredData = this.data.filter(e => {
-                let foundProp = this.searchableProps.find(prop => e[prop].toLowerCase().includes(searchText));
+                const foundProp = this.searchableProps.find(prop => e[prop].toLowerCase().includes(searchText));
                 return !!foundProp;
             });
         }
@@ -1005,10 +961,10 @@ class Datatable {
      * @param {Integer} page Số thứ tự trang (bắt đầu từ 1)
      */
     getDataLocal(page) {
-        let startIndex = (page - 1) * this.pagi.pageSize;
-        let total = this.filteredData.length;
-        let items = [];
-        let end = Math.min(startIndex + this.pagi.pageSize, total);
+        const startIndex = (page - 1) * this.pagi.pageSize;
+        const total = this.filteredData.length;
+        const items = [];
+        const end = Math.min(startIndex + this.pagi.pageSize, total);
         for (let i = startIndex; i < end; i++) {
             items.push(this.filteredData[i]);
         }
@@ -1025,30 +981,30 @@ class Datatable {
      */
     makeSortable(table, callback) {
         table.addEventListener('click', (evt) => {
-            var attribute = 'data-sort-column';
-            var target = evt.target;
+            const attribute = 'data-sort-column';
+            const target = evt.target;
             if (target.tagName == 'TH' && target.getAttribute(attribute)) {
-                let iconSortAsc = 'sorting_asc';
-                let iconSortDesc = 'sorting_desc';
-    
+                const iconSortAsc = 'sorting_asc';
+                const iconSortDesc = 'sorting_desc';
+
                 // Thẻ th hiện tại
-                let thTag = target;
-    
+                const thTag = target;
+
                 // Lấy ra trường thông tin order
-                let column = thTag.getAttribute(attribute);
-    
+                const column = thTag.getAttribute(attribute);
+
                 // Trạng thái order mới
-                let direction = thTag.classList.contains(iconSortAsc) ? 'desc' : 'asc';
-    
+                const direction = thTag.classList.contains(iconSortAsc) ? 'desc' : 'asc';
+
                 // Xóa tất cả các order cũ
                 table.querySelectorAll('[' + attribute + ']').forEach(otherTag => {
                     otherTag.classList.remove(iconSortAsc);
                     otherTag.classList.remove(iconSortDesc);
                 });
-    
+
                 // Điều chỉnh lại mũi tên hiển thị của cột hiện tại
                 thTag.classList.add(direction == 'asc' ? iconSortAsc : iconSortDesc);
-    
+
                 // Gọi hàm callback
                 callback(column, direction);
             }
@@ -1068,13 +1024,13 @@ class Datatable {
     handleClickExpandableArrow() {
         if (this.table.classList.contains('table-expandable')) {
             this.table.addEventListener('click', (evt) => {
-                let target = evt.target;
+                const target = evt.target;
                 if (target.classList.contains('table-expandable-arrow')) {
-                    let arrow = target;
+                    const arrow = target;
                     arrow.classList.toggle('expanded');
 
-                    let mainRow = arrow.closest('tr');
-                    let detailRow = mainRow.nextElementSibling;
+                    const mainRow = arrow.closest('tr');
+                    const detailRow = mainRow.nextElementSibling;
                     if (detailRow.style.display === 'none') {
                         detailRow.style.display = '';
                     } else {
@@ -1091,8 +1047,8 @@ class Datatable {
     handleClickSelectableRow() {
         if (this.table.classList.contains('table-selectable')) {
             this.table.addEventListener('click', (evt) => {
-                let target = evt.target;
-                let row = target.closest('.table-selectable tbody tr');
+                const target = evt.target;
+                const row = target.closest('.table-selectable tbody tr');
                 if (row) {
                     row.classList.toggle('selected-row');
                 }
@@ -1104,8 +1060,8 @@ class Datatable {
      * Lấy ra dữ liệu của các dòng được chọn.
      */
     getSelectedRows() {
-        let selectedRows = [];
-        let rows = this.table.querySelectorAll('tbody tr');
+        const selectedRows = [];
+        const rows = this.table.querySelectorAll('tbody tr');
         for (let i = 0; i < rows.length; i++) {
             if (rows[i].classList.contains('selected-row')) {
                 selectedRows.push(this.items[i]);
@@ -1120,11 +1076,11 @@ class Datatable {
     bindColumnList() {
         if (this.columnListNamespace) {
             // Thêm vùng div
-            let columList = document.createElement('div');
+            const columList = document.createElement('div');
             columList.className = 'datatable-column-list';
             columList.innerHTML = '<span class="text-muted">Hiển thị các cột:</span>';
             this.table.querySelectorAll('thead th').forEach((th, idx) => {
-                let labelTag = document.createElement('label');
+                const labelTag = document.createElement('label');
                 labelTag.innerHTML = `<input type="checkbox" checked data-index="${idx}"> ${th.textContent.trim()}`;
                 if (localStorage.getItem(this.columnListNamespace + idx) == 'hide') {
                     labelTag.querySelector('input').checked = false;
@@ -1132,14 +1088,14 @@ class Datatable {
                 columList.appendChild(labelTag);
             });
 
-            var wrapper = this.table.parentNode;
+            const wrapper = this.table.parentNode;
             wrapper.parentNode.insertBefore(columList, wrapper.nextSibling);
-        
+
             // Thêm sự kiện
             columList.addEventListener('change', (evt) => {
-                let checkbox = evt.target;
-                let index = checkbox.dataset.index;
-                let rows = this.table.querySelectorAll('tr');
+                const checkbox = evt.target;
+                const index = checkbox.dataset.index;
+                const rows = this.table.querySelectorAll('tr');
                 if (checkbox.checked) {
                     localStorage.removeItem(this.columnListNamespace + index);
                     rows.forEach(r => {
@@ -1160,8 +1116,8 @@ class Datatable {
      */
     hideShouldBeHiddenColumns() {
         if (this.columnListNamespace) {
-            let rows = this.table.querySelectorAll('tr');
-            let numOfColumns = rows[0].cells.length;
+            const rows = this.table.querySelectorAll('tr');
+            const numOfColumns = rows[0].cells.length;
             for (let index = 0; index < numOfColumns; index++) {
                 if (localStorage.getItem(this.columnListNamespace + index) == 'hide') {
                     rows.forEach(r => {

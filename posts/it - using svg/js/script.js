@@ -1,3 +1,9 @@
+/**
+ * Load file SVG, sau đó thêm kiểu inline vào trong trang.
+ * @param {String} svgUrl Đường dẫn file SVG
+ * @param {String} containerId ID vùng thêm thẻ svg
+ * @param {Function} callback Hàm sau khi gọi thành công
+ */
 function loadSvg(svgUrl, containerId, callback) {
     fetch(svgUrl)
         .then(resp => resp.text())
@@ -15,8 +21,14 @@ loadSvg('images/vn-all.svg', 'map');
 
 loadSvg('images/world-map-2.svg', 'countries', () => {
     document.querySelectorAll('#countries path').forEach((path, idx) => {
-        const COLORS = ['red', 'green', 'blue', 'yellow'];
-        path.style.fill = COLORS[idx % COLORS.length];
+        const COLORS = [
+            'red',
+            'green',
+            'blue',
+            'yellow'
+        ];
+        // Nếu thiết lập style inline fill thế này thì style css fill khi hover sẽ không ăn
+        // path.style.fill = COLORS[idx % COLORS.length];
         if (!path.dataset.name) {
             console.log(path.id);
         }
@@ -43,4 +55,3 @@ document.querySelector('#map').addEventListener('mousemove', function (evt) {
         tooltip.style.display = 'none';
     }
 });
-

@@ -1,31 +1,4 @@
-.kiwi-logo {
-    width: 100px;
-    height: 82px;
-    background-image: url(../images/kiwi.svg);
-    background-size: 100px 82px;
-	background-color: #777;
-}
-
-.kiwi-logo:hover {
-    background-color: #09b39c;
-}
-
-.twitter-logo {
-	width: 48px;
-    height: 48px;
-
-    display: inline-block;
-
-    background-image: url("../images/logo-twitter.svg");
-	background-size: cover;
-	background-color: #777;
-	transition: background-color 0.2s linear;
-}
-
-.twitter-logo:hover {
-    background-color: #2ba9e1;
-}
-
+/* Style cho inline SVG */
 .kiwi {
     fill: #94d31b; 
 }
@@ -42,10 +15,12 @@ ellipse:hover {
     fill: red;
 }
 
+/* Style của inline SVG, load bằng AJAX */
 #demo svg {
     max-width: 100%;
 }
 
+/* Tooltip của bản đồ Việt Nam */
 .map-tooltip {
     position: absolute;
     z-index: 2;
@@ -68,6 +43,7 @@ ellipse:hover {
 	fill: #00F;
 }
 
+/* Bản đồ thế giới */
 #countries svg {
     width: 100%;
     height: auto;
@@ -79,5 +55,6 @@ ellipse:hover {
 }
 
 #countries path:hover {
+    /* Không ăn do có inline fill */
     fill: gray;
 }
