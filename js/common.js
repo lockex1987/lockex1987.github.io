@@ -10,7 +10,7 @@
     }
 
     /**
-     * Delegate event.
+     * Delegate event cho các phần tử con.
      */
     if (!Element.prototype.delegate) {
         Element.prototype.delegate = function (type, selector, callback) {
@@ -36,7 +36,7 @@ const CommonUtils = {};
 
 /**
  * Trả về một phần tử.
- * @param {String} selector
+ * @param {String} selector CSS selector
  */
 CommonUtils.$ = (selector) => {
     return document.querySelector(selector);
@@ -45,8 +45,8 @@ CommonUtils.$ = (selector) => {
 
 /**
  * Trả về mảng luôn để có thể thực hiện các hàm như map, reduce,...
- * @param {String} selector
- * @param {Element} rootNode
+ * @param {String} selector CSS selector
+ * @param {Element} rootNode Phần tử bắt đầu
  */
 CommonUtils.$$ = (selector, rootNode = document) => {
     return [...rootNode.querySelectorAll(selector)];
@@ -69,8 +69,8 @@ CommonUtils.delegateDocument = (type, selector, callback) => {
 
 /**
  * Tạo một phần tử.
- * @param {String} tag
- * @param {Object} attributes
+ * @param {String} tag Tên tag
+ * @param {Object} attributes Mảng các thuộc tính cùng giá trị
  * @param {Array} children Danh sách phần tử con
  */
 CommonUtils.createElement = (tag, attributes, children) => {
@@ -152,7 +152,7 @@ CommonUtils.formatThousands = (num) => {
 
 
 /**
- * Hiển thị số.
+ * Hiển thị số dạng k.
  */
 CommonUtils.prettifyNumber = (num, digits) => {
     if (digits === undefined) {
@@ -290,7 +290,10 @@ CommonUtils.throttle = (func, limit) => {
     };
 };
 
-
+/**
+ * Thêm CSS.
+ * @param {String} styles Code CSS
+ */
 CommonUtils.addCssStyles = (styles) => {
     const styleSheet = document.createElement('style');
     styleSheet.type = 'text/css';
@@ -300,15 +303,21 @@ CommonUtils.addCssStyles = (styles) => {
 
 
 /**
- * Trả về một số nguyên ngẫu nhiên
- * @param n Số truyền vào
- * @return Số nguyên từ 0 đến n-1
+ * Trả về một số nguyên ngẫu nhiên.
+ * @param {Integer} n Số truyền vào
+ * @return {Integer} Số nguyên từ 0 đến n-1
  */
 CommonUtils.getRandomIndex = (n) => {
     return Math.floor(Math.random() * n);
 };
 
 
+/**
+ * Trả về số nguyên ngẫu nhiên trong khoảng [min, max].
+ * @param {Integer} min Giá trị nhỏ nhất
+ * @param {Integer} max Giá trị lớn nhất
+ * @returns {Integer} Số ngẫu nhiên
+ */
 CommonUtils.getRandomBetween = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
