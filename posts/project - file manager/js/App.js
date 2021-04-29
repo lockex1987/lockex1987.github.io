@@ -83,17 +83,17 @@ export default {
                 // Đánh dấu đang xử lý
                 this.isProcessing = true;
 
-                const url = 'server/list_files.php?folder=' + encodeURIComponent(this.folder);
+                // const url = 'server/list_files.php?folder=' + encodeURIComponent(this.folder);
+                const url = '/list_folder?path=' + encodeURIComponent(this.folder);
                 const data = await fetch(url).then(resp => resp.json());
-                // alert(data);
 
                 // Đầu tiên sắp xếp folder trước file
                 // Sau đó sắp xếp theo tên
-                data.sort((f1, f2) => { // .list
+                data.sort((f1, f2) => {
                     return ((f2.isDir ? 1 : 0) - (f1.isDir ? 1 : 0)) || f1.name.localeCompare(f2.name);
                 });
 
-                this.files = data.map(f => ({ // .list
+                this.files = data.map(f => ({
                     ...f,
                     size: f.isDir ? f.size : CommonUtils.prettifyNumber(f.size) + 'B',
                     download: false
@@ -104,10 +104,6 @@ export default {
 
                 // Đánh dấu đã xử lý xong
                 this.isProcessing = false;
-
-                if (!data.folderSize) {
-                    // TODO: Lấy số lượng file trong từng folder
-                }
             } catch (ex) {
                 alert(ex);
             }
