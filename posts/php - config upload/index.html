@@ -25,8 +25,7 @@
 post_max_size = 8M</pre>
       <p>Bạn có thể cấu hình cả số lượng file <code>max_file_uploads</code>.</p>
       <pre>max_file_uploads = 20</pre>
-	  <p>Ví dụ:</p>
-      
+      <p>Ví dụ:</p>
       <pre>; Maximum allowed size for uploaded files.
 ; http://php.net/upload-max-filesize
 upload_max_filesize = 1000M
@@ -39,14 +38,20 @@ max_file_uploads = 20
 ; is disabled through enable_post_data_reading.
 ; http://php.net/post-max-size
 post_max_size = 1000M</pre>
-<p>Để xác nhận giá trị cấu hình hiện tại bạn có thể sử dụng hàm <code>phpinfo()</code> trong một file <code>.php</code>, hoặc thực hiện các câu lệnh sau:</p>
-<pre>php -i | grep upload_max_filesize
+      <p>Để xác nhận giá trị cấu hình hiện tại bạn có thể sử dụng hàm <code>phpinfo()</code>
+        trong một file <code>.php</code>, hoặc thực hiện các câu lệnh sau:</p>
+      <pre>php -i | grep upload_max_filesize
 php -i | grep post_max_size
 php -i | grep max_file_uploads</pre>
       <p>Bạn có thể lấy vị trí của file <code>php.ini</code> bằng câu lệnh sau:</p>
       <pre>php --ini</pre>
-	  <p>Sau khi sửa xong cấu hình PHP, bạn cần khởi động lại php-fpm:</p>
-	  <pre>systemctl restart php-fpm</pre>
+      <p>Tốt nhất là bạn nên tạo một file sử dụng <code>phpinfo()</code>, vì có
+        lệnh php <code>--ini</code> có thể ra đường dẫn:</p>
+      <pre>/etc/php/8.0/cli/php.ini</pre>
+      <p>Nhưng đường dẫn đúng ở <code>phpinfo()</code> là:</p>
+      <pre>/etc/php/8.0/fpm/php.ini</pre>
+      <p>Sau khi sửa xong cấu hình PHP, bạn cần khởi động lại php-fpm:</p>
+      <pre>systemctl restart php-fpm</pre>
     </article>
     <script src="../../js/docs.js"></script>
   </body>

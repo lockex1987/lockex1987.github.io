@@ -546,9 +546,12 @@ export default {
 
         /**
          * Xử lý khi đã upload xong một file.
-         * @param {Event} e Doi tuong su kien
+         * @param {Event} evt Doi tuong su kien
          */
-        uploadCompleteHandler(e) {
+        uploadCompleteHandler(evt) {
+            // console.log(evt);
+            // console.log(evt.target.response.returnCode);
+            // alert(evt.responseText);
             // document.querySelector(`#progressBar${this.currentIndex}`).style.width = '100%';
             this.currentIndex++;
             if (this.currentIndex < this.uploadingFiles.length) {
