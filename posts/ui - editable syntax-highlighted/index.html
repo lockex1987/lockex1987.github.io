@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Creating an Editable Textarea That Supports Syntax-Highlighted Code"/>
+  
+  <title>Editable, syntax-highlighted code using z-indexes</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  <link rel="icon" href="../../images/favicon.png"/>
+  <!--link rel="stylesheet" href="../../css/style.css"/-->
+  
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <article>
+  <div style="height: 200px;">
+    <textarea placeholder="Enter HTML Source Code"
+      id="editing"
+      spellcheck="false"
+      oninput="update(this.value); sync_scroll(this);"
+      onscroll="sync_scroll(this);"
+      onkeydown="check_tab(this, event);"></textarea>
+    <pre id="highlighting" aria-hidden="true">
+<code class="language-html" id="highlighting-content">
+
+&lt;span title=&quot;Start Typing&quot;&gt;Just start typing!&lt;/span&gt;
+</code>
+</pre>
+  </div>
+
+  <p>This is an example of a <b>syntax-highlighted <code>textarea</code></b>. The textarea, almost completely
+    transparent except for the <code>caret-color</code>, is positioned on top of the syntax-highlighted block using
+    <code>z-indexes</code>, and the result is synchronised whenever the user enters code.
+  </p>
+  <p>I have covered this technique in <a
+      href="https://css-tricks.com/creating-an-editable-textarea-that-supports-syntax-highlighted-code/">an article for
+      CSS-Tricks</a>, and have further edited it to include suggestions from comments.</p>
+  <p><b>One comment suggested creating a custom element for editable syntax-highlighted code, and I thought that was a
+      very good idea, so you can find the custom element demo I created <a
+        href="https://codepen.io/WebCoder49/details/jOypJOx">here</a>.</b></p>
+  <p>Syntax Highlighting by <a href="https://prismjs.com/">Prism.js</a><br />
+    Font from <a href="https://fonts.google.com/">Google Fonts</a><br />
+    Made by <a href="https://codepen.io/WebCoder49/">WebCoder49</a><br />
+    <b>Please feel free to use this technique as inspiration!</b>
+  </p>
+</article>
+
+<!--script src="../../js/docs.js"></script-->
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js'></script>
+  <script src="./script.js"></script>
+</body>
+
+</html>
