@@ -83,8 +83,8 @@ export default {
                 // Đánh dấu đang xử lý
                 this.isProcessing = true;
 
-                // const url = 'server/list_files.php?folder=' + encodeURIComponent(this.folder);
-                const url = '/list_folder?path=' + encodeURIComponent(this.folder);
+                const url = 'server/list_files.php?folder=' + encodeURIComponent(this.folder);
+                // const url = '/list_folder?path=' + encodeURIComponent(this.folder);
                 const data = await fetch(url).then(resp => resp.json());
 
                 // Đầu tiên sắp xếp folder trước file
@@ -503,12 +503,12 @@ export default {
          * Khi chọn file xong thì thông báo bắt đầu upload file.
          */
         startUploadFiles() {
-            const uploadFileInput = this.$refs.uploadFileInput;
-            const files = uploadFileInput.files;
-            this.uploadingFiles = files;
+            this.uploadingFiles = this.$refs.uploadFileInput.files;
+            // console.log(this.uploadingFiles);
             this.currentIndex = 0;
 
-            this.uploadFileInput.value = '';
+            // TODO: Không hiểu sao chỗ này bị lỗi
+            // this.$refs.uploadFileInput.value = '';
 
             this.uploadFile();
         },
@@ -549,7 +549,7 @@ export default {
          * @param {Event} e Doi tuong su kien
          */
         uploadCompleteHandler(e) {
-            document.querySelector(`#progressBar${this.currentIndex}`).style.width = '100%';
+            // document.querySelector(`#progressBar${this.currentIndex}`).style.width = '100%';
             this.currentIndex++;
             if (this.currentIndex < this.uploadingFiles.length) {
                 // Nếu còn file thì upload tiếp
@@ -558,6 +558,8 @@ export default {
                 // Đã upload xong, ẩn vùng upload
                 this.uploadingFiles = [];
                 this.currentIndex = 0;
+
+                noti.success('Upload thành công');
 
                 this.listFolderContent();
             }

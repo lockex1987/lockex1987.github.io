@@ -108,13 +108,13 @@
                 v-if="uploadingFiles.length > 0">
                 <h3>Uploading</h3>
                 
-                <table class="table">
+                <table class="table table-md-responsive">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Tên</th>
                             <th class="text-right">Dung lượng</th>
-                            <th>Tiến trình</th>
+                            <th class="d-none">Tiến trình</th>
                         </tr>
                     </thead>
     
@@ -129,12 +129,12 @@
                             <td class="text-right">
                                 {{f.size}}
                             </td>
-                            <td>
+                            <td class="d-none">
                                 <div class="progress"
-                                        style="height:10px; width: 250px;">
+                                    style="height:10px; width: 250px;">
                                     <div class="progress-bar"
-                                            style="width:0%; height:10px"
-                                            :id="'progressBar' + idx"></div>
+                                        style="width:0%; height:10px"
+                                        :id="'progressBar' + idx"></div>
                                 </div>
                             </td>
                         </tr>
