@@ -1,0 +1,36 @@
+svg {
+    height: 100vh;
+}
+
+line {
+    stroke: #f4f4f4;
+    stroke-width: 10;
+    stroke-linecap: round;
+    stroke-dasharray: 66, 16;
+    stroke-dashoffset: 82;
+}
+
+line:nth-child(odd) {
+    -webkit-animation: lineMove 2s infinite linear;
+    animation: lineMove 2s infinite linear;
+}
+
+line:nth-child(even) {
+    animation: lineMove 2s infinite linear reverse;
+}
+
+#logo line {
+    stroke: #ffd05e;
+}
+
+@-webkit-keyframes lineMove {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes lineMove {
+    to {
+        stroke-dashoffset: 0;
+    }
+}

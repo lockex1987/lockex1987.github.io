@@ -9,7 +9,7 @@ class HeaderNavigator {
                 <div>
                     <div class="logo mb-2 text-right">
                         <a class="text-decoration-none" href="/">
-                            <img src="/images/logo/logo.svg" class="align-baseline"/>
+                            <img src="/images/logo.svg" class="align-baseline"/>
                         </a>
                     </div>
 
@@ -47,7 +47,7 @@ class HeaderNavigator {
         mobileHeader.className = 'mobile-header position-fixed bg-white w-100 border-bottom d-xl-none d-flex align-items-center px-2';
         mobileHeader.innerHTML = `
                 <a href="/" class="logo">
-                    <img src="/images/logo/logo.svg">
+                    <img src="/images/logo.svg">
                 </a>
 
                 <a class="ml-auto text-blue" href="/posts.html">

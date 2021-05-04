@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SVG Pattern: Chevron 2</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <svg width="100%"
+        height="100%">
+
+        <!-- Define the pattern -->
+        <pattern id="pattern-chevron"
+            x="0"
+            y="0"
+            patternUnits="userSpaceOnUse"
+            width="100"
+            height="180"
+            viewBox="0 0 10 18">
+
+            <!-- Group the chevron shapes -->
+            <g id="chevron">
+                <!-- Chevron consists of two shapes, a left and a right to form a `v` -->
+                <!-- We'll apply the `fill` in the CSS for flexibility -->
+                <path class="left"
+                    d="M0 0l5 3v5l-5 -3z" />
+                <path class="right"
+                    d="M10 0l-5 3v5l5 -3" />
+            </g>
+
+            <!-- Apply the shapes -->
+            <!-- `y="9"` narrows the space between rows  -->
+            <use x="0"
+                y="9"
+                xlink:href="#chevron" />
+        </pattern>
+
+        <!-- The canvas for our pattern -->
+        <rect x="0"
+            y="0"
+            width="100%"
+            height="100%"
+            fill="url(#pattern-chevron)" />
+    </svg>
+</body>
+</html>

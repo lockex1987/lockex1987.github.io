@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="SVG animation"/>
+    
+    <title>SVG animation</title>
+
+    <link rel="icon" href="../../images/favicon.png"/>
+    <link rel="stylesheet" href="../../css/style.css"/>
+</head>
+<body>
+    <article>
+        <h2>SVG animation</h2>
+        <p>SMIL vs CSS</p>
+
+        <svg viewBox="0 0 10 10"
+            xmlns="http://www.w3.org/2000/svg"
+            width="100"
+            height="100">
+            <rect width="10"
+                height="10"
+                rx="4.2755">
+                <animate attributeName="rx"
+                    values="0;5;0"
+                    dur="10s"
+                    repeatCount="indefinite"></animate>
+            </rect>
+        </svg>
+
+        <svg viewBox="0 0 200 100"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill="none"
+                stroke="lightgrey"
+                d="M20,50 C20,-50 180,150 180,50 C180-50 20,150 20,50 z"></path>
+          
+            <circle r="5" fill="red">
+                <animateMotion dur="10s"
+                    repeatCount="indefinite"
+                    path="M20,50 C20,-50 180,150 180,50 C180-50 20,150 20,50 z"></animateMotion>
+            </circle>
+        </svg>
+
+        <svg width="120"
+            height="120"
+            viewBox="0 0 120 120"
+            xmlns="http://www.w3.org/2000/svg">
+
+            <polygon points="60,30 90,90 30,90"
+                transform="rotate(73.4634 60 70)">
+                <animateTransform attributeName="transform"
+                    attributeType="XML"
+                    type="rotate"
+                    from="0 60 70"
+                    to="360 60 70"
+                    dur="10s"
+                    repeatCount="indefinite"></animateTransform>
+            </polygon>
+        </svg>
+
+        <h3>Filters</h3>
+
+        <svg width="200"
+            height="200"
+            viewBox="0 0 220 220"
+            xmlns="http://www.w3.org/2000/svg">
+            <filter id="displacementFilter">
+                <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2" result="turbulence"></feTurbulence>
+                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="50" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+            </filter>
+
+            <circle cx="100"
+                cy="100"
+                r="100"
+                style="filter: url(#displacementFilter)"></circle>
+        </svg>
+
+        <div>
+            <img src="images/mdn_logo_only_color.png"/>
+        </div>
+
+        <div>
+            <svg width="200"
+                height="200"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink">
+                <defs>
+                    <filter id="spotlight">
+                        <feSpecularLighting result="spotlight" specularConstant="1.5" specularExponent="80" lighting-color="#FFF">
+                            <fePointLight x="50" y="50" z="220"></fePointLight>
+                        </feSpecularLighting>
+                            <feComposite in="SourceGraphic" in2="spotlight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"></feComposite>
+                    </filter>
+                </defs>
+            
+                <image xlink:href="images/mdn_logo_only_color.png"
+                    x="10%"
+                    y="10%"
+                    width="80%"
+                    height="80%"
+                    style="filter:url(#spotlight);"></image>
+            </svg>
+        </div>
+
+        <div>
+            <svg viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg">
+
+                <!-- to hide the path, it is usually wrapped in a <defs> element -->
+                <!-- <defs> -->
+                <path id="MyPath"
+                    fill="none"
+                    stroke="red"
+                    d="M10,90 Q90,90 90,45 Q90,10 50,10 Q10,10 10,40 Q10,70 45,70 Q70,70 75,50"></path>
+                <!-- </defs> -->
+              
+                <text>
+                    <textPath href="#MyPath">
+                        Quick brown fox jumps over the lazy dog.
+                    </textPath>
+                </text>
+            </svg>
+        </div>
+
+        <div>
+            <svg viewBox="0 0 10 10"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink">
+                <defs>
+                    <linearGradient id="myLinearGradient" gradientTransform="rotate(90)">
+                        <stop offset="5%" stop-color="gold"></stop>
+                        <stop offset="95%" stop-color="red"></stop>
+                    </linearGradient>
+                </defs>
+              
+                <!-- using my linear gradient -->
+                <circle cx="5"
+                    cy="5"
+                    r="4"
+                    fill="url('#myLinearGradient')"></circle>
+            </svg>
+        </div>
+
+        <div>
+            <svg viewBox="0 0 10 10"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink">
+                <defs>
+                    <radialGradient id="myRadialGradient">
+                        <stop offset="10%" stop-color="gold"></stop>
+                        <stop offset="95%" stop-color="red"></stop>
+                    </radialGradient>
+                </defs>
+              
+                <!-- using my radial gradient -->
+                <circle cx="5"
+                    cy="5"
+                    r="4"
+                    fill="url('#myRadialGradient')"></circle>
+            </svg>
+        </div>
+    </article>
+
+    <script src="../../js/docs.js"></script>
+</body>
+</html>
