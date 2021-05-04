@@ -503,14 +503,30 @@ export default {
          * Khi chọn file xong thì thông báo bắt đầu upload file.
          */
         startUploadFiles() {
-            this.uploadingFiles = this.$refs.uploadFileInput.files;
-            // console.log(this.uploadingFiles);
+            // Không được gán trực tiếp this.uploadingFiles cho this.$refs.uploadFileInput.files và thực hiện reset this.$refs.uploadFileInput.value
+            // Cần sử dụng vòng for
+            // this.uploadingFiles = this.$refs.uploadFileInput.files;
+            /*
+            const files = [];
+            const arr = this.$refs.uploadFileInput.files;
+            for (let i = 0; i < arr.length; i++) {
+                const f = arr[i];
+                files.push(f);
+            }
+            this.uploadingFiles = files;
+            */
+
+            this.uploadingFiles = [
+                ...this.$refs.uploadFileInput.files
+            ];
+
             this.currentIndex = 0;
 
-            // TODO: Không hiểu sao chỗ này bị lỗi
-            // this.$refs.uploadFileInput.value = '';
+            this.$refs.uploadFileInput.value = '';
 
-            this.uploadFile();
+            this.$nextTick(() => {
+                this.uploadFile();
+            });
         },
 
         /**
@@ -526,7 +542,7 @@ export default {
                 xhr.addEventListener('error', (evt) => {
                     alert(evt);
                 });
-                // xhr.upload.addEventListener('progress', this.uploadProgressHandler);
+                xhr.upload.addEventListener('progress', this.uploadProgressHandler);
                 xhr.responseType = 'json';
                 xhr.open('POST', 'server/file_upload.php');
                 xhr.send(formData);
@@ -550,9 +566,9 @@ export default {
          */
         uploadCompleteHandler(evt) {
             // console.log(evt);
-            // console.log(evt.target.response.returnCode);
+            console.log(evt.target.response.returnCode);
             // alert(evt.responseText);
-            // document.querySelector(`#progressBar${this.currentIndex}`).style.width = '100%';
+            document.querySelector(`#progressBar${this.currentIndex}`).style.width = '100%';
             this.currentIndex++;
             if (this.currentIndex < this.uploadingFiles.length) {
                 // Nếu còn file thì upload tiếp
@@ -575,6 +591,8 @@ export default {
          */
         openMp4File(f) {
 
-        }
+        },
+
+        prettifyNumber: CommonUtils.prettifyNumber
     }
 };

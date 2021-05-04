@@ -106,7 +106,9 @@
             <!-- Vùng danh sách file ĐANG upload -->
             <div class="mt-5"
                 v-if="uploadingFiles.length > 0">
-                <h3>Uploading</h3>
+                <div class="text-danger font-weight-500 mb-3 font-size-1.25">
+                    Uploading
+                </div>
                 
                 <table class="table table-md-responsive">
                     <thead>
@@ -114,26 +116,26 @@
                             <th>#</th>
                             <th>Tên</th>
                             <th class="text-right">Dung lượng</th>
-                            <th class="d-none">Tiến trình</th>
+                            <th>Tiến trình</th>
                         </tr>
                     </thead>
     
                     <tbody>
                         <tr v-for="(f, idx) in uploadingFiles">
-                            <td>
+                            <td class="text-center">
                                 {{idx + 1}}
                             </td>
                             <td>
                                 {{f.name}}
                             </td>
                             <td class="text-right">
-                                {{f.size}}
+                                {{prettifyNumber(f.size)}}
                             </td>
-                            <td class="d-none">
-                                <div class="progress"
-                                    style="height:10px; width: 250px;">
+                            <td>
+                                <div class="progress mx-auto"
+                                    style="height: 3px; width: 250px;">
                                     <div class="progress-bar"
-                                        style="width:0%; height:10px"
+                                        style="width: 0%;"
                                         :id="'progressBar' + idx"></div>
                                 </div>
                             </td>
