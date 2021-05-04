@@ -25,6 +25,7 @@ const CAT_THUMBS = {
     webrtc: 'programming/webrtc.svg',
     nginx: 'programming/nginx.svg',
     elasticsearch: 'programming/elasticsearch.svg',
+	golang: 'programming/golang.svg',
 };
 
 /**
