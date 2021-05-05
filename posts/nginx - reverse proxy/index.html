@@ -1,19 +1,123 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
- <head> 
-  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
-  <title>Nginx Reverse Proxy</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <link rel="icon" href="../../images/favicon.png"> 
-  <link rel="stylesheet" href="../../css/style.css"> 
-  <meta name="description" content="Nginx Reverse Proxy">
- </head> 
- <body> 
-  <article> 
-   <p>Nginx Reverse Proxy</p> 
-   <p>https://hocvps.com/cau-hinh-nginx-lam-reverse-proxy-cho-apache/</p> 
-   <p><br> </p> 
-  </article> 
-  <script src="../../js/docs.js"></script>  
- </body>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="API gateway, websocket, gRPC, load balancer">
+    <title>Nginx reverse proxy</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Nginx reverse proxy</h2>
+      <p><a href="https://cttd.tk/posts/laravel%20-%20deploy%20in%20subfolder/"
+          target="_blank">Deploy ứng dụng Laravel ở folder con</a></p>
+      <p><a href="https://cttd.tk/posts.html?searchAll=true&amp;query=nginx" target="_blank">Posts
+          "nginx"</a></p>
+      <p>-----------</p>
+      <p><a href="https://hocvps.com/cau-hinh-nginx-lam-reverse-proxy-cho-apache/"
+          target="_blank">Cấu hình Nginx làm Reverse Proxy cho Apache - Học VPS</a></p>
+      <p><a href="https://kipalog.com/posts/Su-dung-NGINX-nhu-mot-Load-Balancer"
+          target="_blank">Sử dụng NGINX như một Load Balancer</a> </p>
+      <p><a href="https://kipalog.com/posts/Trien-khai-ung-dung-nodejs-len-server-Centos"
+          target="_blank">Triển khai ứng dụng nodejs lên server Centos</a></p>
+      <p><a href="https://www.hostinger.vn/huong-dan/cach-su-dung-nginx-redirect-de-chuyen-huong-truy-cap/amp"
+          target="_blank">Cách sử dụng Nginx Redirect để chuyển hướng truy cập</a></p>
+      <p>Websocket</p>
+      <p><a href="https://www.nginx.com/blog/websocket-nginx/" target="_blank">Using
+          NGINX as a WebSocket Proxy</a></p>
+      <p>API Gateway</p>
+      <p><a href="https://docs.nginx.com/nginx/admin-guide/web-server/web-server/"
+          target="_blank">NGINX Docs | Configuring NGINX and NGINX Plus as a Web
+          Server</a></p>
+      <p><a href="https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/"
+          target="_blank">NGINX Docs | NGINX Reverse Proxy</a></p>
+      <p><a href="https://www.nginx.com/blog/deploying-nginx-plus-as-an-api-gateway-part-1/?__cf_chl_captcha_tk__=da88aa4f4d4efb549601430cbcd18042a5b07a08-1620172517-0-Af56rJ_7wuj9_GLynP9bjaCsRhRycZvhy5EhN9HSIW24k6qiWg4No-J2c065wB7Q_33tn-0KvWLQx2TbyioLJPGNvHwALsXsTa2zXhMAyfPJiXz7i_wrUBEpiYeE_tXX9FbowNRt-vxN_s4Wd8tMS2epzC0zA9WjxtM544X57_khfb892bInaw18l2M7Kd7260Q6v51ASU5iKGMI6A7HfaNXIXb5K0VVeSv61MgbMyDOUGLAdACQEvJptlQmXSy9YX9MrpLbxoTtSfekg7ZulWQ2WMEh3nKzlSvEFzofz7nF7aXf2IUSx2vvjY5aYRW6Gq4TcFHVM18oNEc2USgk0xRQebKTUPOvQP2o_GCSuptr6Z_ddWIgKfYniRr26Zzx5hZ4KgYkBM36EBA-qMShjMenLW93if8Uv_d93U8YaPIzvq7FKi2yQDrl-psrxGoUvf1FhXF3NXFu8NaFxHM5RDk2KzRuB79dk9D5pzpF2sk6zsXdbrfafTWp-TnQcBaM6LZLQXMwc7ggeUhorT-zmgY-UliZqWJ9-BMWcA175wsJ62MgWUHbdvtKZkL7UO-TJCkmTt5-d7qm6mqt1HlIkf3xjAlBzpN7-iPNYyR1hgw6Vj3ppcPr4PxIWgoyS9HFR7OxgPBe_lW5XOLe7UGCp-iUjXCL9hThXoVxqTpHJN2QWPHPGKmRx-KYlU8ARJN01hYAWNG2OJ4C4O2P02jCGWddnxbtYWtqUX7km-weuehQ"
+          target="_blank">Deploying NGINX as an API Gateway, Part 1 - NGINX</a></p>
+      <p><a href="https://www.nginx.com/blog/deploying-nginx-plus-as-an-api-gateway-part-2-protecting-backend-services/"
+          target="_blank">Deploying NGINX as an API Gateway, Part 2: Protecting
+          Backend Services - NGINX</a></p>
+      <p><a href="https://www.nginx.com/blog/deploying-nginx-plus-as-an-api-gateway-part-3-publishing-grpc-services/"
+          target="_blank">Deploying NGINX as an API Gateway, Part 3: Publishing
+          gRPC Services - NGINX</a></p>
+      <p><a href="https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-subrequest-authentication/"
+          target="_blank">NGINX Docs | Authentication Based on Subrequest Result</a></p>
+      <p><a href="https://www.nginx.com/blog/building-microservices-using-an-api-gateway/"
+          target="_blank">Building Microservices Using an API Gateway | NGINX</a></p>
+      <p><a href="https://www.nginx.com/blog/choosing-the-right-api-gateway-pattern/"
+          target="_blank">Choosing the Right API Gateway Pattern for Effective
+          API Delivery - NGINX</a></p>
+      <p><a href="https://gock.net/blog/2020/nginx-subrequest-authentication-server/"
+          target="_blank">Protecting web sites with NGINX subrequest
+          authentication | Andy Gock</a> </p>
+      <p>File cấu hình mẫu:</p>
+      <pre>upstream plfapi {
+    ip_hash;
+    server 10.71.72.1:8900;
+    # server 10.71.72.2:8900;
+}
+
+server {
+    listen 80;
+    listen 443;
+    server_name localhost;
+    root /data01/platform-web-frontend/public;
+    index index.php index.html;
+<br>    # Để ở đây hay để ở location /api/
+    # proxy_set_header Host            $host;
+    # proxy_set_header X-Real-IP $remote_addr;
+    # proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+    location /gscb {
+        alias /data01/gscb-web-frontend/public;
+
+        try_files $uri $uri/ @gscb;
+
+        location ~ \.php$ {
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $request_filename;
+            fastcgi_pass 127.0.0.1:9000;
+       }
+    }
+
+    location @gscb {
+        rewrite /gscb/(.*)$ /gscb/index.php?/$1 last;
+    }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        fastcgi_pass  127.0.0.1:9000;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include       fastcgi_params;
+    }
+
+    location /upload {
+        root /data01/platform/pla-api/;
+        secure_link $arg_md5,$arg_expires;
+        secure_link_md5 "$secure_link_expires$uri pLAF@202007";
+        # if ($secure_link = "") { return 403; }
+        if ($secure_link = "0") { return 410; }
+
+    }
+
+    location /api/ {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://plfapi;
+    }
+}
+</pre>
+      <p>TODO: Giám sát cảnh báo bỏ phần code backend PHP, chỉ cấu hình Nginx
+        thôi.<br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
 </html>
