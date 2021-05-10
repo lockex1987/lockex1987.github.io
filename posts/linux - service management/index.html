@@ -12,33 +12,70 @@
     <article>
       <h2>Quản lý service</h2>
       <p>Để quản lý các service trong Linux, chúng ta sử dụng lệnh <code>systemctl</code>.</p>
-      <h3>Các lệnh cơ bản</h3>
+      <h3>Thao tác với một service</h3>
       <p>Start service:</p>
       <pre>sudo systemctl start &lt;tên service&gt;</pre>
       <p>Stop service:</p>
       <pre>sudo systemctl stop &lt;tên service&gt;</pre>
       <p>Restart service:</p>
       <pre>sudo systemctl restart &lt;tên service&gt;</pre>
-      <p>Reload service (load lại các file cấu hình)</p>
+      <p>Reload service (load lại các file cấu hình):</p>
       <pre>sudo systemctl reload &lt;tên service&gt;</pre>
       <p>Enable service, để service tự động chạy khi khởi động máy:</p>
       <pre>sudo systemctl enable &lt;tên service&gt;</pre>
       <p>Disable service:</p>
       <pre>sudo systemctl disable &lt;tên service&gt;</pre>
+      <p>Kiểm tra một service có được enable hay không:</p>
+      <pre>sudo systemctl is-enabled &lt;tên service&gt;</pre>
       <p>Kiểm tra trạng thái service:</p>
       <pre>sudo systemctl status &lt;tên service&gt;</pre>
       <h3>Unit file</h3>
-      <p>Unit file chứa các tham số mà systemd sử dụng để quản lý và chạy unit.</p>
+      <p>Unit file chứa các tham số mà <code>systemd</code> sử dụng để quản lý
+        và chạy unit.</p>
       <p>Xem thông tin unit file:</p>
       <pre>sudo systemctl cat &lt;tên service&gt;</pre>
       <p>Xem các unit cần chạy khi khởi động:</p>
       <pre>sudo systemctl list-dependencies &lt;tên service&gt;</pre>
-      <p>Thêm một option vào unit file:</p>
-      <pre>sudo systemctl edit &lt;tên service&gt;</pre>
-      <p>Sửa trực tiếp toàn bộ nội dung file:</p>
-      <pre>sudo systemctl edit --full &lt;tên service&gt;</pre>
-      <p>Reload lại systemd sau khi sửa:</p>
+      <p>Reload lại systemd sau khi sửa (ví dụ khi thông báo có service mới):</p>
       <pre>sudo systemctl daemon-reload</pre>
+      <h3>Cấu trúc file service unit</h3>
+      <p>Các file cấu hình service có đuôi là <code>.service</code>, nằm trong
+        thư mục <code>/et/systemd/system</code> (service do người dùng tạo)
+        hoặc <code>/lib/systemd/system</code> (service hệ thống). Thế còn <code>/usr/lib/systemd/system</code>?</p>
+      <p>File bao gồm 3 phần chính:</p>
+      <ul>
+        <li>[Unit]: Chứa mô tả, phụ thuộc
+          <ul>
+            <li>Description: Mô tả</li>
+            <li>After: Start service sau khi các unit chỉ định</li>
+            <li>Requires: phụ thuộc hard</li>
+            <li>Wants: phụ thuộc soft</li>
+          </ul>
+        </li>
+        <li>[Service]: Loại, các lệnh start, stop
+          <ul>
+            <li>Type: Có thể có các loại là simple, forking, oneshot, dbus,
+              notify</li>
+            <li>ExecStart: Có thể có nhiều dòng, ví dụ <code>/bin/bash
+                /usr/bin/test.sh</code>.</li>
+            <li>ExecStartPre</li>
+            <li>ExecStartPost</li>
+            <li>ExecStop</li>
+            <li>ExecStopPost</li>
+            <li>ExecReload</li>
+            <li>RestartSec</li>
+            <li>TimeoutStartSec</li>
+            <li>TimeoutStopSec</li>
+          </ul>
+        </li>
+        <li>[Install]:
+          <ul>
+            <li>Alias</li>
+            <li>RequiredBy</li>
+            <li>WantedBy: multi-user.target</li>
+          </ul>
+        </li>
+      </ul>
       <h3>Tự tạo service</h3>
       <p>Chúng ta sẽ thử tạo một service và để nó tự động chạy khi khởi động
         máy.</p>
@@ -51,12 +88,101 @@ do
 echo "Looping...";
 sleep 30;
 done</pre>
+      <p>Demo 2:</p>
+      <pre>#!/bin/bash
+# Location: /usr/local/bin/simple-echo
+
+function echo_start () {
+  echo "Echo: starting service ..."
+  sleep 1
+  echo "Echo: starting done"
+}
+
+function echo_stop () {
+  echo "Echo: stopping service ..."
+  sleep 1
+  echo "Echo: stopping done"
+}
+
+function echo_status () {
+  echo "Echo service"
+}
+
+case "$1" in
+  'start')
+    echo_start
+    ;;
+  'stop')
+    echo_stop
+    ;;
+  'restart')
+    echo_start
+    sleep 1
+    echo_stop
+    ;;
+  'status')
+    echo_status
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|status|restart}" &gt;&amp;2
+    ;;
+esac</pre>
+      <p>Demo 3:</p>
+      <pre>#!/bin/sh
+SERVICE_NAME=myservice
+PATH_TO_JAR=/home/share/application.jar
+LOG_DIR =/home/share/log.txt
+PID_PATH_NAME=/tmp/application-pid<br>
+case $1 in
+   start)
+       echo "Starting $SERVICE_NAME ..."
+       if [ ! -f $PID_PATH_NAME ]; then
+           nohup java -jar -Dspring.profiles.active=test $PATH_TO_JAR  &gt;&gt; $LOG_DIR 2&gt;&amp;1&amp;
+           echo $! &gt; $PID_PATH_NAME
+           echo "$SERVICE_NAME started ..."
+       else
+           echo "$SERVICE_NAME is already running ..."
+       fi
+   ;;
+   stop)
+       if [ -f $PID_PATH_NAME ]; then
+           PID=$(cat $PID_PATH_NAME);
+           echo "$SERVICE_NAME stoping ..."
+           kill $PID;
+           echo "$SERVICE_NAME stopped ..."
+           rm $PID_PATH_NAME
+       else
+           echo "$SERVICE_NAME is not running ..."
+       fi
+   ;;
+   restart)
+       if [ -f $PID_PATH_NAME ]; then
+           PID=$(cat $PID_PATH_NAME);
+           echo "$SERVICE_NAME stopping ...";
+           kill $PID;
+           echo "$SERVICE_NAME stopped ...";
+           rm $PID_PATH_NAME
+           echo "$SERVICE_NAME starting ..."
+           nohup java -jar -Dspring.profiles.active=test $PATH_TO_JAR &gt;&gt; $LOG_DIR 2&gt;&amp;1&amp;
+           echo $! &gt; $PID_PATH_NAME
+           echo "$SERVICE_NAME started ..."
+       else
+           echo "$SERVICE_NAME is not running ..."
+       fi
+   ;;
+esac</pre>
       <p>Copy file script vào thư mục <code>/usr/bin</code>.</p>
       <pre>sudo cp test_service.sh /usr/bin/test_service.sh<br>sudo chmod +x /usr/bin/test_service.sh</pre>
-      <p>Tạo unit file <code>/lib/systemd/system/myservice.service</code>:</p>
-      <p>/etc/systemd/system/myservice.service</p>
+      <p>Tạo unit file <code>/etc/systemd/system/myservice.service</code>,
+        quyền 644 (các service của hệ thống thì để ở <code>/lib/systemd/system</code>):</p>
+      <pre>cd /etc/systemd/system/
+sudo touch myservice.service
+sudo chmod 644 myservice.service
+sudo gedit myservice.service
+</pre>
+      <p>Nội dung file:</p>
       <pre>[Unit]
-Description=Example systemd service
+Description=Simple systemd service
 
 [Service]
 Type=simple
@@ -64,6 +190,18 @@ ExecStart=/bin/bash /usr/bin/test_service.sh
 
 [Install]
 WantedBy=multi-user.target</pre>
+      <p>Demo 2:</p>
+      <pre>[Unit]
+Description=Simple Echo
+
+[Service]
+Type = forking
+ExecStart = /usr/local/bin/simple-echo start
+ExecStop = /usr/local/bin/simple-echo stop
+ExecReload = /usr/local/bin/simple-echo restart
+
+[Install]
+WantedBy = multi-user.target</pre>
       <p>Start và xem trạng thái:</p>
       <pre>sudo systemctl start myservice<br>sudo systemctl status myservice</pre>
       <p>TODO: Ảnh</p>
@@ -74,16 +212,10 @@ WantedBy=multi-user.target</pre>
       <pre>Restart=always<br>RestartSec=1</pre>
       <h3>Tham khảo</h3>
       <p><a href="https://viblo.asia/p/su-dung-systemd-de-chinh-sua-service-linux-m68Z0PJNZkG"
-          target="_blank">Sử dụng systemd để chỉnh sửa service linux</a></p>
-      <p><a href="https://viblo.asia/p/tim-hieu-va-van-dung-systemd-de-quan-ly-he-thong-linux-phan-co-ban-WAyK8kN65xX"
-          target="_blank">Tìm hiểu và vận dụng systemd để quản lý hệ thống Linux
-          (phần cơ bản)</a> </p>
-      <p><a href="https://viblo.asia/p/java-chay-file-jar-nhu-mot-service-tren-linux-07LKX4pEKV4"
-          target="_blank">[Java] Chạy file .jar như một service trên linux</a> </p>
-      <p><a href="https://www.linode.com/docs/guides/introduction-to-systemctl/"
-          target="_blank">Introduction to systemctl | Linode</a></p>
-      <p><a href="https://www.linode.com/docs/guides/start-service-at-boot/" target="_blank">Use
-          systemd to Start a Linux Service at Boot | Linode</a></p>
+          target="_blank">Sử dụng systemd để chỉnh sửa service linux - Viblo</a></p>
+      <p><a href="https://linuxconfig.org/how-to-create-systemd-service-unit-in-linux"
+          target="_blank">How to create systemd service unit in Linux -
+          LinuxConfig.org</a> </p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>

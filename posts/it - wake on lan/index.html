@@ -13,32 +13,33 @@
       <h2>Khởi động máy tính qua mạng LAN</h2>
       <p>Cấu hình để có thể tự động bật máy qua mạng LAN thông qua điện thoại.</p>
       <h3>Making it stick</h3>
-      <p>The problem with this method is that the enabling of WOL on the
-        interface will not stick after a reboot. To make this persistent on
-        Ubuntu 21.04, you must write a systemd file. To do this, issue the
-        command:</p>
+      <p>Vấn đề với phương thức này là việc enable WOL sẽ bị mất sau khi khởi
+        động lại máy tính. Để làm điều này là bền vững trên Ubuntu 21.04, bạn
+        phải viết một file <code>systemd</code>:</p>
       <pre>sudo vi /etc/systemd/system/wol.service</pre>
-      <p>In that file, paste the following:</p>
+      <p>Nội dung như sau:</p>
       <pre>[Unit]
-Description=Configure Wake On LAN
+Description=Configure Wake On LAN<br>Requires=Network.target
+After=Network.target
 
 [Service]
 Type=oneshot
-ExecStart=/sbin/ethtool -s INTERFACE wol g
+ExecStart=/sbin/ethtool -s INTERFACE wol g<br>ExecStop=/usr/sbin/ethtool -s INTERFACE wol d
 
 [Install]
 WantedBy=basic.target</pre>
-      <p>Where INTERFACE is the name of the interface to be used.</p>
-      <p>Save and close the file. Make systemd aware of the new script with the
-        command:</p>
+      <p>Trong đó, <code>INTERFACE</code> là tên card mạng được sử dụng.</p>
+      <p>Lưu và đóng file. Thông báo cho <code>systemd</code> về script mới với
+        lệnh:</p>
       <pre>sudo systemctl daemon-reload</pre>
-      <p>Enable the new service with the command:</p>
+      <p>Enable service mới với lệnh:</p>
       <pre>sudo systemctl enable wol.service</pre>
-      <p>Finally, start the service with the command:</p>
+      <p>Cuối cùng, start service:</p>
       <pre>sudo systemctl start wol.service</pre>
       <h3>Tool</h3>
       <p>Android: Wake On Lan</p>
-      <p>iPad: Mocha WOL (có cả ping xem máy có đang chạy hay không)</p>
+      <p>iPad: Mocha WOL (có cả ping xem máy có đang chạy hay không), dạo này
+        thấy không chạy được</p>
       <h3>Tham khảo</h3>
       <p><a href="https://en.wikipedia.org/wiki/Wake-on-LAN" target="_blank">Wake-on-LAN
           - Wikipedia</a></p>
