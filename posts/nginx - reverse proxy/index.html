@@ -24,10 +24,32 @@
           target="_blank">Triển khai ứng dụng nodejs lên server Centos</a></p>
       <p><a href="https://www.hostinger.vn/huong-dan/cach-su-dung-nginx-redirect-de-chuyen-huong-truy-cap/amp"
           target="_blank">Cách sử dụng Nginx Redirect để chuyển hướng truy cập</a></p>
-      <p>Websocket</p>
-      <p><a href="https://www.nginx.com/blog/websocket-nginx/" target="_blank">Using
-          NGINX as a WebSocket Proxy</a></p>
-      <p>API Gateway</p>
+      <h3>Websocket</h3>
+      <p>Cấu hình tôi đã thử chạy được (sso-admin):</p>
+      <pre>upstream wsbackend {
+    # server 127.0.0.1:9000; # Bị lỗi
+    server localhost:9000; # Chạy được
+}
+
+server {
+    # Các cấu hình khác
+	
+    location /wsapp/ {
+        proxy_pass http://wsbackend;
+        # proxy_pass http://127.0.0.1:9000; # Bị lỗi
+        # proxy_pass http://localhost:9000; # Chạy được
+
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+		
+        # keepalive_requests 500;
+    }
+}</pre>
+      <p>Chú ý: nếu để server là <code>localhost</code> thì chạy được, mà để là
+        <code>127.0.0.1</code> thì bị lỗi.</p>
+      <h3>API Gateway</h3>
       <p><a href="https://docs.nginx.com/nginx/admin-guide/web-server/web-server/"
           target="_blank">NGINX Docs | Configuring NGINX and NGINX Plus as a Web
           Server</a></p>
