@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="logging">
+    <meta name="description" content="logging, monolog">
     <title>Quản lý log trong Laravel</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -11,6 +11,7 @@
   <body>
     <article>
       <h2>Quản lý log trong Laravel</h2>
+      <p>Log rất quan trọng, để kiểm tra lại khi có lỗi.</p>
       <p>Định nghĩa cấu hình <code>LOG_CHANNEL</code> ở file <code>.env</code>.
         Các giá trị có thể có là:</p>
       <table class="table table-bordered">
@@ -71,12 +72,14 @@
       <p>Xem chi tiết ở file <code>config/logging.php</code>.</p>
       <p>Tách file log lỗi ra một file riêng?</p>
       <p>Chỉ log ở các file thuộc namespace <code>App</code>?</p>
-      <p><a href="https://www.codewall.co.uk/how-to-log-like-a-pro-with-laravel-logviewer/"
+      <p><a href="https://www.codewall.co.uk/how-to-log-like-a-pro-with-laravel-logviewer/"
+
           target="_blank">How To Log Like A Pro With Laravel &amp; LogViewer |
           Code Wall</a></p>
       <p>----<br>
       </p>
-      <p>Đối với logging, Laravel tích hợp thư viện <a href="https://github.com/Seldaek/monolog"
+      <p>Đối với logging, Laravel tích hợp thư viện <a href="https://github.com/Seldaek/monolog"
+
           target="_blank">Monolog</a>, nó cung cấp rất một loạt các xử lý rất
         hay. Laravel cấu hình một vài xử lý đó cho bạn, cho phép bạn chọn giữa
         một hoặc nhiều file log, hoặc viết thông tin error vào hệ thống log.</p>
@@ -99,7 +102,7 @@
       <pre><code>'log' =&gt; 'daily'</code></pre>
       <h3>Giới hạn thời gian file daily log</h3>
       <p>Khi bạn sử dụng chế độ <code>daily</code> log, mặc định Laravel chỉ để
-        lại files log 5 ngày gần nhất. Nếu bạn muốn thay đổi số ngày đó, bạn cần
+        lại file log 5 ngày gần nhất. Nếu bạn muốn thay đổi số ngày đó, bạn cần
         thêm 1 dòng <code>log_max_files</code> vào trong file <code>app</code>:</p>
       <pre><code>'log_max_files' =&gt; 30</code></pre>
       <h3>Các mức độ của log</h3>
@@ -145,7 +148,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-<br>
+
 class UserController extends Controller
 {
     /**
@@ -154,14 +157,14 @@ class UserController extends Controller
      * @param int $id ID người dùng
      * @return Response
      */
-    public function showProfile($id)
+    public function showProfile(int $id)
     {
         Log::info('Showing user profile for user: ' . $id);
-
         return view('user.profile', ['user' =&gt; User::findOrFail($id)]);
     }
 }</pre>
-      <p>Logger cung cấp 8 cấp độ cơ bản theo định nghĩa <a href="http://tools.ietf.org/html/rfc5424"
+      <p>Logger cung cấp 8 cấp độ cơ bản theo định nghĩa <a href="http://tools.ietf.org/html/rfc5424"
+
           target="_blank">RFC 5424</a>:</p>
       <ul>
         <li>emergency</li>
@@ -176,7 +179,7 @@ class UserController extends Controller
       <h4>Thông tin theo ngữ cảnh</h4>
       <p>Một mảng dữ liệu theo ngữ cảnh có thể được truyền vào trong phương thức
         log. Các dữ liệu này sẽ được format và hiển thị cùng với nội dung log:</p>
-      <pre>Log::info('User failed to login.', ['id' =&gt; $user-&gt;id]);</pre>
+      <pre>Log::info('User failed to login', ['id' =&gt; $user-&gt;id]);</pre>
       <h4>Truy cập vào đối tượng phía dưới Monolog</h4>
       <p>Monolog có một số handler bổ sung mà bạn có thể sử dụng nó cho việc
         log. Nếu cần thiết, bạn có thể truy cập vào đối tượng phía dưới của
@@ -185,8 +188,8 @@ class UserController extends Controller
       <h3>Ghi log cho tiến trình</h3>
       <p>Nhiều lúc, bạn có nhu cầu ghi log cho các tiến trình. Bạn thiết lập
         tiến trình bằng cách thêm crontab. Khi đó, file log sẽ được tạo ra bởi
-        user chạy crontab chứ không phải user chạy web (thường là nginx). Lúc đó
-        có thể gây ra lỗi.</p>
+        user chạy crontab chứ không phải user chạy web (thường là <code>nginx</code>).
+        Lúc đó có thể gây ra lỗi về phân quyền.</p>
       <p>Chúng ta có thể làm như sau:</p>
       <ul>
         <li>Phân quyền lại file log ghi ra</li>
@@ -228,7 +231,7 @@ class UserController extends Controller
     $monolog-&gt;pushHandler($handler);
 });</pre>
       <h3>Tham khảo</h3>
-      <p> <a href="https://laravel.com/docs/master/logging" target="_blank">laravel.com/docs/master/logging</a></p>
+      <p><a href="https://laravel.com/docs/master/logging" target="_blank">laravel.com/docs/master/logging</a></p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>
