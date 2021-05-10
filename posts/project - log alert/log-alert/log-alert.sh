@@ -1,4 +1,5 @@
 #!/bin/sh
+# Chạy cronjob một phút một lần, đảm bảo tiến trình luôn chạy
 PROCESSFILE='log-alert.jar'
 if ps ax | grep -v grep | grep $PROCESSFILE > /dev/null
 then
