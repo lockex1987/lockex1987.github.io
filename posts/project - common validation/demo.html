@@ -158,7 +158,6 @@
 					</label>
 					<input class="form-control" type="text" maxlength="50" name="myPassword" value="" data-validation="password|passwordStrong" />
 					<!-- 12345 â -->
-					<small class="form-text text-danger" id="password-caps-warning" style="display: none">* Đang bật Caps Lock</small>
 				</div>
 			</div>
 
@@ -270,18 +269,7 @@
 			alert('Form OK');
 		}
 
-		// showError(document.querySelector('[name=username]'), 'Message test thôi');
-
-		// Đơn giản, nhưng rất hữu ích
-		(() => {
-			const passwordField = document.querySelector('[name=myPassword]');
-			const capsErrorField = document.querySelector('#password-caps-warning');
-
-			// Detect Caps Lock
-			passwordField.addEventListener('keydown', (evt) => {
-				capsErrorField.style.display = evt.getModifierState('CapsLock') ? 'block' : 'none';
-			});
-		})();
+		// CV.showError(document.querySelector('[name=username]'), 'Message test thôi');
 
 
 		// Gọi validate ở trường hợp riêng biệt

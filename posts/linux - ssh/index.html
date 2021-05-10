@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="date" content="2020-02-19 23:27:00">
-    <meta name="description" content="passwordless">
+    <meta name="description" content="passwordless, ssh-copy-id">
     <title>Sử dụng SSH</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -71,6 +71,11 @@ The key's randomart image is:
       <pre class="text-pre-wrap">ssh admin1@192.168.1.116 "chmod 700 .ssh; chmod 600 .ssh/authorized_keys"</pre>
       <p>Câu lệnh gộp:</p>
       <pre class="text-pre-wrap">cat ~/.ssh/id_rsa.pub | ssh admin1@192.168.1.116 "mkdir -p ~/.ssh &amp;&amp; chmod 700 ~/.ssh &amp;&amp; cat &gt;&gt; ~/.ssh/authorized_keys &amp;&amp; chmod 600 ~/.ssh/authorized_keys"</pre>
+      <p>Bạn có thể sử dụng lệnh ssh-copy-id cho nhanh:</p>
+      <pre>ssh-copy-id admin1@192.168.1.116</pre>
+      <p>Mặc định sẽ copy public key <code>~/.ssh/id_rsa.pub</code>. Bạn có thể
+        chỉnh định public key khác bằng tham số <code>-i</code>. Ví dụ:</p>
+      <pre>ssh-copy-id -i ~/.ssh/lockex1987.pub admin1@192.168.1.116</pre>
       <p>Từ giờ mỗi lần truy cập lại sẽ không cần dùng password nữa.</p>
       <pre>ssh admin1@192.168.1.116</pre>
       <h3>Một số file trong thư mục .ssh</h3>
