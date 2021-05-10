@@ -12,6 +12,370 @@
     <article>
       <h2>Bắt đầu học Golang</h2>
       <p>Học cấu trúc dữ liệu và giải thuật để luyện tư duy.</p>
+      <p>(Code ngắn gọn, dạng snippet)</p>
+      <h3>Cài đặt</h3>
+      <h4>Windows</h4>
+      <p>Download file msi từ địa chỉ sau:</p>
+      <p><a href="https://golang.org/dl/" target="_blank">https://golang.org/dl/</a></p>
+      <p>Sau đó cài đặt như chương trình bình thường. Trình cài đặt sẽ tự thêm
+        các đường dẫn <code>C:\Program Files\Go\bin</code> và <code>C:\Users\&lt;tên
+          user&gt;\go\bin</code> vào biến môi trường PATH. Bạn có thể thực hiện
+        các lệnh:</p>
+      <ul>
+        <li>go</li>
+        <li>gofmt</li>
+        <li>go-outline</li>
+        <li>gopls</li>
+      </ul>
+      <p>Kiểm tra việc cài đặt có thành công không:</p>
+      <pre>go version</pre>
+      <p>Kết quả có dạng:</p>
+      <pre>go version go1.16.3 windows/amd64</pre>
+      <h4>Ubuntu</h4>
+      <p>TODO</p>
+      <h3>Chương trình đầu tiên</h3>
+      <p>Soạn thảo file hello.go với nội dung sau:</p>
+      <pre class="code-block"><code class="go">package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Hello, World")
+}</code></pre>
+      <p>Thực hiện:</p>
+      <pre>go run hello.go</pre>
+      <p>Build:</p>
+      <pre>go build hello.go</pre>
+      <p>Lệnh trên sẽ tạo file hello.exe (trên Windows) và file hello (trên
+        Ubuntu).</p>
+      <p>Chạy file thực thi trên Windows:</p>
+      <pre>hello.exe</pre>
+      <p>Trên Ubuntu:</p>
+      <p>./hello</p>
+      <h3>Tham số dòng lệnh</h3>
+      <p>Sử dụng os.Args.</p>
+      <p>File <code>arguments.go</code>:</p>
+      <pre class="code-block"><code class="go">package main
+
+import (
+	"fmt"
+	"os"
+)
+
+func main() {
+	var s, sep string
+	for i := 1; i &lt; len(os.Args); i++ {
+		s += sep + os.Args[i]
+		sep = ","
+	}
+	fmt.Println(s)
+}</code></pre>
+      <p>Thực thi:</p>
+      <pre>$ go run arguments.go ABC DEF
+ABC,DEF</pre>
+      <p><br>
+      </p>
+      <h3>Comment</h3>
+      <p>Có hai dạng comment:</p>
+      <p>//</p>
+      <p>/* */<br>
+      </p>
+      <h3>Biến</h3>
+      <p>File <code>variables.go</code>:</p>
+      <pre class="code-block"><code class="go">package main
+
+import "fmt"
+
+func main() {
+	// Khai báo, sau đó gán giá trị
+	var s1 string
+	s1 = "s1"
+
+	// Vừa khai báo vừa khởi tạo
+	var s2 string = "s2"
+
+	// Có thể bỏ qua kiểu dữ liệu
+	var s3 = "s3"
+
+	// Có thể bỏ qua từ khóa var
+	s4 := "s4"
+
+	// Lần sau gán lại giá trị cho biến,
+	// chúng ta chỉ sử dụng =, không sử dụng :=
+	s4 = "s4 updated"
+
+	fmt.Println(s1)
+	fmt.Println(s2)
+	fmt.Println(s3)
+	fmt.Println(s4)
+}</code></pre>
+      <br>
+      <p><br>
+      </p>
+      <h3>Hằng</h3>
+      <p>Sử dụng từ khóa <code>const</code>.</p>
+      <p>File <code>constants.go</code>:</p>
+      <pre class="code-block"><code class="go">package main
+
+import "fmt"
+
+const boilingF = 212.0
+
+func main() {
+	var f = boilingF
+	var c = (f - 32) * 5 / 9
+	fmt.Printf("Boiling point = %g°F or %g°C\n", f, c)
+}</code></pre>
+      <p>Phạm vi của hằng?</p>
+      <h3>Từ khóa và hằng, tên kiểu dữ liệu, hàm built-in</h3>
+      <p>Go có 25 từ khóa:</p>
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>break</td>
+            <td>default</td>
+            <td>func</td>
+            <td>interface</td>
+            <td>select</td>
+          </tr>
+          <tr>
+            <td>case</td>
+            <td>defer</td>
+            <td>go</td>
+            <td>map</td>
+            <td>struct</td>
+          </tr>
+          <tr>
+            <td>chan</td>
+            <td>else</td>
+            <td>goto</td>
+            <td>package</td>
+            <td>switch</td>
+          </tr>
+          <tr>
+            <td>const</td>
+            <td>fallthrough</td>
+            <td>if</td>
+            <td>range</td>
+            <td>type</td>
+          </tr>
+          <tr>
+            <td>continue</td>
+            <td>for</td>
+            <td>import</td>
+            <td>return</td>
+            <td>var</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Các hằng số:</p>
+      <p>true, false, iota, nil</p>
+      <p>Các kiểu dữ liệu:</p>
+      <p>int, int8, int16, int32, int64</p>
+      <p>uint, uint8, uint16, uint32, uint64, uintptr</p>
+      <p>float32, float64</p>
+      <p>complex64, complex128</p>
+      <p>bool</p>
+      <p>byte</p>
+      <p>rune</p>
+      <p>string</p>
+      <p>error</p>
+      <p>Các hàm:</p>
+      <p>make</p>
+      <p>len</p>
+      <p>cap</p>
+      <p>new</p>
+      <p>append</p>
+      <p>copy</p>
+      <p>close</p>
+      <p>delete</p>
+      <p>complex</p>
+      <p>real</p>
+      <p>imag</p>
+      <p>panic</p>
+      <p>recover</p>
+      <h3>Operator</h3>
+      <p><code>+</code> (cộng)</p>
+      <p><code>-</code> (trừ)</p>
+      <p><code>*</code> (nhân)</p>
+      <p><code>/</code> (chia)</p>
+      <p>+=</p>
+      <p>-=</p>
+      <p>*=</p>
+      <p>/=</p>
+      <p><code>=</code> (gán)</p>
+      <p><code>:=</code> (khai báo và khởi tạo)</p>
+      <p><code>++</code> (tăng)</p>
+      <p><code>--</code> (giảm)</p>
+      <h3>Hàm</h3>
+      <p>Sử dụng từ khóa func.</p>
+      <pre class="code-block"><code class="go">package main
+
+import "fmt"
+
+func fToC(f float64) float64 {
+	return (f - 32) * 5 / 9
+}
+
+func main() {
+	const freezingF = 32.0
+	const boilingF = 212.0
+	fmt.Printf("%g°F = %g°C\n", freezingF, fToC(freezingF))
+	fmt.Printf("%g°F = %g°C\n", boilingF, fToC(boilingF))
+}</code></pre>
+      <p><br>
+      </p>
+      <h3>Gán tuple</h3>
+      <p><code>tuple-assignment.go</code>:</p>
+      <pre class="code-block"><code class="go">package main
+
+import "fmt"
+
+/**
+ * Ước số chung lớn nhất (Greatest Common Divisor)
+ */
+func gcd(x, y int) int {
+	for y != 0 {
+		x, y = y, x%y
+	}
+	return x
+}
+
+/**
+ * Fibonacci.
+ */
+func fib(n int) int {
+	x, y := 0, 1
+	for i := 0; i &lt; n; i++ {
+		x, y = y, x+y
+	}
+	return x
+}
+
+func main() {
+	fmt.Println("Tuple")
+}</code></pre>
+      <p><br>
+      </p>
+      <p>Cấu trúc điều khiển</p>
+      <p>if</p>
+      <p>switch</p>
+      <h3>Vòng lặp for</h3>
+      <p>Cấu trúc chung:</p>
+      <pre>for initialization; condition; post {<br>}</pre>
+      <p>Có thể giản lực để thay thế while, do-while:</p>
+      <pre>// vòng lặp "while"<br>for condition {<br>}<br><br>// Vòng lặp vô hạn<br>for {<br>}</pre>
+      <p>Hàm range</p>
+      <p>Hàm len</p>
+      <p><br>
+      </p>
+      <p>break</p>
+      <p>continue</p>
+      <h3>Loại dữ liệu</h3>
+      <p>Số</p>
+      <p>Số nguyên</p>
+      <p>Số dấu phảy động</p>
+      <p>Số phức</p>
+      <p>Xâu</p>
+      <p>Sử dụng package strings</p>
+      <p>strings.Join</p>
+      <p>Boolean</p>
+      <p>struct</p>
+      <p>map</p>
+      <p>array, slice</p>
+      <p>datetime?</p>
+      <h3>Pointer</h3>
+      <p>Giống C</p>
+      <p>Lấy địa chỉ bằng &amp;</p>
+      <p>Khai báo bằng *</p>
+      <h3>Package</h3>
+      <p>Để chạy phải để trong package main, hàm main.</p>
+      <p>Package hỗ trợ modularity, encapsulation, separation, reuse.</p>
+      <p>Convention: Tên file viết liền?</p>
+      <p>Import local package?</p>
+      <p>Chữ cái đầu tiên viết hoa thì được export.</p>
+      <p>Chữ cái đầu tiên viết thường thì không thể truy cập.</p>
+      <p><br>
+      </p>
+      <h3>Format</h3>
+      <p>Hàm <code>Printf</code> có <em>verb</em>:</p>
+      <table style="width: 100%" border="1">
+        <tbody>
+          <tr>
+            <td>%d</td>
+            <td>Số nguyên cơ số 10 (decimal)</td>
+          </tr>
+          <tr>
+            <td>%x</td>
+            <td>Số nguyên cơ số 16 (hexa)</td>
+          </tr>
+          <tr>
+            <td>%o</td>
+            <td>Số nguyên cơ số 8 (octal)</td>
+          </tr>
+          <tr>
+            <td>%b</td>
+            <td>Số nguyên nhị phân (binary)</td>
+          </tr>
+          <tr>
+            <td>%f, %g, %e</td>
+            <td>Số dấu phảy động</td>
+          </tr>
+          <tr>
+            <td>%t</td>
+            <td><code>true</code> hoặc <code>false</code></td>
+          </tr>
+          <tr>
+            <td>%c</td>
+            <td>Mã Unicode</td>
+          </tr>
+          <tr>
+            <td>%s</td>
+            <td>Xâu</td>
+          </tr>
+          <tr>
+            <td>%q</td>
+            <td>quoted string "abc" hoặc rune 'c'</td>
+          </tr>
+          <tr>
+            <td>%v</td>
+            <td>Bất kỳ giá trị nào ở format dạng tự nhiên</td>
+          </tr>
+          <tr>
+            <td>%T</td>
+            <td>Kiểu của giá trị</td>
+          </tr>
+          <tr>
+            <td>%%</td>
+            <td>Ký tự <code>%</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p>Xử lý File</p>
+      <p>JSON</p>
+      <p>Regex</p>
+      <p><br>
+      </p>
+      <p>Web API server</p>
+      <p>Testing</p>
+      <p>Logging</p>
+      <p>Goroutines</p>
+      <p>Redis</p>
+      <p>MySQL</p>
+      <p><br>
+      </p>
+      <p>VSCode extension</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Tham khảo</h3>
       <p><a href="https://en.wikipedia.org/wiki/Go_%28programming_language%29" target="_blank">Go
           (programming language) - Wikipedia</a></p>
       <p><a href="https://golang.org/" target="_blank">The Go Programming
@@ -25,12 +389,15 @@
       <p><a href="https://en.m.wikipedia.org/wiki/List_of_data_structures" target="_blank">List
           of data structures - Wikipedia</a> </p>
       <p><a href="https://grpc.io/" target="_blank">gRPC</a></p>
-      <p><a href="https://www.youtube.com/playlist?list=PLVDJsRQrTUz7-fSzZWtF726st5AYQc57A"
+      <p><a href="https://www.youtube.com/playlist?list=PLVDJsRQrTUz7-fSzZWtF726st5AYQc57A"
+
           target="_blank">Golang thực chiến - YouTube</a></p>
-      <p><a href="https://www.youtube.com/watch?v=KIKefiH0bHI&amp;list=PLVDJsRQrTUz5icsxSfKdymhghOtLNFn-k&amp;index=20"
+      <p><a href="https://www.youtube.com/watch?v=KIKefiH0bHI&amp;list=PLVDJsRQrTUz5icsxSfKdymhghOtLNFn-k&amp;index=20"
+
           target="_blank">Lập trình Golang - 01 Cài đặt môi trường | Setup
           environment - YouTube</a></p>
-      <p><a href="https://www.youtube.com/watch?v=75lJDVT1h0s&amp;list=PLzMcBGfZo4-mtY_SE3HuzQJzuj4VlUG0q"
+      <p><a href="https://www.youtube.com/watch?v=75lJDVT1h0s&amp;list=PLzMcBGfZo4-mtY_SE3HuzQJzuj4VlUG0q"
+
           target="_blank">Golang Tutorial #1 - An Introduction to Go Programming
           - YouTube</a></p>
       <p><a href="https://www.toptal.com/go/golang-oop-tutorial" target="_blank">Golang
@@ -40,6 +407,19 @@
       <p><br>
       </p>
     </article>
+    
+    <style>
+      pre.code-block {
+      	background: #3f3f3f;
+        border-radius: .25rem; /* .rounded */
+      }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/zenburn.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/languages/go.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    
     <script src="../../js/docs.js"></script>
   </body>
 </html>
