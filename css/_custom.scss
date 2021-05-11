@@ -11,12 +11,14 @@ html {
  */
 body {
 	font-family: Roboto, sans-serif;
+	// font-family: Cambria, Cochin, Georgia, 'Times New Roman', Times, serif;
+    // font-family: Verdana, sans-serif;
 
     color: #373a3c;
-    //font-size: 1.25rem;
+    // font-size: 1.25rem;
 
     // Pattern SVG dạng gạch
-    //background-image: url('data:image/svg+xml,%3Csvg%20width%3D%2242%22%20height%3D%2244%22%20viewBox%3D%220%200%2042%2044%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20id%3D%22Page-1%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20id%3D%22brick-wall%22%20fill%3D%22%23000000%22%20fill-opacity%3D%220.4%22%3E%3Cpath%20d%3D%22M0%200h42v44H0V0zm1%201h40v20H1V1zM0%2023h20v20H0V23zm22%200h20v20H22V23z%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+    // background-image: url('data:image/svg+xml,%3Csvg%20width%3D%2242%22%20height%3D%2244%22%20viewBox%3D%220%200%2042%2044%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20id%3D%22Page-1%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20id%3D%22brick-wall%22%20fill%3D%22%23000000%22%20fill-opacity%3D%220.4%22%3E%3Cpath%20d%3D%22M0%200h42v44H0V0zm1%201h40v20H1V1zM0%2023h20v20H0V23zm22%200h20v20H22V23z%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E');
 
     // Blueprint
     /*
@@ -66,7 +68,7 @@ body {
 
     // Pattern image
     @include media-breakpoint-up(md) {
-        //background: url(../images/pattern.png);
+        // background: url(../images/pattern.png);
         
         // Background đầu tiên ở phía trên, gần người dùng hơn
         /*
@@ -85,20 +87,18 @@ article {
     background-color: rgba(255, 255, 255, 1);
     padding: 0.5rem;
     max-width: 570px;
-    //font-family: Cambria, Cochin, Georgia, 'Times New Roman', Times, serif;
-    //font-family: Verdana, sans-serif;
 
     @include media-breakpoint-up(md) {
-        //box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
-        //border-radius: 5px;
+        // box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+        // border-radius: 5px;
         padding: 1rem;
-        //border: 0.5rem solid rgba(0, 0, 0, 0.1);
-        //background-clip: padding-box;
+        // border: 0.5rem solid rgba(0, 0, 0, 0.1);
+        // background-clip: padding-box;
         
     }
 
     @include media-breakpoint-up(xl) {
-        //border-left: 1px solid rgba(0, 0, 0, 0.1);
+        // border-left: 1px solid rgba(0, 0, 0, 0.1);
     }
 }
 
@@ -108,7 +108,7 @@ p {
     line-height: 1.725;
 	
 	@include media-breakpoint-up(md) {
-		text-indent: 0.75rem;
+		// text-indent: 0.75rem;
 	}
 }
 
@@ -151,12 +151,16 @@ h5 {
 }
 
 // Để tiêu đề ở trên để người dùng biết đang ở phần nào
+// Tuy nhiên, không click được vào TOC để chuyển đến heading trước được
 h3, h4 {
+    /*
     position: -webkit-sticky;
     position: sticky;
     top: 0px;
     background: #FFF; // thêm background để che đi các heading cũ
-    padding: 0.5rem 1rem;
+    // padding: 0.5rem 1rem;
+	padding: 0.5rem 0rem;
+	*/
 }
 
 pre {
