@@ -19,8 +19,8 @@
       <p><a href="https://golang.org/dl/" target="_blank">https://golang.org/dl/</a></p>
       <p>Sau đó cài đặt như chương trình bình thường. Trình cài đặt sẽ tự thêm
         các đường dẫn <code>C:\Program Files\Go\bin</code> và <code>C:\Users\&lt;tên
-          user&gt;\go\bin</code> vào biến môi trường PATH. Bạn có thể thực hiện
-        các lệnh:</p>
+          user&gt;\go\bin</code> vào biến môi trường <code>PATH</code>. Bạn có
+        thể thực hiện các lệnh:</p>
       <ul>
         <li>go</li>
         <li>gofmt</li>
@@ -33,6 +33,7 @@
       <pre>go version go1.16.3 windows/amd64</pre>
       <h4>Ubuntu</h4>
       <p>TODO</p>
+      <p>Ảnh</p>
       <h3>Chương trình đầu tiên</h3>
       <p>Soạn thảo file hello.go với nội dung sau:</p>
       <pre class="code-block"><code class="go">package main
@@ -73,13 +74,10 @@ func main() {
       <p>Thực thi:</p>
       <pre>$ go run arguments.go ABC DEF
 ABC,DEF</pre>
-      <p><br>
-      </p>
       <h3>Comment</h3>
       <p>Có hai dạng comment:</p>
       <p>//</p>
-      <p>/* */<br>
-      </p>
+      <p>/* */ </p>
       <h3>Biến</h3>
       <p>File <code>variables.go</code>:</p>
       <pre class="code-block"><code class="go">package main
@@ -110,8 +108,6 @@ func main() {
 	fmt.Println(s4)
 }</code></pre>
       <br>
-      <p><br>
-      </p>
       <h3>Hằng</h3>
       <p>Sử dụng từ khóa <code>const</code>.</p>
       <p>File <code>constants.go</code>:</p>
@@ -127,9 +123,10 @@ func main() {
 	fmt.Printf("Boiling point = %g°F or %g°C\n", f, c)
 }</code></pre>
       <p>Phạm vi của hằng?</p>
-      <h3>Từ khóa và hằng, tên kiểu dữ liệu, hàm built-in</h3>
+      <h3>Từ khóa</h3>
+      <p>Và hằng, tên kiểu dữ liệu, hàm built-in.</p>
       <p>Go có 25 từ khóa:</p>
-      <table class="table">
+      <table class="table table-responsive-md">
         <tbody>
           <tr>
             <td>break</td>
@@ -209,6 +206,12 @@ func main() {
       <p><code>--</code> (giảm)</p>
       <h3>Hàm</h3>
       <p>Sử dụng từ khóa func.</p>
+      <p>Cấu trúc:</p>
+      <pre>func name(parameter-list) (result-list) {<br>   body<br>}</pre>
+      <p>Hàm cũng có thể gán cho biến.</p>
+      <p>Có hàm anonymous.</p>
+      <p>Hàm variadic, số tham số tùy biến.</p>
+      <p>Hàm có thể được <code>defer</code>.</p>
       <pre class="code-block"><code class="go">package main
 
 import "fmt"
@@ -223,8 +226,6 @@ func main() {
 	fmt.Printf("%g°F = %g°C\n", freezingF, fToC(freezingF))
 	fmt.Printf("%g°F = %g°C\n", boilingF, fToC(boilingF))
 }</code></pre>
-      <p><br>
-      </p>
       <h3>Gán tuple</h3>
       <p><code>tuple-assignment.go</code>:</p>
       <pre class="code-block"><code class="go">package main
@@ -255,39 +256,284 @@ func fib(n int) int {
 func main() {
 	fmt.Println("Tuple")
 }</code></pre>
-      <p><br>
-      </p>
-      <p>Cấu trúc điều khiển</p>
-      <p>if</p>
-      <p>switch</p>
-      <h3>Vòng lặp for</h3>
+      <h3>Cấu trúc điều khiển</h3>
+      <h4>if</h4>
+      <p>Không cần dấu mở ngoặc và đóng ngoặc (thêm vào cũng k sao?)</p>
+      <h4>switch</h4>
+      <p>Không cần từ khóa <code>break</code>.</p>
+      <h4>Vòng lặp for</h4>
       <p>Cấu trúc chung:</p>
       <pre>for initialization; condition; post {<br>}</pre>
       <p>Có thể giản lực để thay thế while, do-while:</p>
       <pre>// vòng lặp "while"<br>for condition {<br>}<br><br>// Vòng lặp vô hạn<br>for {<br>}</pre>
-      <p>Hàm range</p>
-      <p>Hàm len</p>
-      <p><br>
-      </p>
-      <p>break</p>
-      <p>continue</p>
-      <h3>Loại dữ liệu</h3>
-      <p>Số</p>
-      <p>Số nguyên</p>
-      <p>Số dấu phảy động</p>
-      <p>Số phức</p>
-      <p>Xâu</p>
-      <p>Sử dụng package strings</p>
-      <p>strings.Join</p>
-      <p>Boolean</p>
-      <p>struct</p>
-      <p>map</p>
-      <p>array, slice</p>
+      <p>Có thể sử dụng <code>break</code> và <code>continue</code> trong vòng
+        lặp như các ngôn ngữ khác.</p>
+      <h5>Hàm range</h5>
+      <p>Cấu trúc:</p>
+      <pre>for first, second := range x {<br>}</pre>
+      <p>Từ khóa range được sử dụng để lặp qua các phần tử của mảng, slice,
+        channel, map. Với mảng và slice, index là số nguyên. Với map, nó trả về
+        key của cặp key-value. Range trả về một hoặc hai giá trị. Nếu chỉ một
+        giá trị được sử dụng ở bên trái biểu thức range, nó là giá trị đầu tiên
+        trong bảng sau:</p>
+      <table class="table table-bordered table-responsive-md">
+        <thead>
+          <tr>
+            <th>Loại dữ liệu</th>
+            <th>Khai báo</th>
+            <th>Giá trị đầu tiên</th>
+            <th>Giá trị thứ hai (tùy chọn)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mảng hoặc slice</td>
+            <td>a [n]E</td>
+            <td>index i int</td>
+            <td>a[i] E</td>
+          </tr>
+          <tr>
+            <td>Xâu</td>
+            <td>s string</td>
+            <td>index i int</td>
+            <td>rune int</td>
+          </tr>
+          <tr>
+            <td>Map</td>
+            <td>m map[K]V</td>
+            <td>key k K</td>
+            <td>value m[k] V</td>
+          </tr>
+          <tr>
+            <td>Channel</td>
+            <td>c chan E</td>
+            <td>Phần tử e E</td>
+            <td>none</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><code>rangedemo.go</code>:</p>
+      <pre class="code-block"><code class="go">package main
+
+import "fmt"
+
+func rangeArray() {
+	numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8}
+	for i, e := range numbers {
+		fmt.Println("Slice item", i, "is", e)
+	}
+}
+
+func rangeMap() {
+	countryCapitalMap := map[string]string{
+		"France": "Paris",
+		"Italy":  "Rome",
+		"Japan":  "Tokyo",
+	}
+	for country, capital := range countryCapitalMap {
+		fmt.Println("Capital of", country, "is", capital)
+	}
+}
+
+func rangeString() {
+	s := "Tuấn"
+	for _, c := range s {
+		fmt.Println(c)
+		fmt.Printf("%c\n", c)
+	}
+}
+
+func rangeChannel() {
+	ch := make(chan int)
+	go func() {
+		ch &lt;- 5
+		ch &lt;- 6
+		ch &lt;- 7
+		close(ch)
+	}()
+	for n := range ch {
+		fmt.Println(n)
+	}
+}
+
+func main() {
+	rangeArray()
+	rangeMap()
+	rangeString()
+	rangeChannel()
+}</code></pre>
+      <h5>Hàm len</h5>
+      <p>Hàm len trả về độ dài của v, tùy theo kiểu dữ liệu của nó.</p>
+      <pre>func len(v Type) int</pre>
+      <p>Mảng: số phần tử trong mảng</p>
+      <p>Pointer đến mảng: Số phần tử trong *v</p>
+      <p>Slice hoặc map: Số phần tử trong v</p>
+      <p>String: Số byte</p>
+      <p>Channel: Số phần tử đang đợi (chưa đọc) </p>
+      <h3>Loại dữ liệu cơ bản</h3>
+      <ul>
+        <li>Số
+          <ul>
+            <li>Số nguyên
+              <ul>
+                <li>Kiểu rune tương đương int32</li>
+              </ul>
+            </li>
+            <li>Số dấu phảy động</li>
+            <li>Số phức</li>
+          </ul>
+        </li>
+        <li>string
+          <ul>
+            <li>Sử dụng package <code>strings</code> (<code>strings.Join</code>)</li>
+            <li>Convert giữa string và số bằng package <code>strconv</code> (<code>strconv.Itoa</code>,
+              <code>strconv.Atoi</code>)</li>
+          </ul>
+        </li>
+        <li>bool</li>
+      </ul>
+      <h3>Array, slice</h3>
+      <p>Array thì có độ dài cố định, ít khi sử dụng trực tiếp. Slice có thể
+        tăng hoặc giảm kích thước.</p>
+      <p>Để thêm phần tử vào slice, sử dụng hàm <code>append()</code>.</p>
+      <p>Hàm cap()</p>
+      <p>Hàm copy()</p>
+      <p>Hàm len()</p>
+      <p>Hàm make()</p>
+      <p>Để xóa phần tử khỏi mảng</p>
+      <p><code>arraydemo.go</code>:</p>
+      <pre class="code-block"><code class="go">package main
+
+import "fmt"
+
+// Khai báo []int (không để kích thước) sẽ bị lỗi
+func printArray(a [3]int) {
+	for _, v := range a {
+		fmt.Println(v)
+	}
+}
+
+func main() {
+	var a1 [3]int = [3]int{1, 2, 3}
+
+	// Sử dụng dấu ba chấm thì không cần chỉ định độ dài
+	a2 := [...]int{
+		1,
+		2,
+		3, // phải có dấu phảy ở cuối khi khai báo trên nhiều dòng
+	}
+	printArray(a1)
+	printArray(a2)
+}</code></pre>
+      <p><code>slicedemo.go</code>:</p>
+      <pre class="code-block"><code class="go">package main
+
+import "fmt"
+
+func printSlice(a []int) {
+	for _, v := range a {
+		fmt.Println(v)
+	}
+}
+
+func main() {
+	var a1 []int = []int{1, 2, 3}
+
+	// Sử dụng dấu ba chấm thì không cần chỉ định độ dài
+	a2 := []int{
+		1,
+		2,
+		3, // phải có dấu phảy ở cuối khi khai báo trên nhiều dòng
+	}
+	printSlice(a1)
+	printSlice(a2)
+
+	var runes []rune
+	for _, r := range "Hello, BF" {
+		runes = append(runes, r)
+	}
+	fmt.Printf("%q\n", runes) // "['H'' e'' l'' l'' o'' ,'''' B'' F']"
+}</code></pre>
+      <h3>Map </h3>
+      <p>Để xóa phần tử khỏi map thì sử dụng hàm <code>delete()</code>.</p>
+      <p>Sử dụng hàm <code>make()</code> để khởi tạo map.</p>
+      <p><code>mapdemo.go</code>:</p>
+      <pre class="code-block"><code class="go">package main
+
+import "fmt"
+
+func main() {
+	// Khai báo luôn
+	ages1 := map[string]int{
+		"alice":   31,
+		"charlie": 34,
+	}
+	for person, age := range ages1 {
+		fmt.Println(person, ": ", age)
+	}
+
+	// Hoặc phải có hàm make
+	ages2 := make(map[string]int)
+	ages2["alice"] = 31
+	ages2["charlie"] = 34
+
+	delete(ages2, "alice")
+}</code></pre>
+      <h3>Struct</h3>
+      <p><code>structdemo.go</code>:</p>
+      <pre class="code-block"><code class="go">package main
+
+import (
+	"fmt"
+	"strconv"
+	"time"
+)
+
+type Employee struct {
+	ID        int
+	Name      string
+	Address   string
+	DoB       time.Time
+	Position  string
+	Salary    int
+	ManagerID int
+}
+
+func (e Employee) getInfo() string {
+	return "ID: " + strconv.Itoa(e.ID) + ", Name: " + e.Name
+}
+
+func main() {
+	dilbert := Employee{
+		ID:   1,
+		Name: "Dilbert",
+	}
+	dilbert.Salary = 5000
+	fmt.Println(dilbert.getInfo())
+}</code></pre>
+      <p>Có thể sử dụng phương thức với struct.</p>
+      <p>Struct có thể được embed để kế thừa.</p>
+      <h3>Interface</h3>
+      <p><code>interfacedemo.go</code>:</p>
+      <pre>x</pre>
       <p>datetime?</p>
+      <p>JSON</p>
+      <p>Sử dụng package json, hàm Marshal() và Unmarshal().</p>
+      <p>Các trường không viết hoa sẽ không được output.</p>
+      <p><code>jsondemo.go</code>:</p>
+      <pre>x</pre>
+      <p>Template</p>
+      <p>Package template, built-in luôn, để generate.</p>
       <h3>Pointer</h3>
       <p>Giống C</p>
       <p>Lấy địa chỉ bằng &amp;</p>
       <p>Khai báo bằng *</p>
+      <p>Phương thức của struct mà có thay đổi các giá trị của struct thì cần
+        khai báo pointer.</p>
+      <pre>func (p *Point) ScaleBy(factor float64) {
+	p.X *= factor
+	p.Y *= factor
+}</pre>
       <h3>Package</h3>
       <p>Để chạy phải để trong package main, hàm main.</p>
       <p>Package hỗ trợ modularity, encapsulation, separation, reuse.</p>
@@ -295,8 +541,27 @@ func main() {
       <p>Import local package?</p>
       <p>Chữ cái đầu tiên viết hoa thì được export.</p>
       <p>Chữ cái đầu tiên viết thường thì không thể truy cập.</p>
-      <p><br>
-      </p>
+      <p>Tên file nên đặt chữ thường hết, viết liền (không có gạch ngang hoặc
+        gạch dưới?).</p>
+      <p>Tool <code>goimports</code>.</p>
+      <p>Hàm <code>init()</code> tự động thực hiện theo thứ tự khai báo.</p>
+      <h3>Câu lệnh go</h3>
+      <p>build:</p>
+      <p>clean:</p>
+      <p>doc:</p>
+      <p>env:</p>
+      <p>fmt:</p>
+      <p>get:</p>
+      <p>install:</p>
+      <p>list:</p>
+      <p>run:</p>
+      <p>test:</p>
+      <p>version:</p>
+      <p>vet:</p>
+      <h3>Build cho các môi trường</h3>
+      <p>Windows</p>
+      <p>Linux</p>
+      <p>Mac </p>
       <h3>Format</h3>
       <p>Hàm <code>Printf</code> có <em>verb</em>:</p>
       <table style="width: 100%" border="1">
@@ -351,30 +616,30 @@ func main() {
           </tr>
         </tbody>
       </table>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p>Xử lý File</p>
-      <p>JSON</p>
-      <p>Regex</p>
-      <p><br>
-      </p>
-      <p>Web API server</p>
-      <p>Testing</p>
-      <p>Logging</p>
-      <p>Goroutines</p>
-      <p>Redis</p>
-      <p>MySQL</p>
-      <p><br>
-      </p>
-      <p>VSCode extension</p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
+      <h3>Panic và recover</h3>
+      <p>TODO</p>
+      <h3>Xử lý File</h3>
+      <p>Đọc và ghi file </p>
+      <h3>Regex</h3>
+      <p>Biểu thức chính quy </p>
+      <h3>Web API server</h3>
+      <p>Tạo API</p>
+      <h3>Testing</h3>
+      <p>Lệnh <code>go test</code>.</p>
+      <p>Các file có dạng <code>*_test.go</code>.</p>
+      <p>Hàm có dạng:</p>
+      <pre>func TestName(t *testing.T) {<br>}</pre>
+      <h3>Logging</h3>
+      <p>Lưu log </p>
+      <h3>Goroutine và channel</h3>
+      <p>Xử lý biến dùng chung</p>
+      <h3>Redis</h3>
+      <p>Thao tác với Redis</p>
+      <h3>MySQL</h3>
+      <p>Thao tác với MySQL</p>
+      <h3>VSCode extension</h3>
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=golang.go"
+          target="_blank">Go - Visual Studio Marketplace</a></p>
       <h3>Tham khảo</h3>
       <p><a href="https://en.wikipedia.org/wiki/Go_%28programming_language%29" target="_blank">Go
           (programming language) - Wikipedia</a></p>
@@ -383,31 +648,27 @@ func main() {
       <p><a href="https://viblo.asia/tags/golang" target="_blank">golang - Viblo</a></p>
       <p><a href="https://github.com/avelino/awesome-go" target="_blank">avelino/awesome-go:
           A curated list of awesome Go frameworks, libraries and software</a></p>
+      <p><a href="https://github.com/uber-go/guide" target="_blank">uber-go/guide:
+          The Uber Go Style Guide</a></p>
       <p>---</p>
       <p><a href="https://en.wikipedia.org/wiki/String-searching_algorithm" target="_blank">String-searching
           algorithm - Wikipedia</a> </p>
       <p><a href="https://en.m.wikipedia.org/wiki/List_of_data_structures" target="_blank">List
           of data structures - Wikipedia</a> </p>
       <p><a href="https://grpc.io/" target="_blank">gRPC</a></p>
-      <p><a href="https://www.youtube.com/playlist?list=PLVDJsRQrTUz7-fSzZWtF726st5AYQc57A"
-
+      <p><a href="https://www.youtube.com/playlist?list=PLVDJsRQrTUz7-fSzZWtF726st5AYQc57A"
           target="_blank">Golang thực chiến - YouTube</a></p>
-      <p><a href="https://www.youtube.com/watch?v=KIKefiH0bHI&amp;list=PLVDJsRQrTUz5icsxSfKdymhghOtLNFn-k&amp;index=20"
-
+      <p><a href="https://www.youtube.com/watch?v=KIKefiH0bHI&amp;list=PLVDJsRQrTUz5icsxSfKdymhghOtLNFn-k&amp;index=20"
           target="_blank">Lập trình Golang - 01 Cài đặt môi trường | Setup
           environment - YouTube</a></p>
-      <p><a href="https://www.youtube.com/watch?v=75lJDVT1h0s&amp;list=PLzMcBGfZo4-mtY_SE3HuzQJzuj4VlUG0q"
-
+      <p><a href="https://www.youtube.com/watch?v=75lJDVT1h0s&amp;list=PLzMcBGfZo4-mtY_SE3HuzQJzuj4VlUG0q"
           target="_blank">Golang Tutorial #1 - An Introduction to Go Programming
           - YouTube</a></p>
       <p><a href="https://www.toptal.com/go/golang-oop-tutorial" target="_blank">Golang
           OOP: Go, the Object-oriented Way | Toptal</a> </p>
       <p><a href="https://www.toptal.com/go/4-go-language-criticisms" target="_blank">Golang:
           4 Go Language Criticisms | Toptal</a> </p>
-      <p><br>
-      </p>
     </article>
-    
     <style>
       pre.code-block {
       	background: #3f3f3f;
@@ -419,7 +680,6 @@ func main() {
     <!-- and it's easy to individually load additional languages -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/languages/go.min.js"></script>
     <script>hljs.highlightAll();</script>
-    
     <script src="../../js/docs.js"></script>
   </body>
 </html>
