@@ -3,8 +3,8 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Học cấu trúc dữ liệu và giải thuật để luyện tư duy; data structures and algorithms">
-    <title>Bắt đầu học Golang</title>
+    <meta name="description" content="Tôi đã học Golang như thế nào">
+    <title>Tôi học Golang</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
     <style>
@@ -48,6 +48,8 @@
       <p>Code ngắn gọn, dạng snippet, có ảnh minh họa.</p>
       <p>Ghi chép lại hàng ngày. Sau một năm, khi số lượng và chất lượng đã OK
         thì xuất bản epub book, dạng handbook như Flavio Copes.</p>
+      <p>Học từ dễ đến khó. Không đâm đầu vào luôn Goroutine.</p>
+      <p>Học ngôn ngữ mới, hiện đại: có logging, linting, testing.</p>
       <p>Convention sử dụng trong sách</p>
       <p>Câu lệnh:</p>
       <pre class="command">go version</pre>
@@ -137,8 +139,7 @@ func main() {
 ABC,DEF</pre>
       <h3>Comment</h3>
       <p>Có hai dạng comment như các ngôn ngữ khác:</p>
-      <p><code>// Comment dòng<br>
-        </code></p>
+      <p><code>// Comment dòng </code></p>
       <p><code>/* Comment khối */ </code></p>
       <h3>Biến</h3>
       <div class="source-file">variables.go</div>
@@ -360,8 +361,6 @@ func main() {
 	}
 	fmt.Println("The number", num, "is", desc)
 }</code></pre>
-      <p><br>
-      </p>
       <h4>switch</h4>
       <p>Không cần từ khóa <code>break</code> ở mỗi block.</p>
       <div class="source-file">switch.go</div>
@@ -385,11 +384,8 @@ func main() {
 		fmt.Println(os)
 	}
 }</code></pre>
-      <p>Có thêm từ khóa <code>fallthrough</code> để.<br>
-      </p>
-      <p><br>
-      </p>
-      <h4>Vòng lặp for</h4>
+      <p>Có thêm từ khóa <code>fallthrough</code> để. </p>
+      <h4>for</h4>
       <p>Cấu trúc chung:</p>
       <pre>for initialization; condition; post {<br>}</pre>
       <p>Có thể giản lược để thay thế các vòng lặp while, do-while trong các
@@ -748,12 +744,6 @@ func main() {
 		e.SayHi()
 	}
 }</code></pre>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
       <h3>Datetime</h3>
       <p>Sửa dụng package <code>time</code>.</p>
       <div class="source-file">duration.go</div>
@@ -781,8 +771,6 @@ func foo() {
 func main() {
 	foo()
 }</code></pre>
-      <p><br>
-      </p>
       <h3>Xử lý file</h3>
       <p>Để đọc và ghi file, đơn giản nhất là sử dụng package <code>io/ioutil</code>
         và các hàm <code>ReadFile()</code>, <code>WriteFile()</code>.</p>
@@ -973,17 +961,17 @@ func main() {
 	http.HandleFunc("/", HelloHandler)
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(port), nil))
 }</code></pre>
-      <p><br>
-      </p>
       <p>Start server:</p>
       <pre>go run simple_server.go</pre>
       <p>Truy cập địa chỉ <a href="http://localhost:8080/" target="_blank">http://localhost:8080/</a>
         để kiểm tra.</p>
       <p>Mục tiêu: Tạo REST API.</p>
-      <p><br>
-      </p>
-      <h3>Template</h3>
-      <p>Package template, built-in luôn, để generate.</p>
+      <p>Trên mạng hay sử dụng thư viện:</p>
+      <p><a href="https://github.com/gorilla/mux" target="_blank">gorilla/mux: A
+          powerful HTTP router and URL matcher for building Go web servers with
+          🦍</a></p>
+      <p>Tuy nhiên, tôi chỉ dùng Go để tạo các API riêng lẻ, đơn giản, cần tốc
+        độ cao. Hệ thống web to vẫn sử dụng Laravel.</p>
       <h3>Pointer</h3>
       <p>Giống ngôn ngữ C.</p>
       <p>Lấy địa chỉ bằng <code>&amp;</code>.</p>
@@ -994,18 +982,10 @@ func main() {
 	p.X *= factor
 	p.Y *= factor
 }</code></pre>
-      <h3>Package</h3>
-      <p>Để chạy phải để trong package main, hàm main.</p>
-      <p>Package hỗ trợ modularity, encapsulation, separation, reuse.</p>
-      <p>Convention: Tên file viết liền?</p>
-      <p>Import local package?</p>
-      <p>Chữ cái đầu tiên viết hoa thì được export.</p>
-      <p>Chữ cái đầu tiên viết thường thì không thể truy cập.</p>
-      <p>Tên file nên đặt chữ thường hết, viết liền (không có gạch ngang hoặc
-        gạch dưới?).</p>
-      <p>Tool <code>goimports</code>.</p>
-      <p>Hàm <code>init()</code> tự động thực hiện theo thứ tự khai báo.</p>
-      <p>Khi source code nhiều thì cần chia ra cho dễ maintain.</p>
+      <h3>Build</h3>
+      <p>Windows</p>
+      <p>Linux</p>
+      <p>Mac</p>
       <h3>Câu lệnh go</h3>
       <p><code>build</code>:</p>
       <p>clean:</p>
@@ -1019,14 +999,20 @@ func main() {
       <p>test:</p>
       <p><code>version</code>:</p>
       <p>vet:</p>
-      <h3>Build</h3>
-      <p>Windows</p>
-      <p>Linux</p>
-      <p>Mac </p>
-      <h3>Panic và recover</h3>
-      <p>TODO</p>
+      <h3>Package</h3>
+      <p>Để chạy phải để trong package <code>main</code>, hàm <code>main</code>.</p>
+      <p>Package hỗ trợ modularity, encapsulation, separation, reuse.</p>
+      <p>Convention: Tên file viết liền?</p>
+      <p>Import local package?</p>
+      <p>Chữ cái đầu tiên viết hoa thì được export.</p>
+      <p>Chữ cái đầu tiên viết thường thì không thể truy cập.</p>
+      <p>Tên file nên đặt chữ thường hết, viết liền (không có gạch ngang hoặc
+        gạch dưới?).</p>
+      <p>Tool <code>goimports</code>.</p>
+      <p>Hàm <code>init()</code> tự động thực hiện theo thứ tự khai báo.</p>
+      <p>Khi source code nhiều thì cần chia ra cho dễ maintain.</p>
       <h3>Regex</h3>
-      <p>Biểu thức chính quy </p>
+      <p>Biểu thức chính quy</p>
       <h3>Testing</h3>
       <p>Lệnh <code>go test</code>.</p>
       <p>Các file có dạng <code>*_test.go</code>.</p>
@@ -1038,6 +1024,8 @@ func main() {
       <p>Log ra file thế nào?</p>
       <h3>Goroutine và channel</h3>
       <p>Xử lý biến dùng chung.</p>
+      <h3>Panic và recover</h3>
+      <p>TODO</p>
       <h3>Redis</h3>
       <p>Thao tác với Redis.</p>
       <h3>MySQL</h3>
@@ -1062,15 +1050,13 @@ func main() {
       <p><a href="https://github.com/uber-go/guide" target="_blank">uber-go/guide:
           The Uber Go Style Guide</a></p>
       <p>---</p>
-      <p><br>
-      </p>
       <p>Học cấu trúc dữ liệu và giải thuật để luyện tư duy.</p>
+      <p>Học cấu trúc dữ liệu và giải thuật để luyện tư duy; data structures and
+        algorithms</p>
       <p><a href="https://www.golangprograms.com/data-structure-and-algorithms.html"
           target="_blank">The fundamentals of the Go programming language from
           the perspective of data structures and algorithms. -
           golangprograms.com</a></p>
-      <p><br>
-      </p>
       <p><a href="https://en.wikipedia.org/wiki/String-searching_algorithm" target="_blank">String-searching
           algorithm - Wikipedia</a> </p>
       <p><a href="https://en.m.wikipedia.org/wiki/List_of_data_structures" target="_blank">List
