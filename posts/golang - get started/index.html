@@ -4,52 +4,61 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Book">
-    <title>Tôi học Golang</title>
+    <title>Lập trình Go</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
-    <style>
-      .source-file {
-        font-weight: 500;
-        padding: 0.25rem 1rem 0.25rem 2rem;
-        background-color: rgb(106, 215, 229);
-        background-image: url(images/source-file.png);
-        background-repeat: no-repeat;
-        background-position: 8px center;
-      }
-      
-      pre.code-block {
-      	background: #FFF;
-        border-left: 2px solid rgb(106, 215, 229);
-        padding-left: 1rem;
-      }
-      
-      .command {
-        /* background-color: #343a40; */ /* .bg-dark */
-        /* color: #28a745; */ /* text-success */
-      }
-      
-      pre.output {
-        background-color: #343a40; /* .bg-dark */
-   			color: #fff; /* .text-white */
-      }
-      
-      .note {
-        margin-bottom: 1rem;
-        padding: 1rem;
-        border: 1px solid #375EAB;
-        border-radius: 5px;
-        background: #E0EBF5;
-      }
-    </style>
+
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Hind+Guntur:600" rel="stylesheet">
+    <link rel="stylesheet" href="css/cover.css">
+    <link rel="stylesheet" href="css/book_conventions.css">
   </head>
   <body>
     <article>
-      <h2>Tôi học Golang</h2>
+
+        <div class="mb-3">
+            <div class="book-cover">
+              <div class="title-small">
+                Lập trình
+              </div>
+              <div class="title">
+                Go
+              </div>
+              <div class="subtitle">
+                Simple is better than smart
+              </div>
+              <div class="image">
+                <img src="images/cover-4.jpg">
+              </div>
+              <div class="author">
+                Nguyễn Văn Huyên
+              </div>
+              <div class="publisher">
+                <img src="images/packt-icon.jpg">
+                <div class="name">
+                  Packt
+                </div>
+                <div class="website">
+                  www.packt.com
+                </div>
+              </div>
+            </div>
+          </div>
+
       <p>Code ngắn gọn, dạng snippet, có ảnh minh họa.</p>
       <p>Ghi chép lại hàng ngày. Sau một năm, khi số lượng và chất lượng đã OK
         thì xuất bản epub book, dạng handbook như Flavio Copes.</p>
       <p>Học từ dễ đến khó. Không đâm đầu vào luôn Goroutine.</p>
       <p>Học ngôn ngữ mới, hiện đại: có logging, linting, testing.</p>
+
+      <div data-toc>
+          <!-- TOC ở đây -->
+      </div>
+
+      
+
+
+      
       <h3>Convention trong sách</h3>
       <p>Câu lệnh:</p>
       <pre class="command">go version</pre>
@@ -72,6 +81,49 @@ func main() {
       </p>
       <p>Nguyễn Anh Tuấn - thằng bé chạy theo quả bóng</p>
       <h3>Cài đặt</h3>
+      <p>Theo hướng dẫn ở trang chủ, sử dụng lệnh sau:</p>
+      <pre>curl -fsSL https://deno.land/x/install/install.sh | sh</pre>
+      <p>Tình hình là ở Việt Nam bị đứt cáp. Nếu cài đặt qua mạng như hướng dẫn
+        ở trang chủ thì bước download file từ GitHub rất là chậm. Ngoài ra, thực
+        tế có thể bạn cần cài cho một server nào đó mà server đó lại không có
+        kết nối Internet. Do đó hãy cài offline nào.</p>
+      <p>Đầu tiên, hãy download file <code>deno-x86_64-unknown-linux-gnu.zip</code>
+        từ địa chỉ sau:</p>
+      <p> <a href="https://github.com/denoland/deno/releases" target="_blank">Releases
+          · denoland/deno</a></p>
+      <p>Tiếp theo, để file <code>install.sh</code> ở ngang với file vừa
+        download, rồi thực hiện lệnh:</p>
+      <pre>sh install.sh</pre>
+      <p>Nội dung file <code>install.sh</code> như sau:</p>
+      <pre>#!/bin/sh
+
+deno_install="${DENO_INSTALL:-$HOME/.deno}"
+bin_dir="$deno_install/bin"
+exe="$bin_dir/deno"
+
+if [ ! -d "$bin_dir" ]; then
+&nbsp; &nbsp; mkdir -p "$bin_dir"
+fi
+
+cp deno-x86_64-unknown-linux-gnu.zip "$exe.zip"
+
+cd "$bin_dir"
+unzip -o "$exe.zip"
+chmod +x "$exe"
+rm "$exe.zip"</pre>
+      <p>Sau đó, sửa file <code>~/.bashrc</code>, thêm đoạn sau:</p>
+      <pre>DENO_INSTALL="$HOME/.deno"
+PATH="$DENO_INSTALL/bin:$PATH"
+
+export DENO_INSTALL
+export PATH</pre>
+      <p>Kiểm tra:</p>
+      <pre>deno --version</pre>
+      <p>Nếu mà các biến môi trường vẫn chưa được hiệu lực, bạn không cần login
+        lại mà có thể làm như sau:</p>
+      <pre>source ~/.bashrc</pre>
+      <p>Deno lưu các file cache ở thư mục <code>~/.cache/deno</code>.</p>
+      
       <h4>Windows</h4>
       <p>Download file msi từ địa chỉ sau:</p>
       <p><a href="https://golang.org/dl/" target="_blank">https://golang.org/dl/</a></p>
@@ -124,7 +176,8 @@ func main() {
       <pre>./hello</pre>
       <h3>VSCode extension</h3>
       <p>Tôi sử dụng trình soạn thảo VSCode và extension sau:</p>
-      <p><a href="https://marketplace.visualstudio.com/items?itemName=golang.go"
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=golang.go"
+
           target="_blank">Go - Visual Studio Marketplace</a></p>
       <p>Highlight syntax</p>
       <p>Tự động format code</p>
@@ -1369,7 +1422,8 @@ func main() {
       <p>---</p>
       <p>Học cấu trúc dữ liệu và giải thuật để luyện tư duy (tách post khác).</p>
       <p>Go data structures and algorithms</p>
-      <p><a href="https://www.golangprograms.com/data-structure-and-algorithms.html"
+      <p><a href="https://www.golangprograms.com/data-structure-and-algorithms.html"
+
           target="_blank">The fundamentals of the Go programming language from
           the perspective of data structures and algorithms. -
           golangprograms.com</a></p>
