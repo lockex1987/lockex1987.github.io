@@ -166,6 +166,7 @@ const toc = (() => {
     function init() {
         const arr = document.querySelectorAll('[data-toc]');
         if (arr.length > 0) {
+			// Chú ý: phải là thẻ UL
             arr.forEach((el) => {
                 buildToc(el);
             });

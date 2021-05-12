@@ -151,8 +151,7 @@ func main() {
       <pre>./hello</pre>
       <h3>VSCode extension</h3>
       <p>Tôi sử dụng trình soạn thảo VSCode và extension sau:</p>
-      <p><a href="https://marketplace.visualstudio.com/items?itemName=golang.go"
-
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=golang.go"
           target="_blank">Go - Visual Studio Marketplace</a></p>
       <p>Highlight syntax</p>
       <p>Tự động format code</p>
@@ -239,19 +238,23 @@ func main() {
             <td class="border-top-0"><code>func</code> (dùng để khai báo hàm)</td>
             <td class="border-top-0"><code>interface</code> (khai báo kiểu
               interface)</td>
-            <td class="border-top-0">select</td>
+            <td class="border-top-0"><code>select</code><br>
+              (goroutine)</td>
           </tr>
           <tr>
             <td><code>case</code> (dùng ở khối switch)</td>
             <td><code>defer</code> (thực hiện câu lệnh sau khi hàm kết thúc)</td>
-            <td>go</td>
+            <td><code>go</code><br>
+              (chạy goroutine)</td>
             <td><code>map</code> (kiểu dữ liệu map)</td>
             <td><code>struct</code> (kiểu dữ liệu struct)</td>
           </tr>
           <tr>
-            <td>chan</td>
+            <td><code>chan</code><br>
+              (channel)</td>
             <td><code>else</code> (khối if else)</td>
-            <td>goto</td>
+            <td><code>goto</code><br>
+              (nhảy tới label)</td>
             <td><code>package</code> (khai báo package đầu file)</td>
             <td><code>switch</code> (dùng ở khối switch)</td>
           </tr>
@@ -286,19 +289,19 @@ func main() {
       <p><code>string</code></p>
       <p>error</p>
       <p>Các hàm:</p>
-      <p>make</p>
+      <p>make:</p>
       <p><code>len</code></p>
       <p>cap</p>
       <p><code>new</code>: Tạo mới pointer</p>
-      <p>append</p>
-      <p>copy</p>
-      <p>close</p>
-      <p>delete</p>
-      <p>complex</p>
-      <p>real</p>
-      <p>imag</p>
-      <p>panic</p>
-      <p>recover</p>
+      <p>append:</p>
+      <p>copy:</p>
+      <p><code>close</code>: Đóng channel</p>
+      <p>delete:</p>
+      <p>complex:</p>
+      <p>real:</p>
+      <p>imag:</p>
+      <p>panic:</p>
+      <p>recover:</p>
       <h3>Toán tử</h3>
       <p>Go cũng có các toán tử như các ngôn ngữ khác:</p>
       <p><code>+</code> (cộng), <code>-</code> (trừ), <code>*</code> (nhân), <code>/</code>
@@ -1374,8 +1377,181 @@ func main() {
       <p>Sử dụng package có sẵn <code>log</code> luôn.</p>
       <p>Log ra file thế nào?</p>
       <h3>Goroutine và channel</h3>
-      <p>Xử lý biến dùng chung.</p>
-      <p>Giúp tăng hiệu năng gấp 4 lần?</p>
+      <p>Xử lý đồng thời trong Go là khả năng của các hàm chạy độc lập với nhau.
+        Goroutine là các hàm chạy đồng thời.</p>
+      <p>Goroutine mới được tạo bằng biểu thức <code>go</code>.</p>
+      <pre>sum()<br>go sum()</pre>
+      <p>Dòng đầu tiên là một lời gọi hàm bình thường. Hàm <code>sum()</code>
+        sẽ được thực hiện đồng bộ và chờ cho nó kết thúc.</p>
+      <p>Dòng thứ hai một goroutine sẽ thực hiện hàm <code>sum()</code> bất
+        đồng bộ và không chờ cho nó kết thúc. Từ khóa <code>go</code> làm cho
+        lời gọi hàm trả về ngay lập tức, trong khi hàm sẽ được chạy ở background
+        như là một goroutine và phần còn lại của chương trình tiếp tục thực thi.</p>
+      <p>Hàm <code>main</code> của tất cả các chương trình Go cũng được bắt đầu
+        sử dụng một goroutine.</p>
+      <p>Sử dụng goroutine thường giúp tăng hiệu năng gấp 4 lần?</p>
+      <h4>Goroutine đơn giản</h4>
+      <div class="source-file">goroutine_simple.go</div>
+      <pre class="code-block"><code class="go">package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func getRemoteResource(msg string) {
+	time.Sleep(3 * time.Second)
+	fmt.Println("Finish goroutine", msg)
+}
+
+func main() {
+	start := time.Now()
+
+	go getRemoteResource("1")
+	go getRemoteResource("2")
+
+	// Goroutine main phải chờ các goroutine khác thực hiện xong
+	// hoặc nó phải thực hiện lâu nhất
+	// nếu không, toàn bộ chương trình sẽ kết thúc luôn
+	// trước khi các goroutine kết thúc
+	time.Sleep(5 * time.Second)
+
+	fmt.Printf("Finish main after %v\n", time.Since(start))
+}</code></pre>
+      <p>Thực thi:</p>
+      <pre class="output">$ go run goroutine_simple.go
+Finish goroutine 2
+Finish goroutine 1
+Finish main after 5.0000409s</pre>
+      <p>Ở chương trình trên, chúng ta thực hiện hai hàm goroutine con, mỗi hàm
+        thực hiện trong 3 giây. Ngoài ra, goroutine main cũng thực hiện trong 5
+        giây. Tuy nhiên, tổng thời gian thực thi của cả chương trình không phải
+        là 3+3+5 = 11 giây mà chỉ là 5 giây (của goroutine lâu nhất).</p>
+      <h4>Chờ các goroutine thực thi xong</h4>
+      <p>Kiểu dữ liệu <code>sync.WaitGroup</code> được sử dụng để chờ tất cả
+        các goroutine được khởi động từ hàm main kết thúc. Nó sử dụng một
+        counter chỉ định số goroutine.</p>
+      <p>Phương thức <code>Add()</code> để thêm counter vào WaitGroup.</p>
+      <p>Phương thức <code>Done()</code> được lập lịch sử dụng biểu thức <code>defer</code>
+        ở các goroutine con, giảm counter.</p>
+      <p>Phương thức <code>Wait()</code> ngăn sự thực thi của chương trình cho
+        đến khi counter của WaitGroup bằng 0.</p>
+      <div class="source-file">goroutine_wait.go</div>
+      <pre class="code-block"><code class="go">package main
+
+import (
+	"fmt"
+	"sync"
+	"time"
+)
+
+// Khai báo toàn cục
+var wg sync.WaitGroup
+
+func getRemoteResource(msg string) {
+	// Chờ cho đến khi hàm thực hiện xong thì đánh dấu là Done
+	defer wg.Done()
+
+	time.Sleep(3 * time.Second)
+	fmt.Println("Finish goroutine", msg)
+}
+
+func main() {
+	start := time.Now()
+
+	// Thêm 2 goroutine
+	wg.Add(2)
+
+	go getRemoteResource("1")
+	go getRemoteResource("2")
+
+	// Chờ cho các goroutine thực thi xong
+	wg.Wait()
+
+	fmt.Printf("Finish main after %v\n", time.Since(start))
+}</code></pre>
+      <p>Thực thi:</p>
+      <pre class="output">go run goroutine_wait.go
+Finish goroutine 2
+Finish goroutine 1
+Finish main after 3.0021864s</pre>
+      <h4>Lấy giá trị từ goroutine<br>
+      </h4>
+      <p>Cách tự nhiên nhất để lấy một giá trị từ một goroutine là channel.
+        Channel là các pipe mà kết nối các goroutine đồng thời. Bạn có thể gửi
+        các giá trị vào channel từ một goroutine và lấy các giá trị đó từ
+        goroutine khác hoặc trong một hàm đồng bộ.</p>
+      <p>goroutine_get_value.go</p>
+      <p>x</p>
+      <p>Play và pause goroutine</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p>Chú ý xử lý biến dùng chung (atomic, mutex, channel).</p>
+      <p><br>
+      </p>
+      <h3>Channel</h3>
+      <h4>Sử dụng channel</h4>
+      <p>Channel là tính năng cho phép 2 goroutine giao tiếp / trao đổi dữ liệu
+        với nhau.</p>
+      <p>channel_1.go</p>
+      <p>Đoạn code trên sẽ in dòng chữ "ping" cho đến khi người dùng nhấn phím
+        Enter.</p>
+      <p>Chúng ta sử dụng hai goroutine là <code>pinger()</code> và <code>printer()</code>
+        và một channel là <code>c</code>. Về cơ bản thì goroutine là các luồng
+        chương trình chạy xuyên suốt, channel có thể coi như là các "ống" truyền
+        dữ liệu qua lại giữa các chương trình đó.</p>
+      <figure> <img src="images/goroutine%20-%20channel.png" alt=""> </figure>
+      <p>Một channel trong Go chỉ là một biến thường, chỉ khác là các goroutine
+        có thể đọc và ghi dữ liệu vào đó.</p>
+      <p>Để khai báo một channel thì chúng ta thêm từ khóa <code>chan</code>
+        vào phía trước kiểu dữ liệu và dùng hàm <code>make()</code>:</p>
+      <pre>c := make(chan &lt;kiểu dữ liệu&gt;)</pre>
+      <p>Để đẩy dữ liệu vào channel, chúng ta để toán tử <code>&lt;-</code> ở
+        bên phải biến:</p>
+      <pre>c &lt;- "ping"</pre>
+      <p>Để lấy dữ liệu từ channel, chúng ta để toán tử <code>&lt;-</code> ở
+        bên trái biến (và viết liền):</p>
+      <pre>msg := &lt;-c     </pre>
+      <h4>Đồng bộ với channel</h4>
+      <p>Việc sử dụng channel cho phép đồng bộ hóa dữ liệu giữa các goroutine
+        bởi vì khi một goroutine truyền dữ liệu vào channel thì goroutine đó sẽ
+        dừng chương trình của nó và đợi cho đến khi có một goroutine khác lấy dữ
+        liệu ra khỏi channel thì mới tiếp tục.</p>
+      <h4>Điều hướng channel</h4>
+      <p>Chúng ta có thể quy định một goroutine chỉ được phép đọc hoặc ghi dữ
+        liệu vào channel.</p>
+      <pre>func handleSend(c chan&lt;- string) {<br>    // Chỉ được phép ghi dữ liệu vào channel c trong goroutine này<br>}<br>
+func handleReceive(c &lt;-chan string) {<br>    // Chỉ được phép đọc dữ liệu từ channel c trong goroutine này<br>}
+</pre>
+      <ul>
+        <li><code>chan&lt;-</code>: chỉ ghi</li>
+        <li><code>&lt;-chan</code>: chỉ đọc</li>
+        <li><code>chan</code>: cả đọc và ghi</li>
+      </ul>
+      <h4>Lệnh select</h4>
+      <p>Lệnh <code>select</code> trong Go có chức năng gần giống như lệnh <code>switch</code>,
+        chỉ khác là <code>select</code> được dùng với biến channel.</p>
+      <p>select.go</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h4>Buffered channel</h4>
+      <p>Các goroutine khi truyền dữ liệu vào channel thì phải có một goroutine
+        khác lấy dữ liệu ra và ngược lại, nếu không các goroutine sẽ đi vào
+        trạng thái chờ.</p>
+      <p>Tuy nhiên, chúng ta có thể cho phép các goroutine không chờ nữa bằng
+        cách dùng các buffered channel.</p>
+      <p>channel_buffered.go</p>
+      <p><br>
+      </p>
+      <p>Unbuffered channel</p>
+      <p><br>
+      </p>
       <h3>Panic và recover</h3>
       <p>TODO</p>
       <h3>Redis</h3>
@@ -1397,8 +1573,7 @@ func main() {
       <p>---</p>
       <p>Học cấu trúc dữ liệu và giải thuật để luyện tư duy (tách post khác).</p>
       <p>Go data structures and algorithms</p>
-      <p><a href="https://www.golangprograms.com/data-structure-and-algorithms.html"
-
+      <p><a href="https://www.golangprograms.com/data-structure-and-algorithms.html"
           target="_blank">The fundamentals of the Go programming language from
           the perspective of data structures and algorithms. -
           golangprograms.com</a></p>
@@ -1412,6 +1587,5 @@ func main() {
     <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/languages/go.min.js"></script>
     <script>hljs.highlightAll();</script>
     <script src="../../js/docs.js"></script>
-    
   </body>
 </html>

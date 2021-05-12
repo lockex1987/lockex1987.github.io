@@ -158,13 +158,17 @@ func CalculateHashConcurrently(images []string) {
 	numberOfImages = len(images)
 	startTime := time.Now()
 	goroutineNumber := 4 // bằng số core của máy
+
 	var wg sync.WaitGroup
+	wg.Add(goroutineNumber)
+
 	for i := 0; i < goroutineNumber; i++ {
 		fmt.Println(i)
-		wg.Add(1)
 		go CalculateHash(images, i, goroutineNumber, &wg)
 	}
+
 	wg.Wait()
+
 	data, _ := json.Marshal(hashes)
 	ioutil.WriteFile("../data/hashes-go.json", data, 0777)
 	elapsed := time.Since(startTime)
