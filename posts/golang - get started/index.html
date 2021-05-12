@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Tôi đã học Golang như thế nào">
+    <meta name="description" content="Book">
     <title>Tôi học Golang</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -50,7 +50,7 @@
         thì xuất bản epub book, dạng handbook như Flavio Copes.</p>
       <p>Học từ dễ đến khó. Không đâm đầu vào luôn Goroutine.</p>
       <p>Học ngôn ngữ mới, hiện đại: có logging, linting, testing.</p>
-      <p>Convention sử dụng trong sách</p>
+      <h3>Convention trong sách</h3>
       <p>Câu lệnh:</p>
       <pre class="command">go version</pre>
       <p>Kết quả câu lệnh:</p>
@@ -65,6 +65,12 @@ func main() {
 }</code></pre>
       <p>Chú ý:</p>
       <div class="note"> Hãy ghi chép cẩn thận </div>
+      <h3>Tác giả</h3>
+      <p>Nguyễn Văn Huyên</p>
+      <p>lockex1987.github.io</p>
+      <p><br>
+      </p>
+      <p>Nguyễn Anh Tuấn - thằng bé chạy theo quả bóng</p>
       <h3>Cài đặt</h3>
       <h4>Windows</h4>
       <p>Download file msi từ địa chỉ sau:</p>
@@ -116,6 +122,13 @@ func main() {
       <pre>hello.exe</pre>
       <p>Trên Linux:</p>
       <pre>./hello</pre>
+      <h3>VSCode extension</h3>
+      <p>Tôi sử dụng trình soạn thảo VSCode và extension sau:</p>
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=golang.go"
+          target="_blank">Go - Visual Studio Marketplace</a></p>
+      <p>Highlight syntax</p>
+      <p>Tự động format code</p>
+      <p>Tự động thêm import</p>
       <h3>Tham số dòng lệnh</h3>
       <p>Sử dụng os.Args.</p>
       <div class="source-file">arguments.go</div>
@@ -989,7 +1002,7 @@ func ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 		// Try to decode the request body into the struct. If there is an error,
 		// respond to the client with the error message and a 400 status code.
-		err := json.NewDecoder(r.Body).Decode(&p)
+		err := json.NewDecoder(r.Body).Decode(&amp;p)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
@@ -1032,6 +1045,7 @@ func main() {
           🦍</a></p>
       <p>Tuy nhiên, tôi chỉ dùng Go để tạo các API riêng lẻ, đơn giản, cần tốc
         độ cao. Hệ thống web to vẫn sử dụng Laravel.</p>
+      <p><a href="https://grpc.io/" target="_blank">gRPC</a></p>
       <h3>Pointer</h3>
       <p>Một pointer chứa địa chỉ vùng nhớ của một giá trị (giống ngôn ngữ C).
         Giá trị zero của một pointer là <code>nil</code>.</p>
@@ -1173,36 +1187,150 @@ func main() {
 &amp;{}
 *main.User
 &amp;{John}</pre>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
       <h3>Build</h3>
-      <p>Windows</p>
-      <p>Linux</p>
-      <p>Mac</p>
+      <p>Chúng ta build ra file binary để có thể chạy nhanh nhất có thể. Tuy
+        nhiên, các file binary này không thể chạy trên tất cả các mỗi trường
+        khác nhau (Windows, Linux, Mac).</p>
+      <p>Sử dụng công cụ go build, biến môi trường, build tag, bạn có thể chỉ
+        định OS và architecture của file binary.</p>
+      <h4>GOOS và GOARCH</h4>
+      <p>Các GOOS và GOARCH hỗ trợ</p>
+      <p>Sử dụng lệnh:</p>
+      <pre>go tool dist list</pre>
+      <p>Kết quả trên máy tôi:</p>
+      <pre class="output">aix/ppc64
+android/386
+android/amd64
+android/arm
+android/arm64
+darwin/amd64
+darwin/arm64
+dragonfly/amd64
+freebsd/386
+freebsd/amd64
+freebsd/arm
+freebsd/arm64
+illumos/amd64
+ios/amd64
+ios/arm64
+js/wasm
+linux/386
+linux/amd64
+linux/arm
+linux/arm64
+linux/mips
+linux/mips64
+linux/mips64le
+linux/mipsle
+linux/ppc64
+linux/ppc64le
+linux/riscv64
+linux/s390x
+netbsd/386
+netbsd/amd64
+netbsd/arm
+netbsd/arm64
+openbsd/386
+openbsd/amd64
+openbsd/arm
+openbsd/arm64
+openbsd/mips64
+plan9/386
+plan9/amd64
+plan9/arm
+solaris/amd64
+windows/386
+windows/amd64
+windows/arm</pre>
+      <p>Để xem máy bạn đang sử dụng thuộc loại nào, sử dụng lệnh:</p>
+      <pre>go env GOOS GOARCH</pre>
+      <p>Kết quả trên máy Windows của tôi:</p>
+      <pre class="output">windows
+amd64</pre>
+      <p>Nếu máy bạn không cài Go, trên Windows, sử dụng câu lệnh:</p>
+      <pre>set</pre>
+      <p>Sau đó tìm đến giá trị <code>PROCESSOR_ARCHITECTURE</code>.</p>
+      <p>Hoặc thực hiện lệnh:</p>
+      <pre>echo %PROCESSOR_ARCHITECTURE%</pre>
+      <p>Trên máy Windows của tôi, giá trị là AMD64.</p>
+      <p>Trên Linux, thực hiện lệnh:</p>
+      <pre>uname -m</pre>
+      <p>Các giá trị có thể có là <code>x86_64</code>, <code>i686</code>, <code>arm</code>,
+        <code>aarch64</code>.</p>
+      <p>Bảng tương ứng với GOARCH:</p>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td><code>i386</code></td>
+            <td><code>386</code></td>
+          </tr>
+          <tr>
+            <td><code>i686</code></td>
+            <td><code>386</code></td>
+          </tr>
+          <tr>
+            <td><code>x86_64</code></td>
+            <td><code>amd64</code></td>
+          </tr>
+          <tr>
+            <td><code>arm</code></td>
+            <td><code>arm</code> hoặc <code>arm64</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Kết quả trên máy CentOS ở công ty tôi là <code>x86_64</code>, tương
+        đương với <code>linux/amd64</code>:</p>
+      <p>Kết quả trên máy Ubuntu ở nhà tôi là: </p>
+      <p>amd là chip ?. arm là chip Intel.</p>
+      <h4>Chương trình mẫu</h4>
+      <p>Không phụ thuộc nền tảng. Sử dụng hàm <code>filepath.Join()</code>. Ký
+        tự ngăn cách trên Windows là <code>\</code>, trên Linux là <code>/</code>.</p>
+      <div class="source-file">cross_platform.go</div>
+      <pre class="code-block"><code class="go">package main
+
+import (
+	"fmt"
+	"path/filepath"
+)
+
+func main() {
+	s := filepath.Join("a", "b", "c")
+	fmt.Println(s)
+}</code></pre>
+      <h4>Thực hiện build </h4>
+      <p>Mặc định lệnh <code>go build</code> sẽ build ra file thực thi tương
+        ứng với môi trường của máy hiện tại.</p>
+      <p>Từ máy Windows, để build ra file chạy trên Linux:</p>
+      <pre>set GOOS=linux<br>set GOARCH=amd64<br>go build -o cross_platform_linux_amd64 cross_platform.go</pre>
+      <p>Từ máy Linux, để build ra file chạy trên Windows:</p>
+      <pre>GOOS=windows go build cross_platform.go
+</pre>
+      <p>Chúng ta có thể chỉ định tên file đầu ra có dạng <code>filename_GOOS_GOARCH</code>
+        bằng tham số <code>-o</code>.</p>
+      <p>Giờ chúng ta có thể copy các file đã build này lên các môi trường khác
+        nhau và thực thi.</p>
       <h3>Câu lệnh go</h3>
-      <p><code>build</code>:</p>
+      <p><code>build</code>: Tạo file binary</p>
       <p>clean:</p>
       <p>doc:</p>
-      <p>env:</p>
+      <p><code>env</code>: Liệt kê các biến môi trường</p>
       <p>fmt:</p>
-      <p>get:</p>
+      <p><code>get</code>: Cài đặt thư viện</p>
       <p>install:</p>
       <p>list:</p>
-      <p><code>run</code>:</p>
+      <p><code>run</code>: Chạy chương trình</p>
       <p>test:</p>
-      <p><code>version</code>:</p>
+      <p><code>version</code>: Hiển thị phiên bản</p>
       <p>vet:</p>
       <h3>Package</h3>
       <p>Để chạy phải để trong package <code>main</code>, hàm <code>main</code>.</p>
       <p>Package hỗ trợ modularity, encapsulation, separation, reuse.</p>
       <p>Convention: Tên file viết liền?</p>
+      <p>Tên file nên đặt chữ thường hết, viết liền, có thể có gạch dưới để ngăn
+        cách, không sử dụng gạch ngang.</p>
       <p>Import local package?</p>
       <p>Chữ cái đầu tiên viết hoa thì được export.</p>
       <p>Chữ cái đầu tiên viết thường thì không thể truy cập.</p>
-      <p>Tên file nên đặt chữ thường hết, viết liền (không có gạch ngang hoặc
-        gạch dưới?).</p>
       <p>Tool <code>goimports</code>.</p>
       <p>Hàm <code>init()</code> tự động thực hiện theo thứ tự khai báo.</p>
       <p>Khi source code nhiều thì cần chia ra cho dễ maintain.</p>
@@ -1219,39 +1347,29 @@ func main() {
       <p>Log ra file thế nào?</p>
       <h3>Goroutine và channel</h3>
       <p>Xử lý biến dùng chung.</p>
+      <p>Giúp tăng hiệu năng gấp 4 lần?</p>
       <h3>Panic và recover</h3>
       <p>TODO</p>
       <h3>Redis</h3>
       <p>Thao tác với Redis.</p>
       <h3>MySQL</h3>
       <p>Thao tác với MySQL.</p>
-      <h3>VSCode extension</h3>
-      <p><a href="https://marketplace.visualstudio.com/items?itemName=golang.go"
-
-          target="_blank">Go - Visual Studio Marketplace</a></p>
-      <p> Highlight syntax</p>
-      <p>Tự động format code</p>
-      <p>Tự động thêm import</p>
       <h3>Tham khảo</h3>
-      <p>Nhiều code ví dụ:</p>
-      <p><a href="https://zetcode.com/all/#go" target="_blank">ZetCode all
-          tutorials</a></p>
       <p><a href="https://en.wikipedia.org/wiki/Go_%28programming_language%29" target="_blank">Go
           (programming language) - Wikipedia</a></p>
       <p><a href="https://golang.org/" target="_blank">The Go Programming
           Language</a></p>
-      <p><a href="https://viblo.asia/tags/golang" target="_blank">golang - Viblo</a></p>
       <p><a href="https://github.com/avelino/awesome-go" target="_blank">avelino/awesome-go:
           A curated list of awesome Go frameworks, libraries and software</a></p>
+      <p><a href="https://zetcode.com/all/#go" target="_blank">ZetCode all
+          tutorials</a> (nhiều code ví dụ hay)</p>
+      <p><a href="https://viblo.asia/tags/golang" target="_blank">golang - Viblo</a></p>
       <p><a href="https://github.com/uber-go/guide" target="_blank">uber-go/guide:
           The Uber Go Style Guide</a></p>
       <p>---</p>
-      <p>Tách post khác:</p>
-      <p>Học cấu trúc dữ liệu và giải thuật để luyện tư duy .</p>
-      <p>Học cấu trúc dữ liệu và giải thuật để luyện tư duy; data structures and
-        algorithms</p>
-      <p><a href="https://www.golangprograms.com/data-structure-and-algorithms.html"
-
+      <p>Học cấu trúc dữ liệu và giải thuật để luyện tư duy (tách post khác).</p>
+      <p>Go data structures and algorithms</p>
+      <p><a href="https://www.golangprograms.com/data-structure-and-algorithms.html"
           target="_blank">The fundamentals of the Go programming language from
           the perspective of data structures and algorithms. -
           golangprograms.com</a></p>
@@ -1259,22 +1377,6 @@ func main() {
           algorithm - Wikipedia</a> </p>
       <p><a href="https://en.m.wikipedia.org/wiki/List_of_data_structures" target="_blank">List
           of data structures - Wikipedia</a> </p>
-      <p><a href="https://grpc.io/" target="_blank">gRPC</a></p>
-      <p><a href="https://www.youtube.com/playlist?list=PLVDJsRQrTUz7-fSzZWtF726st5AYQc57A"
-
-          target="_blank">Golang thực chiến - YouTube</a></p>
-      <p><a href="https://www.youtube.com/watch?v=KIKefiH0bHI&amp;list=PLVDJsRQrTUz5icsxSfKdymhghOtLNFn-k&amp;index=20"
-
-          target="_blank">Lập trình Golang - 01 Cài đặt môi trường | Setup
-          environment - YouTube</a></p>
-      <p><a href="https://www.youtube.com/watch?v=75lJDVT1h0s&amp;list=PLzMcBGfZo4-mtY_SE3HuzQJzuj4VlUG0q"
-
-          target="_blank">Golang Tutorial #1 - An Introduction to Go Programming
-          - YouTube</a></p>
-      <p><a href="https://www.toptal.com/go/golang-oop-tutorial" target="_blank">Golang
-          OOP: Go, the Object-oriented Way | Toptal</a> </p>
-      <p><a href="https://www.toptal.com/go/4-go-language-criticisms" target="_blank">Golang:
-          4 Go Language Criticisms | Toptal</a> </p>
     </article>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/styles/github-gist.min.css">
     <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.7.2/build/highlight.min.js"></script>
