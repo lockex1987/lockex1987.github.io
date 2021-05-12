@@ -6,6 +6,7 @@ use Cttd\FileManager\FileManager;
 use Cttd\FileManager\CommonUtils;
 
 
+// TODO: Chạy file-manager-reactphp dạng Linux service, có ghi log, sử dụng > out.log (https://cttd.tk/posts/linux%20-%20service%20management/)
 function handleRequest()
 {
     $folder = $_GET['folder'];
