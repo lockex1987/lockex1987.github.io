@@ -30,8 +30,23 @@ The file will have its original line endings in your working directory.</pre>
       <pre>git config --global core.autocrlf false</pre>
       <p>Bạn nên thiết lập thành <code>false</code>. Các editor ở Windows phần
         lớn cũng đều hỗ trợ <code>LF</code>.</p>
+      <p>Các giá trị có thể có là <code>true</code>, <code>false</code>, <code>input</code>.</p>
       <p>Có khi bạn đã thiết lập thành <code>false</code> bằng câu lệnh trên
-        rồi mà vẫn không được. Khi đó hãy kiểm tra file <code>.gitattributes</code>.</p>
+        rồi mà vẫn không được. Khi đó hãy kiểm tra file <code>.gitattributes</code>
+        (<code>*text = auto</code>).</p>
+      <p>Cấu hình ký tự xuống dòng trong VSCode là <code>LF</code>. Vào <code>File
+          -&gt; Preferences -&gt; Settings</code>, search theo <code>Line
+          ending</code>, sửa cấu hình <code>Files: Eol</code> thành <code>\n</code>.</p>
+      <figure><img src="images/vscode-eol.png" alt=""></figure>
+      <p>Convert <code>CRLF</code> thành <code>LF</code> ở tất cả các file
+        bằng tool <code>dos2unix</code>:</p>
+      <pre>find . -type f -exec dos2unix {} \;</pre>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>
