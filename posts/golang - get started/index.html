@@ -37,20 +37,20 @@
         <!-- TOC ở đây -->
       </ul>
       <h3>Convention trong sách</h3>
-      <p>Câu lệnh:</p>
-      <pre class="command">go version</pre>
-      <p>Kết quả câu lệnh:</p>
-      <pre class="output">go version go1.16.3 windows/amd64</pre>
-      <p>Mã nguồn:</p>
-      <pre class="code-block"><code class="go">package main
+      <p>Câu lệnh có nền xám:</p>
+      <pre class="command">cmd</pre>
+      <p>Kết quả câu lệnh có nền đen và chữ trắng:</p>
+      <pre class="output">lorem ipsum</pre>
+      <p>Mã nguồn có border trái:</p>
+      <pre class="code-block"><code class="gox">package main
 
 import "fmt"
 
 func main() {
-	fmt.Println("Hello, World")
+
 }</code></pre>
-      <p>Chú ý:</p>
-      <div class="note"> Hãy ghi chép cẩn thận </div>
+      <p>Chú ý có khung border và nền xanh:</p>
+      <div class="note">Lorem ipsum</div>
       <h3>Tác giả</h3>
       <p>Nguyễn Văn Huyên</p>
       <p>lockex1987.github.io</p>
@@ -151,7 +151,8 @@ func main() {
       <pre>./hello</pre>
       <h3>VSCode extension</h3>
       <p>Tôi sử dụng trình soạn thảo VSCode và extension sau:</p>
-      <p><a href="https://marketplace.visualstudio.com/items?itemName=golang.go"
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=golang.go"
+
           target="_blank">Go - Visual Studio Marketplace</a></p>
       <p>Highlight syntax</p>
       <p>Tự động format code</p>
@@ -1371,7 +1372,14 @@ func main() {
       <p>Lệnh <code>go test</code>.</p>
       <p>Các file có dạng <code>*_test.go</code>.</p>
       <p>Hàm có dạng:</p>
-      <pre class="code-block"><code class="go">func TestName(t *testing.T) {<br>}</code></pre>
+      <pre class="code-block"><code class="go">import "testing"<br><br>func TestName(t *testing.T) {<br>}</code></pre>
+      <p> Bạn phải init project trước:</p>
+      <pre>go mod init test_demo</pre>
+      <p>Thực hiện test:</p>
+      <pre>go test</pre>
+      <p>Kết quả:</p>
+      <pre class="output">PASS
+ok      test_demo       0.090s</pre>
       <h3>Logging</h3>
       <p>Lưu log.</p>
       <p>Sử dụng package có sẵn <code>log</code> luôn.</p>
@@ -1573,7 +1581,8 @@ func handleReceive(c &lt;-chan string) {<br>    // Chỉ được phép đọc d
       <p>---</p>
       <p>Học cấu trúc dữ liệu và giải thuật để luyện tư duy (tách post khác).</p>
       <p>Go data structures and algorithms</p>
-      <p><a href="https://www.golangprograms.com/data-structure-and-algorithms.html"
+      <p><a href="https://www.golangprograms.com/data-structure-and-algorithms.html"
+
           target="_blank">The fundamentals of the Go programming language from
           the perspective of data structures and algorithms. -
           golangprograms.com</a></p>
