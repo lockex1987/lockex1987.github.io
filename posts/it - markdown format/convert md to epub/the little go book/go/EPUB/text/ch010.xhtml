@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <title>ch010.xhtml</title>
+  <link rel="stylesheet" type="text/css" href="../styles/stylesheet1.css" />
+</head>
+<body epub:type="bodymatter">
+<section id="conclusion" class="level1" data-number="10">
+<h1 data-number="10">Conclusion</h1>
+<p>I recently heard Go described as a <em>boring</em> language. Boring because it’s easy to learn, easy to write and, most importantly, easy to read. Perhaps, I did this reality a disservice. We <em>did</em> spend three chapters talking about types and how to declare variables after all.</p>
+<p>If you have a background in a statically typed language, much of what we saw was probably, at best, a refresher. That Go makes pointers visible and that slices are thin wrappers around arrays probably isn’t overwhelming to seasoned Java or C# developers.</p>
+<p>If you’ve mostly been making use of dynamic languages, you might feel a little different. It <em>is</em> a fair bit to learn. Not least of which is the various syntax around declaration and initialization. Despite being a fan of Go, I find that for all the progress towards simplicity, there’s something less than simple about it. Still, it comes down to some basic rules (like you can only declare variable once and <code>:=</code> does declare the variable) and fundamental understanding (like <code>new(X)</code> or <code>&amp;X{}</code> only allocate memory, but slices, maps and channels require more initialization and thus, <code>make</code>).</p>
+<p>Beyond this, Go gives us a simple but effective way to organize our code. Interfaces, return-based error handling, <code>defer</code> for resource management and a simple way to achieve composition.</p>
+<p>Last but not least is the built-in support for concurrency. There’s little to say about goroutines other than they’re effective and simple (simple to use anyway). It’s a good abstraction. Channels are more complicated. I always think it’s important to understand basics before using high-level wrappers. I <em>do</em> think learning about concurrent programming without channels is useful. Still, channels are implemented in a way that, to me, doesn’t feel quite like a simple abstraction. They are almost their own fundamental building block. I say this because they change how you write and think about concurrent programming. Given how hard concurrent programming can be, that is definitely a good thing.</p>
+</section>
+</body>
+</html>

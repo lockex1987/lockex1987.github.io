@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <title>ch003.xhtml</title>
+  <link rel="stylesheet" type="text/css" href="../styles/stylesheet1.css" />
+</head>
+<body epub:type="bodymatter">
+<section id="getting-started" class="level1" data-number="3">
+<h1 data-number="3">Getting Started</h1>
+<p>If you’re looking to play a little with Go, you should check out the <a href="https://play.golang.org/">Go Playground</a> which lets you run code online without having to install anything. This is also the most common way to share Go code when seeking help in <a href="https://groups.google.com/forum/#!forum/golang-nuts">Go’s discussion forum</a> and places like StackOverflow.</p>
+<p>Installing Go is straightforward. You can install it from source, but I suggest you use one of the pre-compiled binaries. When you <a href="https://golang.org/dl/">go to the download page</a>, you’ll see installers for various platforms. Let’s avoid these and learn how to set up Go ourselves. As you’ll see, it isn’t hard.</p>
+<p>Except for simple examples, Go is designed to work when your code is inside a workspace. The workspace is a folder composed of <code>bin</code>, <code>pkg</code> and <code>src</code> subfolders. You might be tempted to force Go to follow your own style - don’t.</p>
+<p>Normally, I put my projects inside of <code>~/code</code>. For example, <code>~/code/blog</code> contains my blog. For Go, my workspace is <code>~/code/go</code> and my Go-powered blog would be in <code>~/code/go/src/blog</code>.</p>
+<p>In short, create a <code>go</code> folder with a <code>src</code> subfolder wherever you expect to put your projects.</p>
+<section id="osx-linux" class="level2" data-number="3.1">
+<h2 data-number="3.1">OSX / Linux</h2>
+<p>Download the <code>tar.gz</code> for your platform. For OSX, you’ll most likely be interested in <code>go#.#.#.darwin-amd64-osx10.8.tar.gz</code>, where <code>#.#.#</code> is the latest version of Go.</p>
+<p>Extract the file to <code>/usr/local</code> via <code>tar -C /usr/local -xzf go#.#.#.darwin-amd64-osx10.8.tar.gz</code>.</p>
+<p>Set up two environment variables:</p>
+<ol type="1">
+<li><code>GOPATH</code> points to your workspace, for me, that’s <code>$HOME/code/go</code>.</li>
+<li>We need to append Go’s binary to our <code>PATH</code>.</li>
+</ol>
+<p>You can set these up from a shell:</p>
+<pre><code>echo &#39;export GOPATH=$HOME/code/go&#39; &gt;&gt; $HOME/.profile
+echo &#39;export PATH=$PATH:/usr/local/go/bin&#39; &gt;&gt; $HOME/.profile</code></pre>
+<p>You’ll want to activate these variables. You can close and reopen your shell, or you can run <code>source $HOME/.profile</code>.</p>
+<p>Type <code>go version</code> and you’ll hopefully get an output that looks like <code>go version go1.3.3 darwin/amd64</code>.</p>
+</section>
+<section id="windows" class="level2" data-number="3.2">
+<h2 data-number="3.2">Windows</h2>
+<p>Download the latest zip file. If you’re on an x64 system, you’ll want <code>go#.#.#.windows-amd64.zip</code>, where <code>#.#.#</code> is the latest version of Go.</p>
+<p>Unzip it at a location of your choosing. <code>c:\Go</code> is a good choice.</p>
+<p>Set up two environment variables:</p>
+<ol type="1">
+<li><code>GOPATH</code> points to your workspace. That might be something like <code>c:\users\goku\work\go</code>.</li>
+<li>Add <code>c:\Go\bin</code> to your <code>PATH</code> environment variable.</li>
+</ol>
+<p>Environment variables can be set through the <code>Environment Variables</code> button on the <code>Advanced</code> tab of the <code>System</code> control panel. Some versions of Windows provide this control panel through the <code>Advanced System Settings</code> option inside the <code>System</code> control panel.</p>
+<p>Open a command prompt and type <code>go version</code>. You’ll hopefully get an output that looks like <code>go version go1.3.3 windows/amd64</code>.</p>
+</section>
+</section>
+</body>
+</html>

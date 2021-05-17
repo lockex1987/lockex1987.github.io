@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <title>ch007.xhtml</title>
+  <style>
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" type="text/css" href="../styles/stylesheet1.css" />
+</head>
+<body epub:type="bodymatter">
+<section id="chapter-4---code-organization-and-interfaces" class="level1" data-number="7">
+<h1 data-number="7">Chapter 4 - Code Organization and Interfaces</h1>
+<p>It’s now time to look at how to organize our code.</p>
+<section id="packages" class="level2" data-number="7.1">
+<h2 data-number="7.1">Packages</h2>
+<p>To keep more complicated libraries and systems organized, we need to learn about packages. In Go, package names follow the directory structure of your Go workspace. If we were building a shopping system, we’d probably start with a package name “shopping” and put our source files in <code>$GOPATH/src/shopping/</code>.</p>
+<p>We don’t want to put everything inside this folder though. For example, maybe we want to isolate some database logic inside its own folder. To achieve this, we create a subfolder at <code>$GOPATH/src/shopping/db</code>. The package name of the files within this subfolder is simply <code>db</code>, but to access it from another package, including the <code>shopping</code> package, we need to import <code>shopping/db</code>.</p>
+<p>In other words, when you name a package, via the <code>package</code> keyword, you provide a single value, not a complete hierarchy (e.g., “shopping” or “db”). When you import a package, you specify the complete path.</p>
+<p>Let’s try it. Inside your Go workspace’s <code>src</code> folder (which we set up in Getting Started of the Introduction), create a new folder called <code>shopping</code> and a subfolder within it called <code>db</code>.</p>
+<p>Inside of <code>shopping/db</code>, create a file called <code>db.go</code> and add the following code:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> db</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Item <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  Price <span class="dt">float64</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> LoadItem<span class="op">(</span>id <span class="dt">int</span><span class="op">)</span> <span class="op">*</span>Item <span class="op">{</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">return</span> <span class="op">&amp;</span>Item<span class="op">{</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    Price<span class="op">:</span> <span class="dv">9</span><span class="fl">.001</span><span class="op">,</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Notice that the name of the package is the same as the name of the folder. Also, obviously, we aren’t actually accessing the database. We’re just using this as an example to show how to organize code.</p>
+<p>Now, create a file called <code>pricecheck.go</code> inside of the main <code>shopping</code> folder. Its content is:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> shopping</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="op">(</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;shopping/db&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> PriceCheck<span class="op">(</span>itemId <span class="dt">int</span><span class="op">)</span> <span class="op">(</span><span class="dt">float64</span><span class="op">,</span> <span class="dt">bool</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  item <span class="op">:=</span> db<span class="op">.</span>LoadItem<span class="op">(</span>itemId<span class="op">)</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> item <span class="op">==</span> <span class="ot">nil</span> <span class="op">{</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">return</span> <span class="dv">0</span><span class="op">,</span> <span class="ot">false</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">return</span> item<span class="op">.</span>Price<span class="op">,</span> <span class="ot">true</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>It’s tempting to think that importing <code>shopping/db</code> is somehow special because we’re inside the <code>shopping</code> package/folder already. In reality, you’re importing <code>$GOPATH/src/shopping/db</code>, which means you could just as easily import <code>test/db</code> so long as you had a package named <code>db</code> inside of your workspace’s <code>src/test</code> folder.</p>
+<p>If you’re building a package, you don’t need anything more than what we’ve seen. To build an executable, you still need a <code>main</code>. The way I prefer to do this is to create a subfolder called <code>main</code> inside of <code>shopping</code> with a file called <code>main.go</code> and the following content:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> main</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="op">(</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;shopping&quot;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fmt&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  fmt<span class="op">.</span>Println<span class="op">(</span>shopping<span class="op">.</span>PriceCheck<span class="op">(</span><span class="dv">4343</span><span class="op">))</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>You can now run your code by going into your <code>shopping</code> project and typing:</p>
+<pre><code>go run main/main.go</code></pre>
+<section id="cyclical-imports" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1">Cyclical Imports</h3>
+<p>As you start writing more complex systems, you’re bound to run into cyclical imports. This happens when package A imports package B but package B imports package A (either directly or indirectly through another package). This is something the compiler won’t allow.</p>
+<p>Let’s change our shopping structure to cause the error.</p>
+<p>Move the <code>Item</code> definition from <code>shopping/db/db.go</code> into <code>shopping/pricecheck.go</code>. Your <code>pricecheck.go</code> file should now look like:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> shopping</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="op">(</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;shopping/db&quot;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Item <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  Price <span class="dt">float64</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> PriceCheck<span class="op">(</span>itemId <span class="dt">int</span><span class="op">)</span> <span class="op">(</span><span class="dt">float64</span><span class="op">,</span> <span class="dt">bool</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  item <span class="op">:=</span> db<span class="op">.</span>LoadItem<span class="op">(</span>itemId<span class="op">)</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> item <span class="op">==</span> <span class="ot">nil</span> <span class="op">{</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">return</span> <span class="dv">0</span><span class="op">,</span> <span class="ot">false</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">return</span> item<span class="op">.</span>Price<span class="op">,</span> <span class="ot">true</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>If you try to run the code, you’ll get a couple of errors from <code>db/db.go</code> about <code>Item</code> being undefined. This makes sense. <code>Item</code> no longer exists in the <code>db</code> package; it’s been moved to the shopping package. We need to change <code>shopping/db/db.go</code> to:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> db</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="op">(</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;shopping&quot;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> LoadItem<span class="op">(</span>id <span class="dt">int</span><span class="op">)</span> <span class="op">*</span>shopping<span class="op">.</span>Item <span class="op">{</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">return</span> <span class="op">&amp;</span>shopping<span class="op">.</span>Item<span class="op">{</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    Price<span class="op">:</span> <span class="dv">9</span><span class="fl">.001</span><span class="op">,</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Now when you try to run the code, you’ll get a dreaded <em>import cycle not allowed</em> error. We solve this by introducing another package which contains shared structures. Your directory structure should look like:</p>
+<pre><code>$GOPATH/src
+  - shopping
+    pricecheck.go
+    - db
+      db.go
+    - models
+      item.go
+    - main
+      main.go</code></pre>
+<p><code>pricecheck.go</code> will still import <code>shopping/db</code>, but <code>db.go</code> will now import <code>shopping/models</code> instead of <code>shopping</code>, thus breaking the cycle. Since we moved the shared <code>Item</code> structure to <code>shopping/models/item.go</code>, we need to change <code>shopping/db/db.go</code> to reference the <code>Item</code> structure from <code>models</code> package:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> db</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="op">(</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;shopping/models&quot;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> LoadItem<span class="op">(</span>id <span class="dt">int</span><span class="op">)</span> <span class="op">*</span>models<span class="op">.</span>Item <span class="op">{</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">return</span> <span class="op">&amp;</span>models<span class="op">.</span>Item<span class="op">{</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    Price<span class="op">:</span> <span class="dv">9</span><span class="fl">.001</span><span class="op">,</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>You’ll often need to share more than just <code>models</code>, so you might have other similar folder named <code>utilities</code> and such. The important rule about these shared packages is that they shouldn’t import anything from the <code>shopping</code> package or any sub-packages. In a few sections, we’ll look at interfaces which can help us untangle these types of dependencies.</p>
+</section>
+<section id="visibility" class="level3" data-number="7.1.2">
+<h3 data-number="7.1.2">Visibility</h3>
+<p>Go uses a simple rule to define what types and functions are visible outside of a package. If the name of the type or function starts with an uppercase letter, it’s visible. If it starts with a lowercase letter, it isn’t.</p>
+<p>This also applies to structure fields. If a structure field name starts with a lowercase letter, only code within the same package will be able to access them.</p>
+<p>For example, if our <code>items.go</code> file had a function that looked like:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> NewItem<span class="op">()</span> <span class="op">*</span>Item <span class="op">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// ...</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>it could be called via <code>models.NewItem()</code>. But if the function was named <code>newItem</code>, we wouldn’t be able to access it from a different package.</p>
+<p>Go ahead and change the name of the various functions, types and fields from the <code>shopping</code> code. For example, if you rename the <code>Item's</code> <code>Price</code> field to <code>price</code>, you should get an error.</p>
+</section>
+<section id="package-management" class="level3" data-number="7.1.3">
+<h3 data-number="7.1.3">Package Management</h3>
+<p>The <code>go</code> command we’ve been using to <code>run</code> and <code>build</code> has a <code>get</code> subcommand which is used to fetch third-party libraries. <code>go get</code> supports various protocols but for this example, we’ll be getting a library from Github, meaning, you’ll need <code>git</code> installed on your computer.</p>
+<p>Assuming you already have git installed, from a shell/command prompt, enter:</p>
+<pre><code>go get github.com/mattn/go-sqlite3</code></pre>
+<p><code>go get</code> fetches the remote files and stores them in your workspace. Go ahead and check your <code>$GOPATH/src</code>. In addition to the <code>shopping</code> project that we created, you’ll now see a <code>github.com</code> folder. Within, you’ll see a <code>mattn</code> folder which contains a <code>go-sqlite3</code> folder.</p>
+<p>We just talked about how to import packages that live in our workspace. To use our newly gotten <code>go-sqlite3</code> package, we’d import it like so:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="op">(</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;github.com/mattn/go-sqlite3&quot;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span></code></pre></div>
+<p>I know this looks like a URL but in reality, it’ll simply import the <code>go-sqlite3</code> package which it expects to find in <code>$GOPATH/src/github.com/mattn/go-sqlite3</code>.</p>
+</section>
+<section id="dependency-management" class="level3" data-number="7.1.4">
+<h3 data-number="7.1.4">Dependency Management</h3>
+<p><code>go get</code> has a couple of other tricks up its sleeve. If we <code>go get</code> within a project, it’ll scan all the files, looking for <code>imports</code> to third-party libraries and will download them. In a way, our own source code becomes a <code>Gemfile</code> or <code>package.json</code>.</p>
+<p>If you call <code>go get -u</code> it’ll update the packages (or you can update a specific package via <code>go get -u FULL_PACKAGE_NAME</code>).</p>
+<p>Eventually, you might find <code>go get</code> inadequate. For one thing, there’s no way to specify a revision, it always points to the master/head/trunk/default. This is an even larger problem if you have two projects needing different versions of the same library.</p>
+<p>To solve this, you can use a third-party dependency management tool. They are still young, but two promising ones are <a href="https://github.com/nitrous-io/goop">goop</a> and <a href="https://github.com/tools/godep">godep</a>. A more complete list is available at the <a href="https://code.google.com/p/go-wiki/wiki/PackageManagementTools">go-wiki</a>.</p>
+</section>
+</section>
+<section id="interfaces" class="level2" data-number="7.2">
+<h2 data-number="7.2">Interfaces</h2>
+<p>Interfaces are types that define a contract but not an implementation. Here’s an example:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Logger <span class="kw">interface</span> <span class="op">{</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  Log<span class="op">(</span>message <span class="dt">string</span><span class="op">)</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>You might be wondering what purpose this could possibly serve. Interfaces help decouple your code from specific implementations. For example, we might have various types of loggers:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> SqlLogger <span class="kw">struct</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> ConsoleLogger <span class="kw">struct</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> FileLogger <span class="kw">struct</span> <span class="op">{</span> <span class="op">...</span> <span class="op">}</span></span></code></pre></div>
+<p>Yet by programming against the interface, rather than these concrete implementations, we can easily change (and test) which we use without any impact to our code.</p>
+<p>How would you use one? Just like any other type, it could be a structure’s field:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> Server <span class="kw">struct</span> <span class="op">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  logger Logger</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>or a function parameter (or return value):</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> process<span class="op">(</span>logger Logger<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  logger<span class="op">.</span>Log<span class="op">(</span><span class="st">&quot;hello!&quot;</span><span class="op">)</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>In a language like C# or Java, we have to be explicit when a class implements an interface:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>public class ConsoleLogger <span class="op">:</span> Logger <span class="op">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  public void Logger<span class="op">(</span>message <span class="dt">string</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    Console<span class="op">.</span>WriteLine<span class="op">(</span>message<span class="op">)</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>In Go, this happens implicitly. If your structure has a function name <code>Log</code> with a <code>string</code> parameter and no return value, then it can be used as a <code>Logger</code>. This cuts down on the verboseness of using interfaces:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> ConsoleLogger <span class="kw">struct</span> <span class="op">{}</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> <span class="op">(</span>l ConsoleLogger<span class="op">)</span> Log<span class="op">(</span>message <span class="dt">string</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  fmt<span class="op">.</span>Println<span class="op">(</span>message<span class="op">)</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>It also tends to promote small and focused interfaces. The standard library is full of interfaces. The <code>io</code> package has a handful of popular ones such as <code>io.Reader</code>, <code>io.Writer</code>, and <code>io.Closer</code>. If you write a function that expects a parameter that you’ll only be calling <code>Close()</code> on, you absolutely should accept an <code>io.Closer</code> rather than whatever concrete type you’re using.</p>
+<p>Interfaces can also participate in composition. And, interfaces themselves can be composed of other interfaces. For example, <code>io.ReadCloser</code> is an interface composed of the <code>io.Reader</code> interface as well as the <code>io.Closer</code> interface.</p>
+<p>Finally, interfaces are commonly used to avoid cyclical imports. Since they don’t have implementations, they’ll have limited dependencies.</p>
+</section>
+<section id="before-you-continue-3" class="level2" data-number="7.3">
+<h2 data-number="7.3">Before You Continue</h2>
+<p>Ultimately, how you structure your code around Go’s workspace is something that you’ll only feel comfortable with after you’ve written a couple of non-trivial projects. What’s most important for you to remember is the tight relationship between package names and your directory structure (not just within a project, but within the entire workspace).</p>
+<p>The way Go handles visibility of types is straightforward and effective. It’s also consistent. There are a few things we haven’t looked at, such as constants and global variables but rest assured, their visibility is determined by the same naming rule.</p>
+<p>Finally, if you’re new to interfaces, it might take some time before you get a feel for them. However, the first time you see a function that expects something like <code>io.Reader</code>, you’ll find yourself thanking the author for not demanding more than he or she needed.</p>
+</section>
+</section>
+</body>
+</html>

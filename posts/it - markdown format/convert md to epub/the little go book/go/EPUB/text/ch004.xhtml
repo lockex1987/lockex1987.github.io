@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <title>ch004.xhtml</title>
+  <style>
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" type="text/css" href="../styles/stylesheet1.css" />
+</head>
+<body epub:type="bodymatter">
+<section id="chapter-1---the-basics" class="level1" data-number="4">
+<h1 data-number="4">Chapter 1 - The Basics</h1>
+<p>Go is a compiled, statically typed language with a C-like syntax and garbage collection. What does that mean?</p>
+<section id="compilation" class="level2" data-number="4.1">
+<h2 data-number="4.1">Compilation</h2>
+<p>Compilation is the process of translating the source code that you write into a lower level language – either assembly (as is the case with Go), or some other intermediary language (as with Java and C#).</p>
+<p>Compiled languages can be unpleasant to work with because compilation can be slow. It’s hard to iterate quickly if you have to spend minutes or hours waiting for code to compile. Compilation speed is one of the major design goals of Go. This is good news for people working on large projects as well as those of us used to a quick feedback cycle offered by interpreted languages.</p>
+<p>Compiled languages tend to run faster and the executable can be run without additional dependencies (at least, that’s true for languages like C, C++ and Go which compile directly to assembly).</p>
+</section>
+<section id="static-typing" class="level2" data-number="4.2">
+<h2 data-number="4.2">Static Typing</h2>
+<p>Being statically typed means that variables must be of a specific type (int, string, bool, []byte, etc.). This is either achieved by specifying the type when the variable is declared or, in many cases, letting the compiler infer the type (we’ll look at examples shortly).</p>
+<p>There’s a lot more that can be said about static typing, but I believe it’s something better understood by looking at code. If you’re used to dynamically typed languages, you might find this cumbersome. You’re not wrong, but there are advantages, especially when you pair static typing with compilation. The two are often conflated. It’s true that when you have one, you normally have the other but it isn’t a hard rule. With a rigid type system, a compiler is able to detect problems beyond mere syntactical mistakes as well as make further optimizations.</p>
+</section>
+<section id="c-like-syntax" class="level2" data-number="4.3">
+<h2 data-number="4.3">C-Like Syntax</h2>
+<p>Saying that a language has a C-like syntax means that if you’re used to any other C-like languages such as C, C++, Java, JavaScript and C#, then you’re going to find Go familiar – superficially, at least. For example, it means <code>&amp;&amp;</code> is used as a boolean AND, <code>==</code> is used to compare equality, <code>{</code> and <code>}</code> start and end a scope, and array indexes start at 0.</p>
+<p>C-like syntax also tends to mean semi-colon terminated lines and parentheses around conditions. Go does away with both of these, though parentheses are still used to control precedence. For example, an <code>if</code> statement looks like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> name <span class="op">==</span> <span class="st">&quot;Leto&quot;</span> <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span><span class="op">(</span><span class="st">&quot;the spice must flow&quot;</span><span class="op">)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>And in more complicated cases, parentheses are still useful:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> <span class="op">(</span>name <span class="op">==</span> <span class="st">&quot;Goku&quot;</span> <span class="op">&amp;&amp;</span> power <span class="op">&gt;</span> <span class="dv">9000</span><span class="op">)</span> <span class="op">||</span> <span class="op">(</span>name <span class="op">==</span> <span class="st">&quot;gohan&quot;</span> <span class="op">&amp;&amp;</span> power <span class="op">&lt;</span> <span class="dv">4000</span><span class="op">)</span>  <span class="op">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span><span class="op">(</span><span class="st">&quot;super Saiyan&quot;</span><span class="op">)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Beyond this, Go is much closer to C than C# or Java - not only in terms of syntax, but in terms of purpose. That’s reflected in the terseness and simplicity of the language which will hopefully start to become obvious as you learn it.</p>
+</section>
+<section id="garbage-collected" class="level2" data-number="4.4">
+<h2 data-number="4.4">Garbage Collected</h2>
+<p>Some variables, when created, have an easy-to-define life. A variable local to a function, for example, disappears when the function exits. In other cases, it isn’t so obvious – at least to a compiler. For example, the lifetime of a variable returned by a function or referenced by other variables and objects can be tricky to determine. Without garbage collection, it’s up to developers to free the memory associated with such variables at a point where the developer knows the variable isn’t needed. How? In C, you’d literally <code>free(str);</code> the variable.</p>
+<p>Languages with garbage collectors (e.g., Ruby, Python, Java, JavaScript, C#, Go) are able to keep track of these and free them when they’re no longer used. Garbage collection adds overhead, but it also eliminates a number of devastating bugs.</p>
+</section>
+<section id="running-go-code" class="level2" data-number="4.5">
+<h2 data-number="4.5">Running Go Code</h2>
+<p>Let’s start our journey by creating a simple program and learning how to compile and execute it. Open your favorite text editor and write the following code:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> main</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">println</span><span class="op">(</span><span class="st">&quot;it&#39;s over 9000!&quot;</span><span class="op">)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Save the file as <code>main.go</code>. For now, you can save it anywhere you want; we don’t need to live inside Go’s workspace for trivial examples.</p>
+<p>Next, open a shell/command prompt and change the directory to where you saved the file. For me, that means typing <code>cd ~/code</code>.</p>
+<p>Finally, run the program by entering:</p>
+<pre><code>go run main.go</code></pre>
+<p>If everything worked, you should see <em>it’s over 9000!</em>.</p>
+<p>But wait, what about the compilation step? <code>go run</code> is a handy command that compiles <em>and</em> runs your code. It uses a temporary directory to build the program, executes it and then cleans itself up. You can see the location of the temporary file by running:</p>
+<pre><code>go run --work main.go</code></pre>
+<p>To explicitly compile code, use <code>go build</code>:</p>
+<pre><code>go build main.go</code></pre>
+<p>This will generate an executable <code>main</code> which you can run. On Linux / OSX, don’t forget that you need to prefix the executable with dot-slash, so you need to type <code>./main</code>.</p>
+<p>While developing, you can use either <code>go run</code> or <code>go build</code>. When you deploy your code however, you’ll want to deploy a binary via <code>go build</code> and execute that.</p>
+<section id="main" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1">Main</h3>
+<p>Hopefully, the code that we just executed is understandable. We’ve created a function and printed out a string with the built-in <code>println</code> function. Did <code>go run</code> know what to execute because there was only a single choice? No. In Go, the entry point to a program has to be a function called <code>main</code> within a package <code>main</code>.</p>
+<p>We’ll talk more about packages in a later chapter. For now, while we focus on understanding the basics of Go, we’ll always write our code within the <code>main</code> package.</p>
+<p>If you want, you can alter the code and change the package name. Run the code via <code>go run</code> and you should get an error. Then, change the name back to <code>main</code> but use a different function name. You should see a different error message. Try making those same changes but use <code>go build</code> instead. Notice that the code compiles, there’s just no entry point to run it. This is perfectly normal when you are, for example, building a library.</p>
+</section>
+</section>
+<section id="imports" class="level2" data-number="4.6">
+<h2 data-number="4.6">Imports</h2>
+<p>Go has a number of built-in functions, such as <code>println</code>, which can be used without reference. We can’t get very far though, without making use of Go’s standard library and eventually using third-party libraries. In Go, the <code>import</code> keyword is used to declare the packages that are used by the code in the file.</p>
+<p>Let’s change our program:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> main</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="op">(</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fmt&quot;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;os&quot;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">if</span> <span class="bu">len</span><span class="op">(</span>os<span class="op">.</span>Args<span class="op">)</span> <span class="op">!=</span> <span class="dv">2</span> <span class="op">{</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    os<span class="op">.</span>Exit<span class="op">(</span><span class="dv">1</span><span class="op">)</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  fmt<span class="op">.</span>Println<span class="op">(</span><span class="st">&quot;It&#39;s over&quot;</span><span class="op">,</span> os<span class="op">.</span>Args<span class="op">[</span><span class="dv">1</span><span class="op">])</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Which you can run via:</p>
+<pre><code>go run main.go 9000</code></pre>
+<p>We’re now using two of Go’s standard packages: <code>fmt</code> and <code>os</code>. We’ve also introduced another built-in function <code>len</code>. <code>len</code> returns the size of a string, or the number of values in a dictionary, or, as we see here, the number of elements in an array. If you’re wondering why we expect 2 arguments, it’s because the first argument – at index 0 – is always the path of the currently running executable. (Change the program to print it out and see for yourself.)</p>
+<p>You’ve probably noticed we prefix the function name with the package, e.g., <code>fmt.Println</code>. This is different from many other languages. We’ll learn more about packages in later chapters. For now, knowing how to import and use a package is a good start.</p>
+<p>Go is strict about importing packages. It will not compile if you import a package but don’t use it. Try to run the following:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> main</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="op">(</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fmt&quot;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;os&quot;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>You should get two errors about <code>fmt</code> and <code>os</code> being imported and not used. Can this get annoying? Absolutely. Over time, you’ll get used to it (it’ll still be annoying though). Go is strict about this because unused imports can slow compilation; admittedly a problem most of us don’t have to this degree.</p>
+<p>Another thing to note is that Go’s standard library is well documented. You can head over to <a href="https://golang.org/pkg/fmt/#Println" class="uri">https://golang.org/pkg/fmt/#Println</a> to learn more about the <code>Println</code> function that we used. You can click on that section header and see the source code. Also, scroll to the top to learn more about Go’s formatting capabilities.</p>
+<p>If you’re ever stuck without internet access, you can get the documentation running locally via:</p>
+<pre><code>godoc -http=:6060</code></pre>
+<p>and pointing your browser to <code>http://localhost:6060</code></p>
+</section>
+<section id="variables-and-declarations" class="level2" data-number="4.7">
+<h2 data-number="4.7">Variables and Declarations</h2>
+<p>It’d be nice to begin and end our look at variables by saying <em>you declare and assign to a variable by doing x = 4.</em> Unfortunately, things are more complicated in Go. We’ll begin our conversation by looking at simple examples. Then, in the next chapter, we’ll expand this when we look at creating and using structures. Still, it’ll probably take some time before you truly feel comfortable with it.</p>
+<p>You might be thinking <em>Woah! What can be so complicated about this?</em> Let’s start looking at some examples.</p>
+<p>The most explicit way to deal with variable declaration and assignment in Go is also the most verbose:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">package</span> main</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="op">(</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;fmt&quot;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="op">)</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> power <span class="dt">int</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  power <span class="op">=</span> <span class="dv">9000</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  fmt<span class="op">.</span>Printf<span class="op">(</span><span class="st">&quot;It&#39;s over %d</span><span class="ch">\n</span><span class="st">&quot;</span><span class="op">,</span> power<span class="op">)</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Here, we declare a variable <code>power</code> of type <code>int</code>. By default, Go assigns a zero value to variables. Integers are assigned <code>0</code>, booleans <code>false</code>, strings <code>""</code> and so on. Next, we assign <code>9000</code> to our <code>power</code> variable. We can merge the first two lines:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">var</span> power <span class="dt">int</span> <span class="op">=</span> <span class="dv">9000</span></span></code></pre></div>
+<p>Still, that’s a lot of typing. Go has a handy short variable declaration operator, <code>:=</code>, which can infer the type:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>power <span class="op">:=</span> <span class="dv">9000</span></span></code></pre></div>
+<p>This is handy, and it works just as well with functions:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  power <span class="op">:=</span> getPower<span class="op">()</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> getPower<span class="op">()</span> <span class="dt">int</span> <span class="op">{</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">return</span> <span class="dv">9001</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>It’s important that you remember that <code>:=</code> is used to declare the variable as well as assign a value to it. Why? Because a variable can’t be declared twice (not in the same scope anyway). If you try to run the following, you’ll get an error.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  power <span class="op">:=</span> <span class="dv">9000</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  fmt<span class="op">.</span>Printf<span class="op">(</span><span class="st">&quot;It&#39;s over %d</span><span class="ch">\n</span><span class="st">&quot;</span><span class="op">,</span> power<span class="op">)</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">// COMPILER ERROR:</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">// no new variables on left side of :=</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  power <span class="op">:=</span> <span class="dv">9001</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  fmt<span class="op">.</span>Printf<span class="op">(</span><span class="st">&quot;It&#39;s also over %d</span><span class="ch">\n</span><span class="st">&quot;</span><span class="op">,</span> power<span class="op">)</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>The compiler will complain with <em>no new variables on left side of :=</em>. This means that when we first declare a variable, we use <code>:=</code> but on subsequent assignment, we use the assignment operator <code>=</code>. This makes a lot of sense, but it can be tricky for your muscle memory to remember when to switch between the two.</p>
+<p>If you read the error message closely, you’ll notice that <em>variables</em> is plural. That’s because Go lets you assign multiple variables (using either <code>=</code> or <code>:=</code>):</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  name<span class="op">,</span> power <span class="op">:=</span> <span class="st">&quot;Goku&quot;</span><span class="op">,</span> <span class="dv">9000</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  fmt<span class="op">.</span>Printf<span class="op">(</span><span class="st">&quot;%s&#39;s power is over %d</span><span class="ch">\n</span><span class="st">&quot;</span><span class="op">,</span> name<span class="op">,</span> power<span class="op">)</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>As long as one of the variables is new, <code>:=</code> can be used. Consider:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  power <span class="op">:=</span> <span class="dv">1000</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  fmt<span class="op">.</span>Printf<span class="op">(</span><span class="st">&quot;default power is %d</span><span class="ch">\n</span><span class="st">&quot;</span><span class="op">,</span> power<span class="op">)</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  name<span class="op">,</span> power <span class="op">:=</span> <span class="st">&quot;Goku&quot;</span><span class="op">,</span> <span class="dv">9000</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  fmt<span class="op">.</span>Printf<span class="op">(</span><span class="st">&quot;%s&#39;s power is over %d</span><span class="ch">\n</span><span class="st">&quot;</span><span class="op">,</span> name<span class="op">,</span> power<span class="op">)</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Although <code>power</code> is being used twice with <code>:=</code>, the compiler won’t complain the second time we use it, it’ll see that the other variable, <code>name</code>, is a new variable and allow <code>:=</code>. However, you can’t change the type of <code>power</code>. It was declared (implicitly) as an integer and thus, can only be assigned integers.</p>
+<p>For now, the last thing to know is that, like imports, Go won’t let you have unused variables. For example,</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  name<span class="op">,</span> power <span class="op">:=</span> <span class="st">&quot;Goku&quot;</span><span class="op">,</span> <span class="dv">1000</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  fmt<span class="op">.</span>Printf<span class="op">(</span><span class="st">&quot;default power is %d</span><span class="ch">\n</span><span class="st">&quot;</span><span class="op">,</span> power<span class="op">)</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>won’t compile because <code>name</code> is declared but not used. Like unused imports it’ll cause some frustration, but overall I think it helps with code cleanliness and readability.</p>
+<p>There’s more to learn about declaration and assignments. For now, remember that you’ll use <code>var NAME TYPE</code> when declaring a variable to its zero value, <code>NAME := VALUE</code> when declaring and assigning a value, and <code>NAME = VALUE</code> when assigning to a previously declared variable.</p>
+</section>
+<section id="function-declarations" class="level2" data-number="4.8">
+<h2 data-number="4.8">Function Declarations</h2>
+<p>This is a good time to point out that functions can return multiple values. Let’s look at three functions: one with no return value, one with one return value, and one with two return values.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> log<span class="op">(</span>message <span class="dt">string</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> add<span class="op">(</span>a <span class="dt">int</span><span class="op">,</span> b <span class="dt">int</span><span class="op">)</span> <span class="dt">int</span> <span class="op">{</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> power<span class="op">(</span>name <span class="dt">string</span><span class="op">)</span> <span class="op">(</span><span class="dt">int</span><span class="op">,</span> <span class="dt">bool</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>We’d use the last one like so:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>value<span class="op">,</span> exists <span class="op">:=</span> power<span class="op">(</span><span class="st">&quot;goku&quot;</span><span class="op">)</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> exists <span class="op">==</span> <span class="ot">false</span> <span class="op">{</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">// handle this error case</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Sometimes, you only care about one of the return values. In these cases, you assign the other values to <code>_</code>:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>_<span class="op">,</span> exists <span class="op">:=</span> power<span class="op">(</span><span class="st">&quot;goku&quot;</span><span class="op">)</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">if</span> exists <span class="op">==</span> <span class="ot">false</span> <span class="op">{</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">// handle this error case</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>This is more than a convention. <code>_</code>, the blank identifier, is special in that the return value isn’t actually assigned. This lets you use <code>_</code> over and over again regardless of the returned type.</p>
+<p>Finally, there’s something else that you’re likely to run into with function declarations. If parameters share the same type, we can use a shorter syntax:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">func</span> add<span class="op">(</span>a<span class="op">,</span> b <span class="dt">int</span><span class="op">)</span> <span class="dt">int</span> <span class="op">{</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Being able to return multiple values is something you’ll use often. You’ll also frequently use <code>_</code> to discard a value. Named return values and the slightly less verbose parameter declaration aren’t that common. Still, you’ll run into all of these sooner than later so it’s important to know about them.</p>
+</section>
+<section id="before-you-continue" class="level2" data-number="4.9">
+<h2 data-number="4.9">Before You Continue</h2>
+<p>We looked at a number of small individual pieces and it probably feels disjointed at this point. We’ll slowly build larger examples and hopefully, the pieces will start to come together.</p>
+<p>If you’re coming from a dynamic language, the complexity around types and declarations might seem like a step backwards. I don’t disagree with you. For some systems, dynamic languages are categorically more productive.</p>
+<p>If you’re coming from a statically typed language, you’re probably feeling comfortable with Go. Inferred types and multiple return values are nice (though certainly not exclusive to Go). Hopefully as we learn more, you’ll appreciate the clean and terse syntax.</p>
+</section>
+</section>
+</body>
+</html>
