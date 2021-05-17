@@ -139,7 +139,7 @@ Trên Windows, cài bằng file `msi`.
 
 Kiểm tra bằng lệnh:
 
-```bas
+```bash
 $ pandoc --version
 pandoc 2.13
 Compiled with pandoc-types 1.22, texmath 0.12.2, skylighting 0.10.5,
@@ -149,6 +149,64 @@ Copyright (C) 2006-2021 John MacFarlane. Web:  https://pandoc.org
 This is free software; see the source for copying conditions. There is no
 warranty, not even for merchantability or fitness for a particular purpose.
 ```
+
+
+
+Cài đặt trên Ubuntu
+
+
+
+
+
+
+
+
+
+Download file `deb`, sau đó sử dụng lệnh:
+
+```bash
+sudo dpkg -i $deb_file
+```
+
+
+
+
+
+Kiểm tra amd hay arm bằng lệnh:
+
+```bash
+$ dpkg --print-architecture
+amd64
+```
+
+
+
+Kiểm tra:
+
+```bash
+$ sudo dpkg -i pandoc-2.13-1-amd64.deb
+Selecting previously unselected package pandoc.
+(Reading database ... 241897 files and directories currently installed.)
+Preparing to unpack pandoc-2.13-1-amd64.deb ...
+Unpacking pandoc (2.13-1) ...
+Setting up pandoc (2.13-1) ...
+Processing triggers for man-db (2.9.4-2) ...
+
+$ pandoc --version
+pandoc 2.13
+Compiled with pandoc-types 1.22, texmath 0.12.2, skylighting 0.10.5,
+citeproc 0.3.0.9, ipynb 0.1.0.1
+User data directory: /home/lockex1987/.local/share/pandoc
+Copyright (C) 2006-2021 John MacFarlane. Web:  https://pandoc.org
+This is free software; see the source for copying conditions. There is no
+warranty, not even for merchantability or fitness for a particular purpose.
+```
+
+
+
+
+
+
 
 #### Convert markdown to epub
 
@@ -190,11 +248,34 @@ Trang chủ: [Typora - a markdown editor, reader](https://typora.io/)
 
 Dùng rất thích. Có trên cả Windows, Linux, Mac.
 
+Cài đặt trên Ubuntu:
+
+```bash
+# or run:
+# sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BA300B7755AFCFAE
+wget -qO - https://typora.io/linux/public-key.asc | sudo apt-key add -
+
+# add Typora's repository
+sudo add-apt-repository 'deb https://typora.io/linux ./'
+sudo apt-get update
+
+# install typora
+sudo apt-get install typora
+```
+
+
+
 Nên dùng phím tắt cho tiện.
 
 Có thể export ra PDF, epub, HTML bằng Typora luôn (Typora sử dụng Pandoc).
 
 [Export](https://support.typora.io/Export/)
+
+
+
+
+
+
 
 
 
