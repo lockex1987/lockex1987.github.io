@@ -6,20 +6,23 @@
   height: 100vh;
   background-color: #171717;
 }
+
 @media (min-width: 768px) {
   #particle-animation {
     background-color: transparent;
   }
 }
+
 #particle-animation::before {
   z-index: -2;
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
 }
+
 @media (min-width: 768px) {
   #particle-animation::before {
     background-image: url(../images/bg.jpg);
@@ -27,3 +30,4 @@
     background-size: cover;
   }
 }
+/*# sourceMappingURL=bubble.css.map */

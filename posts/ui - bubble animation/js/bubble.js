@@ -1,18 +1,17 @@
-(function() {
-
-    var width;
-    var height;
-    var largeHeader = document.getElementById('particle-animation');
-    var canvas = document.getElementById('demo-canvas');
-    var ctx = canvas.getContext('2d');
-    var circles = [];
-    var animateHeader = true;
+(function () {
+    let width;
+    let height;
+    const largeHeader = document.getElementById('particle-animation');
+    const canvas = document.getElementById('demo-canvas');
+    const ctx = canvas.getContext('2d');
+    const circles = [];
+    let animateHeader = true;
 
     function createParticles() {
         // So bong bong
-        var num = width * 0.45;
-        for (var x = 0; x < num; x++) {
-            var c = new Circle();
+        const num = width * 0.45;
+        for (let x = 0; x < num; x++) {
+            const c = new Circle();
             circles.push(c);
         }
     }
@@ -37,13 +36,12 @@
         largeHeader.style.height = height + 'px';
         canvas.width = width;
         canvas.height = height;
-
     }
 
     function animate() {
         if (animateHeader) {
             ctx.clearRect(0, 0, width, height);
-            for (var i in circles) {
+            for (const i in circles) {
                 circles[i].draw();
             }
         }
@@ -52,7 +50,7 @@
 
     // Canvas manipulation
     function Circle() {
-        var _this = this;
+        const _this = this;
 
         init();
 
@@ -74,7 +72,7 @@
             _this.velocity = Math.random();
         }
 
-        this.draw = function() {
+        this.draw = function () {
             if (_this.alpha <= 0) {
                 restart();
             }
@@ -94,6 +92,6 @@
         animate();
         addListeners();
     }
-    
+
     init();
 })();

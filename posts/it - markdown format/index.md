@@ -179,8 +179,6 @@ $ dpkg --print-architecture
 amd64
 ```
 
-
-
 Kiểm tra:
 
 ```bash
