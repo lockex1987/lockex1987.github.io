@@ -1,0 +1,111 @@
+// Chiều cao header ở màn hình mobile
+:root {
+    --header-height: 45px;
+}
+
+body {
+    &.has-mobile-header {
+        padding-top: var(--header-height);
+
+        @include media-breakpoint-up(xl) {
+            padding-top: 0;
+        }
+    }
+}
+
+// Header ở màn hình desktop
+.desktop-header {
+    position: fixed;
+    top: 0px;
+    height: 200px;
+    max-width: calc(50vw - 450px);
+    right: calc(50vw + 450px);
+
+    .logo {
+        img {
+            width: 4rem;
+            margin-bottom: -2px;
+        }
+    }
+}
+
+// Header ở màn hình mobile
+.mobile-header {
+    height: var(--header-height);
+    top: 0;
+    transition: top 0.2s ease-in-out;
+    z-index: 10;
+
+	&.nav-hide {
+        top:  calc(var(--header-height) * -1);
+    }
+
+    .logo {
+        img {
+            width: 1.5rem;
+        }
+    }
+}
+
+// Nút di chuyển về đầu trang
+.float-button {
+    bottom: 40px;
+    right: 10px;
+    width: 4rem;
+    height: 4rem;
+    z-index: 2048;
+
+    background-image: url(../images/layout/goto_top.png);
+    background-size: cover;
+    background-position: center center;
+
+    @include media-breakpoint-up(md) {
+        width: 6rem;
+        height: 6rem;
+    }
+}
+
+.no-float-button {
+    .float-button {
+        display: none;
+    }
+}
+
+// Thống kê chung của bài viết
+.footer {
+    border-left: 3px solid #ffc035;
+
+    @include media-breakpoint-up(xl) {    
+        top: 25px;
+        // Giống .toc
+        // max-width: 360px;
+        max-width: calc(50vw - 450px);
+        left: calc(50vw + 450px);
+        position: fixed;
+    }    
+}
+
+.out-of-box {
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+
+    @include media-breakpoint-up(md) {
+        margin-left: -4rem;
+        margin-right: -4rem;
+    }
+	
+    @include media-breakpoint-up(xl) {
+        margin-left: -8rem;
+        margin-right: -8rem;
+    }
+}
+
+.out-of-box-xl {
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+
+    @include media-breakpoint-up(xl) {
+        margin-left: -8rem;
+        margin-right: -8rem;
+    }
+}

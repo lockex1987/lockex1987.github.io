@@ -15,7 +15,7 @@
         khoa học hơn, dễ quản lí, sửa chữa, thích hợp khi làm các dự án lớn. Nhờ
         các tính năng như biến, hàm, mixins... các mã CSS sẽ trở nên có tổ chức
         cho phép các nhà phát triển web làm việc nhanh và ít gặp lỗi hơn.</p>
-      <p>Các bạn có thể tìm hiểu thêm về Sass tại trang chủ <a target="_blank"
+      <p>Các bạn có thể tìm hiểu thêm về Sass tại trang chủ <a target="_blank"
           href="http://sass-lang.com/">sass-lang.com</a>.</p>
       <h3>Cài đặt</h3>
       <p>Sass là một CSS processor có đuôi file là <code>.scss</code> khác với
@@ -31,11 +31,36 @@
       <p>Compile ra file:</p>
       <pre>sass demo.scss demo.css</pre>
       <p>Sử dụng extension sau của VSCode (không cần cài Koala, bật tắt):</p>
-      <p>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.live-sass"
-          target="_blank">Live Sass Compiler - Visual Studio Marketplace</a></p>
-      <p>Extension này sẽ tự động theo dõi và dịch mỗi khi file scss thay đổi.</p>
+      <p> <a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.live-sass"
+          target="_blank">Live Sass Compiler - Visual Studio Marketplace
+          (Ritwick Dey)</a></p>
+      <p>Chú ý: Sử dụng bản sau cho mới hơn, nhiều người sử dụng hơn:</p>
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=glenn2223.live-sass"
+          target="_blank">Live Sass Compiler - Visual Studio Marketplace (Glenn
+          Marks)</a></p>
+      <p>Extension này sẽ tự động theo dõi và dịch mỗi khi file <code>scss</code>
+        thay đổi.</p>
+      <p>Tính năng:</p>
+      <ul>
+        <li>Compile SASS &amp; SCSS trực tiếp</li>
+        <li>Cấu hình vị trí file CSS đầu ra</li>
+        <li>Cấu hình style của file CSS đầu ra (<code>expanded</code>, <code>compressed</code>)</li>
+        <li>Cấu hình tên file (<code>.css</code> hoặc <code>.min.css</code>)</li>
+        <li>Control nhanh ở status bar</li>
+        <li>Cấu hình exclude folder</li>
+        <li>Hỗ trợ autoprefix</li>
+      </ul>
+      <p>Cách sử dụng:</p>
+      <ul>
+        <li>Click "Watch Sass" từ status bar để bật. Click "Stop Watching Sass"
+          từ status bar để tắt.</li>
+        <li>Dùng lệnh Live Sass: Watch Sass hoặc lệnh Live Sass: Stop Watching
+          Sass.</li>
+        <li>Dùng lệnh Live Sass: Compile Sass - Without Watch Mode để compile
+          một lần.</li>
+      </ul>
+      <p><br>
+      </p>
       <p>Mặc định, file <code>css</code> đầu ra sẽ ở cùng thư mục với file
         nguồn <code>scss</code>. Giả sử bạn để file nguồn ở thư mục <code>sass</code>
         và file đích ở thư mục <code>css</code> thì cần vào <code>File -&gt;
@@ -43,13 +68,11 @@
         như sau:</p>
       <pre>"liveSassCompile.settings.formats": [
     {
-        "format": "expanded",
+        "format": "compressed",
         "extensionName": ".css",
         "savePath": "~/../css/"
     }
 ]</pre>
-      <p><br>
-      </p>
       <p><br>
       </p>
       <h3>Comment</h3>
