@@ -1,23 +1,20 @@
-<html><head>
+<html>
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" name="viewport">
     <meta name="description" content="Redis command references">
     <title>Tra cứu các lệnh Redis</title>
     <link rel="icon" href="../../images/favicon.png">
-    <link rel="stylesheet" href="css/styles.css">
-
-  </head>
-    
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
   
-  
-  <body>
-    <div class="site-wrapper">
-	  <section id="commands">
-        <nav>
-          <div class="container">
+<body class="bg-white">
+        <nav class="bg-light py-3 font-size-0.875">
+          <div class="container text-center">
             <label>
               <span>Filter by group:</span>
-              <select class="command-reference-filter">
+              <select id="command-reference-filter">
                 <option value="">All</option>
                 <option value="cluster">Cluster</option>
                 <option value="connection">Connection</option>
@@ -38,12 +35,15 @@
             or
             <label>
               <span>search for:</span>
-              <input autofocus="" class="js-command-reference-search" placeholder="e.g. CLUSTER NODES">
+              <input autofocus=""
+                id="js-command-reference-search"
+                placeholder="e.g. CLUSTER NODES">
             </label>
           </div>
         </nav>
+
         <div class="container">
-          <ul>
+          <ul id="commands">
             <li data-group="string" data-name="append">
               <a href="/commands/append">
                 <span class="command">
@@ -2424,9 +2424,7 @@
             </li>
           </ul>
         </div>
-      </section>
-    </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="js/app.js"></script>
-</body></html>
+    <script src="js/script.js"></script>
+</body>
+</html>
