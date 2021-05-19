@@ -41,10 +41,10 @@
      * Chỉnh lại đường dẫn đúng của thẻ A.
      */
     function modifyLinks() {
-        const links = document.querySelectorAll('#commands ul li a');
+        const links = document.querySelectorAll('#commands li a');
         const baseUrl = 'https://redis.io';
         links.forEach(a => {
-            a.href = baseUrl + a.href;
+            a.href = baseUrl + a.href.replace(location.origin, '');
             a.target = '_blank';
         });
     }

@@ -1,18 +1,18 @@
 <?php
 
-include_once 'vendor/autoload.php';
+require_once 'bootstrap.php';
 
-use Cttd\FileManager\RedisConnection;
-
+use Cttd\RedisDemo\RedisConnection;
 
 function subscribeToRedis(): void
 {
-    $redis = RedisConnection::connectRedis();
+    $conn = new RedisConnection();
+    $channels = ['chan-1', 'chan-2', 'chan-3'];
     $callback = function ($redis, $chan, $msg) {
         echo $chan . PHP_EOL;
         echo $msg . PHP_EOL;
     };
-    $redis->subscribe(['chan-1', 'chan-2', 'chan-3'], $callback);
+    $conn->redis->subscribe($channels, $callback);
 }
 
 subscribeToRedis();
