@@ -1,55 +1,55 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Thực hiện các lệnh PHP artisan">
-    <title>Laravel Artisan</title>
+    <title>Artisan console command</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
   </head>
   <body>
     <article>
-      <h2>Console Commands</h2>
+      <h2>Artisan console command</h2>
       <h3>Giới thiệu</h3>
       <p>Artisan là giao diện command-line đi theo Laravel. Nó cung cấp một danh
         sách các câu lệnh hữu ích để sử dụng trong quá trình phát triển sản
         phẩm. Artisan được phát triển dựa trên component Symfony Console khá
         mạnh mẽ. Để xem danh sách các câu lệnh được cung cấp, bạn có thể sử dụng
-        câu lệnh <code>list</code> command:</p>
+        câu lệnh <code>list</code>:</p>
       <pre><code>php artisan list</code></pre>
       <p>Mỗi câu lệnh đều có kèm theo một màn hình "help" để hiển thị và mô tả
         những đối số và tuỳ chọn có thể sử dụng. Để xem màn hình help, đơn giản
         chỉ cần gõ tên câu lệnh kèm theo từ khoá <code>help</code>:</p>
       <pre><code>php artisan help migrate</code></pre>
-      <h3>Viết Commands</h3>
-      <p>Ngoài việc sử dụng các câu lệnh được cung cấp sẵn, ban cũng có thể tạo
+      <h3>Viết Command</h3>
+      <p>Ngoài việc sử dụng các câu lệnh được cung cấp sẵn, bạn cũng có thể tạo
         câu lệnh riêng để sử dụng cho ứng dụng của bạn. Bạn có thể lưu trữ các
         câu lệnh riêng đó trong thư mục <code>app/Console/Commands</code>; tuy
         nhiên, bạn thoải mái trong việc chọn vị trí lưu đặt mã nguồn các câu
-        lệnh với điều kiện là phải khai báo tự động khởi tạo trong cấu hình của.</p>
-      <h4>Tạo Commands</h4>
+        lệnh với điều kiện là phải khai báo tự động khởi tạo trong cấu hình.</p>
+      <h4>Tạo Command</h4>
       <p>Để tạo một câu lệnh mới, bạn có thể sử dụng câu lệnh <code>make:command</code>.
-        nó sẽ tạo ra các khung mã nguồn cơ bản để giúp bạn bắt đầu một cách dễ
-        dàng hơn <code>app/Console/Commands</code>. Đừng lo lắng nếu thư mục
-        không có trong project, vì nó sẽ được tạo trong lần chạy đầu tiên <code>make:command</code>.
-        Nó sẽ thêm vào các thuộc tính mặc định và phương thức có mặt trên tất cả
-        các lệnh:</p>
+        Nó sẽ tạo ra các khung mã nguồn cơ bản để giúp bạn bắt đầu một cách dễ
+        dàng hơn ở thư mục <code>app/Console/Commands</code>. Đừng lo lắng nếu
+        thư mục không có trong dự án, vì nó sẽ được tạo trong lần chạy đầu tiên
+        <code>make:command</code>. Nó sẽ thêm vào các thuộc tính mặc định và
+        phương thức có mặt trên tất cả các lệnh:</p>
       <pre><code>php artisan make:command SendEmails</code></pre>
-      <h4>Cấu trúc command</h4>
+      <h4>Cấu trúc Command</h4>
       <p>Khi mà câu lệnh được tạo ra, bạn nên điền vào thông tin của hai thuộc
         tính <code>signature</code> và <code>description</code> trong class,
         vì chúng sẽ được dùng để hiển thị khi mà câu lệnh <code>list</code>
-        được thực thi. Hàm <code>handle</code> sẽ được gọi khi command được
+        được thực thi. Hàm <code>handle()</code> sẽ được gọi khi command được
         thực thi. Bạn có thể viết logic vào trong hàm này.</p>
-      <p> Để việc tái sử dụng code được tốt hơn, nó là cách tốt để giữu cho
-        console commands sáng và để cho defer ứng dụng services để thực hiện
-        task của mình. Trong ví dụ bên dưới, chú ý là chúng inject một class
-        service để làm "heavy lifting" gửi e-mails.</p>
-      <p>Hãy xem một ví vụ command. Chú ý là chúng ta có thể inject bất kỳ
-        dependencies chúng ta cần vào hàm constructor. Laravel <a href="https://giaphiep.com/docs/5.3/container">service
-          container</a> sẽ tự động inject tất cả dependencies type-hinted trong
-        constructor:</p>
+      <p> Để việc tái sử dụng code được tốt hơn, nó là cách tốt để giữ cho
+        console command sáng và để cho defer ứng dụng service để thực hiện task
+        của mình. Trong ví dụ bên dưới, chú ý là chúng ta inject một class
+        service để làm "heavy lifting" gửi e-mail.</p>
+      <p>Hãy xem một ví vụ command. Chú ý là chúng ta có thể inject bất kỳ phụ
+        thuộc nào chúng ta cần vào hàm khởi tạo. Laravel <a href="https://giaphiep.com/docs/5.3/container">service
+          container</a> sẽ tự động inject tất cả phụ thuộc type-hint trong hàm
+        khởi tạo:</p>
       <pre><code>&lt;?php
 
 namespace App\Console\Commands;
@@ -100,16 +100,16 @@ class SendEmails extends Command
      * @return  mixed
      */
     public function handle()
-    {
-        $this-&gt;drip-&gt;send(User::find($this-&gt;argument('user')));
+    {<br>        $user = </code><code><code>User::find($this-&gt;argument('user'));</code>
+        $this-&gt;drip-&gt;send($user);
     }
 }</code></pre>
-      <h4>Closure Commands</h4>
-      <p>Closure based commands cung cấp một cách định nghĩa khác của console
-        commands như classes. Giống như route closures là thay thế cho các
-        controllers, nghĩ command closures như là một thay thể của command
-        classes. Trong hàm <code>commands</code> của file <code>app/Console/Kernel.php</code>,
-        Laravel loads file <code>routes/console.php</code>:</p>
+      <h4>Closure Command</h4>
+      <p>Closure based command cung cấp một cách định nghĩa khác của console
+        command như class. Giống như route closure là thay thế cho các
+        controller, nghĩ command closure như là một thay thế của command class.
+        Trong hàm <code>commands</code> của file <code>app/Console/Kernel.php</code>,
+        Laravel load file <code>routes/console.php</code>:</p>
       <pre><code>/**
  * Register the Closure based commands for the application.
  *
@@ -119,9 +119,9 @@ protected function commands()
 {
     require base_path('routes/console.php');
 }</code></pre>
-      <p>Mặc dù file này không được định nghĩa HTTP routes, nó định nghĩa
-        console based entry points (routes) vào ứng dụng. Bên trong file này,
-        bạn có thể định nghĩa tất cả closure based routes sử dụng hàm <code>Artisan::command</code>.
+      <p>Mặc dù file này không được định nghĩa HTTP route, nó định nghĩa console
+        based entry point (route) vào ứng dụng. Bên trong file này, bạn có thể
+        định nghĩa tất cả closure based route sử dụng hàm <code>Artisan::command</code>.
         Hàm <code>command</code> chấp nhận hai tham số: <a href="https://giaphiep.com/docs/5.3/artisan#defining-input-expectations">command
           signature</a> và một closure nhận tham số và tùy chọn:</p>
       <pre><code>Artisan::command('build {project}', function ($project) {
@@ -130,9 +130,9 @@ protected function commands()
       <p>Closure là ràng buộc để các command instance, vì vậy bạn có thể hoàn
         toàn truy cập các hàm helper bạn muốn truy cập vào một full command
         class.</p>
-      <h4>Type-Hinting Dependencies</h4>
-      <p>Ngoài ra để nhận tham số command và options, command closures ngoài ra
-        có thể type-hint thêm các dependencies bạn muốn để giải quyết khỏi <a href="https://giaphiep.com/docs/5.3/container">service
+      <h4>Phụ thuộc type-hint</h4>
+      <p>Ngoài ra để nhận tham số command và option, command closure ngoài ra có
+        thể type-hint thêm các phụ thuộc bạn muốn để giải quyết khỏi <a href="https://giaphiep.com/docs/5.3/container">service
           container</a>:</p>
       <pre><code>use App\User;
 use App\DripEmailer;
@@ -147,16 +147,15 @@ Artisan::command('email:send {user}', function (DripEmailer $drip, $user) {
       <pre><code>Artisan::command('build {project}', function ($project) {
     $this-&gt;info("Building {$project}!");
 })-&gt;describe('Build the project');</code></pre>
-      <h3>Defining Input Expectations</h3>
+      <h3>Chỉ định input mong đợi</h3>
       <p>Khi viết console commands, người dùng thường thêm input qua tham số
         lệnh. Laravel làm cho việc đó khá thuận tiện để xác định input bạn muốn
-        từ user sử dụng thuộc tính <code>signature</code> trong commands. Thuộc
+        từ user sử dụng thuộc tính <code>signature</code> trong command. Thuộc
         tính <code>signature</code> cho phép bạn định nghĩa tên, đối số, và tùy
         chọn cho command trong 1 single, expressive, route-like syntax.</p>
       <h4>Tham số</h4>
       <p>Tất cả các đối số và tùy chọn được nằm trong cặp ngoặc nhọn. Trong ví
-        dụ dưới đây, command định nghĩa một tham số <strong>bắt buộc</strong>:
-        <code>user</code>:</p>
+        dụ dưới đây, command định nghĩa một tham số <strong>bắt buộc</strong> <code>user</code>:</p>
       <pre><code>/**
  * The name and signature of the console command.
  *
@@ -202,12 +201,12 @@ protected $signature = 'email:send {user} {--queue=}';</code></pre>
         định sau tên tùy chọn. Nếu không có giá trị truyền vào bởi user, giá trị
         mặc định sẽ được sử dụng:</p>
       <pre><code>email:send {user} {--queue=default}</code></pre>
-      <h4>Shortcuts của tùy chọn</h4>
+      <h4>Shortcut của tùy chọn</h4>
       <p>Để gán một shortcut khi định nghĩa một tùy chọn, bạn có thể chỉ định nó
         trước tên và sử dụng ký tự | để tách shortcut từ tên đầy đủ của tùy
         chọn:</p>
       <pre><code>email:send {user} {--Q|queue}</code></pre>
-      <h4>Input Arrays</h4>
+      <h4>Input mảng</h4>
       <p>Nếu bạn muốn định nghĩa nhiều tham số thành một mảng, bạn có thể sử
         dụng ký tự <code>*</code>. Đầu tiên, hãy xem ví dụ có một mảng tham số:</p>
       <pre><code>email:send {user*}</code></pre>
@@ -230,8 +229,8 @@ php artisan email:send --id=1 --id=2</code></pre>
  * @var  string
  */
 protected $signature = 'email:send
-                        {user : The ID of the user}
-                        {--queue= : Whether the job should be queued}';</code></pre>
+        {user : The ID of the user}
+        {--queue= : Whether the job should be queued}';</code></pre>
       <h3>Command I/O</h3>
       <h4>Nhận đầu vào</h4>
       <p>Khi câu lệnh được thực thi, rõ ràng là chúng ta cần lấy được giá trị
@@ -287,7 +286,7 @@ public function handle()
       <pre><code>if ($this-&gt;confirm('Do you wish to continue? [y|N]')) {
     //
 }</code></pre>
-      <h4>Auto-Completion</h4>
+      <h4>Auto-complete</h4>
       <p>Phương thức <code>anticipate</code> có thể sử dụng để cung cấp tự động
         hoàn thành câu lệnh với một danh sách các sự gợi ý có thể. Người dùng
         vẫn có thể đưa ra câu trả lời riêng không liên quan tới các gợi ý được
@@ -318,7 +317,7 @@ public function handle()
       <pre><code>$this-&gt;error('Something went wrong!');</code></pre>
       <p>Nếu bạn muốn hiển thị nội dung đơn thuẩn, sử dụng hàm <code>line</code>:</p>
       <pre><code>$this-&gt;line('Display this on the screen');</code></pre>
-      <h4>Table Layouts</h4>
+      <h4>Table Layout</h4>
       <p>Phương thức <code>table</code> sẽ giúp cho việc chỉnh hiển thị các dữ
         liệu kiểu dòng / cột. Chỉ cần truyền vào headers và các dòng nội dung
         vào trong phương thức. Chiều rộng vào chiều cao sẽ được tự động tính
@@ -328,7 +327,7 @@ public function handle()
 $users = App\User::all(['name', 'email'])-&gt;toArray();
 
 $this-&gt;table($headers, $users);</code></pre>
-      <h4>Progress Bars</h4>
+      <h4>Progress bar</h4>
       <p>Với các tác vụ chạy lâu, thì việc sử dụng một thanh tiến trình khá là
         hữu ích. Sử dụng output, chúng ta có thể khởi tạo, chạy tiến trình và
         dừng thanh tiến trình. Bạn có thể khai báo số lượng steps khi bắt đầu
@@ -346,7 +345,7 @@ foreach ($users as $user) {
 $bar-&gt;finish();</code></pre>
       <p>Tham khảo thêm tại <a href="http://symfony.com/doc/2.7/components/console/helpers/progressbar.html">Symfony
           Progress Bar component documentation</a>.</p>
-      <h3>Đăng ký Commands</h3>
+      <h3>Đăng ký Command</h3>
       <p>Khi mà câu lệnh hoàn thành, bạn cần phải đăng kí với Artisan để câu
         lệnh có thể sử dụng được. Việc này sẽ thông qua file <code>app/Console/Kernel.php</code>.
         Trong file này, bạn có thể thấy một danh sách câu lệnh trong thuộc tính
@@ -412,7 +411,8 @@ public function handle()
       <pre><code>$this-&gt;callSilent('email:send', [
     'user' =&gt; 1, '--queue' =&gt; 'default'
 ]);</code></pre>
-      <p>Nguồn: <a href="https://laravel.com/docs/5.3/artisan">https://laravel.com/docs/5.3/artisan</a></p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://laravel.com/docs/master/artisan" target="_blank">https://laravel.com/docs/master/artisan</a></p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>
