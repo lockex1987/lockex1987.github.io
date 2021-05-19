@@ -13,8 +13,12 @@
       <h2>Cấu hình proxy cho npm</h2>
       <p>Sử dụng các lệnh sau:</p>
       <pre>npm config list<br><br>npm config set proxy http://192.168.103.31:80<br>npm config set https-proxy http://192.168.103.31:80<br><br>npm config get proxy<br>npm config get https-proxy<br><br>npm config delete proxy<br>npm config delete https-proxy<br><br>npm install --proxy http://192.168.103.31:80 electron</pre>
-      <p><br>
-      </p>
+      <p>Để cài đặt Electron qua proxy thì phải thiết lập như sau:</p>
+      <pre>set GLOBAL_AGENT_HTTP_PROXY=http://192.168.103.31:80/
+set GLOBAL_AGENT_HTTPS_PROXY=http://192.168.103.31:80/
+set ELECTRON_GET_USE_PROXY=true</pre>
+      <p>Câu lệnh cài đặt:</p>
+      <pre>npm i --save-dev electron</pre>
     </article>
     <script src="../../js/docs.js"></script>
   </body>

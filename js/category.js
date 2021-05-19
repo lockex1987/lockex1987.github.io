@@ -3,7 +3,7 @@ const CAT_THUMBS = {
     linux: 'programming/linux.svg',
     bootstrap: 'programming/bootstrap-5.svg',
     js: 'programming/js.svg',
-    java: 'programming/java.svg',
+
     css: 'programming/sass.svg', // css3
     ui: 'programming/sass.svg',
     mysql: 'programming/mysql.svg',
@@ -16,16 +16,12 @@ const CAT_THUMBS = {
     story: 'programming/epub.svg',
     git: 'programming/git.svg',
     redis: 'programming/redis.svg',
-    node: 'programming/node.svg',
+    
     webext: 'programming/web-extension.png',
 	it: 'programming/it.svg',
 	
     // Gộp các mục sau
-    python: 'programming/python.svg',
-    webrtc: 'programming/webrtc.svg',
-    nginx: 'programming/nginx.svg',
-    elasticsearch: 'programming/elasticsearch.svg',
-	golang: 'programming/golang.svg',
+    nginx: 'programming/nginx.svg'
 };
 
 /**
