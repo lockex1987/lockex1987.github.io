@@ -3,8 +3,7 @@ const CAT_THUMBS = {
     linux: 'programming/linux.svg',
     bootstrap: 'programming/bootstrap-5.svg',
     js: 'programming/js.svg',
-
-    css: 'programming/sass.svg', // css3
+    css: 'programming/sass.svg',
     ui: 'programming/sass.svg',
     mysql: 'programming/mysql.svg',
     laravel: 'programming/laravel.svg',
@@ -16,11 +15,8 @@ const CAT_THUMBS = {
     story: 'programming/epub.svg',
     git: 'programming/git.svg',
     redis: 'programming/redis.svg',
-    
     webext: 'programming/web-extension.png',
-	it: 'programming/it.svg',
-	
-    // Gộp các mục sau
+    it: 'programming/it.svg',
     nginx: 'programming/nginx.svg'
 };
 
@@ -72,9 +68,9 @@ const FullTextSearch = {
         const wholeWordRegex = this.createWholeWordRegex(query);
 
         const posts = allContentList.filter(p => {
-            p.prefixSubCount = this.countOccurrences(p.path, prefixSubRegex) * 10 +
-                this.countOccurrences(p.title, prefixSubRegex) * 8 +
-                this.countOccurrences(p.description, prefixSubRegex) * 5;
+            p.prefixSubCount = this.countOccurrences(p.path, prefixSubRegex) * 10
+                + this.countOccurrences(p.title, prefixSubRegex) * 8
+                + this.countOccurrences(p.description, prefixSubRegex) * 5;
             p.wholeWorldCount = this.countUniqueOccurrences(p.path + '\n' + p.title + '\n' + p.description, wholeWordRegex);
             if (p.prefixSubCount > 0 || p.wholeWorldCount > 0) {
                 return true;
