@@ -148,6 +148,8 @@ function openPage(url) {
         }
     );
     */
+	
+	// Mở web ở chế độ app
     chrome.windows.create({
         url: url,
         type: 'popup',
