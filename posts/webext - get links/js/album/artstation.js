@@ -101,7 +101,7 @@ async function getImagesArtstation(postUrl, username) {
  * @param {String} postUrl
  */
 function getFolderArtstation(postUrl) {
-    const folder = postUrl.split('/').pop(); ;
+    const folder = postUrl.split('/').pop();
     return folder;
 }
 

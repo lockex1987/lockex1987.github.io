@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Just like the name suggests, this project lets you type markdown codes in a textarea, and previews them immediately. Now you can view MD file in Firefox directly.">
+    <title>Markdown preview</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="css/md-preview.css" />
+</head>
+
+<body>
+    <article>
+        <h2>Markdown preview</h2>
+        <p>Based on <a href="https://github.com/chjj/marked" target="_blank">marked</a></p>
+        <div class="out-of-box">
+            <div class="container-fluid">
+                <div class="row"
+                    id="container">
+                    <div class="col-lg-6">
+                        <textarea id="edit"></textarea>
+                    </div>
+                    <div class="col-lg-6">
+                        <div id="preview"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+    
+    <script src="libs/marked/marked.min.js"></script>
+    <script src="js/md-preview.js"></script>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>
