@@ -1,19 +1,14 @@
 body {
-    margin: 0;
-    padding: 0;
     background-color: #130d0a;
-    color: white;
 }
 
 .content {
-    padding: 30px;
-    background-color: #130d0a;
+    background-color: #130d0a; /* giống màu body */
     height: 110vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 42px;
+}
+
+.wrapper {
+    /* max-width: 900px; */
 }
 
 #hero {
@@ -24,10 +19,9 @@ body {
 
 .layer {
     background-position: bottom center;
-    background-size: auto;
     background-repeat: no-repeat;
     width: 100%;
-    height: 100vh;
+    height: 100vh; /* bằng chiều cao #hero */
     position: fixed;
     z-index: -1;
 
@@ -35,33 +29,37 @@ body {
     justify-content: center;
     line-height: 300px;
     font-size: 8vw;
-    font-family: 'Inconsolata';
     text-transform: uppercase;
-    
 }
 
 .layer-bg {
     background-image: url('../images/ilu_bg.jpg');
+    background-size: 100% 100%;
 }
 
 .layer-1 {
     background-image: url('../images/ilu_03.png');
+    background-size: auto;
     background-position: left bottom;
 }
 
 .layer-2 {
     background-image: url('../images/ilu_02.png');
+    background-size: auto;
 }
 
 .layer-3 {
     background-image: url('../images/ilu_man.png');
+    background-size: 50% auto;
     background-position: right bottom;
 }
 
 .layer-4 {
     background-image: url('../images/ilu_01.png');
+    background-size: auto;
 }
 
 .layer-overlay {
     background-image: url('../images/ilu_overlay.png');
+    background-size: auto;
 }

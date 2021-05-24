@@ -8,24 +8,26 @@
     <title>Hiệu ứng parallax nhiều tầng với ảnh và văn bản</title>
 
     <link rel="icon" href="../../images/favicon.png"/>
-    <!--link rel="stylesheet" href="../../css/style.css"/>-->
-    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Inconsolata'>
+    <link rel="stylesheet" href="../../css/style.css"/>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <div id="hero">
-        <div class="layer layer-bg"      data-depth="0.10"></div>
-        <div class="layer layer-5"       data-depth="0.15">Nguyễn Anh Tuấn</div>
-        <div class="layer layer-1"       data-depth="0.20"></div>
-        <div class="layer layer-2"       data-depth="0.50"></div>
-        
-        <div class="layer layer-overlay" data-depth="0.70"></div>
-        <div class="layer layer-3"       data-depth="0.75"></div>
-        <div class="layer layer-4"       data-depth="1.00"></div>
-    </div>
 
-    <div class="content">
-        <p>Thêm nội dung để có thể scroll lên xuống</p>
+<body class="text-white">
+    <div class="wrapper mx-auto">
+        <div id="hero">
+            <div class="layer layer-bg"      data-depth="0.10"></div>
+            <div class="layer layer-5"       data-depth="0.15">Nguyễn Anh Tuấn</div>
+            <div class="layer layer-1"       data-depth="0.20"></div>
+            <div class="layer layer-2"       data-depth="0.50"></div>
+            
+            <div class="layer layer-overlay" data-depth="0.70"></div>
+            <div class="layer layer-3"       data-depth="0.75"></div>
+            <div class="layer layer-4"       data-depth="1.00"></div>
+        </div>
+
+        <div class="content d-flex justify-content-center align-items-center text-center p-5 font-size-2">
+            Thêm nội dung để có thể scroll lên xuống
+        </div>
     </div>
 
     <script src="js/script.js"></script>
