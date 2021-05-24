@@ -1,6 +1,6 @@
 // Cấu hình
 const prefs = {
-    'enabled': false
+    enabled: false
 };
 
 // Đối tượng chứa các phương thức
@@ -18,8 +18,8 @@ cors.onHeadersReceived = ({ responseHeaders }) => {
         // originEntry.value = originValue;
     } else {
         responseHeaders.push({
-            'name': 'Access-Control-Allow-Origin',
-            'value': originValue
+            name: 'Access-Control-Allow-Origin',
+            value: originValue
         });
     }
 
@@ -29,8 +29,8 @@ cors.onHeadersReceived = ({ responseHeaders }) => {
         // methodsEntry.value = methodsValue;
     } else {
         responseHeaders.push({
-            'name': 'Access-Control-Allow-Methods',
-            'value': methodsValue
+            name: 'Access-Control-Allow-Methods',
+            value: methodsValue
         });
     }
 
@@ -40,8 +40,8 @@ cors.onHeadersReceived = ({ responseHeaders }) => {
         // headersEntry.value = originValue;
     } else {
         responseHeaders.push({
-            'name': 'Access-Control-Allow-Headers',
-            'value': headersValue
+            name: 'Access-Control-Allow-Headers',
+            value: headersValue
         });
     }
 
@@ -87,12 +87,12 @@ cors.onCommand = () => {
 
     chrome.browserAction.setIcon({
         path: {
-            '16': 'images/' + (prefs.enabled ? '' : 'disabled/') + '16.png',
-            '19': 'images/' + (prefs.enabled ? '' : 'disabled/') + '19.png',
-            '32': 'images/' + (prefs.enabled ? '' : 'disabled/') + '32.png',
-            '38': 'images/' + (prefs.enabled ? '' : 'disabled/') + '38.png',
-            '48': 'images/' + (prefs.enabled ? '' : 'disabled/') + '48.png',
-            '64': 'images/' + (prefs.enabled ? '' : 'disabled/') + '64.png'
+            16: 'images/' + (prefs.enabled ? '' : 'disabled/') + '16.png',
+            19: 'images/' + (prefs.enabled ? '' : 'disabled/') + '19.png',
+            32: 'images/' + (prefs.enabled ? '' : 'disabled/') + '32.png',
+            38: 'images/' + (prefs.enabled ? '' : 'disabled/') + '38.png',
+            48: 'images/' + (prefs.enabled ? '' : 'disabled/') + '48.png',
+            64: 'images/' + (prefs.enabled ? '' : 'disabled/') + '64.png'
         }
     });
 
