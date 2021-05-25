@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="asus bios, automate, service">
+    <meta name="description" content="asus bios, automate, service, wol, magic packet">
     <title>Khởi động máy tính qua mạng LAN</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -11,7 +11,8 @@
   <body>
     <article>
       <h2>Khởi động máy tính qua mạng LAN</h2>
-      <p>Cấu hình để có thể tự động bật máy qua mạng LAN thông qua điện thoại.</p>
+      <p>Cấu hình để có thể tự động bật máy tính Ubuntu qua mạng LAN thông qua
+        điện thoại, iPad, máy tính Windows.</p>
       <h3>Making it stick</h3>
       <p>Vấn đề với phương thức này là việc enable WOL sẽ bị mất sau khi khởi
         động lại máy tính. Để làm điều này là bền vững trên Ubuntu 21.04, bạn
@@ -39,15 +40,37 @@ WantedBy=basic.target</pre>
       <h3>Tool</h3>
       <p>Android: Wake On Lan</p>
       <p>iPad: Mocha WOL (có cả ping xem máy có đang chạy hay không), dạo này
-        thấy không chạy được</p>
+        thấy không chạy được. Sử dụng app</p>
+      <p>Windows: Sử dụng Depicus GUI.</p>
+      <p>IMAGE</p>
+      <p><br>
+      </p>
+      <p>Cấu hình để gửi magic packet:</p>
+      <p>IP:</p>
+      <p>Mac:</p>
+      <p>Port:</p>
+      <p><br>
+      </p>
+      <h3>Magic packet</h3>
+      <p>Magic packet là một frame được gửi đến địa chỉ broadcast mà có thể chứa
+        bất cứ chỗ nào ở payload của nó 6 byte toàn giá trị 255 (hexa là FF FF
+        FF FF FF FF), theo sau là lặp 16 lần của địa chỉ MAC máy đích (48 bit -
+        8 byte, sau khi bỏ đi ký tự : thì còn 6 byte). Tổng độ dài là:</p>
+      <p>6 + 16 * 6 = 102 (byte)</p>
+      <p>Bạn có thể gửi như là UDP ở cổng 0 (cổng dự trữ), 7 (Echo protocol), 9
+        (Discard protocol).</p>
+      <p><a href="wol.php" download="wol.php">Code PHP</a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
       <h3>Tham khảo</h3>
       <p><a href="https://en.wikipedia.org/wiki/Wake-on-LAN" target="_blank">Wake-on-LAN
           - Wikipedia</a></p>
-      <p><a href="https://quantrimang.com/tim-hieu-ve-ban-chat-cua-tinh-nang-wake-on-lan-82046"
+      <p><a href="https://quantrimang.com/tim-hieu-ve-ban-chat-cua-tinh-nang-wake-on-lan-82046"
+
           target="_blank">Tìm hiểu về bản chất của tính năng Wake-On-LAN -
           Quantrimang.com</a></p>
-      <p><a href="https://dev.to/kevinmel2000/wake-on-lan-python-scrip-pf1" target="_blank">Wake
-          On LAN Python Script - DEV Community</a></p>
       <p><a href="https://www.youtube.com/watch?v=MCizY0Iw8xY" target="_blank">ASUS
           - How to Enable Wake-on-LAN on #ASUS #UEFI #BIOS - YouTube</a></p>
       <p><br>
