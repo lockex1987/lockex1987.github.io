@@ -83,12 +83,36 @@ The key's randomart image is:
       <pre>[bitbucket.cyberspace.vn]:7999,[10.30.152.24]:7999 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDpWlLsJMdkWaXkb2dq+9sE2205w4Q7P4tbDkwmRntgRHbs0dh1lBaHxXTilzsDLMDNXKgCteLxy38ni6nQWmLhAm1d+K4fZt4LqHhb+h9OwadJYY5jJl/lS2ksnhpKTpS9hFxilmf6FTrVg8EYdKFiSWnCRmyQ8b+fl9GZ0O9578ktqArG/hfurN/j4Awm1NHxJWs8H7xjlRDejsBbrZ7y4R+WK2Ghjw7gyYYQE951zviJGNBQ9lqb88jkUlIeg+6GXE/frSgVP1gMB9ym6GohOqGG9P20O+OXTL7E00rwS02HMWDmKnel4yERPQiuBFajo5WkNxi4Yw7szBz6grAT
 bitbucket.cyberspace.vn,10.30.152.24 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMgxyMkUFJr+W83w1gd6/O/gJEy55+XL8EI1qfVchX25UAIU2UaHtq6WYYZd8kmkzknEMQJgLdo0vNp9JzSVr+w=
 source.cyberspace.vn,10.30.152.17 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHctn+maU69t3+JkOBj2I08PeZRMt3aftzzAPfYgRdQFw6mVetJwXhUNg80WYMkgmqZtP6PdlProdBFEKIoejCg=</pre>
-      <p>File <code>.ssh/config</code> để mỗi server sử dụng key khác nhau:</p>
+      <h3>Cấu hình ssh</h3>
+      <p>File <code>.ssh/config</code> để mỗi server sử dụng key, user khác
+        nhau:</p>
       <pre>Host bitbucket.cyberspace.vn
- IdentityFile ~/.ssh/id_rsa
+    IdentityFile ~/.ssh/id_rsa
 
-Host 192.168.101.20
- IdentityFile ~/.ssh/zid_rsa</pre>
+Host lab
+    HostName 192.168.101.20
+    User huyennv9
+    IdentityFile "C:\Users\VTCC-\.ssh\id_rsa"
+    # IdentityFile ~/.ssh/id_rsa</pre>
+      <p>Từ giờ, bạn có thể gõ nhanh:</p>
+      <pre>ssh dev</pre>
+      <p>Thay cho:</p>
+      <pre>ssh -i "C:\Users\VTCC-\.ssh\id_rsa" huyennv9@192.168.101.20</pre>
+      <h4>Phân biệt cấu hình Host và HostName</h4>
+      <ul>
+        <li>Nếu có <code>HostName</code>:
+          <ul>
+            <li><code>Host</code> là nickname (tên bất kỳ) và <code>HostName</code>
+              là địa chỉ chính xác</li>
+          </ul>
+        </li>
+        <li>Nếu không có <code>HostName</code>:
+          <ul>
+            <li><code>Host</code> là địa chỉ chính xác luôn</li>
+          </ul>
+        </li>
+      </ul>
+      <br>
       <h3>Tham khảo</h3>
       <p><a target="_blank" href="https://medium.com/@Magical_Mudit/understanding-ssh-workflow-66a0e8d4bf65">Understanding
           SSH workflow - Mudit Maheshwari - Medium</a></p>
