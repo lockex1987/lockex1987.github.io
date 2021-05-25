@@ -15,7 +15,7 @@ function wol(string $broadcast, string $mac): void
         $options = socket_set_option($sock, SOL_SOCKET, SO_BROADCAST, true);
 
         if ($options !== false) {
-            $port = 7;
+            $port = 9;
             socket_sendto($sock, $packet, strlen($packet), 0, $broadcast, $port);
             socket_close($sock);
             echo 'Magic packet sent' . PHP_EOL;
@@ -50,7 +50,8 @@ function getMagicPacket(string $mac): string
 }
 
 
-$broadcast = '255.255.255.0';
-$mac = 'aa:bb:cc:11:22:33';
+$broadcast = '192.168.1.255';
+$mac = 'B0:6E:BF:BC:9F:A9';
 
 // echo getMagicPacket($mac) . PHP_EOL;
+wol($broadcast, $mac);

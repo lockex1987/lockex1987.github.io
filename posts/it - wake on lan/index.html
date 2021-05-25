@@ -39,16 +39,27 @@ WantedBy=basic.target</pre>
       <pre>sudo systemctl start wol.service</pre>
       <h3>Tool</h3>
       <p>Android: Wake On Lan</p>
-      <p>iPad: Mocha WOL (có cả ping xem máy có đang chạy hay không), dạo này
-        thấy không chạy được. Sử dụng app</p>
+      <p>iPad: <a href="https://apps.apple.com/us/app/mocha-wol/id422625778" target="_blank">Mocha
+          WOL</a> (có cả ping xem máy có đang chạy hay không), dạo này thấy
+        không chạy được. Sử dụng app <a href="https://apps.apple.com/us/app/wol-control/id355814023"
+          target="_blank">WOL Control</a>.</p>
+      <img src="images/mocha%20wol.png" alt=""><br>
+      <br>
+      <img src="images/wol%20control.png" alt="">
+      <p><br>
+      </p>
       <p>Windows: Sử dụng Depicus GUI.</p>
       <p>IMAGE</p>
       <p><br>
       </p>
       <p>Cấu hình để gửi magic packet:</p>
-      <p>IP:</p>
-      <p>Mac:</p>
-      <p>Port:</p>
+      <p>IP:192.168.1.255</p>
+      <p>Mac: B0:6E:BF:BC:9F:A9</p>
+      <p>Port: 9</p>
+      <p>Tool Depicus GUI cần thêm subnet 255.255.255.0 và Send options
+        Internet.</p>
+      <p>Chú ý: Có lần máy server của tôi đang khởi động, chưa xong, nhưng đã bị
+        tắt đột ngột, nên WOL không được.</p>
       <p><br>
       </p>
       <h3>Magic packet</h3>

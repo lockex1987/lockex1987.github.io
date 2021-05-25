@@ -268,27 +268,30 @@ sudo apt-get update<br>sudo apt-get install tlp tlp-rdw<br>sudo tlp start</pre>
         <li>Another Redis Desktop Manager</li>
         <li>Redis?</li>
       </ul>
-      <p><br>
-      </p>
       <p><a href="https://cttd.tk/posts/it%20-%20install%20wemp%20stack/" target="_blank">Cài
           đặt WEMP stack</a> </p>
-      <p><br>
-      </p>
       <h4>Sửa file host</h4>
       <p>Để có thể kết nối các trang web trên server 48.</p>
-      <p>Sử file <code>C:\Windows\System32\drivers\etc\hosts</code>:</p>
+      <p>Sửa file <code>C:\Windows\System32\drivers\etc\hosts</code>:</p>
       <pre>192.168.1.48    cttd.tk
 192.168.1.48    sso-passport.cttd.tk
 192.168.1.48    sso-admin.cttd.tk
 192.168.1.48    landing-page.cttd.tk</pre>
       <h4>Cấu hình ssh</h4>
-      <p>Để có thể kết nối đến server 48 không cần gõ password.</p>
-      <p>Để có thể sử dụng các repository trên GitHub.</p>
-      <p>Thêm public key trên server 48</p>
+      <p>Để có thể kết nối đến server 48 không cần gõ password và sử dụng các
+        repository trên GitHub.</p>
       <p>Cấu hình <code>C:\Users\&lt;tên user&gt;\.ssh\config</code> trên máy
-        vợ</p>
-      <p>Server 48 (mypc, myserver, cttd, cttd.tk)</p>
-      <p>Server github</p>
+        laptop:</p>
+      <pre>Host github.com
+    HostName ssh.github.com
+	User git
+    IdentityFile D:\lockex1987\.ssh\lockex1987
+    Port 443
+
+Host cttd.tk
+	HostName 192.168.1.48
+    User lockex1987
+    IdentityFile D:\lockex1987\.ssh\lockex1987</pre>
       <h3>Tham khảo</h3>
       <p> <a href="https://vinasupport.com/huong-dan-download-va-cai-dat-ubuntu-20-10/"
           target="_blank">Hướng dẫn Download và Cài Đặt Ubuntu 20.10 -
