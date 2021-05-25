@@ -46,8 +46,8 @@
         và file public key (<code>id_rsa.pub</code>).</p>
       <p>Trong trường hợp trên, do tôi đặt lên tên file là <code>bitbucket</code>
         nên sẽ có 2 file <code>bitbucket</code> và <code>bitbucket.pub</code>.</p>
-      <h3>Cài đặt public key cho tài khoản Bitbucket</h3>
-      <p>Mở trình duyệt và đăng nhập tài khoản Bitbucket.</p>
+      <h3>Cài đặt public key cho tài khoản BitBucket</h3>
+      <p>Mở trình duyệt và đăng nhập tài khoản BitBucket.</p>
       <p>Trên menu bên phải, click chọn Avatar &gt; Manage Account.</p>
       <div class="mb-3"> <img alt="" src="images/manage%20account.png"> </div>
       <p>Click SSH keys: Trang sẽ hiển thị danh sách các khóa SSH bạn đã thêm từ
@@ -97,25 +97,24 @@
       <ul>
         <li>Server BitBucket</li>
         <ul>
-          <li>User: nguyenmanh9x / email: nguyenmanh9x@gmail.com | project
-            sample1</li>
-          <li>User: manh.nguyen / email: manh.nguyen@gmail.com | project sample2</li>
+          <li>User: nguyenmanh9x, email: nguyenmanh9x@gmail.com, project sample1</li>
+          <li>User: manh.nguyen, email: manh.nguyen@gmail.com, project sample2</li>
         </ul>
         <li>Server GitHub</li>
         <ul>
-          <li>User: manhhip / email: nguyenmanh9x@gmail.com | project sample 3</li>
+          <li>User: manhhip, email: nguyenmanh9x@gmail.com, project sample3</li>
         </ul>
       </ul>
       <p>Tương ứng với 3 tài khoản trên các bạn sẽ phải tạo 3 bộ ssh-key tương
         ứng để cấu hình ssh tới server git. Trên màn hình command bạn làm các
         thao tác sau:</p>
       <pre>cd ~/.ssh<br>ssh-keygen -t rsa –C "option_email"</pre>
-      <p>This creates a new ssh key, using the provided email as a label.</p>
-      <p>(option_email bạn có thể điền email account của mình hoặc tùy ý hoặc ko
-        điền cũng được). =&gt; Nhập tên cho bộ ssh-key tương ứng.</p>
+      <p>Lệnh trên tạo một ssh key mới, sử dụng email cung cấp như là một nhãn.</p>
+      <p>Tham số <em>option_email</em> bạn có thể điền email account của mình
+        hoặc tùy ý hoặc ko điền cũng được.</p>
       <p>Gợi ý là bạn lên đặt gần giống user git để sau này có nhìn lại key cũng
-        phân biệt cho dễ. =&gt; Lặp lại thao tác này 3 lần để có 3 bộ key khác
-        nhau. Sau khi hoàn tất mình có 3 bộ key (private và public) như thế này</p>
+        phân biệt cho dễ. Lặp lại thao tác này 3 lần để có 3 bộ key khác nhau.
+        Sau khi hoàn tất mình có 3 bộ key (private và public) như thế này</p>
       <ul>
         <li>nguyenmanh9x / nguyenmanh9x.pub</li>
         <li>manhnguyenkey / manhnguyenkey.pub</li>
@@ -126,16 +125,16 @@
       <p>Bạn cần tạo file config trong thư mục <code>~/.ssh</code>. Tiến hành <code>vi
           ~/.ssh/config</code>. Thêm vào file này thông tin như sau:</p>
       <pre>Host bitbucket.org
-  HostName bitbucket.org
-  User nguyenmanh9x
-  IdentityFile ~/.ssh/nguyenmanh9xkey<br>
+    HostName bitbucket.org
+    User nguyenmanh9x
+    IdentityFile ~/.ssh/nguyenmanh9xkey<br>
 Host bitbucket.org
-  HostName bitbucket.org
-  User manh.nguyen
-  IdentityFile ~/.ssh/manhnguyenkey<br>
+    HostName bitbucket.org
+    User manh.nguyen
+    IdentityFile ~/.ssh/manhnguyenkey<br>
 Host github.com
-  User manhhip
-  IdentityFile ~/.ssh/manhhipkey</pre>
+    User manhhip
+    IdentityFile ~/.ssh/manhhipkey</pre>
       <p>Save lại file config. Vẫn chưa xong bạn cần phải add các file private
         key để đảm bảo các file này được lưu trữ lại. Trên cửa số dòng lệnh bạn
         thực hiện các lệnh</p>
@@ -145,7 +144,7 @@ ssh-add nguyenmanh9xkey &amp;&amp; ssh-add manhnguyenkey &amp;&amp; ssh-add manh
       <p>Bước cuối cùng là thử clone các repo thui nào. Lên 3 sever repo git
         tương ứng của bạn, chọn link để clone repo, thay vì clone bằng https thì
         giờ bạn clone repo với ssh. Sau khi lấy hoàn chỉnh mình có 3 link repo
-        như sau.</p>
+        như sau:</p>
       <ul>
         <li>git@bitbucket.org:masterjsteam/sample1.git</li>
         <li>git@bitbucket.org:demo_team/sample2.git</li>
@@ -165,26 +164,26 @@ ssh-add nguyenmanh9xkey &amp;&amp; ssh-add manhnguyenkey &amp;&amp; ssh-add manh
       <p>Giờ hãy thử clone 1 repo để test với SSH key vừa add và config xem sao
         các bạn nhé.</p>
       <h4>Cấu hình với hệ điều hành&nbsp;Linux</h4>
-      <p>Linux cách config về cơ bản khá giống với trên Mac. Có điều hơi khác 1
-        chút về cách điền thông tin ở file config và link remote origin của nó:
-        (hiện tại mình config như trên môi trường Mac nhưng mỗi lần thoát khỏi
-        cửa sổ control thì phải ssh-add lại key đó mới sử dụng được, ko rõ do
-        làm sao lên dưới đây là cách config lại của mình và đã apply thành công,
-        các bác có ghé hay đi qua cho mình vài lời tư vấn vơi nhé :D)</p>
+      <p>Linux cách config về cơ bản khá giống với trên Mac. Có điều hơi khác
+        một chút về cách điền thông tin ở file config và link remote origin của
+        nó: (hiện tại mình config như trên môi trường Mac nhưng mỗi lần thoát
+        khỏi cửa sổ control thì phải ssh-add lại key đó mới sử dụng được, ko rõ
+        do làm sao lên dưới đây là cách config lại của mình và đã apply thành
+        công, các bác có ghé hay đi qua cho mình vài lời tư vấn vơi nhé :D)</p>
       <p>Vẫn là các thông tin như trên, bạn edit config và thêm nội dung file
         config mới như sau:</p>
       <pre>Host bitbucket-acc1
-  HostName bitbucket.org
-  PreferredAuthentications publickey
-  IdentityFile ~/.ssh/nguyenmanh9xkey<br>
+    HostName bitbucket.org
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/nguyenmanh9xkey<br>
 Host bitbucket-acc2
-  HostName bitbucket.org
-  PreferredAuthentications publickey
-  IdentityFile ~/.ssh/manhnguyenkey<br>
+    HostName bitbucket.org
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/manhnguyenkey<br>
 Host github-acc1
-  HostName github.com
-  PreferredAuthentications publickey
-  IdentityFile ~/.ssh/manhhipkey</pre>
+    HostName github.com
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/manhhipkey</pre>
       <p>Thay lại các remote server như sau:</p>
       <ul>
         <li>git@bitbucket-acc1:masterjsteam/sample1.git</li>
@@ -213,8 +212,10 @@ Host github-acc1
     master pushes to master (fast-forwardable)</pre>
       <p> Thay đổi URL của repository cũ bằng lệnh <code>git remote set-url</code>.
         Ở URL mới, chúng ta sẽ đổi <code>https</code> thành <code>ssh</code>,
-        thêm <code>git@</code> trước tên host, do đó <code>https://github.com/Foo/Bar.git</code>
-        sẽ trở thành <code>ssh://git@github.com/Foo/Bar.git</code>.</p>
+        thêm <code>git@</code> trước tên host, do đó:</p>
+      <p><code>https://github.com/Foo/Bar.git</code></p>
+      <p>Sẽ trở thành:</p>
+      <p><code>ssh://git@github.com/Foo/Bar.git</code></p>
       <pre class="out-of-box">git remote set-url origin ssh://git@bitbucket.cyberspace.vn:7999/sn/safenet_front.git<br><br>git remote set-url origin ssh://git@github.com/lockex1987/lockex1987.github.io</pre>
       <p> Clone:</p>
       <pre class="out-of-box">git clone ssh://git@bitbucket.cyberspace.vn:7999/sn/safenet_front.git</pre>
@@ -330,14 +331,15 @@ All identities removed.
 $ <span class="text-success">ssh-add -l</span>
 The agent has no identities.</pre>
       <h3>Tham khảo</h3>
-      <p><a href="https://techmaster.vn/posts/34411/github-su-dung-ssh-hay-https"
-          target="_blank">Github: sử dụng ssh hay https</a></p>
-      <p><a href="https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/"
+      <p><a href="https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/"
+
           target="_blank">Token authentication requirements for Git operations -
           The GitHub Blog</a></p>
-      <p><a href="https://docs.github.com/en/github/authenticating-to-github/about-authentication-to-github"
+      <p><a href="https://docs.github.com/en/github/authenticating-to-github/about-authentication-to-github"
+
           target="_blank">About authentication to GitHub - GitHub Docs</a></p>
-      <p><a href="https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account"
+      <p><a href="https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account"
+
           target="_blank">Adding a new SSH key to your GitHub account - GitHub
           Docs</a> </p>
       <p><br>

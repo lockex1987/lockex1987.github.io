@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Install OS and softwares">
+    <meta name="description" content="Install OS and softwares, ubuntu, windows">
     <title>Cài đặt hệ điều hành và phần mềm</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -32,11 +32,11 @@
       <p>Ổ SSD chia làm 3 phân vùng:</p>
       <p>Phân vùng chính là <code>/dev/sda1</code>, mount vào <code>/</code>,
         định dạng ext4, dung lượng 15G.</p>
-      <p>Phân vùng swap là <code>/dev/sda5</code>, dun lượng ?G.</p>
+      <p>Phân vùng swap là <code>/dev/sda5</code>, dun lượng ?G (bằng RAM).</p>
       <p>Ổ HDD chia làm 1 phân vùng:</p>
       <p>Ổ cứng chứa dữ liệu ở phân vùng <code>/dev/sda6</code>, mount vào <code>/media/lockex1987/data</code>,
         định dạng ext4, dung lượng 2T.</p>
-      <div class="mb-3"><img src="images/screenshot%20from%202018-04-05%2019-52-47.png"
+      <div class="mb-3"><img src="images/screenshot%20from%202018-04-05%2019-52-47.png"
           alt=""></div>
       <div class="mb-3"><img src="images/screenshot%20from%202018-04-05%2020-02-06.png"></div>
       <div class="mb-3"><img src="images/screenshot%20from%202018-04-05%2020-14-02.png"></div>
@@ -100,17 +100,19 @@ sudo apt autoremove
           <ul>
             <li><a href="https://en.bandisoft.com/honeyview/" target="_blank">Honeyview</a>
               (Windows, cài trên Ubuntu qua WINE)</li>
-            <li>Comix (không được maintain nữa, không cài được trên Ubuntu mới
-              do dùng Python 2)</li>
-            <li>mcomix-tabetai (không được maintain nữa, hay lỗi không mở được
-              file)</li>
+            <li><span style="text-decoration: line-through;">Comix</span> (không
+              được maintain nữa, không cài được trên Ubuntu mới do dùng Python
+              2)</li>
+            <li><span style="text-decoration: line-through;">mcomix-tabetai</span>
+              (không được maintain nữa, hay lỗi không mở được file)</li>
           </ul>
         </li>
         <li>Networking:
           <ul>
             <li><a href="#delugeInstall">Deluge</a></li>
-            <li>Chrome / Chromium (<code>sudo apt install chromium-browser</code>)
-              / Firefox</li>
+            <li>Chrome / không dùng <span style="text-decoration: line-through;">Chromium</span>
+              vì không đồng bộ bookmark được (<code>sudo apt install
+                chromium-browser</code>) / <span style="text-decoration: line-through;">Firefox</span></li>
             <li>Cài extension Chrome extension source viewer, ColorZilla,
               YouTube Ad Auto-skipper,...</li>
             <li><a href="#teamViewerInstall">Team Viewer</a></li>
@@ -121,7 +123,8 @@ sudo apt autoremove
             <li><a href="#blueGriffonInstall">BlueGriffon</a></li>
             <li>Foliate <del>FBreader</del> (để mở file epub)</li>
             <li>Libre Office / MS Office</li>
-            <li>Lac Viet 2002 / Lingoes</li>
+            <li><span style="text-decoration: line-through;">Lac Viet 2002</span>
+              / <span style="text-decoration: line-through;">Lingoes</span></li>
           </ul>
         </li>
         <li>Multimedia
@@ -131,7 +134,7 @@ sudo apt autoremove
         </li>
         <li>System tool:
           <ul>
-            <li>Cài bộ gõ tiếng Việt <a href="https://lockex1987.github.io/archive/linux%20-%20install%20vietnamese%20input%20method%20on%20ubuntu/"
+            <li>Cài bộ gõ tiếng Việt <a href="https://lockex1987.github.io/archive/linux%20-%20install%20vietnamese%20input%20method%20on%20ubuntu/"
                 target="_blank">ibus-unikey</a> trên Ubuntu, hoặc Unikey trên
               Windows</li>
             <li>Meld</li>
@@ -143,27 +146,27 @@ sudo apt autoremove
         </li>
         <li>Programming:
           <ul>
-            <li><a href="https://lockex1987.github.io/archive/git%20-%20install%20and%20config/"
+            <li><a href="https://lockex1987.github.io/archive/git%20-%20install%20and%20config/"
                 target="_blank">git</a></li>
-            <li><a href="https://lockex1987.github.io/posts/linux%20-%20install%20nginx/index.html"
+            <li><a href="https://lockex1987.github.io/posts/linux%20-%20install%20nginx/index.html"
                 target="_blank">nginx</a></li>
-            <li><a href="https://lockex1987.github.io/posts/linux%20-%20install%20php/"
+            <li><a href="https://lockex1987.github.io/posts/linux%20-%20install%20php/"
                 target="_blank">PHP</a></li>
-            <li><a href="http://koala-app.com/" target="_blank">Koala</a> (<code>sudo
-                apt install ./koala_2.3.0_x86_64.deb</code>, <code>sudo apt-get
-                install libgconf-2-4</code>)</li>
-            <li><a href="https://lockex1987.github.io/posts/linux%20-%20install%20node/"
+            <li><a href="http://koala-app.com/" target="_blank" style="text-decoration: line-through;">Koala</a>
+              (<code>sudo apt install ./koala_2.3.0_x86_64.deb</code>, <code>sudo
+                apt-get install libgconf-2-4</code>) dùng VSCode extension</li>
+            <li><a href="https://lockex1987.github.io/posts/linux%20-%20install%20node/"
                 target="_blank">Node</a></li>
-            <li><a href="https://lockex1987.github.io/archive/linux%20-%20install%20oracle%20jdk/"
-                target="_blank">JDK</a></li>
-            <li><a href="https://lockex1987.github.io/archive/java%20-%20maven/"
-                target="_blank">Maven</a></li>
-            <li><a href="https://lockex1987.github.io/archive/java%20-%20install%20eclipse/"
-                target="_blank">Eclipse</a></li>
-            <li><a href="http://java-decompiler.github.io/" target="_blank">JD
-                GUI</a></li>
+            <li><span style="text-decoration: line-through;"><a href="https://lockex1987.github.io/archive/linux%20-%20install%20oracle%20jdk/"
+                  target="_blank">JDK</a></span></li>
+            <li><span style="text-decoration: line-through;"><a href="https://lockex1987.github.io/archive/java%20-%20maven/"
+                  target="_blank">Maven</a></span></li>
+            <li><span style="text-decoration: line-through;"><a href="https://lockex1987.github.io/archive/java%20-%20install%20eclipse/"
+                  target="_blank">Eclipse</a></span></li>
+            <li><span style="text-decoration: line-through;"><a href="http://java-decompiler.github.io/"
+                  target="_blank">JD GUI</a></span></li>
             <li>VSCode</li>
-            <li><a href="https://lockex1987.github.io/posts/linux%20-%20install%20mysql/"
+            <li><a href="https://lockex1987.github.io/posts/linux%20-%20install%20mysql/"
                 target="_blank">MySQL</a> / MariaDB</li>
             <li>DB client:</li>
             <ul>
@@ -171,19 +174,17 @@ sudo apt autoremove
               <li><a href="https://www.heidisql.com/download.php" target="_blank">HeidiSQL</a>
                 (đi kèm MariaDB trên Windows, nhẹ, có sửa bảng, cài trên Ubuntu
                 qua WINE)</li>
-              <li>Beekeeper Studio (hiện đại, chỉ đánh được lệnh)</li>
-              <li>Mysql Workbench Community (giao diện hơi rối, nhiều tính năng)</li>
-              <li>Sqlectron (chỉ đánh được lệnh)</li>
+              <li><span style="text-decoration: line-through;">Beekeeper Studio</span>
+                (hiện đại, chỉ đánh được lệnh)</li>
+              <li><span style="text-decoration: line-through;">Mysql Workbench
+                  Community</span> (giao diện hơi rối, nhiều tính năng)</li>
+              <li><span style="text-decoration: line-through;">Sqlectron</span>
+                (chỉ đánh được lệnh)</li>
             </ul>
           </ul>
         </li>
-        <li>Game:
-          <ul>
-            <li>Aisleriot</li>
-            <li>ZSNES</li>
-            <li>Supertuxkart</li>
-          </ul>
-        </li>
+        <li><span style="text-decoration: line-through;">Game: Aisleriot, ZSNES,
+            Supertuxkart</span> </li>
       </ul>
       <p>Cài đặt thông qua kho Ubuntu Software:</p>
       <ul>
@@ -193,7 +194,7 @@ sudo apt autoremove
         <li>GNOME Tweaks</li>
         <li>Meld</li>
         <li>Foliate</li>
-        <li>Beekeeper Studio</li>
+        <li><span style="text-decoration: line-through;">Beekeeper Studio</span></li>
         <li>WINE</li>
       </ul>
       <h4>VSCode</h4>
@@ -233,7 +234,7 @@ sudo apt-get update<br>sudo apt-get install tlp tlp-rdw<br>sudo tlp start</pre>
       <p>No configuration required for using TLP. Install it and forget about
         it.</p>
       <h4 id="teamViewerInstall">Team Viewer</h4>
-      <p>Tải file <code>deb</code> 64bit từ <a href="https://www.teamviewer.com/en/download/linux/"
+      <p>Tải file <code>deb</code> 64bit từ <a href="https://www.teamviewer.com/en/download/linux/"
           target="_blank">trang chủ</a>.</p>
       <p>Câu lệnh cài:</p>
       <pre>sudo apt install ./teamviewer_15.12.4_amd64.deb</pre>
@@ -245,18 +246,59 @@ sudo apt-get update<br>sudo apt-get install tlp tlp-rdw<br>sudo tlp start</pre>
       <p>Truy cập địa chỉ:</p>
       <p><a href="http://localhost:8112" target="_blank">http://&lt;server&gt;:8112</a><br>
       </p>
-      <p>Password mặc định là <strong>deluge</strong>.<br>
+      <p>Password mặc định là <strong>deluge</strong>.</p>
+      <h3>Setup máy tính Windows</h3>
+      <p>Tôi sẽ sử dụng laptop của vợ cho tiện. Máy tính trên gác đóng vai trò
+        là server thôi. Máy tính của vợ tôi cài đặt Windows.</p>
+      <h4>Cài đặt phần mềm</h4>
+      <p>Danh sách các phần mềm hay dùng</p>
+      <ul>
+        <li>Notepad++</li>
+        <li>Typora</li>
+        <li>BlueGriffon</li>
+        <li>Depecious WOL</li>
+        <li>KeePassX</li>
+        <li>Honeyview</li>
+        <li>Meld</li>
+        <li>VLC</li>
+        <li>Git</li>
+        <li>Nginx</li>
+        <li>PHP</li>
+        <li>Node</li>
+        <li>Another Redis Desktop Manager</li>
+        <li>Redis?</li>
+      </ul>
+      <p><br>
       </p>
+      <p><a href="https://cttd.tk/posts/it%20-%20install%20wemp%20stack/" target="_blank">Cài
+          đặt WEMP stack</a> </p>
+      <p><br>
+      </p>
+      <h4>Sửa file host</h4>
+      <p>Để có thể kết nối các trang web trên server 48.</p>
+      <p>Sử file <code>C:\Windows\System32\drivers\etc\hosts</code>:</p>
+      <pre>192.168.1.48    cttd.tk
+192.168.1.48    sso-passport.cttd.tk
+192.168.1.48    sso-admin.cttd.tk
+192.168.1.48    landing-page.cttd.tk</pre>
+      <h4>Cấu hình ssh</h4>
+      <p>Để có thể kết nối đến server 48 không cần gõ password.</p>
+      <p>Để có thể sử dụng các repository trên GitHub.</p>
+      <p>Thêm public key trên server 48</p>
+      <p>Cấu hình <code>C:\Users\&lt;tên user&gt;\.ssh\config</code> trên máy
+        vợ</p>
+      <p>Server 48 (mypc, myserver, cttd, cttd.tk)</p>
+      <p>Server github</p>
       <h3>Tham khảo</h3>
-      <p> <a href="https://vinasupport.com/huong-dan-download-va-cai-dat-ubuntu-20-10/"
+      <p> <a href="https://vinasupport.com/huong-dan-download-va-cai-dat-ubuntu-20-10/"
           target="_blank">Hướng dẫn Download và Cài Đặt Ubuntu 20.10 -
           VinaSupport</a> </p>
-      <p> <a href="https://vinasupport.com/huong-dan-nang-cap-len-ubuntu-20-10-tu-cac-phien-ban-cu/"
+      <p> <a href="https://vinasupport.com/huong-dan-nang-cap-len-ubuntu-20-10-tu-cac-phien-ban-cu/"
           target="_blank">Hướng dẫn nâng cấp lên Ubuntu 20.10 từ các phiên bản
           cũ - VinaSupport</a> </p>
       <p><a href="https://www.tecmint.com/install-ubuntu-20-04-desktop/" target="_blank">How
           To Install Ubuntu 20.04 Desktop</a></p>
-      <p><a href="https://www.tecmint.com/things-to-do-after-installing-ubuntu-20-04/"
+      <p><a href="https://www.tecmint.com/things-to-do-after-installing-ubuntu-20-04/"
           target="_blank">25 Things to Do After Installing Ubuntu 20.04 LTS
           (Focal Fossa)</a></p>
     </article>

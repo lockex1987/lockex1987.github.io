@@ -15,8 +15,9 @@
       <p>Cấu hình và sử dụng SSH để không phải gõ password.</p>
       <p>Sử dụng lệnh <code>ssh</code> để thực hiện lệnh.</p>
       <p>Sử dụng lệnh <code>scp</code> để copy file (upload hoặc download).</p>
-      <p>Không dùng password nữa để có thể thực hiện các script tự động. Nếu
-        dùng password thì script sẽ dừng lại, chờ chúng ta nhập password.</p>
+      <p>Không dùng password (passphrase) nữa để có thể thực hiện các script tự
+        động. Nếu dùng password thì script sẽ dừng lại, chờ chúng ta nhập
+        password.</p>
       <h3>Cài đặt</h3>
       <p>Để có thể ssh từ một máy khác thì máy hiện tại (server) phải cài đặt <code>openssh-server</code>:</p>
       <pre>sudo apt install openssh-server</pre>
@@ -24,7 +25,8 @@
       <pre>sudo systemctl status ssh<br><br>sudo systemctl enable ssh</pre>
       <p>Ở client, nếu là máy Linux thì chúng ta có thể cài đặt <code>openssh-client</code>.
         Khi cài xong gói đó chúng ta sẽ có lệnh <code>ssh</code>. Ngoài ra
-        chúng ta có thể sử dụng các tool như Putty hoặc iTerminal (iPad).</p>
+        chúng ta có thể sử dụng các tool như Putty, Git Bash (Windows) hoặc
+        iTerminal (iPad).</p>
       <h3>Generate key mới</h3>
       <p>Thực hiện câu lệnh:</p>
       <pre>ssh-keygen -t rsa<br>ssh-keygen -t rsa -b 4096 -C "lockex1987@gmail.com"</pre>
@@ -98,6 +100,19 @@ Host lab
       <pre>ssh dev</pre>
       <p>Thay cho:</p>
       <pre>ssh -i "C:\Users\VTCC-\.ssh\id_rsa" huyennv9@192.168.101.20</pre>
+      <p>Chú ý <code>Host</code> phải giống như trong URL của lệnh <code>git
+          remote -v</code>.</p>
+      <p>Giả sử lệnh <code>git remote -v</code> có kết quả như sau:</p>
+      <pre>origin  ssh://git@github/lockex1987/lockex1987.github.io (fetch)
+origin  ssh://git@github/lockex1987/lockex1987.github.io (push)</pre>
+      <p>Chú ý chỗ host đang là <code>github</code> thôi, không phải <code>github.com</code>.</p>
+      <p>Thì cấu hình <code>.ssh/config</code> phải là:</p>
+      <pre>Host github
+    HostName ssh.github.com
+	User git
+    IdentityFile "C:\Users\VTCC-\.ssh\lockex1987"
+    # Port 22
+    Port 443</pre>
       <h4>Phân biệt cấu hình Host và HostName</h4>
       <ul>
         <li>Nếu có <code>HostName</code>:
@@ -112,14 +127,6 @@ Host lab
           </ul>
         </li>
       </ul>
-      <br>
-      <h3>Tham khảo</h3>
-      <p><a target="_blank" href="https://medium.com/@Magical_Mudit/understanding-ssh-workflow-66a0e8d4bf65">Understanding
-          SSH workflow - Mudit Maheshwari - Medium</a></p>
-      <p><a target="_blank" href="https://xuanthulab.net/cai-dat-dich-vu-ssh-tren-server-linux-va-windows.html">Cài
-          đặt dịch vụ SSH trên Server Linux và Windows</a></p>
-      <p><a target="_blank" href="https://xuanthulab.net/su-dung-rsync-dong-bo-thu-muc-tren-linux-va-windows.html">Sử
-          dụng Rsync đồng bộ thư mục trên Linux và Windows</a></p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>
