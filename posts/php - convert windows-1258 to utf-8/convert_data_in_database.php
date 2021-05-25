@@ -4,7 +4,6 @@ include 'vendor/autoload.php';
 
 use Cttd\Common\Utils\CharsetConverter;
 
-
 /**
  * Convert dữ liệu lỗi cũ trong cơ sở dữ liệu.
  */
