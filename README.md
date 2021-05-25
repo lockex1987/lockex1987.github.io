@@ -1,3 +1,3 @@
 ## lockex1987.github.io
 
-My personal website
+My personal website (edited on laptop)
