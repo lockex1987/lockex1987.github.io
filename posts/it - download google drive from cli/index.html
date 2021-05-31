@@ -49,6 +49,238 @@
       <p>Sử dụng RClone?</p>
       <p><a href="https://www.youtube.com/watch?v=yq_MjFj_Sf4" target="_blank">rclone
           mount google drive linux | rclone mount ubuntu 20.10 - YouTube</a></p>
+      <p>Cài đặt</p>
+      <pre>~$ sudo apt install rclone
+[sudo] password for lockex1987: 
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following NEW packages will be installed:
+  rclone
+0 upgraded, 1 newly installed, 0 to remove and 42 not upgraded.
+Need to get 10,5 MB of archives.
+After this operation, 42,7 MB of additional disk space will be used.
+Get:1 http://opensource.xtdv.net/ubuntu hirsute/universe amd64 rclone amd64 1.53.3-1 [10,5 MB]
+Fetched 10,5 MB in 15s (715 kB/s)                                                                                                                                                                         
+Selecting previously unselected package rclone.
+(Reading database ... 241920 files and directories currently installed.)
+Preparing to unpack .../rclone_1.53.3-1_amd64.deb ...
+Unpacking rclone (1.53.3-1) ...
+Setting up rclone (1.53.3-1) ...
+Processing triggers for man-db (2.9.4-2) ...</pre>
+      <p>Cấu hình:</p>
+      <pre>~$ rclone config
+2021/05/31 20:10:57 NOTICE: Config file "/home/lockex1987/.config/rclone/rclone.conf" not found - using defaults
+No remotes found - make a new one
+n) New remote
+s) Set configuration password
+q) Quit config
+n/s/q&gt; q
+~$ cd ~
+~$ rclone config
+2021/05/31 20:11:32 NOTICE: Config file "/home/lockex1987/.config/rclone/rclone.conf" not found - using defaults
+No remotes found - make a new one
+n) New remote
+s) Set configuration password
+q) Quit config
+n/s/q&gt; n
+name&gt; google
+Type of storage to configure.
+Enter a string value. Press Enter for the default ("").
+Choose a number from below, or type in your own value
+ 1 / 1Fichier
+   \ "fichier"
+ 2 / Alias for an existing remote
+   \ "alias"
+ 3 / Amazon Drive
+   \ "amazon cloud drive"
+ 4 / Amazon S3 Compliant Storage Provider (AWS, Alibaba, Ceph, Digital Ocean, Dreamhost, IBM COS, Minio, Tencent COS, etc)
+   \ "s3"
+ 5 / Backblaze B2
+   \ "b2"
+ 6 / Box
+   \ "box"
+ 7 / Cache a remote
+   \ "cache"
+ 8 / Citrix Sharefile
+   \ "sharefile"
+ 9 / Dropbox
+   \ "dropbox"
+10 / Encrypt/Decrypt a remote
+   \ "crypt"
+11 / FTP Connection
+   \ "ftp"
+12 / Google Cloud Storage (this is not Google Drive)
+   \ "google cloud storage"
+13 / Google Drive
+   \ "drive"
+14 / Google Photos
+   \ "google photos"
+15 / Hubic
+   \ "hubic"
+16 / In memory object storage system.
+   \ "memory"
+17 / Jottacloud
+   \ "jottacloud"
+18 / Koofr
+   \ "koofr"
+19 / Local Disk
+   \ "local"
+20 / Mail.ru Cloud
+   \ "mailru"
+21 / Microsoft Azure Blob Storage
+   \ "azureblob"
+22 / Microsoft OneDrive
+   \ "onedrive"
+23 / OpenDrive
+   \ "opendrive"
+24 / OpenStack Swift (Rackspace Cloud Files, Memset Memstore, OVH)
+   \ "swift"
+25 / Pcloud
+   \ "pcloud"
+26 / Put.io
+   \ "putio"
+27 / SSH/SFTP Connection
+   \ "sftp"
+28 / Sugarsync
+   \ "sugarsync"
+29 / Transparently chunk/split large files
+   \ "chunker"
+30 / Union merges the contents of several upstream fs
+   \ "union"
+31 / Webdav
+   \ "webdav"
+32 / Yandex Disk
+   \ "yandex"
+33 / http Connection
+   \ "http"
+34 / premiumize.me
+   \ "premiumizeme"
+35 / seafile
+   \ "seafile"
+Storage&gt; 13
+** See help for drive backend at: https://rclone.org/drive/ **
+
+Google Application Client Id
+Setting your own is recommended.
+See https://rclone.org/drive/#making-your-own-client-id for how to create your own.
+If you leave this blank, it will use an internal key which is low performance.
+Enter a string value. Press Enter for the default ("").
+client_id&gt; 
+OAuth Client Secret
+Leave blank normally.
+Enter a string value. Press Enter for the default ("").
+client_secret&gt; 
+Scope that rclone should use when requesting access from drive.
+Enter a string value. Press Enter for the default ("").
+Choose a number from below, or type in your own value
+ 1 / Full access all files, excluding Application Data Folder.
+   \ "drive"
+ 2 / Read-only access to file metadata and file contents.
+   \ "drive.readonly"
+   / Access to files created by rclone only.
+ 3 | These are visible in the drive website.
+   | File authorization is revoked when the user deauthorizes the app.
+   \ "drive.file"
+   / Allows read and write access to the Application Data folder.
+ 4 | This is not visible in the drive website.
+   \ "drive.appfolder"
+   / Allows read-only access to file metadata but
+ 5 | does not allow any access to read or download file content.
+   \ "drive.metadata.readonly"
+scope&gt; 1
+ID of the root folder
+Leave blank normally.
+
+Fill in to access "Computers" folders (see docs), or for rclone to use
+a non root folder as its starting point.
+
+Enter a string value. Press Enter for the default ("").
+root_folder_id&gt; 
+Service Account Credentials JSON file path 
+Leave blank normally.
+Needed only if you want use SA instead of interactive login.
+
+Leading `~` will be expanded in the file name as will environment variables such as `${RCLONE_CONFIG_DIR}`.
+
+Enter a string value. Press Enter for the default ("").
+service_account_file&gt; 
+Edit advanced config? (y/n)
+y) Yes
+n) No (default)
+y/n&gt; n
+Remote config
+Use auto config?
+ * Say Y if not sure
+ * Say N if you are working on a remote or headless machine
+y) Yes (default)
+n) No
+y/n&gt; y
+If your browser doesn't open automatically go to the following link: http://127.0.0.1:53682/auth?state=mxMaPtzLjIqQSNhj3NyoNw
+Log in and authorize rclone for access
+Waiting for code...
+Got code
+Configure this as a team drive?
+y) Yes
+n) No (default)
+y/n&gt; n
+--------------------
+[google]
+scope = drive
+token = {"access_token":"xxx","token_type":"Bearer","refresh_token":"yyy","expiry":"2021-05-31T21:14:15.6917157+07:00"}
+--------------------
+y) Yes this is OK (default)
+e) Edit this remote
+d) Delete this remote
+y/e/d&gt; y
+Current remotes:
+
+Name                 Type
+====                 ====
+google               drive
+
+e) Edit existing remote
+n) New remote
+d) Delete remote
+r) Rename remote
+c) Copy remote
+s) Set configuration password
+q) Quit config
+e/n/d/r/c/s/q&gt; q</pre>
+      <p>Sử dụng, mount:</p>
+      <pre>~$ rclone listremotes
+google:<br><br>~$ mkdir my-google-drive<br><br>~$ chmod 775 my-google-drive<br>
+~$ rclone mount google: ~/my-google-drive/
+</pre>
+      <p>Ở một tab khác:</p>
+      <pre>~$ cd my-google-drive/
+~/my-google-drive$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs           782M  2,0M  780M   1% /run
+/dev/sda2       102G   29G   68G  31% /
+tmpfs           3,9G  113M  3,8G   3% /dev/shm
+tmpfs           5,0M  4,0K  5,0M   1% /run/lock
+tmpfs           4,0M     0  4,0M   0% /sys/fs/cgroup
+/dev/sda1       511M  5,3M  506M   2% /boot/efi
+/dev/sdb1       1,8T  1,6T  159G  91% /media/lockex1987/data
+tmpfs           782M  712K  782M   1% /run/user/1000
+google:          15G  240M   15G   2% /home/lockex1987/my-google-drive
+~/my-google-drive$ ls
+'Beginning Progressive Web App Development_ Creating a Native App Experience on the Web ( PDFDrive ).pdf'
+'leaflet.js essentials.pdf'
+'leaflet.js succinctly.epub'
+'stargirl spring break special 01 (2021).cbz'
+'tic-tac-toe upgraded.webm'
+'tieu ly phi dao - co long.epub'
+~/my-google-drive$ cp Beginning\ Progressive\ Web\ App\ Development_\ Creating\ a\ Native\ App\ Experience\ on\ the\ Web\ \(\ PDFDrive\ \).pdf ~/new
+~/my-google-drive$ cp leaflet.js\ essentials.pdf ~/new/
+~/my-google-drive$ cp leaflet.js\ succinctly.epub ~/new/
+~/my-google-drive$ cp stargirl\ spring\ break\ special\ 01\ \(2021\).cbz ~/new/
+~/my-google-drive$ cp tic-tac-toe\ upgraded.webm ~/new/
+~/my-google-drive$ cp tieu\ ly\ phi\ dao\ -\ co\ long.epub ~/new/
+~/my-google-drive$ </pre>
+      <p><br>
+      </p>
       <p><br>
       </p>
       <p><br>
