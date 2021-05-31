@@ -1,5 +1,13 @@
 <?php
 
+// Thiết lập đúng header
+header('Content-Type: text/event-stream');
+header('Cache-Control: no-cache');
+
+// Phải thêm dòng này
+// https://serverfault.com/questions/801628/for-server-sent-events-sse-what-nginx-proxy-configuration-is-appropriate
+header('X-Accel-Buffering: no');
+
 // Thêm đoạn này nếu không mặc định script PHP sẽ dừng lại sau 30 giây
 set_time_limit(0);
 
@@ -13,6 +21,7 @@ while (true) {
 
     sleep(2);
 
+    // Thêm đoạn này nếu không sẽ là vòng lặp vô hạn trên server
     if (connection_aborted()) {
         break;
     }
@@ -23,14 +32,6 @@ while (true) {
  */
 function sendMessage($value, $event = null, $id = null, $retry = null)
 {
-    // Thiết lập đúng header
-    header('Content-Type: text/event-stream');
-    header('Cache-Control: no-cache');
-
-    // Phải thêm dòng này
-    // https://serverfault.com/questions/801628/for-server-sent-events-sse-what-nginx-proxy-configuration-is-appropriate
-    header('X-Accel-Buffering: no');
-
     if ($retry) {
         echo "retry: $retry\n";
     }
@@ -45,7 +46,6 @@ function sendMessage($value, $event = null, $id = null, $retry = null)
 
     echo "data: $value\n\n";
 
-    // ob_end_flush();
     ob_flush();
     flush();
 }
