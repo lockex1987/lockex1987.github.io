@@ -19,28 +19,38 @@
         <h3>Demo</h3>
 
         <div class="mb-3">
-            <label class="material-switch mb-0" style="display: none" id="notificationSettingContainer">
-                <input type="checkbox" id="notificationSettingCheckbox" onchange="changeNotificationSetting()">
+            <label class="material-switch mb-0"
+                style="display: none"
+                id="notificationSettingContainer">
+                <input type="checkbox"
+                    id="notificationSettingCheckbox"
+                    onchange="changeNotificationSetting()">
                 <span>Cho phép notification</span>
             </label>
 
-            <span class="text-success" style="display: none" id="grantedMessage">
+            <span class="text-success"
+                style="display: none"
+                id="grantedMessage">
                 Permission granted
             </span>
 
-            <span class="text-danger" style="display: none" id="deniedMessage">
+            <span class="text-danger"
+                style="display: none"
+                id="deniedMessage">
                 Permission denied
             </span>
         </div>
 
         <div class="mb-3">
-            <button class="btn btn-primary" onclick="notifyMe()">
+            <button class="btn btn-primary"
+                onclick="notifyMe()">
 				Notify me
 			</button>
         </div>
 
         <div class="mb-3">
-            <button class="btn btn-secondary" onclick="testCheckNotify()">
+            <button class="btn btn-secondary"
+                onclick="testCheckNotify()">
 				Check notify
 			</button>
         </div>

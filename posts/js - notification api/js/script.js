@@ -2,7 +2,7 @@ function notifyMe() {
     const options = {
         body: 'Whaaa, I\'m becoming well-adjusted, pay attention to me!',
         icon: 'images/happy_head.png'
-    }
+    };
     const n = new Notification('Emogotchi says', options);
     setTimeout(n.close.bind(n), 5000);
 }
@@ -43,13 +43,9 @@ function changeNotificationSetting() {
             });
     } else {
         alert('Hiện không có API để revoke :(. Bạn phải cấu hình ở trình duyệt.');
+        // Không sử dụng navigator.permissions.revoke({ name: 'notifications' })
+        // Sử dụng web worker và unregister
         checkbox.checked = true;
-        return;
-
-        navigator.permissions.revoke({ name: 'notifications' })
-            .then((result) => {
-                console.log(result.state);
-            });
     }
 }
 
@@ -66,10 +62,13 @@ function updateNotificationSettingCheckbox() {
     deniedMessage.style.display = 'none';
 
     if (Notification.permission === 'granted') {
+        // Người dùng cho phép
         grantedMessage.style.display = '';
     } else if (Notification.permission === 'denied') {
+        // Người dùng từ chối
         deniedMessage.style.display = '';
     } else {
+        // Người dùng chưa cấu hình cho phép hay từ chối
         notificationSettingContainer.style.display = '';
     }
 }
