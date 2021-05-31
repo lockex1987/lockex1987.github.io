@@ -212,3 +212,19 @@ figure {
         margin-top: 0.5rem;
     }
 }
+
+
+// Hiển thị các dấu $ hoặc # ở phía trước câu lệnh
+// Các ký tự này sẽ không bị copy
+.command-line {
+    &::before {
+        content: "$ ";
+        font-size: 0.75rem;
+    }
+}
+
+.root-command-line {
+    &::before {
+        content: "# ";
+    }
+}
