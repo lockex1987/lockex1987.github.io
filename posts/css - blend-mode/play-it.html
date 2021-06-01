@@ -6,163 +6,9 @@
 	<meta charset="UTF-8" />
 	<title>Playit</title>
 
-	<script>
-		function playit_onload() {
-			var preval = ""
-			preval = document.getElementById("preselectedValue").value
-			if (preval != "") {
-				change_position(preval)
-				var x = document.getElementsByTagName("input")
-				var l = x.length
-				for (i = 0; i < l; i++) {
-					if (x[i].value == preval) {
-						x[i].checked = true
-					}
-				}
-				document.getElementById("container").style.display = "block";
-			}
-		}
+	
 
-		function click_position(obj) {
-			change_position(obj.value)
-		}
-
-		function change_position(val) {
-
-			var s = "demoDIV";
-
-			s = "myDIV ";
-			s = s.trim();
-
-			document.getElementById(s).style.backgroundBlendMode = val;
-
-			var x = "background-blend-mode:<span id='enlargecssprop'>" + val + "</span>";
-			var y = "#myDIV {<br>    width: 200px;<br>    height: 200px;<br>    background-size: 200px 200px;<br>    background-repeat: no-repeat;<br>    background-image: linear-gradient(to right, black 0%,white 100%), url('w3css.gif');<br>    ###CSSPROP###;<br>}<br>";
-			var z = y.replace("###CSSPROP###", x);
-
-			document.getElementById("styleDIV").innerHTML = z;
-
-		}
-
-		if (!String.prototype.trim) {
-			String.prototype.trim = function () {
-				return this.replace(/^\s+|\s+$/g, '');
-			};
-		}
-	</script>
-
-	<style>
-		body {
-			font-family: verdana;
-			font-size: 14px;
-		}
-		
-		.container {
-			width: 100%;
-			max-width: 974px;
-			min-width: 0;
-			background-color: #f1f1f1;
-			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-			margin: auto;
-			left: 0;
-			right: 0;
-			height: auto;
-			bottom: auto;
-			display: none;
-		}
-		
-		.codecontainer {
-			width: 50%;
-			float: left;
-		}
-		
-		.codecontainer .radio {
-			line-height: 2;
-		}
-		
-		.resultcontainer {
-			width: 48%;
-			float: left;
-		}
-		
-		.playit {
-			background-color: #ffffff;
-			padding: 15px;
-			margin: 15px;
-			margin-top: 0;
-			font-family: Consolas, 'Courier New', Courier, monospace;
-			font-size: 16px;
-		}
-		
-		#enlargecssprop {
-			font-weight: bold;
-			color: #000000;
-		}
-		
-		#demoDIV {
-			margin-left: 10px;
-			margin-top: 3px;
-			margin-right: 15px;
-			background-color: #ffffff;
-			border: 1px solid #c3c3c3;
-			height: 280px;
-		}
-		
-		#myDIV {
-			width: 200px;
-			height: 200px;
-			background-size: 200px 200px;
-			background-repeat: no-repeat;
-			background-image: linear-gradient(to right, black 0%, white 100%), url('w3css.gif');
-			background-blend-mode: normal;
-		}
-		
-		#styleDIV {
-			font-family: consolas, Courier new;
-			font-size: 14px;
-			margin-left: 10px;
-			margin-right: 15px;
-			background-color: #ffffff;
-			padding: 10px;
-			color: #222222;
-			text-align: left;
-		}
-		
-		div.demoHeader {
-			font-size: 24px;
-			margin-top: 15px;
-			margin-left: 15px;
-			margin-bottom: 15px;
-			color: #555555;
-		}
-		
-		div.playitFooter {
-			font-size: 14px;
-			color: #555555;
-			padding: 15px;
-		}
-		
-		#pfooter {
-			margin: 15px;
-		}
-		
-		@media screen and (max-width: 728px) {
-			.codecontainer {
-				width: 100%;
-				text-align: center;
-			}
-			.resultcontainer {
-				width: 100%;
-				text-align: center;
-			}
-			.playitFooter {
-				display: none;
-			}
-			.container {
-				top: 60px;
-			}
-		}
-	</style>
+    <link rel="stylesheet" href="css/play-it.css" />
 </head>
 
 <body>
@@ -230,9 +76,7 @@
 		
 	</div>
 
-	<script type="text/javascript">
-		playit_onload()
-	</script>
+    <script src="js/play-it.js"></script>
 </body>
 
 </html>

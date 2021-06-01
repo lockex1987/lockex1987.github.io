@@ -1,0 +1,153 @@
+#demo-1 {
+    circle {
+        mix-blend-mode: screen;
+    }
+    .isolate {
+        /* without isolation, the background color will be taken into account */
+        isolation: isolate;
+    }
+}
+
+#demo-2 {
+    .backdrop {
+        // width: 800px;
+        height: 300px;
+        position: relative;
+        background-size: 100%;
+        margin: 40px auto;
+    }
+    .text {
+        color: black;
+        background-color: white;
+        mix-blend-mode: screen;
+        width: 100%;
+        height: 100%;
+        font-weight: bolder;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        text-align: center;
+        line-height: 300px;
+        margin: 0;
+    }
+    .inverse {
+        color: white;
+        background-color: black;
+    }
+    /* fire */
+    .fire.backdrop {
+        background-image: url(../images/fire.jpg);
+    }
+    .fire.text {
+        font-size: 165pt;
+    }
+}
+
+#demo-3 {
+    .backdrop {
+        // width: 800px;
+        height: 300px;
+        position: relative;
+        background-size: 100%;
+        margin: 40px auto;
+    }
+    .text {
+        color: black;
+        background-color: white;
+        mix-blend-mode: screen;
+        width: 100%;
+        height: 100%;
+        font-weight: bolder;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        text-align: center;
+        line-height: 300px;
+        margin: 0;
+    }
+    .inverse {
+        color: white;
+        background-color: black;
+    }
+    .backdrop,
+    .text {
+        border-radius: 2px;
+    }
+    .overlay {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        mix-blend-mode: multiply;
+    }
+
+    /* water */
+    .water.backdrop {
+        background-image: url(../images/water.jpg);
+    }
+    .water.overlay {
+        background-color: rgba(0, 255, 255, 0.1);
+    }
+    .water.text {
+        font-size: 160pt;
+    }
+
+    /* fire */
+    .fire.backdrop {
+        background-image: url(../images/fire.jpg);
+    }
+    .fire.overlay {
+        background-color: rgba(255, 0, 0, 0.1);
+    }
+    .fire.text {
+        font-size: 165pt;
+    }
+}
+
+#demo-4 {
+    #div-4 {
+        width: 300px;
+        height: 300px;
+        background: url("../images/br.png"), url("../images/tr.png");
+        background-blend-mode: screen;
+    }
+}
+
+#demo-5 {
+    letter-spacing: -25px;
+    font-size: 150px;
+    text-align: center;
+
+    span:first-child {
+        color: #4285f4;
+    }
+
+    span:nth-child(2) {
+        color: #db4437;
+    }
+
+    span:nth-child(3) {
+        color: #f4b400;
+    }
+
+    span:nth-child(4) {
+        color: #4285f4;
+    }
+
+    span:nth-child(5) {
+        color: #0f9d58;
+    }
+    
+    span:nth-child(6) {
+        color: #db4437;
+    }
+
+    span {
+        mix-blend-mode: multiply;
+    }
+}
+
+#demo-6 {
+    width: 200px;
+    height: 200px;
+    background-size: 200px 200px;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(to right, black 0%, white 100%), url('../images/w3css.gif');
+    background-blend-mode: color-dodge;
+}
