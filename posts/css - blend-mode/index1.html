@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+
+    <title></title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="css/blend-mode.css" />
+</head>
+
+<body>
+    <article>
+        <h2>Blend mode</h2>
+
+        <p>CSS Blend</p>
+    <p>CSS background-blend-mode property</p>
+    <p>The background-blend-mode property defines the blending mode of each
+      background layer (color and/or image).</p>
+    <p>CSS syntax</p>
+    <p>background-blend-mode: normal | multiply | screen | overlay | darken |
+      lighten | color-dodge | saturation | color | luminosity;</p>
+    <p>JavaScript syntax</p>
+    <p>object.style.backgroundBlendMode = "screen"</p>
+    <p>CSS mix-blend-mode</p>
+    <p>The mix-blend-mode CSS property describes how an element's content should
+      blend with the content of the element's direct parent and the element's
+      background.</p>
+    <p>/* Keyword values */<br>
+      mix-blend-mode: normal;<br>
+      mix-blend-mode: multiply;<br>
+      mix-blend-mode: screen;<br>
+      mix-blend-mode: overlay;<br>
+      mix-blend-mode: darken;<br>
+      mix-blend-mode: lighten;<br>
+      mix-blend-mode: color-dodge;<br>
+      mix-blend-mode: color-burn;<br>
+      mix-blend-mode: hard-light;<br>
+      mix-blend-mode: soft-light;<br>
+      mix-blend-mode: difference;<br>
+      mix-blend-mode: exclusion;<br>
+      mix-blend-mode: hue;<br>
+      mix-blend-mode: saturation;<br>
+      mix-blend-mode: color;<br>
+      mix-blend-mode: luminosity;<br>
+      <br>
+      /* Global values */<br>
+      mix-blend-mode: initial;<br>
+      mix-blend-mode: inherit;<br>
+      mix-blend-mode: unset;</p>
+    <p>Possible values</p>
+    <dl>
+      <dt><code>normal</code></dt>
+      <dd>
+        <p>The final color is the top color, whatever the bottom color may be.<br>
+          The effect is similar to two opaque pieces of paper overlapping.</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><code>multiply</code></dt>
+      <dd>
+        <p>The final color is the result of multiplying the top and bottom
+          colors.<br>
+          A black layer leads to a black final layer, and a white layer leads to
+          no change.<br>
+          The effect is similar to two images printed on transparent film
+          overlapping.</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><code>screen</code></dt>
+      <dd>
+        <p>The final color is the result of inverting the colors, multiplying
+          them and inverting that color value.<br>
+          A black layer leads to no change, and a white layer leads to a white
+          final layer.<br>
+          The effect is similar to two images shone onto a projection screen.</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><code>overlay</code></dt>
+      <dd>The final color is the result of <code>multiply</code> if the bottom
+        color is darker, or <code>screen</code> if the bottom color is lighter.<br>
+        This blend mode is equivalent to <code>hard-light</code> but with the
+        layers swapped. </dd>
+    </dl>
+    <dl>
+      <dt><code>darken</code></dt>
+      <dd>
+        <p>The final color is a color composed of the darkest values per color
+          channel.</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><code>lighten</code></dt>
+      <dd>
+        <p>The final color is a color composed of the lightest values per color
+          channel.</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><code>color-dodge</code></dt>
+      <dd>
+        <p>The final color is the result of dividing the bottom color by the
+          inverse of the top color.<br>
+          A black foreground leads to no change. A foreground with the inverse
+          color of the backdrop leads to a fully lit color.<br>
+          This blend mode is similar to screen, but the foreground need only be
+          as light as the inverse of the backdrop to reach a fully lit color.</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><code>color-burn</code></dt>
+      <dd>
+        <p>This final color is the result of inverting the bottom color,
+          dividing the value by the top color, and inverting that value.<br>
+          A white foreground leads to no change. A foreground with the inverse
+          color of the backdrop leads to a black final image.<br>
+          This blend mode is similar to multiply, but the foreground need only
+          be as dark as the inverse of the backdrop to make the final image
+          black.</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><code>hard-light</code></dt>
+      <dd>
+        <p>The final color is the result of <code>multiply</code> if the top
+          color is darker, or <code>screen</code> if the top color is lighter.<br>
+          This blend mode is equivalent to <code>overlay</code> but with the
+          layers swapped.<br>
+          The effect is similar to shining a <em>harsh</em> spotlight on the
+          backdrop.</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><code>soft-light</code></dt>
+      <dd>
+        <p>The final color is similar to hard-light, but softer.<br>
+          This blend mode behaves similar to <code>hard-light</code>.<br>
+          The effect is similar to shining a <em>diffused</em> spotlight on the
+          backdrop<em><code>.</code></em></p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><code>difference</code></dt>
+      <dd>
+        <p>The final color is the result of subtracting the darker of the two
+          colors from the lighter one.<br>
+          A black layer has no effect, while a white layer inverts the other
+          layer's color.</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><code>exclusion</code></dt>
+      <dd>
+        <p>The final color is similar to <code>difference,</code> but with less
+          contrast.<br>
+          As with <code>difference</code>,&nbsp; a black layer has no effect,
+          while a white layer inverts the other layer's color.</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><code>hue</code></dt>
+      <dd>
+        <p>The final color has the <em>hue</em> of the top color, while using
+          the <em>saturation</em> and <em>luminosity</em> of the bottom color.</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><code>saturation</code></dt>
+      <dd>
+        <p>The final color has the <em>saturation</em> of the top color, while
+          using the <em>hue</em> and <em>luminosity</em> of the bottom color.<br>
+          A pure gray backdrop, having no saturation, will have no effect.</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><code>color</code></dt>
+      <dd>
+        <p>The final color has the<em> <em>hue</em></em> and <em><em>saturation</em>
+          </em>of the top color, while using the <em>luminosity</em> of the
+          bottom color.<br>
+          The effect preserves gray levels and can be used to colorize the
+          foreground.</p>
+      </dd>
+    </dl>
+    <dl>
+      <dt><code>luminosity</code></dt>
+      <dd>
+        <p>The final color has the <em>luminosity</em> of the top color, while
+          using the <em>hue</em> and <em>saturation</em> of the bottom color.<br>
+          This blend mode is equivalent to color, but with the layers swapped.</p>
+      </dd>
+    </dl>
+    <h3>Values</h3>
+    <ul>
+      <li><code>initial</code>: the default setting of the property that does
+        not set a blend mode.</li>
+      <li><code>inherit</code>: an element will inherit the blend mode from its
+        parent element.</li>
+      <li><code>unset</code>: removes the current blend mode from an element.</li>
+      <li><code>&lt;blend-mode&gt;</code>: this is the attribute of one of the
+        blend modes beneath:</li>
+      <li><code>normal</code>: this attribute applies no blending whatsoever.</li>
+      <li><code>multiply</code>: the element is multiplied by the background and
+        replaces the background color. The resulting color is always as dark as
+        the background.</li>
+      <li><code>screen</code>: multiplies the background and the content then
+        complements the result. This will result in content which is brighter
+        than the background-color.</li>
+      <li><code>overlay</code>: multiplies or screens the content depending on
+        the background color. This is the inverse of the <code>hard-light</code>
+        blend mode.</li>
+      <li><code>darken</code>: the background is replaced with the content where
+        the content is darker, otherwise it is left as it was.</li>
+      <li><code>lighten</code>: the background is replaced with the content
+        where the content is lighter.</li>
+      <li><code>color-dodge</code>: this attribute brightens the background
+        color to reflect the color of the content.</li>
+      <li><code>color-burn</code>: this darkens the background to reflect the
+        content’s natural color.</li>
+      <li><code>hard-light</code>: depending on the color of the content this
+        attribute will screen or multiply it.</li>
+      <li><code>soft-light</code>: depending on the color of the content this
+        will darken or lighten it.</li>
+      <li><code>difference</code>: this subtracts the darker of the two colors
+        from the lightest color.</li>
+      <li><code>exclusion</code>: similar to <code>difference</code> but with
+        lower contrast.</li>
+      <li><code>hue</code>: creates a color with the hue of the content combined
+        with the saturation and luminosity of the background.</li>
+      <li><code>saturation</code>: creates a color with saturation of the
+        content combined with the hue and luminosity of the background.</li>
+      <li><code>color</code>: creates a color with the hue and saturation of the
+        content and the luminosity of the background.</li>
+      <li><code>luminosity</code>: creates a color with the luminosity of the
+        content and the hue and saturation of the background. This is the
+        inverse of the <code>color</code> attribute.</li>
+    </ul>
+
+        <h3>Simple</h3>
+
+        <div id="demo-1"
+            class="mb-3">
+            <svg>
+                <g class="isolate">
+                    <circle cx="40" cy="40" r="40" fill="red"/>
+                    <circle cx="80" cy="40" r="40" fill="lightgreen"/>
+                    <circle cx="60" cy="80" r="40" fill="blue"/>
+                </g>
+            </svg>
+        </div>
+
+        <h3>Text with Image Background</h3>
+        <div id="demo-2"
+            class="mb-3">
+            <div class="backdrop fire">
+                <p class="text fire">FIRE</p>
+            </div>
+        </div>
+
+        <h3>Text with Image Background</h3>
+        <p>http://www.hongkiat.com/blog/css3-mix-blend-mode/</p>
+        <div id="demo-3"
+            class="mb-3">
+            <div class="backdrop fire">
+                <p class="text fire">FIRE</p>
+                <div class="overlay fire"></div>
+            </div>
+            <div class="backdrop fire">
+                <p class="text fire inverse">FIRE</p>
+                <div class="overlay fire inverse"></div>
+            </div>
+        
+            <div class="backdrop water">
+                <p class="text water">Water</p>
+                <div class="overlay water"></div>
+            </div>
+            <div class="backdrop water">
+                <p class="text water inverse">Water</p>
+                <div class="overlay water"></div>
+            </div>
+        </div>
+
+        <h3>Background blend mode</h3>
+        <div id="demo-4"
+            class="mb-3">
+            <div id="div-4"
+                class="mb-3"></div>
+
+	        <select id="select-4">
+                <option>normal</option>
+                <option>multiply</option>
+                <option selected>screen</option>
+                <option>overlay</option>
+                <option>darken</option>
+                <option>lighten</option>
+                <option>color-dodge</option>
+                <option>color-burn</option>
+                <option>hard-light</option>
+                <option>soft-light</option>
+                <option>difference</option>
+                <option>exclusion</option>
+                <option>hue</option>
+                <option>saturation</option>
+                <option>color</option>
+                <option>luminosity</option>
+            </select>
+        </div>
+
+        <h3>Blend Overlapping Letters</h3>
+        <div id="demo-5"
+            class="mb-3">
+            <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
+        </div>
+
+        <h3>Demo 6</h3>
+        <div id="demo-6"
+            class="mb-3"></div>
+
+        <h3>Canvas blend modes</h3>
+        <p>ctx.globalCompositeOperation = 'multiply';</p>
+        <div id="demo-7"
+            class="mb-3">
+            <canvas id="canvas"></canvas>
+        </div>
+
+        <h3>Play it</h3>
+        <p><a href="play-it.html">Play</a></p>
+    </article>
+
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>
