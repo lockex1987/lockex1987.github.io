@@ -2,15 +2,14 @@
 <html>
  <head> 
   <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
-  <title>Output pretty JSON</title> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <meta name="description" content="Output pretty JSON, highlight">
+  <title>Output pretty JSON</title> 
+  
   <link rel="icon" href="../../images/favicon.png"> 
   <link rel="stylesheet" href="../../css/style.css"> 
-  <meta name="description" content="Output pretty JSON">
- </head> 
- <body> 
-  <article> 
-   <style>
+  
+  <style>
 pre { outline: 1px solid #ccc; padding: 5px; margin: 5px; }
 .string { color: green; }
 .number { color: darkorange; }
@@ -18,6 +17,11 @@ pre { outline: 1px solid #ccc; padding: 5px; margin: 5px; }
 .null { color: magenta; }
 .key { color: red; }
     </style> 
+  
+ </head> 
+ <body> 
+  <article> 
+   
    <p>Pretty-printing is implemented natively in JSON.stringify(). The third argument enables pretty printing and sets the spacing to use:</p> 
    <pre>var str = JSON.stringify(obj, null, 2); // spacing level = 2</pre> 
    <p>If you need syntax highlighting, you might use some regex magic like so:</p> 
