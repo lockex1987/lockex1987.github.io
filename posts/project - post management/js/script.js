@@ -73,11 +73,26 @@ function buildChart(data, chartDivId) {
 }
 
 
-async function init() {
-    const categoryData = await fetch('data/category-data.json').then(resp => resp.json());
-    const postsCategories = normalizeCategories(categoryData);
-    buildChart(postsCategories, 'postChart');
+async function getCategories() {
+    const allCategories = await fetch('data/category-data.json').then(resp => resp.json());
+    const normalizedCategories = normalizeCategories(allCategories);
+    buildChart(normalizedCategories, 'postChart');
+
+    let total = 0;
+    allCategories.forEach(category => {
+        total += category.y;
+    });
+
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                categories: allCategories, // .sort((a, b) => a.y - b.y)
+                total
+            };
+        }
+    });
 }
 
 
-init();
+getCategories();

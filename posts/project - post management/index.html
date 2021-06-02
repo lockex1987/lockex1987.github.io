@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="vi">
-  <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="PHP DOMDocument, html parser, innerText vs textContent, phar composer">
     <meta name="date" content="2020-01-01 15:56:00">
     <title>Quản lý bài viết</title>
     <link rel="stylesheet" href="../../css/style.css">
-  <link rel="icon" href="../../images/favicon.png"></head>
+    <link rel="icon" href="../../images/favicon.png">
+</head>
 
   <body>
     <article>
       <h2>Quản lý bài viết</h2>
       <p>Tôi đã từng sưu tầm các bài viết trên mạng (về lập trình, kiến thức),
         số lượng có lúc đến hơn 1000 bài. Dù đã cố gắng giảm nhưng số lượng bài
-        viết vẫn còn gần 700 bài. Tuy nhiên, chất lượng các bài thì không cao.
+        viết vẫn còn gần 600 bài. Tuy nhiên, chất lượng các bài thì không cao.
         Những bài viết đó chỉ mình tôi hiểu, không thể chia sẻ với người khác.</p>
 
-      <p>Vào ngày đầu tiên của năm 2020 này, tôi quy hoạch lại các bài viết:
+      <p>Tôi quy hoạch lại các bài viết:
         giảm số lượng, tăng chất lượng, tập trung vào những cái ghi trong CV.</p>
 
       <p>Các bài viết đã hoàn thành, thuộc trạng thái có thể xuất bản thì được đánh dấu bằng thời gian xuất bản.
@@ -27,10 +29,44 @@
 
       <p>Tỷ lệ bài viết của các thể loại:</p>
 
-      <div id="postChart" style="height: 400px;"></div>
+      <div id="postChart"
+        class="mb-3"
+        style="height: 400px;"></div>
+
+        <div id="app"
+            v-cloak>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Thể loại</th>
+                        <th>Số bài viết</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-weight-500">
+                            Tổng cộng
+                        </td>
+                        <td class="text-right">
+                            {{total}}
+                        </td>
+                    </tr>
+
+                    <tr v-for="category in categories">
+                        <td>
+                            {{category.name}}
+                        </td>
+                        <td class="text-right">
+                            {{category.y}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </article>
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
 
     <script type="module" src="js/script.js"></script>
     <script src="../../js/docs.js"></script>
