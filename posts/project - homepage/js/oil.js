@@ -68,7 +68,7 @@
 						<td class="text-right">
 							${ formatThousands(e.kmDiff) }
 						</td>
-						<td class="hidden-xs">
+						<td class="d-none d-md-table-cell">
 							${ e.note }
 						</td>
 					</tr>
