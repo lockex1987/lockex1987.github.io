@@ -26,7 +26,7 @@
         <li>XML extension</li>
       </ul>
       <p>Để kiểm tra xem các extension đã đầy đủ chưa, bạn sử dụng lệnh sau:</p>
-      <pre>php -m</pre>
+      <pre class="command-line">php -m</pre>
       <p>Ví dụ một kết quả:</p>
       <pre>$ php -m
 [PHP Modules]
@@ -86,22 +86,24 @@ zlib
 [Zend Modules]
 </pre>
       <p>Với kết quả như trên thì các extension đã đầy đủ.</p>
+      <p>Bạn cũng có thể sử dụng script PHP sau:</p>
+      <p><a href="check.php">check.php</a></p>
       <p>Nếu chưa đầy đủ, chúng ta có thể cài đặt như sau:</p>
-      <pre>sudo apt-get install php7.2-mbstring php7.2-xml \<br>    php7.2-json php7.2-zip php7.2-bcmath</pre>
+      <pre class="command-line">sudo apt install php7.2-mbstring php7.2-xml \<br>    php7.2-json php7.2-zip php7.2-bcmath</pre>
       <h3>Cài đặt Laravel</h3>
       <p>Laravel sử dụng <a href="http://getcomposer.org/" target="_blank">Composer</a>
         để quản lý các dependency. Vì vậy, trước khi bắt tay vào sử dụng Laravel
         thì máy tính của bạn phải cài Composer trước.</p>
       <p> Bạn có thể sử dụng Composer <code>create-project</code> trên
         terminal:</p>
-      <pre>composer create-project --prefer-dist laravel/laravel blog</pre>
+      <pre class="command-line">composer create-project --prefer-dist laravel/laravel blog</pre>
       <h3>Phát triển trên local</h3>
       <p>Nếu máy tính của bạn đã cài PHP rồi thì bạn có thể server PHP built-in
         để phát triển server ứng dụng của bạn bằng cách sử dụng lệnh artisan <code>serve</code>.
         Nó sẽ tạo ra một server tại địa chỉ <a target="_blank" href="http://localhost:8000">localhost:8000</a>:</p>
-      <pre>php artisan serve</pre>
+      <pre class="command-line">php artisan serve</pre>
       <h3>Tham khảo</h3>
-      <p> <a href="https://laravel.com/docs/master/installation" target="_blank">laravel.com/docs/master/installation</a></p>
+      <p><a href="https://laravel.com/docs/master/installation" target="_blank">laravel.com/docs/master/installation</a></p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>
