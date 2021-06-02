@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Inserting text and smileys</title>
+	<style>
+		.buttons input {
+			width: 50px;
+		}
+	</style>
+</head>
+
+<body>
+<form name="news">
+	<div class="buttons">
+		<input type="button" value="b"     onclick="storeCaret('b')" style="font-weight: bold"/>
+		<input type="button" value="i"     onclick="storeCaret('i')" style="font-style: italic"/>
+		<input type="button" value="u"     onclick="storeCaret('u')" style="text-decoration: underline"/>
+		<input type="button" value="quote" onclick="storeCaret('quote')"/>
+		<input type="button" value="code"  onclick="storeCaret('code')"/>
+		<input type="button" value="url"   onclick="storeCaret('url')"/>
+		<input type="button" value="img"   onclick="storeCaret('img')"/>
+		<input type="button" value="Smile" onclick="storeCaret(':)', 'smiley')"/>
+	</div>
+
+	<textarea name="newst" id="newst" rows="10" cols="45"></textarea>
+</form>
+
+<script>
+	var isMozilla = (navigator.userAgent.toLowerCase().indexOf('gecko') != -1) ? true : false;
+	var regexp = new RegExp("[\n]", "gi");
+
+	function storeCaret(selec, type) {
+		if (isMozilla) {
+			// Firefox
+			oField = document.forms['news'].elements['newst'];
+			objectValue = oField.value;
+
+			objectValueStart = objectValue.substring(0, oField.selectionStart);
+			objectSelected   = objectValue.substring(oField.selectionStart, oField.selectionEnd);
+			objectValueEnd   = objectValue.substring(oField.selectionEnd, oField.textLength);
+			
+			if (type) {
+				// smiley
+				oField.value = objectValueStart + " " + selec + objectSelected + objectValueEnd;
+			} else {
+				oField.value = objectValueStart + "[" + selec + "]" + objectSelected + "[/" + selec + "]" + objectValueEnd;
+			}
+			oField.focus();
+			if (type) {
+				// smiley
+				oField.setSelectionRange(objectValueStart.length + selec.length + 2, objectValueStart.length + selec.length + 1);
+			} else {
+				oField.setSelectionRange(objectValueStart.length + selec.length + 2, objectValueStart.length + selec.length + 2);
+			}
+		} else {
+			// IE
+			oField = document.forms['news'].elements['newst'];
+			var str = document.selection.createRange().text;
+			if (str.length > 0) {
+				// if we have selected some text
+				var sel = document.selection.createRange();
+				if (type) {
+					// smiley
+					sel.text = " " + selec;
+				} else {
+					sel.text = "[" + selec + "]" + str + "[/" + selec + "]";
+				}
+				sel.collapse();
+				sel.select();
+			} else {
+				oField.focus(oField.caretPos);
+				oField.focus(oField.value.length);
+				oField.caretPos = document.selection.createRange().duplicate();
+
+				var bidon = "%~%"; // needed to catch the cursor position with IE
+				var orig = oField.value;
+				oField.caretPos.text = bidon;
+				var i = oField.value.search(bidon);
+
+				if (type) {
+					// smiley
+					oField.value = orig.substr(0, i) + " " + selec + orig.substr(i, oField.value.length);
+				} else {
+					oField.value = orig.substr(0, i) + "[" + selec + "][/" + selec + "]" + orig.substr(i, oField.value.length);
+				}
+
+				var r = 0;
+				for (n = 0; n < i; n++) {
+					if (regexp.test(oField.value.substr(n, 2)) == true) {
+						r++;
+					}
+				};
+				if (type) {
+					// smiley
+					pos = i + 1 + selec.length - r;
+				} else {
+					pos = i + 2 + selec.length - r;
+				}
+
+				// re-format the textarea & move the cursor to the correct position
+				var r = oField.createTextRange();
+				r.moveStart('character', pos);
+				r.collapse();
+				r.select();
+			}
+		}
+	}
+
+	document.getElementById('newst').value = ""; // needed for Firefox
+</script>
+ 
+</body>
+</html>

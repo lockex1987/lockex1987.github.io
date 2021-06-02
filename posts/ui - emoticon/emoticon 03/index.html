@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Smiley insertion system using jQuery</title>
+	<meta charset="utf-8"/>
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	
+	<script src="js/jquery-1.10.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/tuto_smiley_system.js"></script>	
+</head>
+
+<body>
+	<p><a href="http://www.tipocode.com/jquery/smiley-insertion-system-using-jquery/">Original link</a></p>
+	<p id="submitOutput"></p>
+	<form class="form-horizontal" id="myForm">
+			<fieldset>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="myTextarea">Text</label>
+				<div class="col-md-8">
+					Write text...with smilies:
+					
+					<div class="btn-group">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					<img src="images/smilies/icon_smile.gif" alt="" /> <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu"><li><a href="#"><table><tr>
+					<td><img src="images/smilies/icon_smile.gif" id="addSmiley" alt=":smile:" />&nbsp;</td><td><img src="images/smilies/icon_sad.gif" id="addSmiley" alt=":sad:" />&nbsp;</td><td><img src="images/smilies/icon_arrow.gif" id="addSmiley" alt=":arrow:" />&nbsp;</td><td><img src="images/smilies/icon_cool.gif" id="addSmiley" alt=":cool:" />&nbsp;</td><td><img src="images/smilies/icon_cry.gif" id="addSmiley" alt=":cry:" />&nbsp;</td></tr><tr><td><img src="images/smilies/icon_grin.gif" id="addSmiley" alt=":grin:" />&nbsp;</td><td><img src="images/smilies/icon_confused.gif" id="addSmiley" alt=":confused:" />&nbsp;</td><td><img src="images/smilies/icon_bigeyes.gif" id="addSmiley" alt=":bigeyes:" />&nbsp;</td><td><img src="images/smilies/icon_evil.gif" id="addSmiley" alt=":evil:" />&nbsp;</td><td><img src="images/smilies/icon_exclaim.gif" id="addSmiley" alt=":exclaim:" />&nbsp;</td></tr><tr><td><img src="images/smilies/icon_geek.gif" id="addSmiley" alt=":geek:" />&nbsp;</td><td><img src="images/smilies/icon_idea.gif" id="addSmiley" alt=":idea:" />&nbsp;</td><td><img src="images/smilies/icon_lol.gif" id="addSmiley" alt=":lol:" />&nbsp;</td><td><img src="images/smilies/icon_mad.gif" id="addSmiley" alt=":mad:" />&nbsp;</td><td><img src="images/smilies/icon_green.gif" id="addSmiley" alt=":green:" />&nbsp;</td></tr><tr><td><img src="images/smilies/icon_neutral.gif" id="addSmiley" alt=":neutral:" />&nbsp;</td><td><img src="images/smilies/icon_question.gif" id="addSmiley" alt=":question:" />&nbsp;</td><td><img src="images/smilies/icon_happy.gif" id="addSmiley" alt=":happy:" />&nbsp;</td><td><img src="images/smilies/icon_redface.gif" id="addSmiley" alt=":redface:" />&nbsp;</td><td><img src="images/smilies/icon_rolleyes.gif" id="addSmiley" alt=":rolleyes:" />&nbsp;</td></tr><tr><td><img src="images/smilies/icon_surprised.gif" id="addSmiley" alt=":surprised:" />&nbsp;</td><td><img src="images/smilies/icon_devil.gif" id="addSmiley" alt=":devil:" />&nbsp;</td><td><img src="images/smilies/icon_wink.gif" id="addSmiley" alt=":wink:" />&nbsp;</td>					</tr></table></a></li></ul>
+					</div>
+					
+					
+					
+					<textarea class="form-control" id="myTextarea" name="textarea" rows="6"></textarea>
+					
+					<button type="button" class="btn btn-info btn-xs" id="clear">Clear</button>
+					<button type="button" class="btn btn-success btn-xs" id="submit">Submit</button>
+					
+					<div class="panel panel-default">
+						<div class="panel-heading">Output</div>
+						<div class="panel-body">
+						<p id="output"></p>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			</fieldset>
+		</form>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Emoticon 02</title>
+    <meta charset="utf-8"/>
+    <link href="emoticons.css" rel="stylesheet"/>
+    <script type="text/javascript" src="jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="emoticons.js"></script>
+<script>
+$(document).ready(function() {
+    var definition = {
+			"smile": {
+				"title":"Smile",
+				"codes":[":)",":=)",":-)"]
+			},
+			"sad-smile": {
+				"title":"Sad Smile",
+				"codes":[":(",":=(",":-("]
+			},
+			"big-smile": {
+				"title":"Big Smile",
+				"codes":[":D",":=D",":-D",":d",":=d",":-d"]
+			},
+			"cool": {
+				"title":"Cool",
+				"codes":["8)","8=)","8-)","B)","B=)","B-)","(cool)"]
+			},
+			"wink":{
+				"title":"Wink",
+				"codes":[":o",":=o",":-o",":O",":=O",":-O"]
+			},
+			"crying": {
+				"title":"Crying",
+				"codes":[";(",";-(",";=("]
+			},
+			"sweating": {
+				"title":"Sweating",
+				"codes":["(sweat)","(:|"]
+			},
+			"speechless": {
+				"title":"Speechless",
+				"codes":[":|",":=|",":-|"]
+			},
+			"kiss": {
+				"title":"Kiss",
+				"codes":[":*",":=*",":-*"]
+			},
+			"tongue-out": {
+				"title":"Tongue Out",
+				"codes":[":P",":=P",":-P",":p",":=p",":-p"]
+			},
+			"blush": {
+				"title":"Blush",
+				"codes":["(blush)",":$",":-$",":=$",":\">"]
+			},
+			"wondering": {
+				"title":"Wondering","codes":[":^)"]
+			}
+		};
+
+		$.emoticons.define(definition);
+
+		$('#comment').keyup(function(e) {
+			if (e.keyCode == 13) {
+				var comment = $('#comment').val();
+				if (comment == "") {
+					alert("Please write something in comment.");
+				} else {
+					var textWithEmoticons = $.emoticons.replace(comment);
+					$("#commentbox").append("<div class='commentarea'>" + textWithEmoticons + "</div>");
+					$('#comment').val("");
+				}
+			}
+		});
+	});
+</script>
+
+<style>
+.status {
+	width:350px;
+	font-size: 14px;
+	line-height: 18px;
+	font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+}
+.commentarea {
+	width:350px;
+	font-size: 13px;
+	line-height: 18px;
+	font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+	border: thin;
+	border-color: white;
+	border-style: solid;
+	background-color: hsl(0, 0%, 96%);
+	padding: 5px;
+}
+#comment {
+	width: 357px;
+	height: 23px;
+	font-size: 15px;
+}
+.main {
+	margin-left:auto;
+	margin-right:auto;
+	width:360px;
+}
+</style>
+</head>
+
+<body>
+	<p><a href="http://www.phpgang.com/how-to-create-facebook-style-emotions-with-css-and-jquery-plugin_537.html">Original link</a></p>
+	
+	<div class="main">
+		<div class="status"If you are doing web application development then you have to separate templates from your controller code and make your application simple.</div>
+		<div id="commentbox">
+			<div class="commentarea">
+				WOW thats great.....
+				<span title="Heart" class="emoticon emoticon-heart">(h)</span>
+				<span title="Smile" class="emoticon emoticon-smile">:)</span>
+			</div>
+			<div class="commentarea">
+				is it really great <span title="Yes" class="emoticon emoticon-yes">(y)</span>
+			</div>
+			<div class="commentarea">
+				<span title="Covered Laugh" class="emoticon emoticon-covered-laugh">(giggle)</span> 
+				<span title="Clapping Hands" class="emoticon emoticon-clapping-hands">(clap)</span> 
+				<span title="Rolling on the floor laughing" class="emoticon emoticon-rofl">(rofl)</span> 
+				<span title="Heart" class="emoticon emoticon-heart">(h)</span> <span title="Cash" class="emoticon emoticon-cash">(cash)</span>
+			</div>
+		</div>
+		<input type="text" name="comment" id="comment" placeholder="Write a comment...." />
+	</div>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="es" xmlns="http://www.w3.org/1999/xhtml" lang="es"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Ex.1: Pretty Fish eye menu with css transform and transition</title>
+<meta name="author" content="Rumoroso">
+<style type="text/css">
+html, body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+ul, li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+ul {
+	text-align: center;
+}
+ul.menu_s li, ul.menu_b li{
+	display: inline;
+}
+ul.menu_l, ul.menu_r, ul.menu_b {
+	position: absolute;
+}
+ul.menu_l, ul.menu_r {
+	top: 50%;
+	margin-top: -200px
+}
+ul.menu_l, l.menu_b {
+	left: 0;
+}
+ul.menu_r {
+	right: 0;
+}
+ul.menu_b {
+	bottom: 0;
+	width: 100%;
+}
+a:hover, a:focus { /* we use :focus for keyboard navigation */
+	z-index: 200 /* bring to top when the mouse is over */
+}
+a img {
+	border: none;
+	-webkit-transition: all .2s; /* in Safari, every animatable property triggers an animation in .2s */
+}
+ul.menu_s a img{
+	-webkit-transform-origin: top; /* in Safari, the origin for transformation */
+	-moz-transform-origin: top; /* in Firefox, the origin for transformation */
+}
+ul.menu_l a img{
+	-webkit-transform-origin: left center;
+	-moz-transform-origin: left center;
+}
+ul.menu_r a img{
+	-webkit-transform-origin: right center;
+	-moz-transform-origin: right center;
+}
+ul.menu_b a img{
+	-webkit-transform-origin: bottom;
+	-moz-transform-origin: bottom;
+}
+a:hover img, a:focus img {
+	-webkit-transform: scale(2);
+	-moz-transform: scale(2);
+}
+p {
+	text-align: center;
+	position: absolute;
+	top: 50%;
+	width: 100%;
+}
+</style>
+</head>
+
+<body>
+<ul class="menu_s">
+	<li><a href="#"><img src="images/opera.png" alt="opera" width="50"></a></li>
+	<li><a href="#"><img src="images/camino.png" alt="camino" width="50"></a></li>
+	<li><a href="#"><img src="images/chrome.png" alt="chrome" width="50"></a></li>
+	<li><a href="#"><img src="images/ff.png" alt="firefox" width="50"></a></li>
+	<li><a href="#"><img src="images/flock.png" alt="flock" width="50"></a></li>
+	<li><a href="#"><img src="images/ie.png" alt="internet explorer" width="50"></a></li>
+	<li><a href="#"><img src="images/konqueror.png" alt="konqueror" width="50"></a></li>
+	<li><a href="#"><img src="images/safari.png" alt="safari" width="50"></a></li>
+</ul>
+<ul class="menu_l">
+	<li><a href="#"><img src="images/opera.png" alt="opera" width="50"></a></li>
+	<li><a href="#"><img src="images/camino.png" alt="camino" width="50"></a></li>
+	<li><a href="#"><img src="images/chrome.png" alt="chrome" width="50"></a></li>
+	<li><a href="#"><img src="images/ff.png" alt="firefox" width="50"></a></li>
+	<li><a href="#"><img src="images/flock.png" alt="flock" width="50"></a></li>
+	<li><a href="#"><img src="images/ie.png" alt="internet explorer" width="50"></a></li>
+	<li><a href="#"><img src="images/konqueror.png" alt="konqueror" width="50"></a></li>
+	<li><a href="#"><img src="images/safari.png" alt="safari" width="50"></a></li>
+</ul>
+<ul class="menu_r">
+	<li><a href="#"><img src="images/opera.png" alt="opera" width="50"></a></li>
+	<li><a href="#"><img src="images/camino.png" alt="camino" width="50"></a></li>
+	<li><a href="#"><img src="images/chrome.png" alt="chrome" width="50"></a></li>
+	<li><a href="#"><img src="images/ff.png" alt="firefox" width="50"></a></li>
+	<li><a href="#"><img src="images/flock.png" alt="flock" width="50"></a></li>
+	<li><a href="#"><img src="images/ie.png" alt="internet explorer" width="50"></a></li>
+	<li><a href="#"><img src="images/konqueror.png" alt="konqueror" width="50"></a></li>
+	<li><a href="#"><img src="images/safari.png" alt="safari" width="50"></a></li>
+</ul>
+<ul class="menu_b">
+	<li><a href="#"><img src="images/opera.png" alt="opera" width="50"></a></li>
+	<li><a href="#"><img src="images/camino.png" alt="camino" width="50"></a></li>
+	<li><a href="#"><img src="images/chrome.png" alt="chrome" width="50"></a></li>
+	<li><a href="#"><img src="images/ff.png" alt="firefox" width="50"></a></li>
+	<li><a href="#"><img src="images/flock.png" alt="flock" width="50"></a></li>
+	<li><a href="#"><img src="images/ie.png" alt="internet explorer" width="50"></a></li>
+	<li><a href="#"><img src="images/konqueror.png" alt="konqueror" width="50"></a></li>
+	<li><a href="#"><img src="images/safari.png" alt="safari" width="50"></a></li>
+</ul>
+<p>
+	<a href="http://www.niquelao.net/css/2009/12/11/fish-eye-menu-only-with-css-transform-and-transition/">return to "Fish eye menu only with CSS Transform and Transition"</a></p>
+</body>
+</html>

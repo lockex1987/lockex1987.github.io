@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Nitobi Fisheye Demo</title>
+<link type="text/css" rel="stylesheet" href="files/default.css">
+<link type="text/css" rel="stylesheet" href="files/nitobi.css">      
+<script src="files/nitobi.js"></script>       
+<script src="files/nitobi_002.js"></script>
+<script>
+	function onLoad() {
+		var f3 = nitobi.loadComponent("fisheye3");
+	}
+</script>
+</head>
+<body onload="onLoad()">
+<p class="main">This sample just demonstrates a sample mockup and usage for the fisheye in a possible web desktop interface</p>
+<table style="background-image: url(files/background.jpg);" width="600" align="left" cellpadding="20" height="400">
+<tbody>
+<tr>
+<td valign="bottom" align="center">
+<div style="width: 330.48px; height: 60.48px;" id="fisheye3" class=" ntb-fisheye-reset nitobi"> &nbsp; 
+<div id="fisheye3.label" style="position: absolute; visibility: visible; height: 15px; top: 347.234px; left: 402.24px; white-space: nowrap; display: block; width: 54px;" class="ntb-fisheye-label">Storage</div>
+<div id="fisheye3.master" style="position: absolute; visibility: visible; z-index: 999990; width: 324px; height: 54px; top: 370.24px; left: 138.24px;">
+<img style="height: 54px; width: 54px; position: absolute; cursor: pointer; visibility: visible; top: 0px; left: 0px;" src="files/fer.png">
+<img style="height: 54px; width: 54px; position: absolute; cursor: pointer; visibility: visible; top: 0px; left: 54px;" src="files/home.png">
+<img style="height: 54px; width: 54px; position: absolute; cursor: pointer; visibility: visible; top: 0px; left: 108px;" src="files/id.png">
+<img style="height: 54px; width: 54px; position: absolute; cursor: pointer; visibility: visible; top: 0px; left: 162px;" src="files/info.png">
+<img style="height: 54px; width: 54px; position: absolute; cursor: pointer; visibility: visible; top: 0px; left: 216px;" src="files/chat.png">
+<img style="height: 54px; width: 54px; position: absolute; cursor: pointer; visibility: visible; top: -0.00606061px; left: 270px;" src="files/messages.png">
+</div>
+<div id="fisheye3.background" style="z-index: 99999; position: absolute; visibility: visible; width: 330.48px; height: 60.48px; top: 366.76px; left: 134.76px;" class="ntb-fisheye-menubackground"></div>
+</div>
+</td></tr>
+</tbody>
+</table>
+</body>
+</html>
