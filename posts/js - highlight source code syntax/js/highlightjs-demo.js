@@ -62,7 +62,7 @@ function highlightJsInlineOne(code) {
     const lang = document.querySelector('#lang');
     const output = document.querySelector('#output');
 
-    document.querySelector('#highlight').addEventListener('click', (evt) => {
+    const handleClick = (evt) => {
         // output.innerHTML = code.value;
         output.textContent = code.value.trim();
         output.className = lang.value;
@@ -71,12 +71,17 @@ function highlightJsInlineOne(code) {
 
         // highlightJsInlineAll();
         highlightJsInlineOne(output);
-    });
+    };
+
+    document.querySelector('#highlight').addEventListener('click', handleClick);
 
     document.querySelector('#copy').addEventListener('click', (evt) => {
         copyToClipboard(output.parentNode.outerHTML.replace(' id="output"', ''));
         noti.success('Copied');
     });
+
+    handleClick();
+    // hljs.initHighlightingOnLoad();
 })();
 
 /**

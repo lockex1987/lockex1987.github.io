@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Highlight.js, CodeMirror">
+    <title>Highlight source code syntax</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Highlight source code syntax</h2>
+      <p>Cool! Bạn có thể viết các bài viết hướng dẫn với các đoạn code được
+        highlight.</p>
+      <p>Bạn có thể sử dụng một trong 2 thư viện:</p>
+      <p><a href="highlightjs-demo.html">Highlight.js</a></p>
+      <p><a href="codemirror-demo.html">CodeMirror</a></p>
+      <h3>Sử dụng Highlight.js<strong> </strong></h3>
+      <p>Cách sử dụng thư viện Highlight.js đơn giản nhất đó là thêm các file
+        CSS, JS và gọi phương thức <code>hljs.initHighlightingOnLoad()</code>.</p>
+      <pre class="code" data-lang="html">&lt;link rel="stylesheet" href="/path/to/styles/default.css"&gt;<br>&lt;script src="/path/to/highlight.min.js"&gt;&lt;/script&gt;<br>&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;</pre>
+      <p>Các đoạn code bên trong <code>&lt;pre&gt;&lt;code&gt;</code> sẽ được
+        highlight.</p>
+      <p>Copy đoạn code có màu từ các trang web vào file DOC hoặc tạo file PDF
+        bằng công cụ wk&lt;HTML&gt;toPDF.</p>
+      <p>Tham khảo:</p>
+      <p><a href="https://highlightjs.org/" target="_blank">highlightjs.org</a></p>
+      <h3>Sử dụng CodeMirror</h3>
+      <p>CodeMirror được sử dụng rộng rãi: Typora (tính năng code fence),
+        BlueGriffin, CodePen, dev tool của Firefox, Chrome,...</p>
+      <p>CodeMirror là một editor. Tuy nhiên tôi chỉ muốn sử dụng tính năng
+        highlight (bằng cách chạy runMode).</p>
+      <p>Cho vào <code>docs.js</code>.</p>
+      <p>Lấy CSS mà Typora sử dụng để highlight code ở thư mục <code>C:\Program
+          Files\Typora\resources\style</code>.</p>
+      <p>CDN của các file JS, CSS là:</p>
+      <p><a href="https://cdnjs.com/libraries/codemirror" target="_blank">https://cdnjs.com/libraries/codemirror</a></p>
+      <p>Tham khảo:</p>
+      <p><a href="https://codemirror.net/demo/" target="_blank">https://codemirror.net/demo/</a></p>
+      <p><a href="https://codemirror.net/demo/runmode.html" target="_blank">https://codemirror.net/demo/runmode.html</a></p>
+      <p><a href="https://codemirror.net/demo/theme.html" target="_blank">https://codemirror.net/demo/theme.html</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

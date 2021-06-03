@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Highlight Syntax</title>
+
+    <link rel="icon" href="../../images/favicon.png" />
+    <link rel="stylesheet" href="../../css/style.css" />
+</head>
+
+<body>
+    <article>
+        <h2>Highlight Syntax</h2>
+
+        <div class="form-group out-of-box">
+            <label>
+                Code
+            </label>
+            <textarea id="code"
+                class="form-control"
+                style="min-height: 500px;">&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;title&gt;04&lt;/title&gt;
+    &lt;link rel="stylesheet" href="../css/themes/default/jquery.mobile-1.4.5.min.css" /&gt;
+    &lt;script src="../js/jquery.js"&gt;&lt;/script&gt;
+    &lt;script src="../js/jquery.mobile-1.4.5.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;<br>
+&lt;body&gt;
+    &lt;div data-role="page" id="init"&gt;
+        &lt;div data-role="header"&gt;
+            &lt;h1&gt;Freetuts.net&lt;/h1&gt;
+        &lt;/div&gt;
+        &lt;div role="main" class=ui-content"&gt;
+            &lt;p&gt;Chào mừng bạn đến với freetuts.net&lt;/p&gt;
+            &lt;p&gt;
+                &lt;a href="#intro"&gt;Lời giới thiệu&lt;/a&gt;
+            &lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div data-role="footer"&gt;
+            &lt;h2&gt;Author: thehalfheart&lt;/h2&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div data-role="page" id="intro" data-dialog="true"&gt;
+        &lt;div data-role="header"&gt;
+            &lt;h1&gt;Lời giới thiệu&lt;/h1&gt;
+        &lt;/div&gt;
+        &lt;div role="main" class="ui-content"&gt;
+            &lt;p&gt;freetuts.net là một website chuyên về lĩnh vực học lập trình
+                online miễn phí hoàn toàn, website hoạt động tập trung vào
+                các chủ đề như học php, học javascript, học bootstrap, học
+                angularjs, học mysql, học codeigniter, học Phalcon&lt;/p&gt;
+            &lt;p&gt;
+                &lt;a href="#init"&gt;Trở về&lt;/a&gt;
+            &lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>
+                Language
+            </label>
+            <select id="lang" class="custom-select">
+                <option value="html" selected>HTML</option>
+                <option value="php">PHP</option>
+                <option value="javascript">JavaScript</option>
+                <option value="css">CSS</option>
+                <option value="less">LESS</option>
+                <option value="scss">SCSS</option>
+                <option value="java">Java</option>
+                <option value="sql">SQL</option>
+                <option value="json">JSON</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <button id="highlight" class="btn btn-primary">
+                Highlight
+            </button>
+            <button id="copy" class="btn btn-secondary ml-2">
+                Copy output
+            </button>
+        </div>
+        
+
+        <div class="mb-3">Output</div>
+
+        <pre class="out-of-box"><code id="output"></code></pre>
+        <pre class="out-of-box border rounded bg-white"><code class="html text-pre-wrap"></code></pre>
+    </article>
+
+    <link rel="stylesheet" href="https://lockex1987.github.io/posts/project%20-%20noti/css/noti.css" />
+    <script src="https://lockex1987.github.io/posts/project%20-%20noti/js/noti.js"></script>
+
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/css/line-awesome.min.css" />
+    <link rel="preload"
+        href="https://cdn.jsdelivr.net/npm/line-awesome@1.3.0/dist/line-awesome/fonts/la-solid-900.woff2"
+        as="font"
+        type="font/woff2"
+        crossorigin="anonymous" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!--link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.0.3/build/styles/solarized-dark.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.0.3/build/highlight.min.js"></script-->
+
+    <!-- default, solarized-dark, xcode, idea, vs -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.0.3/build/styles/vs.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.0.3/build/highlight.min.js"></script>
+
+    <style>
+        pre > code.hljs {
+          background: #fafafa;
+        }
+    </style>
+
+    <script src="js/highlightjs-demo.js"></script>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>

@@ -114,10 +114,9 @@ class TocSection {
     /**
      * Load file JS.
      * @param {String} filePath Đường dẫn file
-    */
+     */
     loadJsFile(filePath) {
         const scriptTag = document.createElement('script');
-        scriptTag.setAttribute('type', 'text/javascript');
         scriptTag.setAttribute('src', filePath);
         document.head.appendChild(scriptTag);
     }
@@ -193,9 +192,9 @@ class FacebookComment {
 
         // Bỏ qua trang chủ, chạy local
         // Chỉ hiển thị các bài viết đã xuất bản
-        if (!PageInfo.isHomePage() &&
-            !PageInfo.isLocalFile() &&
-            PageInfo.isPublishContent()) {
+        if (!PageInfo.isHomePage()
+            && !PageInfo.isLocalFile()
+            && PageInfo.isPublishContent()) {
             // Chú ý data-href đang phân biệt cả giao thức (HTTP và HTTPS)
             // Chuyển về HTTPS hết
             if (!href.startsWith('https')) {
@@ -207,8 +206,8 @@ class FacebookComment {
             const article = document.getElementsByTagName('article')[0];
             const newDiv = document.createElement('div');
             newDiv.className = 'fb-comments mt-5';
-            newDiv.innerHTML = '<div id="fb-root"></div>' +
-                '<div class="fb-comments" data-href="' + href + '" data-numposts="5" data-width="100%" data-order-by="reverse_time"></div>';
+            newDiv.innerHTML = '<div id="fb-root"></div>'
+                + '<div class="fb-comments" data-href="' + href + '" data-numposts="5" data-width="100%" data-order-by="reverse_time"></div>';
             // article.parentNode.insertBefore(newDiv, article.nextSibling);
             article.appendChild(newDiv);
 
@@ -269,9 +268,9 @@ class Datetime {
      * @return {String} Một xâu dạng dd/MM/yyyy tương ứng
      */
     convertDateToString(date) {
-        return this.paddingTwoZero(date.getDate()) + '/' +
-            this.paddingTwoZero(date.getMonth() + 1) + '/' +
-            date.getFullYear();
+        return this.paddingTwoZero(date.getDate()) + '/'
+            + this.paddingTwoZero(date.getMonth() + 1) + '/'
+            + date.getFullYear();
     }
 
     /**
@@ -361,7 +360,7 @@ class FooterSummary {
         const description = PageInfo.getDescription();
 
         const content = document.createElement('div');
-		content.className = 'text-pre-wrap';
+        content.className = 'text-pre-wrap';
         content.textContent = description.replace(/^\s+|\s+$/m, '');
 
         const container = document.createElement('div');
@@ -418,3 +417,48 @@ window.addEventListener('DOMContentLoaded', () => {
     // (new ScrollButton()).addScrollToTopButton();
     (new TocSection()).loadToc();
 });
+
+
+// Highlight source code syntax
+(() => {
+    function loadJsFile(filePath) {
+        const scriptTag = document.createElement('script');
+        // scriptTag.setAttribute('type', 'text/javascript');
+        scriptTag.setAttribute('src', filePath);
+        scriptTag.async = false; // thêm dòng này thì mới giữ được thứ tự các script
+        document.head.appendChild(scriptTag);
+    }
+
+    function loadCssFile(filePath) {
+        const linkTag = document.createElement('link');
+        // linkTag.type = 'text/css';
+        linkTag.rel = 'stylesheet';
+        linkTag.href = filePath;
+        document.head.appendChild(linkTag);
+    }
+
+    function highlighSourceCodeSyntax() {
+        const codeBlocks = [...document.querySelectorAll('pre.code')];
+        if (codeBlocks.length == 0) {
+            return;
+        }
+
+        // Lấy danh sách các ngôn ngữ sử dụng, không duplicate
+        const languages = new Set(codeBlocks.map(code => code.dataset.lang));
+
+        // Thêm file CSS
+        loadCssFile('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.1/codemirror.min.css');
+        // loadCssFile('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.1/theme/monokai.min.css');
+        loadCssFile('../../css/typora-codemirror.css');
+
+        // Thêm các file JS
+        loadJsFile('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.1/codemirror.min.js');
+        loadJsFile('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.1/addon/runmode/runmode.min.js');
+        for (const lang of languages) {
+            loadJsFile(`https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.1/mode/${lang}/${lang}.min.js`);
+        }
+        loadJsFile('../../js/highlight-source-code-syntax.js');
+    }
+
+    highlighSourceCodeSyntax();
+})();

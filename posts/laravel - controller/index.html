@@ -1,24 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
- <head> 
-  <meta content="text/html; charset=UTF-8" http-equiv="content-type"> 
-  <title>Laravel Controller</title> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <link rel="icon" href="../../images/favicon.png"> 
-  <link rel="stylesheet" href="../../css/style.css"> 
-  <meta name="description" content="Laravel Controller">
- </head> 
- <body> 
-  <article> 
-   <h1>Controllers</h1> 
-   <p><a></a></p> 
-   <p>Thay vì định nghĩa tất cả các xử lý request logic như Closures ở trong file routes, bạn có thể tổ chức lại việc này bằng cách sử dụng các class Controller. Controllers có thể nhóm các xử lý request logic vào một class. Controllers để tại thư mục <code>app/Http/Controllers</code>.</p> 
-   <p><a></a></p> 
-   <h2>Cơ bản Controllers</h2> 
-   <p><a></a></p> 
-   <h3>Định nghĩa Controllers</h3> 
-   <p>Phía dưới là một ví dụ cơ bản về class controller. Chú ý rằng controller đấy kế thừa từ class base controller của Laravel. Class base controller cung cấp một vài phương thức như <code>middleware</code> có thể sử dụng để gắn middleware vào controller:</p> 
-   <pre><code>&lt;?php
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Laravel controller">
+    <title>Laravel controller</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Laravel controller</h2>
+      <p>Thay vì định nghĩa tất cả các xử lý request logic như Closure ở trong
+        file route, bạn có thể tổ chức lại việc này bằng cách sử dụng các class
+        Controller. Controller có thể nhóm các xử lý request logic vào một
+        class. Controllers để tại thư mục <code>app/Http/Controllers</code>.</p>
+      <h3>Định nghĩa Controller</h3>
+      <p>Phía dưới là một ví dụ cơ bản về class controller. Chú ý rằng
+        controller đấy kế thừa từ class base controller của Laravel. Class base
+        controller cung cấp một vài phương thức như <code>middleware</code> có
+        thể sử dụng để gắn middleware vào controller:</p>
+      <pre>&lt;?php
 
 namespace App\Http\Controllers;
 
@@ -37,20 +39,30 @@ class UserController extends Controller
     {
         return view('user.profile', ['user' =&gt; User::findOrFail($id)]);
     }
-}</code></pre> 
-   <p>Bạn có thể định nghĩa một route cho action của controller như sau:</p> 
-   <pre><code>Route::get('user/{id}', 'UserController@show');</code></pre> 
-   <p>Bây giờ, khi một request giống với route URI, phương thức <code>show</code> của class <code>UserController</code> sẽ được thực thi. Tất nhiên, tham số route sẽ được truyền đến hàm.</p> 
-   <p>Controllers không <strong>yêu cầu</strong> kế thừa từ base class. Tuy nhiên, bạn sẽ không có thêm một số tính năng như một số phương thức <code>middleware</code>, <code>validate</code>, và <code>dispatch</code>.</p> 
-   <p><a></a></p> 
-   <h3>Controllers &amp; Namespaces</h3> 
-   <p>Có điều rất quan trọng cần lưu ý là chúng ta không cần phải ghi rõ tên đẩu đủ của controller namespace khi chúng ta định nghĩa cho controller route. Kể từ khi <code>RouteServiceProvider</code> tải file route bên trong nhóm route có chứa namespace, chúng ta chỉ cần chỉ định tên class sau <code>App\Http\Controllers</code> namespace.</p> 
-   <p>If you choose to nest your controllers deeper into the <code>App\Http\Controllers</code> directory, simply use the specific class name relative to the <code>App\Http\Controllers</code> root namespace. So, if your full controller class is <code>App\Http\Controllers\Photos\AdminController</code>, you should register routes to the controller like so:</p> 
-   <pre><code>Route::get('foo', 'Photos\AdminController@method');</code></pre> 
-   <p><a></a></p> 
-   <h3>Một Action Controllers</h3> 
-   <p>Nếu bạn muốn định nghĩa một controller xử lý duy nhất một action, bạn có thể dùng phương thức <code>__invoke</code> trong controller:</p> 
-   <pre><code>&lt;?php
+}</pre>
+      <p>Bạn có thể định nghĩa một route cho action của controller như sau:</p>
+      <pre>Route::get('user/{id}', 'UserController@show');</pre>
+      <p>Bây giờ, khi một request giống với route URI, phương thức <code>show</code>
+        của class <code>UserController</code> sẽ được thực thi. Tất nhiên, tham
+        số route sẽ được truyền đến hàm.</p>
+      <p>Controllers không <strong>yêu cầu</strong> kế thừa từ base class. Tuy
+        nhiên, bạn sẽ không có thêm một số tính năng như một số phương thức <code>middleware</code>,
+        <code>validate</code>, và <code>dispatch</code>.</p>
+      <h3>Controller &amp; Namespace</h3>
+      <p>Có điều rất quan trọng cần lưu ý là chúng ta không cần phải ghi rõ tên
+        đẩu đủ của controller namespace khi chúng ta định nghĩa cho controller
+        route. Kể từ khi <code>RouteServiceProvider</code> tải file route bên
+        trong nhóm route có chứa namespace, chúng ta chỉ cần chỉ định tên class
+        sau <code>App\Http\Controllers</code> namespace.</p>
+      <p>If you choose to nest your controllers deeper into the <code>App\Http\Controllers</code>
+        directory, simply use the specific class name relative to the <code>App\Http\Controllers</code>
+        root namespace. So, if your full controller class is <code>App\Http\Controllers\Photos\AdminController</code>,
+        you should register routes to the controller like so:</p>
+      <pre>Route::get('foo', 'Photos\AdminController@method');</pre>
+      <h3>Một Action Controller</h3>
+      <p>Nếu bạn muốn định nghĩa một controller xử lý duy nhất một action, bạn
+        có thể dùng phương thức <code>__invoke</code> trong controller:</p>
+      <pre>&lt;?php
 
 namespace App\Http\Controllers;
 
@@ -69,15 +81,19 @@ class ShowProfile extends Controller
     {
         return view('user.profile', ['user' =&gt; User::findOrFail($id)]);
     }
-}</code></pre> 
-   <p>Khi đó bạn đăng ký một route cho một action controllers, bạn không cần xác định phương thức:</p> 
-   <pre><code>Route::get('user/{id}', 'ShowProfile');</code></pre> 
-   <p><a></a></p> 
-   <h2>Controller Middleware</h2> 
-   <p>Middleware có thể được gán cho controller route ở trong file route:</p> 
-   <pre><code>Route::get('profile', 'UserController@show')-&gt;middleware('auth');</code></pre> 
-   <p>Tuy nhiên, sẽ tiện hơn nếu middleware được để trong hàm constructor của controller. Sử dụng phương thức <code>middleware</code> trong hàm constructor của controller, Bạn có thể dễ dàng gán middleware cho action controller. Bạn thậm chí còn có thể hạn chế cho một vài phương thức cụ thể ở trong class controller:</p> 
-   <pre><code>class UserController extends Controller
+}</pre>
+      <p>Khi đó bạn đăng ký một route cho một action controllers, bạn không cần
+        xác định phương thức:</p>
+      <pre>Route::get('user/{id}', 'ShowProfile');</pre>
+      <h3>Controller Middleware</h3>
+      <p>Middleware có thể được gán cho controller route ở trong file route:</p>
+      <pre>Route::get('profile', 'UserController@show')-&gt;middleware('auth');</pre>
+      <p>Tuy nhiên, sẽ tiện hơn nếu middleware được để trong hàm constructor của
+        controller. Sử dụng phương thức <code>middleware</code> trong hàm
+        constructor của controller, Bạn có thể dễ dàng gán middleware cho action
+        controller. Bạn thậm chí còn có thể hạn chế cho một vài phương thức cụ
+        thể ở trong class controller:</p>
+      <pre>class UserController extends Controller
 {
     /**
      * Instantiate a new new controller instance.
@@ -92,116 +108,142 @@ class ShowProfile extends Controller
 
         $this-&gt;middleware('subscribed')-&gt;except('store');
     }
-}</code></pre> 
-   <p>Controller còn cho phép bạn đăng ký middleware sử dụng một Closure. Phương thức này khá thuận tiện để định nghĩa một middleware cho một controller mà không cần định nghĩa class middleware:</p> 
-   <pre><code>$this-&gt;middleware(function($request, $next) {
+}</pre>
+      <p>Controller còn cho phép bạn đăng ký middleware sử dụng một Closure.
+        Phương thức này khá thuận tiện để định nghĩa một middleware cho một
+        controller mà không cần định nghĩa class middleware:</p>
+      <pre>$this-&gt;middleware(function($request, $next) {
     // ...
 
     return $next($request);
-});</code></pre> 
-   <p> Bạn có thể gán middleware cho một tập con các action của controller; tuy nhiên, tập con action có thể to ra khi controller của bạn nhiều action. Vì thế, nên cân nhắc việc chia thành nhiều controller nhỏ hơn.</p> 
-   <p><a></a></p> 
-   <h2>Resource Controllers</h2> 
-   <p>Laravel resource routing gán kiểu "CRUD" routes cho một controller chỉ với một dòng code. Ví dụ, bạn có thể tạo một controller xử lý tất cả HTTP requests cho "photos" lưu trong ứng dụng của bạn. Sử dụng lệnh <code>make:controller</code> Artisan, chúng ta có thể nhanh chóng tạo ra một controller:</p> 
-   <pre><code>php artisan make:controller PhotoController --resource</code></pre> 
-   <p>Câu lệnh trên sẽ sinh ra một controller tại thư mục <code>app/Http/Controllers/PhotoController.php</code>. Controller sẽ bao gồm method cho các action của resource có sẵn.</p> 
-   <p>Tiếp theo, bạn phải đăng ký một resourceful route cho controller:</p> 
-   <pre><code>Route::resource('photos', 'PhotoController');</code></pre> 
-   <p>Khai báo route này sẽ tạo ra nhiều route để xử lý đa dạng các actions trong resource. Controller tạo ra sẽ có sẵn vài phương thức gốc dễ cho từng action, gồm những thông báo cho bạn những method HTTP và URIs nó xử lý.</p> 
-   <h4>Các action xử lý bởi Resource Controller</h4> 
-   <table> 
-    <thead> 
-     <tr> 
-      <th>Verb</th> 
-      <th>URI</th> 
-      <th>Action</th> 
-      <th>Route Name</th> 
-     </tr> 
-    </thead> 
-    <tbody> 
-     <tr> 
-      <td>GET</td> 
-      <td><code>/photos</code></td> 
-      <td>index</td> 
-      <td>photos.index</td> 
-     </tr> 
-     <tr> 
-      <td>GET</td> 
-      <td><code>/photos/create</code></td> 
-      <td>create</td> 
-      <td>photos.create</td> 
-     </tr> 
-     <tr> 
-      <td>POST</td> 
-      <td><code>/photos</code></td> 
-      <td>store</td> 
-      <td>photos.store</td> 
-     </tr> 
-     <tr> 
-      <td>GET</td> 
-      <td><code>/photos/{photo}</code></td> 
-      <td>show</td> 
-      <td>photos.show</td> 
-     </tr> 
-     <tr> 
-      <td>GET</td> 
-      <td><code>/photos/{photo}/edit</code></td> 
-      <td>edit</td> 
-      <td>photos.edit</td> 
-     </tr> 
-     <tr> 
-      <td>PUT/PATCH</td> 
-      <td><code>/photos/{photo}</code></td> 
-      <td>update</td> 
-      <td>photos.update</td> 
-     </tr> 
-     <tr> 
-      <td>DELETE</td> 
-      <td><code>/photos/{photo}</code></td> 
-      <td>destroy</td> 
-      <td>photos.destroy</td> 
-     </tr> 
-    </tbody> 
-   </table> 
-   <h4>Spoofing Form Methods</h4> 
-   <p>Hãy nhớ rằng HTML forms không hỗ trợ các request <code>PUT</code>, <code>PATCH</code>, hoặc <code>DELETE</code>, bạn sẽ cần thêm một trường hidden <code>_method</code> vào spoof HTTP verbs. Phương thức <code>method_field</code> có thể làm điều đó gúp bạn:</p> 
-   <pre><code>{{ method_field('PUT') }}</code></pre> 
-   <p><a></a></p> 
-   <h3>Từng phần Resource Routes</h3> 
-   <p>Khi bạn khai báo một resource route, bạn có thể chỉ định các tập con action của controller cần xử lý thay vì toàn bộ action mặc định ban đầu:</p> 
-   <pre><code>Route::resource('photo', 'PhotoController', ['only' =&gt; [
+});</pre>
+      <p> Bạn có thể gán middleware cho một tập con các action của controller;
+        tuy nhiên, tập con action có thể to ra khi controller của bạn nhiều
+        action. Vì thế, nên cân nhắc việc chia thành nhiều controller nhỏ hơn.</p>
+      <h3>Resource Controller</h3>
+      <p>Laravel resource routing gán kiểu "CRUD" routes cho một controller chỉ
+        với một dòng code. Ví dụ, bạn có thể tạo một controller xử lý tất cả
+        HTTP requests cho "photos" lưu trong ứng dụng của bạn. Sử dụng lệnh <code>make:controller</code>
+        Artisan, chúng ta có thể nhanh chóng tạo ra một controller:</p>
+      <pre class="command-line">php artisan make:controller PhotoController --resource</pre>
+      <p>Câu lệnh trên sẽ sinh ra một controller tại thư mục <code>app/Http/Controllers/PhotoController.php</code>.
+        Controller sẽ bao gồm method cho các action của resource có sẵn.</p>
+      <p>Tiếp theo, bạn phải đăng ký một resourceful route cho controller:</p>
+      <pre>Route::resource('photos', 'PhotoController');</pre>
+      <p>Khai báo route này sẽ tạo ra nhiều route để xử lý đa dạng các actions
+        trong resource. Controller tạo ra sẽ có sẵn vài phương thức gốc dễ cho
+        từng action, gồm những thông báo cho bạn những method HTTP và URIs nó xử
+        lý.</p>
+      <h4>Các action xử lý bởi Resource Controller</h4>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Verb</th>
+            <th>URI</th>
+            <th>Action</th>
+            <th>Route Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>GET</td>
+            <td><code>/photos</code></td>
+            <td>index</td>
+            <td>photos.index</td>
+          </tr>
+          <tr>
+            <td>GET</td>
+            <td><code>/photos/create</code></td>
+            <td>create</td>
+            <td>photos.create</td>
+          </tr>
+          <tr>
+            <td>POST</td>
+            <td><code>/photos</code></td>
+            <td>store</td>
+            <td>photos.store</td>
+          </tr>
+          <tr>
+            <td>GET</td>
+            <td><code>/photos/{photo}</code></td>
+            <td>show</td>
+            <td>photos.show</td>
+          </tr>
+          <tr>
+            <td>GET</td>
+            <td><code>/photos/{photo}/edit</code></td>
+            <td>edit</td>
+            <td>photos.edit</td>
+          </tr>
+          <tr>
+            <td>PUT/PATCH</td>
+            <td><code>/photos/{photo}</code></td>
+            <td>update</td>
+            <td>photos.update</td>
+          </tr>
+          <tr>
+            <td>DELETE</td>
+            <td><code>/photos/{photo}</code></td>
+            <td>destroy</td>
+            <td>photos.destroy</td>
+          </tr>
+        </tbody>
+      </table>
+      <h4>Spoofing Form Method</h4>
+      <p>Hãy nhớ rằng HTML forms không hỗ trợ các request <code>PUT</code>, <code>PATCH</code>,
+        hoặc <code>DELETE</code>, bạn sẽ cần thêm một trường hidden <code>_method</code>
+        vào spoof HTTP verbs. Phương thức <code>method_field</code> có thể làm
+        điều đó gúp bạn:</p>
+      <pre>{{ method_field('PUT') }}</pre>
+      <h3>Từng phần Resource Route</h3>
+      <p>Khi bạn khai báo một resource route, bạn có thể chỉ định các tập con
+        action của controller cần xử lý thay vì toàn bộ action mặc định ban đầu:</p>
+      <pre>Route::resource('photo', 'PhotoController', ['only' =&gt; [
     'index', 'show'
 ]]);
 
 Route::resource('photo', 'PhotoController', ['except' =&gt; [
     'create', 'store', 'update', 'destroy'
-]]);</code></pre> 
-   <p><a></a></p> 
-   <h3>Tên Resource Routes</h3> 
-   <p>Mặc định, tất cả các action của resource controller đều có tên route; tuy nhiên, bạn có thể ghi đè tên đó bằng cách truyền thêm mảng chứa <code>names</code> với tùy chọn của bạn:</p> 
-   <pre><code>Route::resource('photo', 'PhotoController', ['names' =&gt; [
+]]);</pre>
+      <h3>Tên Resource Route</h3>
+      <p>Mặc định, tất cả các action của resource controller đều có tên route;
+        tuy nhiên, bạn có thể ghi đè tên đó bằng cách truyền thêm mảng chứa <code>names</code>
+        với tùy chọn của bạn:</p>
+      <pre>Route::resource('photo', 'PhotoController', ['names' =&gt; [
     'create' =&gt; 'photo.build'
-]]);</code></pre> 
-   <p><a></a></p> 
-   <h3>Tên tham số Resource Route</h3> 
-   <p>Mặc định, <code>Route::resource</code> sẽ sinh ra tham số route cho resource routes dựa trên tên của resource. Bạn có thể dễ dàng ghi đè cho từng phần resource cơ bản bằng cách truyền <code>parameters</code> trong mảng như bên dưới. Tham số <code>parameters</code> nên là một mảng kết hợp giứa tên resource và tên tham số:</p> 
-   <pre><code>Route::resource('user', 'AdminUserController', ['parameters' =&gt; [
+]]);</pre>
+      <h3>Tên tham số Resource Route</h3>
+      <p>Mặc định, <code>Route::resource</code> sẽ sinh ra tham số route cho
+        resource routes dựa trên tên của resource. Bạn có thể dễ dàng ghi đè cho
+        từng phần resource cơ bản bằng cách truyền <code>parameters</code>
+        trong mảng như bên dưới. Tham số <code>parameters</code> nên là một
+        mảng kết hợp giứa tên resource và tên tham số:</p>
+      <pre>Route::resource('user', 'AdminUserController', ['parameters' =&gt; [
     'user' =&gt; 'admin_user'
-]]);</code></pre> 
-   <p>Ví dụ trên sẽ tạo ra những URI sau cho route <code>show</code> của resource:</p> 
-   <pre><code>/user/{admin_user}</code></pre> 
-   <p><a></a></p> 
-   <h3>Bổ sung Resource Controllers</h3> 
-   <p>Nếu bạn cần thêm route cho một resource controller ngoài các thiết lập mặc định của resource route, thì bạn nên định nghĩa những routes đó trướckhi gọi <code>Route::resource</code>; nếu không thì những route đã được định nghĩa bởi <code>resource</code> method có thể vô tình bị ưu tiên hơn những route bạn bổ sung:</p> 
-   <pre><code>Route::get('photos/popular', 'PhotoController@method');
+]]);</pre>
+      <p>Ví dụ trên sẽ tạo ra những URI sau cho route <code>show</code> của
+        resource:</p>
+      <pre>/user/{admin_user}</pre>
+      <h3>Bổ sung Resource Controllers</h3>
+      <p>Nếu bạn cần thêm route cho một resource controller ngoài các thiết lập
+        mặc định của resource route, thì bạn nên định nghĩa những routes đó
+        trướckhi gọi <code>Route::resource</code>; nếu không thì những route đã
+        được định nghĩa bởi <code>resource</code> method có thể vô tình bị ưu
+        tiên hơn những route bạn bổ sung:</p>
+      <pre>Route::get('photos/popular', 'PhotoController@method');
 
-Route::resource('photos', 'PhotoController');</code></pre> 
-   <p> Bạn nên tập trung vào controllers. Nếu bạn thấy mình thường xuyên thêm các route bên ngoài của các resource route thì hãy cân nhắc chia nhỏ controller hơn.</p> 
-   <p><a></a></p> 
-   <h2>Dependency Injection &amp; Controllers</h2> 
-   <h4>Constructor Injection</h4> 
-   <p>Phần <a href="https://giaphiep.com/docs/5.3/container">service container</a> Laravel sử dụng để xử lý tất cả các controllers. Kết quả là, bạn có thể type-hint bất cứ dependencies controller của bạn cần vào trong constructor. Các dependencies sẽ tự động xử lý và injected trong controller:</p> 
-   <pre><code>&lt;?php
+Route::resource('photos', 'PhotoController');</pre>
+      <p> Bạn nên tập trung vào controllers. Nếu bạn thấy mình thường xuyên thêm
+        các route bên ngoài của các resource route thì hãy cân nhắc chia nhỏ
+        controller hơn.</p>
+      <h3>Dependency Injection &amp; Controller</h3>
+      <h4>Constructor Injection</h4>
+      <p>Phần <a href="https://giaphiep.com/docs/5.3/container">service
+          container</a> Laravel sử dụng để xử lý tất cả các controllers. Kết quả
+        là, bạn có thể type-hint bất cứ dependencies controller của bạn cần vào
+        trong constructor. Các dependencies sẽ tự động xử lý và injected trong
+        controller:</p>
+      <pre>&lt;?php
 
 namespace App\Http\Controllers;
 
@@ -224,11 +266,17 @@ class UserController extends Controller
     {
         $this-&gt;users = $users;
     }
-}</code></pre> 
-   <p>Tất nhiên,bạn cũng có thể type-hint bất cứ <a href="https://giaphiep.com/docs/5.3/contracts">Laravel contract</a>. Nếu các thành phần có thể được giải quyết, bạn có thể type-hint nó. Phụ thuộc vào ứng dụng của bạn, inject dependencies của bạn vào trong controller có thể là một cách tốt hơn.</p> 
-   <h4>Phương thức Injection</h4> 
-   <p>Ngoài cách constructor injection, bạn cũng có thể type-hint dependencies trong phương thức controller. Một trường hợp phổ biến là phương thức injection là trường hợp injecting <code>Illuminate\Http\Request</code> vào trong phương thức controller:</p> 
-   <pre><code>&lt;?php
+}</pre>
+      <p>Tất nhiên,bạn cũng có thể type-hint bất cứ <a href="https://giaphiep.com/docs/5.3/contracts">Laravel
+          contract</a>. Nếu các thành phần có thể được giải quyết, bạn có thể
+        type-hint nó. Phụ thuộc vào ứng dụng của bạn, inject dependencies của
+        bạn vào trong controller có thể là một cách tốt hơn.</p>
+      <h4>Phương thức Injection</h4>
+      <p>Ngoài cách constructor injection, bạn cũng có thể type-hint
+        dependencies trong phương thức controller. Một trường hợp phổ biến là
+        phương thức injection là trường hợp injecting <code>Illuminate\Http\Request</code>
+        vào trong phương thức controller:</p>
+      <pre>&lt;?php
 
 namespace App\Http\Controllers;
 
@@ -248,11 +296,15 @@ class UserController extends Controller
 
         //
     }
-}</code></pre> 
-   <p>Nếu phương thức controller của bạn cũng chờ đợi đầu vào từ tham số của routes, đơn giản là liệt kê các đối số của route sau các dependencies khác. Ví dụ, nếu route của bạn định nghĩa như sau:</p> 
-   <pre><code>Route::put('user/{id}', 'UserController@update');</code></pre> 
-   <p>Bạn vẫn có thể type-hint vào <code>Illuminate\Http\Request</code> và truy cập vào tham số <code>id</code> bằng cách định nghĩa phương thức controller như sau:</p> 
-   <pre><code>&lt;?php
+}</pre>
+      <p>Nếu phương thức controller của bạn cũng chờ đợi đầu vào từ tham số của
+        routes, đơn giản là liệt kê các đối số của route sau các dependencies
+        khác. Ví dụ, nếu route của bạn định nghĩa như sau:</p>
+      <pre>Route::put('user/{id}', 'UserController@update');</pre>
+      <p>Bạn vẫn có thể type-hint vào <code>Illuminate\Http\Request</code> và
+        truy cập vào tham số <code>id</code> bằng cách định nghĩa phương thức
+        controller như sau:</p>
+      <pre>&lt;?php
 
 namespace App\Http\Controllers;
 
@@ -271,17 +323,26 @@ class UserController extends Controller
     {
         //
     }
-}</code></pre> 
-   <p><a></a></p> 
-   <h2>Route Caching</h2> 
-   <p> Closure based routes không hoạt động cached. Để sử dụng route caching, bạn phải chuyển các Closure routes sang sử dụng các class controller.</p> 
-   <p>Nếu ứng dụng của bạn chỉ sử dụng các controller based routes, thì bạn có thể sử dụng phần nâng cao route cache của Laravel. Sử dụng route cache sẽ giảm thời gian cần đăng ký tất cả các route trong ứng dụng của bạn. Trong một vài trường hợp, việc đăng ký route mcó thể nhanh hơn 100x lần. Để tạo ra route cache, chỉ cần chạy lệnh <code>route:cache</code> Artisan:</p> 
-   <pre><code>php artisan route:cache</code></pre> 
-   <p>Sau khi chạy lệnh, file cached routes của bạn sẽ được tải với mọi request. Nhớ rằng, nếu bạn thêm một route mới bạn cần phải làm mới lại route cache. Vì ký do này bạn chỉ lên chạy một lần khi <code>route:cache</code> ứng dụng của bạn deploy.</p> 
-   <p>Bạn có thể sử dụng lệnh <code>route:clear</code> để xóa route cache:</p> 
-   <pre><code>php artisan route:clear</code></pre> 
-   <p> Nguồn: <a href="https://laravel.com/docs/5.3/controllers">https://laravel.com/docs/5.3/controllers</a> </p> 
-  </article> 
-  <script src="../../js/docs.js"></script>  
- </body>
+}</pre>
+      <h3>Route Caching</h3>
+      <p>Các route dạng Closure không hoạt động cache. Để sử dụng route cache,
+        bạn phải chuyển các route Closure sang sử dụng các class controller.</p>
+      <p>Nếu ứng dụng của bạn chỉ sử dụng các controller based routes, thì bạn
+        có thể sử dụng phần nâng cao route cache của Laravel. Sử dụng route
+        cache sẽ giảm thời gian cần đăng ký tất cả các route trong ứng dụng của
+        bạn. Trong một vài trường hợp, việc đăng ký route có thể nhanh hơn 100
+        lần. Để tạo ra route cache, chỉ cần chạy lệnh <code>route:cache</code>
+        Artisan:</p>
+      <pre class="command-line">php artisan route:cache</pre>
+      <p>Sau khi chạy lệnh, file cached routes của bạn sẽ được tải với mọi
+        request. Nhớ rằng, nếu bạn thêm một route mới bạn cần phải làm mới lại
+        route cache. Vì ký do này bạn chỉ lên chạy một lần khi <code>route:cache</code>
+        ứng dụng của bạn deploy.</p>
+      <p>Bạn có thể sử dụng lệnh <code>route:clear</code> để xóa route cache:</p>
+      <pre class="command-line">php artisan route:clear</pre>
+      <h3>Tham khảo</h3>
+      <p><a href="https://laravel.com/docs/master/controllers" target="_blank">https://laravel.com/docs/master/controllers</a></p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
 </html>
