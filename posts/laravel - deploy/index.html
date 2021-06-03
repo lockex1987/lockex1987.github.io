@@ -12,7 +12,7 @@
     <article>
       <h2>Triển khai ứng dụng Laravel</h2>
       <p>Bài viết này sẽ hướng dẫn bạn deploy ứng dụng Laravel trên web server
-        nginx.</p>
+        Nginx.</p>
       <p>Giả sử bạn deploy một ứng dụng có tên là <code>sso</code>. Hãy thay
         tên <code>sso</code> bằng tên tương ứng của bạn ở các câu lệnh và cấu
         hình.</p>
@@ -25,12 +25,12 @@
       <p>Không cần copy thư mục <code>.git</code>, <code>node_modules</code>,
         <code>tests</code>, <code>database</code>,...</p>
       <p>Phân quyền thư mục <code>cache</code> và <code>storage</code>:</p>
-      <pre>sudo su<br>cd /var/www/html/
+      <pre class="code" data-lang="shell">sudo su<br>cd /var/www/html/
 cd sso<br>chmod -R 777 bootstrap/cache
 chmod -R 777 storage</pre>
       <h3>Tối ưu</h3>
       <p>Tạo cache các cấu hình:</p>
-      <pre>php artisan config:cache</pre>
+      <pre class="command-line code" data-lang="shell">php artisan config:cache</pre>
       <p>Bạn hãy nhớ thực hiện lệnh này, vì nếu không khi ứng dụng của bạn có
         nhiều request đồng thời, có thể xảy ra lỗi sau:</p>
       <pre class="text-pre-wrap">production.ERROR: No application encryption key has been specified.</pre>
@@ -43,7 +43,7 @@ chmod -R 777 storage</pre>
         nó hiển thị tất cả các thông số cấu hình của server.</p>
       <h3>File cấu hình mẫu</h3>
       <p>Tạo file <code>sso.conf</code> như sau:</p>
-      <pre class="out-of-box">server {
+      <pre class="out-of-box code" data-lang="nginx">server {
     listen 80;
     # listen 443;
     server_name sso.cttd.tk;
@@ -67,7 +67,7 @@ chmod -R 777 storage</pre>
       <p>Thêm file <code>sso.conf</code> vào thư mục <code>/etc/nginx/conf.d/</code>.</p>
       <h3>Kiểm tra</h3>
       <p>Restart nginx:</p>
-      <pre>sudo systemctl restart nginx</pre>
+      <pre class="command-line code" data-lang="shell">sudo systemctl restart nginx</pre>
       <p>Sửa host:</p>
       <ul>
         <li>Ở Windows, chỉnh file <code>C:\Windows\System32\drivers\etc</code></li>

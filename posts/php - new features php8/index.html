@@ -39,10 +39,12 @@ public function bar(?Bar $bar): void<br>{<br>}</pre>
       <h4>JIT</h4>
       <p>JIT (just in time) compiler hứa hẹn sẽ cải thiện hiệu năng một cách
         đáng kể, không chỉ trong phạm vi ngữ cảnh web request.</p>
-      <p>Nếu bạn muốn biết nhiều hơn về JIT, bạn có thể đọc bài viết về nó <a href="https://stitcher.io/blog/php-jit"
+      <p>Nếu bạn muốn biết nhiều hơn về JIT, bạn có thể đọc bài viết về nó <a href="https://stitcher.io/blog/php-jit"
+
           target="_blank">ở đây</a>.</p>
       <h4>Toán tử nullsafe</h4>
-      <p>Nếu bạn đã quen thuộc với toán tử <a href="https://stitcher.io/blog/shorthand-comparisons-in-php#null-coalescing-operator"
+      <p>Nếu bạn đã quen thuộc với toán tử <a href="https://stitcher.io/blog/shorthand-comparisons-in-php#null-coalescing-operator"
+
           target="_blank">null coalescing</a>, bạn cũng đã quen với hạn chế của
         nó: nó không sử dụng được khi gọi phương thức. Bạn sẽ phải kiểm tra
         trước, ví dụ:</p>
@@ -66,14 +68,15 @@ foo(
     a: 'value a', 
     d: 'value d',
 );</pre>
-      <p>Bạn có thể đọc sâu về chúng <a href="https://stitcher.io/blog/php-8-named-arguments"
+      <p>Bạn có thể đọc sâu về chúng <a href="https://stitcher.io/blog/php-8-named-arguments"
+
           target="_blank">trong bài viết này</a>.</p>
       <h4>Attribute</h4>
       <p><a href="https://stitcher.io/blog/attributes-in-php-8" target="_blank">Attribute</a>,
         thường được biết là annotation ở các ngôn ngữ lập trình khác, đưa ra một
         cách để thêm dữ liệu meta vào class.</p>
       <p>Ví dụ:</p>
-      <pre>use App\Attributes\ExampleAttribute;
+      <pre data-code-lang="php">&lt;?php<br><br>use App\Attributes\ExampleAttribute;
 
 #[ExampleAttribute]
 class Foo
@@ -87,7 +90,7 @@ class Foo
     #[ExampleAttribute]
     public function foo(#[ExampleAttribute] $bar)<br>    {<br>    }
 }</pre>
-      <pre>#[Attribute]
+      <pre data-code-lang="php">&lt;?php<br><br>#[Attribute]
 class ExampleAttribute
 {
     public $value;
@@ -112,14 +115,15 @@ class ExampleAttribute
     0 =&gt; 'hello',
     '1', '2', '3' =&gt; 'world'
 };</pre>
-      <p>Bạn có thể đọc chi tiết <a href="https://stitcher.io/blog/php-8-match-or-switch"
+      <p>Bạn có thể đọc chi tiết <a href="https://stitcher.io/blog/php-8-match-or-switch"
+
           target="_blank">ở đây</a>.</p>
       <h4>Constructor property promotion</h4>
       <p>This RFC adds syntactic sugar to create value objects or data transfer
         objects. Instead of specifying class properties and a constructor for
         them, PHP can now combine them into one.</p>
       <p>Instead of doing this:</p>
-      <pre>class Money 
+      <pre data-code-lang="php">&lt;?php<br><br>class Money
 {
     public Currency $currency;
  
@@ -134,7 +138,7 @@ class ExampleAttribute
     }
 }</pre>
       <p>You can now do this:</p>
-      <pre>class Money 
+      <pre data-code-lang="php">&lt;?php<br><br>class Money
 {
     public function __construct(
         public Currency $currency,

@@ -1,9 +1,12 @@
 (() => {
-    const codeBlocks = [...document.querySelectorAll('pre.code')];
+    const codeBlocks = [...document.querySelectorAll('pre[data-code-lang]')];
     codeBlocks.forEach(code => {
-        const source = code.textContent;
+        const source = code.innerText;
+		// const source = code.textContent;
         // const source = code.innerHTML;
-        const lang = code.dataset.lang;
+		// console.log(source);
+
+        const lang = code.dataset.codeLang;
         code.innerHTML = '';
 
         /*
@@ -15,6 +18,7 @@
             // theme: 'monokai'
         });
         */
+
         code.classList.add('cm-s-inner'); // cm-s-default, cm-s-monokai, cm-s-inner (Typora)
         code.classList.add('CodeMirror');
         CodeMirror.runMode(source, lang, code);

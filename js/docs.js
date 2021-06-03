@@ -438,13 +438,28 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     function highlighSourceCodeSyntax() {
-        const codeBlocks = [...document.querySelectorAll('pre.code')];
+        const codeBlocks = [...document.querySelectorAll('pre[data-code-lang]')];
         if (codeBlocks.length == 0) {
             return;
         }
 
         // Lấy danh sách các ngôn ngữ sử dụng, không duplicate
-        const languages = new Set(codeBlocks.map(code => code.dataset.lang));
+        const languages = new Set(codeBlocks.map(code => code.dataset.codeLang));
+        if (languages.has('htmlmixed')) {
+            languages.add('xml');
+            languages.add('javascript');
+            languages.add('css');
+        }
+        if (languages.has('php')) {
+            languages.add('xml');
+            languages.add('javascript');
+            languages.add('css');
+
+            languages.add('htmlmixed');
+
+            languages.add('clike');
+        }
+        // console.log(languages);
 
         // Thêm file CSS
         loadCssFile('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.1/codemirror.min.css');
