@@ -37,41 +37,40 @@
       <h5>Đăng ký</h5>
       <figure><img src="images/features/register.png" alt=""></figure>
       <p>Chức năng này có sử dụng gửi mail bằng Laravel.</p>
+      <p>Chức năng này mới tạo bản ghi <code>register_user</code>, chưa tạo bản
+        ghi <code>user</code>.</p>
       <h5>Xác nhận mail đăng ký</h5>
-      <p>x</p>
-      <p>Bước 4: <a href="../laravel%20-%20authentication/">Đăng nhập, đăng
-          xuất</a></p>
+      <p>Khi xác nhận thành công sẽ tạo bản ghi <code>user</code> từ bản ghi <code>register_user</code>.</p>
+      <h5>Đăng nhập, đăng xuất</h5>
+      <p><a href="../laravel%20-%20authentication/">Đăng nhập, đăng xuất</a></p>
       <p>Có throttle</p>
-      <p>SSO</p>
-      <p>Bước 5: <a href="../laravel%20-%20two-factor%20authentication/">Xác
-          thực 2 lớp</a></p>
-      <p>Bước 6: Đổi thông tin</p>
+      <p>Tập trung SSO</p>
+      <h5>Xác thực 2 lớp</h5>
+      <p><a href="../laravel%20-%20two-factor%20authentication/">Xác thực 2 lớp</a></p>
+      <h5>Đổi thông tin</h5>
       <p>Mật khẩu, tên, số điện thoại, email, avatar</p>
       <p>Avatar lưu ở trong DB</p>
-      <p>Bước 7: Lịch sử đăng nhập (OS, Browser, IP, time)</p>
-      <p>Bước 8: Danh sách các ứng dụng được phân quyền (link truy cập)</p>
-      <p>Bước 9: Quên mật khẩu</p>
+      <h5>Lịch sử đăng nhập</h5>
+      <p>Parse để lấy thông tin OS, Browser, IP, time.</p>
+      <h5>Danh sách các ứng dụng</h5>
+      <p>Được phân quyền (link truy cập)</p>
+      <h5>Quên mật khẩu</h5>
       <p>Giới hạn số lần thao tác tối đa trong một ngày</p>
       <p>Email đổi mật khẩu thành công</p>
       <p>Giới hạn số lần đổi tối đa trong một ngày</p>
-      <p>Bước 10:</p>
-      <p>Bước 11: TODO: Đăng ký qua Facebook, Google</p>
+      <h5>Đăng ký qua Facebook, Google</h5>
+      <p>TODO</p>
       <h4>sso-admin</h4>
-      <ul>
-        <li>Đăng nhập qua <strong>sso-passport</strong> (người dùng phải được
-          gán cho ứng dụng sso-admin)</li>
-        <li>Quản lý người dùng</li>
-        <li>Quản lý ứng dụng
-          <ul>
-            <li>TODO: secret của ứng dụng, để gọi API từ ứng dụng, tự generate
-              secret</li>
-          </ul>
-        </li>
-        <li>Gán ứng dụng cho người dùng</li>
-      </ul>
       <p>Không mất công làm lại các bài toán cũ.</p>
-      <p>Làm luôn trên project <strong>sso-admin</strong>.</p>
-      <p>Tham khảo Voyager.</p>
+      <h5>Đăng nhập</h5>
+      <p>Đăng nhập qua <strong>sso-passport</strong> (người dùng phải được gán
+        cho ứng dụng sso-admin)</p>
+      <h5>Quản lý người dùng</h5>
+      <p>IMG</p>
+      <h5>Quản lý ứng dụng</h5>
+      <p>TODO: secret của ứng dụng, để gọi API từ ứng dụng, tự generate secret</p>
+      <h5>Gán ứng dụng cho người dùng</h5>
+      <p>IMG</p>
       <ul>
         <li>Web Socket chat, TODO:
           <ul>
@@ -200,44 +199,37 @@
       </ul>
       <h4>landing-page</h4>
       <p>Server render, hỗ trợ SEO.</p>
+      <h5>Trang landing page</h5>
+      <p>Đối tượng hướng tới là doanh nghiệp nhỏ</p>
       <ul>
-        <li>Trang landing page (đối tượng hướng tới là doanh nghiệp nhỏ)
-          <ul>
-            <li>Giới thiệu thông tin chung, liên hệ, đội ngũ, bản đồ địa chỉ</li>
-            <li>Chuyên môn, ảnh sản phẩm</li>
-            <li>Link chat với chúng tôi (FB Messenger)</li>
-            <li>Link tin tức</li>
-            <li>Link đăng nhập (sso-admin)</li>
-          </ul>
-        </li>
-        <li>Trang danh sách tin tức
-          <ul>
-            <li>Có phân trang</li>
-          </ul>
-        </li>
-        <li>Trang chi tiết tin tức
-          <ul>
-            <li>Các bài liên quan</li>
-            <li>FB comment</li>
-            <li>Dùng Share API để share link</li>
-          </ul>
-        </li>
-        <li>Tính năng comment:
-          <ul>
-            <li>Lấy danh sách (sắp xếp: mới nhất, cũ nhất, phổ biến)</li>
-            <li>Thêm comment (HTML)</li>
-            <li>Trả lời (comment lồng nhau)</li>
-            <li>Sửa comment</li>
-            <li>Xóa comment</li>
-            <li>Phê duyệt comment</li>
-            <li>Có thông báo</li>
-            <li>Giới hạn comment dài quá, comment dài quá thì có nút xem thêm</li>
-            <li>Like (bình chọn) comment</li>
-            <li>Thêm đính kèm (thêm ảnh, video)</li>
-            <li>Hash tag</li>
-            <li>Pinging user (@ người dùng)</li>
-          </ul>
-        </li>
+        <li>Giới thiệu thông tin chung, liên hệ, đội ngũ, bản đồ địa chỉ</li>
+        <li>Chuyên môn, ảnh sản phẩm</li>
+        <li>Link chat với chúng tôi (FB Messenger)</li>
+        <li>Link tin tức</li>
+        <li>Link đăng nhập (sso-admin)</li>
+      </ul>
+      <h5>Trang danh sách tin tức </h5>
+      <p>Có phân trang</p>
+      <h5>Trang chi tiết tin tức</h5>
+      <ul>
+        <li>Các bài liên quan</li>
+        <li>FB comment</li>
+        <li>Dùng Share API để share link</li>
+      </ul>
+      <h5>Tính năng comment</h5>
+      <ul>
+        <li>Lấy danh sách (sắp xếp: mới nhất, cũ nhất, phổ biến)</li>
+        <li>Thêm comment (HTML)</li>
+        <li>Trả lời (comment lồng nhau)</li>
+        <li>Sửa comment</li>
+        <li>Xóa comment</li>
+        <li>Phê duyệt comment</li>
+        <li>Có thông báo</li>
+        <li>Giới hạn comment dài quá, comment dài quá thì có nút xem thêm</li>
+        <li>Like (bình chọn) comment</li>
+        <li>Thêm đính kèm (thêm ảnh, video)</li>
+        <li>Hash tag</li>
+        <li>Pinging user (@ người dùng)</li>
       </ul>
       <h4>websocket-server</h4>
       <ul>
