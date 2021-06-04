@@ -12,140 +12,6 @@
   <body>
     <article>
       <h2>Xác thực với Laravel</h2>
-      <p>Xác thực (authentication) gồm các chức năng sau:</p>
-      <ul>
-        <li>Đăng ký</li>
-        <li>Xác nhận email</li>
-        <li>Đăng nhập</li>
-        <li>Gửi mail quên mật khẩu và reset mật khẩu</li>
-        <li>Nhớ đăng nhập</li>
-        <li>Trang chủ sau đăng nhập</li>
-        <li>Đăng xuất</li>
-      </ul>
-      <p>Laravel hỗ trợ cơ bản các chức năng trên.</p>
-      <h3>Khởi tạo</h3>
-      <p>Ở phiên bản Laravel 6 dùng lệnh sau:</p>
-      <pre>composer require laravel/ui --dev
-php artisan ui:auth</pre>
-      <p>Các thay đổi là:</p>
-      <pre>new file:   app/Http/Controllers/HomeController.php
-
-new file:   resources/views/auth/passwords/confirm.blade.php
-new file:   resources/views/auth/passwords/email.blade.php
-new file:   resources/views/auth/passwords/reset.blade.php
-
-new file:   resources/views/auth/login.blade.php
-new file:   resources/views/auth/register.blade.php
-new file:   resources/views/auth/verify.blade.php
-
-new file:   resources/views/home.blade.php
-
-new file:   resources/views/layouts/app.blade.php
-
-modified:   routes/web.php</pre>
-      <p>Ngoài ra còn có các file cũ cũng được sử dụng khi authentication:</p>
-      <pre>app/Http/Controllers/Auth/ConfirmPasswordController.php<br>app/Http/Controllers/Auth/ForgotPasswordController.php<br>app/Http/Controllers/Auth/LoginController.php<br>app/Http/Controllers/Auth/RegisterController.php<br>app/Http/Controllers/Auth/ResetPasswordController.php<br>app/Http/Controllers/Auth/VerificationController.php</pre>
-      <p>File <code>routes/web.php</code> thêm như sau:</p>
-      <pre>Auth::routes();<br>
-Route::get('/home', 'HomeController@index')-&gt;name('home');</pre>
-      <p><code>Auth::routes()</code> nó làm cái gì? Nó gọi đến phương thức
-        static <code>routes()</code> của class <code>Illuminate\Support\Facades\Auth</code>.</p>
-      <p>Chúng ta có thể tham khảo phương thức <code>auth()</code> của file <code>vendor/laravel/framework/src/Illuminate/Routing/Router.php</code>
-        như sau:</p>
-      <pre class="out-of-box text-pre-wrap">/**
- * Register the typical authentication routes for an application.
- *
- * @return void
- */
-public function auth()
-{
-    // Authentication Routes...
-    $this-&gt;get('login', 'Auth\LoginController@showLoginForm')-&gt;name('login');
-    $this-&gt;post('login', 'Auth\LoginController@login');
-    $this-&gt;post('logout', 'Auth\LoginController@logout')-&gt;name('logout');
-
-    // Registration Routes...
-    $this-&gt;get('register', 'Auth\RegisterController@showRegistrationForm')-&gt;name('register');
-    $this-&gt;post('register', 'Auth\RegisterController@register');
-
-    // Password Reset Routes...
-    $this-&gt;get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')-&gt;name('password.request');
-    $this-&gt;post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')-&gt;name('password.email');
-    $this-&gt;get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')-&gt;name('password.reset');
-    $this-&gt;post('password/reset', 'Auth\ResetPasswordController@reset');
-}</pre>
-      <p>Chúng ta tham khảo file <code>vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesUsers.php</code>.</p>
-      <pre>/**
- * Show the application's login form.
- *
- * @return \Illuminate\Http\Response
- */
-public function showLoginForm()
-{
-    return view('auth.login');
-}
-</pre>
-      <p>Nếu ứng dụng không có trang chủ hoặc landing page thì có thể chỉnh file
-        <code>routes/web.php</code> như sau:</p>
-      <pre>Route::get('/', function () {
-    // Nếu người dùng đã đăng nhập thì hiển thị trang home
-    // nếu không thì hiển thị trang đăng nhập
-    if (Auth::check()) {
-        return view('home');
-    } else {
-        return view('auth.login');
-    }
-});</pre>
-      <p>Mặc định sẽ vào luôn trang home đã đăng nhập hoặc trang form đăng nhập.</p>
-      <p>Để làm một cách cơ bản đầy đủ, chúng ta cần thêm trang đổi mật khẩu.</p>
-      <p>Để tương thích với các layout khác trong dự án, chúng ta có thể chuyển
-        <code>layouts/app.blade.php</code> thành <code>layout/authentication.blade.php</code>.
-        Sửa các file tương ứng ở thư mục auth cho extends đúng.</p>
-      <h3>Những chú ý về database</h3>
-      <p>Mặc định, Laravel thêm một <code>App\User</code> Eloquent model trong
-        thư mục app. Model này có thể sử dụng với Eloquent authentication driver
-        mặc định. Nếu ứng dụng của bạn không sử dụng Eloquent, bạn có thể dùng
-        database authentication driver sử dụng Laravel query builder.</p>
-      <p>Khi xây dựng database schema cho model <code>App\User</code> model,
-        đảm bảo rằng độ dài cột password tối thiểu là 60 kí tự. Mặc định với 255
-        kí tự sẽ là một lựa chọn tốt.</p>
-      <p>Ngoài ra, bạn cũng nên xác nhận table <code>users</code> (hoặc tương
-        đương) table chứa một nullable, cột&nbsp; <code>remember_token</code>
-        chứa 100 ký tự. Cột này sẽ được dùng để lưu một token cho session
-        "remember me" khi đang được duy trì bởi ứng dụng của bạn.</p>
-      <p>Đã có sẵn các file trong <code>database/migrations</code>.</p>
-      <p>Chúng ta sửa cấu hình CSDL ở file <code>.env</code> và chạy lệnh
-        migrate:</p>
-      <pre>php artisan migrate</pre>
-      <p>Có thể bị lỗi sau:</p>
-      <pre class="out-of-box text-pre-wrap">SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was too long; max key length is 767 bytes (SQL: alter table `users` add unique `users_email_unique`(`email`))</pre>
-      <p>https://laravel-news.com/laravel-5-4-key-too-long-error</p>
-      <p>Sửa file <code>AppServiceProvider.php</code> ở thư mục <code>app/Providers</code>,
-        thêm dòng sau vào phương thức boot.</p>
-      <pre>use Illuminate\Support\Facades\Schema;
-
-class AppServiceProvider extends ServiceProvider
-{
-    public function boot()
-    {
-        Schema::defaultStringLength(191);
-    }
-}</pre>
-      <p>Chú ý phải đúng là 191, không phải 255.</p>
-      <p>Các bảng sau sẽ được tạo: <code>users</code>, <code>password_resets</code>.
-      </p>
-      <pre class="out-of-box">CREATE TABLE users (
-    id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-    name VARCHAR(191) NOT NULL COLLATE 'utf8mb4_unicode_ci',
-    email VARCHAR(191) NOT NULL COLLATE 'utf8mb4_unicode_ci',
-    password VARCHAR(191) NOT NULL COLLATE 'utf8mb4_unicode_ci',
-    remember_token VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci',
-    created_at TIMESTAMP NULL DEFAULT NULL,
-    updated_at TIMESTAMP NULL DEFAULT NULL,
-    PRIMARY KEY (id),
-    UNIQUE INDEX users_email_unique (email)
-);</pre>
-      <p>Chú ý: độ dài các trường đang là 199.</p>
       <h3>Thêm điều kiện được chỉ định</h3>
       <p>Nếu muốn, bạn cũng có thể thêm những điều kiện mở rộng vào truy vấn xác
         thực. Ví dụ, chúng ta có thể xác nhận xem user đã được đánh dấu như
@@ -155,12 +21,7 @@ class AppServiceProvider extends ServiceProvider
 }</pre>
       <p>Lấy giá trị một trường nào đó của người dùng sau khi đăng nhập.</p>
       <p>Get other field (is_admin).</p>
-      <h3>Tùy chỉnh đường dẫn</h3>
-      <p>Khi một người dùng xác thực thành công, họ sẽ được chuyển đến trang <code>/home</code>.
-        Bạn có thể tùy chỉnh đường dẫn này bằng cách sửa thuộc tính <code>redirectTo</code>
-        của các lớp <code>LoginController</code>, <code>RegisterController</code>,
-        <code>ResetPasswordController</code>.</p>
-      <p>Tiếp theo, bạn sửa phương thức <code>handle</code> của lớp <code>RedirectIfAuthenticated</code>.</p>
+      <br>
       <h3>Đăng xuất</h3>
       <p>Để đăng xuất người dùng khỏi ứng dụng của bạn, bạn có thể sử dụng
         phương thức logout trong&nbsp; Auth facade. Việc này sẽ xóa toàn bộ
@@ -184,26 +45,7 @@ class AppServiceProvider extends ServiceProvider
       <pre>if (Auth::viaRemember()) {
     //
 }</pre>
-      <h3>Đổi tên bảng users</h3>
-      <p>Đôi khi bạn có nhu cầu đổi tên bảng mặc định users thành một tên khác.
-        Ví dụ bạn có 2 bảng:</p>
-      <ul>
-        <li><code>users</code> để quản lý người dùng ngoài</li>
-        <li><code>admin_users</code> để quản lý người dùng trong</li>
-      </ul>
-      <p>Project admin sẽ cần sửa bảng users thành <code>admin_users</code>.</p>
-      <p>Cách đơn giản nhất là sửa file <code>User.php</code>.</p>
-      <pre>protected $table = 'admin_users';</pre>
-      <p>Có khi bạn muốn sửa cả tên lớp <code>User</code> thành <code>AdminUser</code>
-        thì sao?</p>
-      <p>Khi đó bạn sẽ cần sửa cả:</p>
-      <ul>
-        <li>File migrate</li>
-        <li>User.php</li>
-        <li>config/auth.php, sửa User::class thành AdminUser::class</li>
-        <li>RegisterController.php</li>
-      </ul>
-      <p>https://medium.com/@ZtuX/how-to-change-your-authentication-model-in-laravel-5-3-7a580a727d6f</p>
+      <br>
       <h3>Đổi trường đăng nhập</h3>
       <p>Mặc định Laravel đăng nhập bằng trường email.</p>
       <p>Nếu muốn sửa sang trường khác, ví dụ name.</p>
@@ -228,8 +70,7 @@ public function username() {
         @endif
     &lt;/div&gt;
 &lt;/div&gt;</pre>
-      <h3>Đăng nhập với user active</h3>
-      <p>https://stackoverflow.com/questions/31015606/login-only-if-user-is-active-using-laravel</p>
+      <br>
       <h3>Login throttle</h3>
       <p>Nếu bạn sử dụng lớp <code>LoginController</code> có sẵn của Laravel
         thì sẽ bao gồm luôn cả trait <code>Illuminate\Foundation\Auth\ThrottlesLogins</code>.
@@ -237,27 +78,7 @@ public function username() {
         thông tin sai sau một vài lần (tầm 6 lần). Việc giới hạn này là duy nhất
         với tên/email của người dùng và địa chỉ IP.</p>
       <figure> <img alt="" src="images/login%20throttle.png"> </figure>
-      <h3>Thêm trường cho form đăng ký</h3>
-      <p>Form đăng ký mặc định chỉ có các trường: họ tên, địa chỉ email và mật
-        khẩu. Tuy nhiên, có thể bạn muốn thêm các thông tin như tên đăng nhập,
-        số điện thoại, địa chỉ,...</p>
-      <p>Giả sử bạn cần thêm trường số điện thoại (phone_number).</p>
-      <p>Đầu tiên chúng ta phải thêm các trường vào trong DB. Ngoài ra bạn cũng
-        có thể cập nhật file migration của Laravel.</p>
-      <p>Sửa tiếp file <code>User.php</code>, thuộc tính <code>$fillable</code>
-        cho thêm trường <code>phone_number</code>.</p>
-      <p>Tiếp theo bạn sửa file <code>resources/views/auth/register.blade.php</code>,
-        thêm thẻ HTML để nhập giá trị.</p>
-      <pre>CODE</pre>
-      <p>Sửa tiếp file <code>RegisterController.php</code>, sửa hai hàm <code>validator</code>
-        và <code>create</code>.</p>
-      <pre>CODE</pre>
-      <p>Bạn cũng có thể chỉnh sửa, thêm một số logic như:</p>
-      <ul>
-        <li>Khởi tạo một số trường mặc định khác ở bảng users (is_active,...)</li>
-        <li>Validate thêm (không được trùng tên)</li>
-        <li>Xác thực địa chỉ email tồn tại</li>
-      </ul>
+      <br>
       <h3>Ghi nhớ đăng nhập</h3>
       <p>Trong hầu hết các form login của mọi hệ thống thì thường có chức năng
         Remember Me, giúp người dùng khi quay lại hệ thống thì không cần đăng
@@ -337,15 +158,11 @@ public function username() {
         trị rememberMe là true, bạn có thể lấy người sử dụng từ cơ sở dữ liệu
         dựa trên giá trị token và thực hiện đăng nhập tự động.<br>
         4. Khi người sử dụng thoát ra, bạn phải xóa cookie lưu trữ token.</p>
-      <div class="out-of-box text-center">
-      <img src="images/check%20cookie.png" alt="">  
-      </div>
-      
+      <div class="out-of-box text-center"> <img src="images/check%20cookie.png"
+          alt=""> </div>
       <p>check cookie.png</p>
-      <div class="out-of-box text-center">
-      <img src="images/find%20cookie.png" alt="">  
-      </div>
-      
+      <div class="out-of-box text-center"> <img src="images/find%20cookie.png"
+          alt=""> </div>
       <p>find cookie.png</p>
       <h3>Tham khảo</h3>
       <p><a href="https://lockex1987.github.io/archive/laravel%20-%20email%20verification/">Xác

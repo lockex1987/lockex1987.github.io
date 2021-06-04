@@ -12,13 +12,13 @@
     <article>
       <h2>Laravel routing</h2>
       <h3>Routing cơ bản</h3>
-      <p>Hầu hết các route của Laravel cơ cản là nhận một URI và một <code>Closure</code>,
+      <p>Hầu hết các route của Laravel cơ bản là nhận một URI và một <code>Closure</code>,
         nó cung cấp một cách rất đơn giản để định nghĩa một route:</p>
-      <pre>Route::get('foo', function () {
+      <pre data-code-lang="php">&lt;?php<br><br>Route::get('foo', function () {
     return 'Hello World';
 });</pre>
       <h4>File route mặc định</h4>
-      <p>Tất cả các route được định nghĩa ở trong file route, ở trong thư mục <code>routes</code>.
+      <p>Tất cả các route được định nghĩa ở trong các file ở trong thư mục <code>routes</code>.
         Nó đó sẽ được tự động tải bởi framework. File <code>routes/web.php</code>
         định nghĩa route cho giao diện web của bạn. Đấy là các route được gán
         vào thuộc nhóm middleware <code>web</code>, nó cung cấp một số tính
@@ -26,8 +26,8 @@
         gán vào nhóm middleware <code>api</code>.</p>
       <p>Hầu hết các ứng dụng, bạn sẽ bắt đầu định nghĩa route trong file <code>routes/web.php</code>.</p>
       <h4>Một số phương thức có sẵn trong Route</h4>
-      <p>Class <code>Route</code> cho phép bạn đăng ký các route đáp ứng nhiều
-        phương thức HTTP:</p>
+      <p>Facade class <code>Route</code> cho phép bạn đăng ký các route đáp ứng
+        nhiều phương thức HTTP:</p>
       <pre>Route::get($uri, $callback);
 Route::post($uri, $callback);
 Route::put($uri, $callback);
@@ -38,7 +38,7 @@ Route::options($uri, $callback);</pre>
         thức HTTP, có thể dùng phương thức <code>match</code>. Hoặc, bạn có thể
         đăng ký một route mà đáp ứng tất cả các phương thức HTTP bằng cách sử
         dụng phương thức <code>any</code>:</p>
-      <pre>Route::match(['get', 'post'], '/', function () {
+      <pre data-code-lang="php">&lt;?php<br><br>Route::match(['get', 'post'], '/', function () {
     //
 });
 
@@ -49,9 +49,9 @@ Route::any('foo', function () {
       <p>Tất cả các HTML form có method là <code>POST</code>, <code>PUT</code>,
         hoặc <code>DELETE</code> đều chỉ đến route được định nghĩa trong
         middlware <code>web</code> thì cần được thêm trường CSRF token. Nếu
-        không thì request sẽ bị từ chối.</p>
+        không thì request sẽ bị từ chối, do các route web mặc định sẽ có chứa
+        middleware VerifyCsrfToken.</p>
       <pre>&lt;form method="POST" action="/profile"&gt;
-    
     ...
 &lt;/form&gt;</pre>
       <h3>Các tham số route</h3>
@@ -59,22 +59,22 @@ Route::any('foo', function () {
       <p>Tất nhiên, đôi khi bạn cần nắm bắt các segment trong URI bên trong
         route của bạn. Ví dụ, bạn cần phải lấy ID của người dùng từ các URL. Bạn
         có thể làm như vậy bằng cách định nghĩa các tham số như sau:</p>
-      <pre>Route::get('user/{id}', function ($id) {
+      <pre data-code-lang="php">&lt;?php<br><br>Route::get('user/{id}', function ($id) {
     return 'User ' . $id;
 });</pre>
       <p>Ngoài ra bạn cũng có thế định nghĩa nhiều tham số theo yêu cầu:</p>
-      <pre class="out-of-box">Route::get('posts/{post}/comments/{comment}', function ($postId, $commentId) {
+      <pre data-code-lang="php">&lt;?php<br><br>Route::get('posts/{post}/comments/{comment}', function ($postId, $commentId) {
     //
 });</pre>
       <p>Tham số route luôn luôn phải nằm trong dấu ngoặc nhọn <code>{}</code>.
-        Các tham số route không được phép chứa ký tự <code>-</code>. Bạn có thể
-        dùng ký tự (<code>_</code>) để thay thế.</p>
+        Các tham số route không được phép chứa ký tự gạch ngang <code>-</code>.
+        Bạn có thể dùng ký tự gạch dưới (<code>_</code>) để thay thế.</p>
       <h4>Tham số tùy chọn</h4>
       <p>Thỉnh thoảng, bạn cần phải định nghĩa một route đặc biệt chứa tham số,
         nhưng sự hiện diện của tham số đấy có thể có hoặc không, bạn có thể dùng
-        cách đặt dấu <code>?</code> sau tên tham số, và hãy chắc chắn rằng gán
-        cho nó một giá trị mặc định:</p>
-      <pre>Route::get('user/{name?}', function ($name = null) {
+        cách đặt dấu hỏi chấm <code>?</code> sau tên tham số, và hãy chắc chắn
+        rằng gán cho nó một giá trị mặc định:</p>
+      <pre data-code-lang="php">&lt;?php<br><br>Route::get('user/{name?}', function ($name = null) {
     return $name;
 });
 
@@ -85,11 +85,11 @@ Route::get('user/{name?}', function ($name = 'John') {
       <p>Tên routes cho phép đặt tên thuận tiện cho các URL hoặc chuyển hướng
         cho các route cụ thể. Bạn có chỉ định một tên cho route bằng cách thêm <code>name</code>
         vào định nghĩa route :</p>
-      <pre>Route::get('user/profile', function () {
+      <pre data-code-lang="php">&lt;?php<br><br>Route::get('user/profile', function () {
     //
 })-&gt;name('profile');</pre>
       <p>Ngoài ra bạn cũng có thế chỉ định tên route cho controller:</p>
-      <pre>Route::get('user/profile', 'UserController@showProfile')<br>    -&gt;name('profile');</pre>
+      <pre data-code-lang="php">&lt;?php<br><br>Route::get('user/profile', 'UserController@showProfile')<br>    -&gt;name('profile');</pre>
       <h4>Tạo URL từ route đã đặt tên</h4>
       <p>Một khi bạn đã gán tên cho một route xác định, bạn có thể dùng tên của
         nó khi tạo URL hoặc chuyển hướng thông qua hàm toàn cục <code>route</code>:</p>
@@ -101,7 +101,7 @@ return redirect()-&gt;route('profile');</pre>
       <p>Nếu tên route được định nghĩa với tham số, bạn có thể xuyên qua nó như
         là một đối số thứ hai trong phương thức route <code>route</code>. Các
         đối số sẽ được chèn vào theo đúng thứ tự chính xác trên URL:</p>
-      <pre>Route::get('user/{id}/profile', function ($id) {
+      <pre data-code-lang="php">&lt;?php<br><br>Route::get('user/{id}/profile', function ($id) {
     //
 })-&gt;name('profile');
 
@@ -219,17 +219,17 @@ public function getRouteKeyName()
 });</pre>
       <h3>Form Method Spoofing</h3>
       <p>HTML form không hỗ trợ một số method <code>PUT</code>, <code>PATCH</code>
-        or <code>DELETE</code>. Vì vậy, Khi định nghĩa <code>PUT</code>, <code>PATCH</code>
+        or <code>DELETE</code>. Vì vậy, khi định nghĩa <code>PUT</code>, <code>PATCH</code>
         hoặc <code>DELETE</code> route mà được gọi từ HTML form, bạn sẽ cần
         phải thêm một trường hidden <code>_method</code> vào form. Giá trị của
         trường hidden là <code>_method</code> sẽ sử dụng phương thức HTTP
         request:</p>
-      <pre>&lt;form action="/foo/bar" method="POST"&gt;
+      <pre data-code-lang="htmlmixed">&lt;form action="/foo/bar" method="POST"&gt;
     &lt;input type="hidden" name="_method" value="PUT"&gt;
     &lt;input type="hidden" name="_token" value="{{ csrf_token() }}"&gt;
 &lt;/form&gt;</pre>
-      <p>Bạn có thể sử dụng hàm <code>method_field</code> nó sẽ tự sinh ra một
-        <code>_method</code> input:</p>
+      <p>Bạn có thể sử dụng hàm <code>method_field</code> nó sẽ tự
+        sinh ra một <code>_method</code> input:</p>
       <h3>Truy cập route hiện tại</h3>
       <p>Bạn có thể sử dụng phương thức <code>current</code>, <code>currentRouteName</code>,
         và <code>currentRouteAction</code> trên <code>Route</code> facade để
