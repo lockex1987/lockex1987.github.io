@@ -17,6 +17,30 @@
       <pre>grant all privileges on sso.* to 'huyennv9'@'%';</pre>
       <p>Hiệu lực các quyền đã cấp:</p>
       <pre>flush privileges;</pre>
+      <p>Cấu hình MySQL cho phép truy cập từ xa</p>
+      <p>Sửa file mysqld.cnf, sửa cấu hình bind-address từ mặc định 127.0.0.1
+        thành 0.0.0.0.</p>
+      <pre class="command-line">sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf</pre>
+      <p>Restart lại dịch vụ:</p>
+      <pre class="command-line">sudo systemctl restart mysql</pre>
+      <p>Select các user hiện tại:</p>
+      <pre>select * from mysql.user;</pre>
+      <p>Cập nhật lại:</p>
+      <pre>update mysql.user set Host = '%' where User = 'root';<br><br>flush privileges;</pre>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>

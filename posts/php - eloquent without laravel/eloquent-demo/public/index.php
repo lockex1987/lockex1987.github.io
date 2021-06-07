@@ -2,17 +2,6 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-/*
-$slim = new \Slim\App();
-
-$slim->get('/', function ($request, $response) {
-    $response->write('Hey! Slim started.');
-});
-
-$slim->run();
-*/
-
-
 $illuminateContainer = new \Illuminate\Container\Container();
 
 // Load config
@@ -29,8 +18,5 @@ $service->register();
 
 $users = \App\Models\User::all();
 foreach ($users as $user) {
-    echo $user->username . '<br />' . PHP_EOL;
+    echo $user->username . PHP_EOL;
 }
-
-
-echo 'Hello World' . PHP_EOL;

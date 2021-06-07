@@ -10,7 +10,8 @@ use App\Models\User;
 $capsule = new Capsule();
 $capsule->addConnection([
    "driver" => "mysql",
-   "host" =>"127.0.0.1",
+   // "host" =>"127.0.0.1",
+   "host" =>"192.168.1.48",
    "database" => "sso",
    "username" => "root",
    "password" => "abc123a@"
@@ -24,5 +25,5 @@ $capsule->bootEloquent();
 
 $users = User::all();
 foreach ($users as $user) {
-    echo $user->username . '<br />' . PHP_EOL;
+    echo $user->username . PHP_EOL; // . '<br />'
 }
