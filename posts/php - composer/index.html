@@ -2,7 +2,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Cài đặt, proxy">
+    <meta name="description" content="Cài đặt - install, proxy, psr-4">
     <title>Sử dụng Composer</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -13,14 +13,14 @@
       <p>Tìm hiểu Composer; cài đặt và sử dụng Composer để quản lý, cài đặt các
         thư viện; phân phối thư viện lên Packagist.</p>
       <h3>Composer là gì</h3>
-      <p>Composer là một công cụ quản lý các dependency trong PHP. Composer quản
-        lý thư viện dựa trên từng project PHP riêng biệt của bạn, nó cài đặt các
-        thư viện này vào một thư mục có tên <code>vendor</code> trong dự án
-        (mỗi dự án có một thư mục <code>vendor</code> riêng). Composer tự động
-        sinh ra file <code>vendor/autoload.php</code>, từ file này giúp bạn nạp
-        các thư viện đã cài đặt. Nó áp dụng cơ chế tự động nạp theo chuẩn <a href="https://xuanthulab.net/psr-4-autoloader-tieu-chuan-viet-tu-dong-nap-khoi-tao-php.html"
-          target="_blank">PSR-4 Autoloader</a> và cả <code>PSR-0</code> (lỗi
-        thời).</p>
+      <p>Composer là một công cụ quản lý các dependency trong PHP, tương tự như
+        Maven trong Java hay npm trong Node. Composer quản lý thư viện dựa trên
+        từng project PHP riêng biệt của bạn. Nó cài đặt các thư viện này vào một
+        thư mục có tên <code>vendor</code> trong dự án (mỗi dự án có một thư
+        mục <code>vendor</code> riêng). Composer tự động sinh ra file <code>vendor/autoload.php</code>,
+        từ file này giúp bạn nạp các thư viện đã cài đặt. Nó áp dụng cơ chế tự
+        động nạp theo chuẩn <a href="https://xuanthulab.net/psr-4-autoloader-tieu-chuan-viet-tu-dong-nap-khoi-tao-php.html"
+          target="_blank">PSR-4</a> và cả <code>PSR-0</code> (lỗi thời).</p>
       <h3>Lợi ích khi sử dụng Composer</h3>
       <p>Nói chung là các dự án PHP ngày nay là không thể thiếu Composer, vì
         chúng thường sử dụng rất nhiều loại thự viện. Nếu cài đặt thư viện thủ
@@ -31,7 +31,7 @@
       <h3>Cài đặt Composer</h3>
       <p>Composer được viết bằng PHP mã đóng gói dạng <code>PHAR</code>, nên
         muốn dùng Composer phải chắc chắn máy đã cài đặt PHP. Từ terminal gõ
-        lệnh sau kiểm tra xem máy có PHP hay chưa, nếu chưa có bạn phài cài PHP
+        lệnh sau kiểm tra xem máy có PHP hay chưa, nếu chưa có bạn phải cài PHP
         trước.</p>
       <pre>php --version</pre>
       <h4>Trên Linux</h4>
@@ -39,6 +39,8 @@
       <pre>curl -sS https://getcomposer.org/installer \<br>    | sudo php -- --install-dir=/usr/local/bin \<br>    --filename=composer
 <br>sudo chown -R $USER $HOME/.composer</pre>
       <h4>Trên Windows</h4>
+      <p>Cách đơn giản nhất là dùng bộ cài. Nó sẽ cài Composer phiên bản mới
+        nhất và thiết lập biến PATH để bạn có thể sử dụng lệnh <code>composer</code>.</p>
       <p>Download file <code>composer.phar</code> ở địa chỉ sau:</p>
       <p><a href="https://getcomposer.org/download/" target="_blank">Download
           Composer</a></p>
