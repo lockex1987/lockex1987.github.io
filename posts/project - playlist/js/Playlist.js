@@ -1,6 +1,7 @@
 // import CHAPTERS from '../data/dong_chu_liet_quoc.js';
 // import CHAPTERS from '../data/video_truyen_co_tich.js';
-import CHAPTERS from '../data/sherlock_holmes.js';
+// import CHAPTERS from '../data/sherlock_holmes.js';
+import CHAPTERS from '../data/tam_quoc_dien_nghia.js';
 import YoutubePlayer from './YoutubePlayer.js';
 
 
