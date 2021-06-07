@@ -22,7 +22,7 @@
         tập hợp của hai hoặc nhiều kiểu dữ liệu mà chỉ thị có thể sử dụng kiểu
         gì cũng được.</p>
       <p>Ví dụ chúng ta khai báo:</p>
-      <pre>public function foo(Foo|Bar $input): int|float<br>{<br>}</pre>
+      <pre data-code-lang="php">public function foo(Foo|Bar $input): int|float<br>{<br>}</pre>
       <p>Hàm trên sẽ chấp nhận tham số đầu vào <code>$input</code> có kiểu là <code>Foo</code>
         hoặc <code>Bar</code>, và trả về dữ liệu kiểu <code>int</code> hoặc <code>float</code>.</p>
       <p>Chú ý:</p>
@@ -76,7 +76,7 @@ foo(
         thường được biết là annotation ở các ngôn ngữ lập trình khác, đưa ra một
         cách để thêm dữ liệu meta vào class.</p>
       <p>Ví dụ:</p>
-      <pre data-code-lang="php">&lt;?php<br><br>use App\Attributes\ExampleAttribute;
+      <pre data-code-lang="php">use App\Attributes\ExampleAttribute;
 
 #[ExampleAttribute]
 class Foo
@@ -90,7 +90,7 @@ class Foo
     #[ExampleAttribute]
     public function foo(#[ExampleAttribute] $bar)<br>    {<br>    }
 }</pre>
-      <pre data-code-lang="php">&lt;?php<br><br>#[Attribute]
+      <pre data-code-lang="php">#[Attribute]
 class ExampleAttribute
 {
     public $value;
@@ -123,7 +123,7 @@ class ExampleAttribute
         objects. Instead of specifying class properties and a constructor for
         them, PHP can now combine them into one.</p>
       <p>Instead of doing this:</p>
-      <pre data-code-lang="php">&lt;?php<br><br>class Money
+      <pre data-code-lang="php">class Money
 {
     public Currency $currency;
  
@@ -138,7 +138,7 @@ class ExampleAttribute
     }
 }</pre>
       <p>You can now do this:</p>
-      <pre data-code-lang="php">&lt;?php<br><br>class Money
+      <pre data-code-lang="php">class Money
 {
     public function __construct(
         public Currency $currency,

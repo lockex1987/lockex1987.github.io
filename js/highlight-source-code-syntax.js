@@ -8,11 +8,19 @@
 
         const lang = code.dataset.codeLang;
         code.innerHTML = '';
+		
+		
+		const mode = (lang == 'php')
+			? {
+				name: 'php',
+				startOpen: true
+			} // làm thế này để không phải khai báo <?php ở đầu
+			: lang;
 
         /*
         CodeMirror(code, {
             value: source,
-            mode: lang,
+            mode: mode,
             lineNumbers: false,
             readOnly: true,
             // theme: 'monokai'
@@ -21,6 +29,6 @@
 
         code.classList.add('cm-s-inner'); // cm-s-default, cm-s-monokai, cm-s-inner (Typora)
         code.classList.add('CodeMirror');
-        CodeMirror.runMode(source, lang, code);
+        CodeMirror.runMode(source, mode, code);
     });
 })();
