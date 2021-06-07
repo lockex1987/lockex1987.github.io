@@ -101,7 +101,10 @@ class IndexFile
     private function createDefaultIndexFile(): void
     {
         $source = $this->adjustPath . 'template/index.html';
-        copy(realpath($source), realpath($this->indexFilePath));
+        // echo realpath($source) . PHP_EOL;
+        // echo realpath($this->indexFilePath) . PHP_EOL;
+        // File không tồn tại nên không dùng realpath() được
+        copy(realpath($source), $this->indexFilePath);
     }
 
     /**

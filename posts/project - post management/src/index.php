@@ -4,7 +4,7 @@
  * Chương trình này dùng để liệt kê danh sách các bài viết.
  * Các post thì liệt kê thêm ngày xuất bản.
  * Thống kê mỗi chuyên mục có bao nhiêu bài viết.
- * 
+ *
  * Tạo file phar:
  *   php phar-composer-1.2.0.phar build src
  * Hoặc:
@@ -12,9 +12,9 @@
  * Tham khảo:
  *   https://github.com/clue/phar-composer
  *   https://www.mon-code.net/post/126/Package-code-in-a-PHP-archive:-PHAR
- * 
+ *
  * Sau đó đổi tên file src.phar thành post-management và chuyển ra ngoài thư mục gốc
- *   
+ *
  * Nếu ở thư mục trong, thực hiện lệnh:
  *    php index.php "../../../"
  * Hoặc
@@ -25,7 +25,6 @@
 include 'vendor/autoload.php';
 
 use App\IndexFile;
-
 
 /**
  * Lấy ra danh sách bài viết.
@@ -208,7 +207,6 @@ function main(string $adjustPath): void
 
     // Thống kê theo chuyên mục
     $categoryMap = calculateCategoryCountMap($postList);
-
 
     // Ghi ra file
     writeDataFile($listFilePath, getPostListJson($postList));
