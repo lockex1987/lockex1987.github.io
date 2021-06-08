@@ -12,7 +12,7 @@
     <article>
       <h2>Convert truyện tranh định dạng PDF, MOBI sang ảnh</h2>
       <p>Tôi tìm được một kho truyện tranh ở <a href="https://www.dtv-ebook.com/"
-          target="_blank">DTV eBook</a>. bao gồm các truyện quý hiếm như Dũng sĩ
+          target="_blank">DTV eBook</a>, bao gồm các truyện quý hiếm như Dũng sĩ
         Hesman, Võ sĩ đạo Samurai,... Tuy nhiên, các truyện lại có định dạng là
         PDF và MOBI. Tôi muốn chuyển về các ảnh, sau đó chuyển sang định dạng
         CBZ để đọc trên iPad.</p>
@@ -24,9 +24,9 @@
       <p>Chúng ta có thể sử dụng bản cài trên Windows <a href="https://blog.alivate.com.au/poppler-windows/"
           target="_blank">ở đây</a>.</p>
       <p>Cài đặt trên Linux (Ubuntu):</p>
-      <pre>sudo apt install poppler-utils</pre>
+      <pre class="command-line">sudo apt install poppler-utils</pre>
       <p>Câu lệnh:</p>
-      <pre>pdfimages -j &lt;file pdf&gt; &lt;prefix&gt;</pre>
+      <pre class="command-line">pdfimages -j &lt;file pdf&gt; &lt;prefix&gt;</pre>
       <p>Thêm tham số <code>-j</code> để lưu ảnh thành định dạng JPEG, không
         phải định dạng PBM hoặc PPM.</p>
       <h3>Chuyển MOBI sang ảnh</h3>
@@ -34,7 +34,7 @@
       <p>Chúng ta sử dụng công cụ dòng lệnh <code>ebook-convert</code>, là một
         phần của <a href="https://calibre-ebook.com/" target="_blank">Calibre</a>.</p>
       <p>Câu lệnh:</p>
-      <pre>ebook-convert "book.mobi" "book.epub"</pre>
+      <pre class="command-line">ebook-convert "book.mobi" "book.epub"</pre>
       <p>Sau khi được file EPUB, chúng ta chỉ việc giải nén và lấy các ảnh. File
         EPUB thực chất là file ZIP.</p>
       <h3>Script để tạo file batch</h3>

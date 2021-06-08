@@ -1,7 +1,7 @@
 <?php
 
-$inputFolder = 'D:/new/vo si dao samurai mobi';
-$outputFolder = 'D:/new/vo si dao samurai epub';
+$inputFolder = 'D:/new/mobi';
+$outputFolder = 'D:/new/epub';
 
 
 function getFiles(): array
