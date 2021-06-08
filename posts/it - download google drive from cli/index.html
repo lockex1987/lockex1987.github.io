@@ -279,10 +279,16 @@ google:          15G  240M   15G   2% /home/lockex1987/my-google-drive
 ~/my-google-drive$ cp tic-tac-toe\ upgraded.webm ~/new/
 ~/my-google-drive$ cp tieu\ ly\ phi\ dao\ -\ co\ long.epub ~/new/
 ~/my-google-drive$ </pre>
-      <p><br>
+      <p>Ở lệnh <code>rclone mount</code>, bạn có thể đặt ký tự <code>&amp;</code>
+        ở cuối để lệnh chạy ở background. Khi đó bạn có thể thao tác tiếp ở
+        shell hiện tại, không phải mở shell mới. Để kết thúc, bạn cần tìm và
+        kill tiến trình mount.</p>
+      <p>Để copy file và hiển thị progress thì dùng lệnh <code>rsync</code>
+        (với tham số <code>--progress</code>), không dùng lệnh <code>cp</code>:<br>
       </p>
-      <p><br>
-      </p>
+      <pre class="command-line bg-dark text-white">rsync --progress comani.zip /home/lockex1987/new/
+comani.zip
+  1,165,583,819 100%  9.92MB/s 0:01:52 (xfr#1, to-chk=0/1)</pre>
       <p><br>
       </p>
       <p><br>
