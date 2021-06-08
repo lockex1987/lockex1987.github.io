@@ -29,6 +29,11 @@ export default [
         url: 'examples/bar-race',
         image: 'images/bar-chart-race.jpg'
     },
+	{
+        title: 'Bar chart nhãn ở trên',
+        url: 'examples/bar-label-above',
+        image: 'images/bar-label-above.png'
+    },
 	
 	
     {
