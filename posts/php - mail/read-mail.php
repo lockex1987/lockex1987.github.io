@@ -9,7 +9,7 @@ if (! function_exists('imap_open')) {
 	// $mailbox = '{imap.gmail.com:993/imap/ssl}INBOX';
 	$mailbox = '{mail.cyberspace.vn:995/pop3/ssl}INBOX';
 	$username = 'huyennv9';
-	$password = 'Freelancer@20';
+	$password = '';
 	$connection = imap_open($mailbox, $username, $password)
 		or die('Cannot connect to Gmail: ' . imap_last_error());
 	
