@@ -36,13 +36,21 @@
       <p>Ứng dụng này sử dụng để quản lý đăng nhập tập trung của người dùng.</p>
       <h5>Đăng ký</h5>
       <figure><img src="images/features/register.png" alt=""></figure>
-      <p>Chức năng này có sử dụng gửi mail bằng Laravel.</p>
-      <p>Chức năng này mới tạo bản ghi <code>register_user</code>, chưa tạo bản
-        ghi <code>user</code>.</p>
+      <p>Chức năng này gồm một form để người dùng nhập thông tin của mình. Khi
+        người dùng nhấn submit, hệ thống sẽ lưu thông tin vào bảng <code>register_user</code>
+        (chưa lưu vào bảng <code>user</code> luôn), sau đó tạo một token ngẫu
+        nhiên có thời điểm hết hạn và gửi cho người dùng qua email. Hệ thống
+        thông báo thành công và người dùng hãy kiểm tra email.</p>
       <h5>Xác nhận mail đăng ký</h5>
-      <p>Khi xác nhận thành công sẽ tạo bản ghi <code>user</code> từ bản ghi <code>register_user</code>.</p>
+      <p>Người dùng click vào link chứa token trong email và sẽ được đưa tới một
+        trang. Tại trang đó, hệ thống sẽ kiểm tra token đã hết hạn hay chưa, có
+        liên kết với thông tin đăng ký nào không (bảng <code>register_user</code>).
+        Nếu các thông tin đều hợp lệ, hệ thống sẽ tạo bản ghi <code>user</code>
+        từ bản ghi <code>register_user</code>. Sau đó người dùng sẽ được chuyển
+        đến trang chủ luôn.</p>
       <h5>Đăng nhập, đăng xuất</h5>
-      <p><a href="../laravel%20-%20authentication/">Đăng nhập, đăng xuất</a></p>
+      <p>Link tham khảo: <a href="../laravel%20-%20authentication/">Đăng nhập, đăng
+          xuất trong Laravel</a></p>
       <p>Có throttle</p>
       <p>Tập trung SSO</p>
       <h5>Xác thực 2 lớp</h5>
