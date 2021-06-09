@@ -1,21 +1,209 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content=""/>
-    
-    <title></title>
-
-    <link rel="icon" href="../../images/favicon.png"/>
-    <link rel="stylesheet" href="../../css/style.css"/>
-</head>
-<body>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="date, strtotime, date_create_from_format, DateTime::createFromFormat, DateTime, DateInterval">
+    <title>Xử lý kiểu dữ liệu datetime trong PHP</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
     <article>
-        <h2>x</h2>
-        <p>Hãy sử dụng thư viện Carbon.</p>
+      <h2>Xử lý kiểu dữ liệu datetime trong PHP</h2>
+      <p>Hãy sử dụng thư viện Carbon.</p>
+      <p>Hai hàm hay sử dụng nhiều nhất là <code>date</code> và <code>strtotime</code>.</p>
+      <p>Hàm <code>date</code> format ngày và giờ địa phương và trả về xâu được
+        format.</p>
+      <p>Cú pháp:</p>
+      <pre>date(format, timestamp)</pre>
+      <p>Tham số timestamp là không bắt buộc, là Unix timestamp. Mặc định là
+        thời gian địa phương hiện tại (kết quả của hàm <code>time()</code>).</p>
+      <p>Tham số format có thể là các ký tự sau:</p>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Ký tự</th>
+            <th>Ý nghĩa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>d</td>
+            <td>The day of the month (from 01 to 31)</td>
+          </tr>
+          <tr>
+            <td>D</td>
+            <td>A textual representation of a day (three letters)</td>
+          </tr>
+          <tr>
+            <td>j</td>
+            <td>The day of the month without leading zeros (1 to 31)</td>
+          </tr>
+          <tr>
+            <td>l (lowercase 'L')</td>
+            <td>A full textual representation of a day</td>
+          </tr>
+          <tr>
+            <td>N</td>
+            <td>The ISO-8601 numeric representation of a day (1 for Monday, 7
+              for Sunday)</td>
+          </tr>
+          <tr>
+            <td>S</td>
+            <td>The English ordinal suffix for the day of the month (2
+              characters st, nd, rd or th. Works well with j)</td>
+          </tr>
+          <tr>
+            <td>w</td>
+            <td>A numeric representation of the day (0 for Sunday, 6 for
+              Saturday)</td>
+          </tr>
+          <tr>
+            <td>z</td>
+            <td>The day of the year (from 0 through 365)</td>
+          </tr>
+          <tr>
+            <td>W</td>
+            <td>The ISO-8601 week number of year (weeks starting on Monday)</td>
+          </tr>
+          <tr>
+            <td>F</td>
+            <td>A full textual representation of a month (January through
+              December)</td>
+          </tr>
+          <tr>
+            <td>m</td>
+            <td>A numeric representation of a month (from 01 to 12)</td>
+          </tr>
+          <tr>
+            <td>M</td>
+            <td>A short textual representation of a month (three letters)</td>
+          </tr>
+          <tr>
+            <td>n</td>
+            <td>A numeric representation of a month, without leading zeros (1 to
+              12)</td>
+          </tr>
+          <tr>
+            <td>t</td>
+            <td>The number of days in the given month</td>
+          </tr>
+          <tr>
+            <td>L</td>
+            <td>Whether it's a leap year (1 if it is a leap year, 0 otherwise)</td>
+          </tr>
+          <tr>
+            <td>o</td>
+            <td>The ISO-8601 year number</td>
+          </tr>
+          <tr>
+            <td>Y</td>
+            <td>A four digit representation of a year</td>
+          </tr>
+          <tr>
+            <td>y</td>
+            <td>A two digit representation of a year</td>
+          </tr>
+          <tr>
+            <td>a</td>
+            <td>Lowercase am or pm</td>
+          </tr>
+          <tr>
+            <td>A</td>
+            <td>Uppercase AM or PM</td>
+          </tr>
+          <tr>
+            <td>B</td>
+            <td>Swatch Internet time (000 to 999)</td>
+          </tr>
+          <tr>
+            <td>g</td>
+            <td>12-hour format of an hour (1 to 12)</td>
+          </tr>
+          <tr>
+            <td>G</td>
+            <td>24-hour format of an hour (0 to 23)</td>
+          </tr>
+          <tr>
+            <td>h</td>
+            <td>12-hour format of an hour (01 to 12)</td>
+          </tr>
+          <tr>
+            <td>H</td>
+            <td>24-hour format of an hour (00 to 23)</td>
+          </tr>
+          <tr>
+            <td>i</td>
+            <td>Minutes with leading zeros (00 to 59)</td>
+          </tr>
+          <tr>
+            <td>s</td>
+            <td>Seconds, with leading zeros (00 to 59)</td>
+          </tr>
+          <tr>
+            <td>u</td>
+            <td>Microseconds</td>
+          </tr>
+          <tr>
+            <td>e</td>
+            <td>The timezone identifier (Examples: UTC, GMT, Atlantic/Azores)</td>
+          </tr>
+          <tr>
+            <td>I (capital i)</td>
+            <td>Whether the date is in daylights savings time (1 if Daylight
+              Savings Time, 0 otherwise)</td>
+          </tr>
+          <tr>
+            <td>O</td>
+            <td>Difference to Greenwich time (GMT) in hours (Example: +0100)</td>
+          </tr>
+          <tr>
+            <td>P</td>
+            <td>Difference to Greenwich time (GMT) in hours:minutes</td>
+          </tr>
+          <tr>
+            <td>T</td>
+            <td>Timezone abbreviations (Examples: EST, MDT)</td>
+          </tr>
+          <tr>
+            <td>Z</td>
+            <td>Timezone offset in seconds. The offset for timezones west of UTC
+              is negative (-43200 to 50400)</td>
+          </tr>
+          <tr>
+            <td>c</td>
+            <td>The ISO-8601 date (e.g. 2013-05-05T16:34:42+00:00)</td>
+          </tr>
+          <tr>
+            <td>r</td>
+            <td>The RFC 2822 formatted date (e.g. Fri, 12 Apr 2013 12:01:05
+              +0200)</td>
+          </tr>
+          <tr>
+            <td>U</td>
+            <td>The seconds since the Unix Epoch (January 1 1970 00:00:00 GMT)</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><br>
+      </p>
+      <p>Hàm <code>strtotime</code> parse một xâu kiểu datetime tiếng Anh sang
+        Unix timestamp (số giây từ ngày 1/1 năm 1970 GMT). Hàm này có thể chấp
+        nhận các xâu kiểu như <code>now</code>, <code>+5 hours</code>, <code>+1
+          week</code>, <code>next Monday</code>, <code>last Sunday</code>,...</p>
+      <p>Để tránh confuse, sử dụng hàm <code>date_create_from_format</code>
+        hoặc <code>DateTime::createFromFormat</code>.</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><a href="date_time_demo.php">Demo</a></p>
     </article>
-
     <script src="../../js/docs.js"></script>
-</body>
+  </body>
 </html>
