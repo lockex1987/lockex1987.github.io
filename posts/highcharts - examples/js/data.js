@@ -1,4 +1,9 @@
 export default [
+	{
+        title: 'AJAX export',
+        url: 'examples/ajax-export',
+        image: 'images/ajax-export.png'
+    },
     {
         title: 'Các thành phần của biểu đồ',
         url: 'examples/components',
