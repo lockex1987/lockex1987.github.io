@@ -40,3 +40,8 @@ Publish với Firefox thì thêm đoạn sau vào file manifest.json
 			"strict_min_version": "50.0"
 		}
 	},
+
+
+Bật kiểm tra kết quả SafeNet thì bị lỗi Google Drive (có báo lỗi) 
+
+Bật kiểm tra từ thô tục thì bị lỗi icon các ứng dụng Google
