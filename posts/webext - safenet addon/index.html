@@ -18,16 +18,18 @@
       <p>Các tính năng chính của một ứng dụng parental control:</p>
       <ul>
         <li>Content filter: chặn các nội dung theo các thể loại (khiêu dâm, bạo
-          lực,...), người dùng có thể tùy chỉnh</li>
-        <li>Safe search: Google, YouTube, Bing, Yandex,...</li>
+          lực,...). Người dùng cũng có thể tùy chỉnh chặn hoặc cho phép một
+          trang web nào đó.</li>
+        <li>Safe search: khi tìm kiếm trên Google, YouTube, Bing, Yandex,... thì
+          loại bỏ các kết quả không phù hợp</li>
         <li>Chặn sử dụng ứng dụng điện thoại, phần mềm máy tính: ví dụ không cho
           trẻ chơi game, sử dụng Facebook</li>
         <li>Chặn cài đặt ứng dụng, phần mềm</li>
         <li>Monitor: xem lại lịch sử duyệt web, sử dụng ứng dụng, từ khóa tìm
           kiếm, thời gian sử dụng</li>
-        <li>Đặt lịch giới hạn thời gian sử dụng thiết bị (chỉ được trong khoảng
-          từ mấy giờ đến mấy giờ, một ngày sử dụng nhiều nhất mấy giờ), tránh
-          trẻ bị nghiện
+        <li>Đặt lịch giới hạn thời gian sử dụng thiết bị (chỉ được sử dụng trong
+          khoảng từ mấy giờ đến mấy giờ, hoặc một ngày sử dụng nhiều nhất mấy
+          giờ), tránh trẻ bị nghiện
           <ul>
           </ul>
         </li>
@@ -60,12 +62,12 @@
       <ul>
         <li>Chặn lọc ở DNS (OpenDNS)</li>
         <li>Sử dụng proxy và lọc ở proxy</li>
-        <li>Sử dụng DPI và chặn lọc trên đường mạng như SafeNet</li>
+        <li>Sử dụng DPI và chặn lọc trên đường mạng theo thuê bao như SafeNet</li>
         <li>Chặn dựa vào web extension của trình duyệt</li>
-        <li>Chặn bằng cách chỉnh sửa file hosts</li>
-        <li>Lọc theo nội dung (Net Nanny)</li>
-        <li>Lọc theo URL (Qustodio)</li>
-        <li>Sử dụng app chuyên dụng: YouTube Kids</li>
+        <li>Chặn bằng cách chỉnh sửa file <code>hosts</code> trên máy tính</li>
+        <li>Lọc theo nội dung (Net Nanny sử dụng cách này)</li>
+        <li>Lọc theo URL (Qustodio sử dụng cách này)</li>
+        <li>Sử dụng app chuyên dụng cho trẻ em như YouTube Kids</li>
       </ul>
       <h3>Các cách bypass</h3>
       <ul>
@@ -73,23 +75,31 @@
         <li>Sử dụng VPN</li>
         <li>Sử dụng trình duyệt UC, Tor, Cốc Cốc</li>
       </ul>
-      <h3>Mô hình kiến trúc</h3>
-      <p>Ở mỗi thiết bị, chúng ta sẽ cài đặt phần mềm client. Phần mềm này có
-        nhiệm vụ:</p>
+      <p>Để hạn chế các cách bypass này, chúng ta có thể thêm các luật blacklist
+        về proxy, hoặc là chặn các ứng dụng về proxy, VPN, các trình duyệt nêu
+        trên.</p>
       <ul>
-        <li>Liệt kê các ứng dụng, phần mềm, trò chơi có trong thiết bị</li>
+      </ul>
+      <h3>Mô hình kiến trúc</h3>
+      <p>Ở mỗi thiết bị, chúng ta sẽ phải cài đặt một phần mềm client. Phần mềm
+        này có nhiệm vụ:</p>
+      <ul>
+        <li>Liệt kê các ứng dụng, phần mềm, trò chơi có trong thiết bị; đẩy danh
+          sách về server tập trung. Người quản trị sẽ cấu hình các ứng dụng được
+          phép (và các cấu hình khác) trên server tập trung.</li>
         <li>Chặn không cho người dùng chạy các ứng dụng theo cấu hình của người
-          quản trị (phần mềm cần điều khiển được các ứng dụng khác)</li>
-        <ul>
-          <li>Chú ý cần chặn được cả các phần mềm portable</li>
-        </ul>
+          quản trị (phần mềm cần điều khiển được các ứng dụng khác). Chú ý cần
+          chặn được cả các phần mềm portable.</li>
         <li>Không cho phép cài đặt thêm ứng dụng</li>
-        <li>Chặn lọc các trang web người dùng truy cập bằng trình duyệt theo cấu
-          hình (phần mềm cần điều khiển được trình duyệt)</li>
+        <li>Chặn lọc các trang web người dùng truy cập bằng trình duyệt theo
+          danh sách blacklist cấu hình (phần mềm cần điều khiển được trình
+          duyệt: điều hướng)</li>
+        <li>Tự động chuyển sang chế độ Safe search khi người dùng tìm kiếm ở một
+          số trang tìm kiếm thông dụng</li>
         <li>Giới hạn thời gian sử dụng (hoặc chỉ giới hạn việc truy cập
           Internet) theo cấu hình</li>
-        <li> Để sử dụng, gỡ bỏ phần mềm cần có password, tránh trường hợp bị
-          người dùng disable để bypass</li>
+        <li> Để sử dụng, gỡ bỏ phần mềm này cần có password quản trị, tránh
+          trường hợp bị người dùng bình thường disable để bypass</li>
       </ul>
       <p>Giả sử phần mềm không chặn được các trang web nếu người dùng sử dụng
         các trình duyệt như UC, Tor, Cốc Cốc thì có thể hướng dẫn quản trị cấu
@@ -136,7 +146,7 @@
       <p><a href="https://en.wikipedia.org/wiki/Comparison_of_content-control_software_and_providers"
           target="_blank">Comparison of content-control software and providers -
           Wikipedia</a></p>
-      <p>- - - - - - - - -</p>
+      <p>Web extension:</p>
       <p><a href="https://www.ilovefreesoftware.com/22/featured/how-to-prevent-uninstalling-and-disabling-mozilla-firefox-extensions.html"
           target="_blank">How To Prevent Uninstalling And Disabling Firefox
           Add-ons</a></p>
