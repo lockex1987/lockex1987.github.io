@@ -25,9 +25,6 @@
         <li>...</li>
       </ul>
       <h3>Cài đặt</h3>
-      <p>Cài extension cho VSCode:</p>
-      <p><a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint"
-          target="_blank">Link</a></p>
       <p>Khởi tạo dự án mới:</p>
       <pre class="command-line">npm init -y</pre>
       <p>Cài Node package:</p>
@@ -75,6 +72,15 @@ found 0 vulnerabilities
       <p>Cài đặt nhanh (bước <code>Checking peerDependencies of
           eslint-config-standard@latest</code> chạy khá là lâu):</p>
       <pre class="text-pre-wrap command-line">npm install --save-dev eslint eslint-config-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-node eslint-plugin-vue</pre>
+      <p>Về bản chất, chúng ta cần 6 package sau:</p>
+      <pre data-code-lang="javascript">"devDependencies": {
+    "eslint": "^7.28.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-vue": "^7.10.0"
+}</pre>
       <p>Thêm script vào file <code>package.json</code>:</p>
       <pre data-code-lang="javascript">"scripts": {
     "lint": "eslint --fix --ext .js,.vue resources/js"
@@ -98,22 +104,20 @@ found 0 vulnerabilities
     "es2021": true
 }
 </pre>
-      <h4>extends</h4>
-      <p>Đây là những config có sẵn được sử dụng, chúng ta sẽ mở rộng chúng bằng
-        cách thêm vào những config của riêng mình.</p>
-      <p>Mặc định, tất cả các rule đều không được enable. Chúng ta extends từ
-        các tập luật được enable phổ biến để đỡ phải định nghĩa nhiều.</p>
-      <pre data-code-lang="javascript">"extends": [
-    "plugin:vue/essential",
-    "standard"
-]</pre>
+      <h4>parserOptions</h4>
+      <p>Mặc định, ESLint kiểm tra cú pháp của ES5. Nếu sử dụng ES6 hoặc các
+        phiên bản mới hơn, chúng ta phải cấu hình bằng <code>parserOptions</code>.
+        Cấu hình toàn bộ cho phần này như sau:</p>
+      <pre data-code-lang="javascript">"parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+}</pre>
       <h4>plugins</h4>
       <p>Đây là những plugin được sử dụng để mở rộng hoạt động của ESLint. Ví dụ
         để hỗ trợ Vue template:</p>
       <pre data-code-lang="javascript">"plugins": [
     "vue"
-]
-</pre>
+]</pre>
       <h4>globals</h4>
       <p>Đây là nơi chúng ta đưa ra danh sách các biến global dùng trong dự án.
         Nếu không, khi chúng ta truy cập vào một biến nào đó, ESLint sẽ báo lỗi
@@ -128,6 +132,15 @@ found 0 vulnerabilities
     "ExcelJS": "readonly",
     "moment": "readonly"
 }</pre>
+      <h4>extends</h4>
+      <p>Đây là những config có sẵn được sử dụng, chúng ta sẽ mở rộng chúng bằng
+        cách thêm vào những config của riêng mình.</p>
+      <p>Mặc định, tất cả các rule đều không được enable. Chúng ta extends từ
+        các tập luật được enable phổ biến để đỡ phải định nghĩa nhiều.</p>
+      <pre data-code-lang="javascript">"extends": [
+    "plugin:vue/essential",
+    "standard"
+]</pre>
       <h4>rules</h4>
       <p>Đây là chính là phần config những quy tắc mà code cần phải tuân theo.
         Có nhiều rule đã được config sẵn khi chúng ta extends một cấu hình nào
@@ -145,14 +158,6 @@ found 0 vulnerabilities
 </pre>
       <p>Lượng rule mà ESLint support là rất lớn, gần như toàn bộ các yếu tố của
         code đều được support cả, chưa kể plugin còn mở rộng hơn nữa.</p>
-      <h4>parserOptions</h4>
-      <p>Mặc định, ESLint kiểm tra cú pháp của ES5. Nếu sử dụng ES6 hoặc các
-        phiên bản mới hơn, chúng ta phải cấu hình bằng <code>parserOptions</code>.
-        Cấu hình toàn bộ cho phần này như sau:</p>
-      <pre data-code-lang="javascript">"parserOptions": {
-    "ecmaVersion": 12,
-    "sourceType": "module"
-}</pre>
       <h3>Ví dụ</h3>
       <p>Sau đây là toàn bộ cấu hình của ESLint mà tôi sử dụng trong dự án Vue.</p>
       <pre data-code-lang="javascript">{
@@ -160,10 +165,14 @@ found 0 vulnerabilities
         "browser": true,
         "es2021": true
     },
-    "extends": [
-        "plugin:vue/essential",
-        "standard"
+    "parserOptions": {
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "vue"
     ],
+
     "globals": {
         "Vue": "readonly",
         "Vuex": "readonly",
@@ -181,12 +190,10 @@ found 0 vulnerabilities
         "SSO_CONSUMER_DOMAIN": "readonly",
         "SSO_PASSPORT_URL": "readonly",
     },
-    "parserOptions": {
-        "ecmaVersion": 12,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "vue"
+
+    "extends": [
+        "plugin:vue/essential",
+        "standard"
     ],
     "rules": {
         "semi": ["error", "always"],
@@ -223,9 +230,14 @@ found 0 vulnerabilities
       <p>Chúng ta cần escape như sau:</p>
       <pre class="command-line">npx eslint --fix \"posts/ui - carousel\"</pre>
       <h3>Tự động fix trong VSCode</h3>
+      <p>Cài extension cho VSCode:</p>
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint"
+
+          target="_blank">ESLint - Visual Studio Marketplace</a></p>
       <p>Bạn có thể sử dụng lệnh trong VSCode để fix các bug có thể tự động của
         file hiện tại.</p>
-      <figure> <img src="images/eslint%20fix%20all%20auto-fixable%20problems.png"
+      <figure> <img src="images/eslint%20fix%20all%20auto-fixable%20problems.png"
+
           alt=""> </figure>
       <p>Ngoài ra, thêm file <code>.vscode/settings.json</code> như sau để tự
         động format, lint khi lưu file:</p>
@@ -253,7 +265,8 @@ found 0 vulnerabilities
     "vetur.format.options.tabSize": 4
 }</pre>
       <h3>Tham khảo</h3>
-      <p><a href="https://viblo.asia/p/hay-su-dung-eslint-cho-du-an-cua-ban-bJzKm07O59N"
+      <p><a href="https://viblo.asia/p/hay-su-dung-eslint-cho-du-an-cua-ban-bJzKm07O59N"
+
           target="_blank">Hãy sử dụng ESLint cho dự án của bạn! - Viblo</a></p>
       <p><a href="https://eslint.org/docs/user-guide/getting-started" target="_blank">Getting
           Started with ESLint - ESLint</a></p>

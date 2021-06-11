@@ -19,6 +19,7 @@
       </ul>
       <p>Hãy tìm hiểu Laravel Mix.</p>
       <h3>Cài đặt</h3>
+      <p>Bài viết này sử dụng Laravel Mix phiên bản 6.</p>
       <p>Laravel Mix là một gói Node, không liên quan gì đến code PHP Laravel.
         Vì vậy hãy đảm bảo máy bạn có cài <code>node</code> và <code>npm</code>.
         Bạn hoàn toàn có thể chỉ sử dụng Laravel Mix cho một dự án bất kỳ không
@@ -29,50 +30,56 @@
         ở thư mục gốc. File <code>package.json</code> mặc định đã chứa gần như
         tất cả những gì bạn cần.</p>
       <p>Để cài đặt <code>node_modules</code>, chúng ta sử dụng lệnh sau:</p>
-      <pre>npm install</pre>
+      <pre class="command-line">npm install</pre>
+      <p>Tham khảo <code>devDependencies</code> của Laravel <a href="https://github.com/laravel/laravel/blob/master/package.json"
+          target="_blank">ở đây</a>.</p>
       <p>Trong thư mục gốc của ứng dụng ta sẽ thấy file <code>webpack.mix.js</code>
         là file thiết lập các entry point – là các điểm bắt đầu để mix quét và
         thực hiện các kịch bản.</p>
       <p>Cài đặt độc lập với Laravel:</p>
-      <pre>mkdir mix-demo &amp;&amp; cd mix-demo
-npm init -y
-npm install laravel-mix --save-dev
-cp node_modules/laravel-mix/setup/webpack.mix.js ./</pre>
-      <p>Thực hiện compile:</p>
-      <pre>node_modules/.bin/webpack --config=node_modules/laravel-mix/setup/webpack.config.js</pre>
-      <p>Chú ý, chúng ta vẫn phải thêm bốn devDependencies:</p>
+      <pre><span class="command-line">mkdir mix-demo &amp;&amp; cd mix-demo</span>
+<span class="command-line">npm init -y</span>
+<span class="command-line">npm install laravel-mix --save-dev</span>
+</pre>
+      <p>Chú ý, chúng ta vẫn phải thêm 7 <code>devDependencies</code>: </p>
       <ul>
-        <li>resolve-url-loader</li>
-        <li>sass</li>
-        <li>sass-loader</li>
-        <li>vue-template-compiler</li>
+        <li><code>resolve-url-loader</code></li>
+        <li><code>sass</code></li>
+        <li><code>sass-loader</code></li>
+        <li><code>vue</code> (chỉ định rõ Vue 2, tránh xung đột với Vue 3)</li>
+        <li><code>vue-template-compiler</code> (cùng phiên bản với vue)</li>
+        <li><code>postcss</code></li>
+        <li><code>vue-loader</code></li>
       </ul>
-      <p>Nếu lúc đầu chưa có, lệnh compile sẽ tự động thực hiện cài bốn gói trên
-        (do thấy các lệnh <code>js</code>, <code>sass</code> trong file <code>webpack.mix.js</code>).</p>
-      <p>Khi chúng ta sử dụng lệnh <code>react</code>, sẽ tự động cài đặt thêm
-        devDependencies <strong>@babel/preset-react</strong>.</p>
-      <p>Thêm cross-env nữa để switch giữa các môi trường.</p>
-      <p>Tham khảo devDependencies của Laravel <a href="https://github.com/laravel/laravel/blob/master/package.json"
-          target="_blank">ở đây</a>.</p>
-      <p>Để sử dụng Vue:</p>
-      <pre>npm install vue --save-dev</pre>
-      <p>Để sử dụng React:</p>
-      <pre>npm install react react-dom --save-dev</pre>
+      <p> Nếu lúc đầu chưa có, khi compile sẽ tự động thực hiện cài các gói trên
+        (do thấy các lệnh <code>js</code>, <code>sass</code> trong file <code>webpack.mix.js</code>,
+        có file <code>Vue</code> trong file <code>.js</code>).</p>
+      <p>Cài đặt nhanh:</p>
+      <pre class="command-line text-pre-wrap">npm install --save-dev laravel-mix resolve-url-loader sass sass-loader vue vue-template-compiler postcss vue-loader</pre>
+      <p>Thực hiện compile:</p>
+      <pre class="command-line">npx mix</pre>
+      <h3>Demo</h3>
       <p><a href="mix-demo/index.html">Demo</a></p>
       <h3>Chạy mix</h3>
       <p>Chúng ta thường có các lệnh sau:</p>
-      <pre>npm run dev
-npm run watch
-npm run prod</pre>
-      <p><code>npm run dev</code>: Câu lệnh này sẽ thực thi mix các file một
-        lần.</p>
-      <p><code>npm run watch</code>: Câu lệnh này sẽ thực thi mix các file hiện
-        tại và theo dõi các file cần mix (là những file trong thư mục <code>webpack.mix.js</code>)
-        khi có sự thay đổi thì nó sẽ mix cho chúng ta luôn. Cái này chúng ta rất
-        hay sử dụng trong dự án.</p>
-      <p><code>npm run prod</code>: Thực thi tất cả các tác vụ mix và tối ưu
-        (minify) các file kết quả đầu ra, khi đó bạn có thể sử dụng các kết quả
-        để triển khai ứng dụng trên máy chủ.</p>
+      <ul>
+        <li><code>npm run dev</code> (<code>npx mix</code>): Câu lệnh này sẽ
+          thực thi mix các file một lần.</li>
+        <li><code>npm run watch</code> (<code>npx mix watch</code>): Câu lệnh
+          này sẽ thực thi mix các file hiện tại và theo dõi các file cần mix (là
+          những file trong thư mục <code>webpack.mix.js</code>) khi có sự thay
+          đổi thì nó sẽ mix cho chúng ta luôn. Cái này chúng ta rất hay sử dụng
+          trong dự án.</li>
+        <li><code>npm run prod</code> (<code>npx mix --production</code>): Thực
+          thi tất cả các tác vụ mix và tối ưu (minify) các file kết quả đầu ra,
+          khi đó bạn có thể sử dụng các kết quả để triển khai ứng dụng trên máy
+          chủ.</li>
+      </ul>
+      <h3>Compile JS</h3>
+      <p>Sử dụng phương thức <code>js()</code>. Nếu sử dụng Vue thì thêm phương
+        thức <code>vue()</code>.</p>
+      <pre>mix.js('frontend/js/script.js', 'public/js')
+    .vue({ version: 2 });</pre>
       <h3>Compile CSS</h3>
       <p>Laravel có các phương thức như <code>less()</code>, <code>sass()</code>
         để hỗ trợ compile các CSS pre-prosessor ra các file CSS mà trình duyệt
