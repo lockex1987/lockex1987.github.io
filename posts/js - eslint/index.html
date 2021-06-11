@@ -22,16 +22,18 @@
         <li>Có dấu cách sau dấu <code>{</code> và trước dấu <code>}</code> nếu
           viết trên một dòng</li>
         <li>Mỗi file nhỏ hơn 500 dòng</li>
+        <li>...</li>
       </ul>
       <h3>Cài đặt</h3>
       <p>Cài extension cho VSCode:</p>
       <p><a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint"
           target="_blank">Link</a></p>
+      <p>Khởi tạo dự án mới:</p>
+      <pre class="command-line">npm init -y</pre>
       <p>Cài Node package:</p>
-      <pre>npm install --save-dev eslint
-</pre>
+      <pre class="command-line">npm install --save-dev eslint</pre>
       <p>Khởi tạo trong một dự án cụ thể:</p>
-      <pre>npx eslint --init</pre>
+      <pre class="command-line">npx eslint --init</pre>
       <p>Nó sẽ hỏi một số câu như dự án chạy ở đâu, dùng Vue hay React,... giúp
         tạo một file <code>.eslintrc.json</code> có các cấu hình căn bản ban
         đầu, cũng như cài thêm các gói cần thiết.</p>
@@ -70,16 +72,17 @@ added 76 packages from 50 contributors, updated 1 package and audited 186 packag
 found 0 vulnerabilities
 
 <span class="text-success">Successfully created .eslintrc.json file in D:\github\lockex1987.github.io</span></pre>
-      <p>Cài đặt nhanh:</p>
-      <pre class="text-pre-wrap">npm install --save-dev eslint eslint-config-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-node eslint-plugin-vue</pre>
+      <p>Cài đặt nhanh (bước <code>Checking peerDependencies of
+          eslint-config-standard@latest</code> chạy khá là lâu):</p>
+      <pre class="text-pre-wrap command-line">npm install --save-dev eslint eslint-config-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-node eslint-plugin-vue</pre>
       <p>Thêm script vào file <code>package.json</code>:</p>
-      <pre>"scripts": {
+      <pre data-code-lang="javascript">"scripts": {
     "lint": "eslint --fix --ext .js,.vue resources/js"
 }</pre>
       <p>Để kiểm tra, chúng ta có thể chạy lệnh sau:</p>
-      <pre>npm run lint</pre>
+      <pre class="command-line">npm run lint</pre>
       <p>Hoặc:</p>
-      <pre>npx eslint --ext .js,.vue resources/js<br><br>npx eslint --fix js</pre>
+      <pre class="command-line">npx eslint --ext .js,.vue resources/js</pre>
       <h3>Cấu hình</h3>
       <p>Tên file là <code>.eslintrc</code>, định dạng <code>js</code>, <code>json</code>,
         <code>yml</code>. Nên sử dụng định dạng <code>js</code> vì có thể
@@ -88,11 +91,11 @@ found 0 vulnerabilities
       <h4>env</h4>
       <p>Đây là nơi cấu hình môi trường mà code của chúng ta sẽ chạy. Môi trường
         khác nhau thì sẽ có những biến toàn cục khác nhau. Ví dụ, môi trường
-        browser thì sẽ có các biến như window, document; môi trường ES6 sẽ có
-        một số loại dữ liệu mới như Set chẳng hạn. </p>
-      <pre>"env": {
+        browser thì sẽ có các biến như <code>window</code>, <code>document</code>;
+        môi trường ES6 sẽ có một số loại dữ liệu mới như Set chẳng hạn.</p>
+      <pre data-code-lang="javascript">"env": {
     "browser": true,
-    "es6": true
+    "es2021": true
 }
 </pre>
       <h4>extends</h4>
@@ -100,14 +103,14 @@ found 0 vulnerabilities
         cách thêm vào những config của riêng mình.</p>
       <p>Mặc định, tất cả các rule đều không được enable. Chúng ta extends từ
         các tập luật được enable phổ biến để đỡ phải định nghĩa nhiều.</p>
-      <pre>"extends": [
+      <pre data-code-lang="javascript">"extends": [
     "plugin:vue/essential",
     "standard"
 ]</pre>
       <h4>plugins</h4>
       <p>Đây là những plugin được sử dụng để mở rộng hoạt động của ESLint. Ví dụ
         để hỗ trợ Vue template:</p>
-      <pre>"plugins": [
+      <pre data-code-lang="javascript">"plugins": [
     "vue"
 ]
 </pre>
@@ -115,7 +118,7 @@ found 0 vulnerabilities
       <p>Đây là nơi chúng ta đưa ra danh sách các biến global dùng trong dự án.
         Nếu không, khi chúng ta truy cập vào một biến nào đó, ESLint sẽ báo lỗi
         vì truy cập đến một biến chưa được định nghĩa.</p>
-      <pre>"globals": {
+      <pre data-code-lang="javascript">"globals": {
     "Vue": "readonly",
     "Vuex": "readonly",
     "VueRouter": "readonly",
@@ -134,9 +137,9 @@ found 0 vulnerabilities
       <p>Mỗi rule cần được config hai thông số: giá trị ứng với mức độ áp dụng
         rules (<code>off</code>, <code>warn</code>, <code>error</code> hoặc <code>0</code>,
         <code>1</code>, <code>2</code> cho ngắn gọn) và các tuỳ chọn.</p>
-      <p>Ví dụ, rule sau yêu cầu áp dụng single quote <code>'</code> cho các
-        xâu trong code:</p>
-      <pre>"rules": {
+      <p>Ví dụ, rule sau yêu cầu áp dụng dấu nháy đơn (single quote) <code>'</code>
+        cho các xâu trong code:</p>
+      <pre data-code-lang="javascript">"rules": {
     "quotes": ["error", "single"]
 }
 </pre>
@@ -146,13 +149,13 @@ found 0 vulnerabilities
       <p>Mặc định, ESLint kiểm tra cú pháp của ES5. Nếu sử dụng ES6 hoặc các
         phiên bản mới hơn, chúng ta phải cấu hình bằng <code>parserOptions</code>.
         Cấu hình toàn bộ cho phần này như sau:</p>
-      <pre>"parserOptions": {
+      <pre data-code-lang="javascript">"parserOptions": {
     "ecmaVersion": 12,
     "sourceType": "module"
 }</pre>
       <h3>Ví dụ</h3>
       <p>Sau đây là toàn bộ cấu hình của ESLint mà tôi sử dụng trong dự án Vue.</p>
-      <pre>{
+      <pre data-code-lang="javascript">{
     "env": {
         "browser": true,
         "es2021": true
@@ -173,9 +176,8 @@ found 0 vulnerabilities
 
         "CV": "readonly",
         "noti": "readonly",
-        "Datatable": "readonly",
         "Pagi": "readonly",
-        "CommonUtils": "readonly",
+
         "SSO_CONSUMER_DOMAIN": "readonly",
         "SSO_PASSPORT_URL": "readonly",
     },
@@ -217,19 +219,19 @@ found 0 vulnerabilities
       <p>Khi thực hiện lệnh eslint trên đường dẫn mà có dấu cách trên hệ điều
         hành Windows có thể bị lỗi <code>No files matching the pattern</code>.
         Ví dụ đánh lệnh sau sẽ lỗi:</p>
-      <pre>npx eslint --fix "posts/ui - carousel"</pre>
+      <pre class="command-line">npx eslint --fix "posts/ui - carousel"</pre>
       <p>Chúng ta cần escape như sau:</p>
-      <pre>npx eslint --fix \"posts/ui - carousel\"</pre>
+      <pre class="command-line">npx eslint --fix \"posts/ui - carousel\"</pre>
       <h3>Tự động fix trong VSCode</h3>
       <p>Bạn có thể sử dụng lệnh trong VSCode để fix các bug có thể tự động của
         file hiện tại.</p>
-      <div class="mb-3"> <img src="images/eslint%20fix%20all%20auto-fixable%20problems.png"
-          alt=""> </div>
+      <figure> <img src="images/eslint%20fix%20all%20auto-fixable%20problems.png"
+          alt=""> </figure>
       <p>Ngoài ra, thêm file <code>.vscode/settings.json</code> như sau để tự
         động format, lint khi lưu file:</p>
-      <pre>{
+      <pre data-code-lang="javascript">{
     "[javascript]": {
-        "editor.formatOnSave": true,
+        "editor.formatOnSave": false,
         "editor.codeActionsOnSave": {
             "source.fixAll.eslint": true
         }

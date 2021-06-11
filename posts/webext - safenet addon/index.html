@@ -26,22 +26,18 @@
           trẻ chơi game, sử dụng Facebook</li>
         <li>Chặn cài đặt ứng dụng, phần mềm</li>
         <li>Monitor: xem lại lịch sử duyệt web, sử dụng ứng dụng, từ khóa tìm
-          kiếm, thời gian sử dụng</li>
+          kiếm, thời gian sử dụng máy tính hoặc một ứng dụng nào đó</li>
         <li>Đặt lịch giới hạn thời gian sử dụng thiết bị (chỉ được sử dụng trong
           khoảng từ mấy giờ đến mấy giờ, hoặc một ngày sử dụng nhiều nhất mấy
-          giờ), tránh trẻ bị nghiện
-          <ul>
-          </ul>
-        </li>
-        <li>Với thiết bị là điện thoại (iOS, Android) thì có thể thêm các tính
-          năng:
-          <ul>
-            <li>Theo dõi vị trí hiện tại qua GPS</li>
-            <li>Lịch sử cuộc gọi</li>
-            <li>Lịch sử tin nhắn</li>
-            <li>Trạng thái pin</li>
-          </ul>
-        </li>
+          giờ), tránh trẻ bị nghiện </li>
+      </ul>
+      <p>Với thiết bị là điện thoại (iOS, Android) thì có thể thêm các tính
+        năng:</p>
+      <ul>
+        <li>Theo dõi vị trí hiện tại qua GPS</li>
+        <li>Lịch sử cuộc gọi</li>
+        <li>Lịch sử tin nhắn</li>
+        <li>Trạng thái pin</li>
       </ul>
       <p>Yêu cầu phi chức năng:</p>
       <ul>
@@ -78,26 +74,34 @@
       <p>Để hạn chế các cách bypass này, chúng ta có thể thêm các luật blacklist
         về proxy, hoặc là chặn các ứng dụng về proxy, VPN, các trình duyệt nêu
         trên.</p>
-      <ul>
-      </ul>
       <h3>Mô hình kiến trúc</h3>
+      <p>Kiến trúc của chúng ta sẽ gồm có bốn module chính:</p>
+      <ul>
+        <li>CSDL lưu các trang web blacklist, danh sách người dùng và các cấu
+          hình</li>
+        <li>Hệ thống crawler để bổ sung thêm các trang mới vào blacklist</li>
+        <li>Phần mềm client cài trên từng thiết bị</li>
+        <li>Web server tập trung để người dùng quản trị vào cấu hình cũng như
+          chìa API cho bên khác (cho phần mềm client)</li>
+      </ul>
       <p>Ở mỗi thiết bị, chúng ta sẽ phải cài đặt một phần mềm client. Phần mềm
-        này có nhiệm vụ:</p>
+        này có nhiệm vụ (phải làm được những cái sau):</p>
       <ul>
         <li>Liệt kê các ứng dụng, phần mềm, trò chơi có trong thiết bị; đẩy danh
-          sách về server tập trung. Người quản trị sẽ cấu hình các ứng dụng được
-          phép (và các cấu hình khác) trên server tập trung.</li>
+          sách về server tập trung. Người quản trị sẽ cấu hình cho phép chạy các
+          ứng dụng hoặc chặn không cho chạy (và các cấu hình khác) trên server
+          tập trung, thông qua giao diện web.</li>
         <li>Chặn không cho người dùng chạy các ứng dụng theo cấu hình của người
           quản trị (phần mềm cần điều khiển được các ứng dụng khác). Chú ý cần
           chặn được cả các phần mềm portable.</li>
-        <li>Không cho phép cài đặt thêm ứng dụng</li>
+        <li>Không cho phép cài đặt thêm ứng dụng mới</li>
         <li>Chặn lọc các trang web người dùng truy cập bằng trình duyệt theo
-          danh sách blacklist cấu hình (phần mềm cần điều khiển được trình
-          duyệt: điều hướng)</li>
+          danh sách blacklist cấu hình (phần mềm cần điều khiển được request của
+          trình duyệt)</li>
         <li>Tự động chuyển sang chế độ Safe search khi người dùng tìm kiếm ở một
           số trang tìm kiếm thông dụng</li>
-        <li>Giới hạn thời gian sử dụng (hoặc chỉ giới hạn việc truy cập
-          Internet) theo cấu hình</li>
+        <li>Giới hạn thời gian sử dụng thiết bị (hoặc chỉ giới hạn việc truy cập
+          Internet) theo thời gian cấu hình</li>
         <li> Để sử dụng, gỡ bỏ phần mềm này cần có password quản trị, tránh
           trường hợp bị người dùng bình thường disable để bypass</li>
       </ul>
@@ -130,7 +134,7 @@
         <li>Proxy</li>
       </ol>
       <p>Các thể loại như mã độc, web lừa đảo, quảng cáo khó có từ khóa đúng để
-        crawl.</p>
+        crawl, nên bỏ đi.</p>
       <p>Không thể dùng cách search Google theo từ khóa để lấy ra các luật cho
         các ứng dụng. Cách này chỉ lấy được các địa chỉ web.</p>
       <p>Nên có thêm chức năng cho phép người dùng đề xuất thêm luật.</p>
