@@ -207,7 +207,7 @@ const Pagi = {
                 return;
             }
 
-            console.log('Cap nhat');
+            // console.log('Cap nhat');
 
             // Hiển thị 5 trang (trừ khi có ít hơn 5 trang)
             // Trang hiện tại ở vị trí giữa (thứ 3), trừ khi trang hiện tại nhỏ hơn 3 hoặc cách trang cuối cùng ít hơn 2 trang

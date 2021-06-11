@@ -20,7 +20,7 @@ export default [
     },
     {
         code: 'moment-vi',
-        name: 'Moment (giao diện tiếng Việt)',
+        name: 'Moment (ngôn ngữ tiếng Việt)',
         version: '2.24.0',
         jsPath: 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/vi.js',
         savePath: 'moment'
@@ -33,7 +33,8 @@ export default [
         jsPath: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js',
         jsMap: 'bootstrap.min.js.map',
         link: 'https://lockex1987.github.io/posts/bootstrap%20-%20get%20started/',
-        note: 'File JS phụ thuộc jQuery, Popper'
+        note: 'File JS phụ thuộc jQuery, Popper',
+		cssChosen: false
     },
     {
         code: 'bootstrap-extended',
@@ -63,13 +64,6 @@ export default [
         jsPath: '../../js/common.js',
         link: 'https://lockex1987.github.io/posts/js%20-%20common/'
     },
-    {
-        code: 'pagi',
-        name: 'Pagi',
-        jsPath: '../project - pagi/js/pagi.js',
-        note: 'Phụ thuộc noti, Vue',
-        link: 'https://lockex1987.github.io/posts/project%20-%20pagi/'
-    },
     /*
     {
         code: 'datatable',
@@ -78,12 +72,15 @@ export default [
         jsPath: '../project - pagi/js/datatable-sortable.js'
     },
     */
+	/*
     {
         code: 'animate',
         name: 'Animate.css',
         version: '3.7.0',
-        cssPath: 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css'
+        cssPath: 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css',
+		cssChosen: false
     },
+	*/
     {
         code: 'daterangepicker',
         name: 'Date range picker',
@@ -92,7 +89,7 @@ export default [
         cssMap: 'https://cdn.jsdelivr.net/sm/977d76daee7276d0fb7eb98d2d7dcb01c5e058f63c51d94902d4394e65335f6e.map',
         jsPath: 'https://cdn.jsdelivr.net/npm/daterangepicker@3.0.5/daterangepicker.min.js',
         jsMap: 'https://cdn.jsdelivr.net/sm/3a884fe0bdb97cb3a94b410e67cf38fdc248890d5581232077b3e6241e25cd21.map',
-        note: 'Phụ thuộc jQuery, Moment. Phải sửa lại đường dẫn file map.'
+        note: 'Phụ thuộc jQuery, Moment. Phải sửa lại đường dẫn file map (sourceMappingURL).'
     },
     {
         code: 'line-awesome',
@@ -146,7 +143,7 @@ export default [
     },
     {
         code: 'summernote-vietnamese',
-        name: 'Summernote (giao diện tiếng Việt)',
+        name: 'Summernote (ngôn ngữ tiếng Việt)',
         version: '0.8.12',
         jsPath: 'https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/lang/summernote-vi-VN.min.js',
         savePath: 'summernote'
@@ -247,6 +244,13 @@ export default [
         version: '3.1.2',
         jsPath: 'https://cdn.jsdelivr.net/npm/vuex@3.1.2/dist/vuex.min.js',
         savePath: 'vue'
+    },
+	{
+        code: 'pagi',
+        name: 'Pagi',
+        jsPath: '../project - pagi/js/pagi.js',
+        note: 'Phụ thuộc noti, Vue',
+        link: 'https://lockex1987.github.io/posts/project%20-%20pagi/'
     },
     /*
     {

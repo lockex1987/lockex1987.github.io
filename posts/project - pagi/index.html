@@ -14,22 +14,35 @@
       <h2>Pagi</h2>
       <h3>Hướng dẫn sử dụng</h3>
       <p>Khai báo các file CSS và JS của thư viện và các phụ thuộc (noti, Vue):</p>
-      <pre>&lt;link rel="stylesheet" href="../project%20-%20noti/css/noti.css"/&gt;
+      <pre data-code-lang="htmlmixed">&lt;link rel="stylesheet" href="../project%20-%20noti/css/noti.css"/&gt;
 &lt;script src="../project%20-%20noti/js/noti.js"&gt;&lt;/script&gt;
 <br>&lt;script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"&gt;&lt;/script&gt;<br><br>&lt;script src="js/pagi.js"&gt;&lt;/script&gt;</pre>
       <p>Thư viện Pagi sinh ra các phần tử phân trang theo chuẩn của Bootstrap
         4, do đó bạn nên thêm cả CSS của Bootstrap (hoặc bootstrap-extended): </p>
-      <pre>&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/&gt;</pre>
+      <pre data-code-lang="htmlmixed">&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/&gt;</pre>
       <p>Khai báo một component <code>&lt;pagi&gt;</code>:</p>
-      <pre>&lt;pagi @change="search"
+      <pre data-code-lang="htmlmixed">&lt;pagi @change="search"
     v-model="pagi"&gt;&lt;/pagi&gt;</pre>
-      <p>Khai báo hàm xử lý khi click vào link từng trang. Hàm này sẽ có tham số
+      <p>Khai báo đối tượng pagi và hàm xử lý khi click vào link từng trang. Hàm này sẽ có tham số
         <code>page</code> là số thứ tự trang được click (số thứ tự bắt đầu bằng
         1).</p>
-      <pre>search(page = 1) {
-    const data = this.callServer(page);
-    this.pagi = data;
-    this.items = data.data;
+      <pre data-code-lang="javascript">data() {
+    return {
+        items: [],
+        pagi: {}
+    };
+},
+
+methods: {
+    async search(page = 1) {
+        const params = {
+            page: page,
+            size: 10
+        };
+        const { data } = await axios.get('/server', { params });
+        this.items = data.data;
+        this.pagi = data;
+    }
 }</pre>
       <h3>Các tham số khi khởi tạo</h3>
       <div class="out-of-box">

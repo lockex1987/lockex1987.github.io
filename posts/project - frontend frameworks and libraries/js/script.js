@@ -12,8 +12,8 @@ new Vue({
         return {
             libraries: LIBRARIES.map(e => ({
                 ...e,
-                cssChosen: !!e.cssPath,
-                jsChosen: !!e.jsPath
+                cssChosen: e.cssChosen ?? !!e.cssPath,
+                jsChosen: e.jsChosen ?? !!e.jsPath
             }))
         };
     },
