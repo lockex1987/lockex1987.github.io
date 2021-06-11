@@ -30,7 +30,7 @@
         <li><a href="../it%20-%20visual%20studio%20code/">Sử dụng VSCode</a></li>
       </ul>
       <h3>Phát triển các ứng dụng</h3>
-      <p>Mô tả, ảnh minh họa các chức năng.</p>
+      <p>Có mô tả, ảnh minh họa các chức năng.</p>
       <p><a href="../laravel%20-%20installation/">Setup project Laravel mới</a></p>
       <h4>sso-passport</h4>
       <p>Ứng dụng này sử dụng để quản lý đăng nhập tập trung của người dùng.</p>
@@ -53,24 +53,27 @@
           đăng xuất trong Laravel</a></p>
       <p>Có throttle</p>
       <p>Tập trung SSO</p>
-      <p><a href="../laravel%20-%20authentication/" target="_blank">Xác
-          thực với Laravel</a></p>
-      <p><a href="../laravel%20-%20two-factor%20authentication/"
-
-          target="_blank">Xác thực 2 lớp với Laravel</a></p>
-      <p><a href="../laravel%20-%20mail/" target="_blank">Gửi
-          mail với Laravel</a></p>
-      <p><a href="../php%20-%20mail/" target="_blank">Gửi
-          và đọc mail với PHP</a></p>
+      <p><a href="../laravel%20-%20authentication/" target="_blank">Xác thực với
+          Laravel</a></p>
+      <p><a href="../laravel%20-%20two-factor%20authentication/" target="_blank">Xác
+          thực 2 lớp với Laravel</a></p>
+      <p><a href="../laravel%20-%20mail/" target="_blank">Gửi mail với Laravel</a></p>
+      <p><a href="../php%20-%20mail/" target="_blank">Gửi và đọc mail với PHP</a></p>
       <h5>Xác thực 2 lớp</h5>
       <p><a href="../laravel%20-%20two-factor%20authentication/">Xác thực 2 lớp</a></p>
       <h5>Đổi thông tin</h5>
-      <p>Mật khẩu, tên, số điện thoại, email, avatar</p>
-      <p>Avatar lưu ở trong DB</p>
+      <p>Cho phép người dùng cập nhật các thông tin như tên, email, số điện
+        thoại, avatar.</p>
+      <p>Avatar lưu ở trong DB, để có thể backup và migrate thuận tiện.</p>
+      <h5>Đổi mật khẩu</h5>
+      <p>Chú ý validate. </p>
       <h5>Lịch sử đăng nhập</h5>
-      <p>Parse để lấy thông tin OS, Browser, IP, time.</p>
+      <p>Parse user agent để lấy thông tin trình duyệt và hệ điều hành. Ngoài ra
+        còn lưu thông tin IP và thời gian đăng nhập.</p>
+      <figure><img src="images/features/login-logs.png"></figure>
       <h5>Danh sách các ứng dụng</h5>
-      <p>Được phân quyền (link truy cập)</p>
+      <p>Hiện thị danh sách các ứng dụng mà người dùng được phân quyền.</p>
+      <figure><img src="images/features/user-apps.png" alt=""></figure>
       <h5>Quên mật khẩu</h5>
       <p>Giới hạn số lần thao tác tối đa trong một ngày</p>
       <p>Email đổi mật khẩu thành công</p>
@@ -78,196 +81,167 @@
       <h5>Đăng ký qua Facebook, Google</h5>
       <p>TODO</p>
       <h4>sso-admin</h4>
-      <p>Không mất công làm lại các bài toán cũ.</p>
+      <p>Tập hợp các chức năng hay làm, không mất công làm lại các bài toán cũ.</p>
       <h5>Đăng nhập</h5>
       <p>Đăng nhập qua <strong>sso-passport</strong> (người dùng phải được gán
-        cho ứng dụng sso-admin)</p>
+        cho ứng dụng <strong>sso-admin</strong>).</p>
       <h5>Quản lý người dùng</h5>
+      <p>Gồm các chức năng:</p>
+      <ul>
+        <li>Thêm, sửa, xóa</li>
+        <li>Khóa - mở khóa</li>
+        <li>Gán vai trò</li>
+        <li>Gán ứng dụng</li>
+        <li>Export</li>
+        <li>View as (impersonate): đăng nhập với tài khoản người khác</li>
+      </ul>
       <p>IMG</p>
       <h5>Quản lý ứng dụng</h5>
+      <p>Thêm, sửa, xóa ứng dụng.</p>
       <p>TODO: secret của ứng dụng, để gọi API từ ứng dụng, tự generate secret</p>
       <h5>Gán ứng dụng cho người dùng</h5>
       <p>IMG</p>
+      <h5>Quản lý quyền</h5>
+      <p>Thêm, sửa, xóa.</p>
+      <p>Mã quyền nên có dạng "&lt;subject&gt;.&lt;action&gt;".</p>
+      <p>Tên quyền nên có dạng "&lt;Hành động&gt; &lt;đối tượng&gt;".</p>
+      <h5>Quản lý vai trò</h5>
+      <p>Thêm, sửa, xóa.</p>
+      <h5>Kiểm tra quyền</h5>
+      <p>Với từng thao tác</p>
+      <p>Làm giống TTCD.</p>
+      <h5>Kiểm tra đăng nhập</h5>
+      <p>Middleware</p>
+      <h5>Danh mục dùng chung</h5>
+      <p>(tham khảo Voyage)</p>
+      <p>Quốc gia, thể loại phim (dùng để quản lý movie)</p>
+      <h5>Tham số hệ thống</h5>
+      <p>Động (thêm, sửa, xóa)</p>
+      <h5>Cấu hình</h5>
+      <p>Múi giờ Việt Nam (lưu DB không bị lệch với trường timestamp)</p>
+      <p>Thiết lập <code>'timezone' =&gt; 'Asia/Ho_Chi_Minh'</code> ở file <code>config/app.php</code>,
+        mặc định đang là <code>UTC</code></p>
+      <p>i18n: tiếng Việt (các thông báo lỗi validate)</p>
+      <h5>Tổ chức</h5>
+      <p>(dữ liệu dạng cây) </p>
+      <p>Ở form người dùng có chọn tổ chức</p>
+      <h5>Quản lý nội dung </h5>
+      <p>Dùng editor Summernote</p>
+      <p>HTML purify chống lỗi XSS</p>
+      <p>Nội dung chứa ảnh</p>
+      <h5>Upload đính kèm file</h5>
+      <p>Upload sửa avatar ở sso-passport.</p>
+      <p>Giới hạn dung lượng</p>
+      <p>Giới hạn định dạng file</p>
+      <p>TODO: file service, CDN, có HA</p>
+      <h5>Lưu tác động của người dùng</h5>
+      <p>Log tác động</p>
+      <p>Response log</p>
+      <h5>Logging</h5>
+      <p>Cấu hình log Laravel theo ngày, tách log lỗi ra file riêng, đẩy log lỗi
+        vào DB, liệt kê và download file log</p>
+      <p>Log service: Xem log ở các server có load balancer (không biết lỗi ở
+        server nào), cảnh báo log lỗi</p>
+      <p>Xem log lỗi nginx</p>
+      <p>Log lỗi hệ thống đẩy vào DB, có chức năng view
+        (https://laravel.com/docs/master/errors)</p>
+      <h5>Components demo</h5>
+      <p>Week picker</p>
+      <p>Month picker</p>
+      <p>Year picker</p>
+      <h5>Web Socket chat</h5>
+      <p>TODO:</p>
       <ul>
-        <li>Web Socket chat, TODO:
-          <ul>
-            <li>Avatar</li>
-            <li>Emoticon, formated HTML (strong, emphasize, underline,
-              font-family, font-size)</li>
-            <li>buzzes and image posting</li>
-            <li>Offline message</li>
-            <li>Send file (drag and drop, progress bar)</li>
-            <li>Group chat</li>
-            <li>Clear message</li>
-            <li>compress data bandwidth</li>
-            <li>Tham khảo: <a href="https://github.com/wayou/HiChat" target="_blank">github.com/wayou/HiChat</a></li>
-            <li>Dạng service để nhúng như Subiz</li>
-          </ul>
-        </li>
-        <li>View as (impersonate): đăng nhập với tài khoản người khác</li>
-        <li>Quản lý quyền, vai trò</li>
-        <li>Kiểm tra quyền</li>
-        <li>Kiểm tra đăng nhập</li>
-        <li>WebRTC
-          <ul>
-            <li>Text chat</li>
-            <li>Stream (share screen, audio chat, video chat)</li>
-            <li>Send file</li>
-          </ul>
-        </li>
-        <li>Notification
-          <ul>
-            <li>TODO: Notification dạng hệ thống, k phải là noti.info</li>
-            <li>TODO: Khi đánh dấu đã đọc thì cập nhật lại số thông báo mới</li>
-          </ul>
-        </li>
-        <li>Múi giờ Việt Nam (lưu DB không bị lệch với trường timestamp)
-          <ul>
-            <li>Thiết lập <code>'timezone' =&gt; 'Asia/Ho_Chi_Minh'</code> ở
-              file <code>config/app.php</code>, mặc định đang là <code>UTC</code></li>
-          </ul>
-        </li>
-        <li>i18n: tiếng Việt (các thông báo lỗi validate)</li>
-        <li>Danh mục dùng chung (tham khảo Voyage)
-          <ul>
-            <li>Quốc gia, thể loại phim (dùng để quản lý movie)</li>
-          </ul>
-        </li>
-        <li>Tham số hệ thống:
-          <ul>
-            <li>Động (thêm, sửa, xóa)</li>
-          </ul>
-        </li>
-        <li>Import Excel</li>
-        <li>Export Excel</li>
-        <li>Tổ chức (dữ liệu dạng cây)
-          <ul>
-            <li>Ở form người dùng có chọn tổ chức</li>
-          </ul>
-        </li>
-        <li>Quản lý nội dung
-          <ul>
-            <li>Dùng editor Summernote</li>
-            <li>HTML purify chống lỗi XSS</li>
-            <li>Nội dung chứa ảnh</li>
-          </ul>
-        </li>
-        <li>Upload đính kèm file
-          <ul>
-            <li>Giới hạn dung lượng</li>
-            <li>Giới hạn định dạng file</li>
-            <li>TODO: file service, CDN, có HA</li>
-          </ul>
-        </li>
-        <li>Log hệ thống (log tác động)
-          <ul>
-            <li>Response log</li>
-          </ul>
-        </li>
-        <li>Logging: cấu hình log Laravel theo ngày, tách log lỗi ra file riêng,
-          đẩy log lỗi vào DB, liệt kê và download file log
-          <ul>
-            <li>Log service: Xem log ở các server có load balancer (không biết
-              lỗi ở server nào), cảnh báo log lỗi</li>
-            <li>Xem log lỗi nginx</li>
-            <li>Log lỗi hệ thống đẩy vào DB, có chức năng view
-              (https://laravel.com/docs/master/errors)</li>
-          </ul>
-        </li>
-        <li>Components demo:
-          <ul>
-            <li>Week picker</li>
-            <li>Month picker</li>
-            <li>Year picker</li>
-            <li>...</li>
-          </ul>
-        </li>
+        <li>Avatar</li>
+        <li>Emoticon, formated HTML (strong, emphasize, underline, font-family,
+          font-size)</li>
+        <li>buzzes and image posting</li>
+        <li>Offline message</li>
+        <li>Send file (drag and drop, progress bar)</li>
+        <li>Group chat</li>
+        <li>Clear message</li>
+        <li>compress data bandwidth</li>
+        <li>Tham khảo: <a href="https://github.com/wayou/HiChat" target="_blank">github.com/wayou/HiChat</a></li>
+        <li>Dạng service để nhúng như Subiz</li>
       </ul>
-      <p>Ứng dụng thật:</p>
+      <h5>WebRTC</h5>
       <ul>
-        <li>Mail
-          <ul>
-            <li>Mail cảnh báo hoạt động</li>
-            <li>Mail truyền thông</li>
-            <li>Mail báo cáo tuần, báo cáo ngày</li>
-            <li>Mail service: Gửi mail tập trung, gọi REST POST với các tham số
-              (app, secret, to, title, body)</li>
-          </ul>
-        </li>
-        <li>Quản lý movie</li>
-        <li>Quản lý truyện tranh</li>
-        <li>Quản lý sách</li>
-        <li>Quản lý post (bài viết, kiến thức)</li>
-        <li>English common words</li>
-        <li>My family (có DB)</li>
-        <li>Monitor service: Ứng dụng alive; định kỳ đọc log lỗi, nếu có thì
-          cảnh báo</li>
-        <li>ElasticSearch
-          <ul>
-            <li>Tìm kiếm dữ liệu lớn (khách hàng Viettel)</li>
-            <li>Tìm kiếm dữ liệu post</li>
-          </ul>
-        </li>
-        <li>Hỗ trợ PWA
-          <ul>
-            <li>Notification?</li>
-          </ul>
-        </li>
+        <li>Text chat</li>
+        <li>Stream (share screen, audio chat, video chat)</li>
+        <li>Send file</li>
       </ul>
+      <h5>Notification</h5>
+      <p>TODO: Notification dạng hệ thống, k phải là noti.info</p>
+      <p>TODO: Khi đánh dấu đã đọc thì cập nhật lại số thông báo mới</p>
+      <h5>Import Excel</h5>
+      <p>Ví dụ chức năng</p>
+      <h5>Export Excel</h5>
+      <p>Ví dụ chức năng </p>
+      <h5>Mail</h5>
+      <p>Mail cảnh báo hoạt động</p>
+      <p>Mail truyền thông</p>
+      <p>Mail báo cáo tuần, báo cáo ngày</p>
+      <p>Mail service: Gửi mail tập trung, gọi REST POST với các tham số (app,
+        secret, to, title, body)</p>
+      <p>Facebook message bot gửi báo cáo hàng ngày</p>
+      <h5>Ứng dụng thật</h5>
+      <p>Quản lý movie</p>
+      <p>Quản lý truyện tranh</p>
+      <p>Quản lý sách</p>
+      <p>Quản lý post (bài viết, kiến thức)</p>
+      <p>English common words</p>
+      <p>My family (có DB)</p>
+      <h5>Monitor service</h5>
+      <p>Ứng dụng alive; định kỳ đọc log lỗi, nếu có thì cảnh báo</p>
+      <h5>ElasticSearch</h5>
+      <p>Tìm kiếm dữ liệu lớn (khách hàng Viettel)</p>
+      <p>Tìm kiếm dữ liệu post</p>
+      <h5>PWA</h5>
+      <p>Push notification.</p>
       <h4>landing-page</h4>
-      <p>Server render, hỗ trợ SEO.</p>
+      <p>Dạng server render (không phải SPA), hỗ trợ SEO.</p>
+      <p>Đối tượng hướng tới là doanh nghiệp nhỏ.</p>
       <h5>Trang landing page</h5>
-      <p>Đối tượng hướng tới là doanh nghiệp nhỏ</p>
-      <ul>
-        <li>Giới thiệu thông tin chung, liên hệ, đội ngũ, bản đồ địa chỉ</li>
-        <li>Chuyên môn, ảnh sản phẩm</li>
-        <li>Link chat với chúng tôi (FB Messenger)</li>
-        <li>Link tin tức</li>
-        <li>Link đăng nhập (sso-admin)</li>
-      </ul>
+      <p>Giới thiệu thông tin chung, liên hệ, đội ngũ, bản đồ địa chỉ</p>
+      <p>Chuyên môn, ảnh sản phẩm</p>
+      <p>Link chat với chúng tôi (FB Messenger)</p>
+      <p>Link tin tức</p>
+      <p>Link đăng nhập (sso-admin)</p>
       <h5>Trang danh sách tin tức </h5>
       <p>Có phân trang</p>
       <h5>Trang chi tiết tin tức</h5>
-      <ul>
-        <li>Các bài liên quan</li>
-        <li>FB comment</li>
-        <li>Dùng Share API để share link</li>
-      </ul>
+      <p>Các bài liên quan</p>
+      <p>FB comment</p>
+      <p>Dùng Share API để share link</p>
       <h5>Tính năng comment</h5>
-      <ul>
-        <li>Lấy danh sách (sắp xếp: mới nhất, cũ nhất, phổ biến)</li>
-        <li>Thêm comment (HTML)</li>
-        <li>Trả lời (comment lồng nhau)</li>
-        <li>Sửa comment</li>
-        <li>Xóa comment</li>
-        <li>Phê duyệt comment</li>
-        <li>Có thông báo</li>
-        <li>Giới hạn comment dài quá, comment dài quá thì có nút xem thêm</li>
-        <li>Like (bình chọn) comment</li>
-        <li>Thêm đính kèm (thêm ảnh, video)</li>
-        <li>Hash tag</li>
-        <li>Pinging user (@ người dùng)</li>
-      </ul>
+      <p>Lấy danh sách (sắp xếp: mới nhất, cũ nhất, phổ biến)</p>
+      <p>Thêm comment (HTML)</p>
+      <p>Trả lời (comment lồng nhau)</p>
+      <p>Sửa comment</p>
+      <p>Xóa comment</p>
+      <p>Phê duyệt comment</p>
+      <p>Có thông báo</p>
+      <p>Giới hạn comment dài quá, comment dài quá thì có nút xem thêm</p>
+      <p>Like (bình chọn) comment</p>
+      <p>Thêm đính kèm (thêm ảnh, video)</p>
+      <p>Hash tag</p>
+      <p>Pinging user (@ người dùng)</p>
       <h4>websocket-server</h4>
-      <ul>
-        <li>Điều hướng chat</li>
-        <li>Điều hướng WebRTC</li>
-        <li>Chat</li>
-        <li>Notification thông báo mới</li>
-      </ul>
+      <p>Điều hướng chat</p>
+      <p>Điều hướng WebRTC</p>
+      <p>Chat</p>
+      <p>Notification thông báo mới</p>
       <h3>Setup môi trường deploy</h3>
       <p>Chúng ta cũng cần cài Ubuntu, PHP, Nginx, Redis, MySQL, Node như môi
         trường dev.</p>
-      <ul>
-        <li><a href="../it%20-%20virtualbox/index.html">Hướng dẫn sử dụng
-            VirtualBox</a></li>
-        <li><a href="../linux%20-%20install%20ubuntu%20server/index.html">Cài
-            đặt Ubuntu server</a></li>
-        <li><a href="../linux%20-%20ssh/index.html">Sử dụng SSH để kểt nối đến
-            server</a></li>
-        <li><a href="../linux%20-%20install%20glusterfs/index.html">Cài đặt
-            GlusterFS</a></li>
-      </ul>
+      <p><a href="../it%20-%20virtualbox/index.html">Hướng dẫn sử dụng
+          VirtualBox</a></p>
+      <p><a href="../linux%20-%20install%20ubuntu%20server/index.html">Cài đặt
+          Ubuntu server</a></p>
+      <p><a href="../linux%20-%20ssh/index.html">Sử dụng SSH để kểt nối đến
+          server</a></p>
+      <p><a href="../linux%20-%20install%20glusterfs/index.html">Cài đặt
+          GlusterFS</a></p>
       <h4>Mục tiêu</h4>
       <p>Tôi muốn xây dựng cho mình một môi trường lab để thực hành về mạng cũng
         như việc deploy các ứng dụng web.</p>
@@ -322,8 +296,6 @@
       <figure><img src="images/bridged%20adapter.png" alt=""></figure>
       <h3>Triển khai ứng dụng</h3>
       <p>Hướng dẫn cài đặt 2 ứng dụng, khởi tạo DB, cấu hình nginx.</p>
-      <p><br>
-      </p>
       <p><a href="../laravel%20-%20deploy/">Triển khai ứng dụng Laravel</a></p>
       <p><a href="../it%20-%20check%20application%20alive/">Theo dõi tiến trình
           luôn chạy</a></p>
