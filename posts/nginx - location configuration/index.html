@@ -3,83 +3,75 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Cấu hình location trong nginx">
-    <title>Cấu hình location trong nginx</title>
+    <meta name="description" content="Cấu hình location trong Nginx">
+    <title>Cấu hình location trong Nginx</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
   </head>
   <body>
     <article>
-      <h2>Cấu hình location</h2>
+      <h2>Cấu hình location trong Nginx</h2>
       <p>Trong bài viết này, chúng ta sẽ tìm hiểu đến thành phần cuối cùng được
-        sử dụng trong việc cấu hình máy chủ HTTP trong nginx, đó là các khối
-        location.</p>
-      <p>nginx cung cấp cho chúng ta khả năng tinh chỉnh cấu hình xuống 3 cấp –
-        tại cấp giao thức (khối http), cấp máy chủ (khối server) và cấp URI
-        (khối location).</p>
+        sử dụng trong việc cấu hình máy chủ HTTP trong Nginx, đó là các khối <code>location</code>.</p>
+      <p>Nginx cung cấp cho chúng ta khả năng tinh chỉnh cấu hình xuống 3 cấp –
+        tại cấp giao thức (khối <code>http</code>), cấp máy chủ (khối <code>server</code>)
+        và cấp URI (khối <code>location</code>).</p>
       <h3>Các từ bổ nghĩa cho các khối location</h3>
-      <p>Nginx cho phép chúng ta định nghĩa các khối location bằng việc chỉ rõ 1
-        khuôn mẫu URI sẽ được dùng để đối chiếu với URI của yêu cầu.</p>
-      <pre>server {<br>    server_name website.com;<br>    location /admin/ {<br>        # The configuration you place here only applies to http://website.com/admin/<br>    }<br>}</pre>
+      <p>Nginx cho phép chúng ta định nghĩa các khối <code>location</code> bằng
+        việc chỉ rõ 1 khuôn mẫu URI sẽ được dùng để đối chiếu với URI của yêu
+        cầu.</p>
+      <pre>server {<br>    server_name website.com;<br><br>    location /admin/ {<br>        # The configuration you place here only<br>        # applies to http://website.com/admin/<br>    }<br>}</pre>
       <p>Thay vì sử dụng 1 tên thư mục đơn giản, chúng ta có thể sử dụng những
         khuôn mẫu phức tạp như:</p>
-      <p><em>location [=|~|~*|^~|@] pattern {…}</em></p>
-      <p>Các ký hiệu&nbsp;=|~|~*|^~|@ trong ví dụ trên được gọi là bộ bổ nghĩa
-        cho location, chúng định nghĩa cách nginx đối chiếu 1 mẫu cụ
-        thể&nbsp;với URI.</p>
-      <h4>Bổ từ&nbsp;=</h4>
+      <pre>location [=|~|~*|^~|@] pattern {…}</pre>
+      <p>Các ký hiệu&nbsp;<code>=|~|~*|^~|@</code> trong ví dụ trên gọi là bổ từ
+        bổ nghĩa cho <code>location</code>, chúng định nghĩa cách Nginx đối
+        chiếu 1 mẫu cụ thể&nbsp;với URI.</p>
+      <h4>Bổ từ =</h4>
       <p>URI phải khớp chính xác với khuôn mẫu được chỉ định. Khuôn mẫu ở đây
         được giới hạn là chuỗi ký tự bình thường, không được sử dụng biểu thức
         chính quy.</p>
-      <pre>server {<br>    server_name website.com;<br>    location = /abcd {<br>    }<br>}</pre>
+      <pre>server {<br>    server_name website.com;<br><br>    location = /abcd {<br>    }<br>}</pre>
       <p>Trong ví dụ trên:</p>
       <ul>
-        <li>Áp dụng cho<span>&nbsp;</span><em>http://website.com/abcd</em><span>&nbsp;</span>(trùng
+        <li>Áp dụng cho<span> </span><em>http://website.com/abcd</em> (trùng
           khớp)</li>
-        <li>Áp dụng cho<span>&nbsp;</span><em>http://website.com/ABCD</em><span>&nbsp;</span>(phân
-          biệt chữ hoa nếu như hệ điều hành của chúng ta sử dụng filesystem có
-          phân biệt chữ hoa)</li>
-        <li>Áp dụng cho<span>&nbsp;</span><em>http://website.com/abcd?param1&amp;param2</em><span>&nbsp;</span>(không
-          quan tâm các đối số truy vấn)</li>
-        <li>Không áp dụng cho<span>&nbsp;</span><em>http://website.com/abcd/</em><span>&nbsp;</span>(dư
-          ký hiệu /)</li>
-        <li>Không áp dụng cho<span>&nbsp;</span><em>http://website.com/abcde</em></li>
+        <li>Áp dụng cho <em>http://website.com/ABCD</em> (phân biệt chữ hoa nếu
+          như hệ điều hành của chúng ta sử dụng filesystem có phân biệt chữ hoa)</li>
+        <li>Áp dụng cho <em>http://website.com/abcd?param1&amp;param2</em>
+          (không quan tâm các đối số truy vấn)</li>
+        <li>Không áp dụng cho <em>http://website.com/abcd/</em> (dư ký hiệu /)</li>
+        <li>Không áp dụng cho <em>http://website.com/abcde</em></li>
       </ul>
       <h4>Trường hợp không sử dụng bổ từ</h4>
       <p>URI phải bắt đầu với 1 mẫu được chỉ định. Chúng ta không thể sử dụng
         biểu thức chính quy:</p>
-      <pre>server {<br>    server_name website.com;<br>    location /abcd {<br>    }<br>}</pre>
+      <pre>server {<br>    server_name website.com;<br><br>    location /abcd {<br>    }<br>}</pre>
       <p>Trong ví dụ trên:</p>
       <ul>
-        <li>Áp dụng cho<span>&nbsp;</span><em>http://website.com/abcd</em><span>&nbsp;</span>(trùng
-          khớp)</li>
-        <li>Áp dụng cho<span>&nbsp;</span><em>http://website.com/ABCD</em><span>&nbsp;</span>(nếu
-          hệ điều hành không phân biệt chữ hoa, chữ thường)</li>
-        <li>Áp dụng cho<span>&nbsp;</span><em>http://website.com/abcd?param1&amp;param2</em><span>&nbsp;</span>(không
-          quan tâm đối số chuỗi truy vấn)</li>
-        <li>Áp dụng cho<span>&nbsp;</span><em>http://website.com/abcd/</em><span>&nbsp;</span>(bắt
-          đầu với abcd)</li>
-        <li>Áp dụng cho<span>&nbsp;</span><em>http://website.com/abcde</em><span>&nbsp;</span>(bắt
-          đầu với abcd)</li>
+        <li>Áp dụng cho <em>http://website.com/abcd</em> (trùng khớp)</li>
+        <li>Áp dụng cho <em>http://website.com/ABCD</em> (nếu hệ điều hành
+          không phân biệt chữ hoa, chữ thường)</li>
+        <li>Áp dụng cho <em>http://website.com/abcd?param1&amp;param2</em>
+          (không quan tâm đối số chuỗi truy vấn)</li>
+        <li>Áp dụng cho <em>http://website.com/abcd/</em> (bắt đầu với abcd)</li>
+        <li>Áp dụng cho <em>http://website.com/abcde</em> (bắt đầu với abcd)</li>
       </ul>
       <h4>Bổ từ ~</h4>
       <p>URI được yêu cầu phải khớp (phân biệt chữ hoa, chữ thường) với biểu
         thức chính quy được chỉ rõ:</p>
-      <pre>server {<br>    server_name website.com;<br>    location ~ ^/abcd$ {<br>    }<br>}</pre>
-      <p>Biểu thức chính quy ^/abcd$ =&gt; 1 mẫu phải bắt đầu với /, theo sau là
-        abc, và kết thúc là d.</p>
+      <pre>server {<br>    server_name website.com;<br><br>    location ~ ^/abcd$ {<br>    }<br>}</pre>
+      <p>Biểu thức chính quy <code>^/abcd$</code> định nghĩa một mẫu phải bắt
+        đầu với <code>/</code>, theo sau là <code>abc</code>, và kết thúc là <code>d</code>.</p>
       <p>Ví dụ trên:</p>
       <ul>
-        <li>Áp dụng cho<span>&nbsp;</span><em>http://website.com/abcd</em><span>&nbsp;</span>(trùng
-          khớp)</li>
-        <li>Không áp dụng cho<span>&nbsp;</span><em>http://website.com/ABCD</em><span>&nbsp;</span>(chữ
-          hoa)</li>
-        <li>Áp dụng cho<span>&nbsp;</span><em>http://website.com/abcd?param1&amp;param2</em><span>&nbsp;</span>(không
-          quan tâm đến các đối số trong URI)</li>
-        <li>Không áp dụng cho<span>&nbsp;</span><em>http://website.com/abcd/</em><span>&nbsp;</span>(ký
-          hiệu / không khớp với biểu thức chính quy)</li>
-        <li>Không áp dụng cho<span>&nbsp;</span><em>http://website.com/abcde</em><span>&nbsp;</span>(thừa
-          ký tự e)</li>
+        <li>Áp dụng cho <em>http://website.com/abcd</em> (trùng khớp)</li>
+        <li>Không áp dụng cho <em>http://website.com/ABCD</em> (chữ hoa)</li>
+        <li>Áp dụng cho <em>http://website.com/abcd?param1&amp;param2</em>
+          (không quan tâm đến các đối số trong URI)</li>
+        <li>Không áp dụng cho <em>http://website.com/abcd/</em> (ký hiệu /
+          không khớp với biểu thức chính quy)</li>
+        <li>Không áp dụng cho <em>http://website.com/abcde</em> (thừa ký tự e)</li>
       </ul>
       <p><strong><span>Lưu ý</span>:</strong></p>
       <p>Với những hệ điều hành như Microsoft Windows, ~ và ~* không phân biệt
@@ -88,27 +80,24 @@
       <h4>Bổ từ ~*</h4>
       <p>URI được yêu cầu phải khớp (không phân biệt chữ hoa, chữ thường) với 1
         biểu thức chính quy được chỉ rõ.</p>
-      <pre>server {<br>    server_name website.com;<br>    location ~* ^/abcd$ {<br>        ...<br>    }<br>}</pre>
+      <pre>server {<br>    server_name website.com;<br><br>    location ~* ^/abcd$ {<br>        ...<br>    }<br>}</pre>
       <p>Trong ví dụ trên:</p>
       <ul>
-        <li>Áp dụng cho<span>&nbsp;</span><em>http://website.com/abcd</em><span>&nbsp;</span>(trùng
-          khớp)</li>
-        <li>Áp dụng cho<span>&nbsp;</span><em>http://website.com/ABCD</em><span>&nbsp;</span>(không
-          phân biệt chữ hoa)</li>
-        <li>Áp dụng cho<span>&nbsp;</span><em>http://website.com/abcd?param1&amp;param2</em><span>&nbsp;</span>(không
-          quan tâm đối số trong chuỗi truy vấn)</li>
-        <li>Không áp dụng cho<span>&nbsp;</span><em>http://website.com/abcd/</em><span>&nbsp;</span>(dư
-          ký hiệu /)</li>
-        <li>Không áp dụng cho<span>&nbsp;</span><em>http://website.com/abcde</em><span>&nbsp;</span>(dư
-          ký tự e)</li>
+        <li>Áp dụng cho <em>http://website.com/abcd</em> (trùng khớp)</li>
+        <li>Áp dụng cho <em>http://website.com/ABCD</em> (không phân biệt chữ
+          hoa)</li>
+        <li>Áp dụng cho <em>http://website.com/abcd?param1&amp;param2</em>
+          (không quan tâm đối số trong chuỗi truy vấn)</li>
+        <li>Không áp dụng cho <em>http://website.com/abcd/</em> (dư ký hiệu /)</li>
+        <li>Không áp dụng cho <em>http://website.com/abcde</em> (dư ký tự e)</li>
       </ul>
       <h4>Bổ từ ^~</h4>
       <p>Tương tự với trường hợp không dùng bổ từ, URI phải bắt đầu với 1 mẫu cụ
-        thể. Sự khác nhau là nếu mẫu đó khớp, nginx ngừng tìm kiếm các mẫu khác.</p>
+        thể. Sự khác nhau là nếu mẫu đó khớp, Nginx ngừng tìm kiếm các mẫu khác.</p>
       <h4>Bổ từ @</h4>
       <p>Định nghĩa 1 khối location được đặt tên. Khách hàng không thể truy cập
         những khối này, chúng chỉ có thể truy cập bởi các truy cập nội bộ được
-        tạo ra bởi các chỉ thị khác, như là<span>&nbsp;</span><em>try_files</em><span>&nbsp;</span>hoặc<span>&nbsp;</span><em>error_page</em>.</p>
+        tạo ra bởi các chỉ thị khác, như là <em>try_files</em> hoặc <em>error_page</em>.</p>
       <h3>Thứ tự và độ ưu tiên khi tìm kiếm các khối location</h3>
       <p>Ví dụ:</p>
       <pre>server {
@@ -125,52 +114,50 @@
         # but only /files/
     }
 }<span style="color: #212529;"><span style="font-family: SFMono-Regular,Menlo,Monaco,Consolas,&quot;Liberation Mono&quot;,&quot;Courier New&quot;,monospace;"></span></span></pre>
-      <p>Khi khách hàng truy cập<span>&nbsp;</span><em>http://website.com/files/doc.txt</em>,
-        khối location đầu tiên được sử dụng. Tuy nhiên, khi họ truy cập<span>&nbsp;</span><em>http://website.com/files/</em>,
+      <p>Khi khách hàng truy cập <em>http://website.com/files/doc.txt</em>,
+        khối location đầu tiên được sử dụng. Tuy nhiên, khi họ truy cập <em>http://website.com/files/</em>,
         khối location thứ 2 được sử dụng (mặc dù khối 1 cũng khớp) do nó có ưu
         tiên cao hơn khối thứ 1.</p>
       <p>Thứ tự chúng ta đặt các khối location trong tập tin cấu hình không liên
         quan đến độ ưu tiên này. Nginx sẽ tìm các mẫu khớp theo 1 thứ tự cụ thể:</p>
       <ol>
-      </ol>
-      <ul>
-        <li>Các khối location với bổ từ =: nếu chuỗi được chỉ rõ trùng khớp với
-          URI, Nginx giữ lại khối location này.</li>
+        <li>Các khối location với bổ từ <code>=</code>: nếu chuỗi được chỉ rõ
+          trùng khớp với URI, Nginx giữ lại khối location này.</li>
         <li>Các khối location không sử dụng bổ từ: nếu chuỗi được chỉ rõ trùng
           khớp với URI, Nginx giữ lại khối location này.</li>
-        <li>Các khối location sử dụng bổ từ ^~: Nếu chuỗi chỉ rõ khớp với phần
-          đầu của URI, Nginx giữ lại khối location này.</li>
-        <li>Các khối location sử dụng bổ từ ~ hoặc ~*: Nếu biểu thức chính quy
-          khớp với URI, Nginx giữ lại khối location này.</li>
+        <li>Các khối location sử dụng bổ từ <code>^~</code>: Nếu chuỗi chỉ rõ
+          khớp với phần đầu của URI, Nginx giữ lại khối location này.</li>
+        <li>Các khối location sử dụng bổ từ <code>~</code> hoặc <code>~*</code>:
+          Nếu biểu thức chính quy khớp với URI, Nginx giữ lại khối location này.</li>
         <li>Các khối location không sử dụng bổ từ: Nếu chuỗi được chỉ rõ khớp
-          với phần đầu của URI, Nginx giữ lại khối location này.</li>
-      </ul>
-      <ol>
+          với phần đầu của URI (chỉ phần đầu thôi), Nginx giữ lại khối location
+          này.</li>
       </ol>
       <p>Chúng ta cùng xem qua 3 ví dụ sau để làm rõ vấn đề này:</p>
-      <h3>Ví dụ 1</h3>
+      <h4>Ví dụ 1</h4>
       <pre>server {<br>    server_name website.com;<br>
-    # Block&nbsp;1<br>    location /doc {
-      &nbsp; [...] # requests beginning with "/doc"<br>    }
-<br>    # Block&nbsp;2<br>    location ~* ^/document$ {
-        [...] # requests exactly matching "/document"<br>    }
+    # Block 1<br>    location /doc {
+        # Requests beginning with "/doc"<br>    }
+<br>    # Block 2<br>    location ~* ^/document$ {
+        # Requests exactly matching "/document"<br>    }
 }</pre>
-      <p>Khi khách hàng truy cập<span>&nbsp;</span><em>http://website.com/document</em></p>
+      <p>Khi khách hàng truy cập <em>http://website.com/document</em>:</p>
       <ul>
-        <li>Block 1 (URI bắt đầu với /doc) =&gt; có thứ tự ưu tiên là 5.</li>
-        <li>Block 2 (URI khớp với biểu thức chính quy ^/document$) =&gt; có thứ
-          tự ưu tiên là 4.</li>
+        <li>Block 1 (URI bắt đầu với <code>/doc</code>) =&gt; có thứ tự ưu tiên
+          là 5.</li>
+        <li>Block 2 (URI khớp với biểu thức chính quy <code>^/document$</code>)
+          =&gt; có thứ tự ưu tiên là 4.</li>
       </ul>
       <p>Trong trường hợp này, Nginx sử dụng khối location thứ 2 cho truy cập
         trên.</p>
-      <h3>Ví dụ 2</h3>
+      <h4>Ví dụ 2</h4>
       <pre>server {<br>    server_name website.com;<br>
     # Block 1<br>    location /document {
-        [...] # requests beginning with "/document"<br>    }
+        # Requests beginning with "/document"<br>    }
 <br>    # Block 2<br>    location ~* ^/document$ {
-        [...] # requests exactly matching "/document"<br>    }
+        # Requests exactly matching "/document"<br>    }
 }</pre>
-      <p>Khách hàng truy cập<span>&nbsp;</span><em>http://website.com/document</em></p>
+      <p>Khách hàng truy cập <em>http://website.com/document</em>:</p>
       <ul>
         <li>Block 1 (chuỗi được chỉ định trùng khớp với URI) =&gt; thứ tự ưu
           tiên là 2.</li>
@@ -178,14 +165,14 @@
           4.</li>
       </ul>
       <p>Trong trường hợp này, Nginx sử dụng khối thứ 1 cho truy cập trên.</p>
-      <h3>Ví dụ 3</h3>
+      <h4>Ví dụ 3</h4>
       <pre>server {<br>    server_name website.com;
 <br>    # Block 1<br>    location ^~ /doc {
-        [...] # requests beginning with "/doc"<br>    }
+        # Requests beginning with "/doc"<br>    }
 <br>    # Block 2<br>    location ~* ^/document$ {
-        [...] # requests exactly matching "/document"<br>    }
+        # Requests exactly matching "/document"<br>    }
 }</pre>
-      <p>Khách hàng truy cập<span>&nbsp;</span><em>http://website.com/document</em></p>
+      <p>Khách hàng truy cập <em>http://website.com/document</em>:</p>
       <ul>
         <li>Block 1 (chuỗi khớp với phần đầu của URI) =&gt; thứ tự ưu tiên là 3.</li>
         <li>Block 2 (biểu thức chính quy khớp với URI) =&gt; thứ tự ưu tiên là
@@ -195,7 +182,17 @@
       <p>Chúng ta hoàn tất bài tìm hiểu về thành phần cấu hình cuối cùng trong
         module HTTP Core của Nginx tại đây.</p>
       <p>Xin cám ơn các bạn đã quan tâm theo dõi.</p>
-      <p>https://www.justpassion.net/tech/system-quan-tri-he-thong/web/nginx/cau-hinh-may-chu-http-trong-nginx-cac-khoi-location.html</p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://www.justpassion.net/tech/system/web/nginx/cau-hinh-may-chu-http-trong-nginx-cac-khoi-location.html"
+
+          target="_blank">Cấu hình máy chủ HTTP trong Nginx - Các khối location
+          - Passion</a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>
