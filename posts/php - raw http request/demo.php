@@ -1,94 +1,144 @@
 <?php
 
-// $host = 'platform.cttd.tk';
-// $host = 'localhost';
-// $host = 'www.w3schools.com';
-// $host = 'vnexpress.net';
-// $host = 'ttcd.vn';
-$host = 'ttcd-v1.cttd.tk';
-
-$port = 80;
-// $port = 443;
-// $port = 8080;
-
-$fp = fsockopen($host, $port, $errno, $errstr, 20);
-if (!$fp) {
-    echo "$errno: $errstr\n";
-} else {
-	/*
-    $out = "GET /psc/missions HTTP/1.1\r\n";
-    $out .= "Host: " . $host . "\r\n";
-	$out .= "X-CSRF-TOKEN: yoUOXQuw1szk5OyZ0HKjlVl5ZArN1j1oqUi5bBI6\r\n";
-	$out .= "Cookie: laravel_session=eyJpdiI6IlBcL1dFWjRvMll3cTdiVzFFNXpSM0lnPT0iLCJ2YWx1ZSI6IldYT3hyUTZIY0M3NEhlandEdnNVcjNEMUk1OHlucldDNUFHZENIV1gyNWY4VnJqcUpDWGZwWjIwbUtYZ1lLNEciLCJtYWMiOiIxNzA1Mjc4NDMwMTA2MmE4ODQ4MjczZjczNzU2MjA4ZjJhMzNhNjM5MWNhMzk2NjBjYWUyZjFmYWI3Mzg4YzViIn0%3D\r\n";
-    $out .= "Connection: Close\r\n";
-	$out .= "\r\n";
-	*/
-	
-	/*
-	$postData = "----WebKitFormBoundary7MA4YWxkTrZu0gW\r\n"
-		. "Content-Disposition: form-data; name=\"name\"\r\n"
-		. "\r\n"
-		. "xxxx\r\n"
-		. "----WebKitFormBoundary7MA4YWxkTrZu0gW\r\n"
-		. "Content-Disposition: form-data; name=\"description\"\r\n"
-		. "\r\n"
-		. "1\r\n"
-		. "----WebKitFormBoundary7MA4YWxkTrZu0gW--\r\n"
-		;
-	*/
-	
-	$boundary = "---------------------------" . substr(md5(rand(0, 32000)), 0, 10);
-	// $data = "--$boundary";
-
-	// http://docs.php.net/fsockopen
-	// $postData phải có --$boundary ở đầu
-	// và $boundary-- ở cuối
-	$postData = "--$boundary";
-	$arr = [
-		'name' => 'Huyen test 1',
-		'description' => '<p>ABC</p>',
-		'start' => '04/09/2020',
-		'due' => '',
-		'important' => 0,
-		'parent_id' => '',
-		'author_id' => '',
-		'organizations_id' => '[23]',
-		'sources' => '[]',
-		'source' => '',
-		'file_attach' => '[]',
-		'extra' => '{}'
-	];
-
-	foreach ($arr as $key => $value) {
-		$postData .= "\r\nContent-Disposition: form-data; name=\"" . $key ."\"\r\n"
-			. "\r\n"
-			. "$value\r\n"
-			. "--$boundary";
-	}
-	$postData .= "--\r\n\r\n";
-
-	
-	// echo $postData . PHP_EOL;
-	// echo strlen($postData) . PHP_EOL;
-
-	$out = "POST /psc/missions/save HTTP/1.1\r\n";
-    $out .= "Host: " . $host . "\r\n";
-	$out .= "X-CSRF-TOKEN: yoUOXQuw1szk5OyZ0HKjlVl5ZArN1j1oqUi5bBI6\r\n";
-	$out .= "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) SFive/80.0 Chrome/80.0.3987.145 Safari/537.36\r\n";
-	$out .= "Origin: http://ttcd-v1.cttd.tk\r\n";
-	$out .= "Referer: http://ttcd-v1.cttd.tk/psc/missions\r\n";
-	$out .= "Content-Type: multipart/form-data; boundary=$boundary\r\n";
-	$out .= "Content-Length: " . strlen($postData) . "\r\n";
-	$out .= "Cookie: laravel_session=eyJpdiI6IlBcL1dFWjRvMll3cTdiVzFFNXpSM0lnPT0iLCJ2YWx1ZSI6IldYT3hyUTZIY0M3NEhlandEdnNVcjNEMUk1OHlucldDNUFHZENIV1gyNWY4VnJqcUpDWGZwWjIwbUtYZ1lLNEciLCJtYWMiOiIxNzA1Mjc4NDMwMTA2MmE4ODQ4MjczZjczNzU2MjA4ZjJhMzNhNjM5MWNhMzk2NjBjYWUyZjFmYWI3Mzg4YzViIn0%3D\r\n";
-	$out .= "Connection: Close\r\n";
-	$out .= "\r\n";
-	// $out .= "\r\n";
-	$out .= $postData;
-	// $out .= "\r\n";
-
-    fwrite($fp, $out);
-    while (!feof($fp)) {
-        echo fgets($fp, 128);
+function buildGetRequestBody(string $host, string $path, array $headers): string
+{
+    $body = "GET $path HTTP/1.1\r\n";
+    $body .= "Host: $host\r\n";
+    $body .= "Connection: Close\r\n";
+    foreach ($headers as $key => $value) {
+        $body .= "$key: $value\r\n";
     }
-    fclose($fp);
+    $body .= "\r\n";
+    return $body;
 }
+
+function buildPostData(string $boundary, array $params, array $uploadFiles): string
+{
+    $postData = "--$boundary";
+
+    foreach ($params as $key => $value) {
+        $postData .= "\r\nContent-Disposition: form-data; name=\"" . $key ."\"\r\n";
+        $postData .= "\r\n";
+        $postData .= "$value\r\n";
+        $postData .= "--$boundary";
+    }
+
+    foreach ($uploadFiles as $e) {
+        $filePath = $e['path'];
+        $paramName = $e['name'];
+                
+        if (file_exists($filePath)) {
+            $fileName = basename($filePath);
+            $fileContent = file_get_contents($filePath);
+            $mimeType = mime_content_type($filePath);
+ 
+            $postData .= "\r\nContent-Disposition: form-data; name=\"" . $paramName . "\"; filename=\"" . $fileName . "\"\r\n";
+            $postData .= "Content-Type: " . $mimeType . "\r\n";
+            $postData .= "\r\n";
+            $postData .= $fileContent . "\r\n";
+            $postData .= "--" . $boundary;
+        }
+    }
+
+    $postData .= "--\r\n";
+    $postData .= "\r\n";
+    return $postData;
+}
+
+function buildPostRequestBody(string $host, string $path, array $headers, array $params, array $uploadFiles): string
+{
+    $boundary = "----" . substr(md5(rand(0, 32000)), 0, 10);
+    $postData = buildPostData($boundary, $params, $uploadFiles);
+
+    $body = "POST $path HTTP/1.1\r\n";
+    $body .= "Host: " . $host . "\r\n";
+    $body .= "Connection: Close\r\n";
+    foreach ($headers as $key => $value) {
+        $body .= "$key: $value\r\n";
+    }
+    $body .= "Content-Type: multipart/form-data; boundary=$boundary\r\n";
+    $body .= "Content-Length: " . strlen($postData) . "\r\n";
+    $body .= "\r\n";
+    $body .= $postData;
+    return $body;
+}
+
+function makeRequest(string $url, string $method, array $headers = [], array $params = [], array $uploadFiles = []): void
+{
+    $arr = parse_url($url);
+    // var_dump($arr);
+    $host = $arr['host'];
+    $scheme = $arr['scheme'];
+    $port = $arr['port'] ?? ($scheme == 'https' ? 443 : 80);
+    $path = $arr['path'];
+    $hostPrefix = $scheme == 'https' ? 'ssl://' : ''; // nếu dùng stream_socket_client, không dùng fsockopen thì phải có tcp:// trong trường hợp HTTP?
+    // echo "$host $port $path\n";
+
+    $context = stream_context_create([
+        'ssl' => [
+           'verify_peer' => false,
+           'verify_peer_name' => false
+        ]
+    ]);
+
+    // $fp = fsockopen($hostPrefix . $host, $port, $errno, $errstr);
+    $fp = stream_socket_client(
+        $hostPrefix . $host . ':' . $port,
+        $errno,
+        $errstr,
+        30,
+        STREAM_CLIENT_CONNECT,
+        $context
+    );
+    
+    if (!$fp) {
+        echo "$errno: $errstr\n";
+    } else {
+        if ($method == 'GET') {
+            $body = buildGetRequestBody($host, $path, $headers);
+        } elseif ($method == 'POST') {
+            $body = buildPostRequestBody($host, $path, $headers, $params, $uploadFiles);
+        }
+        // echo $body . PHP_EOL;
+
+        // Gửi request
+        fwrite($fp, $body);
+
+        // Đọc response
+        while (!feof($fp)) {
+            echo fgets($fp, 1024);
+        }
+        fclose($fp);
+    }
+}
+
+
+/*
+makeRequest(
+    url: 'https://sso-passport.cttd.tk/api/apps',
+    method: 'GET',
+    headers: [
+        'Authorization' => 'Bearer a4a139e8-6425-43fa-9a08-1b723c5c3aafY8ey7fESGVkDugpBGxGllMYdY4KSiSRlnIlg0t0MArRusbv5ZBAfBZyOdwpsGnsqMwoj8svQDaMdPZugXCC2YaUcRFGBnF4kyE9z'
+    ]
+);
+*/
+
+
+makeRequest(
+    url: 'https://sso-passport.cttd.tk/api/user',
+    method: 'POST',
+    headers: [
+        'Authorization' => 'Bearer a4a139e8-6425-43fa-9a08-1b723c5c3aafY8ey7fESGVkDugpBGxGllMYdY4KSiSRlnIlg0t0MArRusbv5ZBAfBZyOdwpsGnsqMwoj8svQDaMdPZugXCC2YaUcRFGBnF4kyE9z'
+    ],
+    params: [
+        'fullName' => 'Nguyễn Văn Huyên',
+        'email' => 'lockex1987@gmail.com',
+        'phone' => '0386519125'
+    ],
+    uploadFiles: [
+        [
+            'path' => 'D:/htdocs/lockex1987.github.io/images/nvh/huyennv9b.jpg',
+            'name' => 'avatar'
+        ]
+    ]
+);

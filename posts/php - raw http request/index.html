@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="socket">
+    <meta name="description" content="socket, fsockopen, stream_socket_client, upload">
     <title>Tạo raw HTTP request</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -12,8 +12,53 @@
     <article>
       <h2>Tạo raw HTTP request</h2>
       <p>Một HTTP request là một kết nối socket bình thường.</p>
+      <p>Nội dung HTTP request khi upload file là:</p>
+      <pre>POST /api/user HTTP/1.1
+Host: sso-passport.cttd.tk
+Connection: Close
+Content-Type: multipart/form-data; boundary=$boundary
+Content-Length: 196488
+
+--$boundary
+Content-Disposition: form-data; name="fullName"
+
+Nguyễn Văn Huyên
+--$boundary
+Content-Disposition: form-data; name="email"
+
+lockex1987@gmail.com
+--$boundary
+Content-Disposition: form-data; name="phone"
+
+0386519125
+--$boundary
+Content-Disposition: form-data; name="avatar"; filename="nvh3.jpg"
+Content-Type: image/jpeg
+
+&lt;Nội dung file&gt;
+--$boundary--</pre>
+      <p>Demo</p>
       <p><a href="demo.php">demo.php</a></p>
+      <p><a href="upload_attack.php">Upload file An toàn thông tin</a></p>
+      <p>Tham khảo</p>
+      <p><a href="../laravel%20-%20upload%20file/" target="_blank">Upload file
+          với Laravel</a></p>
+      <p><a href="https://viblo.asia/p/khai-thac-loi-unrestricted-file-upload-va-cac-ky-thuat-bypass-Ljy5VyNblra"
+
+          target="_blank">Khai thác lỗi Unrestricted File Upload và các kỹ thuật
+          bypass</a></p>
+      <p><a href="https://viblo.asia/p/laravel-validate-file-upload-co-phai-chi-validate-mimes-mimetypes-la-du-6J3ZgNoLKmB"
+
+          target="_blank">Laravel validate file upload, có phải chỉ validate
+          mimes, mimeTypes là đủ?</a></p>
+      <p><a href="https://www.php.net/manual/en/function.fsockopen.php" target="_blank">Hàm
+          fsockopen</a></p>
+      <p><a href="https://www.php.net/manual/en/function.stream-socket-client.php"
+
+          target="_blank">Hàm stream_socket_client, có thể cấu hình không verify
+          SSL</a></p>
     </article>
     <script src="../../js/docs.js"></script>
+    
   </body>
 </html>
