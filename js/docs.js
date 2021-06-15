@@ -443,7 +443,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
         codeBlocks.forEach(preTag => {
             const lang = preTag.dataset.codeLang;
-            preTag.innerHTML = `<code class="language-${lang}">${preTag.innerHTML}</code>`;
+			const code = preTag.innerHTML.replace(/<br>/g, "\n");
+			// console.log(code);
+            preTag.innerHTML = `<code class="language-${lang}">${code}</code>`;
         });
 
         // Thêm file CSS

@@ -34,7 +34,7 @@
         <li>Chúng ta nên khai báo kiểu dữ liệu để code rõ ràng. Đọc khai báo của
           hàm là chúng ta biết cách sử dụng và truyền dữ liệu thế nào luôn.</li>
       </ul>
-      <pre>public function foo(Foo|null $foo): void<br>{<br>}<br>
+      <pre data-code-lang="php">public function foo(Foo|null $foo): void<br>{<br>}<br>
 public function bar(?Bar $bar): void<br>{<br>}</pre>
       <h4>JIT</h4>
       <p>JIT (just in time) compiler hứa hẹn sẽ cải thiện hiệu năng một cách
@@ -48,25 +48,30 @@ public function bar(?Bar $bar): void<br>{<br>}</pre>
           target="_blank">null coalescing</a>, bạn cũng đã quen với hạn chế của
         nó: nó không sử dụng được khi gọi phương thức. Bạn sẽ phải kiểm tra
         trước, ví dụ:</p>
-      <pre>$startDate = $booking-&gt;getStartDate();<br>$dateAsString = $startDate ? $startDate-&gt;asDateTimeString() : null;</pre>
+      <pre data-code-lang="php">$startDate = $booking-&gt;getStartDate();
+$dateAsString = $startDate ? $startDate-&gt;asDateTimeString() : null;</pre>
       <p>Với toán tử nullsafe (<code>?-&gt;</code>), chúng ta giờ có thể gọi
         phương thức giống như null coalescing:</p>
-      <pre>$dateAsString = $booking-&gt;getStartDate()?-&gt;asDateTimeString();</pre>
+      <pre data-code-lang="php">$dateAsString = $booking-&gt;getStartDate()?-&gt;asDateTimeString();</pre>
       <h4>Truyền tham số theo tên</h4>
       <p><a href="https://stitcher.io/blog/php-8-named-arguments" target="_blank">Named
           arguments</a> (truyền tham số theo tên) cho phép bạn truyền giá trị
         cho một hàm bằng cách chỉ ra tên của giá trị, do đó bạn không cần quan
         tâm đến vị trí của các tham số, và bạn có thể bỏ qua các tham số tùy
         chọn!</p>
-      <pre>function foo(string $a, string $b, ?string $c = null, ?string $d = null) 
-{
+      <pre data-code-lang="php">function foo(
+    string $a,
+    string $b,
+    ?string $c = null,
+    ?string $d = null
+) {
     /* … */
 }
 
 foo(
     b: 'value b', 
     a: 'value a', 
-    d: 'value d',
+    d: 'value d'
 );</pre>
       <p>Bạn có thể đọc sâu về chúng <a href="https://stitcher.io/blog/php-8-named-arguments"
 
@@ -88,7 +93,9 @@ class Foo
     public $x;
  
     #[ExampleAttribute]
-    public function foo(#[ExampleAttribute] $bar)<br>    {<br>    }
+    public function foo(#[ExampleAttribute] $bar)
+    {
+    }
 }</pre>
       <pre data-code-lang="php">#[Attribute]
 class ExampleAttribute
@@ -111,7 +118,7 @@ class ExampleAttribute
         sử dụng so sánh kiểu dữ liệu nghiêm ngặt và không thực hiện type
         coercion.</p>
       <p>Nó trông giống như sau:</p>
-      <pre>$result = match($input) {
+      <pre data-code-lang="php">$result = match($input) {
     0 =&gt; 'hello',
     '1', '2', '3' =&gt; 'world'
 };</pre>
@@ -143,7 +150,8 @@ class ExampleAttribute
     public function __construct(
         public Currency $currency,
         public int $amount,
-    ) {}
+    ) {
+	}
 }</pre>
       <p>There's a lot more to tell about property promotion, you can read about
         them <a href="https://stitcher.io/blog/constructor-promotion-in-php-8">in
@@ -152,7 +160,7 @@ class ExampleAttribute
       <p>While it was already possible to return <code>self</code>, <code>static</code>
         wasn't a valid return type until PHP 8. Given PHP's dynamically typed
         nature, it's a feature that will be useful to many developers.</p>
-      <pre>class Foo
+      <pre data-code-lang="php">class Foo
 {
     public function test(): static
     {
@@ -186,13 +194,13 @@ class ExampleAttribute
       <p>Also note that since <code>mixed</code> already includes <code>null</code>,
         it's not allowed to make it nullable. The following will trigger an
         error:</p>
-      <pre>// Fatal error: Mixed types cannot be nullable, null is already part of the mixed type.
+      <pre data-code-lang="php">// Fatal error: Mixed types cannot be nullable, null is already part of the mixed type.
 function bar(): ?mixed {}</pre>
       <h4>Throw expression</h4>
       <p>This RFC changes <code>throw</code> from being a statement to being an
         expression, which makes it possible to throw exception in many new
         places:</p>
-      <pre>$triggerError = fn () =&gt; throw new MyError();
+      <pre data-code-lang="php">$triggerError = fn () =&gt; throw new MyError();
 
 $foo = $bar['offset'] ?? throw new OffsetDoesNotExist('offset');</pre>
       <h4>Inheritance with private methods</h4>
@@ -223,7 +231,7 @@ $foo = $bar['offset'] ?? throw new OffsetDoesNotExist('offset');</pre>
         not thousands of entities within a request; weak maps can offer a
         better, more resource friendly way of dealing with these objects.</p>
       <p>Here's what weak maps look like, an example from the RFC:</p>
-      <pre>class Foo 
+      <pre data-code-lang="php">class Foo 
 {
     private WeakMap $cache;
  
@@ -237,7 +245,7 @@ $foo = $bar['offset'] ?? throw new OffsetDoesNotExist('offset');</pre>
       <p>A small, yet useful, new feature: it's now possible to use <code>::class</code>
         on objects, instead of having to use <code>get_class()</code> on them.
         It works the same way as <code>get_class()</code>.</p>
-      <pre>$foo = new Foo();
+      <pre data-code-lang="php">$foo = new Foo();
 
 var_dump($foo::class);</pre>
       <h4>Non-capturing catches</h4>
@@ -245,13 +253,13 @@ var_dump($foo::class);</pre>
         store it in a variable, regardless whether you used that variable or
         not. With non-capturing catches, you can omit the variable, so instead
         of this:</p>
-      <pre>try {
+      <pre data-code-lang="php">try {
     // Something goes wrong
 } catch (MySpecialException $exception) {
     Log::error("Something went wrong");
 }</pre>
       <p>You can now do this:</p>
-      <pre>try {
+      <pre data-code-lang="php">try {
     // Something goes wrong
 } catch (MySpecialException) {
     Log::error("Something went wrong");
@@ -264,7 +272,7 @@ var_dump($foo::class);</pre>
       <p>Already possible when calling a function, trailing comma support was
         still lacking in parameter lists. It's now allowed in PHP 8, meaning you
         can do the following:</p>
-      <pre>public function(
+      <pre data-code-lang="php">public function(
     string $parameterA,
     int $parameterB,
     Foo $objectfoo,
@@ -281,7 +289,7 @@ var_dump($foo::class);</pre>
         and <code>DatetimeImmutable::createFromInterface()</code> there's now a
         generalised way to convert <code>DateTime</code> and <code>DateTimeImmutable</code>
         objects to each other.</p>
-      <pre>DateTime::createFromInterface(DateTimeInterface $other);
+      <pre data-code-lang="php">DateTime::createFromInterface(DateTimeInterface $other);
 
 DateTimeImmutable::createFromInterface(DateTimeInterface $other);</pre>
       <h4>New Stringable interface</h4>
@@ -290,7 +298,7 @@ DateTimeImmutable::createFromInterface(DateTimeInterface $other);</pre>
         implements <code>__toString()</code>, it automatically implements the
         interface behind the scenes and there's no need to manually implement
         it.</p>
-      <pre>class Foo
+      <pre data-code-lang="php">class Foo
 {
     public function __toString(): string
     {
@@ -307,13 +315,13 @@ bar('abc');</pre>
         <code>strpos()</code> anymore to know whether a string contains another
         string.</p>
       <p>Instead of doing this:</p>
-      <pre>if (strpos('string with lots of words', 'words') !== false) {<br>    /* … */<br>}</pre>
+      <pre data-code-lang="php">if (strpos('string with lots of words', 'words') !== false) {<br>    /* … */<br>}</pre>
       <p>You can now do this:</p>
-      <pre>if (str_contains('string with lots of words', 'words')) {<br>    /* … */<br>}</pre>
+      <pre data-code-lang="php">if (str_contains('string with lots of words', 'words')) {<br>    /* … */<br>}</pre>
       <h4>Hàm mới str_starts_with() và str_ends_with()</h4>
       <p>Two other ones long overdue, these two functions are now added in the
         core.</p>
-      <pre>str_starts_with('haystack', 'hay'); // true
+      <pre data-code-lang="php">str_starts_with('haystack', 'hay'); // true
 str_ends_with('haystack', 'stack'); // true</pre>
       <h4>Hàm mới fdiv()</h4>
       <p>The new <code>fdiv()</code> function does something similar as the <code>fmod()</code>
@@ -335,16 +343,16 @@ str_ends_with('haystack', 'stack'); // true</pre>
         resources. One example is a MySQL connection, another one a file handle.</p>
       <p>Each one of those resources gets assigned an ID, though previously the
         only way to know that id was to cast the resource to <code>int</code>:</p>
-      <pre>$resourceId = (int) $resource;</pre>
+      <pre data-code-lang="php">$resourceId = (int) $resource;</pre>
       <p>PHP 8 adds the <code>get_resource_id()</code> functions, making this
         operation more obvious and type-safe:</p>
-      <pre>$resourceId = get_resource_id($resource);</pre>
+      <pre data-code-lang="php">$resourceId = get_resource_id($resource);</pre>
       <h4>Abstract methods in traits improvements</h4>
       <p>Traits can specify abstract methods which must be implemented by the
         classes using them. There's a caveat though: before PHP 8 the signature
         of these method implementations weren't validated. The following was
         valid:</p>
-      <pre>trait Test<br>{
+      <pre data-code-lang="php">trait Test<br>{
     abstract public function test(int $input): int;
 }
 
@@ -360,7 +368,7 @@ class UsesTrait
       <p>PHP 8 will perform proper method signature validation when using a
         trait and implementing its abstract methods. This means you'll need to
         write this instead:</p>
-      <pre>class UsesTrait
+      <pre data-code-lang="php">class UsesTrait
 {
     use Test;
 
@@ -464,16 +472,16 @@ class UsesTrait
       <h4>Concatenation precedence</h4>
       <p>While already deprecated in PHP 7.4, this change is now taken into
         effect. If you'd write something like this:</p>
-      <pre>echo "sum: " . $a + $b;</pre>
+      <pre data-code-lang="php">echo "sum: " . $a + $b;</pre>
       <p>PHP would previously interpret it like this:</p>
-      <pre>echo ("sum: " . $a) + $b;</pre>
+      <pre data-code-lang="php">echo ("sum: " . $a) + $b;</pre>
       <p>PHP 8 will make it so that it's interpreted like this:</p>
-      <pre>echo "sum: " . ($a + $b);</pre>
+      <pre data-code-lang="php">echo "sum: " . ($a + $b);</pre>
       <h4>Stricter type checks for arithmetic and bitwise operators</h4>
       <p>Before PHP 8, it was possible to apply arithmetic or bitwise operators
         on arrays, resources or objects. This isn't possible anymore, and will
         throw a <code>TypeError</code>:</p>
-      <pre>[] % [42];
+      <pre data-code-lang="php">[] % [42];
 $object + 4;</pre>
       <h4>Namespaced names being a single token</h4>
       <p>PHP used to interpret each part of a namespace (separated by a
@@ -489,17 +497,17 @@ $object + 4;</pre>
         one, and this RFC fixes them.</p>
       <h4>Reflection method signature changes</h4>
       <p>Three method signatures of reflection classes have been changed:</p>
-      <pre>ReflectionClass::newInstance($args);
+      <pre data-code-lang="php">ReflectionClass::newInstance($args);
 ReflectionFunction::invoke($args);
 ReflectionMethod::invoke($object, $args);</pre>
       <p>Have now become:</p>
-      <pre>ReflectionClass::newInstance(...$args);
+      <pre data-code-lang="php">ReflectionClass::newInstance(...$args);
 ReflectionFunction::invoke(...$args);
 ReflectionMethod::invoke($object, ...$args);</pre>
       <p>The upgrading guide specifies that if you extend these classes, and
         still want to support both PHP 7 and PHP 8, the following signatures are
         allowed:</p>
-      <pre>ReflectionClass::newInstance($arg = null, ...$args);
+      <pre data-code-lang="php">ReflectionClass::newInstance($arg = null, ...$args);
 ReflectionFunction::invoke($arg = null, ...$args);
 ReflectionMethod::invoke($object, $arg = null, ...$args);</pre>
       <h4>Stable sorting</h4>
