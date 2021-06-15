@@ -66,7 +66,7 @@
       <p>File này cho biết danh sách các file nội dung cuốn sách, định nghĩa thứ
         tự đọc và chứa metadata (tác giả, tên sách, ...). Tên file <code>content.opf</code>
         có thể thay đổi nhưng phải được định nghĩa trong <code>container.xml</code>.</p>
-      <pre class="out-of-box">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+      <pre class="out-of-box" data-code-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;package xmlns="http://www.idpf.org/2007/opf"<br>    unique-identifier="BookID"<br>    version="2.0"&gt;
     &lt;metadata xmlns:dc="http://purl.org/dc/elements/1.1/"<br>        xmlns:opf="http://www.idpf.org/2007/opf"&gt;
         &lt;dc:title&gt;Sample .epub eBook&lt;/dc:title&gt; 
@@ -125,7 +125,7 @@
           target="_blank">https://www.w3.org/publishing/epub3/epub-spec.html#sec-core-media-types</a></p>
       <h4>File toc.ncx</h4>
       <p>Đây là file xác định mục lục cuốn sách.</p>
-      <pre class="out-of-box"><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+      <pre class="out-of-box" data-code-lang="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;ncx xmlns="http://www.daisy.org/z3986/2005/ncx/"<br>    version="2005-1"&gt;
     &lt;head&gt;
         &lt;meta name="dtb:uid" content="jedisaber.com06282007214712"/&gt;
@@ -160,26 +160,24 @@
             &lt;content src="chap02.xhtml"/&gt;
         &lt;/navPoint&gt;
     &lt;/navMap&gt;
-&lt;/ncx&gt;
-</code></pre>
+&lt;/ncx&gt;</pre>
       <p>Lưu ý: Bảo đảm rằng <code>uid</code> khớp với <code>dc:identifier</code>
         bên trong file <code>content.opf</code> và phải có tag <code>navPoint</code>.</p>
       <p>ID không nhất thiết phải là UUID. ID có thể do chúng ta tự định nghĩa,
         ví dụ:</p>
       <pre>unique-identifier="motsach_url"<br><br>&lt;dc:identifier id="motsach_url"&gt;http://isach.info/story.php?story=de_men_phieu_luu_ky__to_hoai&lt;/dc:identifier&gt;<br><br>&lt;meta name="dtb:uid" content="http://isach.info/story.php?story=de_men_phieu_luu_ky__to_hoai" /&gt;</pre>
       <p>Chỉ định UUID:</p>
-      <pre>&lt;dc:identifier id="uuid_id" opf:scheme="uuid"&gt;d11c74a2-22cd-41cf-b382-5bcc522aaf57&lt;/dc:identifier&gt;</pre>
+      <pre data-code-lang="xml">&lt;dc:identifier id="uuid_id" opf:scheme="uuid"&gt;d11c74a2-22cd-41cf-b382-5bcc522aaf57&lt;/dc:identifier&gt;</pre>
       <p>Trang web sinh UUID online:</p>
       <p><a href="https://www.uuidgenerator.net/" target="_blank">Online UUID
           Generator Tool</a></p>
       <p>Ví dụ một thẻ <code>navPoint</code>:</p>
-      <pre><code>&lt;navPoint id="chapter01" playOrder="1"&gt;
+      <pre data-code-lang="xml">&lt;navPoint id="chapter01" playOrder="1"&gt;
      &lt;navLabel&gt;
           &lt;text&gt;Chapter 1&lt;/text&gt;
      &lt;/navLabel&gt;
      &lt;content src="chap01.xhtml" /&gt;
-&lt;/navPoint&gt;
-</code></pre>
+&lt;/navPoint&gt;</pre>
       <p>Mỗi thẻ <code>navPoint</code> là một chương truyện gồm:</p>
       <ul>
         <li>Thuộc tính <code>id</code> là ID của chương</li>
@@ -195,7 +193,7 @@
         nếu như đã chỉ định rõ ràng).</p>
       <h3>Nội dung XHTML</h3>
       <p>Nội dung của sách phải ở trong file <code>xhtml</code>. Khung như sau:</p>
-      <pre class="out-of-box">&lt;!DOCTYPE html&gt;
+      <pre class="out-of-box" data-code-lang="html">&lt;!DOCTYPE html&gt;
 &lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
     &lt;head&gt;
         &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8" /&gt;
@@ -222,7 +220,7 @@
       <p>Hiển thị chú thích dạng popup.</p>
       <figure><img src="images/footnote.png" alt=""></figure>
       <p>Cấu trúc HTML như sau:</p>
-      <pre>&lt;p&gt;
+      <pre data-code-lang="xml">&lt;p&gt;
     This sentence contains a
     &lt;a href="#note" epub:type="noteref"&gt;commented phrase&lt;/a&gt;.
 &lt;/p&gt;
@@ -235,10 +233,10 @@
         của thẻ <code>aside</code>. Thuộc tính <code>epub:type</code> là <code>noteref</code>.</p>
       <p>Chú ý, thẻ html phải thêm thuộc tính <code>xmlns:epub</code> để có thể
         hợp lệ thuộc tính <code>epub:type</code>.</p>
-      <pre>&lt;html xmlns="http://www.w3.org/1999/xhtml"<br>    xmlns:epub="http://www.idpf.org/2007/ops"&gt;<br>    ...<br>&lt;/html&gt;</pre>
+      <pre data-code-lang="xml">&lt;html xmlns="http://www.w3.org/1999/xhtml"<br>    xmlns:epub="http://www.idpf.org/2007/ops"&gt;<br>    ...<br>&lt;/html&gt;</pre>
       <p>Trên điện thoại Android, các ứng dụng đọc sách như FBReader, Lithium
         vẫn hiển thị thẻ aside. Nên cấu hình CSS để mặc định là ẩn đi:</p>
-      <pre>/* [epub\:type=footnote] */
+      <pre data-code-lang="css">/* [epub\:type=footnote] */
 aside {
     display: none;
 }</pre>
