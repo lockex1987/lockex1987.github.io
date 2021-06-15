@@ -7,7 +7,7 @@ Khi sử dụng thư viện highlight.js, HTML structure của đoạn code là:
         <span class="hljs-*">...</span>
         ...
     </code>
-</pre>      
+</pre>
 
 Thẻ pre không có định dạng gì.
 

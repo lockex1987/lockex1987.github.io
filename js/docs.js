@@ -419,11 +419,10 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// Highlight source code syntax
+// Highlight code sử dụng Prism
 (() => {
     function loadJsFile(filePath) {
         const scriptTag = document.createElement('script');
-        // scriptTag.setAttribute('type', 'text/javascript');
         scriptTag.setAttribute('src', filePath);
         scriptTag.async = false; // thêm dòng này thì mới giữ được thứ tự các script
         document.head.appendChild(scriptTag);
@@ -431,7 +430,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
     function loadCssFile(filePath) {
         const linkTag = document.createElement('link');
-        // linkTag.type = 'text/css';
         linkTag.rel = 'stylesheet';
         linkTag.href = filePath;
         document.head.appendChild(linkTag);
@@ -443,36 +441,17 @@ window.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Lấy danh sách các ngôn ngữ sử dụng, không duplicate
-        const languages = new Set(codeBlocks.map(code => code.dataset.codeLang));
-        if (languages.has('htmlmixed')) {
-            languages.add('xml');
-            languages.add('javascript');
-            languages.add('css');
-        }
-        if (languages.has('php')) {
-            languages.add('xml');
-            languages.add('javascript');
-            languages.add('css');
-
-            languages.add('htmlmixed');
-
-            languages.add('clike');
-        }
-        // console.log(languages);
+        codeBlocks.forEach(preTag => {
+            const lang = preTag.dataset.codeLang;
+            preTag.innerHTML = `<code class="language-${lang}">${preTag.innerHTML}</code>`;
+        });
 
         // Thêm file CSS
-        loadCssFile('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.1/codemirror.min.css');
-        // loadCssFile('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.1/theme/monokai.min.css');
-        loadCssFile('../../css/typora-codemirror.css');
+        loadCssFile('../../css/typora-prism.css');
 
         // Thêm các file JS
-        loadJsFile('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.1/codemirror.min.js');
-        loadJsFile('https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.1/addon/runmode/runmode.min.js');
-        for (const lang of languages) {
-            loadJsFile(`https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.61.1/mode/${lang}/${lang}.min.js`);
-        }
-        loadJsFile('../../js/highlight-source-code-syntax.js');
+        loadJsFile('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.js');
+        loadJsFile('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/autoloader/prism-autoloader.min.js');
     }
 
     highlighSourceCodeSyntax();

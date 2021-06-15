@@ -18,7 +18,7 @@
         <a href="https://prismjs.com/"
             target="_blank">Trang chủ</a>
     </p>
-    <p>CSS đơn giản: https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.css.</p>
+    <p>CSS đơn giản: <a href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.css" target="_blank">prism.css</a>.</p>
 
     
 
@@ -39,30 +39,50 @@ p {
 </code></pre>
 
     <h3>Language JavaScript</h3>
-    <pre><code class="language-javascript">function myFunction(p1, p2) {
+    <pre><code class="language-javascript">const codes = [...document.querySelectorAll('pre.code')];
+// Comment
+codes.forEach(code =&gt; {
+    const source = code.innerHTML;
+    code.innerHTML = '';
+
+    CodeMirror(code, {
+        value: source,
+        mode: 'javascript',
+        lineNumbers: false,
+        readOnly: true
+    });
+});</code></pre>
+
+    <pre><code class="language-javascript">function multiply(p1, p2) {
   return p1 * p2;
 }
-document.getElementById("demo").innerHTML = myFunction(4, 3);
+
+document.getElementById('demo').innerHTML = multiply(4, 3);
 </code></pre>
 
 <h3>Language PHP</h3>
 <p>Code PHP không tự động highlight, phải thêm prism-autoloader.</p>
-<pre><code class="language-php">#[Attribute]
+<pre data-code-lang="php">#[Attribute]
 class ExampleAttribute
 {
+    // Comment
     public $value;
     
     public function __construct($value)
     {
         $this-&gt;value = $value;
     }
-}</code></pre>
+}</pre>
 
 </article>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" />
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/autoloader/prism-autoloader.min.js'></script>
+    <!--link rel="stylesheet" href="../../css/typora-prism.css" /-->
+    <!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" /-->
 
+    <!--script src='https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/plugins/autoloader/prism-autoloader.min.js'></script-->
+
+    <!-- Sử dụng Prism trong docs.js -->
+    <script src="../../js/docs.js"></script>
 </body>
 </html>
