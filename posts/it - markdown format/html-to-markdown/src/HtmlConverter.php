@@ -105,6 +105,8 @@ class HtmlConverter implements HtmlConverterInterface
             throw new \RuntimeException('Unknown error occurred during HTML to Markdown conversion');
         }
 
+        // echo $markdown;
+
         return $this->sanitize($markdown);
     }
 
@@ -216,6 +218,8 @@ class HtmlConverter implements HtmlConverterInterface
                 }
             }
         }
+
+        // echo $markdown;
 
         return \trim($markdown, "\n\r\0\x0B");
     }
