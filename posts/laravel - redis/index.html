@@ -2,73 +2,76 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Thao tác với Redis trong Laravel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="laravel, redis">
+    <title>Thao tác với Redis trong Laravel</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
-    <meta name="description" content="laravel, redis">
   </head>
   <body>
     <article>
       <h2>Thao tác với Redis trong Laravel</h2>
-      <p>Redis là một dự án store mã nguồn mở để lưu các cặp dữ liệu kiểu
-        key-value. Nó thường được gọi là server cấu trúc dữ liệu vì các khoá có
-        thể chứa dữ liệu kiểu string, hash, list, set, và sorted set. Trước khi
-        sử dụng Redis với Laravel, bạn sẽ cần cài thư viện <code>predis/predis</code>
-        bằng Composer (ở Laravel bản mới hình như dùng luôn, không cần cài
-        thêm):</p>
-      <pre>composer require predis/predis</pre>
+      <p>Redis là một NoSQL để lưu các cặp dữ liệu kiểu key-value. Dữ liệu của
+        nó có thể có kiểu string, hash, list, set, sorted set.</p>
+      <p>Trước khi sử dụng Redis với Laravel, bạn sẽ cần cài <code>phpredis</code>
+        extension cho PHP. Nếu bạn không thể cài extension, bạn có thể cài thư
+        viện Predis<code></code> bằng Composer:</p>
+      <pre class="command-line">composer require predis/predis</pre>
       <h3>Cấu hình</h3>
       <p>Cấu hình cho Redis nằm tại file <code>config/database.php</code>.
         Trong file này, bạn sẽ thấy một mảng <code>redis</code> có chứa thông
         số tới Redis server:</p>
-      <pre>'redis' =&gt; [
-    'cluster' =&gt; false,
+      <pre data-code-lang="php">'redis' =&gt; [
+    'client' =&gt; env('REDIS_CLIENT', 'phpredis'),
 
     'default' =&gt; [
-        'host' =&gt; '127.0.0.1',
-        'port' =&gt; 6379,
-        'database' =&gt; 0,
+        'host' =&gt; env('REDIS_HOST', '127.0.0.1'),
+        'password' =&gt; env('REDIS_PASSWORD', null),
+        'port' =&gt; env('REDIS_PORT', 6379),
+        'database' =&gt; env('REDIS_DB', 0)
+    ],
+
+    'cache' =&gt; [
+        'host' =&gt; env('REDIS_HOST', '127.0.0.1'),
+        'password' =&gt; env('REDIS_PASSWORD', null),
+        'port' =&gt; env('REDIS_PORT', 6379),
+        'database' =&gt; env('REDIS_CACHE_DB', 1)
     ]
+]</pre>
+      <p>Bạn có thể chỉ định các cấu hình thực sự ở file <code>.env</code>:</p>
+      <pre data-code-lang="ini">REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379</pre>
+      <p>Nếu bạn sử dụng thư viện Predis thay cho extension <code>phpredis</code>,
+        cần sửa lại cấu hình client thành <code>predis</code>. Bạn có thể sửa
+        file <code>config/database.php</code> như sau:</p>
+      <pre data-code-lang="php">'redis' =&gt; [
+    'client' =&gt; env('REDIS_CLIENT', 'predis'),
+
+    // Các cấu hình khác
 ],</pre>
-      <p>Cấu hình server mặc định cần cung cấp đầy đủ để phát triển. Tuy nhiên,
-        bạn hoàn toàn thoải mái để thay đổi các giá trị này dựa theo môi trường
-        của bạn. Đơn giản chỉ cần cung cấp tên Redis server và chỉ định host và
-        port mà server sử dụng.</p>
-      <p>Thông số <code>cluster</code> sẽ cho Laravel Redis client biết để thực
-        hiện phân mảnh trên các node của Redis, cho phép bạn tạo pool cho các
-        node và tạo một lượng lớn RAM có thể sử dụng. Tuy nhiên, chú ý là việc
-        phân mảnh phía client không xử lý khi thất bại; do đó, cái này phù hợp
-        với dữ liệu đã được cache có thể dùng được trong các data store chính
-        khác.</p>
-      <p>Ngoài ra, bạn có thể khai báo một mảng <code>options</code> trong kết
-        nối tới Redis, cho phép bạn chỉ định một set các client options của
-        Predis.</p>
-      <p>Nếu Redis server yêu cầu đăng nhập, bạn cần phải cung cấp mật khẩu bằng
-        cách thêm thông số <code>password</code> vào trong mảng cấu hình cho
-        Redis server.</p>
-      <p>Nếu bạn có Redis PHP extension cài thông qua PECL, bạn cần phải đổi tên
-        của Redis trong file <code>config/app.php</code>.</p>
+      <p>Hoặc thêm cấu hình sau ở file <code>.env</code>:</p>
+      <pre data-code-lang="ini">REDIS_CLIENT=predis</pre>
       <h3>Tương tác với Redis</h3>
-      <p>Bạn có thể tương tác với Redis bằng cách gọi một số hàm trong <code>Redis</code>
-        facade. <code>Redis</code> facade hỗ trợ các hàm động, nghĩa là bạn có
-        thể gọi bất cứ Redis command trong facade và nó sẽ được truyền trực tiếp
-        tới Redis. Ở ví dụ này, chúng ta sẽ gọi <code>GET</code> trên Redis
-        bằng cách gọi hàm <code>get</code> trong <code>Redis</code> facade:</p>
-      <pre>&lt;?php
+      <p>Bạn có thể tương tác với Redis bằng cách gọi một số hàm trong lớp <code>Redis</code>
+        facade. Lớp <code>Redis</code> facade hỗ trợ các hàm động, nghĩa là bạn
+        có thể gọi bất cứ Redis command trong facade và nó sẽ được truyền trực
+        tiếp tới Redis. Ở ví dụ này, chúng ta sẽ gọi <code>GET</code> trên
+        Redis bằng cách gọi hàm <code>get</code> trong <code>Redis</code>
+        facade:</p>
+      <pre data-code-lang="php">&lt;?php
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redis;
 
 class UserController extends Controller
 {
     /**
      * Show the profile for the given user.
      *
-     * @param    int  $id
-     * @return  Response
+     * @param int $id
      */
     public function showProfile($id)
     {
@@ -76,31 +79,31 @@ class UserController extends Controller
         return view('user.profile', ['user' =&gt; $user]);
     }
 }</pre>
-      <p>Tất nhiên, như đã nói ở trước, bạn có thể gọi bất cứ câu lệnh Redis nào
+      <p>Tất nhiên, như đã nói ở trên, bạn có thể gọi bất cứ câu lệnh Redis nào
         trên <code>Redis</code> facade. Laravel sử dụng các hàm magic để truyền
         câu lệnh tới Redis server, vì thế, đơn giản chỉ cần truyền tham số mà
         lệnh Redis muốn:</p>
-      <pre>Redis::set('name', 'Taylor');
+      <pre data-code-lang="php">Redis::set('name', 'Taylor');
 
 $values = Redis::lrange('names', 5, 10);</pre>
       <p>Ngoài ra, bạn cũng có thể truyền câu lệnh tới server sử dụng hàm <code>command</code>,
         hàm này nhận tên trong tham số đầu tiên và một mảng các giá trị ở tham
         số thứ hai:</p>
-      <pre>$values = Redis::command('lrange', ['name', 5, 10]);</pre>
+      <pre data-code-lang="php">$values = Redis::command('lrange', ['name', 5, 10]);</pre>
       <h3>Sử dụng nhiều kết nối Redis</h3>
       <p>Bạn có thể lấy một đối tượng kết nối Redis bằng cách gọi tới hàm <code>Redis::connection</code>:</p>
-      <pre>$redis = Redis::connection();</pre>
+      <pre data-code-lang="php">$redis = Redis::connection();</pre>
       <p>Lệnh này sẽ cho bạn đối tượng kết nối tới Redis server mặc định. Nếu
         bạn không sử dụng server cluster nào, bạn có thể truyền vào tên server
         trong hàm <code>connection</code> để lấy một server chỉ định được khai
         báo trong cấu hình Redis:</p>
-      <pre>$redis = Redis::connection('other');</pre>
+      <pre data-code-lang="php">$redis = Redis::connection('other');</pre>
       <h3>Các câu lệnh Pipeline</h3>
       <p>Pipeline nên được sử dụng khi bạn cần gửi nhiều câu lệnh tới server
         trong một yêu cầu. Hàm <code>pipeline</code> nhận một tham số: một <code>Closure</code>
         nhận đối tượng Redis. Bạn có thể cung cấp tất cả các câu lệnh tới đối
         tượng Redis này và chúng sẽ được thực thi trong một yêu cầu:</p>
-      <pre>Redis::pipeline(function ($pipe) {
+      <pre data-code-lang="php">Redis::pipeline(function ($pipe) {
     for ($i = 0; $i &lt; 1000; $i++) {
         $pipe-&gt;set("key:$i", $i);
     }
@@ -115,7 +118,7 @@ $values = Redis::lrange('names', 5, 10);</pre>
         qua Redis sử dụng hàm <code>subscribe</code>. Chúng ta sẽ đặt hàm gọi
         này bên trong Artisan command vì gọi hàm <code>subscribe</code> bắt đầu
         một tiến trình chạy lâu:</p>
-      <pre>&lt;?php
+      <pre data-code-lang="php">&lt;?php
 
 namespace App\Console\Commands;
 
@@ -127,14 +130,14 @@ class RedisSubscribe extends Command
     /**
      * The name and signature of the console command.
      *
-     * @var  string
+     * @var string
      */
     protected $signature = 'redis:subscribe';
 
     /**
      * The console command description.
      *
-     * @var  string
+     * @var string
      */
     protected $description = 'Subscribe to a Redis channel';
 
@@ -145,36 +148,34 @@ class RedisSubscribe extends Command
      */
     public function handle()
     {
-        Redis::subscribe(['test-channel'], function($message) {
+        Redis::subscribe(['test-channel'], function ($message) {
             echo $message;
         });
     }
 }</pre>
       <p>Lúc này, chúng ta có thể publish bản tin tới channel sử dụng hàm <code>publish</code>:</p>
-      <pre>Route::get('publish', function () {
+      <pre data-code-lang="php">Route::get('publish', function () {
     // Route logic...
 
-    Redis::publish('test-channel', json_encode(['foo' =&gt; 'bar']));
+    Redis::publish('test-channel', json_encode([
+        'foo' =&gt; 'bar'
+    ]));
 });</pre>
       <h4>Wildcard subscription</h4>
       <p>Sử dụng hàm <code>psubscribe</code> bạn có thể subscribe tới một
         channel dạng wildcard, khá hữu dụng để bắt tất cả các bản tin trên mọi
         channel. Tên <code>$channel</code> sẽ được truyền ở tham số thứ hai
         trong <code>Closure</code>:</p>
-      <pre>Redis::psubscribe(['*'], function($message, $channel) {
+      <pre data-code-lang="php">Redis::psubscribe(['*'], function ($message, $channel) {
     echo $message;
 });
 
-Redis::psubscribe(['users.*'], function($message, $channel) {
+Redis::psubscribe(['users.*'], function ($message, $channel) {
     echo $message;
 });</pre>
       <h3>Tham khảo</h3>
       <p><a href="https://laravel.com/docs/master/redis" target="_blank">laravel.com/docs/master/redis</a></p>
-      <p>Thực hành</p>
-      <p>https://divinglaravel.com/redis/redis-commands</p>
-      <p>https://divinglaravel.com/redis/redis-hashes</p>
     </article>
     <script src="../../js/docs.js"></script>
-    
   </body>
 </html>
