@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Web Socket Demo</title>
+	<link rel="icon" href="../../../images/favicon.png">
+	<!--link rel="stylesheet" href="../../../css/style.css"-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+	<article class="p-3 mx-auto"
+        style="max-width: 600px;">
+		<form id="frmChat">
+			<div id="chat-box"
+                class="bg-light border p-3 overflow-auto mb-2"
+                style="height: 300px"></div>
+
+			<div class="mb-2">
+				<input type="text"
+                    id="chatUser"
+                    placeholder="Name"
+                    class="chat-input form-control"
+                    required />
+			</div>
+
+			<div class="mb-3">
+				<input type="text"
+                    id="chatMessage"
+                    placeholder="Message"
+					class="chat-input form-control"
+                    required />
+			</div>
+
+			<div>
+				<button class="btn btn-primary"
+                    type="submit">
+					Send
+				</button>
+			</div>
+		</form>
+	</article>
+
+	<script src="js/script.js"></script>
+</body>
+
+</html>

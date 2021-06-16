@@ -29,7 +29,7 @@ export default [
         code: 'bootstrap',
         name: 'Bootstrap',
         version: '4.3.1',
-        // cssPath: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
+        cssPath: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
         jsPath: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js',
         jsMap: 'bootstrap.min.js.map',
         link: 'https://lockex1987.github.io/posts/bootstrap%20-%20get%20started/',
