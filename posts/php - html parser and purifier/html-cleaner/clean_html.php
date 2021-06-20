@@ -24,7 +24,7 @@ function saveXhtml(string $indexFilePath, DOMDocument $doc): void
     $normalizedOutput = str_replace('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>', '', $output);
     $normalizedOutput = '<!DOCTYPE html>' . $normalizedOutput;
 
-    $outputFilePath = str_replace('index.html', 'index.cleaned.html', $indexFilePath);
+    $outputFilePath = str_replace('.html', '.cleaned.html', $indexFilePath);
     file_put_contents($outputFilePath, $normalizedOutput);
 }
 
@@ -80,25 +80,31 @@ function removeAttributes(DOMDocument $doc): void
  * Xóa các phần tử rỗng.
  * @param DOMNode node Node đang xử lý
  */
-function removeEmptyNode(DOMNode $node): void {
+function removeEmptyNode(DOMNode $node, DOMDocument $doc): void {
     $nodeName = strtolower($node->nodeName);
     if (in_array($nodeName, ['#text', 'img', 'script'])) {
         return;
-    }
-
-    // Xử lý những thằng con trước
-    foreach ($node->childNodes as $childNode) {
-        removeEmptyNode($childNode);
     }
 
     $content = trim($node->textContent);
     if (!$content) {
         $hasImage = $node->getElementsByTagName('img')->count() > 0;
         if (!$hasImage) {
-            echo 'Remove ' . $nodeName . PHP_EOL;
+            // echo 'Remove ' . $nodeName . PHP_EOL;
             $node->parentNode->removeChild($node);
+            return;
         }
     }
+
+    // Xử lý những thằng con
+    $markToRemovedNodes = [];
+    foreach ($node->childNodes as $childNode) {
+        $markToRemovedNodes[] = $childNode;
+    }
+
+    foreach ($markToRemovedNodes as $childNode) {
+        removeEmptyNode($childNode, $doc);
+    }    
 }
 
 /**
@@ -120,9 +126,10 @@ function cleanHtml(string $indexFilePath): void
 
     // Phải hỏi hàm này nhiều lần (có thể do quá nhiều node)
     $body = $doc->getElementsByTagName('body')->item(0);
-    for ($i = 0; $i < 5; $i++) {
-        removeEmptyNode($body);
-    }
+    // for ($i = 0; $i < 5; $i++) {
+        // echo $i . PHP_EOL;
+        removeEmptyNode($body, $doc);
+    // }
     saveXhtml($indexFilePath, $doc);
 }
 
