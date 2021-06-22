@@ -29,10 +29,11 @@ Highcharts.maps['custom/world'].features.forEach(e => {
     // e.code = e.properties.name;
 });
 
+/*
 data.forEach(e => {
     e.id = e.name;
 });
-
+*/
 
 
 

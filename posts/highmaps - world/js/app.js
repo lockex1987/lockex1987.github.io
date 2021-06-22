@@ -57,7 +57,7 @@ new Vue({
         VGB: British Virgin Islands
         */
         data.map(e => {
-            const obj = Highcharts.maps['custom/world'].features.find(x => x.properties['iso-a3'] == e['alpha3Code']);
+            const obj = Highcharts.maps['custom/world'].features.find(x => x.properties['iso-a3'] == e.alpha3Code);
             if (!obj) {
                 // console.log(e['name']);
             }
@@ -65,7 +65,7 @@ new Vue({
 
         this.drawNormalMap();
 
-        
+
 
         this.drawPopulationMap(data);
     },
@@ -84,7 +84,7 @@ new Vue({
         drawNormalMap() {
             const data = Highcharts.maps['custom/world'].features
                 .map(x => ({
-                    name: x.properties['name'],
+                    name: x.properties.name,
                     z: 1,
                     alpha3Code: x.properties['iso-a3'],
                     id: x.properties['iso-a3']
@@ -94,19 +94,19 @@ new Vue({
                 chart: {
                     map: 'custom/world'
                 },
-            
+
                 legend: {
                     enabled: false
                 },
-            
+
                 mapNavigation: {
                     enabled: true,
                     buttonOptions: {
                         verticalAlign: 'bottom'
-                    },
+                    }
                     // enableDoubleClickZoomTo: true
                 },
-            
+
                 series: [
                     {
                         name: 'Quốc gia',
@@ -147,18 +147,18 @@ new Vue({
                 chart: {
                     map: 'custom/world'
                 },
-            
+
                 legend: {
                     enabled: false
                 },
-            
+
                 mapNavigation: {
                     enabled: true,
                     buttonOptions: {
                         verticalAlign: 'bottom'
                     }
                 },
-            
+
                 series: [
                     {
                         name: 'Countries',
@@ -181,7 +181,7 @@ new Vue({
                             'name'
                         ],
                         */
-                       
+
                         data: data,
                         minSize: 4,
                         maxSize: '12%',

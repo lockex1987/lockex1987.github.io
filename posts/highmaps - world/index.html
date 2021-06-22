@@ -5,7 +5,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="date" content="2021-03-09 12:14:00"/>
-    <meta name="description" content="Map bubble, REST Countries API, Hiển thị thông tin các nước trên thế giới" />
+    <meta name="description" content="Map bubble,
+        REST Countries API,
+        Hiển thị thông tin các nước trên thế giới" />
 
     <title>Bản đồ thế giới</title>
 
@@ -20,10 +22,10 @@
 
         <div id="app">
             <select v-model="selectedCode"
-                    class="d-block my-4 p-1 w-100 font-weight-700 custom-select country-select"
-                    @change="zoomToCountry()">
+                class="d-block my-4 p-1 w-100 font-weight-700 custom-select country-select"
+                @change="zoomToCountry()">
                 <option v-for="country in countries"
-                        :value="country.alpha3Code">
+                    :value="country.alpha3Code">
                     {{country.name}}
                 </option>
             </select>
@@ -64,26 +66,19 @@
 
             <div ref="bubbleMapContainer" class="out-of-box map-container"></div>
         </div>
-        
-
-        
 
         <p><a href="demo.html">Demo khác</a></p>
         <p>Sử dụng REST Countries API.</p>
         <p>Demo of Highcharts map with bubbles</p>
         <p>TODO: Ghi lại các bước chuẩn hóa, để sau này nếu cập nhật bản đồ thì có thể chuẩn hóa tiếp.</p>
         <p>Cần chuẩn hóa lại các tên nước.</p>
-
-        
     </article>
 
-    
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/maps/modules/map.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
 
-    <!-- Cấu hình Highchart global -->
+    <!-- Cấu hình Highcharts global -->
     <script src="js/highcharts.js"></script>
 
     <script src="https://code.highcharts.com/mapdata/custom/world.js"></script>
