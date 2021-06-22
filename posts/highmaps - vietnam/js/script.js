@@ -85,11 +85,12 @@ const pointer = [
     }
 ];
 
-// Create the chart
+
 const map = Highcharts.mapChart('container', {
+    // Định nghĩa biểu đồ là map
     chart: {
         map: 'countries/vn/vn-all',
-        height: 800,
+        // height: 800,
         // width: 800,
         // backgroundColor: '#235bb0'
     },
@@ -102,8 +103,13 @@ const map = Highcharts.mapChart('container', {
     credits: {
         enabled: false
     },
+    legend: {
+        // Ẩn legend
+        enabled: false
+    },
     mapNavigation: {
-        enabled: true
+        // Không có nút zoom
+        enabled: false
     },
     plotOptions: {
         mappoint: {
