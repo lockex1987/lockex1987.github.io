@@ -1,15 +1,13 @@
 $(function () {
-
     $.getJSON('http://www.highcharts.com/samples/data/jsonp.php?filename=world-population-history.csv&callback=?', function (csv) {
-
         // Parse the CSV Data
-        /*Highcharts.data({
+        /* Highcharts.data({
             csv: data,
             switchRowsAndColumns: true,
             parsed: function () {
                 console.log(this.columns);
             }
-        });*/
+        }); */
 
         // Very simple and case-specific CSV string splitting
         function CSVtoArray(text) {
@@ -20,20 +18,19 @@ $(function () {
 
         csv = csv.split(/\n/);
 
-        var countries = {},
-            mapChart,
-            countryChart,
-            numRegex = /^[0-9\.]+$/,
-            quoteRegex = /\"/g,
-            categories = CSVtoArray(csv[1]).slice(4);
+        const countries = {};
+        let mapChart;
+        let countryChart;
+        const numRegex = /^[0-9\.]+$/;
+        const quoteRegex = /\"/g;
+        const categories = CSVtoArray(csv[1]).slice(4);
 
         // Parse the CSV into arrays, one array each country
         $.each(csv.slice(2), function (j, line) {
-            var row = CSVtoArray(line),
-                data = row.slice(4);
+            const row = CSVtoArray(line);
+            const data = row.slice(4);
 
             $.each(data, function (i, val) {
-                
                 val = val.replace(quoteRegex, '');
                 if (numRegex.test(val)) {
                     val = parseInt(val);
@@ -50,12 +47,12 @@ $(function () {
         });
 
         // For each country, use the latest value for current population
-        var data = [];
-        for (var code3 in countries) {
-            var value = null,
-                year,
-                itemData = countries[code3].data,
-                i = itemData.length;
+        const data = [];
+        for (const code3 in countries) {
+            let value = null;
+            var year;
+            const itemData = countries[code3].data;
+            let i = itemData.length;
 
             while (i--) {
                 if (typeof itemData[i] === 'number') {
@@ -71,9 +68,9 @@ $(function () {
                 year: year
             });
         }
-        
+
         // Add lower case codes to the data set for inclusion in the tooltip.pointFormat
-        var mapData = Highcharts.geojson(Highcharts.maps['custom/world']);
+        const mapData = Highcharts.geojson(Highcharts.maps['custom/world']);
         $.each(mapData, function () {
             this.id = this.properties['hc-key']; // for Chart.get()
             this.flag = this.id.replace('UK', 'GB').toLowerCase();
@@ -81,10 +78,9 @@ $(function () {
 
         // Wrap point.select to get to the total selected points
         Highcharts.wrap(Highcharts.Point.prototype, 'select', function (proceed) {
-
             proceed.apply(this, Array.prototype.slice.call(arguments, 1));
 
-            var points = mapChart.getSelectedPoints();
+            const points = mapChart.getSelectedPoints();
 
             if (points.length) {
                 if (points.length === 1) {
@@ -93,9 +89,8 @@ $(function () {
                 } else {
                     $('#info #flag').attr('class', 'flag');
                     $('#info h2').html('Comparing countries');
-
                 }
-                $('#info .subheader').html('<h4>Historical population</h4><small><em>Shift + Click on map to compare countries</em></small>')
+                $('#info .subheader').html('<h4>Historical population</h4><small><em>Shift + Click on map to compare countries</em></small>');
 
                 if (!countryChart) {
                     countryChart = $('#country-chart').highcharts({
@@ -132,7 +127,7 @@ $(function () {
                                     enabled: false
                                 },
                                 threshold: 0,
-                                pointStart: parseInt(categories[0]),
+                                pointStart: parseInt(categories[0])
                             }
                         }
                     }).highcharts();
@@ -141,9 +136,9 @@ $(function () {
                 $.each(points, function (i) {
                     // Update
                     if (countryChart.series[i]) {
-                        /*$.each(countries[this.code3].data, function (pointI, value) {
+                        /* $.each(countries[this.code3].data, function (pointI, value) {
                             countryChart.series[i].points[pointI].update(value, false);
-                        });*/
+                        }); */
                         countryChart.series[i].update({
                             name: this.name,
                             data: countries[this.code3].data,
@@ -161,7 +156,6 @@ $(function () {
                     countryChart.series[countryChart.series.length - 1].remove(false);
                 }
                 countryChart.redraw();
-
             } else {
                 $('#info #flag').attr('class', '');
                 $('#info h2').html('');
@@ -170,16 +164,13 @@ $(function () {
                     countryChart = countryChart.destroy();
                 }
             }
-
-            
-
         });
-        
+
         // Initiate the map chart
         mapChart = $('#container').highcharts('Map', {
-            
-            title : {
-                text : 'Population history by country'
+
+            title: {
+                text: 'Population history by country'
             },
 
             subtitle: {
@@ -204,8 +195,8 @@ $(function () {
                 footerFormat: '<span style="font-size: 10px">(Click for details)</span>'
             },
 
-            series : [{
-                data : data,
+            series: [{
+                data: data,
                 mapData: mapData,
                 joinBy: ['iso-a3', 'code3'],
                 name: 'Current population',
