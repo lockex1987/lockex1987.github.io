@@ -3,48 +3,175 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="map">
+    <meta name="description" content="map, OpenStreetMap, Leaflet">
     <title>Leaflet</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
   </head>
   <body>
     <article>
-      <h2>Leaflet</h2>
-      <p>Google Map, MapBox có tính phí.</p>
-      <p>Sử dụng thư viện Leaflet:</p>
-      <p><a href="https://leafletjs.com/" target="_blank">Leaflet - a JavaScript
-          library for interactive maps</a> </p>
-      <p>Leaflet chỉ là thư viện JS. Dữ liệu bản đồ là các layer bên thứ 3.</p>
-      <p>Sử dụng OpenStreetMap:</p>
-      <p><a href="https://www.openstreetmap.org/#map=6/16.113/105.806" target="_blank">OpenStreetMap</a>
-      </p>
-      <p><a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap#:%7E:text=OpenStreetMap%20is%20a%20free%2C%20editable,of%20our%20underlying%20map%20data."
+      <h2>Sử dụng OpenStreetMap với Leaflet</h2>
+      <h3>Giới thiệu</h3>
+      <p>Có các dạng map:</p>
+      <ol>
+      </ol>
+      <ul>
+        <li>Bản đồ thế giới</li>
+        <li>Bản đồ Việt Nam, gồm các tỉnh</li>
+        <li>Bản đồ địa điểm</li>
+      </ul>
+      <ol>
+      </ol>
+      <p>Với hai dạng đầu tiên, chúng ta hãy sử dụng Highmaps. Với dạng cuối
+        cùng, chúng ta hãy sử dụng Leaflet và OpenStreetMap.</p>
+      <p>Google Map, MapBox có giới hạn, tính phí. Sử dụng OpenStreetMap (miễn
+        phí, cập nhật - độ chi tiết chấp nhận được). OpenStreetMap là dữ liệu
+        bản đồ. Muốn sử dụng phải dùng thư viện Leaflet. Leaflet chỉ là thư viện
+        JS. Dữ liệu bản đồ là các layer bên thứ 3.</p>
+      <h3>Bắt đầu</h3>
+      <p>Thêm một container vào trang. Nhớ thiết lập chiều cao cho container:</p>
+      <pre data-code-lang="html">&lt;div id="mapid"
+    style="height: 500px"&gt;&lt;/div&gt;</pre>
+      <p>Import các file CSS và JS:</p>
+      <pre data-code-lang="html">&lt;link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" /&gt;
+&lt;script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"&gt;&lt;/script&gt;</pre>
+      <p>Các API của Leaflet thuộc đối tượng <code>L</code>. Khởi tạo bản đồ
+        bằng JS :</p>
+      <pre data-code-lang="js">const defaultCoord = [21.0819, 105.6363]; // tọa độ Hà Nội
+const zoomLevel = 9;
+const containerId = 'mapid';
+const map = L.map(containerId)
+    .setView(defaultCoord, zoomLevel);
 
-          target="_blank">About OpenStreetMap - OpenStreetMap Wiki</a></p>
-      <p>Demo ứng dụng mẫu:</p>
-      <p><a href="https://covidmaps.langson.gov.vn/langson?locale=vn" target="_blank">Bản
-          đồ dịch tễ COVID-19 tỉnh Lạng Sơn</a></p>
-      <p><a href="https://covidmaps.bacgiang.gov.vn/bacgiang?locale=vn" target="_blank">Bản
-          đồ dịch tễ COVID-19 tỉnh Bắc Giang 1</a></p>
-      <p><a href="https://bandodichte.bacgiang.gov.vn/bacgiang?locale=vn" target="_blank">Bản
-          đồ dịch tễ COVID-19 tỉnh Bắc Giang 2</a></p>
-      <p><a href="https://covidmaps.danang.gov.vn/danang?locale=vn" target="_blank">Bản
-          đồ dịch tễ bệnh nhân COVID-19 tại Đà Nẵng</a> </p>
-      <p><a href="https://corona.kompa.ai/?fbclid=IwAR320wQoKHWd3RlPUslXYWSkqieP7KnbuXK3BAuGnU8Xy5QQfv_knMVT7_0"
+const tileLayerUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+L.tileLayer(tileLayerUrl, {
+    maxZoom: 18,
+    attribution: 'Map data &amp;copy; &lt;a href="https://www.openstreetmap.org/copyright"&gt;OpenStreetMap&lt;/a&gt;',
+    attributionControl: false
+})<br>    .addTo(map);</pre>
+      <p>Kết quả như sau:</p>
+      <figure> <img src="images/demo-1.png" alt=""> </figure>
+      <p><a href="demo-1.html">Demo 1: Bắt đầu vẽ bản đồ</a></p>
+      <h3>Marker và popup</h3>
+      <p>Để tạo marker, chúng ta sử dụng phương thức <code>L.marker()</code> và
+        thêm vào map. Cú pháp như sau:</p>
+      <pre data-code-lang="js">L.marker([lat, lng], objOptions)<br>    .addTo(theMap);</pre>
+      <p>Marker sẽ hiển thị như sau:</p>
+      <figure> <img src="images/demo-2-a.png" alt=""> </figure>
+      <p>Để tạo poup, chúng ta sử dụng phương thức <code>L.popup()</code>.
+        Chúng ta có thể thiết lập mã HTML cho popup. Sau đó, chúng ta có thể
+        bindPopup cho marker, thêm tooltip cho marker.</p>
+      <pre data-code-lang="js">const popup = L.popup();
+popup.setContent('&lt;b&gt;Popup&lt;/b&gt;&lt;br&gt;Hello World');
+marker.bindPopup(popup);
+marker.bindTooltip('Xin chào');</pre>
+      <p>Kết quả khi click marker:</p>
+      <figure> <img src="images/demo-2-b.png" alt=""> </figure>
+      <p>Nếu muốn chủ động hiển thị popup, chúng ta sử dụng phương thức:</p>
+      <pre data-code-lang="js">marker.openPopup();</pre>
+      <p><a href="demo-2.html">Demo 2: Marker và popup</a></p>
+      <h3>Style cho popup</h3>
+      <p>Chúng ta có thể thêm tùy chọn <code>className</code> khi tạo popup.</p>
+      <pre data-code-lang="js">const popup = L.popup({
+    className: 'map-popup-content'
+});
+const popupHtml = `
+    &lt;div class='left'&gt;
+        &lt;img src='images/avatar.jpg' /&gt;
+    &lt;/div&gt;
+    &lt;div class='right'&gt;
+        &lt;b&gt;Đây có gì hot?&lt;/b&gt;
+        &lt;br /&gt;
+        Một Popup có 1 cô gái tên là Lailah
+    &lt;/div&gt;
+    &lt;div class='clearfix'&gt;&lt;/div&gt;`;
+popup.setContent(popupHtml);</pre>
+      <p>Sau đó, chúng ta có thể style CSS bình thường, ví dụ:</p>
+      <pre data-code-lang="css">.map-popup-content {
+    width: 300px;
+}
+		
+.map-popup-content .left {
+    float: left;
+    width: 40%;
+}
 
-          target="_blank">Realtime Monitoring SARS-CoV-2 - By Kompa Group</a></p>
+.map-popup-content .left img {
+    width: 100%;
+    height: 100px;
+    margin: -15px 0 -15px -20px;
+    border-radius: 12px;
+}
+	
+.map-popup-content .right {
+    float: right;
+    width: 60%;
+}
+		
+.clearfix {
+    clear: both;
+}</pre>
+      <p>Kết quả:</p>
+      <figure> <img src="images/demo-3.png" alt=""> </figure>
+      <p><a href="demo-3.html">Demo 3: Style popup</a></p>
+      <h3>Circle và polygon</h3>
+      <p>Ngoài marker, bạn có thể thêm các đối tượng circle và polygon:</p>
+      <pre data-code-lang="js">const circle = L.circle([16.067423825201075, 108.19593429565431], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 500
+})
+    .addTo(map);<br><br>const polygon = L.polygon([
+    [16.06214517239666, 108.20812225341798],
+    [16.06445460023069, 108.23043823242189],
+    [16.056948861781635, 108.21962356567384]
+])
+    .addTo(map);</pre>
+      <p>Circle, polygon (và cả marker) đều có phương thức <code>bindPopup()</code>.
+        Tham số của phương thức bindPopup() có thể là một đối tượng popup hoặc
+        là một xâu mã HTML.</p>
+      <pre data-code-lang="js">circle.bindPopup('I am a circle.');
+polygon.bindPopup('I am a polygon.');</pre>
+      <p>Kết quả:</p>
+      <figure> <img src="images/demo-4.png" alt=""> </figure>
+      <p><a href="demo-4.html">Demo 4: Circle và polygon</a></p>
+      <h3>Sự kiện click</h3>
+      <p>Chúng ta có thể bắt sự kiện người dùng click vào bản đồ. Chúng ta có
+        thể lấy được tọa độ (kinh độ, vĩ độ) của vị trí click.</p>
+      <pre data-code-lang="js">const popup = L.popup();
+
+function onMapClick(evt) {
+    popup.setLatLng(evt.latlng)
+        .setContent('You clicked the map at ' + evt.latlng.toString())
+        .openOn(map);
+}
+
+map.on('click', onMapClick);</pre>
+      <p><a href="demo-5.html">Demo 5: Sự kiện click</a></p>
       <p><br>
       </p>
-      <p>Vẽ bản đồ</p>
-      <p><a href="demo-1.html">Demo 1</a></p>
-      <p>Tham khảo:</p>
+      <p><br>
+      </p>
+      <h3>Custom icon cho marker</h3>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Vẽ đa giác, hình tròn</h3>
+      <br>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Tham khảo</h3>
       <p><a href="https://sethphat.com/sp-848/su-dung-openstreetmap-api-cho-website-cua-ban-leafletjs">Sử
           dụng OpenStreetMap API cho website của bạn - LeafletJS - Seth Phát⚡
           Blog</a></p>
       <p><a href="https://viblo.asia/p/leaflet-mot-thu-vien-js-ma-nguon-mo-cho-viec-xay-dung-ung-dung-ban-do-6J3Zg2jLKmB">Leaflet
           - Một thư viện JS mã nguồn mở cho việc xây dụng ứng dụng bản đồ</a></p>
-      <p><a href="https://www.mapbox.com/pricing/">Pricing | Mapbox</a></p>
       <p><a href="https://sudo.vn/blog/gioi-thieu-ve-map-platform-openstreetmap-osm-va-thu-vien-leaflet.html">Giới
           thiệu về Map Platform: OpenStreetMap (OSM) và thư viện Leaflet</a></p>
       <p><a href="https://sudo.vn/blog/su-dung-thu-vien-leaflet-cho-openstreetmap-phan-1.html">Sử
@@ -52,9 +179,26 @@
       <p><a href="https://cloud.google.com/maps-platform/pricing#:%7E:text=Google%20Maps%20Platform%20offers%20a,exceeds%20%24200%20in%20a%20month.">Pricing
           &amp; Plans &nbsp;|&nbsp; Google Maps Platform &nbsp;|&nbsp; Google
           Cloud</a></p>
-      <p><a href="https://codepen.io/chris0stein/pen/qFKhg">Google Maps and
-          Leaflet.js</a></p>
-      <p><a href="https://codepen.io/taniarascia/pen/brRaVE">Web Map</a> </p>
+      <p><a href="https://www.mapbox.com/pricing/">Pricing | Mapbox</a></p>
+      <p><a href="https://leafletjs.com/" target="_blank">Leaflet - a JavaScript
+          library for interactive maps</a> </p>
+      <p><a href="https://www.openstreetmap.org/#map=6/16.113/105.806" target="_blank">OpenStreetMap</a>
+      </p>
+      <p><a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap#:%7E:text=OpenStreetMap%20is%20a%20free%2C%20editable,of%20our%20underlying%20map%20data."
+          target="_blank">About OpenStreetMap - OpenStreetMap Wiki</a></p>
+      <p>Demo ứng dụng mẫu:</p>
+      <ul>
+        <li><a href="https://covidmaps.langson.gov.vn/langson?locale=vn" target="_blank">Bản
+            đồ dịch tễ COVID-19 tỉnh Lạng Sơn</a></li>
+        <li><a href="https://covidmaps.bacgiang.gov.vn/bacgiang?locale=vn" target="_blank">Bản
+            đồ dịch tễ COVID-19 tỉnh Bắc Giang 1</a></li>
+        <li><a href="https://bandodichte.bacgiang.gov.vn/bacgiang?locale=vn" target="_blank">Bản
+            đồ dịch tễ COVID-19 tỉnh Bắc Giang 2</a></li>
+        <li><a href="https://covidmaps.danang.gov.vn/danang?locale=vn" target="_blank">Bản
+            đồ dịch tễ bệnh nhân COVID-19 tại Đà Nẵng</a> </li>
+        <li><a href="https://corona.kompa.ai/?fbclid=IwAR320wQoKHWd3RlPUslXYWSkqieP7KnbuXK3BAuGnU8Xy5QQfv_knMVT7_0"
+            target="_blank">Realtime Monitoring SARS-CoV-2 - By Kompa Group</a></li>
+      </ul>
       <p><br>
       </p>
     </article>
