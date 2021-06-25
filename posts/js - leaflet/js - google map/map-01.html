@@ -2,19 +2,20 @@
 <html>
 
 <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta name="viewport"
+        content="initial-scale=1.0, user-scalable=no" />
     <title>Google Map</title>
     <style>
         html {
             height: 100%
         }
-        
+
         body {
             height: 100%;
             margin: 0;
             padding: 0
         }
-        
+
         #map-canvas {
             height: 100%
         }
@@ -27,9 +28,9 @@
     <!--script src="https://maps.googleapis.com/maps/api/js"></script-->
     <script src="https://maps.googleapis.com/maps/api/js?language=vi"></script>
 
-    <script>      
+    <script>
         // Function khởi tạo google map
-        function initialize()  {
+        function initialize() {
             // Config google map
             var mapOptions = {
                 // Tọa độ muốn hiển thị ban đầu (tung độ,vỹ độ)
@@ -37,11 +38,11 @@
                 // Mức độ zoom
                 zoom: 8
             };
- 
+
             // Hiển thị map lên bản đồ (div#map-canvas)
-            var map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
+            var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
         }
- 
+
         // Gán hàm initialize vào trong sự kiện load dom google map
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
