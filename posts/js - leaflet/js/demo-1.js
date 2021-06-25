@@ -15,7 +15,7 @@ const map = L.map('mapid', {
 });
 
 // URL rút gọn là http://{s}.tile.osm.org/{z}/{x}/{y}.png
-const tileLayerUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const tileLayerUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
 L.tileLayer(tileLayerUrl, {
     maxZoom: 18,

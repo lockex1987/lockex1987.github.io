@@ -4,7 +4,7 @@ const containerId = 'mapid';
 const map = L.map(containerId)
     .setView(defaultCoord, zoomLevel);
 
-const tileLayerUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const tileLayerUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
 L.tileLayer(tileLayerUrl, {
     maxZoom: 18,
@@ -27,6 +27,11 @@ const polygon = L.polygon([
     [16.056948861781635, 108.21962356567384]
 ])
     .addTo(map);
+
+/*
+const rectOptions = { color: 'Red', weight: 1 };
+const rectangle = L.rectangle(latlngs, rectOptions);
+*/
 
 circle.bindPopup('I am a circle.');
 polygon.bindPopup('I am a polygon.');

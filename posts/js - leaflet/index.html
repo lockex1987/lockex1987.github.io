@@ -4,7 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="map, OpenStreetMap, Leaflet">
-    <title>Leaflet</title>
+    <title>Sử dụng OpenStreetMap với Leaflet</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
   </head>
@@ -149,17 +149,111 @@ function onMapClick(evt) {
 
 map.on('click', onMapClick);</pre>
       <p><a href="demo-5.html">Demo 5: Sự kiện click</a></p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
+      <h3>Zoom bản đồ chứa đa giác</h3>
+      <p>Giả sử bạn có một đa giác. Bạn muốn zoom bản đồ lớn nhất sao cho chứa
+        đầy đủ đa giác này.</p>
+      <p>Bạn có thể sử dụng phương thức <code>fitBounds()</code> của map.</p>
+      <pre data-code-lang="js">map.fitBounds(polygon.getBounds());</pre>
+      <p>Bạn cũng có thể truyền tham số vào phương thức <code>fitBounds()</code>
+        một mảng các kinh độ - vĩ độ:</p>
+      <pre data-code-lang="js">const latlngs = [
+    [16.06214517239666, 108.20812225341798],
+    [16.06445460023069, 108.23043823242189],
+    [16.056948861781635, 108.21962356567384]
+];
+map.fitBounds(latlngs);</pre>
+      <p>Ví dụ:</p>
+      <figure><img src="images/demo-6.png" alt=""></figure>
+      <p><a href="demo-6.html">Demo 6: Zoom bản đồ</a></p>
       <h3>Custom icon cho marker</h3>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
+      <p>Để tạo custom icon, chúng ta thường cần 2 ảnh: ảnh thực sự và bóng của
+        nó.</p>
+      <p>Chúng ta có 3 ảnh xanh - đỏ - cam và một ảnh bóng như sau:</p>
+      <div class="mb-3 d-flex align-items-end">
+        <div class="border"> <img src="images/leaf-green.png"> </div>
+        <div class="border ml-2"> <img src="images/leaf-red.png"> </div>
+        <div class="border ml-2"> <img src="images/leaf-orange.png"> </div>
+        <div class="border ml-2"> <img src="images/leaf-shadow.png"> </div>
+      </div>
+      <p>Các icon được định nghĩa bằng các đối tượng <code>L.Icon</code>, được
+        truyền như là một tùy chọn khi tạo marker. Hãy tạo một icon chiếc lá màu
+        xanh như sau:</p>
+      <pre data-code-lang="js">const greenIcon = L.icon({
+    // Ảnh chính
+    iconUrl: 'images/leaf-green.png',
+    // Ảnh bóng
+    shadowUrl: 'images/leaf-shadow.png',
+    // Kích thước của icon
+    iconSize: [38, 95],
+    // Kích thước của bóng
+    shadowSize: [50, 64],
+    // Point of the icon which will correspond to marker's location
+    iconAnchor: [22, 94],
+    // The same for the shadow
+    shadowAnchor: [4, 62],
+    // Point from which the popup should open relative to the iconAnchor
+    popupAnchor: [-3, -76]
+});</pre>
+      <p>Sau đó cho nó là icon của một marker như sau:</p>
+      <pre data-code-lang="js">L.marker([21.0819, 105.6363], { icon: greenIcon })
+    .addTo(map);</pre>
+      <figure><img src="images/demo-7-a.png" alt=""></figure>
+      <p>Nếu chúng ta cần tạo nhiều icon mà có nhiều cái chung, chúng ta có thể
+        tạo một lớp icon riêng của chúng ta chứa các thông tin chung đó, extend
+        từ class <code>L.Icon</code>. Hãy tạo class <code>LeafIcon</code> như
+        sau:</p>
+      <pre data-code-lang="js">const LeafIcon = L.Icon.extend({
+    options: {
+        shadowUrl: 'images/leaf-shadow.png',
+        iconSize: [38, 95],
+        shadowSize: [50, 64],
+        iconAnchor: [22, 94],
+        shadowAnchor: [4, 62],
+        popupAnchor: [-3, -76]
+    }
+});</pre>
+      <p>Tiếp theo, sử dụng class đó để tạo ba icon:</p>
+      <pre data-code-lang="js">const greenIcon = new LeafIcon({ iconUrl: 'images/leaf-green.png' });
+const redIcon = new LeafIcon({ iconUrl: 'images/leaf-red.png' });
+const orangeIcon = new LeafIcon({ iconUrl: 'images/leaf-orange.png' });</pre>
+      <p>Bạn có chú ý rằng chúng ta đã sử dụng từ khóa <code>new</code> để tạo
+        đối tượng <code>LeafIcon</code>. Vậy tại sao tất cả các class của
+        Leaflet được tạo mà không cần từ khóa <code>new</code>? Câu trả lời
+        thật đơn giản: các class của Leaflet được đặt tên bắt đầu bằng chữ cái
+        hoa (ví dụ <code>L.Icon</code>), do đó chúng cần được tạo với từ khóa
+        new. Tuy nhiên cũng có cách ngắn gọn với chữ thường (<code>L.icon</code>)
+        được tạo để thuận tiện như sau:</p>
+      <pre data-code-lang="js">L.icon = function (options) {
+    return new L.Icon(options);
+};</pre>
+      <p>Bạn cũng có thể làm tương tự với class của bạn.</p>
+      <p>Cuối cùng, chúng ta hãy thêm các marker với các icon lên bản đồ:</p>
+      <pre data-code-lang="js">L.marker([51.5, -0.09], { icon: greenIcon })
+    .addTo(map)
+    .bindPopup('I am a green leaf.');
+L.marker([51.495, -0.083], { icon: redIcon })
+    .addTo(map)
+    .bindPopup('I am a red leaf.');
+L.marker([51.49, -0.1], { icon: orangeIcon })
+    .addTo(map)
+    .bindPopup('I am an orange leaf.');</pre>
+      <p><a href="demo-7.html">Demo 7: Custom icon</a></p>
+      <figure><img src="images/demo-7-b.png" alt=""></figure>
       <h3>Vẽ đa giác, hình tròn</h3>
-      <br>
+      <p> Sử dụng plugin Leaflet.draw.</p>
+      <p>Đánh version của thư viện này linh tinh quá. Tôi dùng version 0.4.14,
+        phát hành 21/01/2018, download trên GitHub.</p>
+      <p><a href="demo-8.html">Demo 8: Vẽ đa giác</a></p>
+      <p><a href="demo-9.html">Demo 9: Vẽ các hình</a></p>
+      <p><br>
+      </p>
+      <h3>Context menu<br>
+      </h3>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p>Demo 10: Context menu</p>
       <p><br>
       </p>
       <p><br>
@@ -186,6 +280,10 @@ map.on('click', onMapClick);</pre>
       </p>
       <p><a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap#:%7E:text=OpenStreetMap%20is%20a%20free%2C%20editable,of%20our%20underlying%20map%20data."
           target="_blank">About OpenStreetMap - OpenStreetMap Wiki</a></p>
+      <p><a href="https://github.com/Leaflet/Leaflet.draw" target="_blank">Leaflet/Leaflet.draw:
+          Vector drawing and editing plugin for Leaflet</a></p>
+      <p><a href="https://www.syncfusion.com/succinctly-free-ebooks/leafletjs" target="_blank">Free
+          Ebook - Leaflet.js Succinctly</a></p>
       <p>Demo ứng dụng mẫu:</p>
       <ul>
         <li><a href="https://covidmaps.langson.gov.vn/langson?locale=vn" target="_blank">Bản

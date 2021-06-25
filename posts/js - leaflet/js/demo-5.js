@@ -4,7 +4,7 @@ const containerId = 'mapid';
 const map = L.map(containerId)
     .setView(defaultCoord, zoomLevel);
 
-const tileLayerUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const tileLayerUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
 L.tileLayer(tileLayerUrl, {
     maxZoom: 18,
