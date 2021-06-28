@@ -69,12 +69,15 @@ new Vue({
                 },
                 xAxis: {
                     categories: categories,
+                    // Nếu không có thì dạng spike
                     tickmarkPlacement: 'on',
+                    // Nếu không có thì có vòng tròn bao
                     lineWidth: 0
                 },
                 yAxis: {
+                    // Nếu không thiết lập thì sẽ hình tròn
                     gridLineInterpolation: 'polygon',
-                    lineWidth: 0,
+                    // lineWidth: 0,
                     // Phải có min và max để giữ nguyên các trục khi dữ liệu thay đổi
                     // Nếu không, các trục sẽ thay đổi cho phù hợp dữ liệu của từng nhân vật
                     min: 0,
@@ -88,6 +91,7 @@ new Vue({
                     {
                         name: 'Character Statistic',
                         data: data,
+                        // Nếu không thiết lập thì sẽ bị ngược chiều
                         pointPlacement: 'on',
                         // TODO: Màu viền, màu ở bên trong area, màu của vòng tròn điểm
                         // backgroundColor: 'rgba(255, 99, 132, 0.2)',
@@ -95,7 +99,13 @@ new Vue({
                         // pointBackgroundColor: 'rgba(255, 99, 132, 1)',
                         // color: 'rgba(255, 99, 132, 0.3)'
                     }
-                ]
+                ],
+                tooltip: {
+                    formatter: function () {
+                        // Ký tự BLACK CIRCLE \u25CF
+                        return `<span style="color:${this.point.color}">●</span> ${this.x}: <b>${this.y}</b><br/>`;
+                    }
+                }
             });
 
             // TODO: Sửa lại tooltip cho đúng
