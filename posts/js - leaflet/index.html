@@ -263,6 +263,39 @@ L.marker([51.49, -0.1], { icon: orangeIcon })
       </p>
       <p><br>
       </p>
+      <h3>Render lại bản đồ khi ẩn hiện</h3>
+      <p>Có trường hợp bạn khởi tạo bản đồ khi mà thẻ container đang ở trạng
+        thái ẩn (<code>display: none</code>), ví dụ khi bản đồ ở trên modal. Khi
+        đó, có thể sẽ xảy ra hiện tượng bản đồ không load đầy đủ, chỉ có một
+        tile. Đó là do khi <code>display: none</code> thì không thể xác định
+        được chính xác kích thước chiều rộng - chiều cao của container.</p>
+      <figure><img src="images/demo-12.png" alt=""></figure>
+      <p>Để khắc phục tình trạng trên, chúng ta cần gọi phương thức <code>invalidateSize()</code>
+        để render lại bản đồ.</p>
+      <pre data-code-lang="js">/**
+ * Force vẽ lại bản đồ.
+ * Khi ẩn hiện, bản đồ có thể không load hết mà chỉ load một vài tile
+ * vì khi display: none, Leaflet không tính được kích thước.
+ */
+function forceRerenderMap() {
+    map.invalidateSize();
+}
+
+function showMap() {
+    const container = document.querySelector('#mapid');
+    container.style.display = '';
+
+    forceRerenderMap();
+}</pre>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><a href="demo-12.html">Demo 12: Render lại bản đồ khi ẩn hiện</a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
       <p><br>
       </p>
       <h3>Tham khảo</h3>
@@ -283,7 +316,8 @@ L.marker([51.49, -0.1], { icon: orangeIcon })
           library for interactive maps</a> </p>
       <p><a href="https://www.openstreetmap.org/#map=6/16.113/105.806" target="_blank">OpenStreetMap</a>
       </p>
-      <p><a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap#:%7E:text=OpenStreetMap%20is%20a%20free%2C%20editable,of%20our%20underlying%20map%20data."
+      <p><a href="https://wiki.openstreetmap.org/wiki/About_OpenStreetMap#:%7E:text=OpenStreetMap%20is%20a%20free%2C%20editable,of%20our%20underlying%20map%20data."
+
           target="_blank">About OpenStreetMap - OpenStreetMap Wiki</a></p>
       <p><a href="https://github.com/Leaflet/Leaflet.draw" target="_blank">Leaflet/Leaflet.draw:
           Vector drawing and editing plugin for Leaflet</a></p>
@@ -299,7 +333,8 @@ L.marker([51.49, -0.1], { icon: orangeIcon })
             đồ dịch tễ COVID-19 tỉnh Bắc Giang 2</a></li>
         <li><a href="https://covidmaps.danang.gov.vn/danang?locale=vn" target="_blank">Bản
             đồ dịch tễ bệnh nhân COVID-19 tại Đà Nẵng</a> </li>
-        <li><a href="https://corona.kompa.ai/?fbclid=IwAR320wQoKHWd3RlPUslXYWSkqieP7KnbuXK3BAuGnU8Xy5QQfv_knMVT7_0"
+        <li><a href="https://corona.kompa.ai/?fbclid=IwAR320wQoKHWd3RlPUslXYWSkqieP7KnbuXK3BAuGnU8Xy5QQfv_knMVT7_0"
+
             target="_blank">Realtime Monitoring SARS-CoV-2 - By Kompa Group</a></li>
       </ul>
       <p><br>

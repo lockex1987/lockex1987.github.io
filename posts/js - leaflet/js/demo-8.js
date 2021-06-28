@@ -127,7 +127,7 @@ function setDrawLocalVietnamese() {
 setDrawLocalVietnamese();
 
 
-// Tạo một layer mới
+// Layer chứa các hình được vẽ
 const editableLayers = new L.FeatureGroup();
 map.addLayer(editableLayers);
 
@@ -195,6 +195,7 @@ const drawControl = new L.Control.Draw({
     }
 });
 
+// Thanh điều khiển chỉ cho phép vẽ
 const drawControlDrawOnly = new L.Control.Draw({
     draw: {
         polyline: false
@@ -206,6 +207,7 @@ const drawControlDrawOnly = new L.Control.Draw({
     }
 });
 
+// Thanh điều khiển chỉ cho phép xóa
 const drawControlRemoveOnly = new L.Control.Draw({
     draw: false,
     edit: {
@@ -219,26 +221,35 @@ const drawControlRemoveOnly = new L.Control.Draw({
 drawControlDrawOnly.addTo(map);
 
 // Bắt sự kiện vẽ mới
-map.on(L.Draw.Event.CREATED, function (evt) {
+map.on(L.Draw.Event.CREATED, (evt) => {
     const type = evt.layerType;
     const layer = evt.layer;
 
     // console.log(type);
-    /*
-    if (type === 'marker') {
-        layer.bindPopup('A popup!');
-    }
-    */
-
     // console.log(layer);
 
-    // Polygon chứa mảng _latlngs
-    // console.log(layer._latlngs);
-
-    // Circle sẽ gồm _latlng và _mRadius (tính theo mét)
     if (type == 'circle') {
-        console.log(layer._latlng);
-        console.log(layer._mRadius);
+        // Circle sẽ gồm _latlng và _mRadius (tính theo mét)
+        // console.log(layer._latlng);
+        // console.log(layer._mRadius);
+        // console.log(layer.getRadius());
+        // console.log(layer.getLatLng());
+        const latlng = layer.getLatLng();
+        console.log(latlng.lat);
+        console.log(latlng.lng);
+    } else if (type == 'polygon') {
+        // Polygon chứa mảng _latlngs
+        // console.log(layer._latlngs);
+        // console.log(layer.getLatLngs());
+        // console.log(layer.getLatLngs().length);
+        // Mảng một phần tử
+        layer.getLatLngs()[0].forEach(latlng => {
+            // console.log(latlng);
+            console.log(latlng.lat);
+            console.log(latlng.lng);
+        });
+    } else if (type === 'marker') {
+        layer.bindPopup('A popup!');
     }
 
     editableLayers.addLayer(layer);
@@ -256,15 +267,13 @@ map.on('draw:edited', function (evt) {
 
 
 // Bắt sự kiện xóa hình vẽ
-map.on(L.Draw.Event.DELETED, function (evt) {
-    console.log('something was deleted; showing draw control');
-    // map.addControl(drawControl);
-
+map.on(L.Draw.Event.DELETED, (evt) => {
     checkDrawControl();
 });
 
 
 function checkDrawControl() {
+    // map.addControl(drawControl);
     if (editableLayers.getLayers().length === 0) {
         drawControlRemoveOnly.remove(map);
         drawControlDrawOnly.addTo(map);
