@@ -1,5 +1,10 @@
 export default [
 	{
+        title: 'Biểu đồ radar (spider, polar)',
+        url: 'examples/radar',
+        image: 'images/radar.png'
+    },
+	{
         title: 'AJAX export',
         url: 'examples/ajax-export',
         image: 'images/ajax-export.png'

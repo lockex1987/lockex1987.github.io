@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="radar, polar, spider">
+    <title>Radar chart</title>
+
+    <link rel="icon" href="../../../../images/favicon.png">
+    <link rel="stylesheet" href="../../../../css/style.css">
+</head>
+
+<body>
+    <article>
+        <h2>Radar chart</h2>
+
+        <div id="app">
+            <div class="mb-3"
+                v-if="currentCharacter">
+                <img :src="'images/' + currentCharacter.image"
+                    class="object-fit-cover"
+                    style="width: 100px; height: 100px;"/>
+            </div>
+
+            <div ref="chartContainer"
+                class="mb-3"
+                style="height: 400px;"></div>            
+    
+            <ul>
+                <li v-for="e in characters">
+                    <a href="#"
+                        @click.prevent="changeCharacter(e)">
+                        {{e.name}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+
+    <!-- Thêm script này, nếu không chỉ là biểu đồ area bình thường -->
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+    <script src="js/script.js"></script>
+
+    <script src="../../js/docs.js"></script>
+</body>
+
+</html>
