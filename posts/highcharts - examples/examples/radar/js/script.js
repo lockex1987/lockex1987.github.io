@@ -100,6 +100,7 @@ new Vue({
                         // color: 'rgba(255, 99, 132, 0.3)'
                     }
                 ],
+                // Sửa lại tooltip cho đúng
                 tooltip: {
                     formatter: function () {
                         // Ký tự BLACK CIRCLE \u25CF
@@ -107,8 +108,6 @@ new Vue({
                     }
                 }
             });
-
-            // TODO: Sửa lại tooltip cho đúng
         },
 
         updateChart() {

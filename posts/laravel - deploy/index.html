@@ -32,7 +32,7 @@ chmod -R 777 storage</pre>
       <p>Tạo cache các cấu hình:</p>
       <pre class="command-line code" data-lang="shell">php artisan config:cache</pre>
       <p>Bạn hãy nhớ thực hiện lệnh này, vì nếu không khi ứng dụng của bạn có
-        nhiều request đồng thời, có thể xảy ra lỗi sau:</p>
+        nhiều request đồng thời (test hiệu năng), có thể xảy ra lỗi sau:</p>
       <pre class="text-pre-wrap">production.ERROR: No application encryption key has been specified.</pre>
       <p>Chú ý: hãy đảm bảo rằng bạn không sử dụng hàm <code>env()</code> mà
         chỉ sử dụng hàm <code>config()</code> vì các cấu hình đã được cache.<br>
@@ -43,12 +43,13 @@ chmod -R 777 storage</pre>
         nó hiển thị tất cả các thông số cấu hình của server.</p>
       <h3>File cấu hình mẫu</h3>
       <p>Tạo file <code>sso.conf</code> như sau:</p>
-      <pre class="out-of-box code" data-lang="nginx">server {
+      <pre class="out-of-box code" data-code-lang="nginx">server {
     listen 80;
     # listen 443;
     server_name sso.cttd.tk;
     root "/var/www/html/sso/public";
-    index index.php index.html;
+    # index index.php index.html;
+    index index.php;
 
     location / {
         try_files $uri $uri/ /index.php?$query_string;
@@ -56,7 +57,8 @@ chmod -R 777 storage</pre>
 
     error_page 404 /index.php;
 
-    location ~ \.php$ {
+    # location ~ \.php$ {
+    location = /index.php {
         # fastcgi_pass 127.0.0.1:9000;
         fastcgi_pass   unix:/var/run/php/php7.2-fpm.sock;
         fastcgi_param  SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
@@ -65,6 +67,8 @@ chmod -R 777 storage</pre>
 }</pre>
       <p>Chú ý chỉnh đường dẫn <code>fastcgi_pass</code> cho đúng.</p>
       <p>Thêm file <code>sso.conf</code> vào thư mục <code>/etc/nginx/conf.d/</code>.</p>
+      <p>Chúng ta chỉ cấu hình PHP cho một file <code>/index.php</code>, là một
+        lớp bảo vệ người dùng upload file PHP bất kỳ.</p>
       <h3>Kiểm tra</h3>
       <p>Restart nginx:</p>
       <pre class="command-line code" data-lang="shell">sudo systemctl restart nginx</pre>
@@ -81,8 +85,7 @@ chmod -R 777 storage</pre>
       <p><a target="_blank" href="http://sso.cttd.tk/">http://sso.cttd.tk/</a></p>
       <h3>Tham khảo</h3>
       <p><a target="_blank" href="https://laravel.com/docs/master/deployment">laravel.com/docs/master/deployment</a></p>
-      <p><a target="_blank" href="https://lockex1987.github.io/archive/it%20-%20file%20filter/">File
-          filter</a></p>
+      <p><a target="_blank" href="../it%20-%20filefilter/">File filter</a></p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>

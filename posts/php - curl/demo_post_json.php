@@ -1,7 +1,8 @@
 <?php
+
 $data = [
-    "name" => "Hagrid",
-    "age" => 36
+    'name' => 'Hagrid',
+    'age' => 36
 ];
 
 $json = json_encode($data);

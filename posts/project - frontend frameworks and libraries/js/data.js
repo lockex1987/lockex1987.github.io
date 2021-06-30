@@ -170,7 +170,8 @@ export default [
         jsPath: 'https://code.highcharts.com/highcharts.js',
         jsMap: 'highcharts.js.map',
         savePath: 'highcharts',
-        link: 'https://lockex1987.github.io/posts/highcharts%20-%20learning/'
+        link: 'https://lockex1987.github.io/posts/highcharts%20-%20learning/',
+		note: 'Có thể chỉ định rõ version trên đường dẫn, ví dụ: https://code.highcharts.com/8.2.2/highcharts-more.js'
     },
     {
         code: 'highcharts-exporting',
@@ -199,6 +200,14 @@ export default [
         name: 'Highcharts (bản đồ Việt Nam)',
         jsPath: 'src/highcharts/maps/map-vn-all.js',
         savePath: 'highcharts'
+    },
+	{
+        code: 'highcharts-more',
+        name: 'Highcharts (more)',
+        jsPath: 'https://code.highcharts.com/highcharts.js',
+        jsMap: 'highcharts-more.js.map',
+        savePath: 'highcharts',
+		note: 'Để vẽ biểu đồ polar'
     },
     /*
     {

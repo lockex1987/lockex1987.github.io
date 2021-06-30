@@ -3,14 +3,14 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dữ liệu tỉnh, huyện, xã của Việt Nam">
-    <title>Đơn vị hành chính</title>
+    <meta name="description" content="Dữ liệu tỉnh, huyện, xã của Việt Nam; Tọa độ của các tỉnh (vĩ độ - latitude, kinh độ - longitude); Crawl Wikipedia">
+    <title>Đơn vị hành chính Việt Nam</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
   </head>
   <body>
     <article>
-      <h2>Đơn vị hành chính</h2>
+      <h2>Đơn vị hành chính Việt Nam</h2>
       <h3>Lấy dữ liệu thô</h3>
       <p>Có thể xuất dữ liệu Excel theo tỉnh, huyện, xã từ trang web của Tổng
         cục thống kê <a href="http://www.gso.gov.vn/dmhc2015/" target="_blank">ở
@@ -38,6 +38,176 @@
         <li>commune</li>
       </ul>
       <p>Chúng ta có thể dùng dữ liệu này để thiết lập địa chỉ đặt hàng...</p>
+      <h3>Cách để ghi kinh độ vĩ độ</h3>
+      <p>Kinh độ và vĩ độ là những điểm trên quả địa cầu giúp ta tìm kiếm một
+        địa điểm cụ thể. Khi viết kinh độ và vĩ độ, bạn muốn biết chắc chắn rằng
+        mình định dạng chính xác và sử dụng đúng ký hiệu mà người khác hiểu
+        được. Bạn có thể xác định các điểm kinh độ và vĩ độ khác nhau trên bản
+        đồ và ghi chúng ra. Bạn có thể ghi kinh độ và vĩ độ bằng cách sử dụng
+        đường kinh tuyến và vĩ tuyến. Đối với những điểm kinh độ và vĩ độ cụ thể
+        hơn, tọa độ có thể được viết dưới dạng độ, phút, giây và số thập phân.</p>
+      <p>latitude: vĩ tuyến, ngang, từ -90 đến 90, xích đạo bằng 0, dương chỉ
+        Bắc, âm chỉ Nam. </p>
+      <p>longitude: kinh tuyến, dọc, từ -180 đến 180, kinh tuyến gốc bằng 0,
+        dương chỉ Đông, âm chỉ Tây</p>
+      <h4>Phương pháp 1: Ghi kinh độ và vĩ độ cơ bản</h4>
+      <p>Xác định đường kinh tuyến. Kinh tuyến là những đường thẳng đứng chạy
+        dọc địa cầu từ Bắc cực đến Nam cực. Kinh tuyến gốc chia các đường kinh
+        tuyến thành hai nửa. Đó là kinh tuyến không độ. Khi viết kinh tuyến, bạn
+        sử dụng ký hiệu "°" để chỉ độ.</p>
+      <p>Các đường kinh tuyến trải dài từ đông sang tây. Mỗi đường kinh tuyến sẽ
+        tăng thêm một độ khi dịch chuyển sang phía đông. Bạn dùng chữ cái "E"
+        (Đông) để chỉ đường kinh tuyến nằm ở phía đông của Kinh tuyến gốc. Ví
+        dụ, đường kinh tuyến có thể là 30°E (30 độ kinh Đông).</p>
+      <p>Khi dịch chuyển sang phía tây, mỗi đường kinh tuyến cũng tăng thêm một
+        độ. Khi viết kinh tuyến nằm ở phía tây của Kinh tuyến gốc, bạn dùng ký
+        hiệu "W" để chỉ phía tây. Ví dụ, đường kinh tuyến có thể là 15°W (15 độ
+        kinh Tây).</p>
+      <p>Xác định đường vĩ tuyến. Vĩ tuyến là các đường cắt ngang địa cầu. Chúng
+        trải dài từ bắc tới nam, bắt đầu từ đường xích đạo. Đường xích đạo là vĩ
+        tuyến 0 độ. Khi ghi kinh tuyến và vĩ tuyến, bạn sử dụng ký hiệu "°" để
+        chỉ độ.</p>
+      <p>Khi dịch chuyển lên phía trên của đường xích đạo, các đường vĩ tuyến sẽ
+        tăng một độ cho đến khi đạt tới 90 độ. Điểm 90 độ nằm ở Bắc cực. Các
+        đường vĩ tuyến nằm phía trên xích đạo được ký hiệu bằng chữ "N" có nghĩa
+        là Bắc. Ví dụ, đường vĩ tuyến có thể là 15°N (15 độ vĩ Bắc).</p>
+      <p>Khi bạn di chuyển xuống phía dưới xích đạo, khoảng cách giữa mỗi đường
+        vĩ tuyến cũng tăng thêm một độ cho đến khi đạt tới điểm 90 độ. Đó là Nam
+        cực. Bạn dùng ký hiệu "S" để chỉ phía nam. Chẳng hạn, đường vĩ tuyến có
+        thể là 30°S (30 độ vĩ Nam).</p>
+      <p>Viết tọa độ. Tìm một địa điểm và xác định giao điểm của kinh tuyến và
+        vĩ tuyến. Ví dụ, bạn có thể tìm được địa điểm dọc theo vĩ tuyến 15°N và
+        kinh tuyến 30°E. Khi ghi kinh độ và vĩ độ, viết vĩ độ trước, tiếp theo
+        là dấu phẩy, và sau đó là kinh độ.</p>
+      <p>Ví dụ, các đường kinh tuyến và vĩ tuyến ở trên sẽ được viết thành
+        "15°N, 30°E" (15 độ vĩ Bắc, 30 độ kinh Đông).</p>
+      <h4>Phương pháp 2: Sử dụng độ, phút và giây</h4>
+      <p>Xác định kinh độ và vĩ độ. Đôi khi bạn cần đưa ra vị trí chính xác hơn
+        là kinh tuyến và vĩ tuyến nói chung. Chúng có thể được chia nhỏ đến phút
+        và giây. Tuy nhiên, bạn phải giải mã các đường kinh tuyến và vĩ tuyến.
+        Hãy xem vị trí cần tìm nằm trên đường kinh tuyến và vĩ tuyến nào.</p>
+      <p>Chẳng hạn, giả sử vị trí cần tìm nằm trên vĩ độ 15°Bắc và kinh độ
+        30°Đông.</p>
+      <p>Tìm số phút ở giữa mỗi đường kinh tuyến và vĩ tuyến. Khoảng cách giữa
+        các đường này được chia thành một độ. Độ được chia tiếp thành phút. Hãy
+        tưởng tượng có 60 phút bằng nhau chia từng đường kinh tuyến và vĩ tuyến.
+        Bạn có thể dùng bản đồ trực tuyến để xác định chính xác số phút mà vị
+        trí của bạn nằm trong từng đường kinh tuyến hoặc vĩ tuyến. Dấu móc đơn
+        được sử dụng để chỉ số phút giữa các đường kinh tuyến hoặc vĩ tuyến.</p>
+      <p>Ví dụ, nếu bạn xác định được khoảng cách giữa các đường vĩ tuyến là 23
+        phút, bạn sẽ viết là <strong>23'</strong>.</p>
+      <p>Xác định số giây giữa mỗi phút. Phút sẽ được chia tiếp thành giây. Mỗi
+        phút có 60 giây. Bản đồ trực tuyến cũng giúp bạn xác định chính xác số
+        giây trong từng phút. Dấu móc kép được sử dụng để chỉ số giây.</p>
+      <p>Ví dụ, nếu khoảng cách giữa các phút trên đường kinh tuyến là 15 giây,
+        bạn sẽ viết là <strong>15"</strong>.</p>
+      <p>Ghi độ, sau đó đến phút và giây. Sau khi tìm được tọa độ chính xác đến
+        phút và giây cho kinh độ và vĩ độ, hãy viết chúng ra theo thứ tự đúng.
+        Bắt đầu với vĩ độ, viết số độ đo được, rồi đến phút và cuối cùng là
+        giây. Sau đó, thêm hướng Bắc hoặc Nam. Tiếp theo, đánh dấu phẩy, sau đó
+        là độ, phút, giây của kinh độ. Thêm hướng Đông hoặc Tây.</p>
+      <p>Chẳng hạn, bạn có vĩ độ là 15°Bắc, 24 phút, và 15 giây. Bạn có kinh độ
+        là 30°Đông, 10 phút, và 3 giây.</p>
+      <p>Kinh độ và vĩ độ trên sẽ được viết là: <strong>15°24'15"N, 30°10'3"E</strong>.</p>
+      <h4>Phương pháp 3: Sử dụng số đo độ và phút dưới dạng thập phân</h4>
+      <p>Vẫn sử dụng phút, không sử dụng giây.</p>
+      <p>Xác định tọa độ của kinh tuyến và vĩ tuyến. Bạn cũng có thể dùng phút
+        dưới dạng số thập phân để xác định kinh độ và vĩ độ. Tuy nhiên, bạn phải
+        làm lại từ đầu bằng việc xác định các đường kinh tuyến và vĩ tuyến. Tìm
+        xem đường kinh tuyến và vĩ tuyến gặp nhau ở điểm nào để xác định vị trí
+        của bạn.</p>
+      <p>Ví dụ, giả sử vị trí của bạn nằm ở tọa độ 15° vĩ Bắc, 30° kinh Tây.</p>
+      <p>Xác định số phút, bao gồm các điểm thập phân. Một số bản đồ tính số
+        phút theo sau là các điểm thập phân thay cho giây. Bản đồ trực tuyến có
+        thể cung cấp cho bạn số phút chia nhỏ đến số thập phân cho mỗi đường
+        kinh tuyến và vĩ tuyến. Ví dụ, vĩ độ có thể được xác định ở 23,0256
+        phút.</p>
+      <p>Xác định số âm và số dương. Khi dùng hệ độ và phút dạng thập phân, bạn
+        không dùng các hướng như đông, tây, nam, bắc. Thay vào đó, bạn dùng số
+        âm và số dương để xác định vị trí trên bản đồ.</p>
+      <p>Hãy nhớ, đường vĩ tuyến nằm phía trên hoặc dưới đường xích đạo. Khi sử
+        dụng số thập phân để chỉ kinh độ và vĩ độ, số dương chỉ vị trí nằm phía
+        trên đường xích đạo, còn số âm chỉ vị trí nằm phía dưới xích đạo. Số
+        23,456 nằm phía trên xích đạo, trong khi số -23,456 nằm phía dưới.</p>
+      <p>Các đường kinh tuyến nằm ở phía đông hoặc tây của Kinh tuyến gốc. Số
+        dương chỉ vị trí ở phía đông Kinh tuyến gốc, còn số âm chỉ vị trí ở phía
+        tây. Chẳng hạn, số 10,234 nằm ở phía đông Kinh tuyến gốc, trong khi số
+        -10,234 nằm ở phía tây Kinh tuyến gốc.</p>
+      <p>Ghi kinh độ và vĩ độ. Để xác định đầy đủ vị trí của một địa điểm, hãy
+        bắt đầu bằng đường vĩ tuyến. Tiếp đến là tọa độ với số phút và điểm thập
+        phân. Thêm dấu phẩy và sau đó là kinh tuyến với số phút và điểm thập
+        thân. Nhớ sử dụng số dương và số âm để xác định vị trí tọa độ. Bạn không
+        sử dụng ký hiệu độ đối với định dạng này.</p>
+      <p>Ví dụ, một đường nằm trong khoảng 15° vĩ Bắc, 30° kinh Tây. Xác định số
+        phút và điểm thập phân, rồi viết tọa độ ra.</p>
+      <p>Ví dụ nêu trên có thể được viết như sau: <strong>15 10,234, 30 -23,456</strong>.</p>
+      <h4>Phương pháp 4: Sử dụng đơn vị đo độ thập phân</h4>
+      <p>Tìm kinh tuyến và vĩ tuyến. Số độ của kinh tuyến và vĩ tuyến thường
+        được chia nhỏ thành điểm thập phân. Thay vì dùng số phút và giây, các
+        đường chỉ một độ được chia thành điểm thập phân để xác định chính xác vị
+        trí. Đầu tiên, bạn tìm số độ của kinh tuyến và vĩ tuyến.</p>
+      <p>Ví dụ, giả sử vị trí của bạn nằm ở tọa độ 15° vĩ Bắc, 30° kinh Tây.</p>
+      <p>Tính số điểm thập phân. Bản đồ trực tuyến có thể chia nhỏ kinh tuyến và
+        vĩ tuyến bằng cách dùng điểm thập phân. Thông thường, điểm thập phân
+        được tạo bởi năm chữ số.</p>
+      <p>Ví dụ, tọa độ vị trí của bạn có thể là 15,23456 vĩ bắc và 30,67890 kinh
+        tây.</p>
+      <p>Xác định số âm và số dương. Thay vì dùng các từ như: đông, tây, nam,
+        bắc để chỉ hướng, bạn sử dụng số âm và số dương. Đối với vĩ tuyến, các
+        đường nằm phía trên xích đạo được biểu diễn bằng số dương còn đường nằm
+        dưới xích đạo được biểu diễn bằng số âm. Đối với kinh tuyến, đường nằm ở
+        phía đông kinh tuyến gốc mang dấu dương trong khi đường nằm phía tây của
+        kinh tuyến gốc mang dấu âm.</p>
+      <p>Chẳng hạn, vĩ độ 15,23456 sẽ nằm phía trên đường xích đạo, trong khi vĩ
+        độ -15,23456 sẽ nằm dưới đường xích đạo.</p>
+      <p>Kinh độ 30,67890 sẽ nằm ở phía đông đường kinh tuyến gốc, trong khi
+        kinh độ -30,67890 nằm ở phía tây.</p>
+      <p>Ghi kinh độ và vĩ độ chứa điểm thập phân. Việc sử dụng độ thập phân rất
+        đơn giản. Bạn chỉ cần viết vĩ độ chứa điểm thập phân, tiếp theo là kinh
+        độ chứa điểm thập phân. Dùng dấu âm và dương để xác định hướng.</p>
+      <p>Ví dụ, giả sử ta có tọa độ 15° vĩ Bắc, 30° kinh Tây. Sử dụng hệ thống
+        độ thập phân, bạn có thể viết thành: <strong>15,23456, -30,67890</strong>.</p>
+      <h3>Kinh độ vĩ độ của các tỉnh của Việt Nam</h3>
+      <p>Danh sách các tỉnh của Việt Nam:</p>
+      <p><a href="https://en.wikipedia.org/wiki/Provinces_of_Vietnam" target="_blank">Provinces
+          of Vietnam - Wikipedia</a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Đổi tọa độ từ độ - phút - giây sang thập phân</h3>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://www.wikihow.vn/Ghi-kinh-%C4%91%E1%BB%99-v%C3%A0-v%C4%A9-%C4%91%E1%BB%99"
+
+          target="_blank">Ghi kinh độ và vĩ độ – wikiHow</a></p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>

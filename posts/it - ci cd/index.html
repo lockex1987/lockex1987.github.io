@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="continuous integration, continuous delivery, continuous deployment">
+    <title>Hướng dẫn CI/CD</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Hướng dẫn CI/CD</h2>
+      <p><br>
+      </p>
+      <p>Chúng ta sẽ định nghĩa các stage ở thẻ <code>stages</code>. Đây là bộ
+        khung các pipeline.</p>
+      <p>Cấu hình tags là để chọn runner hợp lý. Runner sẽ phải cài môi trường
+        để chạy được.</p>
+      <p>Ví dụ, chúng ta có script kiểm tra code bằng công cụ Sonar. Để chạy
+        được script thì yêu cầu runner phải cài tool sonar-scanner. Không phải
+        tất cả các runner để được cài tool đó. Chỉ một số runner được cài và
+        được đánh tag là sonar. Khi đó, cấu hình chúng ta như sau:</p>
+      <pre>stages:
+  - sonar_scan
+
+
+sonar_scan:
+  stage: sonar_scan
+  script:
+    - sonar-scanner -D"sonar.projectKey=platform-b86-frontend" -D"sonar.sources=." -D"sonar.host.url=http://10.30.152.17:9000" -D"sonar.login=c932a08d5bfe7c7819af9e6ee5ff2424bbfde481"
+  tags:
+    - sonar
+  allow_failure: true</pre>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p>Deploy dựa vào branch</p>
+      <p>Chỉ chạy ở nhánh develop:</p>
+      <pre>build_dev:
+  only:
+    refs:
+      - develop</pre>
+      <p>Chỉ chạy ở nhánh master:</p>
+      <pre>build_prod:
+  only:
+    refs:
+      - master</pre>
+      <p><br>
+      </p>
+      <p>Deploy dựa vào tên tag</p>
+      <p>Tên tag bắt đầu bằng deploy-test:</p>
+      <pre>build_dev:
+  only:
+    refs:
+      - tags
+    variables:
+      - $CI_COMMIT_TAG =~ /^deploy-test.*/</pre>
+      <p><br>
+      </p>
+      <p>Tên tag bắt đầu bằng deploy-prod:</p>
+      <pre>build_prod:
+  only:
+    refs:
+      - tags
+    variables:
+      - $CI_COMMIT_TAG =~ /^deploy-prod.*/</pre>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p>Deploy dựa vào nội dung commit</p>
+      <p>Không nên dùng <code>only</code>, hãy sử dụng <code>rules</code>. Cấu
+        hình <code>only</code> không được phát triển nữa.</p>
+      <p>Nội dung commit bắt đầu bằng Deploy test (không phân biệt hoa thường):</p>
+      <pre>rules:
+  - if: '$CI_COMMIT_MESSAGE =~ /^Deploy test/i'</pre>
+      <p>Nội dung commit bắt đầu bằng Deploy prod:</p>
+      <pre>rules:
+  - if: '$CI_COMMIT_MESSAGE =~ /^Deploy prod/i'</pre>
+      <p>Để commit mà không có thay đổi gì, mục đích là trigger luồng CI/CD,
+        chúng ta có thể thêm tùy chọn <code>--allow-empty</code>:</p>
+      <pre>git commit -m "Deploy test" --allow-empty</pre>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p>y</p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>

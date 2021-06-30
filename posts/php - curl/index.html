@@ -12,14 +12,14 @@
     <article>
       <h2>cURL</h2>
       <h3>Hướng dẫn</h3>
-      <p>Một ứng dụng CURL thường có 4 bước cơ bản:</p>
+      <p>Một ứng dụng cURL thường có 4 bước cơ bản:</p>
       <ol>
-        <li>Khởi tạo CURL</li>
-        <li>Cấu hình thông số cho CURL</li>
-        <li>Thực thi CURL</li>
-        <li>Ngắt CURL, giải phóng dữ liệu</li>
+        <li>Khởi tạo cURL</li>
+        <li>Cấu hình thông số cho cURL</li>
+        <li>Thực thi cURL</li>
+        <li>Ngắt cURL, giải phóng dữ liệu</li>
       </ol>
-      <pre>// Tạo mới một CURL
+      <pre data-code-lang="php">// Tạo mới một CURL
 $ch = curl_init();
 
 // Cấu hình cho CURL
@@ -32,16 +32,16 @@ curl_exec($ch);
 curl_close($ch);</pre>
       <p>Hàm <code>curl_setopt()</code> có 3 tham số đầu vào:</p>
       <ol>
-        <li>đối tượng CURL</li>
+        <li>đối tượng cURL</li>
         <li>tên cấu hình</li>
-        <li>là giá trị</li>
+        <li>giá trị</li>
       </ol>
       <p>Một số tên cấu hình thông dụng:</p>
       <div class="out-of-box">
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th>Cấu hình</th>
+              <th style="width: 150px">Cấu hình</th>
               <th>Mô tả</th>
             </tr>
           </thead>
@@ -52,7 +52,7 @@ curl_close($ch);</pre>
             </tr>
             <tr>
               <td><code>CURLOPT_RETURNTRANSFER</code></td>
-              <td>Nếu <code>true</code> thì sẽ trả kết quả về ở hàm <code>curl_exec</code>
+              <td>Nếu thiết lập <code>true</code> thì sẽ trả kết quả về ở hàm <code>curl_exec</code>
                 nên ta phải echo kết quả đó mới in lên trình duyệt, nếu <code>false</code>
                 thì thực thi là nó in kết quả lên trình duyệt luôn</td>
             </tr>
@@ -62,7 +62,7 @@ curl_close($ch);</pre>
             </tr>
             <tr>
               <td><code>CURLOPT_TIMEOUT</code></td>
-              <td>Thiết lập thời gian sống của một request CURL</td>
+              <td>Thiết lập thời gian sống của một request cURL</td>
             </tr>
             <tr>
               <td><code>CURLOPT_FILE</code></td>
@@ -71,7 +71,8 @@ curl_close($ch);</pre>
             <tr>
               <td><code>CURLOPT_POSTFIELDS</code></td>
               <td>Giá trị của nó chính là một mảng các key =&gt; value, tương
-                ứng với name và value của nó trong các thẻ input khi submit FORM</td>
+                ứng với name và value của nó trong các thẻ input khi submit
+                form</td>
             </tr>
           </tbody>
         </table>
@@ -83,10 +84,11 @@ curl_close($ch);</pre>
       <p><a target="_blank" href="demo_upload.php">Upload file</a></p>
       <h3>Tham khảo</h3>
       <p><a target="_blank" href="https://www.php.net/manual/en/book.curl.php">https://www.php.net/manual/en/book.curl.php</a></p>
-      <p><a target="_blank" href="https://lockex1987.github.io/posts/it%20-%20curl/">curl</a></p>
-      <p><a target="_blank" href="https://lockex1987.github.io/posts/php%20-%20ixudra%20curl/">https://lockex1987.github.io/posts/php - ixudra curl/</a></p>
-      <p><a target="_blank" href="https://lockex1987.github.io/posts/php%20-%20guzzle/">Sử dụng Guzzle để gọi API</a></p>
-      <p><a target="_blank" href="https://github.com/tcdent/php-restclient/blob/master/restclient.php">GitHub - tcdent/php-restclient: A generic REST API client for PHP</a></p>
+      
+      <p><a target="_blank" href="../it%20-%20curl/">Câu lệnh curl</a></p>
+      <p><a target="_blank" href="../php%20-%20guzzle/">Sử dụng Guzzle để gọi API</a></p>
+      <p><a target="_blank" href="https://github.com/tcdent/php-restclient/blob/master/restclient.php">GitHub
+          - tcdent/php-restclient: A generic REST API client for PHP</a></p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>
