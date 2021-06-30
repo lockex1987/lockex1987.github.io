@@ -1,26 +1,30 @@
 <?php
 
+/**
+ * Lấy mã HTML của trang web.
+ * @param string $url Địa chỉ trang web
+ * @return string Mã HTML
+ */
 function getHtml(string $url): string
 {
-    $proxy = 'http://192.168.103.26:80';
-
     $curl = curl_init($url);
     curl_setopt_array($curl, [
         CURLOPT_RETURNTRANSFER => true,
-        // CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.8.1.6)    Gecko/20070725 Firefox/2.0.0.6',
         CURLOPT_SSL_VERIFYPEER => false,
         CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_PROXY => $proxy,
+        CURLOPT_PROXY => 'http://192.168.103.26:80',
         CURLOPT_SSL_VERIFYPEER => false,
         CURLOPT_SSL_VERIFYHOST => false
     ]);
-
     $resp = curl_exec($curl);
     curl_close($curl);
     return $resp;
 }
 
 
+/**
+ * Bóc tách mã HTML, lấy danh sách các tỉnh / thành phố của Việt Nam.
+ */
 function getProvinceList(string $html): array
 {
     $doc = new DomDocument();
@@ -28,8 +32,6 @@ function getProvinceList(string $html): array
 
     $table = $doc->getElementsByTagName('table')->item(2);
     $rows = $table->getElementsByTagName('tr');
-    $rowCount = $rows->length - 1; // trừ dòng header
-    echo 'Số hàng của bảng là ' . $rowCount . PHP_EOL;
 
     $provinceList = [];
     foreach ($rows as $idx => $row) {
@@ -37,6 +39,7 @@ function getProvinceList(string $html): array
         if ($idx == 0) {
             continue;
         }
+
         $cols = $row->getElementsByTagName('td');
         $firstCell = $cols->item(0);
         $link = $firstCell->getElementsByTagName('a')->item(0);
@@ -48,13 +51,15 @@ function getProvinceList(string $html): array
             'name' => $provinceName,
             'url' => 'https://en.m.wikipedia.org' . $url
         ];
-        // echo $provinceName . ': ' . $url . PHP_EOL;
     }
 
     return $provinceList;
 }
 
 
+/**
+ * Lấy tọa độ của từng tỉnh từ trang Wikipedia của tỉnh đó.
+ */
 function getCoordinatesOfProvince(string $url): array
 {
     $html = getHtml($url);
@@ -70,7 +75,6 @@ function getCoordinatesOfProvince(string $url): array
     $lng = 0;
     $regex = '/([\d.]+)°N ([\d.]+)°E/';
     if (preg_match($regex, $summary, $maches)) {
-        // var_dump($maches);
         $lat = floatval($maches[1]);
         $lng = floatval($maches[2]);
     }
@@ -82,28 +86,29 @@ function getCoordinatesOfProvince(string $url): array
 }
 
 
+/**
+ * Lưu đầu ra JSON ra file.
+ */
+function writeToJsonFile(array $provinceList): void
+{
+    $filePath = 'data/provinceList.json';
+    $json = json_encode($provinceList, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    file_put_contents($filePath, $json);
+}
+
+
 function main(): void
 {
     $html = getHtml('https://en.m.wikipedia.org/wiki/Provinces_of_Vietnam');
     $provinceList = getProvinceList($html);
-    for ($i = 0; $i < count($provinceList); $i++) {
-        $province = $provinceList[$i];
-
-        echo $province['name'] . PHP_EOL;
+    foreach ($provinceList as $i => $province) {
         [$lat, $lng] = getCoordinatesOfProvince($province['url']);
-        echo $lat . ', ' . $lng . PHP_EOL;
+        echo $province['name'] . PHP_EOL . $lat . ', ' . $lng . PHP_EOL . PHP_EOL;
         $provinceList[$i]['lat'] = $lat;
         $provinceList[$i]['lng'] = $lng;
-        echo PHP_EOL;
-        /*
-
-        echo PHP_EOL;
-        echo PHP_EOL;
-        */
+        unset($provinceList[$i]['url']);
     }
-
-    file_put_contents('data/provinceList.json', json_encode($provinceList, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-    // var_dump($provinceList);
+    writeToJsonFile($provinceList);
 }
 
 main();

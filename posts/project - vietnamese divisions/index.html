@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dữ liệu tỉnh, huyện, xã của Việt Nam; Tọa độ của các tỉnh (vĩ độ - latitude, kinh độ - longitude); Crawl Wikipedia">
+    <meta name="description" content="Dữ liệu tỉnh, huyện, xã của Việt Nam; Tọa độ của các tỉnh (vĩ độ - latitude, kinh độ - longitude); Crawl Wikipedia; province map; Leaflet">
     <title>Đơn vị hành chính Việt Nam</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -38,177 +38,603 @@
         <li>commune</li>
       </ul>
       <p>Chúng ta có thể dùng dữ liệu này để thiết lập địa chỉ đặt hàng...</p>
-      <h3>Cách để ghi kinh độ vĩ độ</h3>
-      <p>Kinh độ và vĩ độ là những điểm trên quả địa cầu giúp ta tìm kiếm một
-        địa điểm cụ thể. Khi viết kinh độ và vĩ độ, bạn muốn biết chắc chắn rằng
-        mình định dạng chính xác và sử dụng đúng ký hiệu mà người khác hiểu
-        được. Bạn có thể xác định các điểm kinh độ và vĩ độ khác nhau trên bản
-        đồ và ghi chúng ra. Bạn có thể ghi kinh độ và vĩ độ bằng cách sử dụng
-        đường kinh tuyến và vĩ tuyến. Đối với những điểm kinh độ và vĩ độ cụ thể
-        hơn, tọa độ có thể được viết dưới dạng độ, phút, giây và số thập phân.</p>
-      <p>latitude: vĩ tuyến, ngang, từ -90 đến 90, xích đạo bằng 0, dương chỉ
-        Bắc, âm chỉ Nam. </p>
-      <p>longitude: kinh tuyến, dọc, từ -180 đến 180, kinh tuyến gốc bằng 0,
-        dương chỉ Đông, âm chỉ Tây</p>
-      <h4>Phương pháp 1: Ghi kinh độ và vĩ độ cơ bản</h4>
-      <p>Xác định đường kinh tuyến. Kinh tuyến là những đường thẳng đứng chạy
-        dọc địa cầu từ Bắc cực đến Nam cực. Kinh tuyến gốc chia các đường kinh
-        tuyến thành hai nửa. Đó là kinh tuyến không độ. Khi viết kinh tuyến, bạn
-        sử dụng ký hiệu "°" để chỉ độ.</p>
-      <p>Các đường kinh tuyến trải dài từ đông sang tây. Mỗi đường kinh tuyến sẽ
-        tăng thêm một độ khi dịch chuyển sang phía đông. Bạn dùng chữ cái "E"
-        (Đông) để chỉ đường kinh tuyến nằm ở phía đông của Kinh tuyến gốc. Ví
-        dụ, đường kinh tuyến có thể là 30°E (30 độ kinh Đông).</p>
-      <p>Khi dịch chuyển sang phía tây, mỗi đường kinh tuyến cũng tăng thêm một
-        độ. Khi viết kinh tuyến nằm ở phía tây của Kinh tuyến gốc, bạn dùng ký
-        hiệu "W" để chỉ phía tây. Ví dụ, đường kinh tuyến có thể là 15°W (15 độ
-        kinh Tây).</p>
-      <p>Xác định đường vĩ tuyến. Vĩ tuyến là các đường cắt ngang địa cầu. Chúng
-        trải dài từ bắc tới nam, bắt đầu từ đường xích đạo. Đường xích đạo là vĩ
-        tuyến 0 độ. Khi ghi kinh tuyến và vĩ tuyến, bạn sử dụng ký hiệu "°" để
-        chỉ độ.</p>
-      <p>Khi dịch chuyển lên phía trên của đường xích đạo, các đường vĩ tuyến sẽ
-        tăng một độ cho đến khi đạt tới 90 độ. Điểm 90 độ nằm ở Bắc cực. Các
-        đường vĩ tuyến nằm phía trên xích đạo được ký hiệu bằng chữ "N" có nghĩa
-        là Bắc. Ví dụ, đường vĩ tuyến có thể là 15°N (15 độ vĩ Bắc).</p>
-      <p>Khi bạn di chuyển xuống phía dưới xích đạo, khoảng cách giữa mỗi đường
-        vĩ tuyến cũng tăng thêm một độ cho đến khi đạt tới điểm 90 độ. Đó là Nam
-        cực. Bạn dùng ký hiệu "S" để chỉ phía nam. Chẳng hạn, đường vĩ tuyến có
-        thể là 30°S (30 độ vĩ Nam).</p>
-      <p>Viết tọa độ. Tìm một địa điểm và xác định giao điểm của kinh tuyến và
-        vĩ tuyến. Ví dụ, bạn có thể tìm được địa điểm dọc theo vĩ tuyến 15°N và
-        kinh tuyến 30°E. Khi ghi kinh độ và vĩ độ, viết vĩ độ trước, tiếp theo
-        là dấu phẩy, và sau đó là kinh độ.</p>
-      <p>Ví dụ, các đường kinh tuyến và vĩ tuyến ở trên sẽ được viết thành
-        "15°N, 30°E" (15 độ vĩ Bắc, 30 độ kinh Đông).</p>
-      <h4>Phương pháp 2: Sử dụng độ, phút và giây</h4>
-      <p>Xác định kinh độ và vĩ độ. Đôi khi bạn cần đưa ra vị trí chính xác hơn
-        là kinh tuyến và vĩ tuyến nói chung. Chúng có thể được chia nhỏ đến phút
-        và giây. Tuy nhiên, bạn phải giải mã các đường kinh tuyến và vĩ tuyến.
-        Hãy xem vị trí cần tìm nằm trên đường kinh tuyến và vĩ tuyến nào.</p>
-      <p>Chẳng hạn, giả sử vị trí cần tìm nằm trên vĩ độ 15°Bắc và kinh độ
-        30°Đông.</p>
-      <p>Tìm số phút ở giữa mỗi đường kinh tuyến và vĩ tuyến. Khoảng cách giữa
-        các đường này được chia thành một độ. Độ được chia tiếp thành phút. Hãy
-        tưởng tượng có 60 phút bằng nhau chia từng đường kinh tuyến và vĩ tuyến.
-        Bạn có thể dùng bản đồ trực tuyến để xác định chính xác số phút mà vị
-        trí của bạn nằm trong từng đường kinh tuyến hoặc vĩ tuyến. Dấu móc đơn
-        được sử dụng để chỉ số phút giữa các đường kinh tuyến hoặc vĩ tuyến.</p>
-      <p>Ví dụ, nếu bạn xác định được khoảng cách giữa các đường vĩ tuyến là 23
-        phút, bạn sẽ viết là <strong>23'</strong>.</p>
-      <p>Xác định số giây giữa mỗi phút. Phút sẽ được chia tiếp thành giây. Mỗi
-        phút có 60 giây. Bản đồ trực tuyến cũng giúp bạn xác định chính xác số
-        giây trong từng phút. Dấu móc kép được sử dụng để chỉ số giây.</p>
-      <p>Ví dụ, nếu khoảng cách giữa các phút trên đường kinh tuyến là 15 giây,
-        bạn sẽ viết là <strong>15"</strong>.</p>
-      <p>Ghi độ, sau đó đến phút và giây. Sau khi tìm được tọa độ chính xác đến
-        phút và giây cho kinh độ và vĩ độ, hãy viết chúng ra theo thứ tự đúng.
-        Bắt đầu với vĩ độ, viết số độ đo được, rồi đến phút và cuối cùng là
-        giây. Sau đó, thêm hướng Bắc hoặc Nam. Tiếp theo, đánh dấu phẩy, sau đó
-        là độ, phút, giây của kinh độ. Thêm hướng Đông hoặc Tây.</p>
-      <p>Chẳng hạn, bạn có vĩ độ là 15°Bắc, 24 phút, và 15 giây. Bạn có kinh độ
-        là 30°Đông, 10 phút, và 3 giây.</p>
-      <p>Kinh độ và vĩ độ trên sẽ được viết là: <strong>15°24'15"N, 30°10'3"E</strong>.</p>
-      <h4>Phương pháp 3: Sử dụng số đo độ và phút dưới dạng thập phân</h4>
-      <p>Vẫn sử dụng phút, không sử dụng giây.</p>
-      <p>Xác định tọa độ của kinh tuyến và vĩ tuyến. Bạn cũng có thể dùng phút
-        dưới dạng số thập phân để xác định kinh độ và vĩ độ. Tuy nhiên, bạn phải
-        làm lại từ đầu bằng việc xác định các đường kinh tuyến và vĩ tuyến. Tìm
-        xem đường kinh tuyến và vĩ tuyến gặp nhau ở điểm nào để xác định vị trí
-        của bạn.</p>
-      <p>Ví dụ, giả sử vị trí của bạn nằm ở tọa độ 15° vĩ Bắc, 30° kinh Tây.</p>
-      <p>Xác định số phút, bao gồm các điểm thập phân. Một số bản đồ tính số
-        phút theo sau là các điểm thập phân thay cho giây. Bản đồ trực tuyến có
-        thể cung cấp cho bạn số phút chia nhỏ đến số thập phân cho mỗi đường
-        kinh tuyến và vĩ tuyến. Ví dụ, vĩ độ có thể được xác định ở 23,0256
-        phút.</p>
-      <p>Xác định số âm và số dương. Khi dùng hệ độ và phút dạng thập phân, bạn
-        không dùng các hướng như đông, tây, nam, bắc. Thay vào đó, bạn dùng số
-        âm và số dương để xác định vị trí trên bản đồ.</p>
-      <p>Hãy nhớ, đường vĩ tuyến nằm phía trên hoặc dưới đường xích đạo. Khi sử
-        dụng số thập phân để chỉ kinh độ và vĩ độ, số dương chỉ vị trí nằm phía
-        trên đường xích đạo, còn số âm chỉ vị trí nằm phía dưới xích đạo. Số
-        23,456 nằm phía trên xích đạo, trong khi số -23,456 nằm phía dưới.</p>
-      <p>Các đường kinh tuyến nằm ở phía đông hoặc tây của Kinh tuyến gốc. Số
-        dương chỉ vị trí ở phía đông Kinh tuyến gốc, còn số âm chỉ vị trí ở phía
-        tây. Chẳng hạn, số 10,234 nằm ở phía đông Kinh tuyến gốc, trong khi số
-        -10,234 nằm ở phía tây Kinh tuyến gốc.</p>
-      <p>Ghi kinh độ và vĩ độ. Để xác định đầy đủ vị trí của một địa điểm, hãy
-        bắt đầu bằng đường vĩ tuyến. Tiếp đến là tọa độ với số phút và điểm thập
-        phân. Thêm dấu phẩy và sau đó là kinh tuyến với số phút và điểm thập
-        thân. Nhớ sử dụng số dương và số âm để xác định vị trí tọa độ. Bạn không
-        sử dụng ký hiệu độ đối với định dạng này.</p>
-      <p>Ví dụ, một đường nằm trong khoảng 15° vĩ Bắc, 30° kinh Tây. Xác định số
-        phút và điểm thập phân, rồi viết tọa độ ra.</p>
-      <p>Ví dụ nêu trên có thể được viết như sau: <strong>15 10,234, 30 -23,456</strong>.</p>
-      <h4>Phương pháp 4: Sử dụng đơn vị đo độ thập phân</h4>
-      <p>Tìm kinh tuyến và vĩ tuyến. Số độ của kinh tuyến và vĩ tuyến thường
-        được chia nhỏ thành điểm thập phân. Thay vì dùng số phút và giây, các
-        đường chỉ một độ được chia thành điểm thập phân để xác định chính xác vị
-        trí. Đầu tiên, bạn tìm số độ của kinh tuyến và vĩ tuyến.</p>
-      <p>Ví dụ, giả sử vị trí của bạn nằm ở tọa độ 15° vĩ Bắc, 30° kinh Tây.</p>
-      <p>Tính số điểm thập phân. Bản đồ trực tuyến có thể chia nhỏ kinh tuyến và
-        vĩ tuyến bằng cách dùng điểm thập phân. Thông thường, điểm thập phân
-        được tạo bởi năm chữ số.</p>
-      <p>Ví dụ, tọa độ vị trí của bạn có thể là 15,23456 vĩ bắc và 30,67890 kinh
-        tây.</p>
-      <p>Xác định số âm và số dương. Thay vì dùng các từ như: đông, tây, nam,
-        bắc để chỉ hướng, bạn sử dụng số âm và số dương. Đối với vĩ tuyến, các
-        đường nằm phía trên xích đạo được biểu diễn bằng số dương còn đường nằm
-        dưới xích đạo được biểu diễn bằng số âm. Đối với kinh tuyến, đường nằm ở
-        phía đông kinh tuyến gốc mang dấu dương trong khi đường nằm phía tây của
-        kinh tuyến gốc mang dấu âm.</p>
-      <p>Chẳng hạn, vĩ độ 15,23456 sẽ nằm phía trên đường xích đạo, trong khi vĩ
-        độ -15,23456 sẽ nằm dưới đường xích đạo.</p>
-      <p>Kinh độ 30,67890 sẽ nằm ở phía đông đường kinh tuyến gốc, trong khi
-        kinh độ -30,67890 nằm ở phía tây.</p>
-      <p>Ghi kinh độ và vĩ độ chứa điểm thập phân. Việc sử dụng độ thập phân rất
-        đơn giản. Bạn chỉ cần viết vĩ độ chứa điểm thập phân, tiếp theo là kinh
-        độ chứa điểm thập phân. Dùng dấu âm và dương để xác định hướng.</p>
-      <p>Ví dụ, giả sử ta có tọa độ 15° vĩ Bắc, 30° kinh Tây. Sử dụng hệ thống
-        độ thập phân, bạn có thể viết thành: <strong>15,23456, -30,67890</strong>.</p>
-      <h3>Kinh độ vĩ độ của các tỉnh của Việt Nam</h3>
-      <p>Danh sách các tỉnh của Việt Nam:</p>
+      <p><br>
+      </p>
+      <h3>Cách biểu diễn kinh độ vĩ độ</h3>
+      <p>Để xác định vị trí của một điểm nào đó trên trái đất, chúng ta sử dụng
+        kinh độ và vĩ độ.</p>
+      <p>Kinh tuyến là các đường kẻ dọc, vĩ tuyến là các đường kẻ ngang.</p>
+      <p>Kinh tuyến gốc có kinh độ bằng 0, đi ngang qua đài thiên văn Greenwich
+        ở Anh.</p>
+      <p>Kinh độ (longitude) có giá trị từ -180 đến 180. Giá trị dương chỉ Đông,
+        giá trị âm chỉ hướng Tây.</p>
+      <p>Đường xích đạo có vĩ tuyến bằng 0.</p>
+      <p>Vĩ độ (latitude) có giá trị từ -90 đến 90. Giá trị dương chỉ phía Bắc,
+        giá trị âm chỉ phía Nam.</p>
+      <p>Để biểu diễn kinh độ và vĩ độ, chúng ta thường dùng độ - phút - giây
+        hoặc số thập phân.</p>
+      <p>Độ - phút - giây được ký hiệu bởi các ký tự sau: <code>°</code>, <code>'</code>
+        (dấu nháy đơn), <code>"</code> (dấu nháy kép).</p>
+      <p>Khi dùng độ - phút - giây, chúng ta đi kèm với các hướng là <code>E</code>
+        (East - Đông), <code>W</code> (West - Tây), <code>N</code> (North -
+        Bắc), <code>S</code> (South - Nam).</p>
+      <p>Một độ bằng 60 phút, một phút bằng 60 giây.</p>
+      <p>Chúng ta biểu diễn vĩ độ trước, sau đó đến kinh độ.</p>
+      <p>Giả sử bạn có vĩ độ là 15°Bắc, 24 phút, 15 giây. Bạn có kinh độ là
+        30°Đông, 10 phút, 3 giây. Tọa độ trên được viết là: <strong>15°24'15"N,
+          30°10'3"E</strong>.</p>
+      <p>Tọa độ có thể viết dưới dạng số thập phân. Công thức là:</p>
+      <pre>decimals = degrees + (minutes / 60) + (seconds / 3600)</pre>
+      <p>Chúng ta vẫn biểu diễn vĩ độ trước kinh độ. Tuy nhiên, chúng ta sẽ
+        không viết hướng nữa mà sẽ thay bằng các giá trị âm hoặc dương. <code>E</code>,
+        <code>N</code> sẽ là dương, <code>W</code>, <code>S</code> sẽ là âm.</p>
+      <p>Tọa độ ví dụ khi viết dưới dạng thập phân là: <strong>15,23456,
+          -30,67890</strong>.</p>
+      <h3>Lấy danh sách cùng kinh độ vĩ độ của các tỉnh / thành phố của Việt Nam
+        rồi biểu diễn trên bản đồ</h3>
+      <p>Trong công việc, tôi được giao một task như sau: hiển thị danh sách các
+        tỉnh / thành phố của Việt Nam; khi click vào từng tỉnh thì hiển thị trên
+        bản đồ tỉnh đó. Tôi sẽ chia sẽ lại với các bạn các bước mà tôi đã thực
+        hiện.</p>
+      <h4>Crawl dữ liệu</h4>
+      <p>Đầu tiên, tôi sẽ lấy danh sách tên các tỉnh của Việt Nam cùng địa chỉ
+        Wikipedia của tỉnh đó. Lý do tôi sử dụng Wikipedia vì ở trang chi tiết
+        từng tỉnh có thông tin tọa độ.</p>
+      <p>Danh sách các tỉnh / thành phố của Việt Nam ở địa chỉ sau:</p>
       <p><a href="https://en.wikipedia.org/wiki/Provinces_of_Vietnam" target="_blank">Provinces
           of Vietnam - Wikipedia</a></p>
-      <p><br>
+      <p>Tôi sẽ sử dụng PHP để bóc tách cấu trúc HTML của trang web và lấy ra
+        danh sách tỉnh. Sau khi có danh sách, tôi sẽ thực hiện vòng lặp để gọi
+        trang chi tiết của từng tỉnh và lấy ra kinh độ vĩ độ.</p>
+      <p>Full code PHP <code>get_province_list.php</code> như sau:</p>
+      <pre data-code-lang="php">&lt;?php
+
+/**
+ * Lấy mã HTML của trang web.
+ * @param string $url Địa chỉ trang web
+ * @return string Mã HTML
+ */
+function getHtml(string $url): string
+{
+    $curl = curl_init($url);
+    curl_setopt_array($curl, [
+        CURLOPT_RETURNTRANSFER =&gt; true,
+        CURLOPT_SSL_VERIFYPEER =&gt; false,
+        CURLOPT_FOLLOWLOCATION =&gt; true,
+        CURLOPT_SSL_VERIFYPEER =&gt; false,
+        CURLOPT_SSL_VERIFYHOST =&gt; false
+    ]);
+    $resp = curl_exec($curl);
+    curl_close($curl);
+    return $resp;
+}
+
+
+/**
+ * Bóc tách mã HTML, lấy danh sách các tỉnh / thành phố của Việt Nam.
+ */
+function getProvinceList(string $html): array
+{
+    $doc = new DomDocument();
+    @$doc-&gt;loadHTML($html);
+
+    $table = $doc-&gt;getElementsByTagName('table')-&gt;item(2);
+    $rows = $table-&gt;getElementsByTagName('tr');
+
+    $provinceList = [];
+    foreach ($rows as $idx =&gt; $row) {
+        // Dòng header không có thẻ td
+        if ($idx == 0) {
+            continue;
+        }
+
+        $cols = $row-&gt;getElementsByTagName('td');
+        $firstCell = $cols-&gt;item(0);
+        $link = $firstCell-&gt;getElementsByTagName('a')-&gt;item(0);
+        $provinceName = $link-&gt;nodeValue;
+        $provinceName = str_replace([' Province', ' City'], ['', ''], $provinceName);
+        $url = $link-&gt;getAttribute('href');
+        
+        $provinceList[] = [
+            'name' =&gt; $provinceName,
+            'url' =&gt; 'https://en.m.wikipedia.org' . $url
+        ];
+    }
+
+    return $provinceList;
+}
+
+
+/**
+ * Lấy tọa độ của từng tỉnh từ trang Wikipedia của tỉnh đó.
+ */
+function getCoordinatesOfProvince(string $url): array
+{
+    $html = getHtml($url);
+    $doc = new DomDocument();
+    @$doc-&gt;loadHTML($html);
+
+    $xpath = new DOMXpath($doc);
+    $elems = $xpath-&gt;query("//span[@class='geo-dec']");
+    $summary = $elems[0]-&gt;textContent;
+    echo $summary . PHP_EOL;
+
+    $lat = 0;
+    $lng = 0;
+    $regex = '/([\d.]+)°N ([\d.]+)°E/';
+    if (preg_match($regex, $summary, $maches)) {
+        $lat = floatval($maches[1]);
+        $lng = floatval($maches[2]);
+    }
+
+    return [
+        $lat,
+        $lng
+    ];
+}
+
+
+/**
+ * Lưu đầu ra JSON ra file.
+ */
+function writeToJsonFile(array $provinceList): void
+{
+    $filePath = 'data/provinceList.json';
+    $json = json_encode($provinceList, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    file_put_contents($filePath, $json);
+}
+
+
+function main(): void
+{
+    $html = getHtml('https://en.m.wikipedia.org/wiki/Provinces_of_Vietnam');
+    $provinceList = getProvinceList($html);
+    foreach ($provinceList as $i =&gt; $province) {
+        [$lat, $lng] = getCoordinatesOfProvince($province['url']);
+        echo $province['name'] . PHP_EOL . $lat . ', ' . $lng . PHP_EOL . PHP_EOL;
+        $provinceList[$i]['lat'] = $lat;
+        $provinceList[$i]['lng'] = $lng;
+        unset($provinceList[$i]['url']);
+    }
+    writeToJsonFile($provinceList);
+}
+
+main();</pre>
+      <p>Thực hiện script:</p>
+      <pre class="command-line">php get_province_list.php</pre>
+      <p>Sau khi thực hiện xong script, chúng ta sẽ được file đầu ra <code>data/provinceList.json</code>
+        như sau:</p>
+      <pre data-code-lang="json">[
+    {
+        "name": "Bắc Giang",
+        "lat": 21.333,
+        "lng": 106.333
+    },
+    {
+        "name": "Bắc Kạn",
+        "lat": 22.167,
+        "lng": 105.833
+    },
+    {
+        "name": "Cao Bằng",
+        "lat": 22.667,
+        "lng": 106
+    },
+    {
+        "name": "Hà Giang",
+        "lat": 22.75,
+        "lng": 105
+    },
+    {
+        "name": "Lạng Sơn",
+        "lat": 21.75,
+        "lng": 106.5
+    },
+    {
+        "name": "Phú Thọ",
+        "lat": 21.333,
+        "lng": 105.167
+    },
+    {
+        "name": "Quảng Ninh",
+        "lat": 21.25,
+        "lng": 107.333
+    },
+    {
+        "name": "Thái Nguyên",
+        "lat": 21.667,
+        "lng": 105.833
+    },
+    {
+        "name": "Tuyên Quang",
+        "lat": 22.117,
+        "lng": 105.25
+    },
+    {
+        "name": "Lào Cai",
+        "lat": 22.333,
+        "lng": 104
+    },
+    {
+        "name": "Yên Bái",
+        "lat": 21.5,
+        "lng": 104.667
+    },
+    {
+        "name": "Điện Biên",
+        "lat": 21.383,
+        "lng": 103.017
+    },
+    {
+        "name": "Hòa Bình",
+        "lat": 20.333,
+        "lng": 105.25
+    },
+    {
+        "name": "Lai Châu",
+        "lat": 22,
+        "lng": 103
+    },
+    {
+        "name": "Sơn La",
+        "lat": 21.167,
+        "lng": 104
+    },
+    {
+        "name": "Bắc Ninh",
+        "lat": 21.083,
+        "lng": 106.167
+    },
+    {
+        "name": "Hà Nam",
+        "lat": 20.583,
+        "lng": 106
+    },
+    {
+        "name": "Hải Dương",
+        "lat": 20.917,
+        "lng": 106.333
+    },
+    {
+        "name": "Hưng Yên",
+        "lat": 20.833,
+        "lng": 106.083
+    },
+    {
+        "name": "Nam Định",
+        "lat": 20.25,
+        "lng": 106.25
+    },
+    {
+        "name": "Ninh Bình",
+        "lat": 20.25,
+        "lng": 105.833
+    },
+    {
+        "name": "Thái Bình",
+        "lat": 20.5,
+        "lng": 106.333
+    },
+    {
+        "name": "Vĩnh Phúc",
+        "lat": 21.3,
+        "lng": 105.6
+    },
+    {
+        "name": "Hà Nội",
+        "lat": 21.02833,
+        "lng": 105.85417
+    },
+    {
+        "name": "Hải Phòng",
+        "lat": 20.865139,
+        "lng": 106.683833
+    },
+    {
+        "name": "Hà Tĩnh",
+        "lat": 18.333,
+        "lng": 105.9
+    },
+    {
+        "name": "Nghệ An",
+        "lat": 19.333,
+        "lng": 104.833
+    },
+    {
+        "name": "Quảng Bình",
+        "lat": 17.5,
+        "lng": 106.333
+    },
+    {
+        "name": "Quảng Trị",
+        "lat": 16.75,
+        "lng": 107
+    },
+    {
+        "name": "Thanh Hóa",
+        "lat": 20,
+        "lng": 105.5
+    },
+    {
+        "name": "Thừa Thiên-Huế",
+        "lat": 16.333,
+        "lng": 107.583
+    },
+    {
+        "name": "Đắk Lắk",
+        "lat": 12.667,
+        "lng": 108.05
+    },
+    {
+        "name": "Đắk Nông",
+        "lat": 11.983,
+        "lng": 107.7
+    },
+    {
+        "name": "Gia Lai",
+        "lat": 13.75,
+        "lng": 108.25
+    },
+    {
+        "name": "Kon Tum",
+        "lat": 14.75,
+        "lng": 107.917
+    },
+    {
+        "name": "Lâm Đồng",
+        "lat": 11.95,
+        "lng": 108.433
+    },
+    {
+        "name": "Bình Định",
+        "lat": 14.167,
+        "lng": 109
+    },
+    {
+        "name": "Bình Thuận",
+        "lat": 10.933,
+        "lng": 108.1
+    },
+    {
+        "name": "Khánh Hòa",
+        "lat": 12.25,
+        "lng": 109.2
+    },
+    {
+        "name": "Ninh Thuận",
+        "lat": 11.75,
+        "lng": 108.833
+    },
+    {
+        "name": "Phú Yên",
+        "lat": 13.167,
+        "lng": 109.167
+    },
+    {
+        "name": "Quảng Nam",
+        "lat": 15.58333,
+        "lng": 107.91667
+    },
+    {
+        "name": "Quảng Ngãi",
+        "lat": 15,
+        "lng": 108.667
+    },
+    {
+        "name": "Đà Nẵng",
+        "lat": 16.06944,
+        "lng": 108.20972
+    },
+    {
+        "name": "Bà Rịa-Vũng Tàu",
+        "lat": 10.583,
+        "lng": 107.25
+    },
+    {
+        "name": "Bình Dương",
+        "lat": 11.167,
+        "lng": 106.667
+    },
+    {
+        "name": "Bình Phước",
+        "lat": 11.75,
+        "lng": 106.917
+    },
+    {
+        "name": "Đồng Nai",
+        "lat": 11.117,
+        "lng": 107.183
+    },
+    {
+        "name": "Tây Ninh",
+        "lat": 11.333,
+        "lng": 106.167
+    },
+    {
+        "name": "Hồ Chí Minh",
+        "lat": 10.8,
+        "lng": 106.65
+    },
+    {
+        "name": "An Giang",
+        "lat": 10.5,
+        "lng": 105.167
+    },
+    {
+        "name": "Bạc Liêu",
+        "lat": 9.25,
+        "lng": 105.75
+    },
+    {
+        "name": "Bến Tre",
+        "lat": 10.167,
+        "lng": 106.5
+    },
+    {
+        "name": "Cà Mau",
+        "lat": 9.083,
+        "lng": 105.083
+    },
+    {
+        "name": "Đồng Tháp",
+        "lat": 10.667,
+        "lng": 105.667
+    },
+    {
+        "name": "Hậu Giang",
+        "lat": 9.783,
+        "lng": 105.467
+    },
+    {
+        "name": "Kiên Giang",
+        "lat": 10,
+        "lng": 105.167
+    },
+    {
+        "name": "Long An",
+        "lat": 10.667,
+        "lng": 106.167
+    },
+    {
+        "name": "Sóc Trăng",
+        "lat": 9.667,
+        "lng": 105.833
+    },
+    {
+        "name": "Tiền Giang",
+        "lat": 10.417,
+        "lng": 106.167
+    },
+    {
+        "name": "Trà Vinh",
+        "lat": 9.833,
+        "lng": 106.25
+    },
+    {
+        "name": "Vĩnh Long",
+        "lat": 10.167,
+        "lng": 106
+    },
+    {
+        "name": "Cần Thơ",
+        "lat": 10.033,
+        "lng": 105.783
+    }
+]</pre>
+      <h4>Hiển thị trên bản đồ</h4>
+      <p>Tôi sử dụng Leaflet và OpenStreetMap để hiển thị bản đồ. Ngoài ra tôi
+        cũng dùng Vue để code gọn hơn. Code HTML <code>province_list.html</code>
+        như sau:</p>
+      <pre data-code-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta http-equiv="content-type" content="text/html; charset=UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Bản đồ tỉnh thành phố&lt;/title&gt;
+    &lt;link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div id="app"
+        class="container-fluid"&gt;
+        &lt;div class="row"&gt;
+            &lt;div class="col-md-2"&gt;
+                &lt;div class="custom-scrollbar overflow-auto vh-100 pt-3"&gt;
+                    &lt;ul&gt;
+                        &lt;li v-for="province in provinceList"&gt;
+                            &lt;a href=""
+                                @click.prevent="chooseProvince(province)"&gt;{{province.name}}&lt;/a&gt;
+                        &lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/div&gt;
+                
+            &lt;/div&gt;
+
+            &lt;div class="col-md-10 p-0"&gt;
+                &lt;div ref="mapContainer"
+                    class="vh-100"&gt;&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" /&gt;
+    &lt;script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"&gt;&lt;/script&gt;
+
+    &lt;script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"&gt;&lt;/script&gt;
+    
+    &lt;script src="js/script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+      <p>File <code>js/script.js</code> như sau:</p>
+      <pre data-code-lang="javascript">async function getProvinceList() {
+    const data = await fetch('data/provinceList.json').then(resp =&gt; resp.json());
+    return data;
+}
+
+
+function initVue(provinceList) {
+    new Vue({
+        el: '#app',
+
+        data() {
+            return {
+                provinceList,
+                map: null
+            };
+        },
+
+        mounted() {
+            this.initMap();
+            this.addMarkers();
+        },
+
+        methods: {
+            initMap() {
+                this.map = L.map(this.$refs.mapContainer, {
+                    attributionControl: false,
+                    center: [21.0819, 105.6363],
+                    zoom: 8
+                });
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
+                    .addTo(this.map);
+            },
+
+            addMarkers() {
+                this.provinceList.forEach(province =&gt; {
+                    const latlng = L.latLng(province.lat, province.lng);
+                    const marker = L.marker(latlng)
+                        .addTo(this.map)
+                        .bindPopup(province.name);
+                    province.latlng = latlng;
+                    province.marker = marker;
+                });
+            },
+
+            chooseProvince(province) {
+                this.map.panTo(province.latlng);
+                province.marker.openPopup();
+            }
+        }
+    });
+}
+
+
+async function main() {
+    const provinceList = await getProvinceList();
+    initVue(provinceList);
+}
+
+main();</pre>
+      <p>Kết quả:</p>
+      <figure><img src="images/province_list.png" alt=""></figure>
+      <p>Hy vọng bài viết này có thể giúp đỡ được bạn nào đó cũng được giao task
+        tương tự.<br>
       </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <h3>Đổi tọa độ từ độ - phút - giây sang thập phân</h3>
-      <p>First of all let's take a look at the symbols:</p>
-      <p>° : degree</p>
-      <p>' : minute</p>
-      <p>" : second</p>
-      <p>1 minute is equal to 60 seconds.</p>
-      <p>1 degree is equal to 1 hour, that is equal to 60 minutes or 3600
-        seconds.</p>
-      <p>Decimal Degrees = degrees + (minutes/60) + (seconds/3600)</p>
-      <p>DD = d + (min/60) + (sec/3600)</p>
-      <p><br>
-      </p>
-      <h3>Bản đồ tỉnh thành phố</h3>
-      <p><a href="province_list.html">Bản đồ tỉnh thành phố</a></p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
+      <p><a href="https://lockex1987.github.io/posts/project%20-%20vietnamese%20divisions/province_list.html">Demo</a></p>
       <h3>Tham khảo</h3>
-      <p><a href="https://www.wikihow.vn/Ghi-kinh-%C4%91%E1%BB%99-v%C3%A0-v%C4%A9-%C4%91%E1%BB%99"
+      <p><a href="https://www.wikihow.vn/Ghi-kinh-%C4%91%E1%BB%99-v%C3%A0-v%C4%A9-%C4%91%E1%BB%99"
+
           target="_blank">Ghi kinh độ và vĩ độ – wikiHow</a></p>
       <p><br>
       </p>
@@ -222,5 +648,6 @@
       </p>
     </article>
     <script src="../../js/docs.js"></script>
+    
   </body>
 </html>
