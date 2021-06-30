@@ -1,3 +1,4 @@
+// https://cttd.tk/posts/highmaps%20-%20world/ui%20-%20map%20ammap/demos/capitals-map/index.html
 new Vue({
     el: '#app',
 
