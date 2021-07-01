@@ -13,7 +13,8 @@ function convertHtmlToMarkdown(string $inputFilePath): void
     ];
     $converter = new HtmlConverter($options);
     $markdown = $converter->convert($html);
-    $outputFilePath = 'dist/index.md';
+    // $outputFilePath = 'dist/index.md';
+    $outputFilePath = str_replace('.html', '.md', $inputFilePath);
     file_put_contents($outputFilePath, $markdown);
 }
 

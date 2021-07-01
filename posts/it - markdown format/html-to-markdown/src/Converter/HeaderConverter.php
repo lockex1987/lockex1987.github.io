@@ -30,6 +30,8 @@ class HeaderConverter implements ConverterInterface, ConfigurationAwareInterface
             return "\n";
         }
 
+        // echo $element->getTagName() . ': ' . $element->getValue() . '.' . PHP_EOL;
+
         if (($level === 1 || $level === 2) && ! $element->isDescendantOf('blockquote') && $style === self::STYLE_SETEXT) {
             return $this->createSetextHeader($level, $element->getValue());
         }
@@ -49,6 +51,8 @@ class HeaderConverter implements ConverterInterface, ConfigurationAwareInterface
     {
         $length    = \function_exists('mb_strlen') ? \mb_strlen($content, 'utf-8') : \strlen($content);
         $underline = $level === 1 ? '=' : '-';
+
+        // echo $content . PHP_EOL;
 
         return $content . "\n" . \str_repeat($underline, $length) . "\n\n";
     }

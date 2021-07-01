@@ -101,6 +101,8 @@ class HtmlConverter implements HtmlConverterInterface
         // Store the now-modified DOMDocument as a string
         $markdown = $document->saveHTML();
 
+        // echo $markdown;
+
         if ($markdown === false) {
             throw new \RuntimeException('Unknown error occurred during HTML to Markdown conversion');
         }
@@ -165,6 +167,11 @@ class HtmlConverter implements HtmlConverterInterface
         // Create a DOM text node containing the Markdown equivalent of the original node
 
         // Replace the old $node e.g. '<h3>Title</h3>' with the new $markdown_node e.g. '### Title'
+        /*
+        if ($element->getTagName() == 'h2') {
+            echo 'Catch you: ' . $markdown . PHP_EOL;
+        }
+        */
         $element->setFinalMarkdown($markdown);
     }
 
@@ -195,9 +202,12 @@ class HtmlConverter implements HtmlConverterInterface
     protected function sanitize(string $markdown): string
     {
         $markdown = \html_entity_decode($markdown, ENT_QUOTES, 'UTF-8');
+        // TODO: Bị mất <!DOCTYPE html> ở trong code fence
         $markdown = \preg_replace('/<!DOCTYPE [^>]+>/', '', $markdown); // Strip doctype declaration
         \assert($markdown !== null);
         $markdown = \trim($markdown); // Remove blank spaces at the beggining of the html
+
+        // echo substr($markdown, 0, 100);
 
         /*
          * Removing unwanted tags. Tags should be added to the array in the order they are expected.
@@ -220,6 +230,10 @@ class HtmlConverter implements HtmlConverterInterface
         }
 
         // echo $markdown;
+
+        // TODO: Đang bị lỗi heading đầu tiên có dấu cách ở đầu
+        // trim tiếp cho chắc
+        $markdown = \trim($markdown);
 
         return \trim($markdown, "\n\r\0\x0B");
     }

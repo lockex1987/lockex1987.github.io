@@ -13,6 +13,9 @@ class PreformattedConverter implements ConverterInterface
         $preContent = \html_entity_decode($element->getChildrenAsString());
         $preContent = \str_replace(['<pre>', '</pre>'], '', $preContent);
 
+        // lockex1987 adds: Xóa cả class của CSS, ví dụ class="command-line"
+        $preContent = \preg_replace('/<pre\b[^>]*>/', '', $preContent);
+
         /*
          * Checking for the code tag.
          * Usually pre tags are used along with code tags. This conditional will check for already converted code tags,

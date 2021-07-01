@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -86,8 +86,8 @@
       <p>Tôi sẽ sử dụng PHP để bóc tách cấu trúc HTML của trang web và lấy ra
         danh sách tỉnh. Sau khi có danh sách, tôi sẽ thực hiện vòng lặp để gọi
         trang chi tiết của từng tỉnh và lấy ra kinh độ vĩ độ.</p>
-      <p>Full code PHP <code>get_province_list.php</code> như sau:</p>
-      <pre data-code-lang="php">&lt;?php
+      <p>File <code>get_province_list.php</code> như sau:</p>
+      <pre><code class="language-php">&lt;?php
 
 /**
  * Lấy mã HTML của trang web.
@@ -199,12 +199,12 @@ function main(): void
     writeToJsonFile($provinceList);
 }
 
-main();</pre>
+main();</code></pre>
       <p>Thực hiện script:</p>
       <pre class="command-line">php get_province_list.php</pre>
       <p>Sau khi thực hiện xong script, chúng ta sẽ được file đầu ra <code>data/provinceList.json</code>
         như sau:</p>
-      <pre data-code-lang="json">[
+      <pre><code class="language-json">[
     {
         "name": "Bắc Giang",
         "lat": 21.333,
@@ -520,12 +520,12 @@ main();</pre>
         "lat": 10.033,
         "lng": 105.783
     }
-]</pre>
+]</code></pre>
       <h4>Hiển thị trên bản đồ</h4>
       <p>Tôi sử dụng Leaflet và OpenStreetMap để hiển thị bản đồ. Ngoài ra tôi
-        cũng dùng Vue để code gọn hơn. Code HTML <code>province_list.html</code>
+        cũng dùng Vue để code gọn hơn. File <code>province_list.html</code>
         như sau:</p>
-      <pre data-code-lang="html">&lt;!DOCTYPE html&gt;
+      <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
     &lt;meta http-equiv="content-type" content="text/html; charset=UTF-8"&gt;
@@ -564,9 +564,9 @@ main();</pre>
     
     &lt;script src="js/script.js"&gt;&lt;/script&gt;
 &lt;/body&gt;
-&lt;/html&gt;</pre>
+&lt;/html&gt;</code></pre>
       <p>File <code>js/script.js</code> như sau:</p>
-      <pre data-code-lang="javascript">async function getProvinceList() {
+      <pre><code class="language-javascript">async function getProvinceList() {
     const data = await fetch('data/provinceList.json').then(resp =&gt; resp.json());
     return data;
 }
@@ -625,13 +625,13 @@ async function main() {
     initVue(provinceList);
 }
 
-main();</pre>
+main();</code></pre>
       <p>Kết quả:</p>
-      <figure class="border"><img src="images/province_list.png" alt=""></figure>
-      <p>Hy vọng bài viết này có thể giúp đỡ được bạn nào đó cũng được giao task
-        tương tự.<br>
-      </p>
+      <figure class="border"><img src="https://lockex1987.github.io/posts/project%20-%20vietnamese%20divisions/images/province_list.png" alt=""></figure>
       <p><a href="https://lockex1987.github.io/posts/project%20-%20vietnamese%20divisions/province_list.html">Demo</a></p>
+      <p>Hy vọng bài viết này có thể giúp đỡ được bạn nào đó cũng được giao task
+        tương tự.</p>
+      
       <h3>Tham khảo</h3>
       <p><a href="https://www.wikihow.vn/Ghi-kinh-%C4%91%E1%BB%99-v%C3%A0-v%C4%A9-%C4%91%E1%BB%99"
 
