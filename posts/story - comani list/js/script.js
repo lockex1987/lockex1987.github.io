@@ -5,7 +5,9 @@ new Vue({
         return {
             logo: '',
             sections: [],
-            link: 'ultimates.json'
+            items: [],
+            // link: 'ultimates.json'
+            link: 'infinity.json'
         };
     },
 
@@ -16,8 +18,9 @@ new Vue({
     methods: {
         async getData() {
             const data = await fetch('data/' + this.link).then(resp => resp.json());
-            this.logo = data.logo;
-            this.sections = data.sections;
+            // this.logo = data.logo;
+            // this.sections = data.sections;
+            this.items = data;
         }
     }
 });
