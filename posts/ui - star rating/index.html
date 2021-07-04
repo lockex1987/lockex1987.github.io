@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="range input">
+    
+    <title>Star rating</title>
+    
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <article id="app">
+        <h2>Star rating</h2>
+
+        <div class="font-size-1.5">
+            <span class="fa fa-star text-orange"></span>
+            <span class="fa fa-star text-orange"></span>
+            <span class="fa fa-star text-orange"></span>
+            <span class="fa fa-star text-orange"></span>
+            <span class="fa fa-star"></span>
+        </div>
+
+        <div class="mb-3 text-muted font-size-0.875 pb-3 border-bottom">
+            <span>{{average}}</span>
+            average based on
+            <span>{{total}}</span>
+            reviews
+        </div>
+
+        <div class="rating-table">
+            <div v-for="e in list"
+                class="rating-row mt-2 clearfix">
+                <div class="pull-left w-15">
+                    {{e.star}} star
+                </div>
+    
+                <div class="pull-left w-70 bg-light">
+                    <div class="bar"
+                        :class="backgroundColors[e.star - 1]"
+                        :style="{ width: e.percent + '%' }"></div>
+                </div>
+    
+                <div class="pull-left w-15 text-right font-weight-500">
+                    {{e.num}}
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="../../js/docs.js"></script>
+</body>
+</html>

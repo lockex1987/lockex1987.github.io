@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Star-Rating Using a Range-slider</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <p>
+        <a href="https://dev.to/madsstoumann/star-rating-using-a-single-input-i0l">
+            Star-Rating Using A Single Input | DEV Community
+        </a>
+        
+    </p>
+    <p>
+        <a href="https://lockex1987.github.io/posts/ui%20-%20user%20rating/">
+            Star rating
+        </a>
+    </p>
+    <div>
+        <img src="star.svg" style="width: 3rem; height: 3rem"/>
+    </div>
+
+    <label class="rating-label">
+        <strong>“Half stars” using <code>step="0.5"</code></strong>
+        <input class="rating"
+            max="5"
+            oninput="this.style.setProperty('--value', this.value)"
+            step="0.5"
+            type="range"
+            value="1">
+    </label>
+
+    <label class="rating-label">
+        <strong>Set <code>max</code> and <code>--stars</code> to 4”</strong>
+        <input class="rating"
+            max="4"
+            oninput="this.style.setProperty('--value', this.value)"
+            step="1"
+            style="--stars: 4; --value: 2"
+            type="range"
+            value="2">
+    </label>
+
+    <label class="rating-label" dir="rtl">
+        <strong>Set <code>dir</code> to <code>rtl</code></strong>
+        <input class="rating"
+            max="5"
+            oninput="this.style.setProperty('--value', this.value)"
+            step="0.5"
+            style="--value: 2"
+            type="range"
+            value="2">
+    </label>
+</body>
+</html>
