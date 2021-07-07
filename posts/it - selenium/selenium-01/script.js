@@ -61,7 +61,7 @@ async function takeScreenshot() {
     // Returns base64 encoded string
     const encodedString = await driver.takeScreenshot();
 
-    fs.writeFileSync('./image.png', encodedString, 'base64');
+    fs.writeFileSync('./dist/image.png', encodedString, 'base64');
     await driver.quit();
 }
 
