@@ -4,7 +4,7 @@
 
 const chrome = require('selenium-webdriver/chrome');
 const proxy = require('selenium-webdriver/proxy');
-const { Builder } = require('selenium-webdriver');
+const { Builder, Capabilities } = require('selenium-webdriver');
 const fs = require('fs');
 
 
@@ -46,17 +46,24 @@ async function myFunction() {
 
 async function takeScreenshot() {
     const opts = new chrome.Options();
-    opts.setProxy(proxy.manual({
+    const proxyConfig = proxy.manual({
         http: '192.168.103.26:80',
         sslProxy: '192.168.103.26:80'
-    }));
+    });
+    opts.setProxy(proxyConfig);
 
     const driver = await new Builder()
         .forBrowser('chrome')
-        .setChromeOptions(opts)
+
+        // Sử dụng proxy của hệ thống
+        // Thiết lập proxy của hệ thống là 192.168.103.26:80
+        // .setChromeOptions(opts)
+        // .withCapabilities(Capabilities.chrome())
+        // .setProxy(proxyConfig)
+
         .build();
 
-    await driver.get('https://cttd.tk'); // https://cttd.tk, https://selenium.dev
+    await driver.get('https://selenium.dev'); // https://cttd.tk, https://selenium.dev
 
     // Returns base64 encoded string
     const encodedString = await driver.takeScreenshot();
