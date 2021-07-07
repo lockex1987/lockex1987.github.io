@@ -436,10 +436,17 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     function highlighSourceCodeSyntax() {
+		const standardCodeBlocks = [...document.querySelectorAll('pre code[class^=language-]')];
+		console.log();
+
         const codeBlocks = [...document.querySelectorAll('pre[data-code-lang]')];
-        if (codeBlocks.length == 0) {
+        if (codeBlocks.length == 0 && standardCodeBlocks.length == 0) {
             return;
         }
+		
+		standardCodeBlocks.forEach(codeTag => {
+            codeTag.innerHTML = codeTag.innerHTML.replace(/<br>/g, "\n");
+		});
 
         codeBlocks.forEach(preTag => {
             const lang = preTag.dataset.codeLang;
