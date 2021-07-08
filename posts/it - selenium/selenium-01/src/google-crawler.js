@@ -1,4 +1,5 @@
 const { Builder, By } = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
 const { cutOffDomain } = require('./domain-util.js');
 
 class GoogleCrawler {
@@ -7,8 +8,10 @@ class GoogleCrawler {
     }
 
     async initDriver() {
+        const opts = new chrome.Options();
         this.driver = await new Builder()
             .forBrowser('chrome')
+            .setChromeOptions(opts.headless())
             .build();
         return this;
     }

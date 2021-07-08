@@ -11,6 +11,7 @@
   <body>
     <article>
       <h2>Hướng dẫn Selenium cơ bản</h2>
+      <h3>Giới thiệu</h3>
       <p>Tìm hiểu xem Selenium (automation test) có thể làm được những gì.</p>
       <p>Selenium gồm các thành phần:</p>
       <ul>
@@ -31,9 +32,117 @@
       </p>
       <p>Tôi chọn JS để học cùng với Selenium.</p>
       <p>Phiên bản tôi sử dụng là:</p>
-      <p>Selenium 3.141</p>
+      <p>Selenium 3.141 (4.0.0-beta.4)</p>
+      <p>Trình duyệt Chrome</p>
+      <p>Ngôn ngữ lập trình JS (Node)</p>
       <p><br>
       </p>
+      <p><br>
+      </p>
+      <h3>Bắt đầu</h3>
+      <p>Download file driver dạng binary ở địa chỉ:</p>
+      <p>Link</p>
+      <p>Chú ý:</p>
+      <ul>
+        <li>Bạn phải có sẵn trình duyệt tương ứng (Chrome, Firefox,...) cài ở
+          máy</li>
+        <li>Bạn phải chọn đúng phiên bản của driver và phiên bản trình duyệt ở
+          máy bạn</li>
+      </ul>
+      <p>Cho file driver ở đường dẫn PATH của hệ điều hành.</p>
+      <p><br>
+      </p>
+      <p>Sử dụng package <code>selenium-webdriver</code>:</p>
+      <pre class="command-line">npm install selenium-webdriver</pre>
+      <p>Một số source code của Selenium vẫn viết dạng module.exports cũ (ví dụ
+        selenium-webdriver/chrome), không sử dụng import / export mới của ES6
+        module. Do đó chúng ta vẫn sử dụng require.</p>
+      <p>Để sử dụng import của ES6, bạn phải thêm cấu hình "type": "module" ở
+        file package.json.</p>
+      <p>Bạn không thể dùng lẫn require và import.</p>
+      <p>File <code>01-get-started.js</code>:</p>
+      <pre><code class="language-js">const { Builder } = require('selenium-webdriver');
+
+async function getStarted() {
+    const driver = await new Builder().forBrowser('chrome').build();
+    const url = 'https://google.com';
+    await driver.get(url);
+}
+
+getStarted();</code></pre>
+      <p>Thực thi:</p>
+      <pre class="command-line">node 01-get-started.js</pre>
+      <p>Bạn sẽ thấy trình duyệt Chrome được bật và hiển thị trang web
+        google.com.</p>
+      <h3>Một số thao tác cơ bản<br>
+      </h3>
+      <p>Lấy tiêu đề, URL, source code của trang.</p>
+      <p>Đóng trình duyệt.</p>
+      <p>Chụp ảnh screenshot.</p>
+      <p>Chạy headless, xuất file PDF.</p>
+      <p>Phần lớn các phương thức đều trả về Promise. Hãy sử dụng async await.<br>
+      </p>
+      <p>Kích thước cửa sổ.</p>
+      <h3>Navigate</h3>
+      <p>Back, forward, refresh.</p>
+      <h3>Sử dụng proxy<br>
+      </h3>
+      <p>Đang không được ở máy công ty.</p>
+      <p>Mặc định sẽ sử dụng proxy của hệ thống. Thiết lập proxy của hệ thống là
+        192.168.103.26:80 thì chạy được.</p>
+      <h3>Đường dẫn driver</h3>
+      <p>Để đường dẫn ở trong thư mục thuộc biến môi trường <code>PATH</code>
+        của hệ điều hành.</p>
+      <p>Nếu không thì cần cấu hình (trước khi khởi tạo driver):</p>
+      <pre>x</pre>
+      <p><br>
+      </p>
+      <h3>Select phần tử</h3>
+      <p>ID</p>
+      <p>Name</p>
+      <p>Class</p>
+      <p>CSS selector</p>
+      <p>XPath</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Phần tử WebElement</h3>
+      <p>attribute</p>
+      <p>text</p>
+      <p>HTML</p>
+      <h3>Keyboard</h3>
+      <p>x</p>
+      <p><br>
+      </p>
+      <h3>Thực hiện JS</h3>
+      <p>x</p>
+      <p><br>
+      </p>
+      <h3>Wait</h3>
+      <p>x</p>
+      <p><br>
+      </p>
+      <h3>Upload file</h3>
+      <p>y</p>
+      <h3>Iframe</h3>
+      <p>z</p>
+      <h3>Tab</h3>
+      <p>z</p>
+      <p><br>
+      </p>
+      <h3>Profile</h3>
+      <p>Lịch sử<br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p></p>
+      <p><br>
+      </p>
+      <h3>Google crawler</h3>
+      <p>Crawl các domain bằng Google theo từ khóa.</p>
       <h3>Thực thi dạng headless</h3>
       <p>Triển khai trên Linux server, không có giao diện đồ họa.</p>
       <p>Nếu sử dụng FirefoxDriver:</p>
@@ -65,7 +174,10 @@ Exception in thread "main" org.openqa.selenium.WebDriverException: connection re
 this.driver = new HtmlUnitDriver(BrowserVersion.CHROME, true);</pre>
       <p>Hiện tại đang phải dùng lệnh export DISPLAY=:99 thì mới chạy được.</p>
       <p>Tuy nhiên, lệnh này đang không được lưu giữa session.</p>
-      <p><br>
+      <h3>Selenium IDE</h3>
+      <p>Những cái chúng ta đã học từ đầu gọi là Selenium WebDriver.</p>
+      <h3>Selenium Grid</h3>
+      <p>x<br>
       </p>
       <p><br>
       </p>
@@ -73,10 +185,6 @@ this.driver = new HtmlUnitDriver(BrowserVersion.CHROME, true);</pre>
       </p>
       <p><br>
       </p>
-      <p><br>
-      </p>
-      <h3>Google crawler</h3>
-      <p>Crawl các domain bằng Google theo từ khóa, Selenium</p>
       <h3>Tham khảo</h3>
       <p>Bắt đầu, tổng quan, tiếng Việt cho dễ</p>
       <p><a href="https://en.wikipedia.org/wiki/Selenium_%28software%29" target="_blank">Selenium
@@ -92,11 +200,18 @@ this.driver = new HtmlUnitDriver(BrowserVersion.CHROME, true);</pre>
           target="_blank">Selenium Tutorials - 31+ Bài hướng dẫn học Selenium</a></p>
       <p><a href="https://www.softwaretestinghelp.com/selenium-tutorial-1/" target="_blank">30+
           Best Selenium Tutorials: Learn Selenium With Real Examples</a></p>
+      <p><a href="https://www.selenium.dev/selenium/docs/api/javascript/index.html"
+          target="_blank">JS API reference</a></p>
+      <p>(Có thể xem luôn source code ở node_modules)</p>
+      <p><a href="https://www.browserstack.com/docs/automate/selenium" target="_blank">Run
+          Selenium tests on BrowserStack Automate | BrowserStack Docs</a> </p>
+      <p><a href="https://selenium-python.readthedocs.io/" target="_blank">Selenium
+          with Python — Selenium Python Bindings 2 documentation</a></p>
       <p><br>
       </p>
-      <p><a href="https://trinhtuantai.com/huong-dan-lay-du-lieu-web-web-crawling-voi-selenium-python-webdrive.html"
-          target="_blank">Hướng dẫn lấy dữ liệu web, Web Crawling với Selenium -
-          Python - WebDrive</a></p>
+      <p><a href="https://github.com/selenium-webdriver-book/manuscript/blob/master/manuscript/ch01_first_steps.adoc"
+          target="_blank">manuscript/ch01_first_steps.adoc at master ·
+          selenium-webdriver-book/manuscript</a></p>
       <p><br>
       </p>
       <p>Tổng kết</p>
