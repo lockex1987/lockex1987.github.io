@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Giữ tiến trình luôn chạy trên Linux">
+    <meta name="description" content="Giữ tiến trình luôn chạy trên Linux, check application alive">
     <title>Giữ tiến trình luôn chạy</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -13,7 +13,7 @@
       <h2>Giữ tiến trình luôn chạy</h2>
       <p>Linux crontab kiểm tra chương trình đang chạy hay không và start</p>
       <p>keep.sh</p>
-      <pre>#!/bin/sh
+      <pre><code class="language-bash">#!/bin/sh
 PROCESSFILE='process-log.jar'
 if ps ax | grep -v grep | grep $PROCESSFILE &gt; /dev/null
 then
@@ -22,7 +22,32 @@ else
 	echo "$PROCESSFILE is not running"
 	cd "/var/www/html/process-log/"
 	java -jar "process-log.jar" &gt;&gt; process-log.log &amp;
-fi</pre>
+fi</code></pre>
+
+<h2>Kiểm tra biết ứng dụng vẫn đang chạy bình thường</h2>
+      <ul>
+        <li>https://kipalog.com/posts/Tao-Linux-service-voi-systemd</li>
+        <li>Cài đặt suppervisor?</li>
+      </ul>
+      <p>Có các dạng ứng dụng:</p>
+      <ul>
+        <li>Web</li>
+        <li>Process</li>
+      </ul>
+      <h3>Ứng dụng web</h3>
+      <p>Sử dụng một service free nào đó trên mạng. Ví dụ Uptime Robot</p>
+      <p>URL: https://uptimerobot.com</p>
+      <p>Email: lockex1987@gmail.com</p>
+      <p>Password: ****</p>
+      <p>Cách nữa là tự viết một tiến trình request đến trang web cần kiểm tra,
+        sau đó xem trạng thái mà trang web đó trả về.</p>
+      <p>Thêm vào log-alert.</p>
+      <h3>Ứng dụng process</h3>
+      <p>Viết hàm utility Java.</p>
+      <p>Tham khảo:</p>
+      <p>https://github.com/Alfresco/alfresco-jodconverter/blob/master/jodconverter-core/src/main/java/org/artofsolving/jodconverter/process/LinuxProcessManager.java</p>
+      <p><br>
+      </p>
     </article>
     <script src="../../js/docs.js"></script>
   </body>

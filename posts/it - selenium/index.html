@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Hướng dẫn Selenium cơ bản">
+    <meta name="description" content="test automation, crawl các domain bằng Google theo từ khóa">
     <title>Hướng dẫn Selenium cơ bản</title>
     <link rel="icon" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
@@ -34,27 +34,64 @@
       <p>Selenium 3.141</p>
       <p><br>
       </p>
+      <h3>Thực thi dạng headless</h3>
+      <p>Triển khai trên Linux server, không có giao diện đồ họa.</p>
+      <p>Nếu sử dụng FirefoxDriver:</p>
+      <pre>driver = new FirefoxDriver();</pre>
+      <p>Đầu tiên bị lỗi sau:</p>
+      <pre>Exception in thread "main" java.lang.IllegalStateException: The path to the driver executable must be set by the webdriver.gecko.driver system property;
+for more information, see https://github.com/mozilla/geckodriver.
+The latest version can be downloaded from https://github.com/mozilla/geckodriver/releases</pre>
+      <p>Sau khi download file và thêm lệnh:</p>
+      <pre>System.setProperty("webdriver.gecko.driver", "/home/huyennv9/crawler-service/geckodriver");</pre>
+      <p>Tiếp tục bị lỗi:</p>
+      <pre>Error: GDK_BACKEND does not match available displays</pre>
+      <p>Dùng lệnh:</p>
+      <pre>export DISPLAY=:1</pre>
+      <p>cũng không được, do không đúng số màn hình.</p>
+      <p>Lệnh trước là:</p>
+      <pre>sudo yum -y install firefox Xvfb libXfont Xorg<br>sudo yum -y groupinstall "X Window System" "Desktop" "Fonts" "General Purpose Desktop"<br>Xvfb :99 -ac -screen 0 1280x1024x24 &amp;</pre>
+      <p>Cần dùng lệnh:</p>
+      <pre>export DISPLAY=:99</pre>
+      <p>thì lại bị lỗi:</p>
+      <pre>1522980405446	Marionette	INFO	Listening on port 2828
+Exception in thread "main" org.openqa.selenium.WebDriverException: connection refused</pre>
+      <p>Cuối cùng, sử dụng HtmlUnitDriver (Java).</p>
+      <pre>// Để chạy headless (không có GUI) trên Linux phải dùng HtmlUnitDriver
+// Phải enable JavaScript và browser version
+// driver = new HtmlUnitDriver();
+// driver = new HtmlUnitDriver(true);
+
+this.driver = new HtmlUnitDriver(BrowserVersion.CHROME, true);</pre>
+      <p>Hiện tại đang phải dùng lệnh export DISPLAY=:99 thì mới chạy được.</p>
+      <p>Tuy nhiên, lệnh này đang không được lưu giữa session.</p>
       <p><br>
       </p>
       <p><br>
       </p>
       <p><br>
       </p>
-      <p>Tham khảo</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Google crawler</h3>
+      <p>Crawl các domain bằng Google theo từ khóa, Selenium</p>
+      <h3>Tham khảo</h3>
+      <p>Bắt đầu, tổng quan, tiếng Việt cho dễ</p>
       <p><a href="https://en.wikipedia.org/wiki/Selenium_%28software%29" target="_blank">Selenium
           (software) - Wikipedia</a></p>
       <p><a href="https://www.selenium.dev/documentation/en/getting_started/" target="_blank">Getting
           started :: Documentation for Selenium</a></p>
       <p><a href="https://www.howkteam.vn/course/khoa-hoc-selenium-co-ban-den-nang-cao-40"
           target="_blank">Khóa học Selenium cơ bản đến nâng cao | How Kteam</a></p>
-      <p><br>
+      <p>------------------</p>
+      <p>Đi sâu<br>
       </p>
       <p><a href="https://viblo.asia/p/selenium-tutorials-31-bai-huong-dan-hoc-selenium-eW65Gx8PKDO?__cf_chl_managed_tk__=076c94e08dd5b71268b7462ff28732e7dbce4705-1625565589-0-ATgIFoSeWHS6yyZxVd6iTRNJ7Kfw_p0RSTCbt5KSS4TQV6nM_OnKTHusyGksmXrTDIJUDb-PDW0-8RRv9s2z_Y-A5PZ-PWrUYLGbaICUXJD5NxdrMJIq6nNqJxr6_bhK5lrVSRWMNVGF2jtZqsNOjHpnXGhrMOgHc-Yb88wNNd8LsRHIp7lw_5LYoa8wRvX1jx7xFmdPzPxoC1gcg1tqwiFfTXOhEoGARScX3N1OkvX98jg2qrv87dICEdx0K1ejKMX3bk31iZaarfR4ptk3OVQe-b8_-uBmnWcUnuZVHr8nYpo1ROw6mnGW_mVbfGOVDzWcQgx4Nx40DntRnVqEVTE_J_QOfVht-JenRQ1WnNObeKxqr75w9F2uNSpTJ6cCaaNqTZEUBKDQ93DyObLByoy_ctBuVAuBu8D8AkFvZvf9FlUSfoso3_GVONKo5t41LrCnHwkkzlTW_4SDv_lMgd8wJqBGalEHrm0HnmabezlbGm_Ck4fbENzf-ipPVzLLvXs3nk5AoqLZDiz_HjpnuTMrXT_pbZvwY9AM6EzA-K-Bl9QBybNcKiHwEfpkLgI4mgYfKzFWcS3LTis0ZsPs6DN6mXoWqZ01NcCgYfa44RZrFdE64AIVXieaV1DY8FQg8xwndIzgQBxYEXEU5bLrCOW-6NXXldqGVSzSp9zujVrXnCnnKhEbX2ku1egLtF9lWCnYLlTGSlDN6qXmUJ0cGhk"
           target="_blank">Selenium Tutorials - 31+ Bài hướng dẫn học Selenium</a></p>
       <p><a href="https://www.softwaretestinghelp.com/selenium-tutorial-1/" target="_blank">30+
           Best Selenium Tutorials: Learn Selenium With Real Examples</a></p>
-      <p><br>
-      </p>
       <p><br>
       </p>
       <p><a href="https://trinhtuantai.com/huong-dan-lay-du-lieu-web-web-crawling-voi-selenium-python-webdrive.html"

@@ -21,6 +21,8 @@ async function myFunction() {
     // await driver.navigate().forward();
     // await driver.navigate().refresh();
     // await driver.getTitle();
+    // log.debug("Page source: " + driver.getPageSource());
+    // driver.manage().deleteAllCookies();
 
 
     // Access each dimension individually
@@ -55,21 +57,21 @@ async function takeScreenshot() {
     const driver = await new Builder()
         .forBrowser('chrome')
 
-        // Sử dụng proxy của hệ thống
-        // Thiết lập proxy của hệ thống là 192.168.103.26:80
-        // .setChromeOptions(opts)
-        // .withCapabilities(Capabilities.chrome())
-        // .setProxy(proxyConfig)
+    // Sử dụng proxy của hệ thống
+    // Thiết lập proxy của hệ thống là 192.168.103.26:80
+    // .setChromeOptions(opts)
+    // .withCapabilities(Capabilities.chrome())
+    // .setProxy(proxyConfig)
 
         .build();
 
-    await driver.get('https://selenium.dev'); // https://cttd.tk, https://selenium.dev
+    const url = 'https://selenium.dev'; // https://cttd.tk, https://selenium.dev
+    await driver.get(url);
 
     // Returns base64 encoded string
     const encodedString = await driver.takeScreenshot();
-
     fs.writeFileSync('./dist/image.png', encodedString, 'base64');
     await driver.quit();
 }
 
-takeScreenshot();
+// takeScreenshot();
