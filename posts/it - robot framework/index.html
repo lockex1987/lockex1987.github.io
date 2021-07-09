@@ -28,17 +28,94 @@ Robot Framework 4.0.3 (Python 3.9.2 on win32)</pre>
       <p>C:\Users\VTCC-\AppData\Local\Programs\Python\Python39\Scripts</p>
       <p><br>
       </p>
+      <p>Sử dụng Python 3.8, Robot framework 3.2.2 (không dùng Python 3.9 và
+        Robot framework 4, IDE RED báo đỏ <code>Unknown keyword</code>).</p>
+      <p>Python 3.9 vẫn được? Thử trên máy Ubuntu ở nhà.</p>
+      <p><a href="https://askubuntu.com/questions/682869/how-do-i-install-a-different-python-version-using-apt-get"
+          target="_blank">How do I install a different Python version using
+          apt-get? - Ask Ubuntu</a></p>
+      <p><a href="https://hackersandslackers.com/multiple-versions-python-ubuntu/"
+          target="_blank">Managing Multiple Versions of Python on Ubuntu 18.04</a></p>
+      <p>Gỡ bản 4:</p>
+      <pre class="command-line">pip uninstall robotframework</pre>
+      <p>Cài lại bản 3.2.2:</p>
+      <pre class="command-line">pip install robotframework==3.2.2 --proxy="http://192.168.103.26:80"</pre>
+      <p>Xác nhận:<br>
+      </p>
+      <pre class="text-white bg-dark">C:\Users\VTCC-&gt;robot --version
+Robot Framework 3.2.2 (Python 3.8.1 on win32)
+
+C:\Users\VTCC-&gt;rebot --version
+Rebot 3.2.2 (Python 3.8.1 on win32)</pre>
+      <p><br>
+      </p>
       <p><br>
       </p>
       <h3>Ví dụ bắt đầu</h3>
+      <p>Tạo file <code>HelloWorld.robot</code> như sau:</p>
+      <pre>*** Test Cases ***
+MyFirstTest
+    Log    Hello World</pre>
+      <p>Thực hiện lệnh:</p>
+      <pre class="command-line">robot HelloWorld.robot</pre>
+      <h3>IDE</h3>
+      <ul>
+        <li>Cài đặt wxPython, robotframework-ride (không dùng do khó cài, không
+          thông dụng)</li>
+        <li>Sử dụng Eclipse RED (có highlight syntax, auto-complete, có document
+          khi hover)</li>
+        <li>Sử dụng Visual Studio Code và extension</li>
+      </ul>
+      <p><a href="https://github.com/robotframework/RIDE" target="_blank">robotframework/RIDE:
+          Test data editor for Robot Framework</a></p>
+      <p><br>
+      </p>
+      <ul>
+      </ul>
+      <p><a href="https://github.com/nokia/RED" target="_blank">nokia/RED: RED -
+          Robot Editor</a></p>
+      <p><a href="https://github.com/nokia/RED/issues/413" target="_blank">RED
+          doesn't find Builtin-Libraries with RobotFramework 4.0b1 · Issue #413
+          · nokia/RED · GitHub</a></p>
+      <p><br>
+      </p>
+      <p><a href="https://robocorp.com/docs/developer-tools/visual-studio-code/overview"
+          target="_blank">Visual Studio Code</a></p>
+      <p><a href="https://marketplace.visualstudio.com/items?itemName=robocorp.robotframework-lsp"
+          target="_blank">Robot Framework Language Server - Visual Studio
+          Marketplace</a></p>
+      <p>Tạm sử dụng Eclipse RED</p>
+      <ul>
+      </ul>
+      <h3>Selenium</h3>
+      <p>Cài đặt:</p>
+      <pre class="command-line">pip install robotframework-seleniumlibrary --proxy="http://192.168.103.26:80"</pre>
+      <p><br>
+      </p>
+      <p><a href="https://robotframework.org/SeleniumLibrary/" target="_blank">SeleniumLibrary</a>
+      </p>
+      <p><a href="https://lockex1987.github.io/posts/it%20-%20selenium/" target="_blank">Hướng
+          dẫn Selenium</a></p>
       <p><br>
       </p>
       <p><br>
       </p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://robotframework.org/" target="_blank">Trang chủ Robot
+          Framework</a></p>
+      <p><a href="https://github.com/robotframework/robotframework" target="_blank">GitHub
+          - robotframework/robotframework: Generic automation framework for
+          acceptance testing and RPA</a> </p>
+      <p><a href="https://www.tutorialspoint.com/robot_framework/robot_framework_quick_guide.htm"
+          target="_blank">Robot Framework - Quick Guide - Tutorialspoint</a> </p>
+      <p><a href="http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html"
+          target="_blank">Robot Framework User Guide</a> </p>
+      <p><a href="https://www.youtube.com/playlist?list=PLhW3qG5bs-L_yjwGfRkdySzVKCbV7ciaX"
+          target="_blank">Robot Framework with Eclipse RED - YouTube</a></p>
       <p><br>
       </p>
-      <p>Cài đặt wxPython, robotframework-ride</p>
-      <p>Sử dụng Eclipse RED</p>
+      <p><br>
+      </p>
       <p><br>
       </p>
       <p><br>
