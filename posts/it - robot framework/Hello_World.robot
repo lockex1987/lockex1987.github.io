@@ -1,3 +1,3 @@
 *** Test Cases ***
-MyFirstTest
+My First Test
     Log    Hello World

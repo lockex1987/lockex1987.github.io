@@ -41,7 +41,13 @@
       </p>
       <h3>Bắt đầu</h3>
       <p>Download file driver dạng binary ở địa chỉ:</p>
-      <p>Link</p>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <a href="https://www.selenium.dev/downloads/" target="_blank">Downloads</a></p>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <a href="https://sites.google.com/chromium.org/driver/" target="_blank">ChromeDriver
+          - WebDriver for Chrome</a></p>
       <p>Chú ý:</p>
       <ul>
         <li>Bạn phải có sẵn trình duyệt tương ứng (Chrome, Firefox,...) cài ở
@@ -49,7 +55,18 @@
         <li>Bạn phải chọn đúng phiên bản của driver và phiên bản trình duyệt ở
           máy bạn</li>
       </ul>
-      <p>Cho file driver ở đường dẫn PATH của hệ điều hành.</p>
+      <p>Cho file driver ở đường dẫn <code>PATH</code> của hệ điều hành. Trên
+        môi trường Linux, nên cho vào đường dẫn <code>/home/&lt;Tên người
+          dùng&gt;/.local/bin</code>.</p>
+      <p>Kiểm tra:</p>
+      <pre class="bg-dark text-white">$ chromedriver
+Starting ChromeDriver 91.0.4472.101 (af52a90bf87030dd1523486a1cd3ae25c5d76c9b-refs/branch-heads/4472@{#1462}) on port 9515
+Only local connections are allowed.
+Please see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.
+[1625915137,884][SEVERE]: bind() failed: Cannot assign requested address (99)
+ChromeDriver was started successfully.</pre>
+      <p><br>
+      </p>
       <p><br>
       </p>
       <p>Sử dụng package <code>selenium-webdriver</code>:</p>
@@ -191,16 +208,16 @@ this.driver = new HtmlUnitDriver(BrowserVersion.CHROME, true);</pre>
           (software) - Wikipedia</a></p>
       <p><a href="https://www.selenium.dev/documentation/en/getting_started/" target="_blank">Getting
           started :: Documentation for Selenium</a></p>
-      <p><a href="https://www.howkteam.vn/course/khoa-hoc-selenium-co-ban-den-nang-cao-40"
+      <p><a href="https://www.howkteam.vn/course/khoa-hoc-selenium-co-ban-den-nang-cao-40"
           target="_blank">Khóa học Selenium cơ bản đến nâng cao | How Kteam</a></p>
       <p>------------------</p>
       <p>Đi sâu<br>
       </p>
-      <p><a href="https://viblo.asia/p/selenium-tutorials-31-bai-huong-dan-hoc-selenium-eW65Gx8PKDO?__cf_chl_managed_tk__=076c94e08dd5b71268b7462ff28732e7dbce4705-1625565589-0-ATgIFoSeWHS6yyZxVd6iTRNJ7Kfw_p0RSTCbt5KSS4TQV6nM_OnKTHusyGksmXrTDIJUDb-PDW0-8RRv9s2z_Y-A5PZ-PWrUYLGbaICUXJD5NxdrMJIq6nNqJxr6_bhK5lrVSRWMNVGF2jtZqsNOjHpnXGhrMOgHc-Yb88wNNd8LsRHIp7lw_5LYoa8wRvX1jx7xFmdPzPxoC1gcg1tqwiFfTXOhEoGARScX3N1OkvX98jg2qrv87dICEdx0K1ejKMX3bk31iZaarfR4ptk3OVQe-b8_-uBmnWcUnuZVHr8nYpo1ROw6mnGW_mVbfGOVDzWcQgx4Nx40DntRnVqEVTE_J_QOfVht-JenRQ1WnNObeKxqr75w9F2uNSpTJ6cCaaNqTZEUBKDQ93DyObLByoy_ctBuVAuBu8D8AkFvZvf9FlUSfoso3_GVONKo5t41LrCnHwkkzlTW_4SDv_lMgd8wJqBGalEHrm0HnmabezlbGm_Ck4fbENzf-ipPVzLLvXs3nk5AoqLZDiz_HjpnuTMrXT_pbZvwY9AM6EzA-K-Bl9QBybNcKiHwEfpkLgI4mgYfKzFWcS3LTis0ZsPs6DN6mXoWqZ01NcCgYfa44RZrFdE64AIVXieaV1DY8FQg8xwndIzgQBxYEXEU5bLrCOW-6NXXldqGVSzSp9zujVrXnCnnKhEbX2ku1egLtF9lWCnYLlTGSlDN6qXmUJ0cGhk"
+      <p><a href="https://viblo.asia/p/selenium-tutorials-31-bai-huong-dan-hoc-selenium-eW65Gx8PKDO?__cf_chl_managed_tk__=076c94e08dd5b71268b7462ff28732e7dbce4705-1625565589-0-ATgIFoSeWHS6yyZxVd6iTRNJ7Kfw_p0RSTCbt5KSS4TQV6nM_OnKTHusyGksmXrTDIJUDb-PDW0-8RRv9s2z_Y-A5PZ-PWrUYLGbaICUXJD5NxdrMJIq6nNqJxr6_bhK5lrVSRWMNVGF2jtZqsNOjHpnXGhrMOgHc-Yb88wNNd8LsRHIp7lw_5LYoa8wRvX1jx7xFmdPzPxoC1gcg1tqwiFfTXOhEoGARScX3N1OkvX98jg2qrv87dICEdx0K1ejKMX3bk31iZaarfR4ptk3OVQe-b8_-uBmnWcUnuZVHr8nYpo1ROw6mnGW_mVbfGOVDzWcQgx4Nx40DntRnVqEVTE_J_QOfVht-JenRQ1WnNObeKxqr75w9F2uNSpTJ6cCaaNqTZEUBKDQ93DyObLByoy_ctBuVAuBu8D8AkFvZvf9FlUSfoso3_GVONKo5t41LrCnHwkkzlTW_4SDv_lMgd8wJqBGalEHrm0HnmabezlbGm_Ck4fbENzf-ipPVzLLvXs3nk5AoqLZDiz_HjpnuTMrXT_pbZvwY9AM6EzA-K-Bl9QBybNcKiHwEfpkLgI4mgYfKzFWcS3LTis0ZsPs6DN6mXoWqZ01NcCgYfa44RZrFdE64AIVXieaV1DY8FQg8xwndIzgQBxYEXEU5bLrCOW-6NXXldqGVSzSp9zujVrXnCnnKhEbX2ku1egLtF9lWCnYLlTGSlDN6qXmUJ0cGhk"
           target="_blank">Selenium Tutorials - 31+ Bài hướng dẫn học Selenium</a></p>
       <p><a href="https://www.softwaretestinghelp.com/selenium-tutorial-1/" target="_blank">30+
           Best Selenium Tutorials: Learn Selenium With Real Examples</a></p>
-      <p><a href="https://www.selenium.dev/selenium/docs/api/javascript/index.html"
+      <p><a href="https://www.selenium.dev/selenium/docs/api/javascript/index.html"
           target="_blank">JS API reference</a></p>
       <p>(Có thể xem luôn source code ở node_modules)</p>
       <p><a href="https://www.browserstack.com/docs/automate/selenium" target="_blank">Run
@@ -209,7 +226,7 @@ this.driver = new HtmlUnitDriver(BrowserVersion.CHROME, true);</pre>
           with Python — Selenium Python Bindings 2 documentation</a></p>
       <p><br>
       </p>
-      <p><a href="https://github.com/selenium-webdriver-book/manuscript/blob/master/manuscript/ch01_first_steps.adoc"
+      <p><a href="https://github.com/selenium-webdriver-book/manuscript/blob/master/manuscript/ch01_first_steps.adoc"
           target="_blank">manuscript/ch01_first_steps.adoc at master ·
           selenium-webdriver-book/manuscript</a></p>
       <p><br>
