@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PowerShell">
+    <title>PowerShell</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>PowerShell</h2>
+      <p>PowerShell được phát triển để thay thế CMD.</p>
+      <p>PowerShell được xây dựng trên .NET.</p>
+      <p>Để khởi động PowerShell, vào hộp thoại Run hoặc Search và gõ <code>powershell</code>.</p>
+      <p>Các file script có phần mở rộng là <code>ps1</code>. Bạn không thể
+        click đúp file ps1 để chạy (để tránh tổn hại ngoài ý muốn), mà phải
+        click chuột phải và chọn "Run with PowerShell".</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Định nghĩa hàm</h3>
+      <p><br>
+      </p>
+      <p>Lệnh if (khối điều kiện)</p>
+      <p><br>
+      </p>
+      <p>Vòng lặp</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Pipeline</h3>
+      <p>Pipeline sẽ truyền dữ liệu từ một cmdlet này sang cmdlet khác.</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p>PowerShell có thể nói chuyện</p>
+      <pre>Add-Type -AssemblyName System.speech
+$synth = New-Object -TypeName System.Speech.Synthesis.SpeechSynthesizer
+$synth.Speak("PowerShell to the people")</pre>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>So sánh các cmdlet với các lệnh tương tự</h3>
+      <p>Các lệnh không phân biệt chữ hoa thường.</p>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>PowerShell (Cmdlet)</th>
+              <th>PowerShell (Alias)</th>
+              <th>Windows Command Prompt</th>
+              <th>Unix shell</th>
+              <th>Mô tả</th>
+              <th>Ví dụ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Get-ChildItem</td>
+              <td>gci, dir, ls</td>
+              <td>dir</td>
+              <td>ls</td>
+              <td>Liệt kê tất cả file và folder trong thư mục hiện tại hoặc thư
+                mục chỉ định</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Test-Connection</td>
+              <td>ping</td>
+              <td>ping</td>
+              <td>ping</td>
+              <td>Thực hiện ping đến một máy nào đó</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Get-Content</td>
+              <td>gc, type, cat</td>
+              <td>type</td>
+              <td>cat</td>
+              <td>Lấy nội dung của một file</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Get-Command</td>
+              <td>gcm</td>
+              <td>help, where</td>
+              <td>type, which, compgen</td>
+              <td>Liệt kê các lệnh sẵn có và lấy đường dẫn của lệnh</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Get-Help</td>
+              <td>help, man</td>
+              <td>help</td>
+              <td>apropos, man</td>
+              <td>In ra documentation của lệnh ra console</td>
+              <td>Get-Help -Name Get-Process<br>
+              </td>
+            </tr>
+            <tr>
+              <td>Clear-Host</td>
+              <td>cls, clear</td>
+              <td>cls</td>
+              <td>clear</td>
+              <td>Clear màn hình</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Copy-Item</td>
+              <td>cpi, copy, cp</td>
+              <td>copy, xcopy, robocopy</td>
+              <td>cp</td>
+              <td>Copy các file và folder đến nơi đích</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Move-Item</td>
+              <td>mi, move, mv</td>
+              <td>move</td>
+              <td>mv</td>
+              <td>Di chuyển file và folder đến nơi mới</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Remove-Item</td>
+              <td>ri, del, erase, rmdir, rd, rm</td>
+              <td>del, erase, rmdir, rd</td>
+              <td>rm, rmdir</td>
+              <td>Xóa file và folder</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Rename-Item</td>
+              <td>rni, ren, mv</td>
+              <td>ren, rename</td>
+              <td>mv</td>
+              <td>Đổi tên một file, folder, link</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Get-Location</td>
+              <td>gl, cd, pwd</td>
+              <td>cd</td>
+              <td>pwd</td>
+              <td>Hiển thị thư mục hiện tại</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Pop-Location</td>
+              <td>popd</td>
+              <td>popd</td>
+              <td>popd</td>
+              <td>Đổi thư mục làm việc tới nơi mới nhất được đẩy vào stack</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Set-Location</td>
+              <td>pushd</td>
+              <td>pushd</td>
+              <td>pushd</td>
+              <td>Lưu thư mục hiện tại vào trong stack</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Tee-Object</td>
+              <td>tee</td>
+              <td><br>
+              </td>
+              <td>tee</td>
+              <td>Pipe đầu vào tới một file hoặc một biến, truyền đầu vào
+                pipeline</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Write-Output</td>
+              <td>echo, write</td>
+              <td>echo</td>
+              <td>echo</td>
+              <td>In các xâu hoặc các đối tượng khác ra output chuẩn</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Get-Process</td>
+              <td>gps, ps</td>
+              <td>tlist, tasklist</td>
+              <td>ps</td>
+              <td>Liệt kê các tiến trình đang chạy</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Stop-Process</td>
+              <td>spps, kill</td>
+              <td>kill, taskkill</td>
+              <td>kill</td>
+              <td>Dừng một tiến trình đang chạy</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Select-String</td>
+              <td>sls</td>
+              <td>findstr</td>
+              <td>find, grep</td>
+              <td>In ra các dòng match một pattern nào đó</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Set-Variable</td>
+              <td>sv, set</td>
+              <td>set</td>
+              <td>env, export, set, setenv</td>
+              <td>Tạo hoặc sửa giá trị của một biến môi trường</td>
+              <td><br>
+              </td>
+            </tr>
+            <tr>
+              <td>Invoke-WebRequest</td>
+              <td>iwr</td>
+              <td>curl</td>
+              <td>wget, curl</td>
+              <td>Lấy nội dung từ một trang web</td>
+              <td><br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Tham khảo</h3>
+      <p><a href="https://en.wikipedia.org/wiki/PowerShell" target="_blank">PowerShell
+          - Wikipedia</a></p>
+      <p><a href="https://docs.microsoft.com/en-us/powershell/scripting/how-to-use-docs?view=powershell-7.1"
+          target="_blank">How to use the PowerShell documentation - PowerShell |
+          Microsoft Docs</a></p>
+      <p><a href="https://quantrimang.com/bang-tong-hop-cac-lenh-powershell-co-ban-152785"
+          target="_blank">Bảng tổng hợp các lệnh PowerShell cơ bản -
+          Quantrimang.com</a> </p>
+      <p><a href="https://anonyviet.com/huong-dan-lap-trinh-powershell-tren-windows/"
+          target="_blank">Hướng dẫn lập trình PowerShell trên Windows</a> </p>
+      <p><a href="https://books.goalkicker.com/PowerShellBook/" target="_blank">PowerShell
+          Notes for Professionals book</a> </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>
