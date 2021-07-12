@@ -105,6 +105,28 @@
 
     <script nonce="8IBTHwOdqNKAWeKl7plt8g==">
         console.log('Để chạy inline script thì cần có nonce');
+        
+        // Hàm $x() chỉ được gọi ở Console của Chrome's Dev Tools
+        if (!$x) {
+            console.log('Định nghĩa hàm $x()');
+
+            function $x(xpathToExecute) {
+                const result = [];
+                const nodesSnapshot = document.evaluate(
+                    xpathToExecute,
+                    document,
+                    null,
+                    XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+                    null
+                );
+                for (let i = 0; i < nodesSnapshot.snapshotLength; i++) {
+                    result.push(nodesSnapshot.snapshotItem(i));
+                }
+                return result;
+            }
+        }
+
+        console.log($x("//body"));
     </script>
 
     <script src="../../js/docs.js"></script>
