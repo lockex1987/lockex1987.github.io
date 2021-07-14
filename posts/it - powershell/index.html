@@ -16,11 +16,157 @@
       <p>Để khởi động PowerShell, vào hộp thoại Run hoặc Search và gõ <code>powershell</code>.</p>
       <p>Các file script có phần mở rộng là <code>ps1</code>. Bạn không thể
         click đúp file ps1 để chạy (để tránh tổn hại ngoài ý muốn), mà phải
-        click chuột phải và chọn "Run with PowerShell".</p>
+        click chuột phải và chọn <strong>Run with PowerShell</strong>.</p>
+      <figure><img src="images/run%20with%20powershell.png" alt=""></figure>
+      <p>Các lệnh của PowerShell còn được gọi là <em>cmdlet</em>.</p>
+      <h3>Phiên bản</h3>
+      <p>Để kiểm tra phiên bản PowerShell của bạn, chạy câu lệnh Get-Host và
+        kiểm tra thuộc tính version.</p>
+      <figure><img src="images/version.png" alt=""></figure>
+      <p>Máy tính của tôi sử dụng PowerShell phiên bản 5.1 trên hệ điều hành
+        Windows 10.</p>
+      <h3>Chính sách thực thi</h3>
+      <p>PowerShell có một giao thức an ninh rất độc đáo, gọi là chính sách thực
+        thi (execution policy), cho phép bạn định nghĩa loại script mà có thể
+        chạy trên máy hoặc workgroup của bạn.</p>
+      <p>Mặc định, PowerShell chỉ cho phép bạn thực thi script qua shell tương
+        tác của nó, ngăn việc thực thi các script ngoài. Tuy nhiên, bằng cách
+        thiết lập cấp độ security cao nhất, bạn có thể dẽ dàng thiết lập các cấp
+        độ security. Danh sách các chính sách như dưới:</p>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Chính sách thực thi</th>
+            <th>Cấp độ security</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Restricted</td>
+            <td>Chỉ cho phép thực thi shell tương tác</td>
+          </tr>
+          <tr>
+            <td>AllSigned</td>
+            <td>Chạy các script với chữ ký số. Việc thực thi một script lần đầu
+              tiên sẽ hiển thị một thông báo tin tưởng publisher</td>
+          </tr>
+          <tr>
+            <td>RemoteSigned</td>
+            <td>Tất cả script từ Internet phải được ký</td>
+          </tr>
+          <tr>
+            <td>Unrestricted</td>
+            <td>Cho phép bất kỳ sự thực thi script nào. Script từ Internet phải
+              được tin tưởng.</td>
+          </tr>
+          <tr>
+            <td>ByPass</td>
+            <td>Tất cả sự thực thi script phải được xác thực bởi người dùng</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Để thay đổi chính sách thực thi của bạn, bạn phải sử dụng shell tương
+        tác. Hãy chắc chắn rằng bạn <strong>Run as Administrator</strong>. Sử
+        dụng câu lệnh <code>Set-ExecutionPolicy</code> để thay đổi nó thành cái
+        bạn muốn.</p>
+      <p>Để xem chính sách thực thi hiện tại, bạn có thể sử dụng câu lệnh <code>Get-ExecutionPolicy</code>.</p>
+      <figure><img src="images/execution%20policy.png" alt=""></figure>
+      <p>Chú ý: Nếu chính sách thực thi đang là Restricted, bạn vẫn có thể click
+        chuột phải vào file script và chọn <strong>Run with PowerShell</strong>.
+        Bạn chỉ không thể thực hiện bằng lệnh bên trong PowerShell (ví dụ <code>.\Hello_World.ps1</code>)
+        thôi.</p>
+      <h3>In ra và lấy dữ liệu từ shell tương tác</h3>
+      <p>Sử dụng câu lệnh <code>Write-Host</code>:</p>
+      <pre>Write-Host Hello World
+Write-Host "Hello World"
+Write-Host -ForegroundColor White -BackgroundColor Black "Hello World"</pre>
+      <p>Khi PowerShell tìm thấy một string mà không ở trong một ngữ cảnh nào,
+        nó sẽ in ra giá trị của string. Nếu bạn muốn in ra một biến, chỉ việc
+        viết tên của nó.</p>
+      <p>Để lấy một giá trị từ shell tương tác, bạn có thể sử dụng câu lệnh <code>Read-Host</code>.
+        Câu lệnh sẽ đọc một dòng từ console.</p>
+      <figure><img src="images/read-host.png"></figure>
+      <h3>Sử dụng các lớp .NET<br>
+      </h3>
+      <p>Để sử dụng một lớp .NET trong PowerShell, bạn chỉ cần xác định
+        namespace giữa các ngoặc vuông, sau đó sử dụng hai dấu hai chấm để gọi
+        phương thức mà bạn muốn. Các tham số được truyền vào cùng cách trong
+        .NET. Ví dụ, bạn có thể xem ngày và giờ hiện tại bằng lệnh sau:</p>
+      <pre>[DateTime]::Now</pre>
+      <h3>Biến</h3>
+      <p>Các biến được sử dụng trong mọi ngôn ngữ lập trình để lưu thông tin mà
+        bạn muốn điều chỉnh sau này trong chương trình hoặc script của bạn. Điều
+        này cũng đúng trong PowerShell. Các biến được sử dụng để lưu thông tin
+        về kết quả một câu lệnh để sử dụng sau này hoặc để truyền nó vào
+        pipeline.</p>
+      <p>Trong PowerShell, các biến bắt đầu bằng ký tự dollar <code>$</code> và
+        theo sau bằng gần như ký tự bất kỳ. Ràng buộc duy nhất là các ký tự đặc
+        biệt. PowerShell chỉ giải phóng các biến khi mà phiên của người dùng kết
+        thúc. Nếu bạn không muốn sử dụng một biến nào đó nữa, clean nó bằng cách
+        gán biến <code>$null</code> cho nó.</p>
+      <pre>$var1 = $null</pre>
+      <p>Kiểu đối tượng biến được xác định động, nghĩa là nếu bạn gán một xâu
+        thì kiểu của biến là xâu, tùy giá trị bạn gán. Tuy nhiên, bạn cũng có
+        thể ép kiểu một biến sang kiểu khác sử dụng kiểu bên trong ngoặc vuông <code>[]</code>
+        trước tên biến. Điều này có thể hữu ích khi bạn không muốn tạo một biến
+        khác.</p>
+      <figure><img src="images/variable%20casting.png" alt=""></figure>
+      <pre>$var4 = [System.Xml.XmlDocument]"&lt;xml&gt;&lt;node&gt;HERE&lt;/node&gt;&lt;/xml&gt;"</pre>
+      <p>Các biến có thể được định nghĩa với các phạm vi khác nhau.</p>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Phạm vi</th>
+            <th>Mô tả</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Script</td>
+            <td>Chỉ sẵn có trong script đó</td>
+          </tr>
+          <tr>
+            <td>Local</td>
+            <td>Chỉ sẵn có trong một phạm vi chỉ định hoặc phạm vi con, như một
+              vòng lặp và các vòng lặp bên trong</td>
+          </tr>
+          <tr>
+            <td>Private</td>
+            <td>Chỉ sẵn có trong một phạm vi, như trong một vòng lặp</td>
+          </tr>
+          <tr>
+            <td>Global</td>
+            <td>Sẵn có trên toàn bộ shell</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Phạm vi mặc định của một biến phụ thuộc vào nơi mà bạn định nghĩa nó.
+        Nếu nó được định nghĩa trong shell tương tác, phạm vi là Global. Nếu
+        ngoài hàm và các khối script, phạm vi là Script. Còn lại là Local.</p>
       <p><br>
       </p>
       <p><br>
       </p>
+      <p><br>
+      </p>
+      <p>Xâu</p>
+      <p><br>
+      </p>
+      <p>Biểu thức chính quy</p>
+      <p><br>
+      </p>
+      <p>Mảng</p>
+      <p>Danh sách .NET</p>
+      <p><br>
+      </p>
+      <p>Hash Table</p>
+      <p><br>
+      </p>
+      <p>Dòng điều khiển</p>
+      <p>Toán tử logic và so sánh</p>
+      <p>Mệnh đề điều kiện</p>
+      <p>Switch</p>
+      <p>Vòng lặp</p>
       <p><br>
       </p>
       <p><br>
@@ -248,6 +394,19 @@ $synth.Speak("PowerShell to the people")</pre>
               <td><br>
               </td>
             </tr>
+            <tr>
+              <td>Get-History</td>
+              <td><br>
+              </td>
+              <td><br>
+              </td>
+              <td><br>
+              </td>
+              <td><br>
+              </td>
+              <td><br>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -270,7 +429,7 @@ $synth.Speak("PowerShell to the people")</pre>
           target="_blank">Hướng dẫn lập trình PowerShell trên Windows</a> </p>
       <p><a href="https://books.goalkicker.com/PowerShellBook/" target="_blank">PowerShell
           Notes for Professionals book</a> </p>
-      <p><br>
+      <p>---<br>
       </p>
       <p><a href="https://www.syncfusion.com/succinctly-free-ebooks/powershell"
           target="_blank">Free Ebook - PowerShell Succinctly</a></p>
