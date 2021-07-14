@@ -17,14 +17,14 @@
         https://mydomain/laravel. Ứng dụng này chỉ sử dụng Laravel để làm API,
         còn frontend sẽ sử dụng Vue và Vue router để làm Single Page App.</p>
       <h3>Cấu hình nginx</h3>
-      <p>Chúng ta sẽ phải cấu hình nginx như sau:</p>
-      <pre>location /laravel {
-    alias D:/htdocs/attt86-gscb-frontend/public;
+      <p>Chúng ta sẽ phải cấu hình Nginx như sau:</p>
+      <pre><code class="language-nginx">location /laravel {
+    alias D:/htdocs/attt86-gscb-frontend/public;<br>
     try_files $uri $uri/ @laravel;
 		
     # Phải có cái này, nếu không<br>    # truy cập http://localhost/laravel/ bị lỗi 403
     # Có thể để ở block server
-    index index.php index.html;
+    index index.php;
 
     location ~ \.php$ {
         fastcgi_pass  127.0.0.1:9000;
@@ -35,21 +35,21 @@
 
 location @laravel {
     rewrite /laravel/(.*)$ /laravel/index.php?/$1 last;
-}</pre>
+}</code></pre>
       <p>Full cấu hình tham khảo:</p>
-      <pre>server {
-    listen       80;
-    server_name  localhost;
-    root         D:/htdocs/lockex1987.github.io;
-	
+      <pre><code class="language-nginx">server {
+    listen 80;
+    server_name localhost;
+    root D:/htdocs/lockex1987.github.io;
+
     index index.php index.html;
-	
+
     location / {
         try_files $uri $uri/ /index.php?$query_string;
     }
 
     location /laravel {
-        alias D:/htdocs/attt86-gscb-frontend/public;
+        alias D:/htdocs/attt86-gscb-frontend/public;<br>
         try_files $uri $uri/ @laravel;<br>
         location ~ \.php$ {
             fastcgi_pass  127.0.0.1:9000;
@@ -67,44 +67,43 @@ location @laravel {
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include       fastcgi_params;
     }
-}
-</pre>
+}</code></pre>
       <h3>Sửa source code</h3>
       <p>Tất nhiên, chúng ta sẽ phải sửa code những chỗ liên kết file JS, CSS,
         những chỗ gọi API cho đúng đường dẫn, vì giờ nó có /laravel ở phía
         trước, ví dụ:</p>
-      <pre>&lt;link rel="stylesheet" href="/laravel/libs/noti/css/noti.css" /&gt;
-&lt;script src="/laravel/libs/noti/js/noti.js"&gt;&lt;/script&gt;<br><br>background: url("/laravel/images/bg.png") repeat center;<br><br>axios.post('/laravel/login', params);</pre>
+      <pre><code class="language-html">&lt;link rel="stylesheet" href="/laravel/libs/noti/css/noti.css" /&gt;
+&lt;script src="/laravel/libs/noti/js/noti.js"&gt;&lt;/script&gt;<br><br>&lt;style&gt;<br>    body {<br>        background: url("/laravel/images/bg.png") repeat center;<br>    }<br>&lt;/style&gt;<br><br>&lt;script&gt;<br>    axios.post('/laravel/login', params);<br>&lt;/script&gt;<br></code></pre>
       <h3>Cấu hình Laravel Mix</h3>
       <p>Để Single Page App load đúng các file JS chunk, chúng ta sẽ phải chỉnh
         lại <code>webpack.mix.js</code> như sau:</p>
-      <pre>mix.webpackConfig({
+      <pre><code class="language-javascript">mix.webpackConfig({
     output: {
-        chunkFilename: 'js/[name].[chunkhash].js',
+        chunkFilename: 'js/[name].js?h=[chunkhash]',
 
         // Thêm đoạn này để deploy được ở trong<br>        // thư mục con /laravel
         publicPath: '/laravel/'
     }
-});</pre>
+});</code></pre>
       <p>Chỗ SCSS sẽ kiểm tra đường dẫn url của file ảnh, nên chúng ta phải
         chỉnh lại đường dẫn tương đối như sau:</p>
       <p>File <code>webpack.mix.js</code>:</p>
-      <pre>mix
+      <pre><code class="language-javascript">mix
     // https://laravel.com/docs/8.x/mix#url-processing
     .options({
         processCssUrls: false
-    })</pre>
+    })</code></pre>
       <p>File <code>style.scss</code>:</p>
-      <pre>background: url("../images/bg.png") repeat center;</pre>
+      <pre><code class="language-scss">background: url("../images/bg.png") repeat center;</code></pre>
       <p>Style SCSS ở các file <code>.vue</code> vẫn kiểm tra, do đó nếu cần
         thì phải chuyển SCSS từ file <code>.vue</code> ra <code>style.scss</code>.</p>
       <h3>Cấu hình Vue router</h3>
       <p>Sửa lại cấu hình Vue router:</p>
-      <pre>const router = new VueRouter({
+      <pre><code class="language-javascript">const router = new VueRouter({
     mode: 'history',
     base: '/laravel/',
     routes
-});</pre>
+});</code></pre>
       <p>Nếu không cấu hình, sẽ bị lỗi 404.</p>
       <h3>Tham khảo</h3>
       <p><a href="https://serversforhackers.com/c/nginx-php-in-subdirectory" target="_blank">PHP
