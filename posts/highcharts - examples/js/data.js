@@ -1,5 +1,10 @@
 export default [
 	{
+        title: 'Biểu đồ area tự vẽ bằng SVG',
+        url: 'examples/svg-area',
+        image: 'images/svg-area.png'
+    },
+	{
         title: 'Biểu đồ radar (spider, polar)',
         url: 'examples/radar',
         image: 'images/radar.png'

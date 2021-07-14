@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG area chart</title>
+
+    <link rel="icon" href="../../../../images/favicon.png">
+    <link rel="stylesheet" href="../../../../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <article>
+        <h2>SVG area chart</h2>
+        <p>Link tham khảo:</p>
+        <p>
+            <a href="https://viblo.asia/p/code-weekly-downloads-chart-tren-npmjscom-RnB5prM7ZPG" target="_blank">Code Weekly Downloads Chart trên npmjs.com - Viblo</a>
+        </p>
+
+        <div id="app">
+            <div class="mb-3">
+                <span class="text-info">
+                    {{pointSelected.label}}:
+                </span>
+
+                <span class="font-weight-500">
+                    <!-- formatNumber -->
+                    {{pointSelected.downloads}}
+                </span>
+            </div>    
+
+            <svg :width="WIDTH"
+                :height="HEIGHT"
+                class="chart">
+                <path :d="pathD1"
+                    fill="none"></path>
+                <path :d="pathD2"
+                    stroke="none"></path>
+
+                <line :x1="pointSelected.x"
+                    :x2="pointSelected.x"
+                    y1="0"
+                    :y2="HEIGHT"></line>
+                <circle :cx="pointSelected.x"
+                    :cy="pointSelected.y"></circle>
+
+                <rect :width="WIDTH"
+                    :height="HEIGHT"
+                    @mousemove="handleMouseMove($event)"
+                    @mouseout="handleMouseOut()"></rect>
+            </svg>
+        </div>
+    </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
