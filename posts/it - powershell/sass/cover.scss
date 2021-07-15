@@ -1,0 +1,21 @@
+@function makelongshadow($length, $angle) {
+    $val: 0px 0px transparent;
+    @for $i from 1 through $length {
+        $val: #{$val}, #{$i}px #{$i * $angle}px rgb(123, 184, 229);
+    }
+    @return $val;
+}
+
+@import url("https://fonts.googleapis.com/css?family=Roboto:700,900");
+
+body {
+    background: radial-gradient(#fff, #aaa);
+    background-size: 100vw 100vh;
+    padding-top: 10vh;
+}
+
+.txt {    
+    font-family: "Roboto";
+    font-size: 12vmin;
+    text-shadow: makelongshadow(1000, 1);
+}

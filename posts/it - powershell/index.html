@@ -11,8 +11,9 @@
   <body>
     <article>
       <h2>PowerShell</h2>
-      <p>PowerShell được phát triển để thay thế CMD.</p>
-      <p>PowerShell được xây dựng trên .NET.</p>
+      <p>PowerShell được phát triển để thay thế CMD quá đơn giản.</p>
+      <p>PowerShell được xây dựng trên .NET. PowerShell có điểm hay so với Bash
+        của Linux ở chỗ nó gần giống như là một ngôn ngữ lập trình vậy.</p>
       <p>Để khởi động PowerShell, vào hộp thoại Run hoặc Search và gõ <code>powershell</code>.</p>
       <p>Các file script có phần mở rộng là <code>ps1</code>. Bạn không thể
         click đúp file ps1 để chạy (để tránh tổn hại ngoài ý muốn), mà phải
@@ -25,6 +26,12 @@
       <figure><img src="images/version.png" alt=""></figure>
       <p>Máy tính của tôi sử dụng PowerShell phiên bản 5.1 trên hệ điều hành
         Windows 10.</p>
+      <p>Phiên bản mới nhất là phiên bản 7.</p>
+      <h3>Cài đặt PowerShell trên Ubuntu</h3>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
       <h3>Chính sách thực thi</h3>
       <p>PowerShell có một giao thức an ninh rất độc đáo, gọi là chính sách thực
         thi (execution policy), cho phép bạn định nghĩa loại script mà có thể
@@ -242,49 +249,506 @@ $text -replace "\w+!", "B"</pre>
       <h3>Mảng</h3>
       <p>Để tạo một mảng trong PowerShell, bạn có thể sử dụng một trong hai tùy
         chọn:</p>
-      <p>Khai báo nó một cách tường mình bằng cách bao các giá trị vào trong @(
-        ) và ngăn cách bằng dấu phảy</p>
-      <p>Khi báo </p>
-      <p><br>
-      </p>
-      <p><br>
-      </p>
-      <p>Danh sách .NET</p>
-      <p><br>
-      </p>
-      <p>Hash Table</p>
-      <p><br>
-      </p>
-      <p>Dòng điều khiển</p>
-      <p>Toán tử logic và so sánh</p>
-      <p>Mệnh đề điều kiện</p>
-      <p>Switch</p>
-      <p>Vòng lặp</p>
-      <p><br>
-      </p>
+      <ul>
+        <li>Khai báo nó một cách tường mình bằng cách bao các giá trị vào trong
+          <code>@( )</code> và ngăn cách bằng dấu phảy</li>
+        <li>Khai báo nó một cách không tường mình bằng cách ngăn cách các phần
+          từ bằng dấu phảy</li>
+      </ul>
+      <p>Ví dụ:</p>
+      <pre><code class="language-powershell"># Explicitly
+$array1 = @(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+$array1
+
+# Implicitly
+$array2 = 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+$array2
+
+# Accessing
+$array1[2]
+$index = 4
+$array2[$index]</code></pre>
+      <p>Để truy cập một giá trị của mảng, chỉ cần truyền chỉ số bạn muốn trong
+        dấu ngoặc vuông, ví dụ <code>$array1[2]</code>.</p>
+      <h3>Danh sách .NET</h3>
+      <p>Trong PowerSheell, bạn có thể sử dụng các lớp và đối tượng của .NET, do
+        đó bạn có thể sử dụng bất kỳ loại danh sách nào từ <code>Collections.Generic</code>.
+        Ví dụ sau chỉ ra cách sử dụng một danh sách các xâu:</p>
+      <pre><code class="language-powershell">$myList = New-Object Collections.Generic.List[string]
+$myList.Add("Rui")
+$myList.Item(0)</code></pre>
+      <h3>Hash Table</h3>
+      <p>Hash Table được khai báo bên trong <code>@{ }</code>, các cặp Key =
+        Value được ngăn cách bởi dấu chấm phảy.</p>
+      <p>Để truy cập một giá trị của Hash Table, sử dụng dấu ngoặc vuông và tên
+        khóa, ví dụ <code>$values["key1"]</code>.</p>
+      <pre><code class="language-powershell">$values = @{
+    "key1" = "VAL 1";
+	"key2" = "VAL 2";
+	"key3" = “VAL 3"
+}
+
+$values["key1"]</code></pre>
+      <h3>Dòng điều khiển</h3>
+      <h4>Toán tử logic và so sánh</h4>
+      <p>Để tạo các quyết định trong PowerShell, bạn cần sử dụng các mệnh đề
+        điều kiện như trong các ngôn ngữ lập trình khác.</p>
+      <p>Tất cả các toán tử PowerShell bắng đầu bằng một ký tự gạch ngang <code>-</code>,
+        theo sau là tên của toán tử mong muốn.</p>
+      <p>Danh sách các toán tử so sánh là:</p>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th style="width:100px">Toán tử</th>
+              <th>Định nghĩa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>-eq<br>
+              </td>
+              <td>Bằng (equal)<br>
+              </td>
+            </tr>
+            <tr>
+              <td>-ne<br>
+              </td>
+              <td>Không bằng (not equal)<br>
+              </td>
+            </tr>
+            <tr>
+              <td>-ge<br>
+              </td>
+              <td>Lớn hơn hoặc bằng (greater than or equal)<br>
+              </td>
+            </tr>
+            <tr>
+              <td>-gt<br>
+              </td>
+              <td>Lớn hơn (greater than)<br>
+              </td>
+            </tr>
+            <tr>
+              <td>-lt<br>
+              </td>
+              <td>Nhỏ hơn (less than)<br>
+              </td>
+            </tr>
+            <tr>
+              <td>-le</td>
+              <td>Nhỏ hơn hoặc bằng (less than or equal)</td>
+            </tr>
+            <tr>
+              <td>-like</td>
+              <td>Đánh giá một mẫu với giá trị bên phải, trả về <code>True</code>
+                nếu có match hoặc <code>False</code> nếu không. Toán tử này hỗ
+                trợ các ký tự wildcard như:<br>
+                <ul>
+                  <li><code>?</code> bất kỳ một ký tự nào</li>
+                  <li><code>*</code> không hoặc nhiều hơn bất kỳ ký tự nào</li>
+                  <li><code>[a-b]</code> bất kỳ ký tự nào trong khoảng</li>
+                  <li><code>[ab]</code> ký tự a hoặc b</li>
+                </ul>
+                Hình như không phải biểu thức chính quy.<br>
+                So sánh toàn bộ, không chỉ một phần.<br>
+              </td>
+            </tr>
+            <tr>
+              <td>-notlike</td>
+              <td>Ngược lại của -like<br>
+              </td>
+            </tr>
+            <tr>
+              <td>-match</td>
+              <td>Đánh giá một biểu thức chính quy với giá trị bên phải và trả
+                về <code>True</code> nếu có match hoặc <code>False</code> nếu
+                không<br>
+              </td>
+            </tr>
+            <tr>
+              <td>-notmatch</td>
+              <td>Ngược lại của -match<br>
+              </td>
+            </tr>
+            <tr>
+              <td>-contains</td>
+              <td>Trả về <code>True</code> nếu một danh sách chỉ định có một
+                giá trị nào đó<br>
+              </td>
+            </tr>
+            <tr>
+              <td>-notcontains</td>
+              <td>Ngược lại của -contains<br>
+              </td>
+            </tr>
+            <tr>
+              <td>-is</td>
+              <td>So sánh một giá trị với một kiểu dữ liệu .NET và trả về <code>True</code>
+                nếu chúng match<br>
+              </td>
+            </tr>
+            <tr>
+              <td>-isnot</td>
+              <td>Ngược lại của -is<br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Ví dụ:</p>
+      <pre><code class="language-powershell"># Strings to evaluate
+$a = "Hello"
+$b = "Hi"
+
+# EQUALS returns False
+($a -eq $b)
+
+# NOT EQUALS returns True
+($a -ne $b)
+
+# GREATER THAN OR EQUAL returns True
+(10 -ge 10)
+
+# GREATER THAN returns False
+(10 -gt 10)
+
+# LESS THAN returns True
+(3 -lt 7)
+
+# LESS THAN OR EQUALS returns True
+(3 -le 7)
+
+# LIKE returns True
+($a -like "H*")
+
+# LIKE returns False
+($a -like "H?")
+
+# MATCH returns True
+($a -match "(.*)")
+
+# CONTAINS returns True
+(1, 2, 3, 4, 5 -contains 5)
+
+# CONTAINS returns False
+(1, 2, 3, 4, 5 -contains 15)
+
+# IS returns True
+($a -is [System.String])</code></pre>
+      <p>Danh sách các toán tử logic là:</p>
+      <div class="out-of-box">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th style="width:100px">Toán tử</th>
+              <th>Định nghĩa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>-and<br>
+              </td>
+              <td>Trả về true nếu tất cả là true<br>
+              </td>
+            </tr>
+            <tr>
+              <td>-or</td>
+              <td>Trả về true nếu ít nhất một cái là true</td>
+            </tr>
+            <tr>
+              <td>-xor</td>
+              <td>Trả về false nếu một cái là true, nhưng không phải cả hai là
+                true</td>
+            </tr>
+            <tr>
+              <td>-not</td>
+              <td>Phủ định</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Ví dụ:</p>
+      <pre><code class="language-powershell"># Strings to evaluate
+$a = "Hello"
+$b = "Hi"
+
+# AND returns False
+($a -ne $b) -and (1 -eq 1) -and ($a -eq "PowerShell")
+
+# OR returns True
+($a -ne $b) -or (1 -eq 1) -or ($a -eq "PowerShell")
+
+# XOR returns True
+($a -eq $b) -xor ($a -like "H*")
+
+# NOT returns False
+-not ($a -ne $b)
+
+# Combining multiple operators - returns False
+(($a -eq $b) -xor ($a -like "H*") -and (1,2,3,4 -contains 1)) -xor ("A" -ne "B")</code></pre>
+      <h4>Mệnh đề điều kiện</h4>
+      <p>Mệnh đề điều kiện trong PowerShell tương tự như các ngôn ngữ lập trình
+        khác. Bạn có các mệnh đề <code>if</code>, <code>else</code>, <code>switch</code>.
+        Ví dụ:</p>
+      <pre><code class="language-powershell">$myVar = 1
+if ($myVar –lt 2) {
+    "small"
+} else {
+    "large"
+}</code></pre>
+      <p>Ngoài mệnh đề if else truyền thống, còn có một dạng khác sử dụng hash
+        table. Các key của hash table phải là <code>$true</code> và C, tương
+        ứng với hai trường hợp của điều kiện. Ví dụ:</p>
+      <pre><code class="language-powershell"># @{ $true = TRUE VALUE; $false = FALSE VALUE}[CONDITION]
+
+$var1 = 2
+$var2 = 2
+$value = @{ $true = 12345; $false = 67890}[$var1 –eq $var2]
+# The result should be 12345
+$value</code></pre>
+      <h4>Switch</h4>
+      <p>Sử dụng mệnh đề switch để kiểm tra nhiều trường hợp. Ví dụ:</p>
+      <pre><code class="language-powershell">$int = 15
+
+switch ($int) {
+	0 { "You need to sum 15"; break }
+	1 { "You need to sum 14"; break }
+	2 { "You need to sum 13"; break }
+	3 { "You need to sum 12"; break }
+	4 { "You need to sum 11"; break }
+	5 { "You need to sum 10"; break }
+	6 { "You need to sum 9"; break }
+	7 { "You need to sum 8"; break }
+	15 { "Good!!"; break }
+	default { "You are close"; break }
+}</code></pre>
+      <h3>Vòng lặp</h3>
+      <p>Bạn có thể sử dụng các vòng lặp while, for, foreach. Ví dụ:</p>
+      <pre><code class="language-powershell">$array = 1, 2, 3, 4, 5, 6
+$var = 0
+while ($var -lt 6) {
+    write $array[$var]
+    $var++
+}</code></pre>
+      <pre><code class="language-powershell">$array = 1, 2, 3, 4, 5, 6
+for ($i = 0; $i -lt $array.Count; $i++) {
+    write $array[$i]
+}</code></pre>
+      <pre><code class="language-powershell">$array = 1, 2, 3, 4, 5, 6
+foreach ($var in $array) {
+    write $var
+}</code></pre>
+      <pre><code class="language-powershell">$array | %{
+    write $_
+}</code></pre>
+      <p>Cách cuối sử dụng | % $_ hơi đặc biệt.</p>
+      <h3>Quản lý các luồng xử lý</h3>
+      <p>PowerShell cho phép bạn delay, pause, break trong script của bạn.</p>
+      <p>Câu lệnh <code>Read-Host</code> tạm dừng và chờ người dùng nhấn phím
+        Enter.</p>
+      <p>Câu lệnh <code>Start-Sleep</code> tạm dừng trong một khoảng thời gian
+        chỉ định.</p>
+      <p>Ví dụ:</p>
+      <pre><code class="language-powershell"># Sleep trong 5 giây
+Start-Sleep -Seconds 5
+
+# Dừng cho đến khi người dùng nhấn phím Enter
+Read-Host</code></pre>
       <p><br>
       </p>
       <h3>Định nghĩa hàm</h3>
-      <p><br>
+      <p>Các hàm là các khối code được đặt tên, thường với một task đơn giản và
+        đơn chức năng, được xây dựng để sử dụng lại trong script của bạn.</p>
+      <p>Hàm đơn giản:</p>
+      <pre><code class="language-powershell">function GetAllProcess {
+    Get-Process
+}</code></pre>
+      <p>Hàm đơn giản với hai tham số:</p>
+      <pre><code class="language-powershell">function MyFunction1($param1, $param2) {
+    Write "This is param 1: $param1"
+    Write "This is param 2: $param2"
+}</code></pre>
+      <p>Hàm sử dụng khối <code>param</code> để định nghĩa các tham số, định
+        nghĩa logic trong khối <code>process</code>:<br>
       </p>
-      <p>Lệnh if (khối điều kiện)</p>
-      <p><br>
-      </p>
-      <p>Vòng lặp</p>
+      <pre><code class="language-powershell">function MyFunction2 {
+    param(
+        $param1,
+		$param2
+    )
+
+    # Even declare where you process your logic
+    process {
+        Write "This is param 1: $param1"
+        Write "This is param 2: $param2"
+    }
+}</code></pre>
+      <p>Gọi hàm:</p>
+      <pre><code class="language-powershell">GetAllProcess
+MyFunction1 65 3
+MyFunction2 -param2 3 -param1 65</code></pre>
+      <p>Bạn có thể truyền tham số theo thứ tự khai báo, hoặc theo tên của tham
+        số (lúc đó thì không cần quan tâm đến thứ tự nữa).</p>
+      <p>Các tham số không chỉ được sử dụng trong các hàm mà còn trong các
+        script nữa. PowerShell cho phép bạn sử dụng tham số của script. Toàn bộ
+        script có thể được sử dụng như một hàm. Để thêm tham số vào script, bạn
+        cần sử dụng khối <code>param</code> ở đầu của script (dòng đầu tiên).</p>
+      <p>Các tham số trong khối <code>param</code> có thể có các thuộc tính
+        sau:</p>
       <p><br>
       </p>
       <p><br>
       </p>
       <h3>Pipeline</h3>
-      <p>Pipeline sẽ truyền dữ liệu từ một cmdlet này sang cmdlet khác.</p>
+      <p>Pipeline là quan trọng và được sử dụng nhiều trong PowerShell. Ý tưởng
+        được vay mượn từ Unix. Pipeline cho phép bạn sử dụng kết quả của một
+        lệnh như là đầu vào của lệnh khác. Với cách này bạn không phải lưu kết
+        quả vào các biến, thay vào đó chỉ cần tạo một dòng dữ liệu.</p>
+      <p>Một tính năng chính về pipeline là nó không truyền các kết quả như là
+        văn bản mà truyền như một đối tượng.</p>
+      <p>Lệnh <code>Where-Object</code> để lọc một tập. Alias là <code>where</code>
+        hoặc ký tự <code>?</code>.</p>
+      <p>Lệnh <code>Select-Object</code> để chọn các thuộc tính của một đối
+        tượng. Alias là <code>select</code>.</p>
+      <p>Lệnh <code>Get-Process</code> để lấy danh sách tất cả các tiến trình
+        đang active.</p>
+      <p>Ta có ví dụ sau:</p>
+      <pre><code class="language-powershell">Get-Process | Where-Object {$_.Name -like "PowerShell"} | Select-Object Id</code></pre>
+      <p>Một khái niệm quan trọng của pipeline đó là phần tử pipeline hiện tại,
+        có thể truy cập bằng biến <code>$_</code>. Biến đặc biệt này được sử
+        dụng để tham chiếu đến giá trị hiện tại trong pipeline. Trong trường hợp
+        trên, <code>$_</code> là một tập hợp các dòng sinh ra bởi lệnh <code>Get-Process</code>,
+        trong đó mỗi dòng chứa thuộc tính <code>Name</code>. Lệnh <code>Where-Object</code>
+        lọc các dòng bằng cách so sánh thuộc tính <code>Name</code> với xâu
+        "PowerShell" và gửi các dòng kết quả đến bước tiếp theo trong pipeline.</p>
+      <p>Trong khi sử dụng pipeline, bạn có thể cần tách các dòng ra để cho dễ
+        đọc. Để làm được điều đó, bạn cần sử dụng ký tự đặc biệt tách dòng <code>`</code>
+        (ký tự tiếp tục dòng).</p>
+      <p>Ví dụ trên có thể viết lại như sau:</p>
+      <pre><code class="language-powershell">Get-Process | `
+    Where-Object {$_.Name -like "PowerShell"} | `
+	    Select-Object Id</code></pre>
+      <p><br>
+      </p>
+      <h3>File hệ thống</h3>
+      <h4>Lấy vị trí hiện tại</h4>
+      <p>Sử dụng lệnh <code>Get-Location</code> để lấy ra vị trí thư mục hiện
+        tại, tương tự lệnh <code>pwd</code> (print working directory). Lệnh <code>Get-Location</code>
+        trả về một đối tượng, bạn có thể lấy ra các tham số như <code>Path</code>
+        và <code>Drive</code>.</p>
+      <pre><code class="language-powershell">Get-Location
+
+# Returns full path for the current location
+Get-Location | %{$_.Path}
+
+# Return drive info
+Get-Location | %{$_.Drive}</code></pre>
+      <h4>Lấy danh sách file trong một thư mục</h4>
+      <p>Để lấy thông tin về tất cả các file trong một thư mục, bạn có thể sử
+        dụng lệnh <code>Get-ChildItem</code>, hoặc nếu bạn chỉ muốn liệt kê
+        thông tin của một đối tượng, sử dụng lệnh <code>Get-Item</code>. Lệnh
+        này có một số tham số quan trọng sau:</p>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Tham số</th>
+            <th>Định nghĩa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>-Name</td>
+            <td>Chỉ lấy tên của các phần tử</td>
+          </tr>
+          <tr>
+            <td>-Recurse</td>
+            <td>Lấy các phần tử trong đường dẫn chỉ định và cả các đường dẫn con
+              (xử lý đệ quy)</td>
+          </tr>
+          <tr>
+            <td>-Path</td>
+            <td>Chỉ định một đường dẫn cho một hoặc nhiều hơn vị trí</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Ví dụ:</p>
+      <pre><code class="language-powershell"># Simple Get-ChildItem
+Get-ChildItem -Path (Get-Location).Path
+
+# Get-ChildItem using -Recurse parameter
+Get-ChildItem -Path (Get-Location).Path -Recurse
+
+# Get-ChildItem using -Recurse parameter and a filter for file name (-Name)
+Get-ChildItem -Path (Get-Location).Path -Name "*Rui*"
+
+# Get-ChildItem filter by extension
+Get-ChildItem -Path (Get-Location).Path | ?{$_.Extension -like "*txt"}</code></pre>
+      <h4>Lấy nội dung của một file</h4>
       <p><br>
       </p>
       <p><br>
       </p>
-      <p>PowerShell có thể nói chuyện</p>
+      <p>Thay đổi nội dung của một file</p>
+      <p><br>
+      </p>
+      <p>Tạo file tạm</p>
+      <p><br>
+      </p>
+      <p>Tạo thư mục mới</p>
+      <p><br>
+      </p>
+      <p>Thay đổi quyền của thư mục</p>
+      <p><br>
+      </p>
+      <p>Xóa thư mục</p>
+      <p><br>
+      </p>
+      <p>Đổi tên thư mục</p>
+      <p><br>
+      </p>
+      <p>Di chuyển file hoặc thư mục</p>
+      <p><br>
+      </p>
+      <p>Nối các phần thành một đường dẫn</p>
+      <p><br>
+      </p>
+      <p>Tách đường dẫn thành các phần</p>
+      <p><br>
+      </p>
+      <p>Kiểm tra nếu đường dẫn tồn tại</p>
+      <p><br>
+      </p>
+      <p>Resolve đường dẫn</p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>Tiến trình</h3>
+      <p>Liệt kê tất cả các tiến trình</p>
+      <p><br>
+      </p>
+      <p>Lấy một tiến trình dựa vào ID</p>
+      <p><br>
+      </p>
+      <p>Dừng một tiến trình</p>
+      <p><br>
+      </p>
+      <p>Bắt đầu một tiến trình<br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <p><br>
+      </p>
+      <h3>PowerShell có thể nói chuyện</h3>
       <pre>Add-Type -AssemblyName System.speech
 $synth = New-Object -TypeName System.Speech.Synthesis.SpeechSynthesizer
 $synth.Speak("PowerShell to the people")</pre>
+      <p><br>
+      </p>
+      <h3>Kiểm tra chính tả</h3>
       <p><br>
       </p>
       <p><br>
