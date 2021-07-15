@@ -143,19 +143,112 @@ Write-Host -ForegroundColor White -BackgroundColor Black "Hello World"</pre>
       <p>Phạm vi mặc định của một biến phụ thuộc vào nơi mà bạn định nghĩa nó.
         Nếu nó được định nghĩa trong shell tương tác, phạm vi là Global. Nếu
         ngoài hàm và các khối script, phạm vi là Script. Còn lại là Local.</p>
+      <p>Lấy thuộc tính của một Item</p>
+      <p><br>
+      </p>
+      <h4>Định dạng output của biến</h4>
+      <p>Có ba lệnh để định dạng output của một biến. Bạn có thể sử dụng
+        Format-List để định dạng như một danh sách dọc, Format-Table để định
+        dạng như một bảng, Format-Wide để lấy phần tử và hiển thị nhiều cột.</p>
+      <pre>Get-Process | Format-List
+
+Get-Process | Format-Table
+
+Get-Process | Format-Wide
+
+# Choose how many columns you want
+Get-Process | Format-Wide -Column 3</pre>
+      <h3>Xâu</h3>
+      <p>Xâu là kiểu dữ liệu sử dụng nhiều nhất trong các ngôn ngữ lập trình và
+        PowerShell không phải là ngoại lệ. Mặc định, các xâu trong PowerShell là
+        các đối tượng System.String trong .NET, nghĩa là khi bạn khởi tạo một
+        biến với một giá trị xâu, PowerShell sẽ khởi tạo một đối tượng
+        System.String với các thuộc tính và phương thức của nó.</p>
+      <pre>$myVar = "PowerShell"
+($myVar -is [System.String])</pre>
+      <p>Chú ý phân biệt các xâu literal và expanding. Trong các xâu literal,
+        được bao giữa dấu nháy đơn <code>'</code> và tất cả là phần của xâu.
+        Khi bạn bao bằng dấu nháy kép <code>"</code>, PowerShell thay thế tất
+        cả các tên biến và các ký tự đặc biệt.</p>
+      <pre>$a = "SyncFusion"
+
+# Literal string
+$literal = '$a`n and PowerShell'
+
+$literal
+
+# Expanding string
+$expanding = "$a`n and PowerShell"
+
+$expanding</pre>
+      <h4>Here string</h4>
+      <p>PowerShell cung cấp một tính năng hay mà đơn giản cách bạn quản lý các
+        xâu lớn. Cái này cho phép bạn định nghĩa các xâu nhiều dòng mà không
+        phải cộng nhiều xâu lại với nhau. Để sử dụng here string, bạn bắt đầu
+        bằng ký tự đặc biệt <code>@</code>, dấu nháy kép <code>"</code>, sau
+        đó là dòng mới, và kết thúc bằng dấu nháy kép <code>"</code> cùng ký tự
+        <code>@</code>.</p>
+      <pre># Simple string
+$simpleString = "Example String"
+
+# Empty here string
+@"
+
+"@
+
+# PowerShell here string
+$largeString = @"
+    Hello, this
+    is a PowerShell here string. You can define
+    multiple string lines into one single text block.
+
+    You can even use special characters like `n or expand it with another string
+    $simpleString
+"@
+
+$largeString</pre>
+      <h3>Biểu thức chính quy</h3>
+      <p>Biểu thức chính quy là một cách dễ dàng và rất hiệu quả để tìm kiếm các
+        mẫu trong xâu. Trong khi phát triển các script, bạn sẽ cần sử dụng biểu
+        thức chính quy trong một số ngữ cảnh, trong đó có thể bao gồm việc thay
+        thế các văn bản trong xâu, lấy ra các phần tử trong XML. Để sử dụng biểu
+        thức chính quy trong PowerShell, bạn có thể sử dụng toán tử <code>-match</code>
+        nếu bạn chỉ muốn đánh giá một mẫu trong một xâu hoặc toán tử <code>-replace</code>
+        nếu bạn muốn thay thế các ký tự trong một xâu dựa vào một mẫu. Đoạn code
+        xâu chỉ cho bạn cách sử dụng toán tử <code>-match</code>.</p>
+      <pre><code class="language-powershell"># Text to evaluate
+$text = @"
+	This is a PowerShell string!
+    We will use it to test regular expressions
+"@
+
+# Evaluate a pattern. Returns: True
+$text -match "\w"
+
+# Evaluate a pattern. Returns: False
+$text -match "!\w+"</code></pre>
+      <p>Ví dụ sử dụng toán tử <code>-replace</code>:</p>
+      <pre># Text to evaluate
+$text = @"
+    This is a PowerShell string!
+    We will use it to test regular expressions
+"@
+
+# Replace every character with the A character
+$text -replace "\w", "A"
+
+# Replace every string followed by ! with the B character
+$text -replace "\w+!", "B"</pre>
+      <h3>Mảng</h3>
+      <p>Để tạo một mảng trong PowerShell, bạn có thể sử dụng một trong hai tùy
+        chọn:</p>
+      <p>Khai báo nó một cách tường mình bằng cách bao các giá trị vào trong @(
+        ) và ngăn cách bằng dấu phảy</p>
+      <p>Khi báo </p>
       <p><br>
       </p>
       <p><br>
       </p>
-      <p><br>
-      </p>
-      <p>Xâu</p>
-      <p><br>
-      </p>
-      <p>Biểu thức chính quy</p>
-      <p><br>
-      </p>
-      <p>Mảng</p>
       <p>Danh sách .NET</p>
       <p><br>
       </p>
@@ -199,7 +292,7 @@ $synth.Speak("PowerShell to the people")</pre>
       <h3>So sánh các cmdlet với các lệnh tương tự</h3>
       <p>Các lệnh không phân biệt chữ hoa thường.</p>
       <div class="out-of-box">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-responsive-lg">
           <thead>
             <tr>
               <th>PowerShell (Cmdlet)</th>

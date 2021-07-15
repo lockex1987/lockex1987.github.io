@@ -186,6 +186,7 @@ class Rename
      * Thay thế các ký tự đặc biệt.
      * Thay thế ký tự gạch dưới "_" bằng ký tự dấu cách " ".
      * Thay thế ký tự hai chấm ":" bằng ký tự gạch ngang " - "
+     * Thay các xâu thừa hay có khi download các file truyện tranh như: (digital) (digital-empire) (zone-empire) (son of ultron-empire)
      * Loại bỏ ký tự do người dùng nhập.
      */
     public function removeCharacter(array $a, string $other): void
@@ -194,6 +195,10 @@ class Rename
             $newName = str_replace('_', ' ', $f);
             $newName = str_replace(':', ' - ', $newName);
             $newName = str_replace('!', '', $newName);
+            $newName = str_replace(' (digital)', '', $newName);
+            $newName = str_replace(' (digital-empire)', '', $newName);
+            $newName = str_replace(' (zone-empire)', '', $newName);
+            $newName = str_replace(' (son of ultron-empire)', '', $newName);
             if (!empty($other)) {
                 $newName = str_replace($other, '', $newName);
             }
@@ -204,7 +209,7 @@ class Rename
     /**
      * Loại bỏ các ký tự đặc biệt, để có thể di chuyển file giữa Windows và Linux.
      */
-    function checkSpecialCharacters(string $folder): void
+    public function checkSpecialCharacters(string $folder): void
     {
         $a = scandir($folder);
         foreach ($a as $f) {
