@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JEP (Java), calculate salary dynamically">
+    <title>Hàm eval trong PHP</title>
+    <link rel="icon" href="../../images/favicon.png">
+    <link rel="stylesheet" href="../../css/style.css">
+  </head>
+  <body>
+    <article>
+      <h2>Hàm eval trong PHP</h2>
+      <blockquote> eval is not evil </blockquote>
+      <p></p>
+      <p>Hàm eval dùng để đánh giá một xâu như là mã nguồn PHP.</p>
+      <p>Cú pháp:</p>
+      <pre>eval(string $phpCode): mixed</pre>
+      <p>Tham số $phpCode không bao gồm các thẻ mở và đóng PHP, ví dụ chúng ta
+        truyền <code>'echo "Hi";'</code> chứ không truyền <code>'&lt;?php echo
+          "Hi"; ?&gt;'</code>.</p>
+      <p>Câu lệnh <code>return</code> sẽ dừng việc đánh giá ngay lập tức.</p>
+      <p>Mã nguồn sẽ được thực thi trong phạm vi của mã nguồn mà gọi <code>eval()</code>.
+        Do đó các biến mà được định nghĩa hoặc thay đổi trong lời gọi <code>eval()</code>
+        sẽ được giữ nguyên sau khi lời gọi kết thúc.</p>
+      <p>Hàm <code>eval()</code> trả về <code>null</code> trừ khi câu lệnh <code>return</code>
+        được gọi trong xâu tham số, trong trường hợp đó giá trị return được trả
+        về. Nếu có lỗi parse thì trả về <code>false</code>.</p>
+      <p>Java có một thư viện sử dụng để tính toán động rất hay là JEP. Tôi đã
+        sử dụng nó thực tế trong dự án tính lương cho tập đoàn Viettel.</p>
+      <p><a href="http://www.singularsys.com/jep/" target="_blank">Jep Java -
+          Math Expression Parser - Singular Systems</a></p>
+      <p>Tuy nhiên, tôi không tìm thấy thư viện PHP có các chức năng tương tự.
+        Phần lớn các thư viện chỉ xử lý toán học bình thường, không có câu lệnh
+        điều kiện <code>if</code>.</p>
+      <p>Sử dụng hàm <code>eval()</code> để tính toán động. Hàm này có thể hữu
+        ích để lưu mã nguồn PHP trong cơ sở dữ liệu.</p>
+      <p><a href="eval_demo.php">Demo</a></p>
+      <p>Tham khảo</p>
+      <p><a href="https://www.php.net/manual/en/function.eval.php" target="_blank">PHP:
+          eval - Manual</a></p>
+      <p><br>
+      </p>
+    </article>
+    <script src="../../js/docs.js"></script>
+  </body>
+</html>
