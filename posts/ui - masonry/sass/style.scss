@@ -1,0 +1,31 @@
+.masonry-vertical {
+    column-count: 3;
+    column-gap: 0.5rem;
+
+    img {
+        break-inside: avoid;
+    }
+}
+
+
+.masonry-horizontal {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -1px -1px 0;
+
+    .image-thumb {
+        flex: 1 0 auto;
+        background-position: center;
+        background-size: cover;
+        margin: 0 1px 1px 0px;
+
+        img {
+            // Các ảnh có cùng chiều cao
+            height: 10rem;
+            width: auto;
+            // Không hiển thị ảnh bằng thẻ img,
+            // hiển thị bằng thuộc tính background-image của thẻ cha
+            visibility: hidden;
+        }
+    }
+}

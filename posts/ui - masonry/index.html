@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="masonry, column, flex" />
+    <meta name="description" content="masonry, column-count, column-gap, flex" />
 
-    <title>Masonry</title>
+    <title>Masonry layout</title>
 
     <link rel="icon" href="../../images/favicon.png" />
     <link rel="stylesheet" href="../../css/style.css" />
@@ -14,14 +14,42 @@
 </head>
 
 <body>
-    <article>
+    <article id="app">
         <h2>Masonry layout</h2>
 
-        <h3>Demo ngang</h3>
-        <div class="masonry-horizontal"></div>
-
         <h3>Demo dọc</h3>
-        <div class="masonry-vertical"></div>        
+        <p>Sử dụng thuộc tính column-count. Chú ý từng phần tử phải có break-inside: avoid.</p>
+        <p>Thứ tự hiển thị các phần tử là từ trên xuống dưới, hết cột rồi mới sang cột bên phải.</p>
+        <div class="masonry-vertical">
+            <img v-for="url in urls"
+                :src="url"
+                class="d-block mb-2" />
+        </div>        
+
+        <h3>Demo ngang</h3>
+        <p>Sử dụng d-flex, flex-wrap, flex-1.</p>
+        <div class="masonry-horizontal mb-3">
+            <div v-for="url in urls"
+                class="image-thumb text-center"
+                :style="{ backgroundImage: 'url(' + url + ')' }">
+                <img :src="url" />
+            </div>
+        </div>
+
+        <h3>Native masonry</h3>
+        <p>Chưa hỗ trợ nhiều (grid-template-rows: masonry).</p>
+
+        <h3>Sử dụng thư viện JS</h3>
+        <div class="masonry-js row">
+            <div v-for="url in urls"
+                class="masonry-item col-sm-6 col-md-4 col-lg-3 mb-3">
+                <img :src="url"
+                    onerror="this.style.display = 'none'; this.onerror = null;"
+                    @error="checkLoadImagesComplete()"
+                    @load="checkLoadImagesComplete()" />
+            </div>
+        </div>
+
 
         <h3>Tham khảo</h3>
         <p>
@@ -34,10 +62,16 @@
                 w3bits.com/css-masonry
             </a>
         </p>
+        <p>
+            <a href="https://masonry.desandro.com/" target="_blank">
+                Thư viện JS Masonry
+            </a>
+        </p>
     </article>
 
-    <script src="js/data.js"></script>
-    <script src="js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="js/script.js" type="module"></script>
     <script src="../../js/docs.js"></script>
 </body>
 
