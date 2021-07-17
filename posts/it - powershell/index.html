@@ -28,6 +28,27 @@
         Windows 10.</p>
       <p>Phiên bản mới nhất là phiên bản 7.</p>
       <h3>Cài đặt PowerShell trên Ubuntu</h3>
+      <p>Tham khảo:</p>
+      <p> <a href="https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux?view=powershell-7.1"
+          target="_blank">Installing PowerShell on Linux - PowerShell |
+          Microsoft Docs</a> </p>
+      <p>Máy tôi đang sử dụng Ubuntu 21.04. Trong hướng dẫn trên, khi nói riêng
+        về Ubuntu thì có hướng dẫn riêng với từng phiên bản (thêm thêm key cho
+        từng repository của Microsoft). Tôi sẽ cài đặt thông qua Snap cho tổng
+        quát:</p>
+      <pre class="command-line">sudo snap install powershell --classic</pre>
+      <p>Khởi động PowerShell:</p>
+      <pre class="command-line">pwsh</pre>
+      <p>Để gỡ:</p>
+      <pre class="command-line">sudo snap remove powershell</pre>
+      <p>Không hỗ trợ Ubuntu 21.04, bị lỗi <code>No usable version of libssl
+          was found</code>.</p>
+      <p>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <a href="https://github.com/PowerShell/PowerShell/issues/15608" target="_blank">Powershell
+          Core (7.1.3) and (7.2.0-preview.7) crashing on Ubuntu 21.04 - no
+          usable libssl · Issue #15608 · PowerShell/PowerShell · GitHub</a> </p>
+      <p>Cài đặt trên máy ảo Ubuntu 20.04 (Long term support).</p>
       <p><br>
       </p>
       <p><br>
@@ -984,19 +1005,19 @@ $synth.Speak("PowerShell to the people")</pre>
       <h3>Tham khảo</h3>
       <p><a href="https://en.wikipedia.org/wiki/PowerShell" target="_blank">PowerShell
           - Wikipedia</a></p>
-      <p><a href="https://docs.microsoft.com/en-us/powershell/scripting/how-to-use-docs?view=powershell-7.1"
+      <p><a href="https://docs.microsoft.com/en-us/powershell/scripting/how-to-use-docs?view=powershell-7.1"
           target="_blank">How to use the PowerShell documentation - PowerShell |
           Microsoft Docs</a></p>
-      <p><a href="https://quantrimang.com/bang-tong-hop-cac-lenh-powershell-co-ban-152785"
+      <p><a href="https://quantrimang.com/bang-tong-hop-cac-lenh-powershell-co-ban-152785"
           target="_blank">Bảng tổng hợp các lệnh PowerShell cơ bản -
           Quantrimang.com</a> </p>
-      <p><a href="https://anonyviet.com/huong-dan-lap-trinh-powershell-tren-windows/"
+      <p><a href="https://anonyviet.com/huong-dan-lap-trinh-powershell-tren-windows/"
           target="_blank">Hướng dẫn lập trình PowerShell trên Windows</a> </p>
       <p><a href="https://books.goalkicker.com/PowerShellBook/" target="_blank">PowerShell
           Notes for Professionals book</a> </p>
       <p>---<br>
       </p>
-      <p><a href="https://www.syncfusion.com/succinctly-free-ebooks/powershell"
+      <p><a href="https://www.syncfusion.com/succinctly-free-ebooks/powershell"
           target="_blank">Free Ebook - PowerShell Succinctly</a></p>
       <p><br>
       </p>
