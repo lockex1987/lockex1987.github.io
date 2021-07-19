@@ -359,7 +359,7 @@
         const originalWidth = Math.floor(parseFloat(getComputedStyle(carousel).width.replace('px', '')));
         const itemWidth = Math.floor((originalWidth - 2 * gutterWidth - (numberOfItem - 1) * gapWidth) / numberOfItem);
         const newWidth = itemWidth * numberOfItem + (numberOfItem - 1) * gapWidth + gutterWidth * 2;
-        console.log(originalWidth, itemWidth, newWidth);
+        // console.log(originalWidth, itemWidth, newWidth);
         return newWidth + 'px';
     }
 

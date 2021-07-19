@@ -2,7 +2,7 @@
 /* Phép tính width: calc((100% - (var(--carouselItemNum) - 1) * var(--carouselItemGap)) / var(--carouselItemNum)); ra giá trị nguyên */
 /* 2 nút trước sau có tổng chiều rộng là 64px */
 @media (min-width: 768px) {
-    #gallery {
+    .gallery {
         --carouselItemGap: 16px;
         --carouselItemNum: 2;
 
@@ -12,7 +12,7 @@
 }
 
 @media (min-width: 1200px) {
-    #gallery {
+    .gallery {
         --carouselItemNum: 3;
 
         /* width - 64 - 32 chia hết cho 3 */

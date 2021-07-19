@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html lang="vi">
-
+<html>
 <head>
-    <meta charset="UTF-8" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
 
     <title>Tích hợp carousel với Highcharts</title>
 
@@ -18,31 +16,38 @@
 </head>
 
 <body class="no-float-button">
-    <article id="app" class="mw-none">
+    <article id="app"
+        class="mw-none">
         <h2>Tích hợp carousel với Highcharts</h2>
         <p>Làm như bình thường.</p>
 
-        <div id="gallery" class="nat-carousel mx-auto">
+        <div class="nat-carousel mx-auto gallery">
             <div class="d-flex">
-                <a class="nat-carousel-control" href="#" data-direction="prev">
+                <a class="nat-carousel-control"
+                    href="#"
+                    data-direction="prev">
                     <span class="la la-angle-left text-muted"></span>
                 </a>
     
                 <div class="nat-carousel-wrapper">
                     <div class="nat-carousel-inner">
-                        <div class="nat-carousel-item"
-                                v-for="(e, idx) in list">
+                        <div v-for="(e, idx) in list"
+                            class="nat-carousel-item">
                             <div class="border p-2">
                                 <div class="text-info font-weight-500 mb-3 text-center">
                                     Usage {{e.id}}
                                 </div>
-                                <div :id="'lineChart' + (idx + 1)" class="chart mx-n2"></div>
+
+                                <div :id="'lineChart' + (idx + 1)"
+                                    class="chart mx-n2"></div>
                             </div>
                         </div>
                     </div>
                 </div>
     
-                <a class="nat-carousel-control" href="#" data-direction="next">
+                <a class="nat-carousel-control"
+                    href="#"
+                    data-direction="next">
                     <span class="la la-angle-right text-muted"></span>
                 </a>
             </div>

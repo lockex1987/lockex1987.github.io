@@ -1,4 +1,4 @@
-#gallery {
+.gallery {
     // Responsive
     @media (min-width: 768px) {
         --carouselItemGap: 16px;
@@ -20,13 +20,15 @@
         transform: scale(0.8);
     }
 
+    /*
     &.prev {
         // background-image: linear-gradient(to right,rgba(0,0,0,.5) 0,rgba(0,0,0,.0001) 100%);
     }
-    
+
     &.next {
         // background-image: linear-gradient(to right,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
     }
+    */
 }
 
 .nat-carousel {
@@ -34,21 +36,20 @@
         li {
             width: 10px;
             height: 10px;
-            transition: opacity .6s ease;
+            transition: opacity 0.6s ease;
             margin: 3px;
             border-radius: 50%;
             cursor: pointer;
-            background-color: #AAA;
-            opacity: .5;
+            background-color: #aaa;
+            opacity: 0.5;
 
             &.active {
-                background-color: #F00;
+                background-color: #f00;
                 opacity: 1;
             }
         }
     }
 }
-
 
 .embed-responsive-300by430 {
     &::before {

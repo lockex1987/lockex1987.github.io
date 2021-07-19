@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="vi">
-
+<html>
 <head>
-    <meta charset="UTF-8" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="date" content="2020-06-22 21:15:00">
     <meta name="description" content="carousel, water margin, thủy hử, 108 vị anh hùng Lương Sơn Bạc, 108 heroes" />
@@ -32,28 +31,29 @@
 			<li>Khi trỏ chuột thì không autoPlay</li>
         </ul>
 
-
         <p><a href="bootstrap-carousel.html" target="_blank">Bootstrap carousel</a> đơn giản nhưng hỗ trợ ít.</p>
         <p><strong>Chú ý:</strong> Phải tự style cho <code>nat-carousel-indicators</code> và <code>nat-carousel-control</code>.</p>
 
         <h3>Cấu trúc HTML</h3>
         <pre>.nat-carousel
+    .nat-carousel-control[data-direction=prev]
+
     .nat-carousel-wrapper
         .nat-carousel-inner
             .nat-carousel-item
                 img
+    
+    .nat-carousel-control[data-direction=next]
 
     .nat-carousel-indicators
-        [data-item-to]
-
-    .nat-carousel-control[data-direction=prev]
-    .nat-carousel-control[data-direction=next]</pre>
+        [data-item-to]</pre>
 
         <h3>Demo: 108 vị anh hùng Lương Sơn Bạc</h3>
 
-        <div class="out-of-box">
-            <div id="gallery"
-                class="nat-carousel">
+        <div id="app"
+            class="out-of-box">
+            <div ref="gallery"
+                class="nat-carousel gallery">
                 <div class="d-flex">
                     <!-- Nút điều khiển -->
                     <span class="nat-carousel-control cursor-pointer d-flex align-items-center text-muted opacity-0.5 hover:opacity-1 flex-shrink-0 prev"
@@ -61,12 +61,34 @@
                         <span class="la la-angle-left"></span>
                     </span>
     
-                    <div class="flex-1 nat-carousel-wrapper">
+                    <div class="nat-carousel-wrapper flex-1">
                         <div class="nat-carousel-inner">
                             <!-- Các carousel-item ở đây -->
-                            <!--div class="nat-carousel-item text-center">
-                                <img src="images/001_thien%20khoi%20tinh_ho%20bao%20nghia_tong%20giang.jpg">
-                            </div-->
+                            <div v-for="hero in heroes"
+                                class="nat-carousel-item">
+                                <div class="card h-100">
+                                    <div class="embed-responsive embed-responsive-300by430">
+                                        <div class="embed-responsive-item d-flex justify-content-center align-items-center">
+                                            <img class="mh-100x h-100 w-100 object-fit-cover"
+                                                style="border-radius: 0.25rem 0.25rem 0 0"
+                                                :src="'images/' + hero.image"
+                                                :title="hero.image"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card-body">
+                                        <div class="card-title text-success">
+                                            #{{hero.rank}}: {{hero.nameVietnamese}}
+                                        </div>
+                                        <div class="card-subtitle text-info">
+                                            {{hero.nicknameVietnamese}}
+                                        </div>
+                                        <div class="card-text text-muted">
+                                            {{hero.nickname}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
     
@@ -79,9 +101,9 @@
                 <!-- Indicators -->
                 <!-- Chỉ khi hiển thị một phần tử một lúc mới hiển thị cái này -->
                 <ol class="nat-carousel-indicators justify-content-center my-3 list-unstyled d-flex d-md-none flex-wrap">
-                    <!--li data-item-to="0" class="active"></li>
-                    <li data-item-to="1"></li>
-                    <li data-item-to="2"></li-->
+                    <li v-for="(hero, idx) in heroes"
+                        :data-item-to="idx"
+                        :class="idx == 0 ? 'active' : ''"></li>
                 </ol>
             </div>
         </div>
@@ -98,13 +120,13 @@
         <h3>Tham khảo</h3>
         <p><a href="https://owlcarousel2.github.io/OwlCarousel2/" target="_blank">Owl Carousel</a></p>
         <p><a href="http://kenwheeler.github.io/slick/" target="_blank">slick - the last carousel you'll ever need</a></p>
-        <p><a href="https://cdnjs.com/libraries/slick-carousel" target="_blank">slick-carousel - cdnjs.com</a></p>
-        <p><a href="https://lockex1987.github.io/archive/project%20-%20comic%20reader/other-version.html" target="_blank">Comic Reader</a></p>
-        <p><a href="https://lockex1987.github.io/archive/ui%20-%20swipe/" target="_blank">Swipe</a></p>
+        <p><a href="https://lockex1987.github.io/posts/ui%20-%20swipe/" target="_blank">Swipe</a></p>
     </article>
 
     <link rel="stylesheet" href="css/nat-carousel.css" />
     <script src="js/nat-carousel.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js"></script>
 
     <script src="js/script.js" type="module"></script>
 
