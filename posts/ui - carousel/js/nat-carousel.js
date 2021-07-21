@@ -115,7 +115,7 @@
         const itemNum = getItemNum(carouselInner);
         let idx = Math.min(itemIndex, totalItem - itemNum);
         idx = Math.max(idx, 0);
-        console.log(idx, totalItem);
+        // console.log(idx, totalItem);
         return idx;
     }
 
