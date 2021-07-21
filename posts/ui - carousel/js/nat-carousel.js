@@ -321,27 +321,31 @@
     function autoPlay(carouselInner, duration) {
         // Kiểm tra xem con trỏ chuột
         let checkMouseIn = false;
+        let checkFocus = false;
 
         // Xử lý các sự kiện: khi trỏ chuột thì không tự động play
         const carouselWrapper = carouselInner.closest('.nat-carousel-wrapper');
         if (carouselWrapper) {
-            // focus, mouseenter
-            carouselWrapper.addEventListener('mouseenter', (evt) => {
+            // focus, mouseenter, focusin
+            // blur, mouseleave, focusout
+            carouselWrapper.addEventListener('mouseenter', () => {
                 checkMouseIn = true;
-                console.log('Focus');
             });
-
-            // blur, mouseleave
-            carouselWrapper.addEventListener('mouseleave', (evt) => {
+            carouselWrapper.addEventListener('mouseleave', () => {
                 checkMouseIn = false;
-                console.log('Blur');
+            });
+            carouselWrapper.addEventListener('focusin', () => {
+                checkFocus = true;
+            });
+            carouselWrapper.addEventListener('focusout', () => {
+                checkFocus = false;
             });
         }
 
         setInterval(() => {
             // Auto play
             // Tự động thay đổi item
-            if (!checkMouseIn) {
+            if (!checkMouseIn && !checkFocus) {
                 gotoNextOrFirstItem(carouselInner);
             }
         }, duration);
