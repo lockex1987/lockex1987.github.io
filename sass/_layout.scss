@@ -1,11 +1,12 @@
-// Chiều cao header ở màn hình mobile
 :root {
-    --header-height: 45px;
+	// Chiều cao header ở màn hình mobile
+    --headerHeight: 45px;
 }
 
 body {
     &.has-mobile-header {
-        padding-top: var(--header-height);
+		// Chìa chỗ cho header
+        padding-top: var(--headerHeight);
 
         @include media-breakpoint-up(xl) {
             padding-top: 0;
@@ -31,13 +32,14 @@ body {
 
 // Header ở màn hình mobile
 .mobile-header {
-    height: var(--header-height);
+    height: var(--headerHeight);
     top: 0;
     transition: top 0.2s ease-in-out;
     z-index: 10;
 
+	// Header ở trạng thái ẩn
 	&.nav-hide {
-        top:  calc(var(--header-height) * -1);
+        top:  calc(var(--headerHeight) * -1);
     }
 
     .logo {

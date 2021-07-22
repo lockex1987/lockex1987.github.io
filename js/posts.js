@@ -170,7 +170,7 @@ const App = {
 			
 			// Lọc xóa bớt các post không có title (nội dung sơ sài)
 			const noTitledPostPaths = postList.filter(p => !p.title).map(p => p.path);
-			console.log(noTitledPostPaths);
+			// console.log(noTitledPostPaths);
 
             this.postList = postList;
 

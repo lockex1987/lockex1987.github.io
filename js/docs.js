@@ -47,7 +47,7 @@ class HeaderNavigator {
         mobileHeader.className = 'mobile-header position-fixed bg-white w-100 border-bottom d-xl-none d-flex align-items-center px-2';
         mobileHeader.innerHTML = `
                 <a href="/" class="logo">
-                    <img src="/images/logo.svg">
+                    <img src="/images/logo.svg" />
                 </a>
 
                 <a class="ml-auto text-blue" href="/posts.html">
@@ -74,7 +74,7 @@ class HeaderNavigator {
         const header = document.querySelector('.mobile-header');
         let isHide = false;
 
-        let navbarHeight = getComputedStyle(document.body).getPropertyValue('--header-height');
+        let navbarHeight = getComputedStyle(document.body).getPropertyValue('--headerHeight');
         navbarHeight = parseInt(navbarHeight.replace('px', '')) + 5;
 
         window.addEventListener('scroll', () => {
@@ -87,14 +87,14 @@ class HeaderNavigator {
             }
 
             if (prevScrollPos > currentScrollPos) {
-                // Scroll Up
+                // Scroll up
                 if (isHide) {
                     header.classList.remove('nav-hide');
                     isHide = false;
                 }
             } else {
-                // Scroll Down
-                // If they scrolled down and are past the navbar, add class .nav-up.
+                // Scroll down
+                // If they scrolled down and are past the navbar, add class .nav-hide.
                 // This is necessary so you never see what is "behind" the navbar.
                 if (currentScrollPos > navbarHeight) {
                     if (!isHide) {

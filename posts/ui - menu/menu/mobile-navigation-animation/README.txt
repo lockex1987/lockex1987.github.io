@@ -1,3 +1,0 @@
-A Pen created at CodePen.io. You can find this one at http://codepen.io/karlovidek/pen/aNYWKE.
-
- Mobile navigation open and close animations using GSAP TweenMax and TimelineMax. Still needs some transition tweaking...
