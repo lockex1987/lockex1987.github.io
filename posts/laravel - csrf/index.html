@@ -20,11 +20,11 @@
       <p>Nếu không có sự bảo vệ CSRF, một trang web độc có thể tạo một form HTML
         trỏ tới đường dẫn <code>/user/email</code> của bạn và submit địa chỉ
         bất kỳ.</p>
-      <pre>&lt;form action="https://your-application.com/user/email"<br>    method="POST"&gt;
+      <pre><code class="language-html">&lt;form action="https://your-application.com/user/email"<br>    method="POST"&gt;
     &lt;input type="email"<br>        value="malicious-email@example.com" /&gt;
 &lt;/form&gt;<br><br>&lt;script&gt;
     document.forms[0].submit();
-&lt;/script&gt;</pre>
+&lt;/script&gt;</code></pre>
       <p>Nếu trang web độc tự động submit form khi trang được load, kẻ xấu chỉ
         cần dụ người dùng truy cập trang của chúng và địa chỉ email của người
         dùng sẽ tự động thay đổi trên ứng dụng của bạn.</p>
@@ -32,15 +32,15 @@
         PUT, PATH, DELETE về một giá trị bí mật trong session mà trang web độc
         không thể truy cập.</p>
       <h3>Demo lỗi</h3>
-      <p>Tạo hai ứng dụng nginx là <a href="http://csrf-main.io/" target="_blank">csrf-main.io</a>
-        và <a href="http://csrf-malicious.to/" target="_blank">csrf-malicious.to</a>.
-        Cấu hình nginx lần lượt là:</p>
-      <p><code>csrf-main.conf</code>:</p>
-      <pre>server {
+      <p>Tạo hai ứng dụng nginx là <a href="http://csrf-victim.tk/" target="_blank">csrf-victim.tk</a>
+        và <a href="http://csrf-attacker.tk/" target="_blank">csrf-attacker.tk</a>.
+        Cấu hình Nginx lần lượt là:</p>
+      <p><code>csrf-victim.conf</code> (ứng dụng Laravel):</p>
+      <pre><code class="language-nginx">server {
     listen 80;
-    server_name csrf-main.io;
-    root D:/htdocs/csrf-main/public;
-    index index.php index.html;
+    server_name csrf-victim.tk;
+    root D:/htdocs/csrf-victim/public;
+    index index.php;
 
     location / {
         try_files $uri $uri/ /index.php?$query_string;
@@ -49,31 +49,26 @@
     error_page 404 /index.php;
 
     location ~ \.php$ {
-        fastcgi_split_path_info    ^(.+\.php)(/.+)$;
-        fastcgi_pass               127.0.0.1:9000;
-        fastcgi_index              index.php;
-        fastcgi_param              SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        include                    fastcgi_params;
-    }<br><br>    location = /favicon.ico {
-        log_not_found off;
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include        fastcgi_params;
     }
-}
-</pre>
-      <p><code>csrf-malicious.conf</code>:</p>
-      <pre>server {
+}</code></pre>
+      <p><code>csrf-attacker.conf</code> (ứng dụng web tĩnh):</p>
+      <pre><code class="language-nginx">server {
     listen 80;
-    server_name csrf-malicious.to;
-    root D:/htdocs/csrf-malicious;
+    server_name csrf-attacker.tk;
+    root D:/htdocs/csrf-attacker;
     index index.html;<br><br>    location = /favicon.ico {
         log_not_found off;
     }
-}
-</pre>
-      <p>Sửa file <code>C:/Windows/System32/drivers/etc/hosts</code>:</p>
-      <pre>127.0.0.1    csrf-main.io
-127.0.0.1    csrf-malicious.to</pre>
-      <p>Cấu hình <code>routes/web.php</code> của ứng dụng main như sau:</p>
-      <pre>&lt;?php
+}</code></pre>
+      <p>Sửa file <code>C:/Windows/System32/drivers/etc/hosts</code> (hoặc <code>/etc/hosts</code>):</p>
+      <pre>127.0.0.1    csrf-victim.tk
+127.0.0.1    csrf-attacker.tk</pre>
+      <p>Cấu hình <code>routes/web.php</code> của ứng dụng victim như sau
+        (TODO: update):</p>
+      <pre><code class="language-php">&lt;?php
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -91,14 +86,14 @@ Route::post('/user/email', function (Request $request) {
 Route::get('/call-api/{path}', function (string $path) {
     echo 'Gọi API ' . $path;
 })-&gt;where('path', '(.*)');
-</pre>
+</code></pre>
       <p>Tắt cấu hình CSRF của Laravel bằng cách sửa file <code>app/Http/Kernel.php</code>,
         comment middleware <code>VerifyCsrfToken</code>.</p>
-      <p>Ứng dụng malicious chỉ có một trang <code>index.html</code> như sau:</p>
-      <pre>&lt;!DOCTYPE html&gt;
+      <p>Ứng dụng attacker chỉ có một trang <code>index.html</code> như sau:</p>
+      <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;body&gt;
-    &lt;form action="http://csrf-main.io/user/email"
+    &lt;form action="http://csrf-victim.tk/user/email"
         method="POST"&gt;
         &lt;input name="email"
             value="malicious-email@example.com" /&gt;
@@ -109,11 +104,11 @@ Route::get('/call-api/{path}', function (string $path) {
     &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-</pre>
-      <p>Ở ứng dụng main, chúng ta cũng có file <code>update-email.html</code>
-        có nội dung tương tự. Truy cập đường dẫn <a href="http://csrf-main.io/update-email.html">csrf-main.io/update-email.html</a>
+</code></pre>
+      <p>Ở ứng dụng victim, chúng ta cũng có file <code>resources/views/update-email.blade.php</code>
+        có nội dung tương tự. Truy cập đường dẫn <a href="http://csrf-victim.tk/user/email">csrf-victim.tk/user/email</a>
         để thực thi. Đây là request hợp lệ.</p>
-      <p>Truy cập trang <a href="http://csrf-malicious.to/" target="_blank">csrf-malicious.to</a>
+      <p>Truy cập trang <a href="http://csrf-attacker.tk/" target="_blank">csrf-attacker.tk</a>
         và request đổi email sẽ tự được thực thi.</p>
       <h3>Cách fix với Laravel</h3>
       <p>Laravel rất dễ dàng để bảo vệ các ứng dụng của bạn từ tấn công giả mạo
@@ -128,10 +123,10 @@ Route::get('/call-api/{path}', function (string $path) {
         trường CSRF token vào trong form để bảo mật CSRF middleware có thể xác
         nhận request. Bạn có thể sử dụng <code>@csrf</code> để sinh ra trường
         đấy:</p>
-      <pre>&lt;form method="POST" action="/profile"&gt;
+      <pre><code class="language-html">&lt;form method="POST" action="/profile"&gt;
     @csrf
     ...
-&lt;/form&gt;</pre>
+&lt;/form&gt;</code></pre>
       <p>Middleware <code>VerifyCsrfToken</code>, ở trong nhóm middleware <code>web</code>,
         sẽ tự động xác minh token từ request input giống với token lưu trong
         session. Middleware này mặc định là hiệu lực.</p>
@@ -157,7 +152,7 @@ Route::get('/call-api/{path}', function (string $path) {
         dụng cho tất cả các route trong <code>routes/web.php</code> file. Tuy
         nhiên, bạn có thể loại bỏ route bằng cách thêm URI vào thuộc tính <code>$except</code>
         trong middleware <code>VerifyCsrfToken</code>:</p>
-      <pre class="out-of-box">&lt;?php
+      <pre><code class="language-php">&lt;?php
 
 namespace App\Http\Middleware;
 
@@ -173,20 +168,20 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         'stripe/*',
     ];
-}</pre>
+}</code></pre>
       <h3>X-CSRF-TOKEN</h3>
       <p>Ngoài việc kiểm tra CSRF token như một tham số POST, middleware <code>VerifyCsrfToken</code>
         cũng kiểm tra các yêu cầu <code>X-CSRF-TOKEN</code> request header. Bạn
         có thể, ví dụ, lưu token trong thẻ <code>meta</code>:</p>
-      <pre class="out-of-box">&lt;meta name="csrf-token" content="TAoJ9p7uOI0xWTiHzY7m4u0LSPY0xSpDMwZcptNT"&gt;</pre>
+      <pre><code class="language-html">&lt;meta name="csrf-token" content="TAoJ9p7uOI0xWTiHzY7m4u0LSPY0xSpDMwZcptNT"&gt;</code></pre>
       <p>Sau đó, khi bạn đã tạo ra thẻ <code>meta</code>, bạn có thể chỉ định
         một thư viện như jQuery để tự động thêm tất cả request header. Điều này
         rất đơn giản, thuận tiện để bảo mật CSRF các ứng dụng AJAX của bạn:</p>
-      <pre>$.ajaxSetup({
+      <pre><code class="language-javascript">$.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[]').attr('content')
     }
-});</pre>
+});</code></pre>
       <h3>X-XSRF-TOKEN</h3>
       <p>Laravel lưu CSRF token hiện tại trong cookie <code>XSRF-TOKEN</code>
         mỗi khi có response tạo ra bởi framework. Bạn có thể sử dụng cookie để
@@ -199,11 +194,8 @@ class VerifyCsrfToken extends BaseVerifier
       <h3>Cookie SameSite</h3>
       <p>Giờ đây, chúng ta có thể ngăn chặn lỗi CSRF một cách đơn giản bằng cách
         thiết lập cookie là SameSite.</p>
-      <p>Yêu cầu trình duyệt phải hỗ trợ, và cookie phải có thuộc tính Secure?</p>
       <p>Cấu hình cookie là SameSite strict bằng cách sửa cấu hình <code>same_site</code>
         trong file <code>config/session.php</code> từ <code>lax</code> thành <code>strict</code>.</p>
-      <p>Demo vẫn bị lợi dụng.</p>
-      <p>Vẫn phải sử dụng token.</p>
       <h3>Token</h3>
       <p>Bạn cũng có thể ngăn lỗi CSRF bằng cách không xác thực dựa vào cookie
         mà dựa vào token.</p>
@@ -211,8 +203,7 @@ class VerifyCsrfToken extends BaseVerifier
       <p><a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery" target="_blank">Cross-site
           request forgery - Wikipedia</a></p>
       <p><a href="https://laravel.com/docs/master/csrf" target="_blank">laravel.com/docs/master/csrf</a></p>
-      <p><a href="https://viblo.asia/p/cross-site-request-forgery-csrf-sap-het-thoi-oOVlYyEyl8W"
-
+      <p><a href="https://viblo.asia/p/cross-site-request-forgery-csrf-sap-het-thoi-oOVlYyEyl8W"
           target="_blank">Cross-Site Request Forgery (CSRF) sắp hết thời?!!</a></p>
     </article>
     <script src="../../js/docs.js"></script>
