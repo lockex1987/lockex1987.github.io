@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="notification, menu đa cấp (multilevel)">
     <title>Bootstrap dropdown</title>
@@ -12,7 +12,7 @@
     <article>
       <h2>Bootstrap dropdown</h2>
       <h3>Cơ bản</h3>
-      <p>Một dropdown là một menu có thể ấn hiện mà cho phép người dùng chọn một
+      <p>Một dropdown là một menu có thể ẩn hiện mà cho phép người dùng chọn một
         giá trị từ danh sách được định nghĩa trước.</p>
       <p>Class <code>.dropdown</code> đánh dấu, bao ngoài một dropdown.</p>
       <p>Để mở dropdown, sử dụng một nút hoặc một link với class <code>.dropdown-toggle</code>
@@ -33,30 +33,81 @@
       <p>Class <code>.dropdown-item-text</code> được sử dụng để thêm một phần
         tử văn bản thuần, hoặc một link với style mặc định.</p>
       <p>Bạn cũng có thể tạo menu bên phải hoặc bên trái bằng cách thêm class <code>.dropright</code>
-        hoặc <code>.dropleft</code> vào phần tử dropdown. Chú ý caret/arrow sẽ
-        được thêm tự động.</p>
+        hoặc <code>.dropleft</code> vào phần tử dropdown. Chú ý caret / arrow
+        sẽ được thêm tự động.</p>
       <p>Để căn phải menu, thêm class <code>.dropdown-menu-right</code> vào
         phần tử <code>.dropdown-menu</code>.</p>
       <p>Nếu bạn muốn menu hiển thị lên đằng trên thay vì đằng dưới, thay đổi
         phần tử div với class <code>.dropup</code>.</p>
       <h3>Demo</h3>
-      <ul>
-        <li><a href="basic.html">Ví dụ cơ bản về dropdown</a> </li>
-        <li><a href="split-button.html">Split button dropdown</a> </li>
-        <li><a href="dropdown-menu.html">Dropdown menu (và các phần tử dropdown
-            khác)</a> </li>
-        <li><a href="multilevel.html">Menu đa cấp</a></li>
-      </ul>
+      
+      <h4>Cơ bản</h4>
+
+      <div class="dropdown mb-3">
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+              Dropdown button
+          </button>
+
+          <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Link 1</a>
+              <a class="dropdown-item" href="#">Link 2</a>
+              <a class="dropdown-item" href="#">Link 3</a>
+              
+              <div class="dropdown-divider"></div>
+
+              <a class="dropdown-item" href="#">Another link</a>
+
+              <h5 class="dropdown-header">Dropdown header</h5>
+
+              <a class="dropdown-item" href="#">Link 1</a>
+              <a class="dropdown-item" href="#">Link 2</a>
+              <a class="dropdown-item" href="#">Link 3</a>
+
+              <h5 class="dropdown-header">Dropdown header</h5>
+
+              <a class="dropdown-item" href="#">Another link</a>
+              <a class="dropdown-item" href="#">Normal</a>
+              <a class="dropdown-item active" href="#">Active</a>
+              <a class="dropdown-item disabled" href="#">Disabled</a>
+              <a class="dropdown-item-text" href="#">Text Link</a>
+
+              <span class="dropdown-item-text" href="#">Just Text</span>
+          </div>
+      </div>
+
+      <h4>Split button dropdown</h4>
+
+      <div class="mb-3">
+      <div class="btn-group">
+          <button type="button" class="btn btn-primary">Sony</button>
+          <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+              data-toggle="dropdown"></button>
+          <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Tablet</a>
+              <a class="dropdown-item" href="#">Smartphone</a>
+          </div>
+      </div>
+
+      <div class="btn-group">
+          <button type="button" class="btn btn-success">Success</button>
+          <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split"
+              data-toggle="dropdown"></button>
+          <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="#">Link 1</a>
+              <a class="dropdown-item" href="#">Link 2</a>
+          </div>
+      </div>
+
+    </div>
+
       <h3>Tham khảo</h3>
-      <ul>
-        <li><a target="_blank" href="https://www.w3schools.com/bootstrap4/bootstrap_dropdowns.asp">https://www.w3schools.com/bootstrap4/bootstrap_dropdowns.asp</a>
-        </li>
-        <li><a target="_blank" href="https://getbootstrap.com/docs/4.1/getting-started/introduction/">https://getbootstrap.com/docs/4.1/getting-started/introduction/</a>
-          </li>
-        <li><a target="_blank" href="https://o7planning.org/vi/11993/huong-dan-bootstrap-dropdown">https://o7planning.org/vi/11993/huong-dan-bootstrap-dropdown</a>
-        </li>
-      </ul>
+      <p><a target="_blank" href="https://www.w3schools.com/bootstrap4/bootstrap_dropdowns.asp">Bootstrap 4 Dropdowns | w3schools</a></p>
     </article>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
     <script src="../../js/docs.js"></script>
   </body>
 </html>
